@@ -1,0 +1,24 @@
+name: Refresh market prices
+on:
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python build/refresh_market.py
+      - run: python build/make_site.py
+      - run: |
+          git config user.name "tenno-codex-bot"
+          git config user.email "tenno-codex-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Refresh market prices"
+          git push
