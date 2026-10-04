@@ -36,6 +36,12 @@ nav.tabs{display:flex;gap:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:n
 nav.tabs a{font:600 14.5px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);padding:10px 10px;border-bottom:2px solid transparent;white-space:nowrap}
 nav.tabs a:hover{color:var(--ink)}
 nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold)}
+.acct{margin-left:auto;flex:none;display:grid;place-items:center;min-width:36px;height:36px;padding:0 10px;border:1px solid var(--line2);color:var(--cyan);text-decoration:none;font:700 13px var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+.acct[hidden]{display:none}
+@media (max-width:420px){.has-acct .brand{font-size:15px;letter-spacing:.05em;gap:6px}.has-acct .bar-in{gap:6px}}
+@media (max-width:520px){.acct:not([hidden])~.mrb .t{display:none}.acct{padding:0 8px;font-size:12px}}
+.acct.in{border-radius:50%;padding:0;width:36px;background:var(--cyan-soft);font-size:16px}
+.acct:not([hidden])+.mrb{margin-left:8px}
 .mrb{margin-left:auto;display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);flex:none}
 .ring{border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p,0)*1%),#1B2A35 0);box-shadow:0 0 14px rgba(217,180,94,.25)}
 .mrb .ring{width:40px;height:40px}
@@ -89,7 +95,7 @@ h3{font-size:20px;line-height:1.15;letter-spacing:.04em}
 .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-inline:-16px;padding-inline:16px}
 .obj-h .seg{margin-inline:-14px;padding-inline:14px}
 .seg .btn{flex:none;white-space:nowrap}
-select,input[type=search],input[type=number],input[type=text],textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
+select,input[type=search],input[type=number],input[type=text],input[type=password],input[type=email],textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
 select:focus,input:focus,textarea:focus{border-color:var(--cyan);outline:none}
 textarea{min-height:110px;font:13px var(--f-mono)}
 .prog{display:flex;align-items:center;gap:8px;font:12px var(--f-mono);color:var(--muted)}
@@ -246,7 +252,7 @@ details>summary::-webkit-details-marker{display:none}
     Tenno <b>Codex</b>
   </a>
   <nav class="tabs" aria-label="Sections"></nav>
-  <a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a>
+  <a class="acct" href="#tenno" id="acctbtn" data-ttab="account" hidden aria-label="Account"></a><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a>
 </div></header>
 <main id="app"></main>
 <nav class="bnav" aria-label="Sections"></nav>
@@ -283,18 +289,15 @@ C=lsGet('tenno-codex',{})||{};Object.assign(P,lsGet('tenno-profile',{})||{});
 if(!P.wfid)P.wfid=lsGet('tenno-acct','')||'';
 const kenc=k=>k.replace(/[.\/\[\]#$]/g,'_');
 const on=k=>!!C[kenc(k)];
-let docRef=null,profRef=null,pending={},timer=null,ptimer=null,synced=false;
+let docRef=null,profRef=null,pending={},timer=null,ptimer=null,synced=false,acct=null,FB=null;
+const SAVE_MS=HOSTED?2500:600;
 function setK(k,v){const e=kenc(k);if(v)C[e]=1;else delete C[e];lsSet('tenno-codex',C);
-  if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,600)}updateMR()}
-async function flush(){if(!docRef)return;const p=pending;pending={};
+  if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}updateMR()}
+async function flush(){if(!docRef)return;const p=pending;pending={};if(!Object.keys(p).length)return;
   try{await docRef.update({c:p})}catch(e){try{await docRef.set({c:C})}catch(e2){Object.assign(pending,p)}}}
-function saveProfile(){P.edited=new Date().toISOString();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})},500)}
+function saveProfile(){P.edited=new Date().toISOString();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})},SAVE_MS)}
 async function pushAll(){clearTimeout(timer);pending={};if(docRef){try{await docRef.set({c:C})}catch(e){}}saveProfile()}
-(async()=>{try{
-  if(!window.claude||!claude.use)return;
-  const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
-  if(!db||!user)return;const id=await user.id();if(!id)return;
-  docRef=db.doc('data/users/'+id+'/progress');profRef=db.doc('data/users/'+id+'/profile');
+async function attach(dr,pr,info){docRef=dr;profRef=pr;
   const [snap,ps]=await Promise.all([docRef.get(),profRef.get()]);
   if(snap.exists){const rc=(snap.data()||{}).c||{};const localOnly=Object.keys(C).filter(k=>!(k in rc));
     const m={...C};for(const k in rc){if(rc[k])m[k]=1;else delete m[k]}C=m;lsSet('tenno-codex',C);
@@ -302,8 +305,41 @@ async function pushAll(){clearTimeout(timer);pending={};if(docRef){try{await doc
   else await docRef.set({c:C});
   if(ps.exists){const pd=ps.data()||{};if(!P.edited||(pd.edited&&pd.edited>=P.edited))Object.assign(P,pd);lsSet('tenno-profile',P)}
   else if(P.edited||P.at)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{});
-  synced=true;if(!document.activeElement||!document.activeElement.matches('input,textarea'))render();
+  synced=true;acct=info;if(!document.activeElement||!document.activeElement.matches('input,textarea'))render()}
+function detach(){flushNow();docRef=null;profRef=null;synced=false;acct=null;render()}
+function flushNow(){if(!docRef)return;clearTimeout(timer);flush();clearTimeout(ptimer);if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})}
+window.addEventListener('pagehide',flushNow);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flushNow()});
+(async()=>{try{
+  if(!window.claude||!claude.use)return;
+  const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+  if(!db||!user)return;const id=await user.id();if(!id)return;
+  await attach(db.doc('data/users/'+id+'/progress'),db.doc('data/users/'+id+'/profile'),{kind:'claude'});
 }catch(e){}})();
+/* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
+function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){return}
+  const cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey)return;
+  const V='10.12.2',B='https://www.gstatic.com/firebasejs/'+V+'/';
+  try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){return}
+  firebase.initializeApp(cfg);const auth=firebase.auth();const fs=firebase.firestore();FB={auth,fs};render();
+  try{await auth.getRedirectResult()}catch(e){toast(authMsg(e))}
+  auth.onAuthStateChanged(async u=>{if(u){const base=fs.collection('users').doc(u.uid).collection('data');
+      const wrap=r=>({get:()=>r.get(),set:o=>r.set(o),update:o=>r.set(o,{merge:true})});
+      try{await attach(wrap(base.doc('progress')),wrap(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||''})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}}
+    else if(acct&&acct.kind==='fb')detach()})}
+function authMsg(e){const c=(e&&e.code)||'';return ({'auth/invalid-credential':'Wrong email or password.','auth/wrong-password':'Wrong email or password.','auth/user-not-found':'No account with that email. Tap Create account.','auth/email-already-in-use':'That email already has an account. Tap Sign in.','auth/weak-password':'Use a password with at least 6 characters.','auth/invalid-email':'That email address doesn\'t look right.','auth/popup-closed-by-user':'Sign-in was cancelled.','auth/too-many-requests':'Too many tries. Wait a minute and try again.','auth/network-request-failed':'No connection. Check your internet and try again.'})[c]||'Sign-in failed. Try again.'}
+async function signGoogle(){if(!FB)return;const pr=new firebase.auth.GoogleAuthProvider();try{await FB.auth.signInWithPopup(pr)}catch(e){if(/popup-blocked|operation-not-supported|cancelled-popup/.test(e.code||''))await FB.auth.signInWithRedirect(pr);else toast(authMsg(e))}}
+async function signEmail(create){if(!FB)return;const em=($('#lgemail')||{}).value?.trim(),pw=($('#lgpw')||{}).value||'';if(!em||!pw){toast('Enter your email and password');return}
+  try{if(create)await FB.auth.createUserWithEmailAndPassword(em,pw);else await FB.auth.signInWithEmailAndPassword(em,pw);toast(create?'Account created. Your progress now saves to it.':'Signed in')}catch(e){toast(authMsg(e))}}
+async function resetPw(){if(!FB)return;const em=($('#lgemail')||{}).value?.trim();if(!em){toast('Type your email first');return}try{await FB.auth.sendPasswordResetEmail(em);toast('Password reset email sent')}catch(e){toast(authMsg(e))}}
+function accountPanel(){if(!HOSTED)return '';
+  if(!FB)return `<div class="panel stack cut"><h2>Sign in</h2><p class="small muted" style="margin:0">Accounts aren't switched on for this site yet. Progress saves in this browser; use Backup to move it.</p></div>`;
+  if(acct&&acct.kind==='fb')return `<div class="panel stack cut"><h2>Signed in</h2><div class="kv"><span>Account</span><span>${esc(acct.email||acct.name||'Google account')}</span></div><p class="small muted" style="margin:0">Everything saves to your account automatically, so you can sign in on any device and pick up where you left off.</p><div class="row"><button class="btn" id="lgout">Sign out</button></div></div>`;
+  return `<div class="panel stack cut" id="signin"><h2>Sign in to save forever</h2><p class="small" style="margin:0">Make a free account so your ranks, quests, missions and builds are never lost and follow you to any device. What you've already done here carries over.</p>
+  <button class="btn primary" id="lggoogle">Continue with Google</button>
+  <div class="small muted">or use email</div>
+  <input id="lgemail" type="text" inputmode="email" autocomplete="email" placeholder="Email" aria-label="Email"><input id="lgpw" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" aria-label="Password">
+  <div class="row"><button class="btn" id="lgin">Sign in</button><button class="btn" id="lgnew">Create account</button><button class="btn sm" id="lgreset">Forgot password</button></div></div>`}
 
 /* ---------- mastery math ---------- */
 const BIG=['Warframe','Companion','Archwing','K-Drive','Necramech'];
@@ -333,7 +369,7 @@ const mrNeed=m=>m<=30?2500*m*m:2250000+(m-30)*147500;
 function mrInfo(x){let mr=0;while(mr<30&&mrNeed(mr+1)<=x)mr++;if(mr===30)mr=30+Math.max(0,Math.floor((x-2250000)/147500));
   const cur=mrNeed(mr),next=mrNeed(mr+1);return {mr,cur,next,pct:Math.max(0,Math.min(100,(x-cur)/(next-cur)*100))}}
 const mrLabel=m=>m>30?'L'+(m-30):String(m);
-function updateMR(){const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
+function updateMR(){const ab=$('#acctbtn');if(ab){ab.hidden=!(HOSTED&&FB);ab.textContent=acct&&acct.kind==='fb'?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'Sign in';ab.classList.toggle('in',!!(acct&&acct.kind==='fb'));document.body.classList.toggle('has-acct',!ab.hidden)}const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
   $('#mrb-s').textContent=fmt(m.next-t.total)+' XP to next';$('#mrb-r').style.setProperty('--p',m.pct.toFixed(1));const b=$('#bigmr');if(b)b.outerHTML=bigMR();const hh=$('#hero');if(hh)hh.outerHTML=heroHTML();if(typeof rkHdr==='function')rkHdr()}
 
 /* ---------- linking ---------- */
@@ -464,7 +500,7 @@ function home(){const t=totalXP();const qd=Q.filter(q=>on('q|'+q.n)).length;cons
   const ext=[[`Star chart`,`${nd}`,`/${ALLN.length}`,nd/ALLN.length,fmt(catXP('chart'))+' XP','#missions'],[`Steel Path`,`${sd}`,`/${ALLN.length}`,sd/ALLN.length,fmt(catXP('sp'))+' XP','#missions'],[`Intrinsics`,`${intrSum(P.intrR)+intrSum(P.intrD)||+P.intr||0}`,'/90',(intrSum(P.intrR)+intrSum(P.intrD)||+P.intr||0)/90,fmt(catXP('rail')+catXP('drift'))+' XP','#ranks|Intrinsics'],[`Quests`,`${qd}`,`/${Q.length}`,qd/Q.length,'Story & frame quests','#quests']]
     .map(([k,v,s,p,x,h])=>{const [hh,cat]=h.split('|');return `<a class="tile cut" href="${hh}" ${cat?`data-rkcat="${cat}"`:''}><span class="k">${k}</span><span class="v num">${v}<small>${s}</small></span><span class="tbar"><i style="width:${Math.min(100,p*100)}%"></i></span><span class="x">${x}</span></a>`}).join('');
   const ez=easiest(5);
-  return `<div class="stack">${heroHTML()}
+  return `<div class="stack">${heroHTML()}${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Your ranks, quests and missions follow you to every device.</span></a>`:''}
   <div class="sec-h"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust to match in-game</a></div>
   <div class="tiles">${tiles}</div>
   <div class="sec-h"><h2>Progress</h2></div>
@@ -477,7 +513,7 @@ function home(){const t=totalXP();const qd=Q.filter(q=>on('q|'+q.n)).length;cons
   </div>
   <div class="sec-h"><h2>Explore</h2></div>
   <div class="grid">${[['ranks','Rank tracker','Ranks','Set the rank of every weapon, frame and companion.'],['missions','Star chart','Missions','Every node, Normal and Steel Path.'],['resources','Farming guide','Resources','Best farms by game stage.'],['mastery','MR 0 → Legendary','MR Plan','What to do next to rank up.'],['tenno','Your account','Tenno','Profile, breakdown, Foundry, inventory, sync.'],['frames','Arsenal','Warframes','Crafting steps, meta builds, mod sources.'],['farm','Search anything','Farm Finder','Prime parts → relics → best node.'],['market','warframe.market','Market','Prices, sellers, vault tracker.']].map(([h,e,t,d])=>`<a class="panel navcard cut" href="#${h}"><span class="eyebrow">${e}</span><h3>${t}</h3><span class="muted small">${d}</span></a>`).join('')}</div>
-  <div class="callout small">${synced?'Signed in: everything saves to your claude.ai account and follows you to any device.':HOSTED?'Your progress saves in this browser, so closing the page never loses anything. To move it to another device, use Tenno → Backup.':'Your progress saves on this device. Sign in to claude.ai to sync it across devices.'}</div>
+  <div class="callout small">${synced?(acct&&acct.kind==='fb'?'Signed in as '+esc(acct.email||acct.name||'you')+'. Everything saves to your account.':'Signed in: everything saves to your claude.ai account and follows you to any device.'):HOSTED?(FB?'Saving in this browser only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep your progress forever on any device.':'Your progress saves in this browser. To move it to another device, use Tenno → Backup.'):'Your progress saves on this device. Sign in to claude.ai to sync it across devices.'}</div>
   </div>`}
 
 /* ---------- ranks ---------- */
@@ -530,7 +566,7 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
   if(tab==='backup')h+=backupTab();
   return h+'</div>'}
 function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');
-  return `<div class="panel stack cut"><h2>Your account</h2>
+  return accountPanel()+`<div class="panel stack cut"><h2>Warframe link</h2>
   <p class="small" style="margin:0">${synced?'You\'re signed in with claude.ai, and that is your account here. Everything below saves to it.':HOSTED?'Your profile lives in this browser. Use Backup to copy it to another device.':'Sign in to claude.ai to save this to your account. For now it saves on this device.'}</p>
   <label class="small" for="wfid"><b>Warframe account ID</b> (24 characters, saved to your account)</label>
   <input id="wfid" type="text" placeholder="e.g. 5a1b2c3d4e5f60718293a4b5" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -834,9 +870,14 @@ document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches(
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){$('#drawer').classList.remove('open');return}
   const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
-  const t=e.target.closest('#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
+  const t=e.target.closest('#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){$('#drawer').classList.toggle('open');return}
+  if(t.id==='lggoogle'){signGoogle();return}
+  if(t.id==='lgin'){signEmail(false);return}
+  if(t.id==='lgnew'){signEmail(true);return}
+  if(t.id==='lgreset'){resetPw();return}
+  if(t.id==='lgout'){flushNow();FB&&FB.auth.signOut();toast('Signed out. Progress stays in this browser too.');return}
   if(t.dataset.rk){const row=t.closest('.rk');const n=row.dataset.n;const r=rankOf(n);setRank(n,t.dataset.rk==='max'?99:r+(+t.dataset.rk));row.outerHTML=rkRow(I[n]);return}
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
@@ -884,7 +925,7 @@ function bindPage(r){
   if(r==='resources'&&state.resSel&&window.innerWidth<900&&!state.resQ)setTimeout(()=>$('#rdet')?.scrollIntoView({block:'start'}),30)}
 liveResurgence();if(P.wfid&&(!P.auto||Date.now()-new Date(P.auto)>6*3600e3))autoSync(true);
 setInterval(()=>{if(location.hash==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
-render();
+render();fbInit();
 })();
 </script>
 
