@@ -5,7 +5,7 @@ function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.pro
   const act=HOSTED&&!P.at&&!P.wfid?`<a class="btn primary" href="#tenno" data-ttab="account">Sync your profile</a>`
     :HOSTED&&stale?`<button type="button" class="btn primary" id="autosync">Sync now</button>`
     :`<a class="btn primary" href="#mastery">See rank-up plan</a>`;
-  const parts=[['Gear',t.it,'var(--gold)'],['Star chart',t.ch,'var(--gold-dim)'],['Steel Path',t.sp,'var(--muted)'],['Intrinsics',t.intr,'var(--line2)'],['Other',(t.other||0)+(t.adj||0)+(t.un||0),'var(--line)']].filter(p=>p[1]>0);
+  const parts=[['Gear',t.it,'var(--gold)'],['Star chart',t.ch,'var(--gold-dim)'],['Steel Path',t.sp,'var(--ink2)'],['Intrinsics',t.intr,'var(--line2)'],['Other',(t.other||0)+(t.adj||0)+(t.un||0),'var(--line)']].filter(p=>p[1]>0);
   const sum=parts.reduce((a,p)=>a+p[1],0)||1;
   return `<section class="mrcard" aria-labelledby="mr-h"><div class="mrtop"><div class="ring big" style="--p:${m.pct.toFixed(1)}"><span>${mrLabel(m.mr)}</span></div>
    <div class="mrtxt"><h1 id="mr-h">${name?esc(name):(m.mr>30?'Legendary '+(m.mr-30):'Mastery rank '+m.mr)}</h1>

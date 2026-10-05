@@ -1,5 +1,5 @@
 /* ---------- v15: dashboard, reasons, undo, goal → farm → task ---------- */
-function toastAction(text,label,fn){document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast act';d.setAttribute('role','status');
+function toastAction(text,label,fn){if(window.TF_UI&&TF_UI.toast){TF_UI.toast(text,{label,fn});return}document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast act';d.setAttribute('role','status');
   const s=document.createElement('span');s.textContent=text;d.appendChild(s);const b=document.createElement('button');b.type='button';b.className='btn sm';b.textContent=label;b.onclick=()=>{d.remove();fn()};d.appendChild(b);document.body.appendChild(d);setTimeout(()=>d.remove(),7000)}
 /* rank undo */
 let UNDO=null;

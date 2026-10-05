@@ -5,7 +5,7 @@ const CHANGES=[
  ['2026-10-05','Big usability update: welcome screen with two clear starts, customizable dashboard with a reasoned Next up list, undo for rank changes, sync, restores and hidden checklist items, need/have/left shopping lists that turn into tasks, task notes, repeats and due dates, your own daily/weekly checklist items, syndicate side effects, farms marked for your stage, phone-friendly layout with larger tap targets, full accessibility pass, block and report for friends, About & privacy page, delete-account option.'],
  ['2026-10-05','Security hardening, stay signed in on the iPhone home-screen app, feedback page, group chats, friends and messages, shared tasks, live sync across devices.'],
  ['2026-10-04','Tennoform launched: mastery tracking, star chart, quests, syndicates, resources, relics, market prices, builds.']];
-const LOGO_HTML=()=>{const l=document.querySelector('.brand .logo');return l?l.outerHTML:''};
+const LOGO_HTML=()=>{const l=document.getElementById('tf-logo');return l?l.innerHTML.trim():''};
 function isNew(){return !P.onb&&!P.at&&!Object.keys(P.rk||{}).length&&Object.keys(C).length<3&&!(P.tasks||[]).length&&!synced}
 function welcome(){return `<section class="welcome cut"><div class="wl">${LOGO_HTML()}<div><div class="eyebrow">Welcome, Tenno</div><h1>Tennoform</h1><p class="lede" style="margin:4px 0 0">${PITCH}</p></div></div>
  <div class="wchoices">

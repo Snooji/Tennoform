@@ -24,11 +24,21 @@ csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
        "img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "
        "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'" % hashes)
+def shell_tags():
+    # The React shell (app/, built with Vite into assets/) loads after the main script, which exposes window.TF.
+    mf = os.path.join(H, '..', 'assets', '.vite', 'manifest.json')
+    if not os.path.exists(mf):
+        return ''
+    e = json.load(open(mf))['src/main.tsx']
+    css = ''.join('<link rel="stylesheet" href="/assets/%s">' % c for c in e.get('css', []))
+    # Layer order first: the old page styles sit above Tailwind's reset but below shadcn components and utilities.
+    order = '<style>@layer properties, theme, base, legacy, components, utilities;</style>'
+    return order + css + '<script type="module" src="/assets/%s"></script>' % e['file']
 page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
         '<meta http-equiv="Content-Security-Policy" content="' + csp + '">'
         '<meta name="referrer" content="strict-origin-when-cross-origin">'
         '<meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png">'
-        '</head><body>\n' + body + '\n</body></html>\n')
+        + shell_tags() + '</head><body>\n' + body + '\n</body></html>\n')
 open(os.path.join(H, '..', 'index.html'), 'w').write(page)
 print('index.html', len(page) // 1024, 'KB')

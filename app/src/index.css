@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+    --font-sans: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-elevated: var(--elevated);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Tennoform design tokens.
+   Dark is the primary experience: graphite surfaces in three steps, cool white text,
+   one restrained Orokin-gold accent for selection, progress and achievement. */
+:root {
+    --radius: 0.625rem;
+    /* light: soft off-white page, white surfaces, graphite text */
+    --background: #f5f5f3;
+    --foreground: #1b1d22;
+    --card: #ffffff;
+    --card-foreground: #1b1d22;
+    --elevated: #ffffff;
+    --popover: #ffffff;
+    --popover-foreground: #1b1d22;
+    --primary: #7a5c17;
+    --primary-foreground: #ffffff;
+    --secondary: #eeeeeb;
+    --secondary-foreground: #1b1d22;
+    --muted: #efefec;
+    --muted-foreground: #5b616b;
+    --accent: #eceae4;
+    --accent-foreground: #1b1d22;
+    --destructive: #b42318;
+    --success: #23703f;
+    --warning: #8f4f06;
+    --border: #e1e1dc;
+    --input: #d6d6d0;
+    --ring: #a7832f;
+    --chart-1: #7a5c17;
+    --chart-2: #2f6470;
+    --chart-3: #5b616b;
+    --chart-4: #23703f;
+    --chart-5: #8f4f06;
+    --sidebar: #fbfbfa;
+    --sidebar-foreground: #1b1d22;
+    --sidebar-primary: #7a5c17;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #efeeea;
+    --sidebar-accent-foreground: #1b1d22;
+    --sidebar-border: #e6e6e1;
+    --sidebar-ring: #a7832f;
+    --shadow-elev: 0 1px 2px rgb(16 18 22 / 6%), 0 8px 24px rgb(16 18 22 / 6%);
+}
+
+.dark {
+    /* dark: graphite page, a lighter card, one more step for menus and dialogs */
+    --background: #0e0f12;
+    --foreground: #e8ebf0;
+    --card: #15171b;
+    --card-foreground: #e8ebf0;
+    --elevated: #1b1e23;
+    --popover: #1b1e23;
+    --popover-foreground: #e8ebf0;
+    --primary: #d2ae63;
+    --primary-foreground: #17130a;
+    --secondary: #1d2025;
+    --secondary-foreground: #e8ebf0;
+    --muted: #1a1c21;
+    --muted-foreground: #9aa1ad;
+    --accent: #22252b;
+    --accent-foreground: #e8ebf0;
+    --destructive: #f0605d;
+    --success: #5cc27f;
+    --warning: #e8a948;
+    --border: #262930;
+    --input: #30343c;
+    --ring: #b8954e;
+    --chart-1: #d2ae63;
+    --chart-2: #6fb6c3;
+    --chart-3: #9aa1ad;
+    --chart-4: #5cc27f;
+    --chart-5: #e8a948;
+    --sidebar: #111316;
+    --sidebar-foreground: #e8ebf0;
+    --sidebar-primary: #d2ae63;
+    --sidebar-primary-foreground: #17130a;
+    --sidebar-accent: #1d2025;
+    --sidebar-accent-foreground: #e8ebf0;
+    --sidebar-border: #22252b;
+    --sidebar-ring: #b8954e;
+    --shadow-elev: 0 1px 2px rgb(0 0 0 / 40%), 0 10px 30px rgb(0 0 0 / 35%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+
+@layer base {
+  h1, h2, h3, .font-heading { font-family: var(--font-heading); letter-spacing: 0; }
+}

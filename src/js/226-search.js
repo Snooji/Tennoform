@@ -19,7 +19,7 @@ function cmdFind(q){q=q.toLowerCase().trim().replace(/\s+/g,' ');if(!q)return []
     if(s!=null)out.push([s+CMDG.indexOf(e.g)*.01+e.n.length*.0001,e])}
   out.sort((a,b)=>a[0]-b[0]);const per={};return out.map(x=>x[1]).filter(e=>(per[e.g]=(per[e.g]||0)+1)<=(e.g==='Pages'?4:6)).slice(0,24)}
 let CMDI=0,CMDR=[],CMDLAST=null;
-function cmdOpen(){if($('#cmdbk'))return;CMDLAST=document.activeElement;document.body.insertAdjacentHTML('beforeend',`<div class="dlgbk" id="cmdbk"><div class="cmd" role="dialog" aria-modal="true" aria-label="Search Tennoform">
+function cmdOpen(){if(window.TF_UI&&TF_UI.openSearch){TF_UI.openSearch();return}if($('#cmdbk'))return;CMDLAST=document.activeElement;document.body.insertAdjacentHTML('beforeend',`<div class="dlgbk" id="cmdbk"><div class="cmd" role="dialog" aria-modal="true" aria-label="Search Tennoform">
   <div class="cmdin">${ic('search')}<input id="cmdq" type="text" role="combobox" aria-expanded="true" aria-controls="cmdres" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Search gear, relics, quests, planets, pages…" enterkeyhint="go"><button type="button" class="btn sm" data-cmdx>Esc</button></div>
   <div id="cmdres" role="listbox" aria-label="Results"></div><div class="cmdfoot small muted">↑ ↓ to move · Enter to open · Esc to close · <kbd>?</kbd> for shortcuts</div></div></div>`);
   cmdPaint();setTimeout(()=>$('#cmdq').focus(),10)}

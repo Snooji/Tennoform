@@ -9,7 +9,7 @@
 .nuact{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .nu{grid-template-columns:26px minmax(0,1fr)}
 .nupre{margin-top:4px}.nupre summary{cursor:pointer;color:var(--cyan);width:max-content}.nupre ul{margin:4px 0 0;padding-left:18px}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}.btn.ghost:hover{border-color:var(--line2)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--ink2)}.btn.ghost:hover{border-color:var(--line2)}
 .hubhint,.hubhelp{margin-bottom:8px;flex-wrap:wrap;gap:8px}
 .chip.trk{border-style:dashed}
 .lact{display:inline-flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px;width:100%}

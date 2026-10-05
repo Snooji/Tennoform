@@ -27,7 +27,7 @@ function afterRender(key,nav){a11yPass();const ey=document.querySelector('#app .
   document.title=(key==='home'?'':(PL[key]||key)+' · ')+'Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
 window.addEventListener('hashchange',()=>setTimeout(()=>afterRender((location.hash||'#home').slice(1),true),0));
 /* menu focus handling */
-$('#hamb').addEventListener('click',()=>setTimeout(()=>{if($('#drawer').classList.contains('open')){const a=$('#sheet a');a&&a.focus()}},30));
+$('#hamb')&&$('#hamb').addEventListener('click',()=>setTimeout(()=>{if($('#drawer').classList.contains('open')){const a=$('#sheet a');a&&a.focus()}},30));
 /* block & report */
 function blocked(uid){return (P.block||[]).includes(uid)}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-fblock],[data-freport]');if(!t)return;
