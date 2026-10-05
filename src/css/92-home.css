@@ -55,3 +55,15 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .hrow>.hrt{grid-column:2}.hrow>.small{grid-column:3}
 .nextup .nu>.nut{grid-column:2}
 @media (max-width:599px){.mkrow>.mkp{grid-column:2}}
+/* first visit and sample account */
+.welcome{gap:18px}
+.welcome h1{font-size:32px}
+.wchoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.wchoice{display:flex;flex-direction:column;gap:6px;text-align:left;padding:16px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel);color:var(--ink);cursor:pointer;font:inherit}
+.wchoice:first-child{border-color:var(--gold-dim)}
+.wchoice:hover{border-color:var(--ink)}
+.wchoice b{font:600 18px/1.2 var(--f-display);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.wchoice .wgo{margin-top:auto;padding-top:6px;font-weight:600}
+.demobar{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:15;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;padding:10px 14px;border:1px solid var(--gold-dim);border-radius:var(--r-sm);background:var(--panel)}
+.mract .linkbtn{margin-left:auto}
+.mract .linkbtn,.mract a.ln{min-height:40px;display:inline-flex;align-items:center}

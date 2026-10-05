@@ -7,6 +7,6 @@ function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,sy
 function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
   navPaint(key);
   setMenu(false);
-  $('#app').innerHTML=subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
+  $('#app').innerHTML=demoBar()+subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 

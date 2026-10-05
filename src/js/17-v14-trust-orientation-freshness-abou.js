@@ -1,6 +1,7 @@
 /* ---------- v14: trust, orientation, freshness, about ---------- */
 const PITCH='Track your mastery, plan your next farms and keep up with daily Warframe activities.';
 const CHANGES=[
+ ['2026-10-05','New look: calmer colours with a light theme, five sections instead of twenty pages, a simpler home, search everything with Ctrl+K, a sample account to try first, and a progress card you can share.'],
  ['2026-10-05','Big usability update: welcome screen with two clear starts, customizable dashboard with a reasoned Next up list, undo for rank changes, sync, restores and hidden checklist items, need/have/left shopping lists that turn into tasks, task notes, repeats and due dates, your own daily/weekly checklist items, syndicate side effects, farms marked for your stage, phone-friendly layout with larger tap targets, full accessibility pass, block and report for friends, About & privacy page, delete-account option.'],
  ['2026-10-05','Security hardening, stay signed in on the iPhone home-screen app, feedback page, group chats, friends and messages, shared tasks, live sync across devices.'],
  ['2026-10-04','Tennoform launched: mastery tracking, star chart, quests, syndicates, resources, relics, market prices, builds.']];
@@ -24,7 +25,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
 function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
- <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
+ <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
@@ -40,7 +41,7 @@ function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   <div class="small muted">${pre?`Undo last sync puts everything back the way it was before the sync on ${esc(new Date(pre.at).toLocaleString())}. `:''}Clear imported data removes the in-game snapshot (in-game MR, synced syndicates, Nightwave, run counts). Your ranks and ticks stay; change them on the Ranks page.</div></details>`}
 function about(){const sec=state.aboutSec;
   return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About</h1><p class="lede">${PITCH}</p></div>
-  <div class="small muted">Actively maintained by one developer · site updated ${esc(D.meta.site||D.meta.built)} · see What's new below.</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
+  <p style="margin:0;max-width:68ch">Tennoform is made and maintained by <b>Snooji</b>, a Warframe player, on their own time. Ideas and bug reports go straight to them through <a class="ln" href="#feedback">Feedback</a>, and every change is listed under What's new below.</p><div class="small muted">Site updated ${esc(D.meta.site||D.meta.built)}</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
   <section class="panel cut stack"><h2>Where the data comes from</h2><div class="kv small">
    <span>Items, mastery, relics, mods, arcanes</span><span><a class="ln" href="https://github.com/WFCD/warframe-items" target="_blank" rel="noopener">WFCD warframe-items</a> v${esc(D.meta.wfcd||'')}</span>
    <span>Drop locations, quests, junctions, syndicates, fishing and mining</span><span><a class="ln" href="https://wiki.warframe.com" target="_blank" rel="noopener">Warframe Wiki</a></span>

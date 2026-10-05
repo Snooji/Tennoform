@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-nPRaj7KDl8HI400b01YIa/k5h4LH1EC2z/cherBkaxI=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sdp/oJ2dBckph9Qm5ezErElgBn2HNjKsmfS7odASxtw=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -726,6 +726,18 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .hrow>.hrt{grid-column:2}.hrow>.small{grid-column:3}
 .nextup .nu>.nut{grid-column:2}
 @media (max-width:599px){.mkrow>.mkp{grid-column:2}}
+/* first visit and sample account */
+.welcome{gap:18px}
+.welcome h1{font-size:32px}
+.wchoices{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.wchoice{display:flex;flex-direction:column;gap:6px;text-align:left;padding:16px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel);color:var(--ink);cursor:pointer;font:inherit}
+.wchoice:first-child{border-color:var(--gold-dim)}
+.wchoice:hover{border-color:var(--ink)}
+.wchoice b{font:600 18px/1.2 var(--f-display);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.wchoice .wgo{margin-top:auto;padding-top:6px;font-weight:600}
+.demobar{position:sticky;top:calc(58px + env(safe-area-inset-top,0px));z-index:15;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;padding:10px 14px;border:1px solid var(--gold-dim);border-radius:var(--r-sm);background:var(--panel)}
+.mract .linkbtn{margin-left:auto}
+.mract .linkbtn,.mract a.ln{min-height:40px;display:inline-flex;align-items:center}
 /* ---- search, shortcuts, feeds ---- */
 .srch{flex:none;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;margin-left:auto;margin-right:12px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--sunk);color:var(--muted);cursor:pointer;font:400 14px var(--f-body)}
 .srch:hover{color:var(--ink);border-color:var(--ink)}
@@ -1509,6 +1521,7 @@ document.addEventListener('change',e=>{if(e.target.id==='fbf'){state.fbF=e.targe
 /* ---------- v14: trust, orientation, freshness, about ---------- */
 const PITCH='Track your mastery, plan your next farms and keep up with daily Warframe activities.';
 const CHANGES=[
+ ['2026-10-05','New look: calmer colours with a light theme, five sections instead of twenty pages, a simpler home, search everything with Ctrl+K, a sample account to try first, and a progress card you can share.'],
  ['2026-10-05','Big usability update: welcome screen with two clear starts, customizable dashboard with a reasoned Next up list, undo for rank changes, sync, restores and hidden checklist items, need/have/left shopping lists that turn into tasks, task notes, repeats and due dates, your own daily/weekly checklist items, syndicate side effects, farms marked for your stage, phone-friendly layout with larger tap targets, full accessibility pass, block and report for friends, About & privacy page, delete-account option.'],
  ['2026-10-05','Security hardening, stay signed in on the iPhone home-screen app, feedback page, group chats, friends and messages, shared tasks, live sync across devices.'],
  ['2026-10-04','Tennoform launched: mastery tracking, star chart, quests, syndicates, resources, relics, market prices, builds.']];
@@ -1532,7 +1545,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
 function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
- <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
+ <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
@@ -1548,7 +1561,7 @@ function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   <div class="small muted">${pre?`Undo last sync puts everything back the way it was before the sync on ${esc(new Date(pre.at).toLocaleString())}. `:''}Clear imported data removes the in-game snapshot (in-game MR, synced syndicates, Nightwave, run counts). Your ranks and ticks stay; change them on the Ranks page.</div></details>`}
 function about(){const sec=state.aboutSec;
   return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About</h1><p class="lede">${PITCH}</p></div>
-  <div class="small muted">Actively maintained by one developer · site updated ${esc(D.meta.site||D.meta.built)} · see What's new below.</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
+  <p style="margin:0;max-width:68ch">Tennoform is made and maintained by <b>Snooji</b>, a Warframe player, on their own time. Ideas and bug reports go straight to them through <a class="ln" href="#feedback">Feedback</a>, and every change is listed under What's new below.</p><div class="small muted">Site updated ${esc(D.meta.site||D.meta.built)}</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
   <section class="panel cut stack"><h2>Where the data comes from</h2><div class="kv small">
    <span>Items, mastery, relics, mods, arcanes</span><span><a class="ln" href="https://github.com/WFCD/warframe-items" target="_blank" rel="noopener">WFCD warframe-items</a> v${esc(D.meta.wfcd||'')}</span>
    <span>Drop locations, quests, junctions, syndicates, fishing and mining</span><span><a class="ln" href="https://wiki.warframe.com" target="_blank" rel="noopener">Warframe Wiki</a></span>
@@ -1978,7 +1991,7 @@ function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,sy
 function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
   navPaint(key);
   setMenu(false);
-  $('#app').innerHTML=subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
+  $('#app').innerHTML=demoBar()+subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 
 /* ---------- home ---------- */
@@ -2014,7 +2027,7 @@ function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.pro
    <div class="small muted bdlab">Where your Mastery XP comes from</div>
    <div class="bdbar" role="img" aria-label="Mastery XP by source: ${parts.map(p=>p[0]+' '+fmt(p[1])).join(', ')}">${parts.map(p=>`<i style="width:${(p[1]/sum*100).toFixed(2)}%;background:${p[2]}"></i>`).join('')}</div>
    <div class="bdleg small">${parts.map(p=>`<span><i style="background:${p[2]}" aria-hidden="true"></i>${p[0]} <b>${fmt(p[1])}</b></span>`).join('')}</div>
-   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a></div>
+   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a><button type="button" class="linkbtn small" data-share>Share progress</button></div>
    ${!isNew()&&HOSTED&&FB&&!synced?`<div class="small muted mrsave">Saved on this device only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep it on every device.</div>`:''}</section>`}
 
 /* since last time: compare with the totals from the previous visit (at least 30 minutes ago) */
@@ -2045,6 +2058,53 @@ function homeGoals(){const g=(P.goals||[]).filter(n=>I[n]&&!on('build|'+n));
 function home(){if(state.qs)return `<div class="stack">${quickStart()}</div>`;if(isNew())return `<div class="stack">${welcome()}</div>`;
   return `<div class="home2">${mrCard()}${sinceLast()}
    <div class="hgrid"><div class="hmain">${nextCard()}</div><div class="hside">${todayStrip()}${homeGoals()}${taskPanel()}</div></div></div>`}
+/* ---------- first visit: sync first, quick start, or look around a sample account ---------- */
+function welcome(){return `<section class="welcome"><div class="wl">${LOGO_HTML()}<div><h1>Know what to rank next</h1><p class="lede" style="margin:4px 0 0;display:block">Tennoform reads your Warframe profile and tells you what to master, farm and do before reset.</p></div></div>
+ <div class="wchoices">
+  <button type="button" class="wchoice" data-onb="import"><b>Sync my profile <span class="chip good">Recommended</span></b><span class="small muted">Paste your account ID. Read-only: no password, nothing changes in game.</span><span class="wgo">Sync →</span></button>
+  <button type="button" class="wchoice" data-qsopen><b>Quick start</b><span class="small muted">Enter your Mastery Rank and tick the gear you've maxed. About a minute.</span><span class="wgo">Start →</span></button>
+  <button type="button" class="wchoice" data-demo><b>Look around first</b><span class="small muted">Open a sample MR 11 account. Nothing is saved.</span><span class="wgo">Open sample →</span></button>
+ </div>
+ <div class="small muted">${HOSTED&&FB?'Already use Tennoform? <a class="ln" href="#tenno" data-ttab="account">Sign in</a>. ':''}Or <button type="button" class="linkbtn" data-onb="manual">track every item by hand</button>.</div></section>`}
+
+/* sample account: swaps in made-up progress, saves nothing, and puts everything back on exit */
+let DEMO=null;
+function demoStart(){if(DEMO)return;DEMO={c:JSON.stringify(C),p:JSON.stringify(P),dr:docRef,pr:profRef,ls:lsSet};docRef=null;profRef=null;lsSet=function(){};
+  const c={};const m=k=>{c[kenc(k)]=1};const pool=MI.filter(i=>(i.mr||0)<=8).sort((a,b)=>(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n));
+  pool.slice(0,62).forEach(i=>m('m|'+i.n));ALLN.filter(n=>!isJ(n)).slice(0,140).forEach(n=>m('n|'+n.id));Q.slice(0,14).forEach(q=>m('q|'+q.n));
+  const now=Date.now();C=c;P={rk:{},other:0,intr:0,mr:null,name:'',at:'',adj:0,wfid:'',mc:{},inv:{},prof:{mr:11,name:'Sample Tenno'},tname:'Sample Tenno',onb:'demo',
+    foundry:[{id:'d1',n:'Nikana Prime',t0:now-4*36e5,dur:3*36e5},{id:'d2',n:'Rhino',t0:now,dur:3*864e5}],goals:['Saryn Prime','Nikana Prime'],
+    tasks:[{id:'t1',t:'Farm 10 Orokin Cells',k:'res',r:'Orokin Cell',d:0,at:now}],syn:{'Cephalon Suda':{r:2,s:46000},'Ostron':{r:1,s:4000}}};
+  pool.slice(62,70).forEach((i,k)=>{P.rk[i.n]=10+k*2});
+  lastMR=null;updateMR();document.body.classList.add('demo');if(location.hash&&location.hash!=='#home')location.hash='home';else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
+function demoExit(){if(!DEMO)return;C=JSON.parse(DEMO.c);P=JSON.parse(DEMO.p);docRef=DEMO.dr;profRef=DEMO.pr;lsSet=DEMO.ls;DEMO=null;document.body.classList.remove('demo');lastMR=null;updateMR();render();window.scrollTo(0,0)}
+function demoBar(){return DEMO?`<div class="demobar" role="status"><span><b>Sample account.</b> Nothing here is saved.</span><button type="button" class="btn sm primary" data-demox>Use my own</button></div>`:''}
+document.addEventListener('click',e=>{if(e.target.closest('[data-demo]')){demoStart();return}if(e.target.closest('[data-demox]')){demoExit()}});
+
+/* share card: a 1200 x 630 image of your progress, drawn in the browser */
+async function shareCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.prof&&P.prof.name)||'Tenno';const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length;
+  const nodes=ALLN.filter(n=>!isJ(n)&&on('n|'+n.id)).length,qd=Q.filter(q=>qDone(q.n)).length;
+  try{await document.fonts.ready}catch(e){}
+  const W=1200,H=630,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const gold='#C8A35A',ink='#ECE7DC',mut='#A29D92',bg='#0C0C0E',line='#2A2A30',D1='"Barlow Semi Condensed", Arial Narrow, sans-serif',B1='"Source Sans 3", Arial, sans-serif';
+  x.fillStyle=bg;x.fillRect(0,0,W,H);
+  x.strokeStyle=line;x.lineWidth=2;x.strokeRect(28,28,W-56,H-56);x.strokeStyle='rgba(200,163,90,.45)';x.lineWidth=1.5;x.strokeRect(40,40,W-80,H-80);
+  x.save();x.translate(W/2,40);x.rotate(Math.PI/4);x.fillStyle=bg;x.fillRect(-9,-9,18,18);x.strokeStyle=gold;x.strokeRect(-9,-9,18,18);x.restore();
+  x.fillStyle=mut;x.font=`600 26px ${D1}`;x.fillText('TENNOFORM',90,110);
+  x.fillStyle=ink;x.font=`600 64px ${D1}`;x.fillText(name.slice(0,26),90,190);
+  const cx=1000,cy=230,r=110;x.lineWidth=16;x.strokeStyle=line;x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.stroke();
+  x.strokeStyle=gold;x.lineCap='round';x.beginPath();x.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.max(.01,m.pct/100));x.stroke();
+  x.fillStyle=gold;x.textAlign='center';x.font=`600 96px ${D1}`;x.fillText(m.mr>30?'L'+(m.mr-30):String(m.mr),cx,cy+32);x.fillStyle=mut;x.font=`400 24px ${B1}`;x.fillText(m.mr>30?'Legendary':'Mastery rank',cx,cy+r+56);x.textAlign='left';
+  x.fillStyle=ink;x.font=`600 40px ${B1}`;x.fillText(fmt(t.total)+' XP',90,262);x.fillStyle=mut;x.font=`400 26px ${B1}`;x.fillText(fmt(m.next-t.total)+' to '+(m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1)),90,302);
+  x.fillStyle=line;x.fillRect(90,330,720,10);x.fillStyle=gold;x.fillRect(90,330,720*m.pct/100,10);
+  const stat=(v,k,i)=>{const sx=90+i*250;x.fillStyle=ink;x.font=`600 56px ${D1}`;x.fillText(v,sx,450);x.fillStyle=mut;x.font=`400 24px ${B1}`;x.fillText(k,sx,488)};
+  stat(fmt(maxed),'items mastered',0);stat(fmt(nodes),'star chart nodes',1);stat(fmt(qd),'quests done',2);
+  x.fillStyle=mut;x.font=`400 22px ${B1}`;x.fillText('tennoform.com · '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),90,560);
+  const blob=await new Promise(res=>cv.toBlob(res,'image/png'));if(!blob){toast("Couldn't make the image");return}
+  const file=new File([blob],'tennoform-progress.png',{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'My Warframe progress'});return}catch(e){if(e&&e.name==='AbortError')return}}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tennoform-progress.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast('Image saved')}
+document.addEventListener('click',e=>{if(e.target.closest('[data-share]'))shareCard()});
 /* ---------- ranks ---------- */
 function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';{const _k=cat+'|'+q+'|'+f+'|'+(state.rkS||'');if(state._rkKey!==_k){state._rkKey=_k;state.rkLim=60}}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c));
