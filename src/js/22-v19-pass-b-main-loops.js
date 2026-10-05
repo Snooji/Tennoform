@@ -34,7 +34,7 @@ let NU=[];
 function nextCard(){NU=nextUp();const nz=Object.values(P.nuSnz||{}).filter(z=>z>=lastDaily()).length;
   const open=x=>x.go?`<a class="ln" href="#" data-go="${esc(x.go)}">${esc(x.t)}</a>`:x.q?`<a class="ln" href="#quests" data-q="${esc(x.q)}">${esc(x.t)}</a>`:x.href?`<a class="ln" href="${x.href}" ${x.tt?`data-ttab="${x.tt}"`:''}>${esc(x.t)}</a>`:esc(x.t);
   return `<section class="panel cut stack nextup" style="gap:8px" aria-labelledby="nu-h"><div class="row" style="justify-content:space-between"><h2 id="nu-h">Next up</h2><span class="small muted">${esc(stage())}</span></div>
-  ${NU.map((x,i)=>`<div class="nu"><span class="nun" aria-hidden="true">${i+1}</span><div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
+  ${NU.map((x,i)=>`<div class="nu">${x.go&&x.go.startsWith('item|')&&art(x.go.slice(5),'mini')||`<span class="nun" aria-hidden="true">${i+1}</span>`}<div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
    ${x.pre&&x.pre.length?`<details class="nupre"><summary class="small">Details</summary><ul class="small">${x.pre.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`:''}
    <div class="nuact">${x.done?`<button type="button" class="btn sm" data-nudone="${i}">✓ ${esc(x.doneL||'Done')}</button>`:''}${x.task?taskBtn(...x.task):''}<button type="button" class="btn sm ghost" data-nusnz="${i}" aria-label="Not now: ${esc(x.t)}">Not now</button></div></div></div>`).join('')||'<div class="small muted">You\'re all caught up. Pick something from Goals or the rank-up plan.</div>'}
   ${nz?`<button type="button" class="small linkbtn" id="nuunsnz">Show ${nz} snoozed suggestion${nz>1?'s':''}</button>`:''}</section>`}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jc9rBX82M9RjaMC2XzDEMwdhdntltqQCo8rroDRn5jc=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DlDC9ggbPfgu56K+fLRGY3ZkjdOdry2FZyH1O1ACHCk=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -658,6 +658,51 @@ nav.tabs a{padding:14px 12px}
 .msheet-grip{position:absolute;left:50%;top:6px;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:var(--line2)}
 body.sheet-on{overflow:hidden}
 body.sheet-on::before{content:"";position:fixed;inset:0;z-index:44;background:color-mix(in srgb,#000 45%,transparent)}
+/* ---- home ---- */
+.home2{display:flex;flex-direction:column;gap:16px}
+.mrcard{position:relative;display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel)}
+.mrcard::before{content:"";position:absolute;inset:5px;border:1px solid color-mix(in srgb,var(--gold) 28%,transparent);border-radius:calc(var(--r) - 4px);pointer-events:none}
+.mrcard::after{content:"";position:absolute;top:-1px;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;transform:rotate(45deg);background:var(--bg);border:1px solid color-mix(in srgb,var(--gold) 55%,transparent)}
+.mrtop{display:flex;gap:18px;align-items:center;min-width:0}
+.mrcard .ring.big{width:88px;height:88px;flex:none}
+.mrcard .ring.big>span{width:74px;height:74px;font-size:34px;color:var(--gold)}
+.mrtxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mrtxt h1{font-size:30px;overflow-wrap:anywhere}
+.mrxp{font-size:15px;margin-top:2px}.mrxp b{font-size:17px}
+.bdbar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--sunk);gap:2px}
+.bdbar i{display:block;height:100%;min-width:3px}
+.bdleg{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted)}
+.bdleg span{display:inline-flex;align-items:center;gap:6px}
+.bdleg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.bdleg b{color:var(--ink);font-weight:600}
+.mract{gap:10px;position:relative;z-index:1}
+.mrsave{position:relative;z-index:1}
+.since{margin:-4px 0 0;padding:0 4px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:980px){.hgrid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}}
+.hmain,.hside{display:flex;flex-direction:column;gap:16px;min-width:0}
+.hmain .nextup{border:1px solid var(--line);background:var(--panel)}
+.hsec{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.tstrip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:599px){.tstrip{display:flex;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px;scroll-snap-type:x proximity}.tstrip::-webkit-scrollbar{display:none}.ts{flex:0 0 150px;scroll-snap-align:start}}
+.ts{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);text-decoration:none;color:var(--ink);background:var(--panel);min-width:0}
+.ts:hover{border-color:var(--line2)}
+.ts .k{font-size:13px;color:var(--muted)}
+.ts b{font:600 18px/1.2 var(--f-display);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ts .x{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hlist{display:flex;flex-direction:column}
+.hrow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink);min-height:52px}
+.hrow:first-child{border-top:0}
+.hrt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.hrow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
+.nu img.mini{width:40px;height:40px;margin-top:2px}
+.nextup .nu{grid-template-columns:44px minmax(0,1fr)}
+@media (max-width:480px){.nextup .nu{grid-template-columns:44px minmax(0,1fr)}.nextup .nun{display:grid}}
+.hside .tpanel{border:1px solid var(--line);background:var(--panel)}
+.bdlab{margin-bottom:-6px}
+.bdbar{height:6px}
+@media (max-width:599px){.mrcard{padding:16px}.mrtop{gap:14px}.mrcard .ring.big{width:64px;height:64px}.mrcard .ring.big>span{width:52px;height:52px;font-size:24px}.mrtxt h1{font-size:24px}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -1702,7 +1747,7 @@ let NU=[];
 function nextCard(){NU=nextUp();const nz=Object.values(P.nuSnz||{}).filter(z=>z>=lastDaily()).length;
   const open=x=>x.go?`<a class="ln" href="#" data-go="${esc(x.go)}">${esc(x.t)}</a>`:x.q?`<a class="ln" href="#quests" data-q="${esc(x.q)}">${esc(x.t)}</a>`:x.href?`<a class="ln" href="${x.href}" ${x.tt?`data-ttab="${x.tt}"`:''}>${esc(x.t)}</a>`:esc(x.t);
   return `<section class="panel cut stack nextup" style="gap:8px" aria-labelledby="nu-h"><div class="row" style="justify-content:space-between"><h2 id="nu-h">Next up</h2><span class="small muted">${esc(stage())}</span></div>
-  ${NU.map((x,i)=>`<div class="nu"><span class="nun" aria-hidden="true">${i+1}</span><div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
+  ${NU.map((x,i)=>`<div class="nu">${x.go&&x.go.startsWith('item|')&&art(x.go.slice(5),'mini')||`<span class="nun" aria-hidden="true">${i+1}</span>`}<div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
    ${x.pre&&x.pre.length?`<details class="nupre"><summary class="small">Details</summary><ul class="small">${x.pre.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`:''}
    <div class="nuact">${x.done?`<button type="button" class="btn sm" data-nudone="${i}">✓ ${esc(x.doneL||'Done')}</button>`:''}${x.task?taskBtn(...x.task):''}<button type="button" class="btn sm ghost" data-nusnz="${i}" aria-label="Not now: ${esc(x.t)}">Not now</button></div></div></div>`).join('')||'<div class="small muted">You\'re all caught up. Pick something from Goals or the rank-up plan.</div>'}
   ${nz?`<button type="button" class="small linkbtn" id="nuunsnz">Show ${nz} snoozed suggestion${nz>1?'s':''}</button>`:''}</section>`}
@@ -1846,6 +1891,53 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   <div class="callout small">${synced?(acct&&acct.kind==='fb'?'Signed in as '+esc(acct.email||acct.name||'you')+'. Everything saves to your account.':'Signed in: everything saves to your claude.ai account and follows you to any device.'):HOSTED?(FB?'Saving in this browser only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep your progress forever on any device.':'Your progress saves in this browser. To move it to another device, use Tenno → Backup.'):'Your progress saves on this device. Sign in to claude.ai to sync it across devices.'}</div>
   </div>`}
 
+/* ---------- home: one question, five groups ---------- */
+function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.prof&&P.prof.name)||'';const g=P.prof&&P.prof.mr!=null?P.prof.mr:null;
+  const toNext=m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1);const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length;
+  const stale=P.wfid&&(!P.auto||Date.now()-Date.parse(P.auto)>864e5);
+  const act=HOSTED&&!P.at&&!P.wfid?`<a class="btn primary" href="#tenno" data-ttab="account">Sync your profile</a>`
+    :HOSTED&&stale?`<button type="button" class="btn primary" id="autosync">Sync now</button>`
+    :`<a class="btn primary" href="#mastery">See rank-up plan</a>`;
+  const parts=[['Gear',t.it,'var(--gold)'],['Star chart',t.ch,'var(--gold-dim)'],['Steel Path',t.sp,'var(--muted)'],['Intrinsics',t.intr,'var(--line2)'],['Other',(t.other||0)+(t.adj||0)+(t.un||0),'var(--line)']].filter(p=>p[1]>0);
+  const sum=parts.reduce((a,p)=>a+p[1],0)||1;
+  return `<section class="mrcard" aria-labelledby="mr-h"><div class="mrtop"><div class="ring big" style="--p:${m.pct.toFixed(1)}"><span>${mrLabel(m.mr)}</span></div>
+   <div class="mrtxt"><h1 id="mr-h">${name?esc(name):(m.mr>30?'Legendary '+(m.mr-30):'Mastery rank '+m.mr)}</h1>
+   <div class="small muted">${name?(m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr)+' · ':''}${g!=null&&g!==m.mr?`in game MR ${mrLabel(g)} · `:''}${maxed} items mastered</div>
+   <div class="mrxp"><b>${fmt(t.total)}</b> <span class="muted">/ ${fmt(m.next)} XP · ${fmt(m.next-t.total)} to ${toNext}</span></div></div></div>
+   <div class="small muted bdlab">Where your Mastery XP comes from</div>
+   <div class="bdbar" role="img" aria-label="Mastery XP by source: ${parts.map(p=>p[0]+' '+fmt(p[1])).join(', ')}">${parts.map(p=>`<i style="width:${(p[1]/sum*100).toFixed(2)}%;background:${p[2]}"></i>`).join('')}</div>
+   <div class="bdleg small">${parts.map(p=>`<span><i style="background:${p[2]}" aria-hidden="true"></i>${p[0]} <b>${fmt(p[1])}</b></span>`).join('')}</div>
+   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a></div>
+   ${!isNew()&&HOSTED&&FB&&!synced?`<div class="small muted mrsave">Saved on this device only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep it on every device.</div>`:''}</section>`}
+
+/* since last time: compare with the totals from the previous visit (at least 30 minutes ago) */
+let SEEN=null;
+function seenNow(){const t=totalXP();return {t:Date.now(),xp:t.total,mr:mrInfo(t.total).mr,maxed:MI.filter(i=>itemXP(i.n)>=mxp(i)).length,q:Q.filter(q=>qDone(q.n)).length}}
+function sinceLast(){const cur=seenNow();if(!SEEN){const prev=lsGet('tf-seen',null);SEEN=prev&&cur.t-prev.t>30*60e3?prev:(prev||cur);if(!prev||cur.t-prev.t>30*60e3)lsSet('tf-seen',cur)}
+  const now=Date.now();const ready=(P.foundry||[]).filter(f=>now>=f.t0+f.dur*1000).length;const bits=[];
+  if(SEEN!==cur&&SEEN.t<cur.t){if(cur.mr>SEEN.mr)bits.push(`MR ${SEEN.mr} → ${cur.mr}`);if(cur.maxed>SEEN.maxed)bits.push(`+${cur.maxed-SEEN.maxed} mastered`);if(cur.xp>SEEN.xp)bits.push(`+${fmt(cur.xp-SEEN.xp)} XP`);if(cur.q>SEEN.q)bits.push(`+${cur.q-SEEN.q} quest${cur.q-SEEN.q>1?'s':''}`)}
+  if(ready)bits.push(`<a class="ln" href="#tenno" data-ttab="foundry">${ready} ready in the Foundry</a>`);
+  return bits.length?`<p class="since small"><span class="muted">Since last time:</span> ${bits.join(' · ')}</p>`:''}
+
+/* today strip: what is on before the next reset */
+function todayStrip(){const now=Date.now();if(HOSTED&&!WS&&!WSerr)loadWS();const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]));const done=dd.filter(ckDone).length;
+  const fl=(P.foundry||[]);const ready=fl.filter(f=>now>=f.t0+f.dur*1000).length;const tiles=[];
+  tiles.push(`<a class="ts" href="#today"><span class="k">Daily reset</span><b>${lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now)}</b><span class="x">${done}/${dd.length} done</span></a>`);
+  if(WS&&WS.sortie&&WS.sortie.variants)tiles.push(`<a class="ts" href="#today"><span class="k">Sortie</span><b>${esc(WS.sortie.boss||'Today')}</b><span class="x">${untilIso(WS.sortie.expiry)} left</span></a>`);
+  if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)tiles.push(`<a class="ts" href="#today"><span class="k">Fissures you need</span><b>${n}</b><span class="x">${Object.keys(need).slice(0,3).join(', ')}</span></a>`)}
+  if(WS&&WS.steelPath&&WS.steelPath.currentReward)tiles.push(`<a class="ts" href="#today"><span class="k">Steel Path reward</span><b>${esc(WS.steelPath.currentReward.name)}</b><span class="x">${WS.steelPath.currentReward.cost} essence</span></a>`);
+  if(fl.length)tiles.push(`<a class="ts" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><b>${ready}/${fl.length} ready</b><span class="x">${ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000)}</span></a>`);
+  tiles.push(`<a class="ts" href="#today"><span class="k">Weekly reset</span><b>${left(lastWeekly()+7*DAY-now)}</b><span class="x">Monday 00:00 UTC</span></a>`);
+  return `<section aria-labelledby="ts-h"><div class="hsec"><h2 id="ts-h">Today</h2><a class="ln small" href="#today">All of today</a></div><div class="tstrip">${tiles.join('')}</div></section>`}
+
+function homeGoals(){const g=(P.goals||[]).filter(n=>I[n]&&!on('build|'+n));
+  return `<section aria-labelledby="hg-h"><div class="hsec"><h2 id="hg-h">Goals</h2><a class="ln small" href="#goals">${g.length>3?'All '+g.length:'Goals'}</a></div>
+   ${g.length?`<div class="hlist">${g.slice(0,3).map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<a class="hrow" href="#" data-go="item|${esc(n)}">${art(n,'mini')||'<span class="mini"></span>'}<span class="hrt"><span class="nm">${esc(n)}</span><span class="nextbar"><i style="width:${(d/k.length*100).toFixed(1)}%"></i></span></span><span class="small muted">${d}/${k.length}</span></a>`}).join('')}</div>`
+   :`<p class="small muted" style="margin:0">Nothing tracked. Open any item and choose <b>Track</b>.</p>`}</section>`}
+
+function home(){if(state.qs)return `<div class="stack">${quickStart()}</div>`;if(isNew())return `<div class="stack">${welcome()}</div>`;
+  return `<div class="home2">${mrCard()}${sinceLast()}
+   <div class="hgrid"><div class="hmain">${nextCard()}</div><div class="hside">${todayStrip()}${homeGoals()}${taskPanel()}</div></div></div>`}
 /* ---------- ranks ---------- */
 function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';{const _k=cat+'|'+q+'|'+f+'|'+(state.rkS||'');if(state._rkKey!==_k){state._rkKey=_k;state.rkLim=60}}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c));
