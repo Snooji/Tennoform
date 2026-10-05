@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-eEhaU243vNHj+K4cyDKIHQI9UF557ThkWjXwCgLJxJs=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-cOPNE1nNaBHO2iyoCp6GNjLPHLd+sIqdlEYLLSWUgV8=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -802,6 +802,46 @@ body.typing .bnav{display:none}
 .ssl{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px}
 .ssl li{display:flex;flex-direction:column;gap:4px}
 .ssl li::marker{font-weight:600;color:var(--gold)}
+/* ---- rows that open (checklist, next up) and the achievements log ---- */
+.ckrow{align-items:start}
+.ckbody{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ckhead,.nuhead{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;width:100%;min-height:32px;cursor:pointer;border-radius:var(--r-sm);color:var(--ink)}
+.ckhead:focus-visible,.nuhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ckhead:hover .nm,.nuhead:hover b{text-decoration:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
+.ckchev{margin-left:auto;color:var(--muted);display:inline-flex;transition:transform .15s}
+.ckchev .ic{width:18px;height:18px}
+.open>.ckbody>.ckhead .ckchev,.nu2.open .nuhead .ckchev{transform:rotate(180deg)}
+.ckpin{color:var(--gold);display:inline-flex}.ckpin .ic{width:14px;height:14px}
+.ckrow,.nu2{cursor:pointer}
+.ckrow .ck,.nu2 .ck{cursor:pointer}
+.ckmore,.numore{cursor:auto;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--sunk);display:flex;flex-direction:column;gap:8px}
+.ckol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.ckact{gap:6px}
+.ckact .cktools{display:inline-flex;gap:6px;margin-left:auto}
+.qrow.done .ckhead .nm{text-decoration:line-through;text-decoration-color:var(--gold);color:var(--muted)}
+.nu2{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;border-top:1px solid var(--line)}
+.nu2:first-of-type{border-top:0}
+.nu2>.ck{margin-top:6px}
+.nu2>.nun{margin-top:6px;justify-self:center}
+.nuhead{flex-wrap:nowrap;align-items:flex-start}
+.nuhead img.mini{width:40px;height:40px;flex:none}
+.nutx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.numore ul{margin:0;padding-left:18px}
+.numore .nuact{margin-top:0}
+/* achievements */
+.lglist{list-style:none;margin:0;padding:0}
+.lgrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:4px 10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.lgrow:first-child{border-top:0}
+.lgic{color:var(--gold);display:inline-flex;justify-content:center}.lgic .ic{width:18px;height:18px}
+.lgt{display:flex;flex-direction:column;min-width:0}
+.lgl{font-weight:600;overflow-wrap:anywhere}
+.lgnote{min-width:60px;text-align:right}
+.lgweek{padding:12px 14px}
+.lgbars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end}
+.lgday{display:flex;flex-direction:column;align-items:center;gap:2px}
+.lgb{height:56px;width:100%;max-width:36px;display:flex;align-items:flex-end;background:var(--sunk);border-radius:4px;overflow:hidden}
+.lgb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:2px}
+@media (max-width:560px){.lgrow{grid-template-columns:24px minmax(0,1fr) auto}.lgrow .chip.mxc{grid-column:2;justify-self:start}.lgrow .btn,.lgrow .lgnote{grid-row:1;grid-column:3}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -847,12 +887,12 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends'],['donate','Support'],['feedback','Feedback'],['about','About']];
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['achievements','Achievements'],['friends','Friends'],['donate','Support'],['feedback','Feedback'],['about','About']];
 const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM1 21v-1c0-3.9 3.1-7 7-7s7 3.1 7 7v1zm15.4-7.9c3.2.2 5.6 2.8 5.6 6V21h-5v-1c0-2.6-.9-5-2.5-6.7.6-.1 1.2-.2 1.9-.2z',me:'M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z',tasks:'M9 4h11v2H9zm0 7h11v2H9zm0 7h11v2H9zM3.5 3.5l1.5 1.5 3-3 1 1-4 4-2.5-2.5zm0 7l1.5 1.5 3-3 1 1-4 4-2.5-2.5zM4 17h3v3H4z',home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 /* Five places. Every page belongs to one; the place link reopens the last page used in it. */
-const PLACES=[['home','Home','home',['home']],['plan','Plan','ranks',['ranks','mastery','goals','tasks','missions','quests']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd']],['squad','Squad','friends',['friends']]];
+const PLACES=[['home','Home','home',['home']],['plan','Plan','ranks',['ranks','mastery','goals','tasks','missions','quests']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','friends',['friends']]];
 const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
-const SUBL={ranks:'Ranks',mastery:'MR plan',goals:'Goals',tasks:'Tasks',missions:'Star chart',quests:'Quests',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates'};
+const SUBL={ranks:'Ranks',mastery:'MR plan',goals:'Goals',tasks:'Tasks',missions:'Star chart',quests:'Quests',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements'};
 const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about',"About & what's new"]];
 const BAR=PLACES.flatMap(p=>p[3]);
 const PL=Object.fromEntries(PAGES);PL.admin='Backend';
@@ -894,7 +934,7 @@ if(!P.wfid)P.wfid=lsGet('tenno-acct','')||'';
 const kenc=k=>k.replace(/[.\/\[\]#$]/g,'_');
 const on=k=>!!C[kenc(k)];
 let docRef=null,profRef=null,pending={},timer=null,ptimer=null,synced=false,acct=null,FB=null;
-const SAVE_MS=600;
+const SAVE_MS=600;var LOGMUTE=0;
 function setK(k,v){const e=kenc(k);if(v)C[e]=1;else delete C[e];lsSet('tenno-codex',C);
   if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}updateMR()}
 async function flush(){if(!docRef)return;const p=pending;pending={};if(!Object.keys(p).length)return;
@@ -2021,7 +2061,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#keysbk'))keysCl
 document.addEventListener('focusin',e=>{if(window.innerWidth<900&&e.target.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')){document.body.classList.add('typing');setTimeout(()=>{try{e.target.scrollIntoView({block:'center'})}catch(x){}},250)}});
 document.addEventListener('focusout',()=>setTimeout(()=>{if(!(document.activeElement&&document.activeElement.matches('input:not([type=checkbox]),textarea,select')))document.body.classList.remove('typing')},50));
 /* ---------- router ---------- */
-const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about,admin:backend};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about,admin:backend,achievements};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));Object.assign(state,(()=>{const q=lsGet('tenno-uiq',{})||{};return {resQ:q.resQ||state.resQ||'',farmQ:q.farmQ||state.farmQ||'',mkQ:q.mkQ||state.mkQ||'',mkSort:q.mkSort||state.mkSort||'a7'}})());
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
@@ -2080,6 +2120,7 @@ function sinceLast(){const cur=seenNow();if(!SEEN){const prev=lsGet('tf-seen',nu
 function todayStrip(){const now=Date.now();if(HOSTED&&!WS&&!WSerr)loadWS();const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]));const done=dd.filter(ckDone).length;
   const fl=(P.foundry||[]);const ready=fl.filter(f=>now>=f.t0+f.dur*1000).length;const tiles=[];
   tiles.push(`<a class="ts" href="#today"><span class="k">Daily reset</span><b>${lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now)}</b><span class="x">${done}/${dd.length} done</span></a>`);
+  {const lg=logList().filter(e=>e.t>=lastDaily());const xp=lg.reduce((a,e)=>a+(e.xp||0),0);tiles.push(`<a class="ts" href="#achievements"><span class="k">Done today</span><b>${lg.length} thing${lg.length===1?'':'s'}</b><span class="x">${xp?'+'+fmt(xp)+' XP · ':''}Achievements</span></a>`)}
   if(WS&&WS.sortie&&WS.sortie.variants)tiles.push(`<a class="ts" href="#today"><span class="k">Sortie</span><b>${esc(WS.sortie.boss||'Today')}</b><span class="x">${untilIso(WS.sortie.expiry)} left</span></a>`);
   if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)tiles.push(`<a class="ts" href="#today"><span class="k">Fissures you need</span><b>${n}</b><span class="x">${Object.keys(need).slice(0,3).join(', ')}</span></a>`)}
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)tiles.push(`<a class="ts" href="#today"><span class="k">Steel Path reward</span><b>${esc(WS.steelPath.currentReward.name)}</b><span class="x">${WS.steelPath.currentReward.cost} essence</span></a>`);
@@ -2296,7 +2337,7 @@ function today(){const f=state.ckF||'todo';const now=Date.now();
   <div class="tile cut"><span class="k">Sortie reset</span><span class="v num">${lastSortie()+DAY-now<60000?'Resetting…':left(lastSortie()+DAY-now)}</span><span class="x">${lt(lastSortie()+DAY)} your time (16:00 UTC)</span></div>
   <div class="tile cut"><span class="k">Weekly reset</span><span class="v num">${lastWeekly()+7*DAY-now<60000?'Resetting…':left(lastWeekly()+7*DAY-now)}</span><span class="x">${wd.filter(ckDone).length}/${wd.length} done · ${ltw(lastWeekly()+7*DAY)} your time (Mon 00:00 UTC)</span></div></div>
   <div class="sec-h"><h2>Checklist</h2>${TRK}<select id="ckf" aria-label="Filter checklist" style="width:auto">${[['todo','To do (unlocked)'],['d','Daily'],['w','Weekly'],['all','Everything'],['locked','Locked by quests'],['hidden','Hidden ('+(P.ckHide||[]).length+')']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
-  <div class="obj">${rows.map(c=>{const ok=gateOK(c[4]);return `<div class="qrow${ckDone(c)?' done':''}"><input type="checkbox" class="ck" data-dw="${c[1]}" ${ckDone(c)?'checked':''} ${ok?'':'disabled'} aria-label="${esc(c[2])}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(c[4])}">Needs ${esc(c[4])}</a>`}${ckTools(c)}</div><div class="small muted">${esc(c[3])}</div></div></div>`}).join('')||`<div class="empty">Done for today. Resets in ${left(lastDaily()+DAY-Date.now())}.</div>`}</div>
+  <div class="obj">${rows.map(ckRow).join('')||`<div class="empty">Done for today. Resets in ${left(lastDaily()+DAY-Date.now())}.</div>`}</div>
   <div class="row ckaddrow"><input id="cknew" type="text" maxlength="80" placeholder="Add your own (e.g. Run Arbitration)" aria-label="Add your own checklist item"><select id="ckper" aria-label="Repeats" style="width:auto"><option value="d">Daily</option><option value="w">Weekly</option></select><button type="button" class="btn" id="ckadd">Add</button></div>
   <div class="small muted">Daily items reset at 00:00 UTC (${lt(lastDaily()+DAY)} your time), the Sortie at 16:00 UTC, and weekly items on Monday 00:00 UTC. Warframe doesn't share daily progress, so these ticks are tracked by you; they're saved and clear themselves at each reset. Pin what matters, hide what you never do.</div>`;
   h+=`<div class="sec-h"><h2>Live in the game</h2>${liveStatus()}</div>`;
@@ -2712,7 +2753,8 @@ function findKey(o,key,depth){if(!o||typeof o!=='object'||depth>6)return undefin
 const SYN={ArbitersSyndicate:'Arbiters of Hexis',CephalonSudaSyndicate:'Cephalon Suda',NewLokaSyndicate:'New Loka',PerrinSyndicate:'The Perrin Sequence',RedVeilSyndicate:'Red Veil',SteelMeridianSyndicate:'Steel Meridian',CetusSyndicate:'Ostrons',QuillsSyndicate:'The Quills',SolarisSyndicate:'Solaris United',VentKidsSyndicate:'Ventkids',VoxSyndicate:'Vox Solaris',EntratiSyndicate:'Entrati',NecraloidSyndicate:'Necraloid',ZarimanSyndicate:'The Holdfasts',KahlSyndicate:"Kahl's Garrison",EntratiLabSyndicate:'Cavia',HexSyndicate:'The Hex',LibrarySyndicate:'Cephalon Simaris',ConclaveSyndicate:'Conclave',RadioLegionSyndicate:'Nightwave'};
 const pretty=s=>String(s||'').split('/').pop().replace(/([a-z])([A-Z])/g,'$1 $2').replace(/ ?Syndicate$/,'').trim();
 function nm(u){return U[u]||pretty(u)}
-function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}const _pre=JSON.stringify({at:Date.now(),C,P});if(!P.wfid){const id=findId(txt);if(id){P.wfid=id;lsSet('tenno-acct',id)}}
+function importProfile(txt){const a=logSnap();LOGMUTE++;let r;try{r=importProfile0(txt)}finally{LOGMUTE--}logSummary('sync','Synced your Warframe profile',a,false);return r}
+function importProfile0(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}const _pre=JSON.stringify({at:Date.now(),C,P});if(!P.wfid){const id=findId(txt);if(id){P.wfid=id;lsSet('tenno-acct',id)}}
   const j=raw.Results&&raw.Results[0]?raw.Results[0]:raw;const st=raw.Stats||{};
   const xpi=(j.LoadOutInventory&&j.LoadOutInventory.XPInfo)||findKey(j,'XPInfo',0)||[];const mis=j.Missions||[];const skills=j.PlayerSkills||{};
   if(!xpi.length&&!mis.length)return 'No ranks or missions found. Make sure you copied the whole page.';try{localStorage.setItem('tf-presync',_pre)}catch(e){}
@@ -2780,6 +2822,131 @@ document.addEventListener('click',async e=>{const b=e.target.closest('#pastesync
     const d=box&&box.closest('details');if(d)d.open=true;if(box){box.focus();box.scrollIntoView({block:'center'})}
     toast(txt?"That doesn't look like your profile data. Copy the whole page, then try again.":"Couldn't read the clipboard. Paste into the box instead.");return}
   if(box)box.value=txt;state.syncFail=false;const imp=$('#imp');if(imp)imp.click()});
+/* ---------- activity log: what you did today, this week and all time, with undo ---------- */
+Object.assign(IC,{undo:'M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11',chev:'M6 9l6 6 6-6',bars:'M5 20v-8M12 20V5M19 20v-6',map:'M12 3l2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4z',
+  book:'M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',list:'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',trophy:'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8'});
+const LOG_MAX=400;
+function logList(){return Array.isArray(P.log)?P.log:(P.log=[])}
+function logAdd(e){if(LOGMUTE)return null;const L=logList();e.id=newId();e.t=Date.now();L.unshift(e);if(L.length>LOG_MAX)L.length=LOG_MAX;return e}
+function logDrop(key,k){const L=logList();const i=L.findIndex(x=>x.key===key&&(!k||x.k===k));if(i>=0){L.splice(i,1);return true}return false}
+const LOGK={m:'Mastered',n:'Cleared',sp:'Cleared on Steel Path',q:'Completed quest',build:'Built',bp:'Got blueprint',part:'Got'};
+function logKeyInfo(key,v0){const p=key.split('|'),k=p[0];if(!LOGK[k])return null;
+  if(k==='m'){const it=I[p[1]];return {k,label:'Mastered '+p[1],xp:it?mxp(it)-v0:0}}
+  if(k==='n'||k==='sp'){const nd=NX[p[1]];return {k,label:LOGK[k]+' '+(nd?nd.n+' ('+nd.p+')':p[1]),xp:nd&&!isJ(nd)?nd.x||0:0}}
+  if(k==='q')return {k,label:'Completed '+p[1],xp:0};
+  if(k==='build')return {k,label:'Built '+p[1],xp:0};
+  if(k==='bp')return {k,label:'Got the '+p[1]+' Blueprint',xp:0};
+  if(k==='part')return {k,label:'Got '+p[1]+' '+p[2],xp:0};return null}
+
+/* one switch for every place that ticks a key, a rank, a checklist item or a task */
+const _setK0=setK;
+setK=function(k,v){if(LOGMUTE)return _setK0(k,v);const was=on(k);const n=k.startsWith('m|')?k.slice(2):null;const v0=n&&I[n]?itemXP(n):0;const pr=n?P.rk[n]:undefined;
+  _setK0(k,v);if(was===!!v)return;
+  if(v){const inf=logKeyInfo(k,v0);if(inf){const e={...inf,key:k};if(n&&pr!=null)e.pr=pr;logAdd(e);saveProfile()}}
+  else if(logDrop(k))saveProfile()};
+const _setRank0=setRank;
+setRank=function(n,r){const from=rankOf(n),x0=itemXP(n);LOGMUTE++;let out;try{out=_setRank0(n,r)}finally{LOGMUTE--}const to=rankOf(n);if(to===from||LOGMUTE)return out;
+  const it=I[n],mx=maxRank(it),L=logList(),top=L.find(x=>x.key==='rk|'+n);
+  if(top&&L.indexOf(top)<3&&Date.now()-top.t<10*60e3){top.to=to;top.xp=(top.xp||0)+itemXP(n)-x0;top.t=Date.now();if(top.to===top.from)L.splice(L.indexOf(top),1);else top.label=to>=mx?'Mastered '+n:n+' rank '+top.from+' → '+to}
+  else logAdd({k:'rk',key:'rk|'+n,label:to>=mx?'Mastered '+n:n+' rank '+from+' → '+to,from,to,xp:itemXP(n)-x0});
+  saveProfile();return out};
+function logDW(id,v){if(!v){logDrop(id,'dw');return}const c=allChecks().find(x=>x[1]===id);let label=c?c[2]:id;
+  if(id.startsWith('nw|')&&WS&&WS.nightwave){const a=(WS.nightwave.activeChallenges||[]).find(x=>'nw|'+x.id===id);label='Nightwave: '+(a?a.title:'act')}
+  logAdd({k:'dw',key:id,label,per:c?c[0]:'w'})}
+const _toggleTask0=toggleTask;
+toggleTask=async function(id,v){const x=(P.tasks||[]).find(t=>t.id===id);const r=await _toggleTask0(id,v);if(x){if(v)logAdd({k:'t',key:'t|'+id,label:x.t});else logDrop('t|'+id,'t');saveProfile()}return r};
+
+/* bulk changes (sync, max all, a whole planet) log one line; the line can undo the whole change */
+function logSnap(){return {c:{...C},rk:{...P.rk},xp:totalXP().total}}
+function logSummary(k,label,a,undoable){if(LOGMUTE)return;const on1=Object.keys(C).filter(e=>!a.c[e]),off=Object.keys(a.c).filter(e=>!C[e]);const rk={};
+  for(const n of new Set([...Object.keys(a.rk),...Object.keys(P.rk)]))if(a.rk[n]!==P.rk[n])rk[n]=a.rk[n]==null?null:a.rk[n];
+  const xp=totalXP().total-a.xp;if(!on1.length&&!off.length&&!Object.keys(rk).length&&!xp)return;
+  const items=on1.filter(e=>e.startsWith('m|')).length,nodes=on1.filter(e=>/^(n|sp)\|/.test(e)).length,qs=on1.filter(e=>e.startsWith('q|')).length;
+  const e={k,key:k+'|'+Date.now(),label,xp,items,nodes,qs};if(undoable&&on1.length+off.length<=600){e.on=on1;e.off=off;e.rk=rk}logAdd(e);saveProfile()}
+function logBulk(label,fn){const a=logSnap();LOGMUTE++;try{fn()}finally{LOGMUTE--}logSummary('bulk',label,a,true)}
+
+/* undo: put things back the way they were and drop the line */
+function logUndo(id){const L=logList();const e=L.find(x=>x.id===id);if(!e)return;LOGMUTE++;
+  try{if(e.k==='rk'){const n=e.key.slice(3);_setRank0(n,e.from)}
+    else if(e.k==='m'){const n=e.key.slice(2);_setK0(e.key,0);if(e.pr!=null)P.rk[n]=e.pr}
+    else if(LOGK[e.k])_setK0(e.key,0);
+    else if(e.k==='dw'){if(P.dw)delete P.dw[e.key]}
+    else if(e.k==='t'){const x=(P.tasks||[]).find(t=>'t|'+t.id===e.key);if(x){x.d=0;x.dat=0}}
+    else if(e.on){e.on.forEach(k=>{delete C[k]});e.off.forEach(k=>{C[k]=1});for(const n in e.rk){if(e.rk[n]==null)delete P.rk[n];else P.rk[n]=e.rk[n]}if(typeof pushAll==='function')pushAll();lsSet('tenno-codex',C)}}
+  finally{LOGMUTE--}
+  L.splice(L.indexOf(e),1);if(typeof UNDO!=='undefined'&&UNDO)clearTimeout(UNDO.tm);saveProfile();updateMR();rerender();toast('Undone: '+e.label)}
+
+/* achievements page */
+function logSince(p){return p==='today'?lastDaily():p==='week'?lastWeekly():0}
+function logSum(list){const s={xp:0,m:0,rk:0,n:0,q:0,dw:0,t:0,b:0};for(const e of list){s.xp+=e.xp||0;
+  if(e.k==='m'||(e.k==='rk'&&e.label.startsWith('Mastered')))s.m++;if(e.k==='rk')s.rk+=Math.max(0,(e.to||0)-(e.from||0));if(e.k==='n'||e.k==='sp')s.n++;if(e.k==='q')s.q++;if(e.k==='dw')s.dw++;if(e.k==='t')s.t++;if(e.k==='build')s.b++;
+  if(e.items)s.m+=e.items;if(e.nodes)s.n+=e.nodes;if(e.qs)s.q+=e.qs}return s}
+const LOGIC={m:'star',rk:'bars',n:'map',sp:'map',q:'book',build:'check',bp:'check',part:'check',dw:'cal',t:'list',sync:'repeat',bulk:'check'};
+function logRow(e){const tm=new Date(e.t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});const canUndo=e.k!=='sync';
+  const extra=e.k==='sync'||e.k==='bulk'?[e.items?e.items+' mastered':'',e.nodes?e.nodes+' nodes':'',e.qs?e.qs+' quests':''].filter(Boolean).join(' · '):e.k==='dw'?(e.per==='d'?'Daily':'Weekly')+' checklist':e.k==='t'?'Task':'';
+  return `<li class="lgrow"><span class="lgic" aria-hidden="true">${ic(LOGIC[e.k]||'check')}</span><span class="lgt"><span class="lgl">${esc(e.label)}</span><span class="small muted">${tm}${extra?' · '+esc(extra):''}</span></span>
+   ${e.xp?`<span class="chip mxc">${e.xp>0?'+':''}${fmt(e.xp)} XP</span>`:'<span></span>'}${canUndo?`<button type="button" class="btn sm" data-logundo="${esc(e.id)}" aria-label="Undo: ${esc(e.label)}">${ic('undo')}Undo</button>`:'<span class="small muted lgnote">Sync</span>'}</li>`}
+function achievements(){const p=state.lgP||'today';const L=logList();const since=logSince(p);const list=L.filter(e=>e.t>=since);const s=logSum(list);
+  const t=totalXP(),m=mrInfo(t.total);const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length,nodes=ALLN.filter(n=>!isJ(n)&&on('n|'+n.id)).length,qd=Q.filter(q=>qDone(q.n)).length;
+  const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1])),wd=allChecks().filter(c=>c[0]==='w'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]));
+  const tile=(k,v,x)=>`<div class="tile"><span class="k">${k}</span><span class="v num">${v}</span>${x?`<span class="x">${x}</span>`:''}</div>`;
+  let tiles;
+  if(p==='all')tiles=tile('Mastery XP',fmt(t.total),'MR '+mrLabel(m.mr)+(L.length?' · +'+fmt(s.xp)+' logged here':''))+tile('Items mastered',fmt(maxed),MI.length+' in the game')+tile('Star chart nodes',fmt(nodes),ALLN.filter(n=>!isJ(n)).length+' in total')+tile('Quests done',fmt(qd),Q.length+' in total');
+  else tiles=tile('Mastery XP gained','+'+fmt(s.xp),s.rk?s.rk+' rank'+(s.rk>1?'s':'')+' gained':'')+tile('Items mastered',fmt(s.m),s.b?s.b+' built':'')+tile('Checklist ticks',fmt(s.dw),p==='today'?'Today '+dd.filter(ckDone).length+'/'+dd.length:'Weekly items '+wd.filter(ckDone).length+'/'+wd.length)+tile('Nodes · quests · tasks',`${s.n} · ${s.q} · ${s.t}`,'');
+  const days=[];if(p!=='today'){const t0=lastDaily();for(let i=6;i>=0;i--){const a=t0-i*DAY,b=a+DAY;const de=L.filter(e=>e.t>=a&&e.t<b);days.push({a,n:de.length,xp:de.reduce((q,e)=>q+(e.xp||0),0)})}}
+  const mx=Math.max(1,...days.map(d=>d.n));
+  const groups=[];for(const e of list){const d=new Date(e.t).toLocaleDateString([],{weekday:'long',month:'short',day:'numeric'});let g=groups[groups.length-1];if(!g||g.d!==d){g={d,items:[]};groups.push(g)}g.items.push(e)}
+  return `<div class="stack"><div class="head"><div class="eyebrow">Today</div><h1>Achievements</h1><p class="lede">Everything you've ticked off, ranked up or mastered. Tapped something by mistake? Undo it here.</p></div>
+   ${segBtns('lgp',p,[['today','Today'],['week','This week'],['all','All time']])}
+   <div class="tiles">${tiles}</div>
+   ${days.length?`<section class="panel lgweek" aria-label="Last 7 days"><div class="lgbars">${days.map(d=>`<div class="lgday" title="${d.n} things · +${fmt(d.xp)} XP"><span class="lgb"><i style="height:${(d.n/mx*100).toFixed(0)}%"></i></span><span class="small muted">${new Date(d.a).toLocaleDateString([],{weekday:'short',timeZone:'UTC'})}</span><span class="small num">${d.n}</span></div>`).join('')}</div></section>`:''}
+   <p class="small muted" style="margin:0">${p==='today'?`Since the daily reset (${lt(lastDaily())} your time).`:p==='week'?`Since the weekly reset (Monday ${lt(lastWeekly())} your time).`:L.length?`Your log keeps the last ${LOG_MAX} things you did, back to ${fdate(new Date(L[L.length-1].t).toISOString())}.`:''}</p>
+   ${groups.length?groups.map(g=>`<section class="obj"><div class="obj-h"><h3>${esc(g.d)}</h3></div><ul class="lglist">${g.items.map(logRow).join('')}</ul></section>`).join('')
+     :`<div class="panel empty stack" style="gap:8px;text-align:left"><b>${p==='today'?'Nothing yet today.':p==='week'?'Nothing yet this week.':'Nothing logged yet.'}</b><span class="small">Tick a checklist item on <a class="ln" href="#today">Today</a>, update a rank on <a class="ln" href="#ranks">Ranks</a>, or finish a task, and it shows up here.</span></div>`}
+  </div>`}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-lgp],[data-logundo]');if(!t)return;
+  if(t.dataset.lgp){state.lgP=t.dataset.lgp;saveUI();rerender();return}
+  if(t.dataset.logundo){logUndo(t.dataset.logundo)}});
+/* ---------- rows that open: tap a checklist item or a Next up card to see details; only the checkbox completes it ---------- */
+state.ckOpen=state.ckOpen||{};state.nuOpen=state.nuOpen||{};
+function ckEnd(c){return ckReset(c)+(c[0]==='d'?DAY:7*DAY)}
+function ckLive(c){const w=WS;const id=c[1];if(!w)return HOSTED&&!WSerr?'<div class="small muted">Loading live details…</div>':'';
+  if(id==='sortie'&&w.sortie&&w.sortie.variants)return `<div class="small"><b>${esc(w.sortie.boss||'Sortie')}</b>${w.sortie.faction?' · '+esc(w.sortie.faction):''}</div><ol class="ckol small">${w.sortie.variants.map(v=>`<li><b>${esc(v.missionType)}</b> · ${esc(v.node)}<div class="muted">${esc(v.modifier)}</div></li>`).join('')}</ol>`;
+  if(id==='archon'&&w.archonHunt&&w.archonHunt.missions)return `<div class="small"><b>${esc(w.archonHunt.boss||'Archon Hunt')}</b></div><ol class="ckol small">${w.archonHunt.missions.map(v=>`<li><b>${esc(v.type)}</b> · ${esc(v.node)}</li>`).join('')}</ol>`;
+  if((id==='nwd'||id==='nww')&&w.nightwave&&w.nightwave.activeChallenges){const ac=w.nightwave.activeChallenges.filter(x=>id==='nwd'?x.isDaily:!x.isDaily);
+    return ac.length?`<ul class="ckol small">${ac.map(x=>`<li><b>${esc(x.title)}</b> · ${fmt(x.reputation)} standing${x.isElite?' (elite)':''}<div class="muted">${esc(x.desc)}${(P.dw||{})['nw|'+x.id]?' · done':''}</div></li>`).join('')}</ul><div class="small muted">Tick single acts under <b>Nightwave acts</b> further down.</div>`:''}
+  if(id==='teshin'&&w.steelPath&&w.steelPath.currentReward)return `<div class="small">This week: <b>${esc(w.steelPath.currentReward.name)}</b> for ${w.steelPath.currentReward.cost} Steel Essence.</div>`;
+  return ''}
+const CKLINK={synd:['#synd','Open Syndicates'],openworld:['#synd','Open Syndicates'],simaris:['#synd','Open Syndicates'],sortie:null,teshin:null};
+function ckMore(c){const end=ckEnd(c),ok=gateOK(c[4]);const lk=CKLINK[c[1]];
+  return `<div class="ckmore" id="ckm-${esc(c[1].replace(/\W/g,'_'))}">${ckLive(c)}
+   <div class="small muted">${ckDone(c)?'Done '+new Date((P.dw||{})[c[1]]).toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'})+' · ':''}Resets in ${left(end-Date.now())} (${lt(end)} your time)</div>
+   ${ok?'':`<div class="small">Unlocks after the quest <a class="ln" href="#quests" data-q="${esc(c[4])}">${esc(c[4])}</a>.</div>`}
+   <div class="row ckact">${lk?`<a class="btn sm" href="${lk[0]}">${lk[1]}</a>`:''}${ltBtn(c[2],new Date(end).toISOString())}${ckTools(c)}</div></div>`}
+function ckRow(c){const ok=gateOK(c[4]),dn=ckDone(c),open=!!state.ckOpen[c[1]];const mid='ckm-'+c[1].replace(/\W/g,'_');
+  return `<div class="qrow ckrow${dn?' done':''}${open?' open':''}"><input type="checkbox" class="ck" data-dw="${esc(c[1])}" ${dn?'checked':''} ${ok?'':'disabled'} aria-label="Mark done: ${esc(c[2])}">
+   <div class="ckbody"><button type="button" class="ckhead" data-ckx="${esc(c[1])}" aria-expanded="${open}" aria-controls="${esc(mid)}"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':'<span class="chip warn">Locked</span>'}${(P.ckPin||[]).includes(c[1])?`<span class="ckpin" title="Pinned">${ic('pin','fill')}</span>`:''}<span class="ckchev" aria-hidden="true">${ic('chev')}</span></button>
+   <div class="small muted">${esc(c[3])}</div>${open?ckMore(c):''}</div></div>`}
+
+/* next up: the checkbox completes, the card opens */
+function nextCard(){NU=nextUp();const nz=Object.values(P.nuSnz||{}).filter(z=>z>=lastDaily()).length;
+  const openL=x=>x.go?`<a class="btn sm" href="#" data-go="${esc(x.go)}">Open</a>`:x.q?`<a class="btn sm" href="#quests" data-q="${esc(x.q)}">Open quest</a>`:x.href?`<a class="btn sm" href="${x.href}" ${x.tt?`data-ttab="${x.tt}"`:''}>Open</a>`:'';
+  return `<section class="panel cut stack nextup" style="gap:8px" aria-labelledby="nu-h"><div class="row" style="justify-content:space-between"><h2 id="nu-h">Next up</h2><span class="small muted">${esc(stage())}</span></div>
+  ${NU.map((x,i)=>{const open=!!state.nuOpen[x.id];const pic=x.go&&x.go.startsWith('item|')&&art(x.go.slice(5),'mini');
+   return `<div class="nu2${open?' open':''}">${x.done?`<input type="checkbox" class="ck" data-nudone="${i}" aria-label="${esc(x.doneL||'Done')}: ${esc(x.t)}">`:`<span class="nun" aria-hidden="true">${i+1}</span>`}
+   <div class="nut"><button type="button" class="nuhead" data-nux="${esc(x.id)}" aria-expanded="${open}">${pic||''}<span class="nutx"><b>${esc(x.t)}</b><span class="small muted">${esc(x.why)}</span></span><span class="ckchev" aria-hidden="true">${ic('chev')}</span></button>
+   ${open?`<div class="numore">${x.pre&&x.pre.length?`<ul class="small">${x.pre.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>`:''}
+    <div class="nuact">${openL(x)}${x.task?taskBtn(...x.task):''}<button type="button" class="btn sm ghost" data-nusnz="${i}" aria-label="Not now: ${esc(x.t)}">Not now</button></div>
+    ${x.done?`<div class="small muted">Tick the box when it's done${x.doneL?` (${esc(x.doneL.toLowerCase())})`:''}. Mistake? Undo it from <a class="ln" href="#achievements">Achievements</a>.</div>`:''}</div>`:''}</div></div>`}).join('')||'<div class="small muted">You\'re all caught up. Pick something from Goals or the rank-up plan.</div>'}
+  ${nz?`<button type="button" class="small linkbtn" id="nuunsnz">Show ${nz} snoozed suggestion${nz>1?'s':''}</button>`:''}</section>`}
+
+function rowToggle(store,id){store[id]=!store[id];const y=scrollY;rerender();scrollTo(0,y);
+  const b=document.querySelector(`[data-ckx="${CSS.escape(id)}"],[data-nux="${CSS.escape(id)}"]`);if(b)b.focus({preventScroll:true})}
+document.addEventListener('click',e=>{
+  const h=e.target.closest('[data-ckx],[data-nux]');if(h){rowToggle(h.dataset.ckx!=null?state.ckOpen:state.nuOpen,h.dataset.ckx!=null?h.dataset.ckx:h.dataset.nux);return}
+  /* a tap on the empty part of a row opens it too */
+  const row=e.target.closest('.ckrow,.nu2');if(!row||e.target.closest('a,button,input,select,textarea,label,summary,.ckmore,.numore'))return;
+  const b=row.querySelector('[data-ckx],[data-nux]');if(b)b.click()});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
@@ -2793,7 +2960,8 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast('No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
-  if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
+  if(t.dataset.dw){const id=t.dataset.dw;P.dw=P.dw||{};if(t.checked)P.dw[id]=Date.now();else delete P.dw[id];logDW(id,t.checked);saveProfile();const y=scrollY;render();scrollTo(0,y);
+    if(t.checked){const c=allChecks().find(x=>x[1]===id);const lg=logList()[0];toastAction((c?c[2]:'Done')+' ticked off','Undo',()=>{if(lg&&lg.key===id)logUndo(lg.id);else{delete P.dw[id];logDW(id,false);saveProfile();rerender()}})}return}
   if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   const SEL2={scs:'scS',ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',ffc:'ffC',frf:'frF',mkf:'mkF',rks:'rkS'};
   if(SEL2[t.id]){state[SEL2[t.id]]=t.value;saveUI();const y=scrollY;render();scrollTo(0,y);return}
@@ -2807,7 +2975,7 @@ document.addEventListener('change',e=>{const t=e.target;
 document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.lazy')&&d.open){const b=d.querySelector(':scope > .lazybody, :scope > .sub');if(b&&!b.dataset.f){b.dataset.f=1;b.innerHTML=itemTree(d.dataset.tree,{note:d.dataset.note,depth:+d.dataset.depth||0});refresh()}}},true);
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){setMenu(false);return}
-  const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
+  /* tapping a row's name never ticks it: only the checkbox completes things */
   const t=e.target.closest('#unlink,[data-scp],[data-ipip],[data-oth],#exhtml,#exjson,[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){setMenu(!$('#drawer').classList.contains('open'));return}
@@ -2829,9 +2997,9 @@ document.addEventListener('click',async e=>{
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
   if(t.id==='rkmaxall'){if(!t.dataset.armed){const k=(state._rkList||[]).filter(n=>!on('m|'+n)).length;t.dataset.armed=1;t.textContent=`Mark ${k} item${k===1?'':'s'} mastered? Tap again`;t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all in this list…'}},5000);return}
-    (state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)});render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
+    logBulk('Maxed '+(state._rkList||[]).filter(n=>!on('m|'+n)).length+' items on Ranks',()=>(state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)}));render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
   if(t.id==='boreset'){P.bo={};saveProfile();render();toast('Using your Ranks page numbers again');return}
-  if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)});const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
+  if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);logBulk('Quests up to '+q.n,()=>Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)}));const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
   if(t.dataset.go){e.preventDefault();go(t.dataset.go)}
   else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else render()}
   else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render()}
@@ -2840,7 +3008,7 @@ document.addEventListener('click',async e=>{
   else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}}
   else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
   else if(t.dataset.cat){state.allCat=t.dataset.cat;state.allQ='';saveUI();render()}
-  else if(t.dataset.planet){const md=t.dataset.mode;ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
+  else if(t.dataset.planet){const md=t.dataset.mode;logBulk('All of '+t.dataset.planet+(md==='sp'?' (Steel Path)':''),()=>ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1)));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
   else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else focusQuest()}
   else if(t.dataset.wh){copy(t.dataset.wh,'Whisper copied. Paste it into in-game chat.')}
   else if(t.dataset.fstart){const n=t.dataset.fstart;const d=foundryFind(n)||43200;P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d});saveProfile();toast(n+' started · ready in '+hrs(d))}

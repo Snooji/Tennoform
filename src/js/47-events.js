@@ -11,7 +11,8 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast('No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
-  if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
+  if(t.dataset.dw){const id=t.dataset.dw;P.dw=P.dw||{};if(t.checked)P.dw[id]=Date.now();else delete P.dw[id];logDW(id,t.checked);saveProfile();const y=scrollY;render();scrollTo(0,y);
+    if(t.checked){const c=allChecks().find(x=>x[1]===id);const lg=logList()[0];toastAction((c?c[2]:'Done')+' ticked off','Undo',()=>{if(lg&&lg.key===id)logUndo(lg.id);else{delete P.dw[id];logDW(id,false);saveProfile();rerender()}})}return}
   if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   const SEL2={scs:'scS',ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',ffc:'ffC',frf:'frF',mkf:'mkF',rks:'rkS'};
   if(SEL2[t.id]){state[SEL2[t.id]]=t.value;saveUI();const y=scrollY;render();scrollTo(0,y);return}
@@ -25,7 +26,7 @@ document.addEventListener('change',e=>{const t=e.target;
 document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.lazy')&&d.open){const b=d.querySelector(':scope > .lazybody, :scope > .sub');if(b&&!b.dataset.f){b.dataset.f=1;b.innerHTML=itemTree(d.dataset.tree,{note:d.dataset.note,depth:+d.dataset.depth||0});refresh()}}},true);
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){setMenu(false);return}
-  const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
+  /* tapping a row's name never ticks it: only the checkbox completes things */
   const t=e.target.closest('#unlink,[data-scp],[data-ipip],[data-oth],#exhtml,#exjson,[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){setMenu(!$('#drawer').classList.contains('open'));return}
@@ -47,9 +48,9 @@ document.addEventListener('click',async e=>{
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
   if(t.id==='rkmaxall'){if(!t.dataset.armed){const k=(state._rkList||[]).filter(n=>!on('m|'+n)).length;t.dataset.armed=1;t.textContent=`Mark ${k} item${k===1?'':'s'} mastered? Tap again`;t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all in this list…'}},5000);return}
-    (state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)});render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
+    logBulk('Maxed '+(state._rkList||[]).filter(n=>!on('m|'+n)).length+' items on Ranks',()=>(state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)}));render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
   if(t.id==='boreset'){P.bo={};saveProfile();render();toast('Using your Ranks page numbers again');return}
-  if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)});const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
+  if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);logBulk('Quests up to '+q.n,()=>Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)}));const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
   if(t.dataset.go){e.preventDefault();go(t.dataset.go)}
   else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else render()}
   else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render()}
@@ -58,7 +59,7 @@ document.addEventListener('click',async e=>{
   else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}}
   else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
   else if(t.dataset.cat){state.allCat=t.dataset.cat;state.allQ='';saveUI();render()}
-  else if(t.dataset.planet){const md=t.dataset.mode;ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
+  else if(t.dataset.planet){const md=t.dataset.mode;logBulk('All of '+t.dataset.planet+(md==='sp'?' (Steel Path)':''),()=>ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1)));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
   else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else focusQuest()}
   else if(t.dataset.wh){copy(t.dataset.wh,'Whisper copied. Paste it into in-game chat.')}
   else if(t.dataset.fstart){const n=t.dataset.fstart;const d=foundryFind(n)||43200;P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d});saveProfile();toast(n+' started · ready in '+hrs(d))}

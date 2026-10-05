@@ -7,7 +7,7 @@ if(!P.wfid)P.wfid=lsGet('tenno-acct','')||'';
 const kenc=k=>k.replace(/[.\/\[\]#$]/g,'_');
 const on=k=>!!C[kenc(k)];
 let docRef=null,profRef=null,pending={},timer=null,ptimer=null,synced=false,acct=null,FB=null;
-const SAVE_MS=600;
+const SAVE_MS=600;var LOGMUTE=0;
 function setK(k,v){const e=kenc(k);if(v)C[e]=1;else delete C[e];lsSet('tenno-codex',C);
   if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}updateMR()}
 async function flush(){if(!docRef)return;const p=pending;pending={};if(!Object.keys(p).length)return;
