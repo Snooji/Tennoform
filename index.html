@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oJLW/48UiM8nRsHE7FTedhQwrW36mv32N4UMax+o5SM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-BSvpZRA_.css"><script type="module" src="/assets/main-CnunkZ2B.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-0FJ44DI7hqm8Qxo9j8ZDYl9iqXucdRbZlbisQJPuDjc=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DeMRCta5.css"><script type="module" src="/assets/main-f9auThhk.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0e0f12">
 
@@ -29,9 +29,9 @@ html{background:var(--bg)}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);margin:0;-webkit-text-size-adjust:100%;
   background-image:radial-gradient(ellipse 90% 40% at 50% -5%,color-mix(in srgb,var(--cyan) 13%,transparent),transparent 70%),linear-gradient(color-mix(in srgb,var(--cyan) 4%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--cyan) 4%,transparent) 1px,transparent 1px);
   background-size:auto,32px 32px,32px 32px;background-attachment:fixed}
-:where(#app,.dlgbk,.toast) a{color:var(--cyan)}
-:where(#app,.dlgbk,.toast) button,:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input,:where(#app,.dlgbk,.toast) textarea{font:inherit;color:inherit}
-:where(#app,.dlgbk,.toast) :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+:where(#app,.dlgbk,.toast,.tf-island) a{color:var(--cyan)}
+:where(#app,.dlgbk,.toast,.tf-island) button,:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input,:where(#app,.dlgbk,.toast,.tf-island) textarea{font:inherit;color:inherit}
+:where(#app,.dlgbk,.toast,.tf-island) :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .cut{}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent)}
@@ -71,11 +71,11 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 }
 @media (max-width:420px){.mrb .t small{display:none}.brand{font-size:18px}}
 #app{max-width:1120px;margin:0 auto;padding-block:18px 60px;padding-inline:16px}
-:where(#app,.dlgbk,.toast) h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:700}
-:where(#app,.dlgbk,.toast) h1{font-size:clamp(30px,7.5vw,48px);line-height:1}
-:where(#app,.dlgbk,.toast) h2{font-size:21px;color:var(--gold);display:flex;align-items:center;gap:10px}
-:where(#app,.dlgbk,.toast) h2::before{content:"";width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none}
-:where(#app,.dlgbk,.toast) h3{font-size:20px;line-height:1.15}
+:where(#app,.dlgbk,.toast,.tf-island) h1,:where(#app,.dlgbk,.toast,.tf-island) h2,:where(#app,.dlgbk,.toast,.tf-island) h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:700}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:clamp(30px,7.5vw,48px);line-height:1}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:21px;color:var(--gold);display:flex;align-items:center;gap:10px}
+:where(#app,.dlgbk,.toast,.tf-island) h2::before{content:"";width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:20px;line-height:1.15}
 .lede{color:var(--ink2);max-width:68ch;margin:6px 0 0}
 .eyebrow{font:600 12px/1 var(--f-mono);color:var(--cyan)}
 .head{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -101,9 +101,9 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-inline:-16px;padding-inline:16px}
 .obj-h .seg{margin-inline:-14px;padding-inline:14px}
 .seg .btn{flex:none;white-space:nowrap}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
-:where(#app,.dlgbk,.toast) select:focus,:where(#app,.dlgbk,.toast) input:focus,:where(#app,.dlgbk,.toast) textarea:focus{border-color:var(--cyan);outline:none}
-:where(#app,.dlgbk,.toast) textarea{min-height:110px;font:13px var(--f-mono)}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
+:where(#app,.dlgbk,.toast,.tf-island) select:focus,:where(#app,.dlgbk,.toast,.tf-island) input:focus,:where(#app,.dlgbk,.toast,.tf-island) textarea:focus{border-color:var(--cyan);outline:none}
+:where(#app,.dlgbk,.toast,.tf-island) textarea{min-height:110px;font:13px var(--f-mono)}
 .prog{display:flex;align-items:center;gap:8px;font:12px var(--f-mono);color:var(--ink2)}
 .prog .track{flex:1;min-width:50px;height:4px;background:var(--line);overflow:hidden}
 .prog .fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));width:0;transition:width .25s}
@@ -124,17 +124,17 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 .src{font-size:13.5px;color:var(--ink2);margin-top:4px;overflow-wrap:anywhere}
 .src b{color:var(--ink);font-weight:600}
 .where b{color:var(--cyan);font-weight:600}
-:where(#app,.dlgbk,.toast) a.ln{color:var(--cyan);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--cyan) 50%,transparent)}
-:where(#app,.dlgbk,.toast) a.ln:hover{border-bottom-style:solid}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln{color:var(--cyan);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--cyan) 50%,transparent)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln:hover{border-bottom-style:solid}
 .reslist{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
 .reslist li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:2px 10px;align-items:start;font-size:13.5px}
 .reslist .q{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
 .reslist .where{grid-column:2;color:var(--ink2);overflow-wrap:anywhere}
 .have{font:600 11.5px var(--f-mono);margin-left:6px}
 .have.ok{color:var(--ok)} .have.no{color:var(--warn)}
-:where(#app,.dlgbk,.toast) details{min-width:0}
-:where(#app,.dlgbk,.toast) details>summary{cursor:pointer;list-style:none}
-:where(#app,.dlgbk,.toast) details>summary::-webkit-details-marker{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) details{min-width:0}
+:where(#app,.dlgbk,.toast,.tf-island) details>summary{cursor:pointer;list-style:none}
+:where(#app,.dlgbk,.toast,.tf-island) details>summary::-webkit-details-marker{display:none}
 .relics{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .relic>summary{display:inline-flex;gap:6px;align-items:center;font:500 12.5px/1 var(--f-mono);padding:9px 10px;border:1px solid var(--line2);background:var(--sunk);color:var(--ink)}
 .relic[open]{flex-basis:100%}
@@ -300,7 +300,7 @@ ul.rw{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:
 .ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .dtbl{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:6px 12px;align-items:center}.dtbl .h,.ftbl .h{font-size:12px;color:var(--ink2)}.dtbl .c,.ftbl .c{text-align:center}
 .ftbl{display:grid;gap:6px 12px;align-items:center;min-width:max-content}.ftbl .top{color:var(--gold);font-weight:600}.ftbl .fl{font-size:14px}
-:where(#app,.dlgbk,.toast) details.jt{border-top:1px solid var(--line)}:where(#app,.dlgbk,.toast) details.jt>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;list-style:none}:where(#app,.dlgbk,.toast) details.jt>summary::-webkit-details-marker{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) details.jt{border-top:1px solid var(--line)}:where(#app,.dlgbk,.toast,.tf-island) details.jt>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;list-style:none}:where(#app,.dlgbk,.toast,.tf-island) details.jt>summary::-webkit-details-marker{display:none}
 .ftbl .h{max-width:130px;overflow-wrap:anywhere}
 /* ---- v10 layout: fluid width,compact sizing,hamburger menu ---- */
 body{font-size:14.5px}
@@ -315,9 +315,9 @@ nav.tabs a{font-size:13px;padding:9px 8px}
 .hamb:hover,.hamb[aria-expanded=true]{border-color:var(--cyan);color:var(--cyan)}
 @media (min-width:900px){.hamb{display:grid}}
 .mrb .ring{width:34px;height:34px}.mrb .ring>span{width:27px;height:27px;font-size:14px}
-:where(#app,.dlgbk,.toast) h1{font-size:clamp(24px,3vw,38px)}
-:where(#app,.dlgbk,.toast) h2{font-size:17px}
-:where(#app,.dlgbk,.toast) h3{font-size:17px}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:clamp(24px,3vw,38px)}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:17px}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:17px}
 .head{padding-bottom:8px;gap:4px}
 .lede{max-width:90ch;font-size:14px}
 .stack{gap:12px}
@@ -326,7 +326,7 @@ nav.tabs a{font-size:13px;padding:9px 8px}
 .step,.qrow{padding:9px 12px}
 .btn{min-height:36px;padding:7px 12px;font-size:13px}
 .btn.sm{min-height:30px;padding:4px 9px;font-size:12px}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) textarea{min-height:38px;padding:7px 10px;font-size:14.5px}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) textarea{min-height:38px;padding:7px 10px;font-size:14.5px}
 .grp>summary{padding:10px 12px;min-height:44px}.grp>summary h3{font-size:16px}
 .card{padding:10px 12px}.card .nm{font-size:16px}
 .tile{padding:10px}.tile .v{font-size:22px}.tile .k{font-size:12px}
@@ -451,7 +451,7 @@ dl.faq{margin:0;display:grid;gap:4px 0}dl.faq dt{font-weight:600;margin-top:6px}
 @media (prefers-reduced-motion:reduce){.bdchev{transition:none}}
 @media (max-width:899px){
   .btn{min-height:44px}.btn.sm{min-height:40px;padding:6px 12px;font-size:12.5px}.btn.tb{min-height:36px}
-  :where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) input[type=date]{min-height:44px;font-size:16px}
+  :where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) input[type=date]{min-height:44px;font-size:16px}
   .ck{width:30px;height:30px}.ck.sm{width:28px;height:28px}
   .step,.qrow{grid-template-columns:34px minmax(0,1fr)}
   .sbtn{width:44px;height:44px}.stepper{gap:6px}.stepper input{width:58px;min-height:44px}.sbtn.mx{margin-left:14px}
@@ -472,11 +472,11 @@ dl.faq{margin:0;display:grid;gap:4px 0}dl.faq dt{font-weight:600;margin-top:6px}
 /* ---- v17 a11y ---- */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .skip{position:fixed;left:8px;top:-60px;z-index:100;background:var(--gold);color:var(--gold-ink);border:0;padding:10px 14px;font-weight:700}.skip:focus{top:8px}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) input[type=date],:where(#app,.dlgbk,.toast) textarea{border-color:var(--line2)}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) input[type=date],:where(#app,.dlgbk,.toast,.tf-island) textarea{border-color:var(--line2)}
 .ck{border-color:var(--line2)}.sbtn{border-color:var(--line2)}
 .pstat{margin-left:10px;font:600 10.5px var(--f-mono);text-transform:none;color:var(--ink2);border:1px solid var(--line2);padding:2px 6px;vertical-align:middle}
 .pstat.live{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
-:where(#app,.dlgbk,.toast) h1:focus{outline:none}
+:where(#app,.dlgbk,.toast,.tf-island) h1:focus{outline:none}
 .hit[aria-pressed="true"]{border-left-color:var(--gold)}
 .hit>span:first-child{min-width:0;overflow-wrap:anywhere}.hitst{gap:4px;justify-content:flex-end;flex:0 1 auto;min-width:0}
 /* ---- v18 ---- */
@@ -510,11 +510,11 @@ html,body{background:var(--bg)}
 body{font:15.5px/1.55 var(--f-body);background-image:none;font-variant-numeric:tabular-nums}
 @media (max-width:899px){body{font-size:16.5px}}
 b,strong,.lbl,.nm{font-weight:600}
-:where(#app,.dlgbk,.toast) a{color:var(--ink);text-decoration-line:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
-:where(#app,.dlgbk,.toast) a:hover{text-decoration-color:var(--gold)}
-:where(#app,.dlgbk,.toast) a.ln{color:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
-:where(#app,.dlgbk,.toast) a.ln:hover{border-bottom-color:var(--gold)}
-:where(#app,.dlgbk,.toast) :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+:where(#app,.dlgbk,.toast,.tf-island) a{color:var(--ink);text-decoration-line:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
+:where(#app,.dlgbk,.toast,.tf-island) a:hover{text-decoration-color:var(--gold)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln{color:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln:hover{border-bottom-color:var(--gold)}
+:where(#app,.dlgbk,.toast,.tf-island) :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* top bar */
 .bar{background:color-mix(in srgb,var(--bg) 92%,transparent);border-bottom:1px solid var(--line)}
@@ -532,13 +532,13 @@ nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)
 .acct.in{background:var(--sunk)}
 
 /* headings and page openers */
-h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgbk,.toast) h4{font-family:var(--f-display);font-weight:600;color:var(--ink)}
-:where(#app,.dlgbk,.toast) h1{font-size:30px;line-height:1.1}
-:where(#app,.dlgbk,.toast) h2{font-size:19px;line-height:1.25;color:var(--ink);gap:8px}
-:where(#app,.dlgbk,.toast) h2::before{display:none}
-:where(#app,.dlgbk,.toast) h3{font-size:17px;line-height:1.25}
+h1,:where(#app,.dlgbk,.toast,.tf-island) h2,:where(#app,.dlgbk,.toast,.tf-island) h3,:where(#app,.dlgbk,.toast,.tf-island) h4{font-family:var(--f-display);font-weight:600;color:var(--ink)}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:30px;line-height:1.1}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:19px;line-height:1.25;color:var(--ink);gap:8px}
+:where(#app,.dlgbk,.toast,.tf-island) h2::before{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:17px;line-height:1.25}
 .hero-t h1{font-size:30px}
-@media (max-width:899px){:where(#app,.dlgbk,.toast) h1,.hero-t h1{font-size:26px}:where(#app,.dlgbk,.toast) h2{font-size:18px}}
+@media (max-width:899px){:where(#app,.dlgbk,.toast,.tf-island) h1,.hero-t h1{font-size:26px}:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:18px}}
 .eyebrow{font:400 13px/1.3 var(--f-body);color:var(--ink2)}
 .head{border-bottom:0;padding-bottom:2px;gap:4px}
 .lede{font-size:15px}
@@ -575,9 +575,9 @@ h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgb
 .btn.primary{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
 .btn.primary:hover{background:color-mix(in srgb,var(--gold) 88%,var(--ink));color:var(--gold-ink)}
 .btn.sm{font-size:13px}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) input[type=date],:where(#app,.dlgbk,.toast) textarea{border-radius:var(--r-sm);background:var(--sunk);border-color:var(--line2)}
-:where(#app,.dlgbk,.toast) select:focus,:where(#app,.dlgbk,.toast) input:focus,:where(#app,.dlgbk,.toast) textarea:focus{border-color:var(--gold-dim)}
-:where(#app,.dlgbk,.toast) textarea{font:14px/1.5 var(--f-body)}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) input[type=date],:where(#app,.dlgbk,.toast,.tf-island) textarea{border-radius:var(--r-sm);background:var(--sunk);border-color:var(--line2)}
+:where(#app,.dlgbk,.toast,.tf-island) select:focus,:where(#app,.dlgbk,.toast,.tf-island) input:focus,:where(#app,.dlgbk,.toast,.tf-island) textarea:focus{border-color:var(--gold-dim)}
+:where(#app,.dlgbk,.toast,.tf-island) textarea{font:14px/1.5 var(--f-body)}
 .ck{transform:none;border-radius:6px;background:transparent}
 .ck:checked{box-shadow:none}
 .ck:checked::after{transform:rotate(45deg) translate(-1px,-1px)}
@@ -623,7 +623,7 @@ h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgb
 .card>a.small,.card>a.ln{align-self:flex-start}
 /* only state gets a chip (vaulted, mastered, ready, overdue, MR XP); plain labels read as text */
 .chip:not(.ok):not(.bad):not(.warn):not(.good):not(.gold):not(.mxc):not(.trk){border-color:transparent;background:none;padding-inline:0;font-weight:400;color:var(--ink2)}
-:where(#app,.dlgbk,.toast) a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
+:where(#app,.dlgbk,.toast,.tf-island) a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
 .chip.gold{border-color:transparent;padding-inline:2px;font-weight:600}
 .where b,.src b{color:var(--ink)}
 .ic{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
@@ -717,7 +717,7 @@ body.sheet-on::before{content:"";position:fixed;inset:0;z-index:44;background:co
 .hrow:first-child{border-top:0}
 .hrt{display:flex;flex-direction:column;gap:6px;min-width:0}
 .hrow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-:where(#app,.dlgbk,.toast) img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
+:where(#app,.dlgbk,.toast,.tf-island) img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .nu img.mini{width:40px;height:40px;margin-top:2px}
 .nextup .nu{grid-template-columns:44px minmax(0,1fr)}
 @media (max-width:480px){.nextup .nu{grid-template-columns:44px minmax(0,1fr)}.nextup .nun{display:grid}}
@@ -753,7 +753,7 @@ body.sheet-on::before{content:"";position:fixed;inset:0;z-index:44;background:co
 .srch{flex:none;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;margin-left:auto;margin-right:12px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--sunk);color:var(--ink2);cursor:pointer;font:400 14px var(--f-body)}
 .srch:hover{color:var(--ink);border-color:var(--ink)}
 .srch .srcht{min-width:110px;text-align:left}
-:where(#app,.dlgbk,.toast) kbd,.srchk{font:600 11px/1 var(--f-body);padding:3px 5px;border:1px solid var(--line2);border-radius:4px;color:var(--ink2);background:var(--panel)}
+:where(#app,.dlgbk,.toast,.tf-island) kbd,.srchk{font:600 11px/1 var(--f-body);padding:3px 5px;border:1px solid var(--line2);border-radius:4px;color:var(--ink2);background:var(--panel)}
 .srch+.mrb{margin-left:0}
 @media (max-width:899px){.srch{width:40px;padding:0;justify-content:center;margin-right:8px}.srch .srcht,.srch .srchk{display:none}}
 #cmdbk{align-items:start;padding-top:min(12vh,96px)}
@@ -856,7 +856,7 @@ body.typing .bnav{display:none}
 <script>
 (function(){
 if(/(^|\.)tennoform\.com$|github\.io$/.test(location.hostname)&&window.top!==window.self){try{window.top.location.replace(location.href)}catch(e){}document.documentElement.innerHTML='';return}
-document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&/cdn\.warframestat\.us|githubusercontent/.test(t.src||''))t.remove()},true);
+document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&!t.closest('[data-thumb]')&&/cdn\.warframestat\.us|githubusercontent/.test(t.src||''))t.remove()},true);
 const D=JSON.parse(document.getElementById('data').textContent);
 const I=D.items, REL=D.relics, MODS=D.mods, ARC=D.arcanes, RES=D.res, PR=D.prices, MS=D.mslug, M=D.mastery, Q=D.quests, NODES=D.nodes, ALLN=D.allnodes, RT=D.rtiers, RSRC=D.rsrc, VAULT=D.vault, SEL=D.sellers;
 const U={};for(const n in I)U[I[n].u]=n;
@@ -2860,6 +2860,9 @@ setRank=function(n,r){const from=rankOf(n),x0=itemXP(n);LOGMUTE++;let out;try{ou
   if(top&&L.indexOf(top)<3&&Date.now()-top.t<10*60e3){top.to=to;top.xp=(top.xp||0)+itemXP(n)-x0;top.t=Date.now();if(top.to===top.from)L.splice(L.indexOf(top),1);else top.label=to>=mx?'Mastered '+n:n+' rank '+top.from+' → '+to}
   else logAdd({k:'rk',key:'rk|'+n,label:to>=mx?'Mastered '+n:n+' rank '+from+' → '+to,from,to,xp:itemXP(n)-x0});
   saveProfile();return out};
+/* the rank toast's Undo goes through the log too, so Achievements always matches; bulk changes show their own toast */
+let RKT=0;
+undoPush=function(n){if(LOGMUTE>1)return;clearTimeout(RKT);RKT=setTimeout(()=>{const e=logList().find(x=>x.key==='rk|'+n);if(e)toastAction(`${n} → rank ${rankOf(n)}`,'Undo',()=>logUndo(e.id))},200)};
 function logDW(id,v){if(!v){logDrop(id,'dw');return}const c=allChecks().find(x=>x[1]===id);let label=c?c[2]:id;
   if(id.startsWith('nw|')&&WS&&WS.nightwave){const a=(WS.nightwave.activeChallenges||[]).find(x=>'nw|'+x.id===id);label='Nightwave: '+(a?a.title:'act')}
   logAdd({k:'dw',key:id,label,per:c?c[0]:'w'})}
@@ -2884,7 +2887,7 @@ function logUndo(id){const L=logList();const e=L.find(x=>x.id===id);if(!e)return
     else if(e.k==='t'){const x=(P.tasks||[]).find(t=>'t|'+t.id===e.key);if(x){x.d=0;x.dat=0}}
     else if(e.on){e.on.forEach(k=>{delete C[k]});e.off.forEach(k=>{C[k]=1});for(const n in e.rk){if(e.rk[n]==null)delete P.rk[n];else P.rk[n]=e.rk[n]}if(typeof pushAll==='function')pushAll();lsSet('tenno-codex',C)}}
   finally{LOGMUTE--}
-  L.splice(L.indexOf(e),1);if(typeof UNDO!=='undefined'&&UNDO)clearTimeout(UNDO.tm);saveProfile();updateMR();rerender();toast('Undone: '+e.label)}
+  L.splice(L.indexOf(e),1);clearTimeout(RKT);if(typeof UNDO!=='undefined'&&UNDO)clearTimeout(UNDO.tm);saveProfile();updateMR();rerender();toast('Undone: '+e.label)}
 
 /* achievements page */
 function logSince(p){return p==='today'?lastDaily():p==='week'?lastWeekly():0}
@@ -3010,6 +3013,33 @@ routes.home=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('home')&&!sta
 const _demoBar=demoBar;demoBar=function(){return window.TF_UI&&TF_UI.owns?'':_demoBar()};
 /* live game info arrives after the first paint; let the shell know */
 const _loadWS=loadWS;loadWS=async function(){const r=await _loadWS();tfNotify();return r};
+/* ---------- bridge: Ranks for the React page. The row order is kept while you edit, so rows don't jump under your finger. ---------- */
+const RKC={key:'',order:[]};
+function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it)}}
+function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s].join('|');
+  if(state._rkKey!==key){state._rkKey=key;state.rkLim=60;fresh=true}
+  const cats=CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);return {id:c,label:CATL[c],m:a.m,t:a.t}}).concat([{id:'Intrinsics',label:'Intrinsics',m:0,t:0},{id:'Other',label:'Other gear',m:0,t:0}]);
+  const base={cat,q:qr,f,s,cats,island:'',items:[],total:0,shown:0,notMax:0,head:{label:'',m:0,t:0,p:0,x:0,search:!!q}};
+  if(!q&&(cat==='Intrinsics'||cat==='Other')){base.island=cat==='Intrinsics'?intrHTML():othHTML();base.head.label=cat==='Intrinsics'?'Intrinsics':'Other gear';base.head.x=cat==='Intrinsics'?catXP('rail')+catXP('drift'):othXP();return base}
+  if(fresh||RKC.key!==key){let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)):MI.filter(i=>i.c===cat);
+    if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
+    list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));
+    RKC.key=key;RKC.order=list.map(i=>i.n)}
+  state._rkList=RKC.order;const total=RKC.order.length,shown=Math.min(state.rkLim||60,total);
+  base.items=RKC.order.slice(0,shown).map(rkItem);base.total=total;base.shown=shown;base.notMax=RKC.order.filter(n=>rankOf(n)<maxRank(I[n])).length;
+  if(q)base.head.label='Search results';else{const a=autoCat(cat);Object.assign(base.head,{label:CATL[cat],m:a.m,t:a.t,p:a.p,x:a.x})}
+  return base}
+Object.assign(window.TF,{
+  ranks:fresh=>ranksData(!!fresh),
+  ranksSet:o=>{if(o.cat!=null){state.rkCat=o.cat;state.rkQ=''}if(o.q!=null)state.rkQ=o.q;if(o.f!=null)state.rkF=o.f;if(o.s!=null)state.rkS=o.s;saveUI();tfNotify()},
+  ranksMore:all=>{state.rkLim=all?1e5:(state.rkLim||60)+60;tfNotify()},
+  ranksRefresh:()=>{RKC.key='';tfNotify()},
+  setRank:(n,r)=>{setRank(n,r);tfNotify()},
+  maxAll:()=>{const L=(state._rkList||[]).filter(n=>!on('m|'+n));if(!L.length)return 0;logBulk('Maxed '+L.length+' items on Ranks',()=>L.forEach(n=>setRank(n,99)));updateMR();clearTimeout(RKT);
+    toastAction(`Marked ${L.length} item${L.length===1?'':'s'} mastered`,'Undo',()=>{const e=logList()[0];if(e&&e.k==='bulk')logUndo(e.id)});return L.length}
+});
+const _ranksRoute=routes.ranks;
+routes.ranks=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('ranks')?'':_ranksRoute()};
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}

@@ -50,6 +50,12 @@ export type TFApi = {
   taskDone(id: string, v: boolean): Promise<void>
   addTask(text: string): boolean
   sync(): void
+  ranks(fresh?: boolean): RanksData
+  ranksSet(o: { cat?: string; q?: string; f?: string; s?: string }): void
+  ranksMore(all?: boolean): void
+  ranksRefresh(): void
+  setRank(n: string, r: number): void
+  maxAll(): number
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -66,6 +72,13 @@ export type HomeData = {
   goals: { name: string; img: string; done: number; total: number }[]; goalCount: number
   tasks: { id: string; title: string; kind: string; due: string; over: boolean; rep: string; open: TFAction | null }[]; taskCount: number
   showSign: boolean; demo: boolean; stage: string
+}
+export type RankItem = { n: string; img: string; mr: number; r: number; mx: number; xp: number; max: number; per: number }
+export type RanksData = {
+  cat: string; q: string; f: string; s: string
+  cats: { id: string; label: string; m: number; t: number }[]
+  island: string; items: RankItem[]; total: number; shown: number; notMax: number
+  head: { label: string; m: number; t: number; p: number; x: number; search: boolean }
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

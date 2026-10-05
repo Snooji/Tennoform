@@ -9,7 +9,7 @@
 @media (prefers-reduced-motion:reduce){.bdchev{transition:none}}
 @media (max-width:899px){
   .btn{min-height:44px}.btn.sm{min-height:40px;padding:6px 12px;font-size:12.5px}.btn.tb{min-height:36px}
-  :where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) input[type=date]{min-height:44px;font-size:16px}
+  :where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) input[type=date]{min-height:44px;font-size:16px}
   .ck{width:30px;height:30px}.ck.sm{width:28px;height:28px}
   .step,.qrow{grid-template-columns:34px minmax(0,1fr)}
   .sbtn{width:44px;height:44px}.stepper{gap:6px}.stepper input{width:58px;min-height:44px}.sbtn.mx{margin-left:14px}

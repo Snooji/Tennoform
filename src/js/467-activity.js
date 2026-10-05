@@ -26,6 +26,9 @@ setRank=function(n,r){const from=rankOf(n),x0=itemXP(n);LOGMUTE++;let out;try{ou
   if(top&&L.indexOf(top)<3&&Date.now()-top.t<10*60e3){top.to=to;top.xp=(top.xp||0)+itemXP(n)-x0;top.t=Date.now();if(top.to===top.from)L.splice(L.indexOf(top),1);else top.label=to>=mx?'Mastered '+n:n+' rank '+top.from+' → '+to}
   else logAdd({k:'rk',key:'rk|'+n,label:to>=mx?'Mastered '+n:n+' rank '+from+' → '+to,from,to,xp:itemXP(n)-x0});
   saveProfile();return out};
+/* the rank toast's Undo goes through the log too, so Achievements always matches; bulk changes show their own toast */
+let RKT=0;
+undoPush=function(n){if(LOGMUTE>1)return;clearTimeout(RKT);RKT=setTimeout(()=>{const e=logList().find(x=>x.key==='rk|'+n);if(e)toastAction(`${n} → rank ${rankOf(n)}`,'Undo',()=>logUndo(e.id))},200)};
 function logDW(id,v){if(!v){logDrop(id,'dw');return}const c=allChecks().find(x=>x[1]===id);let label=c?c[2]:id;
   if(id.startsWith('nw|')&&WS&&WS.nightwave){const a=(WS.nightwave.activeChallenges||[]).find(x=>'nw|'+x.id===id);label='Nightwave: '+(a?a.title:'act')}
   logAdd({k:'dw',key:id,label,per:c?c[0]:'w'})}
@@ -50,7 +53,7 @@ function logUndo(id){const L=logList();const e=L.find(x=>x.id===id);if(!e)return
     else if(e.k==='t'){const x=(P.tasks||[]).find(t=>'t|'+t.id===e.key);if(x){x.d=0;x.dat=0}}
     else if(e.on){e.on.forEach(k=>{delete C[k]});e.off.forEach(k=>{C[k]=1});for(const n in e.rk){if(e.rk[n]==null)delete P.rk[n];else P.rk[n]=e.rk[n]}if(typeof pushAll==='function')pushAll();lsSet('tenno-codex',C)}}
   finally{LOGMUTE--}
-  L.splice(L.indexOf(e),1);if(typeof UNDO!=='undefined'&&UNDO)clearTimeout(UNDO.tm);saveProfile();updateMR();rerender();toast('Undone: '+e.label)}
+  L.splice(L.indexOf(e),1);clearTimeout(RKT);if(typeof UNDO!=='undefined'&&UNDO)clearTimeout(UNDO.tm);saveProfile();updateMR();rerender();toast('Undone: '+e.label)}
 
 /* achievements page */
 function logSince(p){return p==='today'?lastDaily():p==='week'?lastWeekly():0}

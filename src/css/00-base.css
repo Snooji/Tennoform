@@ -21,9 +21,9 @@ html{background:var(--bg)}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);margin:0;-webkit-text-size-adjust:100%;
   background-image:radial-gradient(ellipse 90% 40% at 50% -5%,color-mix(in srgb,var(--cyan) 13%,transparent),transparent 70%),linear-gradient(color-mix(in srgb,var(--cyan) 4%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--cyan) 4%,transparent) 1px,transparent 1px);
   background-size:auto,32px 32px,32px 32px;background-attachment:fixed}
-:where(#app,.dlgbk,.toast) a{color:var(--cyan)}
-:where(#app,.dlgbk,.toast) button,:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input,:where(#app,.dlgbk,.toast) textarea{font:inherit;color:inherit}
-:where(#app,.dlgbk,.toast) :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+:where(#app,.dlgbk,.toast,.tf-island) a{color:var(--cyan)}
+:where(#app,.dlgbk,.toast,.tf-island) button,:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input,:where(#app,.dlgbk,.toast,.tf-island) textarea{font:inherit;color:inherit}
+:where(#app,.dlgbk,.toast,.tf-island) :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 .cut{}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim) 20%,var(--gold) 50%,var(--gold-dim) 80%,transparent)}
@@ -63,11 +63,11 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 }
 @media (max-width:420px){.mrb .t small{display:none}.brand{font-size:18px}}
 #app{max-width:1120px;margin:0 auto;padding-block:18px 60px;padding-inline:16px}
-:where(#app,.dlgbk,.toast) h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:700}
-:where(#app,.dlgbk,.toast) h1{font-size:clamp(30px,7.5vw,48px);line-height:1}
-:where(#app,.dlgbk,.toast) h2{font-size:21px;color:var(--gold);display:flex;align-items:center;gap:10px}
-:where(#app,.dlgbk,.toast) h2::before{content:"";width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none}
-:where(#app,.dlgbk,.toast) h3{font-size:20px;line-height:1.15}
+:where(#app,.dlgbk,.toast,.tf-island) h1,:where(#app,.dlgbk,.toast,.tf-island) h2,:where(#app,.dlgbk,.toast,.tf-island) h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:700}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:clamp(30px,7.5vw,48px);line-height:1}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:21px;color:var(--gold);display:flex;align-items:center;gap:10px}
+:where(#app,.dlgbk,.toast,.tf-island) h2::before{content:"";width:8px;height:8px;transform:rotate(45deg);background:var(--gold);flex:none}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:20px;line-height:1.15}
 .lede{color:var(--ink2);max-width:68ch;margin:6px 0 0}
 .eyebrow{font:600 12px/1 var(--f-mono);color:var(--cyan)}
 .head{display:flex;flex-direction:column;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
@@ -93,9 +93,9 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-inline:-16px;padding-inline:16px}
 .obj-h .seg{margin-inline:-14px;padding-inline:14px}
 .seg .btn{flex:none;white-space:nowrap}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
-:where(#app,.dlgbk,.toast) select:focus,:where(#app,.dlgbk,.toast) input:focus,:where(#app,.dlgbk,.toast) textarea:focus{border-color:var(--cyan);outline:none}
-:where(#app,.dlgbk,.toast) textarea{min-height:110px;font:13px var(--f-mono)}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) textarea{background:var(--sunk);border:1px solid var(--line2);padding:10px 12px;min-height:44px;font-size:16px;min-width:0;max-width:100%;width:100%;color:var(--ink)}
+:where(#app,.dlgbk,.toast,.tf-island) select:focus,:where(#app,.dlgbk,.toast,.tf-island) input:focus,:where(#app,.dlgbk,.toast,.tf-island) textarea:focus{border-color:var(--cyan);outline:none}
+:where(#app,.dlgbk,.toast,.tf-island) textarea{min-height:110px;font:13px var(--f-mono)}
 .prog{display:flex;align-items:center;gap:8px;font:12px var(--f-mono);color:var(--ink2)}
 .prog .track{flex:1;min-width:50px;height:4px;background:var(--line);overflow:hidden}
 .prog .fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));width:0;transition:width .25s}
@@ -116,17 +116,17 @@ nav.tabs a[aria-current="page"]{color:var(--gold);border-bottom-color:var(--gold
 .src{font-size:13.5px;color:var(--ink2);margin-top:4px;overflow-wrap:anywhere}
 .src b{color:var(--ink);font-weight:600}
 .where b{color:var(--cyan);font-weight:600}
-:where(#app,.dlgbk,.toast) a.ln{color:var(--cyan);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--cyan) 50%,transparent)}
-:where(#app,.dlgbk,.toast) a.ln:hover{border-bottom-style:solid}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln{color:var(--cyan);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--cyan) 50%,transparent)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln:hover{border-bottom-style:solid}
 .reslist{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
 .reslist li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:2px 10px;align-items:start;font-size:13.5px}
 .reslist .q{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
 .reslist .where{grid-column:2;color:var(--ink2);overflow-wrap:anywhere}
 .have{font:600 11.5px var(--f-mono);margin-left:6px}
 .have.ok{color:var(--ok)} .have.no{color:var(--warn)}
-:where(#app,.dlgbk,.toast) details{min-width:0}
-:where(#app,.dlgbk,.toast) details>summary{cursor:pointer;list-style:none}
-:where(#app,.dlgbk,.toast) details>summary::-webkit-details-marker{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) details{min-width:0}
+:where(#app,.dlgbk,.toast,.tf-island) details>summary{cursor:pointer;list-style:none}
+:where(#app,.dlgbk,.toast,.tf-island) details>summary::-webkit-details-marker{display:none}
 .relics{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .relic>summary{display:inline-flex;gap:6px;align-items:center;font:500 12.5px/1 var(--f-mono);padding:9px 10px;border:1px solid var(--line2);background:var(--sunk);color:var(--ink)}
 .relic[open]{flex-basis:100%}
@@ -292,5 +292,5 @@ ul.rw{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:
 .ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .dtbl{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:6px 12px;align-items:center}.dtbl .h,.ftbl .h{font-size:12px;color:var(--ink2)}.dtbl .c,.ftbl .c{text-align:center}
 .ftbl{display:grid;gap:6px 12px;align-items:center;min-width:max-content}.ftbl .top{color:var(--gold);font-weight:600}.ftbl .fl{font-size:14px}
-:where(#app,.dlgbk,.toast) details.jt{border-top:1px solid var(--line)}:where(#app,.dlgbk,.toast) details.jt>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;list-style:none}:where(#app,.dlgbk,.toast) details.jt>summary::-webkit-details-marker{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) details.jt{border-top:1px solid var(--line)}:where(#app,.dlgbk,.toast,.tf-island) details.jt>summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;list-style:none}:where(#app,.dlgbk,.toast,.tf-island) details.jt>summary::-webkit-details-marker{display:none}
 .ftbl .h{max-width:130px;overflow-wrap:anywhere}

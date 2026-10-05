@@ -33,7 +33,7 @@
 .hrow:first-child{border-top:0}
 .hrt{display:flex;flex-direction:column;gap:6px;min-width:0}
 .hrow .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-:where(#app,.dlgbk,.toast) img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
+:where(#app,.dlgbk,.toast,.tf-island) img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .nu img.mini{width:40px;height:40px;margin-top:2px}
 .nextup .nu{grid-template-columns:44px minmax(0,1fr)}
 @media (max-width:480px){.nextup .nu{grid-template-columns:44px minmax(0,1fr)}.nextup .nun{display:grid}}

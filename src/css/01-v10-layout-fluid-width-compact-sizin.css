@@ -11,9 +11,9 @@ nav.tabs a{font-size:13px;padding:9px 8px}
 .hamb:hover,.hamb[aria-expanded=true]{border-color:var(--cyan);color:var(--cyan)}
 @media (min-width:900px){.hamb{display:grid}}
 .mrb .ring{width:34px;height:34px}.mrb .ring>span{width:27px;height:27px;font-size:14px}
-:where(#app,.dlgbk,.toast) h1{font-size:clamp(24px,3vw,38px)}
-:where(#app,.dlgbk,.toast) h2{font-size:17px}
-:where(#app,.dlgbk,.toast) h3{font-size:17px}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:clamp(24px,3vw,38px)}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:17px}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:17px}
 .head{padding-bottom:8px;gap:4px}
 .lede{max-width:90ch;font-size:14px}
 .stack{gap:12px}
@@ -22,7 +22,7 @@ nav.tabs a{font-size:13px;padding:9px 8px}
 .step,.qrow{padding:9px 12px}
 .btn{min-height:36px;padding:7px 12px;font-size:13px}
 .btn.sm{min-height:30px;padding:4px 9px;font-size:12px}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) textarea{min-height:38px;padding:7px 10px;font-size:14.5px}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) textarea{min-height:38px;padding:7px 10px;font-size:14.5px}
 .grp>summary{padding:10px 12px;min-height:44px}.grp>summary h3{font-size:16px}
 .card{padding:10px 12px}.card .nm{font-size:16px}
 .tile{padding:10px}.tile .v{font-size:22px}.tile .k{font-size:12px}

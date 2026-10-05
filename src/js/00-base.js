@@ -1,7 +1,7 @@
 
 (function(){
 if(/(^|\.)tennoform\.com$|github\.io$/.test(location.hostname)&&window.top!==window.self){try{window.top.location.replace(location.href)}catch(e){}document.documentElement.innerHTML='';return}
-document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&/cdn\.warframestat\.us|githubusercontent/.test(t.src||''))t.remove()},true);
+document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&!t.closest('[data-thumb]')&&/cdn\.warframestat\.us|githubusercontent/.test(t.src||''))t.remove()},true);
 const D=JSON.parse(document.getElementById('data').textContent);
 const I=D.items, REL=D.relics, MODS=D.mods, ARC=D.arcanes, RES=D.res, PR=D.prices, MS=D.mslug, M=D.mastery, Q=D.quests, NODES=D.nodes, ALLN=D.allnodes, RT=D.rtiers, RSRC=D.rsrc, VAULT=D.vault, SEL=D.sellers;
 const U={};for(const n in I)U[I[n].u]=n;

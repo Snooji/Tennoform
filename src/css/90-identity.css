@@ -8,11 +8,11 @@ html,body{background:var(--bg)}
 body{font:15.5px/1.55 var(--f-body);background-image:none;font-variant-numeric:tabular-nums}
 @media (max-width:899px){body{font-size:16.5px}}
 b,strong,.lbl,.nm{font-weight:600}
-:where(#app,.dlgbk,.toast) a{color:var(--ink);text-decoration-line:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
-:where(#app,.dlgbk,.toast) a:hover{text-decoration-color:var(--gold)}
-:where(#app,.dlgbk,.toast) a.ln{color:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
-:where(#app,.dlgbk,.toast) a.ln:hover{border-bottom-color:var(--gold)}
-:where(#app,.dlgbk,.toast) :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+:where(#app,.dlgbk,.toast,.tf-island) a{color:var(--ink);text-decoration-line:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
+:where(#app,.dlgbk,.toast,.tf-island) a:hover{text-decoration-color:var(--gold)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln{color:var(--ink);border-bottom:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+:where(#app,.dlgbk,.toast,.tf-island) a.ln:hover{border-bottom-color:var(--gold)}
+:where(#app,.dlgbk,.toast,.tf-island) :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
 /* top bar */
 .bar{background:color-mix(in srgb,var(--bg) 92%,transparent);border-bottom:1px solid var(--line)}
@@ -30,13 +30,13 @@ nav.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)
 .acct.in{background:var(--sunk)}
 
 /* headings and page openers */
-h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgbk,.toast) h4{font-family:var(--f-display);font-weight:600;color:var(--ink)}
-:where(#app,.dlgbk,.toast) h1{font-size:30px;line-height:1.1}
-:where(#app,.dlgbk,.toast) h2{font-size:19px;line-height:1.25;color:var(--ink);gap:8px}
-:where(#app,.dlgbk,.toast) h2::before{display:none}
-:where(#app,.dlgbk,.toast) h3{font-size:17px;line-height:1.25}
+h1,:where(#app,.dlgbk,.toast,.tf-island) h2,:where(#app,.dlgbk,.toast,.tf-island) h3,:where(#app,.dlgbk,.toast,.tf-island) h4{font-family:var(--f-display);font-weight:600;color:var(--ink)}
+:where(#app,.dlgbk,.toast,.tf-island) h1{font-size:30px;line-height:1.1}
+:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:19px;line-height:1.25;color:var(--ink);gap:8px}
+:where(#app,.dlgbk,.toast,.tf-island) h2::before{display:none}
+:where(#app,.dlgbk,.toast,.tf-island) h3{font-size:17px;line-height:1.25}
 .hero-t h1{font-size:30px}
-@media (max-width:899px){:where(#app,.dlgbk,.toast) h1,.hero-t h1{font-size:26px}:where(#app,.dlgbk,.toast) h2{font-size:18px}}
+@media (max-width:899px){:where(#app,.dlgbk,.toast,.tf-island) h1,.hero-t h1{font-size:26px}:where(#app,.dlgbk,.toast,.tf-island) h2{font-size:18px}}
 .eyebrow{font:400 13px/1.3 var(--f-body);color:var(--ink2)}
 .head{border-bottom:0;padding-bottom:2px;gap:4px}
 .lede{font-size:15px}
@@ -73,9 +73,9 @@ h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgb
 .btn.primary{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
 .btn.primary:hover{background:color-mix(in srgb,var(--gold) 88%,var(--ink));color:var(--gold-ink)}
 .btn.sm{font-size:13px}
-:where(#app,.dlgbk,.toast) select,:where(#app,.dlgbk,.toast) input[type=search],:where(#app,.dlgbk,.toast) input[type=number],:where(#app,.dlgbk,.toast) input[type=text],:where(#app,.dlgbk,.toast) input[type=password],:where(#app,.dlgbk,.toast) input[type=email],:where(#app,.dlgbk,.toast) input[type=date],:where(#app,.dlgbk,.toast) textarea{border-radius:var(--r-sm);background:var(--sunk);border-color:var(--line2)}
-:where(#app,.dlgbk,.toast) select:focus,:where(#app,.dlgbk,.toast) input:focus,:where(#app,.dlgbk,.toast) textarea:focus{border-color:var(--gold-dim)}
-:where(#app,.dlgbk,.toast) textarea{font:14px/1.5 var(--f-body)}
+:where(#app,.dlgbk,.toast,.tf-island) select,:where(#app,.dlgbk,.toast,.tf-island) input[type=search],:where(#app,.dlgbk,.toast,.tf-island) input[type=number],:where(#app,.dlgbk,.toast,.tf-island) input[type=text],:where(#app,.dlgbk,.toast,.tf-island) input[type=password],:where(#app,.dlgbk,.toast,.tf-island) input[type=email],:where(#app,.dlgbk,.toast,.tf-island) input[type=date],:where(#app,.dlgbk,.toast,.tf-island) textarea{border-radius:var(--r-sm);background:var(--sunk);border-color:var(--line2)}
+:where(#app,.dlgbk,.toast,.tf-island) select:focus,:where(#app,.dlgbk,.toast,.tf-island) input:focus,:where(#app,.dlgbk,.toast,.tf-island) textarea:focus{border-color:var(--gold-dim)}
+:where(#app,.dlgbk,.toast,.tf-island) textarea{font:14px/1.5 var(--f-body)}
 .ck{transform:none;border-radius:6px;background:transparent}
 .ck:checked{box-shadow:none}
 .ck:checked::after{transform:rotate(45deg) translate(-1px,-1px)}
@@ -121,7 +121,7 @@ h1,:where(#app,.dlgbk,.toast) h2,:where(#app,.dlgbk,.toast) h3,:where(#app,.dlgb
 .card>a.small,.card>a.ln{align-self:flex-start}
 /* only state gets a chip (vaulted, mastered, ready, overdue, MR XP); plain labels read as text */
 .chip:not(.ok):not(.bad):not(.warn):not(.good):not(.gold):not(.mxc):not(.trk){border-color:transparent;background:none;padding-inline:0;font-weight:400;color:var(--ink2)}
-:where(#app,.dlgbk,.toast) a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
+:where(#app,.dlgbk,.toast,.tf-island) a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
 .chip.gold{border-color:transparent;padding-inline:2px;font-weight:600}
 .where b,.src b{color:var(--ink)}
 .ic{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}

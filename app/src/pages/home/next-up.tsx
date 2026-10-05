@@ -5,6 +5,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
+import { Thumb } from "@/components/tf/thumb"
 import { hrefOf, runAct, tf, type HomeData, type HomeNext } from "@/lib/tf"
 
 function NextRow({ x, n }: { x: HomeNext; n: number }) {
@@ -26,9 +27,7 @@ function NextRow({ x, n }: { x: HomeNext; n: number }) {
       </div>
       <Collapsible className="min-w-0 flex-1">
         <CollapsibleTrigger className="group flex w-full cursor-pointer items-start gap-3 rounded-md text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-          {x.img ? (
-            <img src={x.img} alt="" loading="lazy" className="size-10 shrink-0 rounded-md bg-muted object-contain p-0.5" />
-          ) : null}
+          {x.img ? <Thumb src={x.img} className="size-10" /> : null}
           <span className="flex min-w-0 flex-1 flex-col gap-0.5">
             <span className="font-medium leading-snug group-hover:underline group-hover:decoration-primary/60 group-hover:underline-offset-4">
               {x.title}

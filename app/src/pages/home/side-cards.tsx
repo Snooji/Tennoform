@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
+import { Thumb } from "@/components/tf/thumb"
 import { fmt, hrefOf, runAct, tf, type HomeData, type HomeTile } from "@/lib/tf"
 
 const cardLink = "text-xs font-medium text-muted-foreground underline decoration-primary/50 underline-offset-4 hover:text-foreground"
@@ -97,11 +98,7 @@ export function GoalsCard({ d }: { d: HomeData }) {
                   }}
                   className="flex items-center gap-3 rounded-lg p-1.5 transition-colors hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
                 >
-                  {g.img ? (
-                    <img src={g.img} alt="" loading="lazy" className="size-9 shrink-0 rounded-md bg-muted object-contain p-0.5" />
-                  ) : (
-                    <span className="size-9 shrink-0 rounded-md bg-muted" />
-                  )}
+                  <Thumb src={g.img} className="size-9" />
                   <span className="flex min-w-0 flex-1 flex-col gap-1">
                     <span className="truncate text-sm font-medium">{g.name}</span>
                     <Progress value={(100 * g.done) / (g.total || 1)} className="h-1" aria-label={`${g.name}: ${g.done} of ${g.total} steps`} />
