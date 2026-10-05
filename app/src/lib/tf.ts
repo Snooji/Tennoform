@@ -85,6 +85,11 @@ export type TFApi = {
   goalsSet(o: { s?: string; short?: boolean }): void
   goalRemove(n: string): void
   setInv(n: string, v: string): void
+  quests(): QuestsData
+  questsSet(o: { f?: string }): void
+  questTick(n: string, v: boolean): void
+  questUpto(n: string): void
+  questFocused(): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -162,6 +167,15 @@ export type GoalsData = {
   goals: { name: string; img: string; done: number; total: number; xp: number; built: boolean; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null }[]
   shop: { n: string; need: number; have: number | null; left: number; where: string; task: { has: boolean; key: string; label: string } }[]
   relics: { era: string; relics: string[] }[]
+}
+export type QuestRow = {
+  n: string; id: string; done: boolean; locked: boolean; desc: string; wiki: string
+  req: { text: string; quest: string; done: boolean }[]; rewards: { text: string; go: string; left: number; xp: number }[]
+  hasTask: boolean; upto: boolean
+}
+export type QuestsData = {
+  filter: string; next: string; focus: string; total: number; done: number
+  groups: { name: string; done: number; total: number; quests: QuestRow[] }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
