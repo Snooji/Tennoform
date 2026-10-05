@@ -14,3 +14,5 @@ window.addEventListener('popstate',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SHEET)sheetClose(false)});
 window.addEventListener('hashchange',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('click',e=>{if(e.target.closest('#mkmore')){state.mkLim=(state.mkLim||60)+60;rerender()}});
+document.addEventListener('click',e=>{if(e.target.closest('#ffmore')){state.ffLim=(state.ffLim||60)+60;$('#fres').innerHTML=resultsHTML()}});
+document.addEventListener('change',e=>{if(e.target.id==='fft'){state.ffC='';state.ffLim=60}if(e.target.id==='ffc')state.ffLim=60},true);

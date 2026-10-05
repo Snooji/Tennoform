@@ -1,21 +1,28 @@
 /* ---------- farm finder ---------- */
 let IDX=null;
-function buildIdx(){IDX=[];for(const n in I)IDX.push([n,'item',I[n].p?'Prime set':I[n].c]);
-  for(const n in D.partrel)IDX.push([n,'part','Prime part']);for(const n in REL)IDX.push([n,'relic','Relic'+(REL[n].v?' · vaulted':'')]);
-  for(const n in MODS)IDX.push([n,'mod',MODS[n].ty||'Mod']);for(const n in ARC)IDX.push([n,'arc','Arcane']);for(const n in RES)IDX.push([n,'res','Resource'])}
-function search(q){if(!IDX)buildIdx();q=q.toLowerCase().trim();if(!q)return[];const w=q.split(/\s+/);
-  const r=IDX.filter(([n])=>{const l=n.toLowerCase();return w.every(x=>l.includes(x))});
-  r.sort((a,b)=>{const al=a[0].toLowerCase(),bl=b[0].toLowerCase();return (bl.startsWith(q)-al.startsWith(q))||a[0].length-b[0].length});return r.slice(0,50)}
+function buildIdx(){IDX=[];for(const n in I)IDX.push([n,'item',I[n].p?'Prime '+I[n].c:I[n].c,I[n].c]);
+  for(const n in D.partrel)IDX.push([n,'part','Prime part',(partOwner(n)||{}).c||'']);for(const n in REL)IDX.push([n,'relic','Relic'+(REL[n].v?' · vaulted':''),REL[n].era]);
+  for(const n in MODS)IDX.push([n,'mod',MODS[n].ty||'Mod',MODS[n].ty||'Mod']);for(const n in ARC)IDX.push([n,'arc',ARC[n].ty||'Arcane',ARC[n].ty||'Arcane']);for(const n in RES)IDX.push([n,'res','Resource',''])}
+/* q: words that must all appear; ty/cat narrow it first so a filter never hides real matches */
+function search(q,ty,cat){if(!IDX)buildIdx();q=(q||'').toLowerCase().trim();const w=q?q.split(/\s+/):[];
+  let r=IDX.filter(x=>(!ty||ty==='all'||x[1]===ty)&&(!cat||x[3]===cat));
+  if(w.length){r=r.filter(([n])=>{const l=n.toLowerCase();return w.every(x=>l.includes(x))});r.sort((a,b)=>{const al=a[0].toLowerCase(),bl=b[0].toLowerCase();return (bl.startsWith(q)-al.startsWith(q))||a[0].length-b[0].length||a[0].localeCompare(b[0])})}
+  else r.sort((a,b)=>a[0].localeCompare(b[0],'en',{numeric:true}));return r}
+const FFT=[['all','Everything'],['item','Gear & sets'],['mod','Mods'],['relic','Relics'],['part','Prime parts'],['arc','Arcanes'],['res','Resources']];
+function ffCats(ty){if(!IDX)buildIdx();if(!ty||ty==='all'||ty==='res')return [];const c={};IDX.forEach(x=>{if(x[1]===ty&&x[3])c[x[3]]=(c[x[3]]||0)+1});
+  const order=ty==='relic'?['Lith','Meso','Neo','Axi','Requiem']:null;return Object.entries(c).sort((a,b)=>order?order.indexOf(a[0])-order.indexOf(b[0]):b[1]-a[1])}
+function unvFilter(r){return state.unvOnly?r.filter(([n,t])=>t==='relic'?!REL[n].v:t==='part'?D.partrel[n].some(x=>!REL[x[0]]?.v):t==='item'&&I[n].p?!I[n].v:true):r}
 function farm(){const sel=state.farmSel;
   return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>Farm finder</h1></div>
-  <div class="split two"><div class="stack" style="gap:8px"><input id="fq" type="search" placeholder="Saryn Prime, Neo S10, Primed Flow, Orokin Cell…" value="${esc(state.farmQ)}" autocomplete="off" enterkeyhint="search" aria-label="Search">
-  <div class="row">${`<select id="fft" aria-label="Result type" style="width:auto">${[['all','Everything'],['item','Gear & sets'],['part','Prime parts'],['relic','Relics'],['mod','Mods'],['arc','Arcanes'],['res','Resources']].map(([k,l])=>`<option value="${k}" ${(state.ffT||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}<button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
+  <div class="split two"><div class="stack" style="gap:8px"><input id="fq" type="search" placeholder="Search, or pick a type to browse everything" value="${esc(state.farmQ)}" autocomplete="off" enterkeyhint="search" aria-label="Search">
+  <div class="row">${`<select id="fft" aria-label="Result type" style="width:auto">${FFT.map(([k,l])=>`<option value="${k}" ${(state.ffT||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}${(()=>{const cs=ffCats(state.ffT||'all');return cs.length?`<select id="ffc" aria-label="Category" style="width:auto"><option value="">All ${esc((FFT.find(x=>x[0]===(state.ffT||'all'))||[,''])[1].toLowerCase())}</option>${cs.map(([c,n])=>`<option value="${esc(c)}" ${state.ffC===c?'selected':''}>${esc(c)} (${n})</option>`).join('')}</select>`:''})()}<button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
   <div class="results" id="fres">${resultsHTML()}</div></div><div id="fdet">${sel?detail(sel):''}</div></div></div>`}
-function resultsHTML(){let r=state.farmQ?search(state.farmQ):[];const ft=state.ffT||'all';if(ft!=='all')r=r.filter(x=>x[1]===ft);
-  if(state.unvOnly)r=r.filter(([n,t])=>t==='relic'?!REL[n].v:t==='part'?D.partrel[n].some(x=>!REL[x[0]]?.v):t==='item'&&I[n].p?!I[n].v:true);
-  if(!state.farmQ){const sets=Object.values(I).filter(i=>i.p&&!i.v&&i.c!=='Companion').map(i=>[i.n,'item','Farmable Prime']);
-    return `<div class="small muted">Prime gear you can farm right now (${sets.length}):</div>`+sets.map(hit).join('')}
-  return r.length?countLine(r.length,r.length,r.length===1?'result':'results',ft!=='all'||!!state.unvOnly,'ffclear')+r.map(hit).join(''):'<div class="small muted">No matches.</div>'}
+function resultsHTML(){const ft=state.ffT||'all';const cats=ffCats(ft);const cat=cats.some(c=>c[0]===state.ffC)?state.ffC:'';const q=state.farmQ||'';
+  const total=search('',ft,cat).length;let r=unvFilter(search(q,ft,cat));const lim=state.ffLim||60;
+  const what=ft==='all'?'results':(FFT.find(x=>x[0]===ft)||[,'results'])[1].toLowerCase();
+  const head=countLine(r.length,total,what,!!(q||ft!=='all'||cat||state.unvOnly),'ffclear');
+  if(!r.length)return head+'<div class="small muted">No matches. Try fewer letters, or a different type.</div>';
+  return head+r.slice(0,lim).map(hit).join('')+(r.length>lim?`<button type="button" class="btn" id="ffmore">Show ${Math.min(60,r.length-lim)} more</button>`:'')}
 function hit([n,t,l]){const s=state.farmSel===t+'|'+n;return `<button class="hit ${s?'sel':''}" data-pick="${esc(t+'|'+n)}"><span>${esc(n)}</span><span class="row" style="gap:4px">${t==='item'?mxChip(n):''}<span class="chip">${esc(l)}</span></span></button>`}
 function detail(sel){const i=sel.indexOf('|');const t=sel.slice(0,i),n=sel.slice(i+1);
   if(t==='item')return itemTree(n);

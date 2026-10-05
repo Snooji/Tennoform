@@ -13,7 +13,7 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
-  const SEL2={scs:'scS',ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',frf:'frF',mkf:'mkF',rks:'rkS'};
+  const SEL2={scs:'scS',ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',ffc:'ffC',frf:'frF',mkf:'mkF',rks:'rkS'};
   if(SEL2[t.id]){state[SEL2[t.id]]=t.value;saveUI();const y=scrollY;render();scrollTo(0,y);return}
   if(t.matches('[data-rkin]')){const row=t.closest('.rk');const n=row.dataset.n;setRank(n,t.value);row.outerHTML=rkRow(I[n])}
   if(t.dataset.intrin){setIntr(t.dataset.intrin,t.value);const y=window.scrollY;render();window.scrollTo(0,y)}
@@ -79,7 +79,7 @@ document.addEventListener('click',async e=>{
 function focusQuest(){if(!state.qFocus)return;const el=document.getElementById('q-'+state.qFocus.replace(/\W/g,''));state.qFocus=null;if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({block:'center',behavior:'smooth'});el.style.background='var(--cyan-soft)';setTimeout(()=>el.style.background='',1600)}}
 function liveSearch(id,key){const q=$(id);if(!q)return;q.addEventListener('input',()=>{state[key]=q.value;const pos=q.selectionStart;render();const n=$(id);n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}})}
 function bindPage(r){
-  if(r==='farm'){const q=$('#fq');q.addEventListener('input',()=>{state.farmQ=q.value;$('#fres').innerHTML=resultsHTML()})}
+  if(r==='farm'){const q=$('#fq');q.addEventListener('input',()=>{state.farmQ=q.value;state.ffLim=60;$('#fres').innerHTML=resultsHTML()})}
   if(r==='resources')liveSearch('#rq','resQ');
   if(r==='missions')liveSearch('#scq','scQ');
   if(r==='ranks')liveSearch('#rkq','rkQ');

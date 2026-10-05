@@ -115,7 +115,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-nudone],[d
   if(t.id==='rsclear'){state.resQ='';state.rsF='all';saveUI();rerender();return}
   if(t.id==='mkclear'){state.mkQ='';state.mkF='all';saveUI();rerender();return}
   if(t.id==='rlclear'){state.rlE='all';saveUI();rerender();return}
-  if(t.id==='ffclear'){state.farmQ='';state.ffT='all';state.unvOnly=false;saveUI();rerender();return}});
+  if(t.id==='ffclear'){state.farmQ='';state.ffT='all';state.ffC='';state.unvOnly=false;saveUI();rerender();return}});
 /* reset layout with undo */
 document.addEventListener('click',e=>{const t=e.target.closest('#hubreset');if(!t)return;e.stopPropagation();const o=P.hub;delete P.hub;saveProfile();rerender();announce('Layout reset');
   toastAction('Home layout reset','Undo',()=>{P.hub=o;saveProfile();rerender()})},true);
