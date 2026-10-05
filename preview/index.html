@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/NBfWHBlYomtk2nzlq+k81cvhL+729so+1ncCT6G0HM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-BOZM9AKB.css"><script type="module" src="/assets/main-CtCii9Vz.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-W6iFsrL0xmbcwirj9tbAfREOAt7+w2xjHHDC/gUwHOI=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-CurkmVJo.css"><script type="module" src="/assets/main-D4LJAcwQ.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0e0f12">
 
@@ -3023,13 +3023,16 @@ const _loadWS=loadWS;loadWS=async function(){if(WSload||(WS&&Date.now()-WSat<120
 const _bindPage=bindPage;bindPage=function(r){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns(r))return;return _bindPage(r)};
 /* ---------- bridge: Ranks for the React page. The row order is kept while you edit, so rows don't jump under your finger. ---------- */
 const RKC={key:'',order:[]};
-function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it)}}
-function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s].join('|');
+function relicsDrop(n){const it=I[n];if(!it||!it.p||ownedItem(n))return false;const has=rel=>(rel||[]).some(([r])=>relCount(r)>0);
+  if(!on('bp|'+n)&&has(it.bprel))return true;return it.parts.some(p=>p.k==='p'&&p.n!=='Blueprint'&&!on('part|'+n+'|'+p.n)&&has(p.rel))}
+function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);const v=VAULT[n]||{};
+  return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it),prime:!!it.p,vaulted:!!(it.p&&it.v&&!v.now),resurgence:!!v.now,owned:ownedItem(n)&&r<mx,relics:relicsDrop(n)}}
+function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s,state.rkT||'all'].join('|');
   if(state._rkKey!==key){state._rkKey=key;state.rkLim=60;fresh=true}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);return {id:c,label:CATL[c],m:a.m,t:a.t}}).concat([{id:'Intrinsics',label:'Intrinsics',m:0,t:0},{id:'Other',label:'Other gear',m:0,t:0}]);
-  const base={cat,q:qr,f,s,cats,island:'',items:[],total:0,shown:0,notMax:0,head:{label:'',m:0,t:0,p:0,x:0,search:!!q}};
+  const base={cat,q:qr,f,s,t:state.rkT||'all',cats,island:'',items:[],total:0,shown:0,notMax:0,head:{label:'',m:0,t:0,p:0,x:0,search:!!q}};
   if(!q&&(cat==='Intrinsics'||cat==='Other')){base.island=cat==='Intrinsics'?intrHTML():othHTML();base.head.label=cat==='Intrinsics'?'Intrinsics':'Other gear';base.head.x=cat==='Intrinsics'?catXP('rail')+catXP('drift'):othXP();return base}
-  if(fresh||RKC.key!==key){let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)):MI.filter(i=>i.c===cat);
+  if(fresh||RKC.key!==key){let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)||(I[i.n]&&I[i.n].parts.some(p=>(p.full||p.n).toLowerCase().includes(q)))):MI.filter(i=>i.c===cat);const ty=state.rkT||'all';if(ty==='prime')list=list.filter(i=>I[i.n]&&I[i.n].p);if(ty==='normal')list=list.filter(i=>!(I[i.n]&&I[i.n].p));if(ty==='relics')list=list.filter(i=>relicsDrop(i.n));
     if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
     list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));
     RKC.key=key;RKC.order=list.map(i=>i.n)}
@@ -3039,7 +3042,7 @@ function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=q
   return base}
 Object.assign(window.TF,{
   ranks:fresh=>ranksData(!!fresh),
-  ranksSet:o=>{if(o.cat!=null){state.rkCat=o.cat;state.rkQ=''}if(o.q!=null)state.rkQ=o.q;if(o.f!=null)state.rkF=o.f;if(o.s!=null)state.rkS=o.s;saveUI();tfNotify()},
+  ranksSet:o=>{if(o.cat!=null){state.rkCat=o.cat;state.rkQ=''}if(o.q!=null)state.rkQ=o.q;if(o.f!=null)state.rkF=o.f;if(o.s!=null)state.rkS=o.s;if(o.t!=null)state.rkT=o.t;saveUI();tfNotify()},
   ranksMore:all=>{state.rkLim=all?1e5:(state.rkLim||60)+60;tfNotify()},
   ranksRefresh:()=>{RKC.key='';tfNotify()},
   setRank:(n,r)=>{setRank(n,r);tfNotify()},
@@ -3234,6 +3237,7 @@ function masteryData(){const tab=state.mTab||'path';const t=totalXP(),cur=mrInfo
   if(tab==='craft'){const by={};M.craft.forEach(x=>(by[x.mr]=by[x.mr]||[]).push(x));
     out.craft=Object.keys(by).sort((a,b)=>a-b).map(mr=>({title:'MR '+mr,recipes:by[mr].map(x=>({recipe:x.recipe,xp:x.xp,note:x.note||'',items:x.targets.map(t=>gearRow(t.id,'')).filter(Boolean)}))}))}
   if(tab==='xp')out.xpHtml=xpTabHTML();
+  if(tab==='helper')out.helper=helperData();
   return out}
 Object.assign(window.TF,{
   mastery:()=>masteryData(),
@@ -3246,6 +3250,32 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-mtab]');if
   e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else tfNotify()},true);
 const _masteryRoute=routes.mastery;
 routes.mastery=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')?'':_masteryRoute()};
+/* mastery helper: easy wins, items you can finish from relics you own, and the cheapest items to buy with platinum */
+function missingParts(n){const it=I[n];const out=[];if(!it)return out;
+  if(!on('bp|'+n))out.push({full:n+' Blueprint',key:'bp|'+n,rel:it.bprel||[]});
+  for(const p of it.parts){if(p.k!=='p'||p.n==='Blueprint')continue;if(!on('part|'+n+'|'+p.n))out.push({full:p.full,key:'part|'+n+'|'+p.n,rel:p.rel||[]})}
+  return out}
+function partChance(rel){let miss=1;const used=[];for(const [r,rar] of rel){const x=(P.rel||{})[r];if(!x||!REL[r])continue;let m=1;for(const k of ['i','e','f','r']){const c=+x[k]||0;if(c)m*=Math.pow(1-RCH[k][rar]/100,c)}if(m<1){miss*=m;used.push({r,rar,count:relCount(r)})}}return {p:1-miss,used}}
+function helperData(){const mode=state.mhM||'easy';const out={mode,items:[]};
+  const cand=MI.filter(it=>!on('m|'+it.n));
+  if(mode==='easy'){
+    out.leveling=cand.filter(it=>{const r=rankOf(it.n);return r>0&&r<maxRank(it)}).map(it=>({n:it.n,img:IMG(it.n),rank:rankOf(it.n),mx:maxRank(it),left:mxp(it)-itemXP(it.n)})).sort((a,b)=>b.left-a.left);
+    out.built=cand.filter(it=>rankOf(it.n)===0&&(on('build|'+it.n)||(P.foundry||[]).some(f=>f.n===it.n))).map(it=>{const f=(P.foundry||[]).find(x=>x.n===it.n);return {n:it.n,img:IMG(it.n),xp:mxp(it),state:f?(Date.now()>=f.t0+f.dur*1000?'Ready to claim in the Foundry':'Building, ready in '+hrs((f.t0+f.dur*1000-Date.now())/1000)):'Built: rank it up'}});
+    const rail=IR.length*10*1500,drift=ID.length*10*1500;out.intr=[{n:'Railjack intrinsics',left:Math.max(0,rail-catXP('rail')),max:rail},{n:'Drifter intrinsics',left:Math.max(0,drift-catXP('drift')),max:drift}].filter(x=>x.left>0);
+    out.total=out.leveling.reduce((a,x)=>a+x.left,0)+out.built.reduce((a,x)=>a+x.xp,0)+out.intr.reduce((a,x)=>a+x.left,0)}
+  else if(mode==='relics'){for(const it of cand){if(!it.p||on('build|'+it.n))continue;const miss=missingParts(it.n);if(!miss.length)continue;let p=1,ok=true;const parts=[];
+      for(const m of miss){const c=partChance(m.rel);if(!c.used.length){ok=false;break}p*=c.p;parts.push({full:m.full,p:c.p,relics:c.used.map(u=>u.r+(u.count>1?' ×'+u.count:''))})}
+      if(ok)out.items.push({n:it.n,img:IMG(it.n),xp:mxp(it)-itemXP(it.n),p,parts})}
+    out.items.sort((a,b)=>b.p-a.p||b.xp-a.xp);out.relicCount=Object.keys(P.rel||{}).filter(r=>relCount(r)>0).length}
+  else{for(const it of cand){if(!it.p||on('build|'+it.n))continue;const miss=missingParts(it.n);if(!miss.length)continue;let cost=0,ok=true;const parts=[];
+      for(const m of miss){const v=pv(m.full);if(v==null){ok=false;break}cost+=v;parts.push({full:m.full,plat:Math.round(v)})}
+      const set=(D.sets[it.n+' Set']||{}).a7;const nothing=miss.length===it.parts.filter(p=>p.k==='p'&&p.n!=='Blueprint').length+1;
+      if(!ok&&!(nothing&&set))continue;const useSet=nothing&&set&&(!ok||set<cost);const c=Math.round(useSet?set:cost);
+      out.items.push({n:it.n,img:IMG(it.n),xp:mxp(it)-itemXP(it.n),cost:c,useSet:!!useSet,parts:useSet?[]:parts,per1k:c/((mxp(it)-itemXP(it.n))/1000)})}
+    out.items.sort((a,b)=>a.cost-b.cost||b.xp-a.xp);out.items=out.items.slice(0,80)}
+  if(mode!=='easy')out.items=out.items.slice(0,80);
+  return out}
+Object.assign(window.TF,{helper:()=>helperData(),helperSet:m=>{state.mhM=m;tfNotify()}});
 /* ---------- bridge: Star chart for the React page ---------- */
 const orbC=p=>(ORB[p]||'#6fd6e8,#1e3440').split(',');
 function chartData(){const planets=[...new Set(ALLN.filter(n=>!isJ(n)).map(n=>n.p))].sort((a,b)=>{const ia=PORD.indexOf(a),ib=PORD.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b)});
@@ -3387,6 +3417,7 @@ function relicsData(){const tab=state.rlTab||'mine';const out={tab};
     Object.assign(out,{era:ef,sort:so,kinds:mine.length,tot:mine.reduce((a,r)=>a+relCount(r),0),totPl:Math.round(mine.reduce((a,r)=>a+val(r)*relCount(r),0)),withNeed:mine.filter(r=>relicAdvice(r).need.length).length,traces:+P.traces||0,
       cards:list.map(r=>{const R=REL[r];const a=relicAdvice(r);const x=P.rel[r]||{};return {r,vaulted:!!R.v,advice:{t:a.t,why:a.why,k:a.k},counts:{i:+x.i||0,e:+x.e||0,f:+x.f||0,r:+x.r||0},
         rewards:R.rw.map(([n,rr])=>({n,rar:rr,go:linkKey(n),need:!/Forma/.test(n)&&partNeeded(n),goal:!!partGoal(n),plat:pv(n)!=null?Math.round(pv(n)):null,du:partDu(n)||0})),evI:Math.round(relicEV(r,'i').pl),evR:Math.round(relicEV(r,'r').pl)}})})}
+  else if(tab==='plan')out.plan=plannerData();
   else if(tab==='add'){const q=(state.raQ||'').toLowerCase().trim(),ef=state.raE||'all';
     const list=Object.keys(REL).filter(r=>(!q||r.toLowerCase().includes(q))&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v)||(ef==='need'&&REL[r].rw.some(([n])=>!/Forma/.test(n)&&partNeeded(n)&&partGoal(n))))).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
     Object.assign(out,{q:state.raQ||'',filter:ef,total:list.length,list:list.slice(0,150).map(r=>{const R=REL[r];const rare=R.rw.find(x=>x[1]==='R');return {r,vaulted:!!R.v,rare:rare?rare[0]:'',count:+(((P.rel||{})[r]||{}).i)||0}})})}
@@ -3413,6 +3444,20 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');i
   e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
 const _relicsRoute=routes.relics;
 routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
+/* relic planner: what a run is worth with your squad size and refinement, and the chance of what you need */
+function runEV(r,ref,n,valOf){const R=REL[r];const rows=R.rw.map(([nm,rar])=>({v:valOf(nm)||0,p:RCH[ref][rar]/100})).sort((a,b)=>a.v-b.v);let F=0,prev=0,ev=0;for(const x of rows){F+=x.p;const cur=Math.pow(Math.min(1,F),n);ev+=x.v*(cur-prev);prev=cur}return ev}
+function plannerData(){const ref=state.rpR||'r',n=+(state.rpN||4),own=state.rpO!==false&&state.rpO!=='0',ef=state.rpE||'all',so=state.rpS||'plat',q=(state.rpQ||'').toLowerCase().trim();
+  let list=Object.keys(REL).filter(r=>(!own||relCount(r)>0)&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v))&&(!q||r.toLowerCase().includes(q)||REL[r].rw.some(([x])=>x.toLowerCase().includes(q))));
+  const rows=list.map(r=>{const R=REL[r];const need=R.rw.filter(([x])=>!/Forma/.test(x)&&partNeeded(x)&&partGoal(x));
+    const best=need.length?need.reduce((a,[x,rar])=>RCH[ref][rar]<RCH[ref][a[1]]?[x,rar]:a,need[0]):null;
+    const needP=need.length?1-need.reduce((m,[,rar])=>m*Math.pow(1-RCH[ref][rar]/100,n),1):0;
+    const rare=R.rw.find(x=>x[1]==='R');
+    return {r,era:R.era,vaulted:!!R.v,count:relCount(r),plat:runEV(r,ref,n,pv),du:runEV(r,ref,n,partDu),
+      rare:rare?{n:rare[0],go:linkKey(rare[0]),p:1-Math.pow(1-RCH[ref].R/100,n),plat:pv(rare[0])!=null?Math.round(pv(rare[0])):null}:null,
+      need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:''}});
+  rows.sort((a,b)=>so==='du'?b.du-a.du:so==='need'?(b.needP-a.needP)||b.plat-a.plat:so==='name'?a.r.localeCompare(b.r,undefined,{numeric:true}):b.plat-a.plat);
+  return {ref,squad:String(n),own,era:ef,sort:so,q:state.rpQ||'',total:rows.length,owned:Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0).length,rows:rows.slice(0,150).map(x=>({...x,plat:Math.round(x.plat*10)/10,du:Math.round(x.du)}))}}
+Object.assign(window.TF,{planSet:o=>{const m={ref:'rpR',squad:'rpN',era:'rpE',sort:'rpS',q:'rpQ'};for(const k in o)if(m[k])state[m[k]]=o[k];if(o.own!=null)state.rpO=o.own;tfNotify()}});
 /* ---------- bridge: Builds (arsenal) for the React page ---------- */
 function modSlot(slot,m,arc){const md=(arc?ARC[m]:MODS[m])||{};const key=(arc?'arc|':'mod|')+m;
   return {slot,m,key,pol:arc?'':(md.pol||''),done:on(key),price:strip(priceChip(m)),src:md.src?md.src:(md.dr&&md.dr.length?strip(dropsList(md.dr,2)):'Trade on warframe.market'),seller:sellerRow(m)}}
