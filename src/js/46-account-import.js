@@ -3,7 +3,8 @@ function findKey(o,key,depth){if(!o||typeof o!=='object'||depth>6)return undefin
 const SYN={ArbitersSyndicate:'Arbiters of Hexis',CephalonSudaSyndicate:'Cephalon Suda',NewLokaSyndicate:'New Loka',PerrinSyndicate:'The Perrin Sequence',RedVeilSyndicate:'Red Veil',SteelMeridianSyndicate:'Steel Meridian',CetusSyndicate:'Ostrons',QuillsSyndicate:'The Quills',SolarisSyndicate:'Solaris United',VentKidsSyndicate:'Ventkids',VoxSyndicate:'Vox Solaris',EntratiSyndicate:'Entrati',NecraloidSyndicate:'Necraloid',ZarimanSyndicate:'The Holdfasts',KahlSyndicate:"Kahl's Garrison",EntratiLabSyndicate:'Cavia',HexSyndicate:'The Hex',LibrarySyndicate:'Cephalon Simaris',ConclaveSyndicate:'Conclave',RadioLegionSyndicate:'Nightwave'};
 const pretty=s=>String(s||'').split('/').pop().replace(/([a-z])([A-Z])/g,'$1 $2').replace(/ ?Syndicate$/,'').trim();
 function nm(u){return U[u]||pretty(u)}
-function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}const _pre=JSON.stringify({at:Date.now(),C,P});if(!P.wfid){const id=findId(txt);if(id){P.wfid=id;lsSet('tenno-acct',id)}}
+function importProfile(txt){const a=logSnap();LOGMUTE++;let r;try{r=importProfile0(txt)}finally{LOGMUTE--}logSummary('sync','Synced your Warframe profile',a,false);return r}
+function importProfile0(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}const _pre=JSON.stringify({at:Date.now(),C,P});if(!P.wfid){const id=findId(txt);if(id){P.wfid=id;lsSet('tenno-acct',id)}}
   const j=raw.Results&&raw.Results[0]?raw.Results[0]:raw;const st=raw.Stats||{};
   const xpi=(j.LoadOutInventory&&j.LoadOutInventory.XPInfo)||findKey(j,'XPInfo',0)||[];const mis=j.Missions||[];const skills=j.PlayerSkills||{};
   if(!xpi.length&&!mis.length)return 'No ranks or missions found. Make sure you copied the whole page.';try{localStorage.setItem('tf-presync',_pre)}catch(e){}
@@ -54,7 +55,8 @@ async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/
   try{let j=null;if(window.TENNO_PROXY){try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}catch(e){}}
     if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
-  catch(e){if(!quiet){const el=$('#asres');if(el)el.textContent="Couldn't reach your profile automatically. Use the copy-and-paste steps below.";toast('Automatic sync unavailable. Use the paste steps.')}return false}}
+  catch(e){if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+      toast("Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
 async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;

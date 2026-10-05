@@ -28,12 +28,17 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
   </div>`}</div>
   <div class="panel stack cut"><h2>Sync</h2>
   <div class="row"><button class="btn primary" id="autosync" ${ok?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
-  ${HOSTED?(px?'<div class="small muted">Syncs every time you open the app.</div>':'<div class="small muted">If automatic sync can\'t reach Warframe, use the backup method below.</div>'):'<div class="small muted">Automatic sync works on the website version. Here, use the backup method below.</div>'}
-  <details class="more" ${HOSTED?'':'open'}><summary>Backup method: copy and paste</summary><div class="stack" style="gap:8px;margin-top:6px">
-  <div class="row"><a class="btn" id="openprof" ${ok?`href="https://api.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>1 · Open my profile data ↗</a></div>
-  <div class="small muted">2 · Select all on that page and copy. 3 · Paste here.</div>
-  <textarea id="pj" placeholder='Paste your profile data here (starts with {"Results":…)'></textarea>
-  <div class="row"><button class="btn primary" id="imp">Sync my progress</button></div></div></details>
+  ${state.syncFail?`<div class="callout small" role="status">Automatic sync couldn't reach Warframe just now. The steps below always work and take about 20 seconds.</div>`:''}
+  <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
+   <ol class="ssl">
+    <li><b>Open your profile data.</b> <span class="small muted">It opens Warframe's own page with your ID filled in. You don't need to be signed in.</span>
+     <div><a class="btn" id="openprof" ${ok?`href="https://api.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div></li>
+    <li><b>Copy everything on that page.</b> <span class="small muted">On a phone: press and hold the text, tap <b>Select All</b>, then <b>Copy</b>. On a computer: Ctrl+A (⌘A), then Ctrl+C (⌘C).</span></li>
+    <li><b>Come back and paste.</b> <div class="row" style="margin-top:6px"><button class="btn primary" id="pastesync" type="button">Paste &amp; sync</button><span class="small muted">You'll see what changes before anything is saved.</span></div></li>
+   </ol>
+   <details class="more"${HOSTED?'':' open'}><summary>Paste it by hand instead</summary><div class="stack" style="gap:8px;margin-top:6px">
+    <textarea id="pj" placeholder='Paste your profile data here (starts with {"Results":…)' aria-label="Profile data"></textarea>
+    <div class="row"><button class="btn" id="imp">Sync my progress</button></div></div></details></section>
 </div>${syncInfo()}`}
 function profileTab(){const p=P.prof;const t=totalXP(),m=mrInfo(t.total);
   const top=`<div class="panel stack cut"><h2>Tenno</h2><label class="small" for="tname">Your in-game name</label><input id="tname" type="text" value="${esc(P.tname||(p&&p.name)||'')}" placeholder="Shown on your hub" autocomplete="off">

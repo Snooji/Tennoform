@@ -19,7 +19,7 @@ body = template.replace('/*DATA*/', data)
 scripts = re.findall(r'<script>(.*?)</script>', body, re.S)
 hashes = ' '.join("'sha256-%s'" % base64.b64encode(hashlib.sha256(x.encode()).digest()).decode() for x in scripts)
 csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
-       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; "
+       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; "
        "frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; "
        "img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "

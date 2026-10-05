@@ -1,0 +1,40 @@
+/* ---- rows that open (checklist, next up) and the achievements log ---- */
+.ckrow{align-items:start}
+.ckbody{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ckhead,.nuhead{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;width:100%;min-height:32px;cursor:pointer;border-radius:var(--r-sm);color:var(--ink)}
+.ckhead:focus-visible,.nuhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ckhead:hover .nm,.nuhead:hover b{text-decoration:underline;text-decoration-color:var(--gold-dim);text-underline-offset:3px}
+.ckchev{margin-left:auto;color:var(--muted);display:inline-flex;transition:transform .15s}
+.ckchev .ic{width:18px;height:18px}
+.open>.ckbody>.ckhead .ckchev,.nu2.open .nuhead .ckchev{transform:rotate(180deg)}
+.ckpin{color:var(--gold);display:inline-flex}.ckpin .ic{width:14px;height:14px}
+.ckrow,.nu2{cursor:pointer}
+.ckrow .ck,.nu2 .ck{cursor:pointer}
+.ckmore,.numore{cursor:auto;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--sunk);display:flex;flex-direction:column;gap:8px}
+.ckol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.ckact{gap:6px}
+.ckact .cktools{display:inline-flex;gap:6px;margin-left:auto}
+.qrow.done .ckhead .nm{text-decoration:line-through;text-decoration-color:var(--gold);color:var(--muted)}
+.nu2{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;border-top:1px solid var(--line)}
+.nu2:first-of-type{border-top:0}
+.nu2>.ck{margin-top:6px}
+.nu2>.nun{margin-top:6px;justify-self:center}
+.nuhead{flex-wrap:nowrap;align-items:flex-start}
+.nuhead img.mini{width:40px;height:40px;flex:none}
+.nutx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.numore ul{margin:0;padding-left:18px}
+.numore .nuact{margin-top:0}
+/* achievements */
+.lglist{list-style:none;margin:0;padding:0}
+.lgrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:4px 10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.lgrow:first-child{border-top:0}
+.lgic{color:var(--gold);display:inline-flex;justify-content:center}.lgic .ic{width:18px;height:18px}
+.lgt{display:flex;flex-direction:column;min-width:0}
+.lgl{font-weight:600;overflow-wrap:anywhere}
+.lgnote{min-width:60px;text-align:right}
+.lgweek{padding:12px 14px}
+.lgbars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end}
+.lgday{display:flex;flex-direction:column;align-items:center;gap:2px}
+.lgb{height:56px;width:100%;max-width:36px;display:flex;align-items:flex-end;background:var(--sunk);border-radius:4px;overflow:hidden}
+.lgb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:2px}
+@media (max-width:560px){.lgrow{grid-template-columns:24px minmax(0,1fr) auto}.lgrow .chip.mxc{grid-column:2;justify-self:start}.lgrow .btn,.lgrow .lgnote{grid-row:1;grid-column:3}}
