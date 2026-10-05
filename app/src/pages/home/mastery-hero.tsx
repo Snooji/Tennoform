@@ -1,3 +1,4 @@
+import { useId, useRef } from "react"
 import { motion, useReducedMotion } from "motion/react"
 import { RefreshCw, Share2, Sparkles } from "lucide-react"
 
@@ -10,15 +11,22 @@ import { fmt, tf, type HomeData } from "@/lib/tf"
 /** Progress to the next rank as a ring; fills once on load, then follows the numbers. */
 export function MasteryRing({ pct, label, size = 132 }: { pct: number; label: string; size?: number }) {
   const reduce = useReducedMotion()
+  const gid = "ring" + useId().replace(/:/g, "")
   const r = 44
   const c = 2 * Math.PI * r
   const p = Math.max(0.005, Math.min(1, pct / 100))
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
-      <svg viewBox="0 0 100 100" className="size-full -rotate-90" aria-hidden>
+      <svg viewBox="0 0 100 100" className="size-full -rotate-90 drop-shadow-[0_0_10px_color-mix(in_oklch,var(--primary)_35%,transparent)]" aria-hidden>
+        <defs>
+          <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="var(--glow2)" />
+            <stop offset="100%" stopColor="var(--primary)" />
+          </linearGradient>
+        </defs>
         <circle cx="50" cy="50" r={r} fill="none" strokeWidth="7" className="stroke-muted" />
         <motion.circle
-          cx="50" cy="50" r={r} fill="none" strokeWidth="7" strokeLinecap="round" className="stroke-primary"
+          cx="50" cy="50" r={r} fill="none" strokeWidth="7" strokeLinecap="round" stroke={`url(#${gid})`}
           strokeDasharray={c}
           initial={{ strokeDashoffset: reduce ? c * (1 - p) : c }}
           animate={{ strokeDashoffset: c * (1 - p) }}
@@ -62,6 +70,8 @@ function Breakdown({ parts }: { parts: HomeData["parts"] }) {
 }
 
 export function MasteryHero({ d }: { d: HomeData }) {
+  const card = useRef<HTMLDivElement>(null)
+  const reduce = useReducedMotion()
   const title = d.name || d.mrLabel
   const primary =
     d.action === "link" ? (
@@ -78,10 +88,25 @@ export function MasteryHero({ d }: { d: HomeData }) {
       </a>
     )
   return (
-    <Card className="relative gap-5 p-5 md:p-6">
+    <Card
+      ref={card}
+      onPointerMove={(e) => {
+        const el = card.current
+        if (!el || reduce) return
+        const b = el.getBoundingClientRect()
+        el.style.setProperty("--mx", `${e.clientX - b.left}px`)
+        el.style.setProperty("--my", `${e.clientY - b.top}px`)
+      }}
+      className="relative gap-5 p-5 md:p-6"
+    >
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -left-16 size-72 rounded-full bg-primary/10 blur-3xl"
+        className="pointer-events-none absolute -top-24 -left-16 size-72 rounded-full bg-primary/15 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 [@media(hover:hover)]:group-hover/card:opacity-100"
+        style={{ background: "radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklch, var(--primary) 12%, transparent), transparent 70%)" }}
       />
       <div className="relative flex items-center gap-5 md:gap-7">
         <MasteryRing pct={d.pct} label={d.mrShort} size={window.innerWidth < 500 ? 104 : 132} />

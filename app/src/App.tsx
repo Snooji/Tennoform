@@ -29,6 +29,7 @@ import { RelicsPage } from "@/pages/relics/relics-page"
 import { ArsenalPage } from "@/pages/arsenal/arsenal-page"
 import { TennoPage } from "@/pages/tenno/tenno-page"
 import { isDark, tf, useTF } from "@/lib/tf"
+import { useAccent } from "@/lib/accent"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
 const PAGES: Record<string, () => React.JSX.Element> = {
@@ -58,6 +59,7 @@ export default function App() {
   const s = useTF()
   const [searchOpen, setSearchOpen] = useState(false)
   const Page = PAGES[s.route]
+  useAccent(s.mr, s.pct)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {

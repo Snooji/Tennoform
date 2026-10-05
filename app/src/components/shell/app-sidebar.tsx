@@ -1,4 +1,4 @@
-import { ChevronsUpDown, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
+import { ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -12,6 +12,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { HaloProgress } from "@/components/ui/halo-progress"
 import { PAGE_ICON } from "./nav-icons"
+import { ACCENTS, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 
@@ -187,6 +188,7 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubContent>
             </DropdownMenuSub>
+            <AccentMenu />
             {s.signedIn && (
               <>
                 <DropdownMenuSeparator />
@@ -199,5 +201,26 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
+  )
+}
+
+function AccentMenu() {
+  const choice = useAccentChoice()
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <Palette /> Colour
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent className="min-w-56">
+        <DropdownMenuRadioGroup value={choice} onValueChange={(v) => setAccent(v as AccentChoice)}>
+          {ACCENTS.map((a) => (
+            <DropdownMenuRadioItem key={a.value} value={a.value} className="flex-col items-start gap-0">
+              <span>{a.label}</span>
+              {a.hint ? <span className="text-xs text-muted-foreground">{a.hint}</span> : null}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
   )
 }

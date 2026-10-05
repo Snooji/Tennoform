@@ -15,7 +15,7 @@ export function MobileTabs() {
   return (
     <nav
       aria-label="Sections"
-      className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-background pb-[env(safe-area-inset-bottom)] md:hidden [body.typing_&]:hidden"
+      className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t bg-background/90 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70 pb-[env(safe-area-inset-bottom)] md:hidden [body.typing_&]:hidden"
     >
       {nav.map((p) => {
         const Icon = PLACE_ICON[p.id]

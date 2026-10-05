@@ -2,7 +2,7 @@
 /* dark is the default; "auto" follows the device. The .dark class drives every colour token. */
 function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
 function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);document.documentElement.style.colorScheme=dark?'dark':'light';
-  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0e0f12':'#f5f5f3'}
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':'#f5f5f3'}
 function themeSet(t){try{localStorage.setItem('tf-theme',JSON.stringify(t))}catch(x){}themeApply(t);if(typeof tfNotify==='function')tfNotify()}
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(themeGet()==='auto')themeApply('auto')})}catch(e){}
 themeApply(themeGet());
