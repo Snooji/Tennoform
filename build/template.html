@@ -350,12 +350,63 @@ select,input[type=search],input[type=number],input[type=text],input[type=passwor
 }
 @media (min-width:1200px){#rklist:has(> .rk){display:grid;grid-template-columns:1fr 1fr}#rklist>.rk:nth-child(odd){border-right:1px solid var(--line)}}
 @media (min-width:1200px){.bigmr+.bd,.panel .bd{column-gap:24px}}
+/* ---- v11 ---- */
+.chip.mxc{background:rgba(217,180,94,.10);border-color:var(--gold-dim);color:var(--gold)}
+.chip.mxc.done{background:var(--sunk);border-color:var(--line);color:var(--muted)}
+.btn.tb{min-height:28px;padding:3px 8px;font-size:11.5px}
+.brand .logo{width:30px;height:30px;flex:none;filter:drop-shadow(0 0 6px rgba(217,180,94,.35))}
+.hub3{display:grid;gap:14px;align-items:start;grid-template-columns:minmax(0,1fr);grid-template-areas:"c" "r" "l"}
+.hub3>.hc{grid-area:c}.hub3>.hl{grid-area:l}.hub3>.hr{grid-area:r}
+@media (min-width:900px){.hub3{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-areas:"c r" "l r"}}
+@media (min-width:1280px){.hub3{grid-template-columns:minmax(0,1fr) minmax(360px,1.15fr) minmax(0,1fr);grid-template-areas:"l c r"}}
+.tiles.t2{grid-template-columns:1fr 1fr}
+.bdp.center{border-color:var(--gold);box-shadow:0 0 0 1px rgba(217,180,94,.15),0 10px 40px rgba(217,180,94,.10)}
+.bdhead{display:flex;align-items:center;gap:14px}
+.bdhead .ring{width:84px;height:84px;flex:none}.bdhead .ring>span{width:70px;height:70px;font-size:32px;color:var(--gold)}
+.bdl.un span{color:var(--warn)}.bdl.un b{color:var(--warn)}
+.bdnote{font-size:12px;color:var(--muted);margin-top:-2px}
+.tlist{display:flex;flex-direction:column}
+.trow{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}.trow.done .tmain>a,.trow.done .tmain>span{text-decoration:line-through;color:var(--muted)}
+.tact{display:flex;gap:4px}.panel.tlist .trow{padding:8px 4px}
+.sharebox{grid-column:1/-1;padding:8px;border:1px dashed var(--line2);margin:0 0 6px;display:flex;flex-direction:column;gap:6px}
+.nbadge{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 4px;margin-left:4px;border-radius:9px;background:var(--bad);color:#fff;font:700 10.5px/1 var(--f-mono);vertical-align:top}
+#hamb{position:relative}#hamb .nbadge,#menu .nbadge{position:absolute;top:-4px;right:-4px;margin:0}
+#menu{position:relative}
+.fcode{font:700 28px/1.1 var(--f-mono);letter-spacing:.2em;color:var(--gold)}
+.chatwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@media (min-width:900px){.chatwrap{grid-template-columns:280px minmax(0,1fr)}}
+.flist{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--panel);max-height:520px;overflow:auto}
+.fitem{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);text-align:left;cursor:pointer;position:relative}
+.fitem.on,.fitem:hover{background:var(--cyan-soft)}.fitem .fn{font-weight:600}
+.fitem .nb{position:absolute;right:10px;top:12px;background:var(--bad);color:#fff;border-radius:9px;font:700 11px var(--f-mono);padding:2px 6px}
+.chat{border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:360px}
+.chath{padding:8px 12px;border-bottom:1px solid var(--line)}
+.chatlog{flex:1;overflow:auto;max-height:440px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.msg{display:flex;flex-direction:column;align-items:flex-start;max-width:85%}.msg.me{align-self:flex-end;align-items:flex-end}
+.bub{padding:8px 11px;background:var(--panel2);border:1px solid var(--line2);font-size:14px;overflow-wrap:anywhere}
+.msg.me .bub{background:rgba(217,180,94,.12);border-color:var(--gold-dim)}
+.mt{font:10.5px var(--f-mono);color:var(--muted);margin-top:2px}
+.chatin{padding:8px;border-top:1px solid var(--line)}
+.hero{grid-template-columns:minmax(0,1fr)!important;padding:12px 16px}.hero>.ring.big{display:none}
+@media (max-width:520px){.hero{text-align:left;justify-items:stretch}.hero-t .row{justify-content:flex-start}}
 </style>
 
 <header class="bar"><div class="bar-in">
   <button type="button" class="hamb" id="hamb" aria-label="All pages" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <a class="brand" href="#home" aria-label="Home">
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 1 L25 13 L13 25 L1 13 Z" fill="none" stroke="#D9B45E" stroke-width="1.6"/><path d="M13 6 L20 13 L13 20 L6 13 Z" fill="none" stroke="#6FD6E8" stroke-width="1.2"/><circle cx="13" cy="13" r="2.4" fill="#D9B45E"/></svg>
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+<defs>
+<linearGradient id="tfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEBB5"/><stop offset=".45" stop-color="#D9B45E"/><stop offset="1" stop-color="#8A6526"/></linearGradient>
+<radialGradient id="tfv" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#E9FBFF"/><stop offset=".35" stop-color="#6FD6E8"/><stop offset="1" stop-color="#0E3B46"/></radialGradient>
+</defs>
+<path d="M32 3C35 15 41 22 52 26 44 28 39 30 35 34 39 38 44 42 52 44 41 46 35 52 32 61 29 52 23 46 12 44 20 42 25 38 29 34 25 30 20 28 12 26 23 22 29 15 32 3Z" fill="#0A0F14" stroke="url(#tfg)" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M13 32C17 22 24 18 32 18S47 22 51 32C47 42 40 46 32 46S17 42 13 32Z" fill="none" stroke="url(#tfg)" stroke-width="1.8"/>
+<path d="M4 32C9 30 12 27 13 22M60 32C55 30 52 27 51 22M4 32C9 34 12 37 13 42M60 32C55 34 52 37 51 42" fill="none" stroke="url(#tfg)" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="32" cy="32" r="8.2" fill="#0A0F14" stroke="url(#tfg)" stroke-width="2"/>
+<circle cx="32" cy="32" r="4.6" fill="url(#tfv)"/>
+<circle cx="32" cy="9.5" r="1.6" fill="url(#tfg)"/><circle cx="32" cy="54.5" r="1.6" fill="url(#tfg)"/>
+</svg>
     <span>Tenno<b>form</b></span>
   </a>
   <nav class="tabs" aria-label="Sections"></nav>
@@ -381,11 +432,11 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market']];
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends']];
 const BAR=['home','today','ranks','resources'];
 const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
-const TOP=['home','today','ranks','missions','relics','market','arsenal'];
-const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']]];
+const TOP=['home','today','ranks','tasks','friends','missions','relics','market'];
+const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Squad',['tasks','friends']]];
 const PL=Object.fromEntries(PAGES);
 $('nav.tabs').innerHTML=TOP.map(r=>`<a href="#${r}">${PL[r]}</a>`).join('');
 $('.bnav').innerHTML=BAR.map(r=>`<a href="#${r}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[r]}"/></svg>${PAGES.find(p=>p[0]===r)[1]}</a>`).join('')+`<button type="button" id="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>`;
@@ -409,7 +460,7 @@ function setK(k,v){const e=kenc(k);if(v)C[e]=1;else delete C[e];lsSet('tenno-cod
   if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}updateMR()}
 async function flush(){if(!docRef)return;const p=pending;pending={};if(!Object.keys(p).length)return;
   try{await docRef.update({c:p})}catch(e){try{await docRef.set({c:C})}catch(e2){Object.assign(pending,p)}}}
-function saveProfile(){P.edited=new Date().toISOString();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})},SAVE_MS)}
+function saveProfile(){P.edited=new Date().toISOString();if(typeof schedulePublic==='function')schedulePublic();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})},SAVE_MS)}
 async function pushAll(){clearTimeout(timer);pending={};if(docRef){try{await docRef.set({c:C})}catch(e){}}saveProfile()}
 async function attach(dr,pr,info){docRef=dr;profRef=pr;
   const [snap,ps]=await Promise.all([docRef.get(),profRef.get()]);
@@ -435,12 +486,12 @@ async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.
   const cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey)return;
   const V='10.12.2',B='https://www.gstatic.com/firebasejs/'+V+'/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){return}
-  firebase.initializeApp(cfg);const auth=firebase.auth();const fs=firebase.firestore();FB={auth,fs};render();
+  firebase.initializeApp(cfg);const auth=firebase.auth();const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};render();
   try{await auth.getRedirectResult()}catch(e){toast(authMsg(e))}
   auth.onAuthStateChanged(async u=>{if(u){const base=fs.collection('users').doc(u.uid).collection('data');
       const wrap=r=>({get:()=>r.get(),set:o=>r.set(o),update:o=>r.set(o,{merge:true})});
-      try{await attach(wrap(base.doc('progress')),wrap(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||''})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}}
-    else if(acct&&acct.kind==='fb')detach()})}
+      try{await attach(wrap(base.doc('progress')),wrap(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||'',uid:u.uid})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}socialInit(u.uid)}
+    else{socialStop();if(acct&&acct.kind==='fb')detach()}})}
 function authMsg(e){const c=(e&&e.code)||'';return ({'auth/invalid-credential':'Wrong email or password.','auth/wrong-password':'Wrong email or password.','auth/user-not-found':'No account with that email. Tap Create account.','auth/email-already-in-use':'That email already has an account. Tap Sign in.','auth/weak-password':'Use a password with at least 6 characters.','auth/invalid-email':'That email address doesn\'t look right.','auth/popup-closed-by-user':'Sign-in was cancelled.','auth/too-many-requests':'Too many tries. Wait a minute and try again.','auth/network-request-failed':'No connection. Check your internet and try again.'})[c]||'Sign-in failed. Try again.'}
 async function signGoogle(){if(!FB)return;const pr=new firebase.auth.GoogleAuthProvider();try{await FB.auth.signInWithPopup(pr)}catch(e){if(/popup-blocked|operation-not-supported|cancelled-popup/.test(e.code||''))await FB.auth.signInWithRedirect(pr);else toast(authMsg(e))}}
 async function signEmail(create){if(!FB)return;const em=($('#lgemail')||{}).value?.trim(),pw=($('#lgpw')||{}).value||'';if(!em||!pw){toast('Enter your email and password');return}
@@ -477,8 +528,8 @@ function autoExtra(k){if(k==='chart')return NODES.reduce((a,n)=>a+(on('n|'+n.id)
 function isOv(k){return P.bo&&P.bo[k]!=null&&P.bo[k]!==''}
 function catXP(k){if(isOv(k))return +P.bo[k];return CATS.includes(k)?autoCat(k).x:autoExtra(k)}
 function totalXP(){const rows=[...CATS,...EXTRA.map(e=>e[0])].map(k=>[k,catXP(k)]);const g=k=>rows.find(r=>r[0]===k)[1];
-  const it=CATS.reduce((a,k)=>a+g(k),0);const adj=+P.adj||0;
-  return {rows,it,ch:g('chart'),sp:g('sp'),intr:g('rail')+g('drift'),other:g('other'),adj,total:rows.reduce((a,r)=>a+r[1],0)+adj}}
+  const it=CATS.reduce((a,k)=>a+g(k),0);const adj=+P.adj||0;const raw=rows.reduce((a,r)=>a+r[1],0)+adj;const base=inGameBase();const un=base?Math.max(0,base.x-raw):0;
+  return {rows,it,ch:g('chart'),sp:g('sp'),intr:g('rail')+g('drift'),other:g('other'),adj,raw,un,base,total:raw+un}}
 const mrNeed=m=>m<=30?2500*m*m:2250000+(m-30)*147500;
 function mrInfo(x){let mr=0;while(mr<30&&mrNeed(mr+1)<=x)mr++;if(mr===30)mr=30+Math.max(0,Math.floor((x-2250000)/147500));
   const cur=mrNeed(mr),next=mrNeed(mr+1);return {mr,cur,next,pct:Math.max(0,Math.min(100,(x-cur)/(next-cur)*100))}}
@@ -559,7 +610,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
   const depth=opts.depth||0;const rk=P.rk[name];
   let h=`<section class="obj" data-scope><div class="obj-h">${depth===0?art(name,'hero-art'):''}<div class="title"><h3>${esc(name)}</h3>
     <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set '):''}
-    ${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}" style="margin-left:auto">${(P.goals||[]).includes(name)?'★ Tracking':'☆ Track'}</button></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
+    ${mxChip(name)}${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<span class="row" style="margin-left:auto;gap:4px">${it.t?`<button class="btn sm" data-fstart="${esc(name)}" title="Start a Foundry timer">⏱ Foundry</button>`:''}${taskBtn('item',name,'Build '+name)}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}">${(P.goals||[]).includes(name)?'★ Tracking':'☆ Track'}</button></span></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
   h+=step('bp|'+name,'Get the blueprint',bpSource(it,opts.note));
   let pi=0;for(const p of it.parts){pi++;
     if(p.k==='p'&&p.n==='Blueprint')continue;
@@ -567,14 +618,14 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
       let src='';if(p.rel)src=`${priceChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
       h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
-      if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n));
+      if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">⏱ Start Foundry timer</button>`);
     }else if(p.k==='i'){
       h+=step('have|'+name+'|'+p.n+'|'+pi,`Have a spare ${L(p.n)}${p.q>1?' ×'+p.q:''} (used up by the recipe)`,
         depth<3?`<details class="more lazy" data-tree="${esc(p.n)}" data-depth="${depth+1}"><summary>${esc(p.n)} steps</summary><div class="sub"></div></details>`:'');
     }}
   const rs=it.parts.filter(p=>p.k==='r').map(p=>[p.n,p.q]);
   h+=step('build|'+name,`Build in Foundry · ${hrs(it.t)} · ${fmt(it.cr)} cr${it.rush?` <span class="muted">(rush ${it.rush}p)</span>`:''}`,(rs.length?resRows(rs,'res|'+name+'|main'):'')+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name)}">Start Foundry timer</button>`);
-  h+=step('m|'+name,`Rank to ${maxRank(it)} · +${fmt(mxp(it))} Mastery XP`,`Level it fast on Hydron (Sedna) or Elite Sanctuary Onslaught.`);
+  h+=step('m|'+name,`Rank to ${maxRank(it)} · ${mxChip(name)}`,`Level it fast on Hydron (Sedna) or Elite Sanctuary Onslaught.`);
   h+='</ol>';
   const T=totals(name,1,{cr:0,r:{},pt:0},[]);const tr=Object.entries(T.r).sort((a,b)=>b[1]-a[1]);
   if(tr.length)h+=`<details class="more" style="padding:4px 14px 12px"><summary>Total shopping list</summary><div class="small"><div style="margin:6px 0"><b>${fmt(T.cr)} credits</b> · fastest finish <b>${hrs((T.pt||0)+(it.t||0))}</b> (build parts together, then the final build)</div><ul class="reslist">${tr.map(([n,q])=>`<li><span></span><span class="q">${fmt(q)} × ${L(n)}${haveTag(n,q)}</span><span class="where">${farmFor(n)}</span></li>`).join('')}</ul></div></details>`;
@@ -625,7 +676,7 @@ function lichTab(){const ff=state.lF||'all',sf=state.lS||'all';const L2=P.lich||
    <div class="small muted">Valence Fusion: combine two copies of the same weapon to raise its bonus element. Max is 60%.</div></div></details>
   <div class="row">${sel('lf',ff,[['all','All factions'],['Kuva','Kuva'],['Tenet','Tenet'],['Coda','Coda']],'Faction')}${sel('ls',sf,[['all','All weapons'],['own','Owned'],['miss','Missing'],['low','Owned, under 60%'],['unm','Not mastered']],'Status')}</div>
   <div class="obj" data-scope="input.ck.lw"><div class="obj-h"><b>${list.length} weapons</b>${progHTML()}</div><div class="lichl">${list.map(w=>{const v=L2[w.n]||{};const o=own(w.n);
-    return `<div class="lrow${o?' done':''}"><div class="lnm">${ck('lich|'+w.n,'sm lw')}<span>${L(w.n)} <span class="small muted">${esc(w.c)}${on('m|'+w.n)?' · mastered':rankOf(w.n)?' · rank '+rankOf(w.n):''}</span></span>${priceChip(w.n)}</div>
+    return `<div class="lrow${o?' done':''}"><div class="lnm">${ck('lich|'+w.n,'sm lw')}<span>${L(w.n)} <span class="small muted">${esc(w.c)}${rankOf(w.n)&&!on('m|'+w.n)?' · rank '+rankOf(w.n):''}</span></span>${mxChip(w.n)}${priceChip(w.n)}</div>
     <div class="lctl"><select data-lel="${esc(w.n)}" aria-label="Bonus element for ${esc(w.n)}">${ELEM.map(e=>`<option value="${e}" ${v.e===e?'selected':''}>${e||'Element'}</option>`).join('')}</select>
     <input type="number" min="25" max="60" inputmode="numeric" data-lb="${esc(w.n)}" value="${v.b||''}" placeholder="%" aria-label="Bonus percent" style="width:70px">${v.b>=60?'<span class="chip ok">60%</span>':''}</div></div>`}).join('')||'<div class="empty">Nothing matches.</div>'}</div></div>`;
   return h}
@@ -723,9 +774,9 @@ function fishTab(){const rg=state.fR||'Plains of Eidolon',rr=state.fRr||'all',tm
   <div class="panel cut stack" style="gap:6px"><div class="row" style="justify-content:space-between"><b>${esc(rg)}</b>${cyc}</div><div class="small"><b>Spears:</b> ${esc(R.sp)}</div><div class="small"><b>Vendor:</b> ${esc(R.v)}. ${esc(R.use)}</div><ul class="small" style="margin:0;padding-left:18px">${(R.tips||[]).map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>
   <div class="row">${sel('frr',rr,[['all','All rarities'],['todo','Not caught yet'],['Common','Common'],['Uncommon','Uncommon'],['Rare','Rare'],['Legendary','Legendary']],'Rarity')}${sel('ftm',tm,[['all','Any time'],...times.map(t=>[t,t])],'Time')}</div>
   <div class="obj" data-scope="input.ck.fi"><div class="obj-h"><b>${list.length} fish</b> <span class="small muted">tick once caught</span>${progHTML()}</div><ol class="steps">${list.map(f=>{const k='fish|'+f.n;
-    return `<li class="step${on(k)?' done':''}">${ck(k,'fi')}<div><div class="lbl">${esc(f.n)} <span class="chip ${f.r==='Rare'||f.r==='Legendary'?'gold':''}">${esc(f.r)}</span></div><div class="src"><b>${esc(f.bio)}</b> · ${esc(f.time)} · spear: ${esc(f.sp||'any')}${f.bait?` · bait: <b>${esc(f.bait)}</b>`:''}${f.spots&&f.spots.length?` · spot: ${f.spots.map(esc).join(', ')}`:''}${f.dr.length?`<br><span class="muted">Gives ${f.dr.map(d=>L(d)).join(', ')}</span>`:''}</div></div></li>`}).join('')}</ol></div>`}
+    return `<li class="step${on(k)?' done':''}">${ck(k,'fi')}<div><div class="lbl">${esc(f.n)} <span class="chip ${f.r==='Rare'||f.r==='Legendary'?'gold':''}">${esc(f.r)}</span> ${taskBtn('fish',f.n,'Catch '+f.n)}</div><div class="src"><b>${esc(f.bio)}</b> · ${esc(f.time)} · spear: ${esc(f.sp||'any')}${f.bait?` · bait: <b>${esc(f.bait)}</b>`:''}${f.spots&&f.spots.length?` · spot: ${f.spots.map(esc).join(', ')}`:''}${f.dr.length?`<br><span class="muted">Gives ${f.dr.map(d=>L(d)).join(', ')}</span>`:''}</div></div></li>`}).join('')}</ol></div>`}
 function mineTab(){const M2=D.mine;const rg=state.mR||'Plains of Eidolon';const R=M2.reg[rg];
-  const rowF=(arr,kind)=>arr.map(([n,r])=>{const k='ore|'+n;return `<li class="step${on(k)?' done':''}">${ck(k,'mi')}<div><div class="lbl">${L(n)} <span class="chip ${r==='Rare'||r==='Special'?'gold':''}">${r}</span> <span class="small muted">${kind}</span></div></div></li>`}).join('');
+  const rowF=(arr,kind)=>arr.map(([n,r])=>{const k='ore|'+n;return `<li class="step${on(k)?' done':''}">${ck(k,'mi')}<div><div class="lbl">${L(n)} <span class="chip ${r==='Rare'||r==='Special'?'gold':''}">${r}</span> <span class="small muted">${kind}</span> ${taskBtn('ore',n,'Mine '+n)}</div></div></li>`}).join('');
   return `${segBtns('mreg',rg,Object.keys(M2.reg).map(r=>[r,r]))}
   <div class="panel cut stack" style="gap:6px"><b>Best spots in ${esc(rg)}</b><ul class="small" style="margin:0;padding-left:18px">${R.spots.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><div class="small muted">${esc(R.v)}</div></div>
   <div class="obj" data-scope="input.ck.mi"><div class="obj-h"><b>Ores and gems</b> <span class="small muted">tick once mined</span>${progHTML()}</div><ol class="steps">${rowF(R.ore,'ore · red vein')}${rowF(R.gem,'gem · blue vein')}</ol></div>
@@ -738,7 +789,7 @@ function juncTasks(){const order=['Venus','Mercury','Mars','Phobos','Ceres','Jup
   ${order.filter(p=>D.junc[p]).map(p=>{const j=D.junc[p];const node=ALLN.find(n=>isJ(n)&&n.n===p+' Junction');const k=node?'n|'+node.id:'';
     const done=j.tasks.filter((t,i)=>on('jt|'+p+'|'+i)).length;
     return `<details class="jt"><summary><span>${orb(j.from,18)} <b>${esc(j.from)} → ${esc(p)}</b> <span class="small muted">${esc(j.spec)}</span></span><span class="chip ${k&&on(k)?'ok':''}">${k&&on(k)?'Done':done+'/'+j.tasks.length}</span></summary><ol class="steps">
-    ${j.tasks.map((t,i)=>{const last=/^Complete the Junction$/i.test(t.t);const kk=last&&k?k:'jt|'+p+'|'+i;return `<li class="step${on(kk)?' done':''}">${ck(kk,last?'jn jx':'jt')}<div><div class="lbl">${last?'Beat the '+esc(j.spec):esc(t.t)}</div><div class="src">${t.h?esc(t.h)+'<br>':''}${t.r.length?'<span class="muted">Reward: '+t.r.map(r=>esc(r)).join(', ')+'</span>':''}</div></div></li>`}).join('')}</ol></details>`}).join('')}</details>`}
+    ${j.tasks.map((t,i)=>{const last=/^Complete the Junction$/i.test(t.t);const kk=last&&k?k:'jt|'+p+'|'+i;return `<li class="step${on(kk)?' done':''}">${ck(kk,last?'jn jx':'jt')}<div><div class="lbl">${last?'Beat the '+esc(j.spec):esc(t.t)}</div><div class="src">${t.h?esc(t.h)+'<br>':''}${t.r.length?'<span class="muted">Reward: '+t.r.map(r=>{const m=r.replace(/ Blueprint$/,'');return esc(r)+(MIX[m]?' '+mxChip(m):'')}).join(', ')+'</span>':''}</div></div></li>`}).join('')}</ol></details>`}).join('')}</details>`}
 
 /* ---------- friends & clan ---------- */
 function summarize(raw){const j=raw.Results&&raw.Results[0]?raw.Results[0]:raw;const xpi=(j.LoadOutInventory&&j.LoadOutInventory.XPInfo)||findKey(j,'XPInfo',0)||[];const mis=j.Missions||[];const sk=j.PlayerSkills||{};
@@ -785,12 +836,175 @@ document.addEventListener('change',e=>{const t=e.target;const S3={wbc:'wbC',wbo:
   if(t.dataset.dup){P.dup=P.dup||{};const v=Math.max(0,+t.value||0);if(v)P.dup[t.dataset.dup]=v;else delete P.dup[t.dataset.dup];saveProfile();rerender();return}
   if(t.dataset.ptr){P[t.dataset.ptr]=Math.max(0,+t.value||0);saveProfile();return}});
 
+/* ---------- v11: mastery everywhere, tasks, friends & messages ---------- */
+const MIX={};MI.forEach(i=>MIX[i.n]=i);
+function mxChip(n){const it=MIX[n];if(!it)return'';const tot=mxp(it),left=tot-itemXP(n);
+  return left<=0?`<span class="chip mxc done" title="Mastery XP earned">✓ ${fmt(tot)} MR XP</span>`:`<span class="chip mxc" title="Mastery XP still to earn">+${fmt(left)} MR XP</span>`}
+function inGameBase(){const g=[];if(P.gxp)g.push({x:+P.gxp,src:'your in-game total'});const mr=P.prof&&P.prof.mr;if(mr!=null&&(P.at||P.gmr!=null))g.push({x:mrNeed(mr),src:'MR '+mrLabel(mr)+' in game'});return g.sort((a,b)=>b.x-a.x)[0]||null}
+
+/* ---- tasks ---- */
+const TK={res:'Farm',item:'Build',relic:'Crack',quest:'Do quest',mod:'Get',arc:'Get',node:'Clear',synd:'Rank up',fish:'Catch',ore:'Mine',lich:'Get',note:''};
+function taskBtn(k,r,label){const has=(P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r);
+  return `<button class="btn sm tb${has?' on':''}" data-addtask="${esc(k+'|'+r)}" data-tlabel="${esc(label||'')}" title="${has?'Already in your tasks':'Add to your tasks'}">${has?'✓ In tasks':'+ Task'}</button>`}
+function newId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function addTask(k,r,t,extra){P.tasks=P.tasks||[];if(k!=='note'&&P.tasks.some(x=>!x.d&&x.k===k&&x.r===r)){toast('Already in your tasks');return null}
+  const task={id:newId(),t:t||((TK[k]?TK[k]+' ':'')+r),k,r,d:0,at:Date.now(),...(extra||{})};P.tasks.unshift(task);saveProfile();return task}
+function taskGo(x){if(x.k==='quest')return `href="#quests" data-q="${esc(x.r)}"`;if(x.k==='node')return `href="#missions" data-scp="${esc(x.r)}"`;if(x.k==='synd')return 'href="#synd"';
+  if(x.k==='fish'||x.k==='ore')return 'href="#world"';if(x.k==='lich')return `href="#" data-go="item|${esc(x.r)}"`;if(['res','item','relic','mod','arc'].includes(x.k))return `href="#" data-go="${esc(x.k+'|'+x.r)}"`;return ''}
+function taskRow(x,compact){const go=taskGo(x);
+  return `<div class="trow${x.d?' done':''}"><input type="checkbox" class="ck sm" data-tdone="${esc(x.id)}" ${x.d?'checked':''} aria-label="Done"><div class="tmain">${go?`<a class="ln" ${go}>${esc(x.t)}</a>`:`<span>${esc(x.t)}</span>`}
+   ${(x.with||[]).length?`<div class="small muted">with ${x.with.map(w=>esc(w.name)).join(', ')}</div>`:''}${x.from?`<div class="small muted">from ${esc(x.from.name)}</div>`:''}</div>
+   <div class="tact">${SO.uid&&!x.d?`<button class="btn sm" data-tshare="${esc(x.id)}" title="Invite a friend">Invite</button>`:''}${compact?'':`<button class="btn sm" data-tdel="${esc(x.id)}" aria-label="Delete task">✕</button>`}</div></div>
+   ${state.tShare===x.id?shareBox(x):''}`}
+function shareBox(x){const fr=SO.friends.filter(f=>!f.pending);
+  return `<div class="sharebox">${fr.length?`<span class="small">Invite to <b>${esc(x.t)}</b>:</span><div class="row">${fr.map(f=>`<button class="btn sm${(x.with||[]).some(w=>w.uid===f.uid)?' on':''}" data-tinvite="${esc(x.id+'|'+f.uid)}">${esc(f.name||'Friend')}</button>`).join('')}</div>`:`<span class="small muted">Add friends on the <a class="ln" href="#friends">Friends</a> page first.</span>`}</div>`}
+function taskPanel(){const open=(P.tasks||[]).filter(x=>!x.d);
+  return `<section class="panel cut stack tpanel" style="gap:8px"><div class="row" style="justify-content:space-between"><h2>My tasks</h2><a class="small ln" href="#tasks">All tasks</a></div>
+   <div class="row" style="flex-wrap:nowrap"><input id="tnew" type="text" placeholder="Add something you want to do" maxlength="120" aria-label="New task"><button class="btn primary" id="taddb">Add</button></div>
+   <div class="tlist">${open.slice(0,8).map(x=>taskRow(x,1)).join('')||'<div class="small muted">Nothing yet. Type above, or tap <b>+ Task</b> on any resource, item, relic, quest or syndicate.</div>'}${open.length>8?`<a class="small ln" href="#tasks">${open.length-8} more</a>`:''}</div></section>`}
+function tasks(){const f=state.tkF||'open',so=state.tkS||'new';let L2=(P.tasks||[]).slice();
+  L2=L2.filter(x=>f==='all'||(f==='open'&&!x.d)||(f==='done'&&x.d)||(f==='shared'&&((x.with||[]).length||x.from))||(f===x.k));
+  L2.sort((a,b)=>so==='old'?a.at-b.at:so==='kind'?(a.k||'').localeCompare(b.k||'')||b.at-a.at:b.at-a.at);
+  const all=P.tasks||[];const dn=all.filter(x=>x.d).length;
+  return `<div class="stack"><div class="head"><div class="eyebrow">Checklist</div><h1>My tasks</h1><p class="lede">Your own to-do list. Add anything, or tap <b>+ Task</b> on a resource, item, relic, quest, mod, syndicate, fish or ore anywhere in the app. Invite friends to join you.</p></div>
+  <div class="row" style="flex-wrap:nowrap"><input id="tnew" type="text" placeholder="Add something you want to do" maxlength="120" aria-label="New task"><button class="btn primary" id="taddb">Add</button></div>
+  <div class="row">${sel('tkf',f,[['open','To do'],['done','Done'],['shared','Shared with friends'],['all','All'],['res','Resources'],['item','Builds'],['relic','Relics'],['quest','Quests'],['synd','Syndicates'],['note','My notes']],'Filter tasks')}${sel('tks',so,[['new','Newest first'],['old','Oldest first'],['kind','By type']],'Sort tasks')}<span class="chip gold">${all.length-dn} to do · ${dn} done</span>${dn?'<button class="btn sm" id="tclear">Clear done</button>':''}</div>
+  <div class="panel cut tlist">${L2.map(x=>taskRow(x,0)).join('')||'<div class="empty">No tasks here.</div>'}</div></div>`}
+async function toggleTask(id,v){const x=(P.tasks||[]).find(t=>t.id===id);if(!x)return;x.d=v?1:0;x.dat=v?Date.now():0;saveProfile();
+  if(v&&SO.uid){for(const w of x.with||[])sendMsg(w.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{});if(x.from)sendMsg(x.from.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{})}}
+
+/* ---- friends & messages (Firebase) ---- */
+const SO={uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false};
+const CODE_AB='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+function myName(){return String(P.tname||(P.prof&&P.prof.name)||(acct&&acct.name)||(acct&&acct.email||'').split('@')[0]||'Tenno').slice(0,40)}
+function socialStop(){SO.unsub.forEach(f=>{try{f()}catch(e){}});Object.assign(SO,{uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false});badge()}
+async function socialInit(uid){socialStop();if(!FB)return;SO.uid=uid;const fs=FB.fs;
+  try{const ps=await fs.collection('public').doc(uid).get();const pd=ps.exists?ps.data():null;SO.code=pd&&pd.code||'';
+    if(!SO.code){for(let i=0;i<6&&!SO.code;i++){const c=Array.from({length:6},()=>CODE_AB[Math.floor(Math.random()*CODE_AB.length)]).join('');try{await fs.collection('codes').doc(c).set({uid});SO.code=c}catch(e){}}}
+    await publishPublic()}catch(e){}
+  SO.unsub.push(fs.collection('users').doc(uid).collection('friends').onSnapshot(s=>{SO.friends=s.docs.map(d=>({uid:d.id,...d.data()}));loadFriendCards();socialRender()},()=>{}));
+  SO.unsub.push(fs.collection('inbox').doc(uid).collection('msgs').orderBy('at','desc').limit(400).onSnapshot(s=>{SO.inbox=s.docs.map(d=>({id:d.id,...d.data()}));SO.ready=true;processInbox();socialRender()},()=>{}))}
+let pubT=null;
+function publishPublic(){if(!SO.uid||!FB)return Promise.resolve();const t=totalXP();const cats={};CATS.forEach(c=>{const x=catXP(c);if(x)cats[c]=x});
+  const d={name:myName(),code:SO.code||'',mr:mrInfo(t.total).mr,xp:t.total,nodes:ALLN.filter(n=>!isJ(n)&&on('n|'+n.id)).length,sp:ALLN.filter(n=>!isJ(n)&&on('sp|'+n.id)).length,maxed:MI.filter(i=>itemXP(i.n)>=mxp(i)).length,cats,at:Date.now()};
+  return FB.fs.collection('public').doc(SO.uid).set(d).catch(()=>{})}
+function schedulePublic(){if(!SO.uid)return;clearTimeout(pubT);pubT=setTimeout(publishPublic,15000)}
+async function loadFriendCards(){if(!FB)return;for(const f of SO.friends){if(SO.pub[f.uid]&&Date.now()-SO.pub[f.uid]._t<300000)continue;try{const d=await FB.fs.collection('public').doc(f.uid).get();SO.pub[f.uid]={...(d.exists?d.data():{}),_t:Date.now()}}catch(e){}}socialRender()}
+function sendMsg(to,body,copy){if(!SO.uid)return Promise.reject();const fs=FB.fs;const at=Date.now();const m={from:SO.uid,fromName:myName(),at,...body};
+  const ps=[fs.collection('inbox').doc(to).collection('msgs').add(m)];
+  if(copy!==false){const c={from:SO.uid,to,type:'sent',at,text:body.text||''};if(body.task)c.task=body.task;ps.push(fs.collection('inbox').doc(SO.uid).collection('msgs').add(c))}
+  return Promise.all(ps)}
+function processInbox(){const fs=FB.fs;
+  for(const m of SO.inbox){
+    if(m.type==='accept'){fs.collection('users').doc(SO.uid).collection('friends').doc(m.from).set({name:m.fromName||'Friend',code:m.code||'',at:Date.now()}).then(()=>fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete()).catch(()=>{});toast((m.fromName||'A friend')+' accepted your friend request')}
+    if(m.type==='taskok'&&!m.ans){const x=(P.tasks||[]).find(t=>t.id===(m.task&&m.task.id));if(x){x.with=x.with||[];if(!x.with.some(w=>w.uid===m.from))x.with.push({uid:m.from,name:m.fromName||'Friend'});saveProfile()}
+      fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).update({ans:'seen'}).catch(()=>{})}}}
+function unread(){const lr=lsGet('tf-read',{});let n=0;const per={};for(const m of SO.inbox){if(m.type==='sent'||m.type==='accept')continue;if(m.type==='friend'){n++;continue}if(m.at>(lr[m.from]||0)){n++;per[m.from]=(per[m.from]||0)+1}}return {n,per}}
+function badge(){const u=SO.uid?unread().n:0;document.querySelectorAll('.nbadge').forEach(e=>e.remove());if(!u)return;
+  document.querySelectorAll('a[href="#friends"],#hamb,#menu').forEach(a=>{const b=document.createElement('span');b.className='nbadge';b.textContent=u>9?'9+':u;a.appendChild(b)})}
+function socialRender(){badge();if(location.hash==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(location.hash==='#friends'){const box=$('#chatlog');if(box){box.innerHTML=chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
+function chatLog(fid){const ms=SO.inbox.filter(m=>(m.from===fid&&m.type!=='friend'&&m.type!=='accept')||(m.type==='sent'&&m.to===fid)).sort((a,b)=>a.at-b.at);
+  return ms.map(m=>{const mine=m.type==='sent';const t=new Date(m.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    let body=esc(m.text||'');
+    if(m.type==='task')body=`<b>Invite:</b> ${esc(m.task&&m.task.t)}${m.ans?`<div class="small muted">${m.ans==='ok'?'You joined':'You declined'}</div>`:`<div class="row" style="margin-top:6px"><button class="btn sm primary" data-tjoin="${esc(m.id)}">Join</button><button class="btn sm" data-tdecline="${esc(m.id)}">Decline</button></div>`}`;
+    if(m.type==='taskok')body=`Joined your task: <b>${esc(m.task&&(m.task.t||''))||'your task'}</b>`;
+    if(m.type==='taskno')body=`Can't join: <b>${esc(m.task&&m.task.t||'your task')}</b>`;
+    if(m.type==='taskdone')body=`Finished: <b>${esc(m.task&&m.task.t)}</b> ✓`;
+    if(mine&&m.task&&!m.text)body=`Invited to: <b>${esc(m.task.t)}</b>`;
+    return `<div class="msg${mine?' me':''}"><div class="bub">${body}</div><div class="mt">${t}</div></div>`}).join('')||'<div class="small muted" style="padding:10px">No messages yet. Say hi, or invite them to a task.</div>'}
+function friends(){const signed=SO.uid;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Squad</div><h1>Friends</h1><p class="lede">Add friends with their friend code, message them, and invite them to join your tasks.</p></div>`;
+  if(!HOSTED)return h+`<div class="panel cut">Friends and messages work on <a class="ln" href="https://tennoform.com" target="_blank" rel="noopener">tennoform.com</a> after you sign in.</div></div>`;
+  if(!FB)return h+`<div class="panel cut">Loading…</div></div>`;
+  if(!signed)return h+`<div class="panel cut stack"><b>Sign in to add friends.</b><span class="small muted">Friends, messages and shared tasks are tied to your account.</span><a class="btn primary" href="#tenno" data-ttab="account" style="align-self:flex-start">Sign in</a></div></div>`;
+  const reqs=SO.inbox.filter(m=>m.type==='friend');const ur=unread().per;const cur=state.chat&&SO.friends.some(f=>f.uid===state.chat)?state.chat:null;
+  h+=`<div class="panel cut row" style="justify-content:space-between"><div><span class="eyebrow">Your friend code</span><div class="fcode">${esc(SO.code||'…')}</div></div><button class="btn" data-copy="${esc(SO.code)}">Copy code</button></div>
+  <div class="panel cut stack" style="gap:8px"><b>Add a friend</b><div class="row" style="flex-wrap:nowrap"><input id="fcode" type="text" placeholder="Their 6-character code" maxlength="6" autocomplete="off" style="text-transform:uppercase" aria-label="Friend code"><button class="btn primary" id="faddc">Send request</button></div></div>
+  ${reqs.length?`<div class="panel cut stack" style="gap:8px;border-color:var(--gold-dim)"><b>Friend requests</b>${reqs.map(m=>`<div class="row" style="justify-content:space-between"><span><b>${esc(m.fromName||'Tenno')}</b> <span class="small muted mono">${esc(m.code||'')}</span></span><span class="row"><button class="btn sm primary" data-facc="${esc(m.id)}">Accept</button><button class="btn sm" data-fdec="${esc(m.id)}">Decline</button></span></div>`).join('')}</div>`:''}
+  <div class="chatwrap"><div class="flist">${SO.friends.length?SO.friends.map(f=>{const p=SO.pub[f.uid]||{};return `<button class="fitem${cur===f.uid?' on':''}" data-chat="${esc(f.uid)}"><span class="fn">${esc(p.name||f.name||'Friend')}${f.pending?' <span class="chip">pending</span>':''}</span><span class="small muted mono">${[p.mr!=null?'MR '+mrLabel(p.mr):'',p.xp?fmt(p.xp)+' XP':''].filter(Boolean).join(' · ')}</span>${ur[f.uid]?`<span class="nb">${ur[f.uid]}</span>`:''}</button>`}).join(''):'<div class="small muted" style="padding:12px">No friends yet. Share your code or enter theirs above.</div>'}</div>
+  <div class="chat">${cur?chatPane(cur):'<div class="empty">Pick a friend to message them.</div>'}</div></div>
+  ${SO.friends.length?compareFriends():''}</div>`;
+  return h}
+function chatPane(fid){const f=SO.friends.find(x=>x.uid===fid)||{};const p=SO.pub[fid]||{};const lr=lsGet('tf-read',{});lr[fid]=Date.now();lsSet('tf-read',lr);setTimeout(badge,0);
+  const mine=(P.tasks||[]).filter(x=>!x.d);
+  return `<div class="row chath" style="justify-content:space-between"><b>${esc(p.name||f.name||'Friend')}</b><span class="row"><select id="tinv" aria-label="Invite to a task" style="width:auto;max-width:200px"><option value="">Invite to a task…</option>${mine.map(x=>`<option value="${esc(x.id)}">${esc(x.t)}</option>`).join('')}</select><button class="btn sm" data-funf="${esc(fid)}" title="Remove friend">Remove</button></span></div>
+  ${f.pending?'<div class="small muted" style="padding:8px 12px">Waiting for them to accept. You can message once they do.</div>':''}
+  <div class="chatlog" id="chatlog">${chatLog(fid)}</div>
+  <div class="row chatin" style="flex-wrap:nowrap"><input id="msgin" type="text" maxlength="1000" placeholder="Message" aria-label="Message" ${f.pending?'disabled':''}><button class="btn primary" id="msgsend" ${f.pending?'disabled':''}>Send</button></div>`}
+function compareFriends(){const t=totalXP();const me={name:'You',mr:mrInfo(t.total).mr,xp:t.total,maxed:MI.filter(i=>itemXP(i.n)>=mxp(i)).length,nodes:ALLN.filter(n=>!isJ(n)&&on('n|'+n.id)).length,sp:ALLN.filter(n=>!isJ(n)&&on('sp|'+n.id)).length};
+  const all=[me,...SO.friends.filter(f=>!f.pending).map(f=>({name:(SO.pub[f.uid]||{}).name||f.name,...(SO.pub[f.uid]||{})}))];const best=k=>Math.max(...all.map(x=>+x[k]||0));
+  const row=(lab,k,fm)=>`<div class="fl">${lab}</div>${all.map(x=>`<div class="c mono${(+x[k]||0)===best(k)&&best(k)>0?' top':''}">${x[k]==null?'—':fm?fm(x[k]):fmt(x[k])}</div>`).join('')}`;
+  return `<details class="obj grp" open><summary><h3>Compare</h3></summary><div style="overflow-x:auto;padding:10px 14px"><div class="ftbl" style="grid-template-columns:minmax(120px,1fr) repeat(${all.length},minmax(80px,auto))"><div class="h"></div>${all.map(x=>`<div class="h c">${esc(x.name||'Friend')}</div>`).join('')}
+   ${row('Mastery rank','mr',v=>mrLabel(v))}${row('Total XP','xp')}${row('Items mastered','maxed')}${row('Nodes','nodes')}${row('Steel Path','sp')}</div></div></details>`}
+async function addFriendCode(code){code=String(code||'').trim().toUpperCase();if(!/^[A-Z0-9]{6}$/.test(code))return toast('Friend codes are 6 letters and numbers');if(code===SO.code)return toast("That's your own code");
+  try{const d=await FB.fs.collection('codes').doc(code).get();if(!d.exists)return toast('No one has that code. Check it and try again.');const uid=d.data().uid;
+    if(SO.friends.some(f=>f.uid===uid))return toast('Already in your friends');
+    await FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).set({name:'Pending',code,pending:true,at:Date.now()});
+    await sendMsg(uid,{type:'friend',code:SO.code},false);toast('Friend request sent');const el=$('#fcode');if(el)el.value=''}catch(e){toast('Couldn\'t send the request. Try again.')}}
+async function acceptFriend(id){const m=SO.inbox.find(x=>x.id===id);if(!m)return;const fs=FB.fs;
+  try{await fs.collection('users').doc(SO.uid).collection('friends').doc(m.from).set({name:m.fromName||'Friend',code:m.code||'',at:Date.now()});
+    await sendMsg(m.from,{type:'accept',code:SO.code},false);await fs.collection('inbox').doc(SO.uid).collection('msgs').doc(id).delete();toast('Friend added')}catch(e){toast('Couldn\'t accept. Try again.')}}
+async function answerInvite(id,ok){const m=SO.inbox.find(x=>x.id===id);if(!m||!m.task)return;const fs=FB.fs;
+  if(ok){addTask(m.task.k||'note',m.task.r||m.task.t,m.task.t,{from:{uid:m.from,name:m.fromName||'Friend'},src:{uid:m.from,id:m.task.id}})}
+  try{await fs.collection('inbox').doc(SO.uid).collection('msgs').doc(id).update({ans:ok?'ok':'no'});await sendMsg(m.from,{type:ok?'taskok':'taskno',task:{id:m.task.id,t:m.task.t}},false);toast(ok?'Added to your tasks':'Declined')}catch(e){toast('Couldn\'t reach your friend. Try again.')}}
+
+/* ---- home: breakdown in the centre ---- */
+function hubLeft(){const nd=ALLN.filter(n=>!isJ(n)&&on('n|'+n.id)).length,all=ALLN.filter(n=>!isJ(n)).length,J=ALLN.filter(isJ),jd=J.filter(n=>on('n|'+n.id)).length;
+  const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();const ez=easiest(5);
+  const syn=D.synd.filter(e=>gateOK(e.gate)&&e.ranks.length);const near=syn.map(e=>{const st=synState(e),rr=rankRow(e,st.r);return [e,rr.max!=null?rr.max-st.s:1e9,st]}).filter(x=>x[1]>0&&x[1]<1e9).sort((a,b)=>a[1]-b[1])[0];
+  const leftNodes=NODES.reduce((a,n)=>a+(on('n|'+n.id)?0:n.x),0);
+  return `<div class="stack hl">
+   <div class="panel cut stack" style="gap:6px"><span class="eyebrow">Easiest Mastery XP right now</span>${ez.map(x=>`<div class="row" style="justify-content:space-between;gap:6px;flex-wrap:nowrap">${art(x.it.n,'mini')}<a class="ln ell" style="flex:1" href="#" data-go="item|${esc(x.it.n)}">${esc(x.it.n)}</a><span class="chip mxc">+${fmt(x.gain)}</span></div>`).join('')||'<span class="small muted">Everything you can use is mastered.</span>'}<a class="small ln" href="#mastery">Full rank-up plan</a></div>
+   <div class="tiles t2">
+    <a class="tile cut" href="#missions"><span class="k">Star chart</span><span class="v num">${nd}<small>/${all}</small></span><span class="tbar"><i style="width:${nd/all*100}%"></i></span><span class="x">+${fmt(leftNodes)} MR XP left · junctions ${jd}/${J.length}</span></a>
+    <a class="tile cut" href="#quests"><span class="k">Quests</span><span class="v num">${qd}<small>/${Q.length}</small></span><span class="tbar"><i style="width:${qd/Q.length*100}%"></i></span><span class="x">${nq?'Next: '+esc(nq.n):'All done'}</span></a>
+    <a class="tile cut" href="#ranks" data-rkcat="Intrinsics"><span class="k">Intrinsics</span><span class="v num">${fmt(catXP('rail')+catXP('drift'))}</span><span class="x">1,500 MR XP per rank</span></a>
+    <a class="tile cut" href="#synd"><span class="k">Syndicates</span><span class="v num">${syn.filter(e=>synState(e).r>0).length}<small>/${syn.length}</small></span><span class="tbar"><i style="width:${syn.length?syn.filter(e=>synState(e).r>0).length/syn.length*100:0}%"></i></span><span class="x">${near?'Closest: '+esc(near[0].n):'Ranked up'}</span></a>
+   </div>
+   ${near?`<a class="panel navcard cut" href="#synd"><span class="eyebrow">Closest syndicate rank-up</span><h3>${esc(near[0].n)}</h3><span class="small muted">${fmt(near[1])} standing to ${esc(rankRow(near[0],near[2].r+1).t||'next rank')}. Rank-ups unlock gear that gives Mastery XP.</span></a>`:''}</div>`}
+function hubRight(){const now=Date.now();const fl=(P.foundry||[]).slice().sort((a,b)=>(a.t0+a.dur*1000)-(b.t0+b.dur*1000));const ready=fl.filter(f=>now>=f.t0+f.dur*1000).length;
+  const dd=D.checks.filter(c=>gateOK(c[4]));const ddone=dd.filter(ckDone).length;const u=SO.uid?unread():null;
+  return `<div class="stack hr">${taskPanel()}
+   <div class="tiles t2">
+    <a class="tile cut" href="#today"><span class="k">Today</span><span class="v num">${ddone}<small>/${dd.length}</small></span><span class="tbar"><i style="width:${dd.length?ddone/dd.length*100:0}%"></i></span><span class="x">Reset in ${left(lastDaily()+DAY-now)}</span></a>
+    <a class="tile cut" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?(ready?'Ready to claim':'Next in '+hrs((fl[0].t0+fl[0].dur*1000-now)/1000)):'Nothing building'}</span></a>
+    <a class="tile cut" href="#goals"><span class="k">Goals</span><span class="v num">${(P.goals||[]).length}</span><span class="x">Tracked items</span></a>
+    <a class="tile cut" href="#friends"><span class="k">Friends</span><span class="v num">${SO.uid?SO.friends.filter(f=>!f.pending).length:'—'}</span><span class="x">${u&&u.n?u.n+' new':SO.uid?'Message & invite':HOSTED?'Sign in to add':'On tennoform.com'}</span></a>
+   </div></div>`}
+
+/* ---- v11 events ---- */
+document.addEventListener('click',async e=>{const t=e.target.closest('[data-addtask],#taddb,[data-tdel],[data-tshare],[data-tinvite],#tclear,#faddc,[data-facc],[data-fdec],[data-chat],#msgsend,[data-funf],[data-tjoin],[data-tdecline],[data-copy]');if(!t)return;
+  if(t.dataset.addtask){e.preventDefault();const i=t.dataset.addtask.indexOf('|');const k=t.dataset.addtask.slice(0,i),r=t.dataset.addtask.slice(i+1);const lab=t.dataset.tlabel||'';
+    if((P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r)){location.hash='tasks';return}if(addTask(k,r,lab)){toast('Added to your tasks');t.classList.add('on');t.textContent='✓ In tasks'}return}
+  if(t.id==='taddb'){const el=$('#tnew');const v=(el&&el.value||'').trim();if(!v)return;addTask('note',v,v);rerender();return}
+  if(t.dataset.tdel){P.tasks=(P.tasks||[]).filter(x=>x.id!==t.dataset.tdel);saveProfile();rerender();return}
+  if(t.dataset.tshare){state.tShare=state.tShare===t.dataset.tshare?null:t.dataset.tshare;rerender();return}
+  if(t.dataset.tinvite){const [id,uid]=t.dataset.tinvite.split('|');const x=(P.tasks||[]).find(y=>y.id===id);if(!x)return;
+    try{await sendMsg(uid,{type:'task',task:{id:x.id,t:x.t,k:x.k,r:x.r}});toast('Invite sent');state.tShare=null;rerender()}catch(err){toast('Couldn\'t send. They need to accept your friend request first.')}return}
+  if(t.id==='tclear'){P.tasks=(P.tasks||[]).filter(x=>!x.d);saveProfile();rerender();return}
+  if(t.id==='faddc'){addFriendCode($('#fcode')&&$('#fcode').value);return}
+  if(t.dataset.facc){acceptFriend(t.dataset.facc);return}
+  if(t.dataset.fdec){FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(t.dataset.fdec).delete().catch(()=>{});return}
+  if(t.dataset.chat){state.chat=t.dataset.chat;rerender();const b=$('#chatlog');if(b)b.scrollTop=b.scrollHeight;return}
+  if(t.id==='msgsend'){const el=$('#msgin');const v=(el&&el.value||'').trim();if(!v||!state.chat)return;el.value='';try{await sendMsg(state.chat,{type:'msg',text:v})}catch(err){toast('Couldn\'t send. They may not have accepted yet.');el.value=v}return}
+  if(t.dataset.funf){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again';setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent='Remove'}},3000);return}
+    FB.fs.collection('users').doc(SO.uid).collection('friends').doc(t.dataset.funf).delete().catch(()=>{});state.chat=null;return}
+  if(t.dataset.tjoin){answerInvite(t.dataset.tjoin,true);return}
+  if(t.dataset.tdecline){answerInvite(t.dataset.tdecline,false);return}
+  if(t.dataset.copy){copy(t.dataset.copy,'Copied');return}});
+document.addEventListener('change',async e=>{const t=e.target;
+  if(t.dataset.tdone){await toggleTask(t.dataset.tdone,t.checked);rerender();return}
+  if(t.id==='tkf'||t.id==='tks'){state[t.id==='tkf'?'tkF':'tkS']=t.value;saveUI();rerender();return}
+  if(t.id==='tinv'&&t.value&&state.chat){const x=(P.tasks||[]).find(y=>y.id===t.value);if(x){try{await sendMsg(state.chat,{type:'task',task:{id:x.id,t:x.t,k:x.k,r:x.r}});toast('Invite sent')}catch(err){toast('Couldn\'t send the invite.')}}t.value=''}});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const id=e.target&&e.target.id;
+  if(id==='tnew'){e.preventDefault();$('#taddb')&&$('#taddb').click()}if(id==='msgin'){e.preventDefault();$('#msgsend')&&$('#msgsend').click()}if(id==='fcode'){e.preventDefault();$('#faddc')&&$('#faddc').click()}});
+
 /* ---------- router ---------- */
-const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
-function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,syF:state.syF,syS:state.syS,syH:state.syH,gS:state.gS,hF:state.hF,qF:state.qF,misType:state.misType,rsF:state.rsF,ffT:state.ffT,frF:state.frF,mkF:state.mkF,rkS:state.rkS,rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide,aTab:state.aTab,wbC:state.wbC,wbO:state.wbO,wbSel:state.wbSel,cbSel:state.cbSel,lF:state.lF,lS:state.lS,arT:state.arT,arS:state.arS,arO:state.arO,kmT:state.kmT,kmS:state.kmS,rlTab:state.rlTab,rlE:state.rlE,rlO:state.rlO,raE:state.raE,duF:state.duF,duO:state.duO,wTab:state.wTab,fR:state.fR,fRr:state.fRr,fT:state.fT,mR:state.mR})}
+function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,syF:state.syF,syS:state.syS,syH:state.syH,gS:state.gS,hF:state.hF,qF:state.qF,misType:state.misType,rsF:state.rsF,ffT:state.ffT,frF:state.frF,mkF:state.mkF,rkS:state.rkS,rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide,aTab:state.aTab,wbC:state.wbC,wbO:state.wbO,wbSel:state.wbSel,cbSel:state.cbSel,lF:state.lF,lS:state.lS,arT:state.arT,arS:state.arS,arO:state.arO,kmT:state.kmT,kmS:state.kmS,rlTab:state.rlTab,rlE:state.rlE,rlO:state.rlO,raE:state.raE,duF:state.duF,duO:state.duO,wTab:state.wTab,fR:state.fR,fRr:state.fRr,fT:state.fT,mR:state.mR,tkF:state.tkF,tkS:state.tkS})}
 function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
   document.querySelectorAll('nav.tabs a,.bnav a,#sheet a').forEach(a=>{if(a.getAttribute('href')==='#'+key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   const mb=$('#menu');if(mb){if(BAR.includes(key))mb.removeAttribute('aria-current');else mb.setAttribute('aria-current','page')}
@@ -802,7 +1016,7 @@ window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 function sheetItems(){const s=new Set();M.weapons.forEach(w=>w.id&&s.add(w.id));M.companions.forEach(w=>w.id&&s.add(w.id));M.frames.forEach(w=>w.id&&s.add(w.id));M.craft.forEach(x=>x.targets.forEach(t=>t.id&&s.add(t.id)));return [...s]}
 function bigMR(){const t=totalXP(),m=mrInfo(t.total);const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length;
   return `<div class="panel stack cut" id="bigmr"><div class="bigmr"><div class="ring" style="--p:${m.pct.toFixed(1)}"><span>${mrLabel(m.mr)}</span></div><div class="stack" style="gap:4px;min-width:0"><div class="eyebrow">${m.mr>30?'Legendary rank':'Mastery rank'}</div><div class="num" style="font-size:20px;font-weight:600">${fmt(t.total)} XP</div><div class="small muted">${fmt(m.next-t.total)} XP to ${m.mr>=30?'L'+(m.mr-29):'MR '+(m.mr+1)}${P.mr!=null?` · in-game at last sync: ${mrLabel(P.mr)}`:''}</div></div></div>
-  <div class="bd"><span>Gear (${maxed} maxed)</span><span class="num">${fmt(t.it)}</span><span>Star chart nodes</span><span class="num">${fmt(t.ch)}</span><span>Steel Path nodes</span><span class="num">${fmt(t.sp)}</span><span>Intrinsics</span><span class="num">${fmt(t.intr)}</span>${t.other?`<span>Other gear</span><span class="num">${fmt(t.other)}</span>`:''}${t.adj?`<span>Manual adjustment</span><span class="num">${fmt(t.adj)}</span>`:''}</div></div>`}
+  <div class="bd"><span>Gear (${maxed} maxed)</span><span class="num">${fmt(t.it)}</span><span>Star chart nodes</span><span class="num">${fmt(t.ch)}</span><span>Steel Path nodes</span><span class="num">${fmt(t.sp)}</span><span>Intrinsics</span><span class="num">${fmt(t.intr)}</span>${t.other?`<span>Other gear</span><span class="num">${fmt(t.other)}</span>`:''}${t.adj?`<span>Manual adjustment</span><span class="num">${fmt(t.adj)}</span>`:''}${t.un?`<span style="color:var(--warn)">Unaccounted (in game)</span><span class="num" style="color:var(--warn)">${fmt(t.un)}</span>`:''}</div></div>`}
 /* ---------- hub (home) ---------- */
 function easiest(k){const cur=Math.max(mrInfo(totalXP().total).mr,1);return MI.filter(it=>!on('m|'+it.n)&&(it.mr||0)<=Math.min(cur,30)).map(it=>({it,gain:mxp(it)-itemXP(it.n),e:ease(it)})).filter(x=>x.gain>0).sort((a,b)=>a.e-b.e||b.gain-a.gain).slice(0,k)}
 function heroHTML(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.prof&&P.prof.name)||'Tenno';const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length;
@@ -824,19 +1038,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   return `<div class="stack">${heroHTML()}${testBanner()}
   ${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Everything follows you to every device.</span></a>`:''}
   ${!P.at?`<a class="panel navcard cut" href="#tenno" data-ttab="account"><span class="eyebrow">Link your account</span><h3>Sync your Warframe profile</h3><span class="small muted">Fills in your ranks, missions, quests and syndicates automatically.</span></a>`:syncCard()}
-  <div class="hubgrid">${bdPanel()}
-  <div class="stack">
-   <div class="tiles">
-    <a class="tile cut" href="#today"><span class="k">Today</span><span class="v num">${ddone}<small>/${dd.length}</small></span><span class="tbar"><i style="width:${dd.length?ddone/dd.length*100:0}%"></i></span><span class="x">Daily reset in ${left(lastDaily()+DAY-now)}</span></a>
-    <a class="tile cut" href="#quests"><span class="k">Quests</span><span class="v num">${qd}<small>/${Q.length}</small></span><span class="tbar"><i style="width:${qd/Q.length*100}%"></i></span><span class="x">${nq?'Next: '+esc(nq.n):'All done'}</span></a>
-    <a class="tile cut" href="#missions"><span class="k">Star chart</span><span class="v num">${nd}<small>/${ALLN.length}</small></span><span class="tbar"><i style="width:${nd/ALLN.length*100}%"></i></span><span class="x">Steel Path ${sd}</span></a>
-    <a class="tile cut" href="#synd"><span class="k">Syndicates</span><span class="v num">${syn.filter(e=>synState(e).r>0).length}<small>/${syn.length}</small></span><span class="tbar"><i style="width:${syn.length?syn.filter(e=>synState(e).r>0).length/syn.length*100:0}%"></i></span><span class="x">${near?'Closest: '+esc(near[0].n):'Ranked up'}</span></a>
-    <a class="tile cut" href="#goals"><span class="k">Goals</span><span class="v num">${(P.goals||[]).length}</span><span class="tbar"><i style="width:${(P.goals||[]).length?(P.goals.filter(n=>on('build|'+n)).length/P.goals.length*100):0}%"></i></span><span class="x">Tracked items</span></a>
-    <a class="tile cut" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?'Ready to claim':'Nothing building'}</span></a>
-   </div>
-   <div class="panel cut stack" style="gap:6px"><span class="eyebrow">Easiest Mastery XP right now</span>${ez.map(x=>`<div class="row" style="justify-content:space-between;gap:6px">${art(x.it.n,'mini')}<a class="ln" style="flex:1" href="#" data-go="item|${esc(x.it.n)}">${esc(x.it.n)}</a><span class="chip">+${fmt(x.gain)}</span></div>`).join('')||'<span class="small muted">Everything you can use is mastered.</span>'}<a class="small ln" href="#mastery">Full rank-up plan</a></div>
-   ${near?`<a class="panel navcard cut" href="#synd"><span class="eyebrow">Closest syndicate rank-up</span><h3>${esc(near[0].n)}</h3><span class="small muted">${fmt(near[1])} standing to ${esc(rankRow(near[0],near[2].r+1).t||'next rank')}</span></a>`:''}
-  </div></div>
+  <div class="hub3"><div class="hc">${bdPanel()}</div>${hubLeft()}${hubRight()}</div>
   <div class="sec-h"><h2>Explore</h2></div>
   <div class="grid">${PAGES.filter(p=>p[0]!=='home').map(([h,t])=>`<a class="panel navcard cut" href="#${h}"><h3>${t}</h3></a>`).join('')}</div>
   <div class="callout small">${synced?(acct&&acct.kind==='fb'?'Signed in as '+esc(acct.email||acct.name||'you')+'. Everything saves to your account.':'Signed in: everything saves to your claude.ai account and follows you to any device.'):HOSTED?(FB?'Saving in this browser only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep your progress forever on any device.':'Your progress saves in this browser. To move it to another device, use Tenno → Backup.'):'Your progress saves on this device. Sign in to claude.ai to sync it across devices.'}</div>
@@ -875,6 +1077,7 @@ function breakdownTab(){const t=totalXP(),m=mrInfo(t.total);
   <div class="bdr hd"><span>Category</span><span>In-game XP</span><span>Counted</span></div>
   ${BDG.flat().map(k=>CATS.includes(k)?(()=>{const a=autoCat(k);return row(k,CATL[k],a.x,`${a.m}/${a.t} mastered · from Ranks: ${fmt(a.x)}`)})():row(k,bdLabel(k),autoExtra(k),k==='other'?'Gear this app doesn\'t list (from sync or your entry)':'From your ticks: '+fmt(autoExtra(k)))).join('')}
   <div class="bdr"><div><b>Adjustment</b><div class="small muted">Anything else, to match your in-game total</div></div><input id="adj" type="number" inputmode="numeric" value="${+P.adj||0}" aria-label="Adjustment XP"><span class="num">${fmt(+P.adj||0)}</span></div>
+  ${t.un?`<div class="bdr"><div><b style="color:var(--warn)">Unaccounted</b><div class="small muted">In game (${esc(t.base.src)}) but not itemised here yet. Ticking more fills this first.</div></div><span></span><span class="num" style="color:var(--warn)">${fmt(t.un)}</span></div>`:''}
   <div class="bdr tot"><b>Total</b><span></span><span class="num">${fmt(t.total)}</span></div>
   <div class="panel stack cut" style="margin-top:6px"><b>Check against the game</b><div class="small muted">Type the totals from your in-game profile. The app shows where the difference is.</div><div class="row"><label class="small" for="gmr">In-game MR</label><input id="gmr" type="number" inputmode="numeric" value="${P.gmr??''}" style="width:90px"><label class="small" for="gxp">In-game total XP</label><input id="gxp" type="number" inputmode="numeric" value="${P.gxp??''}" style="width:140px"></div>${P.gxp?`<div class="small">${+P.gxp===t.total?'<b style="color:var(--ok)">Matches the game exactly.</b>':`Tracked total is <b>${fmt(Math.abs(t.total-P.gxp))} XP ${t.total>P.gxp?'more':'less'}</b> than the game. ${t.total<P.gxp?'Most often this is junctions or Steel Path nodes not ticked on the Star Chart, intrinsics, or MOAs, Hounds and Amps under Ranks → Other gear.':'Check for gear marked mastered that isn\'t, or a typed number that\'s too high.'}`}</div>`:''}${P.gmr!=null&&P.gmr!==''&&+P.gmr!==m.mr?`<div class="small">In game you're MR ${P.gmr}; tracked is MR ${m.mr}. ${+P.gmr>m.mr?`MR ${+P.gmr} needs ${fmt(mrNeed(+P.gmr))} XP, so at least ${fmt(mrNeed(+P.gmr)-t.total)} XP is missing from what you've entered.`:`If your in-game XP really reaches MR ${m.mr}, your rank-up test is waiting. Otherwise something is counted that shouldn't be.`}</div>`:''}</div>
   <div class="row"><span class="chip gold">${m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr}</span><span class="small muted">${fmt(m.next-t.total)} XP to the next rank</span><button class="btn sm" id="boreset">Clear in-game numbers</button></div></div>`}
@@ -902,8 +1105,9 @@ function bdLabel(k){return CATL[k]||(EXTRA.find(e=>e[0]===k)||[])[1]||k}
 function bdPanel(){const t=totalXP(),m=mrInfo(t.total);
   const row=k=>{const x=catXP(k);const isC=CATS.includes(k);const a=isC?autoCat(k):null;const tgt=isC?`data-rkcat="${esc(k)}"`:k==='rail'||k==='drift'?'data-rkcat="Intrinsics"':`data-scp=""`;
     return `<button class="bdl" ${tgt}><b class="num">${fmt(x)}</b><span>${bdLabel(k)}</span>${a?`<small class="mono">${a.m}/${a.t}</small>`:''}${isOv(k)?'<small class="ovt">set</small>':''}</button>`};
-  return `<section class="bdp cut" id="bdp"><div class="row" style="justify-content:space-between"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust</a></div>
+  return `<section class="bdp cut center" id="bdp"><div class="bdhead"><div class="ring" style="--p:${m.pct.toFixed(1)}"><span>${mrLabel(m.mr)}</span></div><div class="stack" style="gap:2px;min-width:0;flex:1"><div class="row" style="justify-content:space-between"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust</a></div><span class="small muted mono">${fmt(t.total)} / ${fmt(m.next)} XP · ${fmt(m.next-t.total)} to ${m.mr>=30?'L'+(m.mr-29):'MR '+(m.mr+1)}</span><div class="nextbar"><i style="width:${m.pct.toFixed(1)}%"></i></div></div></div>
   ${BDG.map((g,i)=>{const rows=g.filter(k=>i<4||catXP(k)>0||(CATS.includes(k)&&autoCat(k).p));return rows.length?`<div class="bdg">${rows.map(row).join('')}</div>`:''}).join('')}
+  ${t.un?`<div class="bdg"><button class="bdl un" data-ttab="breakdown"><b class="num">${fmt(t.un)}</b><span>Unaccounted</span><small>in game</small></button><div class="bdnote">From ${esc(t.base.src)}, not itemised here yet. Anything you tick (missions, junctions, gear) fills this first, so your total stays the same until it's used up.</div></div>`:''}
   <div class="bdtot"><span>Total</span><b class="num">${fmt(t.total)}</b></div></section>`}
 function testBanner(){const t=totalXP(),m=mrInfo(t.total);const g=P.prof&&P.prof.mr!=null?P.prof.mr:null;if(g==null||m.mr<=g)return'';
   return `<div class="callout small" style="border-color:var(--ok)"><b style="color:var(--ok)">Rank-up test ready.</b> You have the XP for ${m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr}; your account is still MR ${g} in game. Take the test from the Mastery shrine in a Relay or your Orbiter.</div>`}
@@ -970,13 +1174,14 @@ function synCard(e){const st=synState(e),ok=gateOK(e.gate);const cur=rankRow(e,s
   const pct=cur.max!=null?Math.max(0,Math.min(100,(st.s-(cur.min||0))/((cur.max||1)-(cur.min||0))*100)):0;const dl=dailyLeft(e);
   const stages=(e.farm||[]);let si=0;stages.forEach((s,i)=>{if(st.r>=s[1])si=i});
   const offers=(e.offers||[]).filter(o=>o[2]<=st.r+1).slice(0,40);
-  return `<div class="card cut${ok?'':' locked'}"><div class="top"><span class="nm">${esc(e.n)}</span><span class="row" style="gap:6px">${st.sync?'<span class="chip teal">Synced</span>':''}<span class="chip">${e.kind==='faction'?'Faction':e.kind==='open'?'Open world':'Other'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(e.gate)}">Unlocks after ${esc(e.gate)}</a>`}</span></div>
+  return `<div class="card cut${ok?'':' locked'}"><div class="top"><span class="nm">${esc(e.n)}</span><span class="row" style="gap:6px">${taskBtn('synd',e.n,'Rank up '+e.n)}${st.sync?'<span class="chip teal">Synced</span>':''}<span class="chip">${e.kind==='faction'?'Faction':e.kind==='open'?'Open world':'Other'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(e.gate)}">Unlocks after ${esc(e.gate)}</a>`}</span></div>
   ${e.ranks.length?`<div class="row" style="gap:8px"><b style="color:var(--gold)">${esc(cur.t||'Rank '+st.r)}</b><span class="small muted">Rank ${st.r}${top?' of '+top:''}</span><span class="small mono">${fmt(st.s)}${cur.max!=null?' / '+fmt(cur.max):''}</span></div><div class="nextbar"><i style="width:${pct}%"></i></div>
   ${nx.t?`<div class="small">Next: <b>${esc(nx.t)}</b> at ${fmt(cur.max)} standing${cur.max!=null&&st.s<cur.max?` (${fmt(cur.max-st.s)} to go${dl?`, about ${Math.ceil((cur.max-st.s)/Math.max(1,dailyCap()))} days at the daily cap`:''})`:' · ready to rank up'}. Costs ${nx.cr?fmt(nx.cr)+' credits':''}${nx.items&&nx.items.length?(nx.cr?' + ':'')+nx.items.map(([q,n])=>`${fmt(q)} × ${L(n)}`).join(', '):''}${nx.sc?` and ${fmt(nx.sc)} standing`:''}.</div>`:`<div class="small" style="color:var(--ok)">Max rank.</div>`}`:''}
   ${dl!=null?`<div class="small muted">Standing left today: <b class="num">${fmt(dl)}</b></div>`:''}
   ${e.kind==='faction'?`<div class="small muted">Allied: ${esc(e.ally)} · Opposed: ${esc(e.opp)} · Enemy: ${esc(e.enemy)}. Earning standing here also raises your ally and lowers the opposed and enemy syndicates.</div>`:''}
   ${stages.length?`<div class="tier cut"><h4>Best way to earn now · ${esc(stages[si][0])}</h4><ul style="margin:0;padding-left:18px">${stages[si][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul>${stages[si+1]?`<details class="more"><summary>Next stage: ${esc(stages[si+1][0])}</summary><ul style="margin:0;padding-left:18px">${stages[si+1][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul></details>`:''}</div>`:''}
-  ${offers.length?`<details class="more"><summary>What you can buy (${offers.length})</summary><div class="kv small">${offers.map(o=>`<span>${L(o[0])}${o[2]>st.r?' <span class="chip">next rank</span>':''}</span><span class="num">${fmt(o[1])}</span>`).join('')}</div></details>`:''}
+  ${(()=>{const mo=(e.offers||[]).filter(o=>MIX[o[0]]&&itemXP(o[0])<mxp(MIX[o[0]]));const sum=mo.reduce((a,o)=>a+mxp(MIX[o[0]])-itemXP(o[0]),0);return sum?`<div class="small"><span class="chip mxc">+${fmt(sum)} MR XP</span> in gear you can buy here with standing (${mo.length} item${mo.length>1?'s':''})</div>`:''})()}
+  ${offers.length?`<details class="more"><summary>What you can buy (${offers.length})</summary><div class="kv small">${offers.map(o=>`<span>${L(o[0])}${o[2]>st.r?' <span class="chip">next rank</span>':''} ${mxChip(o[0])}</span><span class="num">${fmt(o[1])}</span>`).join('')}</div></details>`:''}
   ${e.ranks.length?`<details class="more"><summary>Set rank by hand</summary><div class="row"><select data-synr="${esc(e.n)}" aria-label="Rank" style="width:auto">${e.ranks.map(r=>`<option value="${r.r}" ${r.r===st.r?'selected':''}>${r.r}: ${esc(r.t)}</option>`).join('')}</select><input type="number" inputmode="numeric" data-syns="${esc(e.n)}" value="${st.s||''}" placeholder="Standing" style="width:140px" aria-label="Standing"></div></details>`:''}
   <a class="small" href="${e.w}" target="_blank" rel="noopener">wiki</a></div>`}
 
@@ -1024,7 +1229,7 @@ function missions(){const planets=[...new Set(ALLN.filter(n=>!isJ(n)).map(n=>n.p
   let ns=s.ns.filter(n=>(tf==='all'||n.t===tf)&&(!hide||!on('n|'+n.id)||!on('sp|'+n.id))&&(!q||n.n.toLowerCase().includes(q)));
   const srt=state.scS||'lv';ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);
   const rr=(D.regres[sel]||D.regres[sel==='Zariman'?'Zariman Ten Zero':sel]||[]);const pj=ALLN.filter(n=>isJ(n)&&(n.id.startsWith(sel)));
-  h+=`<div class="row"><button class="btn" data-scp="">← All planets</button>${orb(sel,34)}<span class="small mono">${s.d}/${s.ns.length} nodes · SP ${s.s}/${s.ns.length} · ${fmt(s.xd)} XP earned</span></div>
+  h+=`<div class="row"><button class="btn" data-scp="">← All planets</button>${orb(sel,34)}${taskBtn('node',sel,'Clear '+sel+' nodes')}<span class="small mono">${s.d}/${s.ns.length} nodes · SP ${s.s}/${s.ns.length} · ${fmt(s.xd)} XP earned</span></div>
   ${rr.length?`<div class="small">Resources here: ${rr.map(r=>L(r)).join(' · ')}</div>`:''}
   <div class="row"><input id="scq" type="search" placeholder="Find a node" value="${esc(state.scQ||'')}" style="flex:1 1 160px" aria-label="Find a node"><select id="mtype" aria-label="Mission type" style="width:auto">${[['all','All types'],...[...new Set(s.ns.map(n=>n.t))].sort().map(t=>[t,t])].map(([k,l])=>`<option value="${esc(k)}" ${tf===k?'selected':''}>${esc(l)}</option>`).join('')}</select><select id="scs" aria-label="Sort" style="width:auto">${[['lv','Sort: level'],['xp','Sort: XP'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select><button class="btn ${hide?'on':''}" id="mishide">Unfinished only</button></div>
   <div class="obj" data-scope="input.ck.nd"><div class="obj-h">${progHTML()}<div class="row"><button class="btn sm" data-planet="${esc(sel)}" data-mode="n">Mark all done</button><button class="btn sm" data-planet="${esc(sel)}" data-mode="sp">Mark all Steel Path</button></div></div>
@@ -1079,7 +1284,7 @@ async function saveFile(name,text,type){if(HOSTED){const a=document.createElemen
   try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:name,data:text});toast('Saved '+name)}catch(e){toast('Saving files isn\'t available here.')}}
 
 /* ---------- tenno (character) ---------- */
-function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['friends','Friends & clan'],['backup','Backup & export']];
+function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['friends','Compare profiles'],['backup','Backup & export']];
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Tenno</div><h1>${esc(P.tname||(P.prof&&P.prof.name)||'Your Tenno')}</h1>${P.at?`<div class="small muted">Last synced ${fdate(P.at)}${P.prof&&P.prof.mr!=null?` · In-game MR ${mrLabel(P.prof.mr)}`:''}</div>`:''}</div>
   <div class="seg">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-ttab="${k}">${l}</button>`).join('')}</div>`;
   if(tab==='account')h+=accountTab();
@@ -1161,7 +1366,7 @@ function resources(){const sel=state.resSel&&RES[state.resSel]?state.resSel:null
   <div id="rdet">${sel?resDetail(sel):`<div class="panel empty cut">Pick a material to see where to farm it.</div>`}</div></div></div>`}
 function resDetail(n){const r=RES[n]||{};const t=RT[n];const s=RSRC[n]||[];
   const users=Object.values(I).filter(it=>it.parts.some(p=>p.n===n||(p.sub||[]).some(x=>x[0]===n))).map(i=>i.n);
-  let h=`<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3>${r.ra?`<span class="chip">${esc(r.ra)}</span>`:''}${priceChip(n)}</div>
+  let h=`<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3>${r.ra?`<span class="chip">${esc(r.ra)}</span>`:''}${priceChip(n)}<span style="margin-left:auto">${taskBtn('res',n,'Farm '+n)}</span></div>
    <div class="row"><label class="small" for="have1">You have</label><input id="have1" type="number" inputmode="numeric" min="0" data-inv="${esc(n)}" value="${P.inv&&P.inv[n]!=null?esc(P.inv[n]):''}" placeholder="0" style="width:130px"></div></div><div style="padding:12px 14px" class="stack">`;
   if(r.best)h+=`<div class="callout small"><b>Community pick:</b> ${esc(r.best)}${r.how?' — '+esc(r.how):''}</div>`;
   if(t){h+=`<div class="small muted">Drops on ${t.planets.map(p=>`<a class="ln" href="#" data-go="node|${esc(p)}">${esc(p)}</a>`).join(', ')}. Best options at each stage:</div>`+
@@ -1267,15 +1472,15 @@ function resultsHTML(){let r=state.farmQ?search(state.farmQ):[];const ft=state.f
   if(!state.farmQ){const sets=Object.values(I).filter(i=>i.p&&!i.v&&i.c!=='Companion').map(i=>[i.n,'item','Farmable Prime']);
     return `<div class="small muted">Prime gear you can farm right now (${sets.length}):</div>`+sets.map(hit).join('')}
   return r.length?r.map(hit).join(''):'<div class="small muted">No matches.</div>'}
-function hit([n,t,l]){const s=state.farmSel===t+'|'+n;return `<button class="hit ${s?'sel':''}" data-pick="${esc(t+'|'+n)}"><span>${esc(n)}</span><span class="chip">${esc(l)}</span></button>`}
+function hit([n,t,l]){const s=state.farmSel===t+'|'+n;return `<button class="hit ${s?'sel':''}" data-pick="${esc(t+'|'+n)}"><span>${esc(n)}</span><span class="row" style="gap:4px">${t==='item'?mxChip(n):''}<span class="chip">${esc(l)}</span></span></button>`}
 function detail(sel){const i=sel.indexOf('|');const t=sel.slice(0,i),n=sel.slice(i+1);
   if(t==='item')return itemTree(n);
   if(t==='res')return resDetail(n);
-  if(t==='relic')return REL[n]?`<section class="obj"><div class="obj-h"><div class="title"><h3>${esc(n)} Relic</h3>${REL[n].v?'<span class="chip bad">Vaulted</span>':'<span class="chip ok">Farmable</span>'}${priceChip(n+' Relic')}</div></div><div style="padding:12px 14px" class="small">${relicBody(n)}</div></section>`:'';
+  if(t==='relic')return REL[n]?`<section class="obj"><div class="obj-h"><div class="title"><h3>${esc(n)} Relic</h3>${REL[n].v?'<span class="chip bad">Vaulted</span>':'<span class="chip ok">Farmable</span>'}${priceChip(n+' Relic')}<span style="margin-left:auto">${taskBtn('relic',n,(REL[n].v?'Buy ':'Farm ')+n+' relic')}</span></div></div><div style="padding:12px 14px" class="small">${relicBody(n)}</div></section>`:'';
   if(t==='part'){const own=partOwner(n)||I[n.replace(/ Blueprint$/,'')];
     return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3>${priceChip(n)}</div>${sellerRow(n)}${progHTML()}</div><ol class="steps">${step('got|'+n,'Get '+esc(n),relicChips(D.partrel[n]))}</ol>${own?`<div style="padding:0 14px 12px"><button class="btn" data-pick="item|${esc(own.n)}">Open the full ${esc(own.n)} set</button></div>`:''}</section>`}
-  if(t==='mod'&&MODS[n]){const md=MODS[n];return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3><span class="chip">${esc(md.ty)}</span></div>${progHTML()}</div><div style="padding:12px 14px">${modCard(RAR[md.r]||'Mod',n)}</div></section>`}
-  if(t==='arc'&&ARC[n])return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3></div>${progHTML()}</div><div style="padding:12px 14px">${arcCard(n)}</div></section>`;
+  if(t==='mod'&&MODS[n]){const md=MODS[n];return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3><span class="chip">${esc(md.ty)}</span><span style="margin-left:auto">${taskBtn('mod',n,'Get '+n)}</span></div>${progHTML()}</div><div style="padding:12px 14px">${modCard(RAR[md.r]||'Mod',n)}</div></section>`}
+  if(t==='arc'&&ARC[n])return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3><span style="margin-left:auto">${taskBtn('arc',n,'Get '+n)}</span></div>${progHTML()}</div><div style="padding:12px 14px">${arcCard(n)}</div></section>`;
   return ''}
 
 /* ---------- quests ---------- */
@@ -1288,9 +1493,9 @@ function quests(){const groups=[...new Set(Q.map(q=>q.g))];const nq=nextQuest();
   ${nq?`<div class="callout small">Next up: <a class="ln" href="#quests" data-q="${esc(nq.n)}"><b>${esc(nq.n)}</b></a>. Its quest prerequisites are done.</div>`:''}
   <div class="row">${`<select id="qf" aria-label="Filter quests" style="width:auto">${[['all','All quests'],['avail','Available now'],['todo','Not done'],['locked','Locked'],['done','Done']].map(([k,l])=>`<option value="${k}" ${(state.qF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   ${groups.map(g=>{const f=state.qF||'all';const qs=Q.filter(q=>q.g===g).filter(q=>{const lk=qPrereqs(q).some(p=>!qDone(p.n));return f==='all'||(f==='done'&&qDone(q.n))||(f==='todo'&&!qDone(q.n))||(f==='locked'&&!qDone(q.n)&&lk)||(f==='avail'&&!qDone(q.n)&&!lk)});return qs.length?`<details class="obj grp" data-scope open><summary><h3>${esc(g)}</h3>${progHTML()}</summary>${qs.map(qrow).join('')}</details>`:''}).join('')||'<div class="panel empty cut">No quests match this filter.</div>'}</div>`}
-function rewardLink(r){const m=Object.keys(I).find(n=>r.toLowerCase().startsWith(n.toLowerCase()+' ')||r===n);if(m)return `<a class="ln" href="#" data-go="item|${esc(m)}">${esc(r)}</a>`;if(MODS[r]||RES[r]||ARC[r])return L(r);return esc(r)}
+function rewardLink(r){const m=Object.keys(I).find(n=>r.toLowerCase().startsWith(n.toLowerCase()+' ')||r===n);if(m)return `<a class="ln" href="#" data-go="item|${esc(m)}">${esc(r)}</a> ${mxChip(m)}`;if(MODS[r]||RES[r]||ARC[r])return L(r);return esc(r)}
 function qrow(q){const k='q|'+q.n;const pre=qPrereqs(q);const locked=pre.some(p=>!qDone(p.n));
-  return `<div class="qrow${qDone(q.n)?' done':''}" id="q-${esc(q.n.replace(/\W/g,''))}">${ck(k)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(q.n)}</span>${locked&&!qDone(q.n)?'<span class="chip warn">Locked</span>':''}<a class="small" href="${q.w}" target="_blank" rel="noopener">wiki</a>${!qDone(q.n)&&Q.indexOf(q)>0?`<button class="btn sm" data-qupto="${esc(q.n)}">Done up to here</button>`:''}</div>
+  return `<div class="qrow${qDone(q.n)?' done':''}" id="q-${esc(q.n.replace(/\W/g,''))}">${ck(k)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(q.n)}</span>${locked&&!qDone(q.n)?'<span class="chip warn">Locked</span>':''}<a class="small" href="${q.w}" target="_blank" rel="noopener">wiki</a>${!qDone(q.n)?taskBtn('quest',q.n,'Do quest: '+q.n):''}${!qDone(q.n)&&Q.indexOf(q)>0?`<button class="btn sm" data-qupto="${esc(q.n)}">Done up to here</button>`:''}</div>
    ${q.d?`<div class="small muted" style="margin-top:2px">${esc(q.d)}</div>`:''}
    ${q.req.length?`<div class="small" style="margin-top:6px"><b>Needs:</b> ${q.req.map(r=>{const p=pre.find(x=>qClean(r)===x.n);return p?`<a class="ln" href="#quests" data-q="${esc(p.n)}" style="color:var(--${qDone(p.n)?'ok':'warn'})">${esc(r)}</a>`:esc(r)}).join(' · ')}</div>`:''}
    ${q.rw.length?`<details class="more"><summary>Rewards (${q.rw.length})</summary><ul>${q.rw.map(r=>`<li>${rewardLink(r)}</li>`).join('')}</ul></details>`:''}</div></div>`}
@@ -1309,7 +1514,7 @@ function setsTab(){const rows=Object.entries(D.sets).map(([n,s])=>{const base=n.
   r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));
   return `<p class="small muted" style="margin:0">7-day average sale price, the cheapest online seller when the snapshot was taken, and a ready-to-paste whisper. Sellers go offline, so check <b>Live listings</b> before you trade.</p>
   <div class="row"><input id="mq" type="search" placeholder="Filter sets" value="${esc(state.mkQ)}" style="flex:1 1 200px" aria-label="Filter sets"><select id="msort" aria-label="Sort by" style="flex:0 1 200px">${[['a7','7-day price'],['low','Cheapest seller'],['v7','Trades'],['ps','Parts total'],['du','Ducats'],['n','Name']].map(([c,l])=>`<option value="${c}" ${k===c?'selected':''}>Sort: ${l}</option>`).join('')}</select>${`<select id="mkf" aria-label="Filter sets" style="width:auto">${[['all','All sets'],['farm','Farmable now'],['now','In Prime Resurgence'],['vault','Vaulted'],['goals','In my goals']].map(([k,l])=>`<option value="${k}" ${(state.mkF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
-  <div class="cards">${r.map(x=>`<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(x.base)}">${esc(x.base)}</a>${vaultChip(x.it)}</div>
+  <div class="cards">${r.map(x=>`<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(x.base)}">${esc(x.base)}</a><span class="row" style="gap:4px">${mxChip(x.base)}${vaultChip(x.it)}</span></div>
    <div class="row small"><span class="chip gold">${x.a7!=null?Math.round(x.a7)+'p':'—'} avg</span><span class="muted">Parts ${x.ps!=null?x.ps+'p':'—'} · ${fmt(x.v7)} trades/wk${x.du?` · ${x.du} ducats`:''}</span></div>
    ${sellerRow(x.n)}<div><a class="small" href="https://warframe.market/items/${MS[x.n]||''}" target="_blank" rel="noopener">Live listings ↗</a></div></div>`).join('')}</div>`}
 function vaultTab(){const primes=Object.values(I).filter(i=>i.p);

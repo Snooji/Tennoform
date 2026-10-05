@@ -1,11 +1,54 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Each signed-in user can only read and write their own progress.
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+    function isFriendOf(owner, other) {
+      return exists(/databases/$(database)/documents/users/$(owner)/friends/$(other));
+    }
+
+    // Your own saved progress.
     match /users/{uid}/data/{doc} {
-      allow read, write: if request.auth != null && request.auth.uid == uid
-                         && doc in ['progress', 'profile']
-                         && (request.resource == null || true);
+      allow read, write: if signedIn() && me() == uid && doc in ['progress', 'profile'];
+    }
+
+    // Your friends list. Only you can see or change it.
+    match /users/{uid}/friends/{fid} {
+      allow read, write: if signedIn() && me() == uid;
+    }
+
+    // Public card (name, friend code, MR) that friends see.
+    match /public/{uid} {
+      allow read: if signedIn();
+      allow write: if signedIn() && me() == uid
+        && request.resource.data.keys().hasOnly(['name', 'code', 'mr', 'xp', 'nodes', 'sp', 'maxed', 'cats', 'at'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40;
+    }
+
+    // Friend codes: claimed once, never changed.
+    match /codes/{code} {
+      allow read: if signedIn();
+      allow create: if signedIn() && code.size() == 6
+        && request.resource.data.keys().hasOnly(['uid']) && request.resource.data.uid == me();
+    }
+
+    // Inbox: friend requests, messages and shared-task invites.
+    match /inbox/{uid}/msgs/{id} {
+      allow read, delete: if signedIn() && me() == uid;
+      allow update: if signedIn() && me() == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ans']);
+      allow create: if signedIn()
+        && request.resource.data.from == me()
+        && request.resource.data.keys().hasOnly(['from', 'fromName', 'code', 'to', 'type', 'text', 'task', 'at'])
+        && request.resource.data.at is number
+        && (!('text' in request.resource.data) || (request.resource.data.text is string && request.resource.data.text.size() <= 1000))
+        && (!('fromName' in request.resource.data) || (request.resource.data.fromName is string && request.resource.data.fromName.size() <= 40))
+        && (
+          (me() == uid && request.resource.data.type == 'sent')
+          || (me() != uid && request.resource.data.type == 'friend')
+          || (me() != uid && request.resource.data.type == 'accept' && isFriendOf(me(), uid))
+          || (me() != uid && request.resource.data.type in ['msg', 'task', 'taskok', 'taskno', 'taskdone'] && isFriendOf(uid, me()))
+        );
     }
   }
 }
