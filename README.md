@@ -12,7 +12,11 @@ Progress saves in your browser. Use **Tenno → Backup** to move it to another d
 - Live Prime Resurgence and profile sync: [warframestat.us](https://docs.warframestat.us)
 
 ## Rebuild
-`python build/make_site.py` rebuilds `index.html` from `build/template.html`, `build/base.json` and `build/market.json`.
+`python build/make_site.py` rebuilds `index.html` from `src/` and the game data in `build/base.json` and `build/market.json`.
+
+- `src/shell.html` is the page skeleton.
+- `src/css/*.css` and `src/js/*.js` are joined in file-name order (the number prefix sets the order).
+- Edit those files, run the build, and commit both `src/` and `index.html`.
 `python build/refresh_market.py` refreshes `build/market.json`.
 
 Not affiliated with Digital Extremes.

@@ -1,0 +1,13 @@
+/* ---------- goals (wishlist) ---------- */
+function goals(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';
+  let list=g.slice();if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
+  const acc={cr:0,r:{},pt:0};g.filter(n=>!on('build|'+n)).forEach(n=>totals(n,1,acc,[]));const tr=Object.entries(acc.r).sort((a,b)=>b[1]-a[1]);const short=state.gShort;
+  const need=neededEras();
+  return `<div class="stack"><div class="head"><div class="eyebrow">Goals</div><h1>What I'm working toward</h1><p class="lede">Tap <b>Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.</p></div>
+  ${g.length?`<div class="row"><select id="gs" aria-label="Sort goals" style="width:auto">${[['added','Sort: order added'],['progress','Sort: most complete'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="cards">${list.map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<div class="card cut"><div class="top">${art(n,'mini')}<a class="nm ln" style="flex:1" href="#" data-go="item|${esc(n)}">${esc(n)}</a><span class="row" style="gap:6px">${vaultChip(I[n])}${on('build|'+n)?'<span class="chip good">Built</span>':''}<button class="btn sm" data-goal="${esc(n)}">Remove</button></span></div><div class="nextbar"><i style="width:${d/k.length*100}%"></i></div><div class="small muted">${d}/${k.length} steps · ${fmt(mxp(I[n]))} Mastery XP</div></div>`}).join('')}</div>
+  <div class="panel stack cut"><div class="row" style="justify-content:space-between"><h2>Shopping list</h2><button class="btn sm ${short?'on':''}" id="gshort">Only what I'm short on</button></div><div class="small muted">${fmt(acc.cr)} credits for everything not built yet. Set what you have in Tenno → Inventory (or on any resource page) to see what's left, then turn the rest into tasks.</div>
+  <ul class="reslist">${tr.filter(([n,q])=>!short||!(P.inv&&+P.inv[n]>=q)).map(([n,q])=>shopLi(n,q)).join('')||'<li class="small muted">Nothing left to farm.</li>'}</ul></div>
+  ${Object.keys(need).length?`<div class="panel stack cut"><h2>Relics to crack</h2>${Object.entries(need).map(([e,s])=>`<div class="small"><b>${e}:</b> ${[...s].map(r=>`<a class="ln" href="#" data-go="relic|${esc(r)}">${esc(r)}</a>`).join(', ')}</div>`).join('')}<a class="btn sm" href="#today">See open fissures</a></div>`:''}`
+  :`<div class="panel empty cut">No goals yet. Open any Warframe, weapon or Prime set and tap <b>Track</b>.<div style="margin-top:10px"><a class="btn primary" href="#frames">Browse Warframes</a></div></div>`}</div>`}
+

@@ -1,4 +1,4 @@
-"""Builds index.html from template.html + base.json (game data) + market.json (prices, sellers)."""
+"""Builds index.html from src/ (shell, css, js) + base.json (game data) + market.json (prices, sellers)."""
 import json, os, datetime, hashlib, base64, re
 H = os.path.dirname(os.path.abspath(__file__))
 base = json.load(open(os.path.join(H, 'base.json')))
@@ -9,7 +9,12 @@ D['sellers'] = mk['sellers']
 D['sets'] = {k: v for k, v in mk['prices'].items() if k.endswith(' Set')}
 D['meta'] = dict(base['meta'], prices=mk.get('date') or base['meta'].get('prices'), site=datetime.date.today().strftime('%b %-d, %Y'))
 data = json.dumps(D, separators=(',', ':'), ensure_ascii=False).replace('<', '\\u003c')
-body = open(os.path.join(H, 'template.html')).read().replace('/*DATA*/', data)
+def part(d):
+    d = os.path.join(H, '..', 'src', d)
+    return ''.join(open(os.path.join(d, f)).read() for f in sorted(os.listdir(d)))
+# The page is assembled from src/: shell.html with every src/css file and every src/js file, in name order.
+template = open(os.path.join(H, '..', 'src', 'shell.html')).read().replace('/*CSS*/', part('css'), 1).replace('/*JS*/', part('js'), 1)
+body = template.replace('/*DATA*/', data)
 # Content Security Policy: only this site's own script (pinned by hash) and Google sign-in may run.
 scripts = re.findall(r'<script>(.*?)</script>', body, re.S)
 hashes = ' '.join("'sha256-%s'" % base64.b64encode(hashlib.sha256(x.encode()).digest()).decode() for x in scripts)

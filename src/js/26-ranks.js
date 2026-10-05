@@ -1,0 +1,25 @@
+/* ---------- ranks ---------- */
+function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';{const _k=cat+'|'+q+'|'+f+'|'+(state.rkS||'');if(state._rkKey!==_k){state._rkKey=_k;state.rkLim=60}}
+  const cats=CATS.filter(c=>MI.some(i=>i.c===c));
+  const chips=cats.map(c=>{const a=autoCat(c);return `<button class="btn ${c===cat&&!q?'on':''}" data-rkcat="${esc(c)}">${CATL[c]} <span class="mono small">${a.m}/${a.t}</span></button>`}).join('')+`<button class="btn ${cat==='Intrinsics'&&!q?'on':''}" data-rkcat="Intrinsics">Intrinsics</button><button class="btn ${cat==='Other'&&!q?'on':''}" data-rkcat="Other">Other gear</button>`;
+  let body,head;
+  if(cat==='Intrinsics'&&!q){body=intrHTML();head=`<b>Intrinsics</b><span class="small muted">${fmt(catXP('rail')+catXP('drift'))} XP</span>`}
+  else if(cat==='Other'&&!q){body=othHTML();head=`<b>Other gear</b><span class="small muted">${fmt(othXP())} XP</span>`}
+  else{let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)):MI.filter(i=>i.c===cat);
+    if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
+    const rs=state.rkS||'name';list.sort((a,b)=>rs==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):rs==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):rs==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));state._rkList=list.map(i=>i.n);
+    const a=q?null:autoCat(cat);
+    head=`<b>${q?'Search results':CATL[cat]}</b><span class="small muted" id="rkhdr">${a?`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`:list.length+' items'}</span>${list.filter(i=>rankOf(i.n)<maxRank(i)).length?`<button class="btn sm" id="rkmaxall">Max all in this list…</button>`:''}`;
+    body=list.slice(0,state.rkLim).map(rkRow).join('')+moreRow(Math.min(state.rkLim,list.length),list.length)||'<div class="empty">Nothing matches this filter.</div>'}
+  return `<div class="stack"><div class="head"><div class="eyebrow">Rank tracker</div><h1>Ranks</h1><p class="lede">Set the rank of everything you've leveled. Mastered gear counts in full and partial ranks count too. Your MR, breakdown and rank-up plan update right away.</p><p class="small muted" style="margin:0">Why the numbers: Warframes, companions, Archwings and vehicles give 200 Mastery XP per rank and weapons 100. Most gear stops at rank 30 (6,000 or 3,000 XP); Kuva, Tenet, Coda, Paracesis and Necramechs go to 40. Type a rank and press Enter to jump to the next item.</p></div>
+  ${bigMR()}
+  <div class="seg wrapseg" role="toolbar" aria-label="Gear categories">${chips}</div>
+  <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['notmax','Not mastered'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select>${`<select id="rks" aria-label="Sort" style="width:auto">${[['name','Sort: name'],['mr','Sort: MR needed'],['close','Sort: closest to mastered'],['left','Sort: most XP left']].map(([k,l])=>`<option value="${k}" ${(state.rkS||'name')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
+  <div class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between">${head}</div></div><div id="rklist">${body}</div></div></div>`}
+function rkRow(it){const r=rankOf(it.n),mx=maxRank(it);
+  return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:8px">${art(it.n)}<a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">✓ Mastered</span>':r>0?'<span class="chip teal">In progress</span>':'<span class="chip">Not started</span>'}</div>
+  <div class="rkbar"><i style="width:${r/mx*100}%"></i></div><div class="small muted mono">${fmt(r*perRank(it))} / ${fmt(mxp(it))} XP</div></div>
+  <div class="stepper"><button class="sbtn" data-rk="-1" aria-label="Lower rank of ${esc(it.n)}">−</button><input type="number" inputmode="numeric" min="0" max="${mx}" value="${r}" data-rkin aria-label="Rank of ${esc(it.n)}"><button class="sbtn" data-rk="1" aria-label="Raise rank of ${esc(it.n)}">+</button><button class="sbtn mx" data-rk="max" aria-label="Set ${esc(it.n)} to max rank">Max</button></div></div>`}
+function setIntr(spec,v){const [key,n]=spec.split('|');P[key]=P[key]||{};P[key][n]=Math.max(0,Math.min(10,Math.round(+v||0)));if(!P[key][n])delete P[key][n];P.intr=intrSum(P.intrR)+intrSum(P.intrD);saveProfile();updateMR()}
+function rkHdr(){const h=$('#rkhdr');if(h&&state.rkCat&&CATS.includes(state.rkCat)&&!state.rkQ){const a=autoCat(state.rkCat);h.textContent=`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`}}
+

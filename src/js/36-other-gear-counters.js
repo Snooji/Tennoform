@@ -1,0 +1,7 @@
+/* ---------- other gear counters ---------- */
+const OTH=[['moa','MOAs',6000,'Modular companion (Fortuna)'],['hound','Hounds',6000,'Modular companion (Sisters of Parvos)'],['amp','Amps',3000,'Each Amp prism you rank up'],['kitgun','Extra Kitgun forms',3000,'Kitgun chambers ranked as primary and secondary'],['pred','Predasites & Vulpaphylas',6000,'Infested companions not listed above'],['plexus','Other (enter XP)',1,'Any other mastery XP the app does not list']];
+function othXP(){const o=P.oth||{};return OTH.reduce((a,[k,,x])=>a+(+o[k]||0)*x,0)}
+function othHTML(){const o=P.oth||{};return `<div style="padding:12px 14px" class="stack"><p class="small muted" style="margin:0">Modular and extra gear the item list doesn't cover. Enter how many you've mastered (rank 30).</p>
+  ${OTH.map(([k,l,x,d])=>`<div class="rk"><div class="rk-main"><b>${l}</b><div class="small muted">${d}${x>1?` · ${fmt(x)} XP each`:''}</div></div><div class="stepper"><button class="sbtn" data-oth="${k}" data-d="-1" aria-label="Fewer">−</button><input type="number" inputmode="numeric" min="0" value="${+o[k]||0}" data-othin="${k}" aria-label="${l}" style="width:${x>1?54:110}px"><button class="sbtn" data-oth="${k}" data-d="1" aria-label="More">+</button></div></div>`).join('')}
+  <div class="small">Total from other gear: <b class="num">${fmt(othXP())}</b> XP${P.other?` (plus ${fmt(P.other)} found by sync)`:''}</div></div>`}
+

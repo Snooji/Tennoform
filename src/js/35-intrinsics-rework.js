@@ -1,0 +1,8 @@
+/* ---------- intrinsics (rework) ---------- */
+const IDESC={Tactical:'Crew orders and Railjack battle abilities',Piloting:'Railjack handling, boost and evasive moves',Gunnery:'Turret damage and critical hits',Engineering:'Repairs, crafting Railjack parts, Forge efficiency',Command:'Hire and level up your crew',Riding:'Kaithe horse riding in Duviri',Combat:'Drifter weapons, melee and abilities',Opportunity:'Loot, resources and Duviri rewards',Endurance:'Drifter health, shields and survival'};
+function intrHTML(){const sch=(key,names,label,col)=>{const tot=names.reduce((a,n)=>a+(+((P[key]||{})[n]||0)),0);
+  return `<div class="school cut" style="--sc:${col}"><div class="row" style="justify-content:space-between"><h3>${label}</h3><span class="chip gold">${tot}/${names.length*10} ranks · ${fmt(tot*1500)} XP</span></div>
+  ${names.map(n=>{const v=+((P[key]||{})[n]||0);return `<div class="iskill"><div class="row" style="justify-content:space-between"><b>${n}</b><span class="mono small">${v}/10</span></div><div class="small muted">${IDESC[n]||''}</div>
+  <div class="pips" role="group" aria-label="${n} rank">${Array.from({length:10},(_,i)=>`<button class="pip${i<v?' on':''}" data-ipip="${key}|${n}|${i+1===v?i:i+1}" aria-label="Set ${n} to rank ${i+1}"></button>`).join('')}</div></div>`}).join('')}</div>`};
+  return `<div style="padding:12px 14px" class="stack"><p class="small muted" style="margin:0">Tap a pip to set the rank (tap your current rank again to lower it by one). Each intrinsic rank is worth 1,500 Mastery XP.</p><div class="schools">${sch('intrR',IR,'Railjack','#6FD6E8')}${sch('intrD',ID,'Drifter','#D9B45E')}</div></div>`}
+
