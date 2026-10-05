@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pcl5ReFR4mD/ygArErhXtE6fFUasomHH2bbI/dic8tM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-0Se1lQtF.css"><script type="module" src="/assets/main-DFeTaYIB.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-NqA5FOG4Hq7FxFlDe5TqHtBn1uDs/VlcAk5sOWf3bko=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-Cv2rCOO0.css"><script type="module" src="/assets/main-DO8TMqn3.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0e0f12">
 
@@ -3296,6 +3296,23 @@ Object.assign(window.TF,{
 });
 const _syndRoute=routes.synd;
 routes.synd=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('synd')?'':_syndRoute()};
+/* ---------- bridge: Resources for the React page ---------- */
+const RSD={key:'',html:''};
+function resData(){const sel=state.resSel&&RES[state.resSel]?state.resSel:'';const q=(state.resQ||'').toLowerCase().trim();
+  const main=MAINRES.filter(n=>RES[n]);const rest=Object.keys(RES).filter(n=>!main.includes(n)).sort();
+  const gneed={};(P.goals||[]).filter(n=>I[n]&&!on('build|'+n)).forEach(n=>{const a=totals(n,1,{cr:0,r:{},pt:0},[]);for(const r in a.r)gneed[r]=(gneed[r]||0)+a.r[r]});
+  const rf=state.rsF||'all';let list=q?Object.keys(RES).filter(n=>n.toLowerCase().includes(q)):null;
+  if(rf!=='all'){list=(list||Object.keys(RES)).filter(n=>rf==='inv'?(P.inv&&P.inv[n]!=null):rf==='goal'?gneed[n]:rf==='short'?(gneed[n]&&!(P.inv&&+P.inv[n]>=gneed[n])):RT[n]);list.sort()}
+  const row=n=>({n,have:P.inv&&P.inv[n]!=null?+P.inv[n]:null,label:RT[n]?'by stage':(RSRC[n]||[]).length+' farms',need:gneed[n]||0});
+  if(sel){const k=sel+'|'+ISLV;if(RSD.key!==k){RSD.key=k;RSD.html=resDetail(sel)}}
+  return {q:state.resQ||'',filter:rf,sel,total:Object.keys(RES).length,list:list?list.map(row):null,main:list?[]:main.map(row),rest:list?[]:rest.map(row),detail:sel?RSD.html:''}}
+Object.assign(window.TF,{
+  res:()=>resData(),
+  resSet:o=>{if(o.q!=null)state.resQ=o.q;if(o.f!=null)state.rsF=o.f;saveUI();tfNotify()},
+  resPick:n=>{state.resSel=n||null;tfNotify()}
+});
+const _resRoute=routes.resources;
+routes.resources=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('resources')?'':_resRoute()};
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}

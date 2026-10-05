@@ -101,6 +101,9 @@ export type TFApi = {
   synd(): SyndData
   syndSet(o: { f?: string; s?: string; hide?: boolean }): void
   synSet(n: string, o: { r?: string; s?: string }): void
+  res(): ResData
+  resSet(o: { q?: string; f?: string }): void
+  resPick(n: string | null): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -221,6 +224,8 @@ export type SyndData = {
   filter: string; sort: string; hide: boolean; cap: number; factionLeft: number | null; synced: boolean; reset: string
   nightwave: { t: string; s: number; r: number }[]; list: SyndCard[]
 }
+export type ResRow = { n: string; have: number | null; label: string; need: number }
+export type ResData = { q: string; filter: string; sel: string; total: number; list: ResRow[] | null; main: ResRow[]; rest: ResRow[]; detail: string }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
   openSearch?: () => void
