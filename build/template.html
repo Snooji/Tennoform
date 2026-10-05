@@ -1299,13 +1299,18 @@ function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){retu
   P.rk=rk;P.other=other;if(intr)P.intr=intr;if(j.PlayerLevel!=null)P.mr=j.PlayerLevel;P.name=j.DisplayName||P.name;P.mc=mc;P.at=new Date().toISOString();
   pushAll();
   return `Synced ${P.name||'your account'}: ${maxed} items maxed, ${partial} in progress, ${nodes} nodes cleared${intr?`, ${intr} intrinsic ranks`:''}${qn?`, ${qn} quests`:''}.`}
+const SYNN={};for(const t in SYN){const n=SYN[t].toLowerCase();SYNN[n]=t;SYNN[n.replace(/^the /,'')]=t}Object.assign(SYNN,{ostron:'CetusSyndicate','vent kids':'VentKidsSyndicate',simaris:'LibrarySyndicate'});
+function synTag(n){n=String(n||'');if(/Syndicate$/.test(n))return n;return SYNN[n.toLowerCase()]||SYNN[n.toLowerCase().replace(/^the /,'')]||n}
+const DKEY={daily:'DailyAffiliation',conclave:'DailyAffiliationPvp',simaris:'DailyAffiliationLibrary',ostron:'DailyAffiliationCetus',quills:'DailyAffiliationQuills',solaris:'DailyAffiliationSolaris',ventKids:'DailyAffiliationVentkids',voxSolaris:'DailyAffiliationVox',entrati:'DailyAffiliationEntrati',necraloid:'DailyAffiliationNecraloid',holdfasts:'DailyAffiliationZariman',kahl:'DailyAffiliationKahl',cavia:'DailyAffiliationCavia',hex:'DailyAffiliationHex'};
+function dailyFrom(p){const o={};const d=p.dailyStanding||{};for(const k in d)if(DKEY[k])o[DKEY[k]]=d[k];if(p.dailyFocus!=null)o.DailyFocus=p.dailyFocus;return o}
 function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.stats||{};const i=p.intrinsics||{};
   const sk={LPS_TACTICAL:i.tactical,LPS_PILOTING:i.piloting,LPS_GUNNERY:i.gunnery,LPS_ENGINEERING:i.engineering,LPS_COMMAND:i.command,LPS_DRIFT_RIDING:i.riding,LPS_DRIFT_COMBAT:i.combat,LPS_DRIFT_OPPORTUNITY:i.opportunity,LPS_DRIFT_ENDURANCE:i.endurance};for(const k in sk)if(sk[k]==null)delete sk[k];
   const lo=p.loadout||{};const li=x=>(x||[]).map(e=>({ItemType:e.uniqueName||(e.item&&e.item.uniqueName)})).filter(e=>e.ItemType);
   return {Results:[{DisplayName:p.displayName,PlayerLevel:p.masteryRank,GuildName:p.guildName,Created:p.created,
     LoadOutInventory:{XPInfo:(lo.xpInfo||[]).map(x=>({ItemType:x.uniqueName,XP:x.xp})),Suits:li(lo.suits),LongGuns:li(lo.primary),Pistols:li(lo.secondary),Melee:li(lo.melee)},
     Missions:(p.missions||[]).map(m=>({Tag:m.nodeKey||m.node,Completes:m.completes,Tier:m.tier})),PlayerSkills:sk,
-    Affiliations:(p.syndicates||[]).map(a=>({Tag:a.name,Standing:a.standing,Title:a.title}))}],
+    Affiliations:(p.syndicates||[]).map(a=>({Tag:synTag(a.name),Standing:a.standing,Title:a.title})),
+    ChallengeProgress:(p.challengeProgress||[]).map(c=>({Name:c.name,Progress:c.progress})),...dailyFrom(p)}],
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
 async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
