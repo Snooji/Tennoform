@@ -111,6 +111,18 @@ service cloud.firestore {
       }
     }
 
+    // Donation log: only admins can read or write it.
+    match /donations/{id} {
+      allow read, delete: if isAdmin();
+      allow create, update: if isAdmin()
+        && data().keys().hasOnly(['at', 'kind', 'amount', 'who', 'note', 'by'])
+        && data().kind in ['plat', 'paypal', 'other']
+        && data().amount is number && data().amount >= 0 && data().amount <= 1000000
+        && data().at is number && data().by == me()
+        && (!('who' in data()) || shortStr(data().who, 60))
+        && (!('note' in data()) || shortStr(data().note, 200));
+    }
+
     // Feedback: signed-in users can send; only admins can read.
     match /feedback/{id} {
       allow create: if signedIn() && data().uid == me()
