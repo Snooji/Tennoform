@@ -3,37 +3,19 @@ import { Check, Sparkles } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
 import { HaloSegmented } from "@/components/ui/halo-segmented"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
+import { ModCard } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
-import { cn } from "@/lib/utils"
-import { tf, useTFData, type ModSlot } from "@/lib/tf"
+import { tf, useTFData } from "@/lib/tf"
 
 const FILTERS = [
   { value: "all", label: "All Warframes" }, { value: "owned", label: "Owned" }, { value: "not", label: "Not owned" }, { value: "mastered", label: "Mastered" },
   { value: "prime", label: "Prime" }, { value: "farm", label: "Prime, farmable now" }, { value: "goals", label: "In my goals" },
 ]
-
-function ModCard({ m }: { m: ModSlot }) {
-  return (
-    <li className={cn("flex gap-3 rounded-lg border bg-background/40 p-3", m.done && "border-primary/30 bg-primary/5")}>
-      <Checkbox className="mt-0.5 size-5 rounded-md" checked={m.done} onCheckedChange={(v) => tf().nodeTick(m.key, !!v)} aria-label={(m.done ? "Don't have: " : "Have: ") + m.m} />
-      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="text-xs text-muted-foreground">{m.slot}{m.pol ? ` · ${m.pol}` : ""}</span>
-        <span className="flex flex-wrap items-baseline gap-x-2">
-          <b className={cn("font-medium", m.done && "text-muted-foreground line-through decoration-primary/70")}>{m.m}</b>
-          {m.price ? <span className="text-xs text-primary">{m.price}</span> : null}
-        </span>
-        <span className="text-xs text-muted-foreground">{m.src}</span>
-        {m.seller ? <span className="tf-island text-xs" dangerouslySetInnerHTML={{ __html: m.seller }} /> : null}
-      </div>
-    </li>
-  )
-}
 
 export function FramesPage() {
   const d = useTFData(() => tf().frames())

@@ -118,6 +118,11 @@ export type TFApi = {
   relSet(r: string, k: string, v: string): void
   setTraces(v: string): void
   setDup(n: string, v: string): void
+  arsenal(): ArsenalData
+  arsenalSet(o: Partial<Record<"tab" | "cat" | "own" | "lf" | "ls" | "arq" | "art" | "ars" | "aro" | "kmt" | "kms" | "sel" | "bi", string>>): void
+  arcAdj(n: string, d: number): void
+  arcSet(n: string, v: string): void
+  lichSet(n: string, o: { e?: string; b?: string }): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -274,6 +279,18 @@ export type RelicsData = {
   snapshot?: string; spares?: number; plat?: number; ducats?: number; baro?: { state: string; text: string }; count?: number
   rows?: { n: string; go: string; plat: number | null; du: number; spares: number; tag: string }[]
   stock?: { item: string; go: string; ducats: number; credits: number }[]
+}
+export type ArsenalData = {
+  tab: "builds" | "comp" | "lich" | "arc" | "mods"
+  cats?: string[]; cat?: string; own?: string; names?: string[]; cur?: string; img?: string; filteredEmpty?: boolean; tree?: string
+  builds?: { value: string; label: string }[]; bi?: string
+  build?: { role: string; name: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
+  faction?: string; status?: string; total?: number; have?: number; mastered?: number
+  factions?: { f: string; have: number; total: number }[]; how?: { f: string; who: string; how: string; vanq: string; alt: string }[]; elements?: string[]
+  list?: { n: string; f: string; c: string; go: string; own: boolean; key: string; rank: number; left: number; xp: number; price: string; el: string; bonus: number }[]
+  q?: string; type?: string; sort?: string; types?: string[]; count?: number; owned?: number; maxed?: number
+  arcs?: { n: string; go: string; copies: number; need: number; maxRank: number; rank: number; price: string; type: string; uses: string[]; drops: string }[]
+  mods?: { n: string; go: string; key: string; done: boolean; price: string; type: string; uses: number; src: string }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

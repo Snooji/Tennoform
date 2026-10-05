@@ -26,6 +26,7 @@ import { FramesPage } from "@/pages/frames/frames-page"
 import { WorldPage } from "@/pages/world/world-page"
 import { MarketPage } from "@/pages/market/market-page"
 import { RelicsPage } from "@/pages/relics/relics-page"
+import { ArsenalPage } from "@/pages/arsenal/arsenal-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
@@ -45,6 +46,7 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   world: WorldPage,
   market: MarketPage,
   relics: RelicsPage,
+  arsenal: ArsenalPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
