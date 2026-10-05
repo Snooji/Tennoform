@@ -94,6 +94,7 @@ export type TFApi = {
   masterySet(o: { tab?: string; target?: string }): void
   gearTick(n: string, v: boolean): void
   itemTree(n: string, note?: string): string
+  helperSet(m: string): void
   chart(): ChartData
   chartSet(o: { p?: string; q?: string; type?: string; sort?: string; hide?: boolean }): void
   nodeTick(key: string, v: boolean): void
@@ -213,6 +214,13 @@ export type QuestsData = {
   groups: { name: string; done: number; total: number; quests: QuestRow[] }[]
 }
 export type GearRow = { n: string; img: string; mr: number; rk: number; xp: number; done: boolean; price: string; note: string }
+export type HelperData = {
+  mode: "easy" | "relics" | "plat"
+  leveling?: { n: string; img: string; rank: number; mx: number; left: number }[]
+  built?: { n: string; img: string; xp: number; state: string }[]
+  intr?: { n: string; left: number; max: number }[]; total?: number; relicCount?: number
+  items: { n: string; img: string; xp: number; p?: number; cost?: number; useSet?: boolean; per1k?: number; parts: { full: string; p?: number; plat?: number; relics?: string[] }[] }[]
+}
 export type MasteryData = {
   tab: string; cur: number
   target?: string; targetLabel?: string; targets?: { value: string; label: string }[]
@@ -222,6 +230,7 @@ export type MasteryData = {
   sheetXp?: number
   craft?: { title: string; recipes: { recipe: string; xp: number; note: string; items: GearRow[] }[] }[]
   xpHtml?: string
+  helper?: HelperData
 }
 export type JunctionRow = { id: string; label: string; from: string; done: boolean; sp: boolean }
 export type ChartData = {

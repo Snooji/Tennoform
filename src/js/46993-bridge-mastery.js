@@ -17,6 +17,7 @@ function masteryData(){const tab=state.mTab||'path';const t=totalXP(),cur=mrInfo
   if(tab==='craft'){const by={};M.craft.forEach(x=>(by[x.mr]=by[x.mr]||[]).push(x));
     out.craft=Object.keys(by).sort((a,b)=>a-b).map(mr=>({title:'MR '+mr,recipes:by[mr].map(x=>({recipe:x.recipe,xp:x.xp,note:x.note||'',items:x.targets.map(t=>gearRow(t.id,'')).filter(Boolean)}))}))}
   if(tab==='xp')out.xpHtml=xpTabHTML();
+  if(tab==='helper')out.helper=helperData();
   return out}
 Object.assign(window.TF,{
   mastery:()=>masteryData(),
@@ -29,3 +30,29 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-mtab]');if
   e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else tfNotify()},true);
 const _masteryRoute=routes.mastery;
 routes.mastery=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')?'':_masteryRoute()};
+/* mastery helper: easy wins, items you can finish from relics you own, and the cheapest items to buy with platinum */
+function missingParts(n){const it=I[n];const out=[];if(!it)return out;
+  if(!on('bp|'+n))out.push({full:n+' Blueprint',key:'bp|'+n,rel:it.bprel||[]});
+  for(const p of it.parts){if(p.k!=='p'||p.n==='Blueprint')continue;if(!on('part|'+n+'|'+p.n))out.push({full:p.full,key:'part|'+n+'|'+p.n,rel:p.rel||[]})}
+  return out}
+function partChance(rel){let miss=1;const used=[];for(const [r,rar] of rel){const x=(P.rel||{})[r];if(!x||!REL[r])continue;let m=1;for(const k of ['i','e','f','r']){const c=+x[k]||0;if(c)m*=Math.pow(1-RCH[k][rar]/100,c)}if(m<1){miss*=m;used.push({r,rar,count:relCount(r)})}}return {p:1-miss,used}}
+function helperData(){const mode=state.mhM||'easy';const out={mode,items:[]};
+  const cand=MI.filter(it=>!on('m|'+it.n));
+  if(mode==='easy'){
+    out.leveling=cand.filter(it=>{const r=rankOf(it.n);return r>0&&r<maxRank(it)}).map(it=>({n:it.n,img:IMG(it.n),rank:rankOf(it.n),mx:maxRank(it),left:mxp(it)-itemXP(it.n)})).sort((a,b)=>b.left-a.left);
+    out.built=cand.filter(it=>rankOf(it.n)===0&&(on('build|'+it.n)||(P.foundry||[]).some(f=>f.n===it.n))).map(it=>{const f=(P.foundry||[]).find(x=>x.n===it.n);return {n:it.n,img:IMG(it.n),xp:mxp(it),state:f?(Date.now()>=f.t0+f.dur*1000?'Ready to claim in the Foundry':'Building, ready in '+hrs((f.t0+f.dur*1000-Date.now())/1000)):'Built: rank it up'}});
+    const rail=IR.length*10*1500,drift=ID.length*10*1500;out.intr=[{n:'Railjack intrinsics',left:Math.max(0,rail-catXP('rail')),max:rail},{n:'Drifter intrinsics',left:Math.max(0,drift-catXP('drift')),max:drift}].filter(x=>x.left>0);
+    out.total=out.leveling.reduce((a,x)=>a+x.left,0)+out.built.reduce((a,x)=>a+x.xp,0)+out.intr.reduce((a,x)=>a+x.left,0)}
+  else if(mode==='relics'){for(const it of cand){if(!it.p||on('build|'+it.n))continue;const miss=missingParts(it.n);if(!miss.length)continue;let p=1,ok=true;const parts=[];
+      for(const m of miss){const c=partChance(m.rel);if(!c.used.length){ok=false;break}p*=c.p;parts.push({full:m.full,p:c.p,relics:c.used.map(u=>u.r+(u.count>1?' ×'+u.count:''))})}
+      if(ok)out.items.push({n:it.n,img:IMG(it.n),xp:mxp(it)-itemXP(it.n),p,parts})}
+    out.items.sort((a,b)=>b.p-a.p||b.xp-a.xp);out.relicCount=Object.keys(P.rel||{}).filter(r=>relCount(r)>0).length}
+  else{for(const it of cand){if(!it.p||on('build|'+it.n))continue;const miss=missingParts(it.n);if(!miss.length)continue;let cost=0,ok=true;const parts=[];
+      for(const m of miss){const v=pv(m.full);if(v==null){ok=false;break}cost+=v;parts.push({full:m.full,plat:Math.round(v)})}
+      const set=(D.sets[it.n+' Set']||{}).a7;const nothing=miss.length===it.parts.filter(p=>p.k==='p'&&p.n!=='Blueprint').length+1;
+      if(!ok&&!(nothing&&set))continue;const useSet=nothing&&set&&(!ok||set<cost);const c=Math.round(useSet?set:cost);
+      out.items.push({n:it.n,img:IMG(it.n),xp:mxp(it)-itemXP(it.n),cost:c,useSet:!!useSet,parts:useSet?[]:parts,per1k:c/((mxp(it)-itemXP(it.n))/1000)})}
+    out.items.sort((a,b)=>a.cost-b.cost||b.xp-a.xp);out.items=out.items.slice(0,80)}
+  if(mode!=='easy')out.items=out.items.slice(0,80);
+  return out}
+Object.assign(window.TF,{helper:()=>helperData(),helperSet:m=>{state.mhM=m;tfNotify()}});

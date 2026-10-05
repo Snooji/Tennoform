@@ -12,9 +12,10 @@ import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
+import { Helper } from "./helper"
 
 const TABS = [
-  { value: "path", label: "Path to max" }, { value: "ladder", label: "Rank ladder" }, { value: "sheet", label: "Sheet MR 0–12" },
+  { value: "path", label: "Path to max" }, { value: "helper", label: "Helper" }, { value: "ladder", label: "Rank ladder" }, { value: "sheet", label: "Sheet MR 0–12" },
   { value: "sframes", label: "Sheet frames" }, { value: "craft", label: "Craft-ups" }, { value: "xp", label: "XP farms" },
 ]
 const linkCls = "underline decoration-primary/50 underline-offset-4 hover:decoration-primary"
@@ -162,6 +163,7 @@ export function MasteryPage() {
         </div>
       </Tabs>
       {d.tab === "path" ? <Path d={d} /> : null}
+      {d.tab === "helper" && d.helper ? <Helper h={d.helper} /> : null}
       {d.tab === "ladder" ? <Ladder d={d} /> : null}
       {d.tab === "sheet" ? (
         <>
