@@ -80,5 +80,22 @@ service cloud.firestore {
           && (!('fromName' in request.resource.data) || (request.resource.data.fromName is string && request.resource.data.fromName.size() <= 40));
       }
     }
+
+    // Feedback: anyone can send; only admins (listed in the admins collection) can read.
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    match /feedback/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['text', 'kind', 'page', 'contact', 'uid', 'name', 'at'])
+        && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000
+        && request.resource.data.kind in ['bug', 'idea', 'other']
+        && request.resource.data.at is number
+        && (!('page' in request.resource.data) || (request.resource.data.page is string && request.resource.data.page.size() <= 40))
+        && (!('contact' in request.resource.data) || (request.resource.data.contact is string && request.resource.data.contact.size() <= 120))
+        && (!('name' in request.resource.data) || (request.resource.data.name is string && request.resource.data.name.size() <= 40))
+        && (!('uid' in request.resource.data) || (signedIn() && request.resource.data.uid == me()));
+      allow read, delete: if isAdmin();
+      allow update: if isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['done']);
+    }
   }
 }

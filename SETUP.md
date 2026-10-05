@@ -17,3 +17,12 @@ Free limits: about 50,000 reads and 20,000 saves per day. The site batches saves
 Works out of the box: the site syncs through warframestat.us's public profile service when someone taps **Sync**.
 
 `cloudflare-worker.js` (deployed by Cloudflare from `wrangler.jsonc` on every push) is a backup relay. Warframe's API currently refuses requests coming from Cloudflare Workers, so it isn't switched on in `firebase-config.js`. If that changes, set `TENNO_PROXY` to the worker's address.
+
+# Reading feedback (owner only)
+
+Feedback from the **Feedback** page is stored in Firestore and only admins can read it.
+
+1. Sign in to the site once with the account you want to read feedback with.
+2. Firebase console → **Security → Authentication → Users**: copy that account's **User UID**.
+3. **Firestore Database → Data → + Start collection**: Collection ID `admins`, Document ID = the UID you copied, add a field `role` = `owner`, **Save**.
+4. Open the site's **Feedback** page while signed in. The **Feedback inbox** appears under the form.

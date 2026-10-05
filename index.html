@@ -400,6 +400,10 @@ select,input[type=search],input[type=number],input[type=text],input[type=passwor
 .donate-mini:hover{opacity:1;text-decoration:underline}
 .dcard{align-items:flex-start}.dic{line-height:0}
 @media (min-width:900px){.dongrid{grid-template-columns:1fr 1fr!important}}
+.hubtop{display:flex;justify-content:space-between;gap:10px;margin:-6px 0 -6px}
+.hubtop .donate-mini{margin:0}
+.fbi{padding:10px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}.fbi.done{opacity:.55}
+.fbt{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14.5px}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -442,11 +446,11 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends'],['donate','Support']];
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends'],['donate','Support'],['feedback','Feedback']];
 const BAR=['home','today','ranks','resources'];
 const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 const TOP=['home','today','ranks','tasks','friends','missions','relics','market'];
-const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Squad',['tasks','friends','donate']]];
+const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Squad',['tasks','friends','donate','feedback']]];
 const PL=Object.fromEntries(PAGES);
 $('nav.tabs').innerHTML=TOP.map(r=>`<a href="#${r}">${PL[r]}</a>`).join('');
 $('.bnav').innerHTML=BAR.map(r=>`<a href="#${r}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[r]}"/></svg>${PAGES.find(p=>p[0]===r)[1]}</a>`).join('')+`<button type="button" id="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>`;
@@ -465,12 +469,12 @@ if(!P.wfid)P.wfid=lsGet('tenno-acct','')||'';
 const kenc=k=>k.replace(/[.\/\[\]#$]/g,'_');
 const on=k=>!!C[kenc(k)];
 let docRef=null,profRef=null,pending={},timer=null,ptimer=null,synced=false,acct=null,FB=null;
-const SAVE_MS=HOSTED?2500:600;
+const SAVE_MS=600;
 function setK(k,v){const e=kenc(k);if(v)C[e]=1;else delete C[e];lsSet('tenno-codex',C);
   if(docRef){pending[e]=v?1:0;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}updateMR()}
 async function flush(){if(!docRef)return;const p=pending;pending={};if(!Object.keys(p).length)return;
-  try{await docRef.update({c:p})}catch(e){try{await docRef.set({c:C})}catch(e2){Object.assign(pending,p)}}}
-function saveProfile(){P.edited=new Date().toISOString();if(typeof schedulePublic==='function')schedulePublic();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})},SAVE_MS)}
+  try{await docRef.update({c:p})}catch(e){try{await docRef.set({c:C})}catch(e2){Object.assign(pending,p);saveFail();clearTimeout(timer);timer=setTimeout(flush,5000)}}}
+function saveProfile(){P.edited=new Date().toISOString();if(typeof schedulePublic==='function')schedulePublic();lsSet('tenno-profile',P);clearTimeout(ptimer);ptimer=setTimeout(()=>{if(profRef)Promise.resolve(profRef.set(JSON.parse(JSON.stringify(P)))).catch(saveFail)},SAVE_MS)}
 async function pushAll(){clearTimeout(timer);pending={};if(docRef){try{await docRef.set({c:C})}catch(e){}}saveProfile()}
 async function attach(dr,pr,info){docRef=dr;profRef=pr;
   const [snap,ps]=await Promise.all([docRef.get(),profRef.get()]);
@@ -499,8 +503,8 @@ async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.
   firebase.initializeApp(cfg);const auth=firebase.auth();const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};render();
   try{await auth.getRedirectResult()}catch(e){toast(authMsg(e))}
   auth.onAuthStateChanged(async u=>{if(u){const base=fs.collection('users').doc(u.uid).collection('data');
-      const wrap=r=>({get:()=>r.get(),set:o=>r.set(o),update:o=>r.set(o,{merge:true})});
-      try{await attach(wrap(base.doc('progress')),wrap(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||'',uid:u.uid})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}socialInit(u.uid)}
+      const wrap=r=>({get:()=>r.get(),set:o=>r.set(o),update:o=>r.set(o,{merge:true})});const wrapP=r=>{const put=o=>r.set({j:JSON.stringify(o),edited:o.edited||''});return {get:async()=>{const sn=await r.get();const d=sn.exists?(sn.data()||{}):null;return {exists:!!d,data:()=>d&&typeof d.j==='string'?JSON.parse(d.j):d}},set:put,update:put}};
+      try{await attach(wrap(base.doc('progress')),wrapP(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||'',uid:u.uid})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}socialInit(u.uid)}
     else{socialStop();if(acct&&acct.kind==='fb')detach()}})}
 function authMsg(e){const c=(e&&e.code)||'';return ({'auth/invalid-credential':'Wrong email or password.','auth/wrong-password':'Wrong email or password.','auth/user-not-found':'No account with that email. Tap Create account.','auth/email-already-in-use':'That email already has an account. Tap Sign in.','auth/weak-password':'Use a password with at least 6 characters.','auth/invalid-email':'That email address doesn\'t look right.','auth/popup-closed-by-user':'Sign-in was cancelled.','auth/too-many-requests':'Too many tries. Wait a minute and try again.','auth/network-request-failed':'No connection. Check your internet and try again.'})[c]||'Sign-in failed. Try again.'}
 async function signGoogle(){if(!FB)return;const pr=new firebase.auth.GoogleAuthProvider();try{await FB.auth.signInWithPopup(pr)}catch(e){if(/popup-blocked|operation-not-supported|cancelled-popup/.test(e.code||''))await FB.auth.signInWithRedirect(pr);else toast(authMsg(e))}}
@@ -888,7 +892,7 @@ const SO={uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false,group
 const CODE_AB='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 function myName(){return String(P.tname||(P.prof&&P.prof.name)||(acct&&acct.name)||(acct&&acct.email||'').split('@')[0]||'Tenno').slice(0,40)}
 function socialStop(){SO.unsub.forEach(f=>{try{f()}catch(e){}});Object.values(SO.gun).forEach(f=>{try{f()}catch(e){}});Object.assign(SO,{uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false,groups:[],gm:{},gun:{}});badge()}
-async function socialInit(uid){socialStop();if(!FB)return;SO.uid=uid;const fs=FB.fs;
+async function socialInit(uid){socialStop();if(!FB)return;SO.uid=uid;const fs=FB.fs;liveSync(uid);FBK.tried=false;FBK.admin=false;
   try{const ps=await fs.collection('public').doc(uid).get();const pd=ps.exists?ps.data():null;SO.code=pd&&pd.code||'';
     if(!SO.code){for(let i=0;i<6&&!SO.code;i++){const c=Array.from({length:6},()=>CODE_AB[Math.floor(Math.random()*CODE_AB.length)]).join('');try{await fs.collection('codes').doc(c).set({uid});SO.code=c}catch(e){}}}
     await publishPublic()}catch(e){}
@@ -1079,8 +1083,49 @@ document.addEventListener('change',async e=>{const t=e.target;const gid=state.ch
   if(t.id==='gadd'&&t.value){gAdd(gid,t.value);t.value=''}
   if(t.id==='ginv'&&t.value){const x=(P.tasks||[]).find(y=>y.id===t.value);if(x){x.g=gid;saveProfile();try{await gpost(gid,{type:'task',task:{id:x.id,t:x.t,k:x.k,r:x.r}});toast('Invite sent to the group')}catch(err){toast('Couldn\'t send the invite.')}}t.value=''}});
 
+/* ---------- v13: live cross-device sync, feedback ---------- */
+let saveErrShown=false;
+function saveFail(){if(saveErrShown)return;saveErrShown=true;toast('Couldn\'t save to your account. Check your connection; changes are kept on this device and retried.');setTimeout(()=>saveErrShown=false,60000)}
+function liveRender(){if(document.activeElement&&document.activeElement.matches('input,textarea,select'))return;const y=scrollY;render();scrollTo(0,y)}
+function liveSync(uid){const base=FB.fs.collection('users').doc(uid).collection('data');
+  SO.unsub.push(base.doc('progress').onSnapshot(s=>{if(s.metadata.hasPendingWrites||!s.exists)return;const rc=(s.data()||{}).c||{};let ch=false;
+    for(const k in rc){if(k in pending)continue;const v=!!rc[k];if(v!==!!C[k]){if(v)C[k]=1;else delete C[k];ch=true}}
+    if(ch){lsSet('tenno-codex',C);updateMR();liveRender()}},()=>{}));
+  SO.unsub.push(base.doc('profile').onSnapshot(s=>{if(s.metadata.hasPendingWrites||!s.exists)return;const d=s.data()||{};if(typeof d.j!=='string')return;
+    if(d.edited&&P.edited&&d.edited<=P.edited)return;let o;try{o=JSON.parse(d.j)}catch(e){return}Object.assign(P,o);lsSet('tenno-profile',P);updateMR();liveRender()},()=>{}))}
+
+/* ---- feedback ---- */
+const FBK={list:null,admin:false,tried:false};
+async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
+  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;if(location.hash==='#feedback')liveRender()}catch(e){FBK.admin=false}}
+function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Help improve Tennoform</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
+  if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
+  h+=`<section class="panel cut stack" style="gap:10px">
+   <div class="row">${sel('fbkind','bug',[['bug','Something is wrong'],['idea','Idea or request'],['other','Other']],'Feedback type').replace('style="width:auto"','style="width:auto" id="fbkind"')}${state.fbFrom&&state.fbFrom!=='feedback'?`<span class="small muted">About the ${esc(PL[state.fbFrom]||state.fbFrom)} page</span>`:''}</div>
+   <textarea id="fbtext" maxlength="2000" placeholder="What happened, or what would you like to see? The more detail the better." aria-label="Your feedback" style="min-height:140px;font:14.5px var(--f-body)"></textarea>
+   <input id="fbcontact" type="text" maxlength="120" placeholder="Optional: Discord, email or in-game name if you'd like a reply" aria-label="Contact (optional)">
+   <div class="row"><button class="btn primary" id="fbsend">Send feedback</button><span class="small muted">Only the developer can read this.</span></div></section>`;
+  if(FBK.admin){const L2=(FBK.list||[]).filter(x=>f==='all'||(f==='open'&&!x.done)||(f==='done'&&x.done)||f===x.kind);const open=(FBK.list||[]).filter(x=>!x.done).length;
+    h+=`<section class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between"><h3>Feedback inbox <span class="chip gold">${open} open</span></h3><span class="row">${sel('fbf',f,[['open','Open'],['done','Done'],['all','All'],['bug','Bugs'],['idea','Ideas'],['other','Other']],'Filter feedback')}<button class="btn sm" id="fbreload">Refresh</button></span></div><span class="small muted">Only you see this section.</span></div>
+     ${L2.map(x=>`<div class="fbi${x.done?' done':''}"><div class="row" style="justify-content:space-between;gap:6px"><span class="row" style="gap:6px"><span class="chip ${x.kind==='bug'?'bad':x.kind==='idea'?'teal':''}">${esc(x.kind)}</span><span class="small muted mono">${new Date(x.at).toLocaleString()}</span>${x.page?`<span class="small muted">· ${esc(x.page)}</span>`:''}</span><span class="row" style="gap:4px"><button class="btn sm" data-fbdone="${esc(x.id)}">${x.done?'Reopen':'Done'}</button><button class="btn sm" data-fbdel="${esc(x.id)}">Delete</button></span></div>
+      <div class="fbt">${esc(x.text)}</div><div class="small muted">${x.name?esc(x.name):'Anonymous'}${x.contact?' · '+esc(x.contact):''}</div></div>`).join('')||'<div class="empty">Nothing here.</div>'}</section>`}
+  return h+'</div>'}
+async function sendFeedback(){const text=($('#fbtext')&&$('#fbtext').value||'').trim();if(text.length<3)return toast('Write a little more first');
+  if(!FB)return toast('Still loading. Try again in a moment.');
+  const d={text:text.slice(0,2000),kind:($('#fbkind')||{}).value||'other',page:(state.fbFrom||'home').slice(0,40),at:Date.now()};const c=($('#fbcontact')&&$('#fbcontact').value||'').trim();if(c)d.contact=c.slice(0,120);
+  if(SO.uid){d.uid=SO.uid;d.name=myName()}
+  try{await FB.fs.collection('feedback').add(d);$('#fbtext').value='';if($('#fbcontact'))$('#fbcontact').value='';toast('Thanks! Your feedback was sent.')}catch(e){toast('Couldn\'t send. Try again in a moment.')}}
+document.addEventListener('click',async e=>{const t=e.target.closest('#fbsend,[data-fbdone],[data-fbdel],#fbreload,a[href="#feedback"]');if(!t)return;
+  if(t.matches('a[href="#feedback"]')){state.fbFrom=(location.hash||'#home').slice(1);return}
+  if(t.id==='fbsend'){t.disabled=true;await sendFeedback();t.disabled=false;return}
+  if(t.id==='fbreload'){FBK.tried=false;loadFeedback();return}
+  if(t.dataset.fbdone){const x=FBK.list.find(y=>y.id===t.dataset.fbdone);if(!x)return;x.done=!x.done;FB.fs.collection('feedback').doc(x.id).update({done:x.done}).catch(()=>toast('Couldn\'t update'));liveRender();return}
+  if(t.dataset.fbdel){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again';return}FB.fs.collection('feedback').doc(t.dataset.fbdel).delete().catch(()=>{});FBK.list=FBK.list.filter(y=>y.id!==t.dataset.fbdel);liveRender();return}});
+document.addEventListener('change',e=>{if(e.target.id==='fbf'){state.fbF=e.target.value;liveRender()}});
+
 /* ---------- router ---------- */
-const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
@@ -1115,7 +1160,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   const dd=D.checks.filter(c=>gateOK(c[4]));const ddone=dd.filter(ckDone).length;
   const syn=D.synd.filter(e=>gateOK(e.gate)&&e.ranks.length);const near=syn.map(e=>{const st=synState(e),rr=rankRow(e,st.r);return [e,rr.max!=null?rr.max-st.s:1e9,st]}).filter(x=>x[1]>0&&x[1]<1e9).sort((a,b)=>a[1]-b[1])[0];
   const ez=easiest(5);
-  return `<div class="stack"><a class="donate-mini" href="#donate">♥ Support Tennoform</a>${heroHTML()}${testBanner()}
+  return `<div class="stack"><div class="hubtop"><a class="donate-mini" href="#donate">♥ Support Tennoform <span class="muted">· built by one developer</span></a><a class="donate-mini" href="#feedback">✉ Feedback</a></div>${heroHTML()}${testBanner()}
   ${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Everything follows you to every device.</span></a>`:''}
   ${!P.at?`<a class="panel navcard cut" href="#tenno" data-ttab="account"><span class="eyebrow">Link your account</span><h3>Sync your Warframe profile</h3><span class="small muted">Fills in your ranks, missions, quests and syndicates automatically.</span></a>`:syncCard()}
   <div class="hub3"><div class="hc">${bdPanel()}</div>${hubLeft()}${hubRight()}</div>
@@ -1166,7 +1211,7 @@ function breakdownTab(){const t=totalXP(),m=mrInfo(t.total);
 function stepKeys(n){const it=I[n];if(!it)return[];const k=['bp|'+n];let pi=0;for(const p of it.parts){pi++;if(p.k==='p'&&p.n==='Blueprint')continue;
   if(p.k==='p'){k.push('part|'+n+'|'+p.n);if(p.sub){k.push('built|'+n+'|'+p.n);p.sub.forEach(([r])=>k.push('res|'+n+'|'+p.n+'|'+r))}}else if(p.k==='i')k.push('have|'+n+'|'+p.n+'|'+pi);else if(p.k==='r')k.push('res|'+n+'|main|'+p.n)}
   k.push('build|'+n);return k}
-function setQ(k){const e=kenc(k);if(C[e])return;C[e]=1;if(docRef)pending[e]=1}
+function setQ(k){const e=kenc(k);if(C[e])return;C[e]=1;if(docRef){pending[e]=1;clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}}
 function exclusive(it){return it&&!it.p&&!it.bc&&!(it.bpd&&it.bpd.length)&&!(it.dr&&it.dr.length)&&!it.bprel}
 function detectQuests(j,mis,owned){const det=new Set(['Awakening',"Vor's Prize"]);const nq=s=>s.toLowerCase().replace(/^the /,'').replace(/[^a-z0-9]/g,'');
   const ch=(j.ChallengeProgress||[]).map(c=>String(c.Name||'').toLowerCase());
@@ -1615,7 +1660,7 @@ function findKey(o,key,depth){if(!o||typeof o!=='object'||depth>6)return undefin
 const SYN={ArbitersSyndicate:'Arbiters of Hexis',CephalonSudaSyndicate:'Cephalon Suda',NewLokaSyndicate:'New Loka',PerrinSyndicate:'The Perrin Sequence',RedVeilSyndicate:'Red Veil',SteelMeridianSyndicate:'Steel Meridian',CetusSyndicate:'Ostrons',QuillsSyndicate:'The Quills',SolarisSyndicate:'Solaris United',VentKidsSyndicate:'Ventkids',VoxSyndicate:'Vox Solaris',EntratiSyndicate:'Entrati',NecraloidSyndicate:'Necraloid',ZarimanSyndicate:'The Holdfasts',KahlSyndicate:"Kahl's Garrison",EntratiLabSyndicate:'Cavia',HexSyndicate:'The Hex',LibrarySyndicate:'Cephalon Simaris',ConclaveSyndicate:'Conclave',RadioLegionSyndicate:'Nightwave'};
 const pretty=s=>String(s||'').split('/').pop().replace(/([a-z])([A-Z])/g,'$1 $2').replace(/ ?Syndicate$/,'').trim();
 function nm(u){return U[u]||pretty(u)}
-function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}
+function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){return 'That isn\'t profile data. Copy the whole page from your profile link and try again.'}if(!P.wfid){const id=findId(txt);if(id){P.wfid=id;lsSet('tenno-acct',id)}}
   const j=raw.Results&&raw.Results[0]?raw.Results[0]:raw;const st=raw.Stats||{};
   const xpi=(j.LoadOutInventory&&j.LoadOutInventory.XPInfo)||findKey(j,'XPInfo',0)||[];const mis=j.Missions||[];const skills=j.PlayerSkills||{};
   if(!xpi.length&&!mis.length)return 'No ranks or missions found. Make sure you copied the whole page.';
