@@ -147,3 +147,6 @@
 @layer base {
   h1, h2, h3, .font-heading { font-family: var(--font-heading); letter-spacing: 0; }
 }
+
+/* our search boxes have their own clear button */
+#tf-root input[type="search"]::-webkit-search-cancel-button,[data-slot="dialog-content"] input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}

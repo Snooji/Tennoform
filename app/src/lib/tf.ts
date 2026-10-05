@@ -119,6 +119,7 @@ export type TFApi = {
   relSet(r: string, k: string, v: string): void
   setTraces(v: string): void
   setDup(n: string, v: string): void
+  planSet(o: { ref?: string; squad?: string; era?: string; sort?: string; q?: string; own?: boolean }): void
   arsenal(): ArsenalData
   arsenalSet(o: Partial<Record<"tab" | "cat" | "own" | "lf" | "ls" | "arq" | "art" | "ars" | "aro" | "kmt" | "kms" | "sel" | "bi", string>>): void
   arcAdj(n: string, d: number): void
@@ -283,8 +284,14 @@ export type RelicCard = {
   r: string; vaulted: boolean; advice: { t: string; why: string; k: string }; counts: Record<"i" | "e" | "f" | "r", number>
   rewards: { n: string; rar: string; go: string; need: boolean; goal: boolean; plat: number | null; du: number }[]; evI: number; evR: number
 }
+export type PlanRow = {
+  r: string; era: string; vaulted: boolean; count: number; plat: number; du: number
+  rare: { n: string; go: string; p: number; plat: number | null } | null; need: { n: string; go: string; p: number }[]; needP: number; hardest: string
+}
+export type PlanData = { ref: string; squad: string; own: boolean; era: string; sort: string; q: string; total: number; owned: number; rows: PlanRow[] }
 export type RelicsData = {
-  tab: "mine" | "add" | "ducats"
+  tab: "mine" | "plan" | "add" | "ducats"
+  plan?: PlanData
   era?: string; sort?: string; kinds?: number; tot?: number; totPl?: number; withNeed?: number; traces?: number; cards?: RelicCard[]
   q?: string; filter?: string; total?: number; list?: { r: string; vaulted: boolean; rare: string; count: number }[]
   snapshot?: string; spares?: number; plat?: number; ducats?: number; baro?: { state: string; text: string }; count?: number

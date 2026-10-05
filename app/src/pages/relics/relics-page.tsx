@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { GoLink } from "@/components/tf/go-link"
 import { NumField } from "@/components/tf/num-field"
+import { Planner } from "./planner"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type RelicCard, type RelicsData } from "@/lib/tf"
 
@@ -201,9 +202,9 @@ export function RelicsPage() {
         <h1 className="font-heading text-3xl font-semibold">Relics</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p>
       </header>
-      <HaloSegmented className="self-start" value={d.tab} onValueChange={(v) => tf().relicsSet({ tab: v })}
-        items={[{ value: "mine", label: "My relics" }, { value: "add", label: "Add relics" }, { value: "ducats", label: "Ducats & trading" }]} />
-      {d.tab === "add" ? <Add d={d} /> : d.tab === "ducats" ? <Ducats d={d} /> : <Mine d={d} />}
+      <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0"><HaloSegmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().relicsSet({ tab: v })}
+        items={[{ value: "mine", label: "My relics" }, { value: "plan", label: "Planner" }, { value: "add", label: "Add relics" }, { value: "ducats", label: "Ducats & trading" }]} /></div>
+      {d.tab === "plan" && d.plan ? <Planner d={d.plan} /> : d.tab === "add" ? <Add d={d} /> : d.tab === "ducats" ? <Ducats d={d} /> : <Mine d={d} />}
     </div>
   )
 }
