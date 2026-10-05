@@ -392,6 +392,14 @@ select,input[type=search],input[type=number],input[type=text],input[type=passwor
 .chatin{padding:8px;border-top:1px solid var(--line)}
 .hero{grid-template-columns:minmax(0,1fr)!important;padding:12px 16px}.hero>.ring.big{display:none}
 @media (max-width:520px){.hero{text-align:left;justify-items:stretch}.hero-t .row{justify-content:flex-start}}
+.fsec{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);font:600 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);background:var(--sunk)}
+.msys{align-self:center;font:11.5px var(--f-mono);color:var(--muted);padding:2px 8px}
+.mw{font:600 11.5px var(--f-body);color:var(--cyan);margin-bottom:2px}
+.gpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px}.gpick label{display:flex;gap:6px;align-items:center}
+.donate-mini{align-self:flex-start;font:600 11px var(--f-mono);letter-spacing:.08em;color:var(--gold);text-decoration:none;opacity:.8;margin:-6px 0 -6px}
+.donate-mini:hover{opacity:1;text-decoration:underline}
+.dcard{align-items:flex-start}.dic{line-height:0}
+@media (min-width:900px){.dongrid{grid-template-columns:1fr 1fr!important}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -434,11 +442,11 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends']];
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends'],['donate','Support']];
 const BAR=['home','today','ranks','resources'];
 const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 const TOP=['home','today','ranks','tasks','friends','missions','relics','market'];
-const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Squad',['tasks','friends']]];
+const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Squad',['tasks','friends','donate']]];
 const PL=Object.fromEntries(PAGES);
 $('nav.tabs').innerHTML=TOP.map(r=>`<a href="#${r}">${PL[r]}</a>`).join('');
 $('.bnav').innerHTML=BAR.map(r=>`<a href="#${r}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[r]}"/></svg>${PAGES.find(p=>p[0]===r)[1]}</a>`).join('')+`<button type="button" id="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>`;
@@ -873,18 +881,19 @@ function tasks(){const f=state.tkF||'open',so=state.tkS||'new';let L2=(P.tasks||
   <div class="row">${sel('tkf',f,[['open','To do'],['done','Done'],['shared','Shared with friends'],['all','All'],['res','Resources'],['item','Builds'],['relic','Relics'],['quest','Quests'],['synd','Syndicates'],['note','My notes']],'Filter tasks')}${sel('tks',so,[['new','Newest first'],['old','Oldest first'],['kind','By type']],'Sort tasks')}<span class="chip gold">${all.length-dn} to do · ${dn} done</span>${dn?'<button class="btn sm" id="tclear">Clear done</button>':''}</div>
   <div class="panel cut tlist">${L2.map(x=>taskRow(x,0)).join('')||'<div class="empty">No tasks here.</div>'}</div></div>`}
 async function toggleTask(id,v){const x=(P.tasks||[]).find(t=>t.id===id);if(!x)return;x.d=v?1:0;x.dat=v?Date.now():0;saveProfile();
-  if(v&&SO.uid){for(const w of x.with||[])sendMsg(w.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{});if(x.from)sendMsg(x.from.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{})}}
+  if(v&&SO.uid&&x.g){gpost(x.g,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}}).catch(()=>{})}else if(v&&SO.uid){for(const w of x.with||[])sendMsg(w.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{});if(x.from)sendMsg(x.from.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{})}}
 
 /* ---- friends & messages (Firebase) ---- */
-const SO={uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false};
+const SO={uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false,groups:[],gm:{},gun:{}};
 const CODE_AB='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 function myName(){return String(P.tname||(P.prof&&P.prof.name)||(acct&&acct.name)||(acct&&acct.email||'').split('@')[0]||'Tenno').slice(0,40)}
-function socialStop(){SO.unsub.forEach(f=>{try{f()}catch(e){}});Object.assign(SO,{uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false});badge()}
+function socialStop(){SO.unsub.forEach(f=>{try{f()}catch(e){}});Object.values(SO.gun).forEach(f=>{try{f()}catch(e){}});Object.assign(SO,{uid:null,code:'',friends:[],inbox:[],pub:{},unsub:[],ready:false,groups:[],gm:{},gun:{}});badge()}
 async function socialInit(uid){socialStop();if(!FB)return;SO.uid=uid;const fs=FB.fs;
   try{const ps=await fs.collection('public').doc(uid).get();const pd=ps.exists?ps.data():null;SO.code=pd&&pd.code||'';
     if(!SO.code){for(let i=0;i<6&&!SO.code;i++){const c=Array.from({length:6},()=>CODE_AB[Math.floor(Math.random()*CODE_AB.length)]).join('');try{await fs.collection('codes').doc(c).set({uid});SO.code=c}catch(e){}}}
     await publishPublic()}catch(e){}
   SO.unsub.push(fs.collection('users').doc(uid).collection('friends').onSnapshot(s=>{SO.friends=s.docs.map(d=>({uid:d.id,...d.data()}));loadFriendCards();socialRender()},()=>{}));
+  SO.unsub.push(fs.collection('groups').where('members','array-contains',uid).onSnapshot(s=>{SO.groups=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.at||0)-(a.at||0));syncGroupListeners();socialRender()},()=>{}));
   SO.unsub.push(fs.collection('inbox').doc(uid).collection('msgs').orderBy('at','desc').limit(400).onSnapshot(s=>{SO.inbox=s.docs.map(d=>({id:d.id,...d.data()}));SO.ready=true;processInbox();socialRender()},()=>{}))}
 let pubT=null;
 function publishPublic(){if(!SO.uid||!FB)return Promise.resolve();const t=totalXP();const cats={};CATS.forEach(c=>{const x=catXP(c);if(x)cats[c]=x});
@@ -901,10 +910,10 @@ function processInbox(){const fs=FB.fs;
     if(m.type==='accept'){fs.collection('users').doc(SO.uid).collection('friends').doc(m.from).set({name:m.fromName||'Friend',code:m.code||'',at:Date.now()}).then(()=>fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete()).catch(()=>{});toast((m.fromName||'A friend')+' accepted your friend request')}
     if(m.type==='taskok'&&!m.ans){const x=(P.tasks||[]).find(t=>t.id===(m.task&&m.task.id));if(x){x.with=x.with||[];if(!x.with.some(w=>w.uid===m.from))x.with.push({uid:m.from,name:m.fromName||'Friend'});saveProfile()}
       fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).update({ans:'seen'}).catch(()=>{})}}}
-function unread(){const lr=lsGet('tf-read',{});let n=0;const per={};for(const m of SO.inbox){if(m.type==='sent'||m.type==='accept')continue;if(m.type==='friend'){n++;continue}if(m.at>(lr[m.from]||0)){n++;per[m.from]=(per[m.from]||0)+1}}return {n,per}}
+function unread(){const lr=lsGet('tf-read',{});let n=0;const per={};for(const g of SO.groups){const c=(SO.gm[g.id]||[]).filter(m=>m.from!==SO.uid&&m.at>(lr['g:'+g.id]||0)).length;if(c){n+=c;per['g:'+g.id]=c}}for(const m of SO.inbox){if(m.type==='sent'||m.type==='accept')continue;if(m.type==='friend'){n++;continue}if(m.at>(lr[m.from]||0)){n++;per[m.from]=(per[m.from]||0)+1}}return {n,per}}
 function badge(){const u=SO.uid?unread().n:0;document.querySelectorAll('.nbadge').forEach(e=>e.remove());if(!u)return;
   document.querySelectorAll('a[href="#friends"],#hamb,#menu').forEach(a=>{const b=document.createElement('span');b.className='nbadge';b.textContent=u>9?'9+':u;a.appendChild(b)})}
-function socialRender(){badge();if(location.hash==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(location.hash==='#friends'){const box=$('#chatlog');if(box){box.innerHTML=chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
+function socialRender(){badge();if(location.hash==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(location.hash==='#friends'){const box=$('#chatlog');if(box){const g=state.chat&&state.chat.startsWith('g:')?SO.groups.find(x=>'g:'+x.id===state.chat):null;box.innerHTML=g?groupLog(g):chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
 function chatLog(fid){const ms=SO.inbox.filter(m=>(m.from===fid&&m.type!=='friend'&&m.type!=='accept')||(m.type==='sent'&&m.to===fid)).sort((a,b)=>a.at-b.at);
   return ms.map(m=>{const mine=m.type==='sent';const t=new Date(m.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     let body=esc(m.text||'');
@@ -915,16 +924,17 @@ function chatLog(fid){const ms=SO.inbox.filter(m=>(m.from===fid&&m.type!=='frien
     if(mine&&m.task&&!m.text)body=`Invited to: <b>${esc(m.task.t)}</b>`;
     return `<div class="msg${mine?' me':''}"><div class="bub">${body}</div><div class="mt">${t}</div></div>`}).join('')||'<div class="small muted" style="padding:10px">No messages yet. Say hi, or invite them to a task.</div>'}
 function friends(){const signed=SO.uid;
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Squad</div><h1>Friends</h1><p class="lede">Add friends with their friend code, message them, and invite them to join your tasks.</p></div>`;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Squad</div><h1>Friends</h1><p class="lede">Add friends with their friend code, chat one-on-one or in groups, and invite them to join your tasks.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Friends and messages work on <a class="ln" href="https://tennoform.com" target="_blank" rel="noopener">tennoform.com</a> after you sign in.</div></div>`;
   if(!FB)return h+`<div class="panel cut">Loading…</div></div>`;
   if(!signed)return h+`<div class="panel cut stack"><b>Sign in to add friends.</b><span class="small muted">Friends, messages and shared tasks are tied to your account.</span><a class="btn primary" href="#tenno" data-ttab="account" style="align-self:flex-start">Sign in</a></div></div>`;
-  const reqs=SO.inbox.filter(m=>m.type==='friend');const ur=unread().per;const cur=state.chat&&SO.friends.some(f=>f.uid===state.chat)?state.chat:null;
+  const reqs=SO.inbox.filter(m=>m.type==='friend');const ur=unread().per;const cur=state.chat&&SO.friends.some(f=>f.uid===state.chat)?state.chat:null;const curG=state.chat&&state.chat.startsWith('g:')?SO.groups.find(g=>'g:'+g.id===state.chat):null;
   h+=`<div class="panel cut row" style="justify-content:space-between"><div><span class="eyebrow">Your friend code</span><div class="fcode">${esc(SO.code||'…')}</div></div><button class="btn" data-copy="${esc(SO.code)}">Copy code</button></div>
   <div class="panel cut stack" style="gap:8px"><b>Add a friend</b><div class="row" style="flex-wrap:nowrap"><input id="fcode" type="text" placeholder="Their 6-character code" maxlength="6" autocomplete="off" style="text-transform:uppercase" aria-label="Friend code"><button class="btn primary" id="faddc">Send request</button></div></div>
   ${reqs.length?`<div class="panel cut stack" style="gap:8px;border-color:var(--gold-dim)"><b>Friend requests</b>${reqs.map(m=>`<div class="row" style="justify-content:space-between"><span><b>${esc(m.fromName||'Tenno')}</b> <span class="small muted mono">${esc(m.code||'')}</span></span><span class="row"><button class="btn sm primary" data-facc="${esc(m.id)}">Accept</button><button class="btn sm" data-fdec="${esc(m.id)}">Decline</button></span></div>`).join('')}</div>`:''}
-  <div class="chatwrap"><div class="flist">${SO.friends.length?SO.friends.map(f=>{const p=SO.pub[f.uid]||{};return `<button class="fitem${cur===f.uid?' on':''}" data-chat="${esc(f.uid)}"><span class="fn">${esc(p.name||f.name||'Friend')}${f.pending?' <span class="chip">pending</span>':''}</span><span class="small muted mono">${[p.mr!=null?'MR '+mrLabel(p.mr):'',p.xp?fmt(p.xp)+' XP':''].filter(Boolean).join(' · ')}</span>${ur[f.uid]?`<span class="nb">${ur[f.uid]}</span>`:''}</button>`}).join(''):'<div class="small muted" style="padding:12px">No friends yet. Share your code or enter theirs above.</div>'}</div>
-  <div class="chat">${cur?chatPane(cur):'<div class="empty">Pick a friend to message them.</div>'}</div></div>
+  ${state.newGroup?newGroupForm():''}
+  <div class="chatwrap"><div class="flist"><div class="fsec"><span>Groups</span><button class="btn sm" id="gnew">+ New group</button></div>${SO.groups.map(g=>`<button class="fitem${curG&&curG.id===g.id?' on':''}" data-chat="g:${esc(g.id)}"><span class="fn">${esc(g.name)}</span><span class="small muted">${g.members.length} members</span>${ur['g:'+g.id]?`<span class="nb">${ur['g:'+g.id]}</span>`:''}</button>`).join('')||'<div class="small muted" style="padding:8px 12px">No groups yet.</div>'}<div class="fsec"><span>Friends</span></div>${SO.friends.length?SO.friends.map(f=>{const p=SO.pub[f.uid]||{};return `<button class="fitem${cur===f.uid?' on':''}" data-chat="${esc(f.uid)}"><span class="fn">${esc(p.name||f.name||'Friend')}${f.pending?' <span class="chip">pending</span>':''}</span><span class="small muted mono">${[p.mr!=null?'MR '+mrLabel(p.mr):'',p.xp?fmt(p.xp)+' XP':''].filter(Boolean).join(' · ')}</span>${ur[f.uid]?`<span class="nb">${ur[f.uid]}</span>`:''}</button>`}).join(''):'<div class="small muted" style="padding:12px">No friends yet. Share your code or enter theirs above.</div>'}</div>
+  <div class="chat">${cur?chatPane(cur):curG?groupPane(curG):'<div class="empty">Pick a friend or group to start chatting.</div>'}</div></div>
   ${SO.friends.length?compareFriends():''}</div>`;
   return h}
 function chatPane(fid){const f=SO.friends.find(x=>x.uid===fid)||{};const p=SO.pub[fid]||{};const lr=lsGet('tf-read',{});lr[fid]=Date.now();lsSet('tf-read',lr);setTimeout(badge,0);
@@ -988,7 +998,7 @@ document.addEventListener('click',async e=>{const t=e.target.closest('[data-addt
   if(t.dataset.facc){acceptFriend(t.dataset.facc);return}
   if(t.dataset.fdec){FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(t.dataset.fdec).delete().catch(()=>{});return}
   if(t.dataset.chat){state.chat=t.dataset.chat;rerender();const b=$('#chatlog');if(b)b.scrollTop=b.scrollHeight;return}
-  if(t.id==='msgsend'){const el=$('#msgin');const v=(el&&el.value||'').trim();if(!v||!state.chat)return;el.value='';try{await sendMsg(state.chat,{type:'msg',text:v})}catch(err){toast('Couldn\'t send. They may not have accepted yet.');el.value=v}return}
+  if(t.id==='msgsend'){const el=$('#msgin');const v=(el&&el.value||'').trim();if(!v||!state.chat)return;el.value='';try{if(state.chat.startsWith('g:'))await gpost(state.chat.slice(2),{type:'msg',text:v});else await sendMsg(state.chat,{type:'msg',text:v})}catch(err){toast('Couldn\'t send. They may not have accepted yet.');el.value=v}return}
   if(t.dataset.funf){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again';setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent='Remove'}},3000);return}
     FB.fs.collection('users').doc(SO.uid).collection('friends').doc(t.dataset.funf).delete().catch(()=>{});state.chat=null;return}
   if(t.dataset.tjoin){answerInvite(t.dataset.tjoin,true);return}
@@ -1001,8 +1011,76 @@ document.addEventListener('change',async e=>{const t=e.target;
 document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const id=e.target&&e.target.id;
   if(id==='tnew'){e.preventDefault();$('#taddb')&&$('#taddb').click()}if(id==='msgin'){e.preventDefault();$('#msgsend')&&$('#msgsend').click()}if(id==='fcode'){e.preventDefault();$('#faddc')&&$('#faddc').click()}});
 
+/* ---------- v12: group chats, support page ---------- */
+const DONATE={ign:'',paypal:''};
+function syncGroupListeners(){const fs=FB.fs;const ids=new Set(SO.groups.map(g=>g.id));
+  for(const id in SO.gun)if(!ids.has(id)){try{SO.gun[id]()}catch(e){}delete SO.gun[id];delete SO.gm[id]}
+  for(const g of SO.groups)if(!SO.gun[g.id])SO.gun[g.id]=fs.collection('groups').doc(g.id).collection('msgs').orderBy('at','desc').limit(200).onSnapshot(s=>{SO.gm[g.id]=s.docs.map(d=>({id:d.id,...d.data()}));processGroup(g.id);socialRender()},()=>{})}
+function gpost(gid,body){return FB.fs.collection('groups').doc(gid).collection('msgs').add({from:SO.uid,fromName:myName(),at:Date.now(),...body})}
+function processGroup(gid){for(const m of SO.gm[gid]||[]){if(m.type!=='taskok'||m.from===SO.uid)continue;const x=(P.tasks||[]).find(t=>t.id===(m.task&&m.task.id));
+  if(x&&!(x.with||[]).some(w=>w.uid===m.from)){x.with=x.with||[];x.with.push({uid:m.from,name:m.fromName||'Friend'});saveProfile()}}}
+function gname(g,uid){return (g.names&&g.names[uid])||(SO.pub[uid]&&SO.pub[uid].name)||((SO.friends.find(f=>f.uid===uid)||{}).name)||'Tenno'}
+function groupLog(g){const ms=(SO.gm[g.id]||[]).slice().sort((a,b)=>a.at-b.at);
+  return ms.map(m=>{const mine=m.from===SO.uid;const t=new Date(m.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});const who=mine?'':`<div class="mw">${esc(m.fromName||gname(g,m.from))}</div>`;
+    if(m.type==='sys')return `<div class="msys">${esc(m.text)}</div>`;
+    let body=esc(m.text||'');
+    if(m.type==='task'){const joined=(P.tasks||[]).some(x=>x.src&&x.src.id===(m.task&&m.task.id))||mine;body=`<b>${mine?'You invited the group to':'Invite'}:</b> ${esc(m.task&&m.task.t)}${joined?(mine?'':'<div class="small muted">You joined</div>'):`<div class="row" style="margin-top:6px"><button class="btn sm primary" data-gjoin="${esc(g.id+'|'+m.id)}">Join</button></div>`}`}
+    if(m.type==='taskok')body=`Joined: <b>${esc(m.task&&m.task.t||'a task')}</b>`;
+    if(m.type==='taskdone')body=`Finished: <b>${esc(m.task&&m.task.t)}</b> ✓`;
+    return `<div class="msg${mine?' me':''}">${who}<div class="bub">${body}</div><div class="mt">${t}</div></div>`}).join('')||'<div class="small muted" style="padding:10px">No messages yet. Say hi to the group.</div>'}
+function groupPane(g){const lr=lsGet('tf-read',{});lr['g:'+g.id]=Date.now();lsSet('tf-read',lr);setTimeout(badge,0);
+  const mine=(P.tasks||[]).filter(x=>!x.d);const addable=SO.friends.filter(f=>!f.pending&&!g.members.includes(f.uid));
+  return `<div class="row chath" style="justify-content:space-between"><div style="min-width:0"><b>${esc(g.name)}</b><div class="small muted ell">${g.members.map(u=>u===SO.uid?'You':esc(gname(g,u))).join(', ')}</div></div>
+   <span class="row"><select id="ginv" aria-label="Invite the group to a task" style="width:auto;max-width:180px"><option value="">Invite to a task…</option>${mine.map(x=>`<option value="${esc(x.id)}">${esc(x.t)}</option>`).join('')}</select>
+   ${addable.length?`<select id="gadd" aria-label="Add a friend to the group" style="width:auto;max-width:160px"><option value="">Add friend…</option>${addable.map(f=>`<option value="${esc(f.uid)}">${esc((SO.pub[f.uid]||{}).name||f.name)}</option>`).join('')}</select>`:''}
+   <button class="btn sm" data-gleave="${esc(g.id)}">Leave</button></span></div>
+  <div class="chatlog" id="chatlog">${groupLog(g)}</div>
+  <div class="row chatin" style="flex-wrap:nowrap"><input id="msgin" type="text" maxlength="1000" placeholder="Message ${esc(g.name)}" aria-label="Message"><button class="btn primary" id="msgsend">Send</button></div>`}
+function newGroupForm(){const fr=SO.friends.filter(f=>!f.pending);
+  return `<div class="panel cut stack" style="gap:8px"><b>New group chat</b>${fr.length?`<input id="gname" type="text" maxlength="40" placeholder="Group name (e.g. Eidolon squad)" aria-label="Group name">
+   <div class="gpick">${fr.map(f=>`<label class="small"><input type="checkbox" data-gpick="${esc(f.uid)}"> ${esc((SO.pub[f.uid]||{}).name||f.name)}</label>`).join('')}</div>
+   <div class="row"><button class="btn primary" id="gcreate">Create group</button><button class="btn" id="gcancel">Cancel</button></div>`:'<span class="small muted">Add at least one friend first.</span><div><button class="btn" id="gcancel">Close</button></div>'}</div>`}
+async function createGroup(){const name=($('#gname')&&$('#gname').value||'').trim().slice(0,40);const picks=[...document.querySelectorAll('[data-gpick]:checked')].map(i=>i.dataset.gpick);
+  if(!name)return toast('Give the group a name');if(!picks.length)return toast('Pick at least one friend');
+  const names={[SO.uid]:myName()};picks.forEach(u=>names[u]=String((SO.pub[u]||{}).name||(SO.friends.find(f=>f.uid===u)||{}).name||'Tenno').slice(0,40));
+  try{const r=await FB.fs.collection('groups').add({name,owner:SO.uid,members:[SO.uid,...picks],names,at:Date.now()});await gpost(r.id,{type:'sys',text:myName()+' created '+name});state.newGroup=false;state.chat='g:'+r.id;rerender()}catch(e){toast('Couldn\'t create the group. Check the Firebase rules are up to date.')}}
+async function gAdd(gid,uid){const g=SO.groups.find(x=>x.id===gid);if(!g)return;const nm=String((SO.pub[uid]||{}).name||(SO.friends.find(f=>f.uid===uid)||{}).name||'Tenno').slice(0,40);
+  try{await FB.fs.collection('groups').doc(gid).update({members:firebase.firestore.FieldValue.arrayUnion(uid),['names.'+uid]:nm,at:Date.now()});await gpost(gid,{type:'sys',text:myName()+' added '+nm})}catch(e){toast('Couldn\'t add them. Groups hold up to 25 people.')}}
+async function gLeave(gid){const g=SO.groups.find(x=>x.id===gid);if(!g)return;
+  try{await gpost(gid,{type:'sys',text:myName()+' left'});if(g.owner===SO.uid&&g.members.length<=1)await FB.fs.collection('groups').doc(gid).delete();else await FB.fs.collection('groups').doc(gid).update({members:firebase.firestore.FieldValue.arrayRemove(SO.uid),at:Date.now()});state.chat=null;rerender()}catch(e){toast('Couldn\'t leave. Try again.')}}
+async function gJoin(gid,mid){const m=(SO.gm[gid]||[]).find(x=>x.id===mid);if(!m||!m.task)return;
+  addTask(m.task.k||'note',m.task.r||m.task.t,m.task.t,{from:{uid:m.from,name:m.fromName||'Tenno'},src:{uid:m.from,id:m.task.id},g:gid});
+  try{await gpost(gid,{type:'taskok',task:{id:m.task.id,t:m.task.t}});toast('Added to your tasks')}catch(e){}rerender()}
+
+/* ---- support page ---- */
+function donate(){const ign=DONATE.ign,pp=DONATE.paypal;const wh=ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:'';
+  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Tennoform is free, has no ads and always will. If it helped you, you can chip in to keep it running and growing. Totally optional, and thank you.</p></div>
+  <div class="split two dongrid">
+   <section class="panel cut stack dcard"><div class="dic">${PLAT_SVG}</div><h2>Donate platinum</h2>
+    ${ign?`<p class="small" style="margin:0">Send any amount of platinum in game to <b class="mono" style="color:var(--gold)">${esc(ign)}</b>.</p>
+    <ol class="small" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px"><li>Copy the whisper below and paste it into in-game chat.</li><li>Meet in Maroo's Bazaar (Mars) or a Clan Dojo Trading Post.</li><li>Open a trade and add the platinum. Trading needs MR 2 and two-factor sign-in, and costs a small credit tax.</li></ol>
+    <div class="row"><button class="btn primary" data-copy="${esc(wh)}">Copy whisper</button><button class="btn" data-copy="${esc(ign)}">Copy name</button></div>`:'<p class="small muted" style="margin:0">Platinum donations open soon.</p>'}
+   </section>
+   <section class="panel cut stack dcard"><div class="dic">${PP_SVG}</div><h2>Donate with PayPal</h2>
+    ${pp?`<p class="small" style="margin:0">One-off donation in any amount through PayPal. You don't need a PayPal account to pay by card.</p><a class="btn primary" href="${esc(pp)}" target="_blank" rel="noopener" style="align-self:flex-start">Donate on PayPal ↗</a>`:'<p class="small muted" style="margin:0">PayPal donations open soon.</p>'}
+   </section></div>
+  <div class="callout small">Donations don't unlock anything. Every feature stays free for everyone.</div></div>`}
+const PLAT_SVG='<svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 3 42 14v20L24 45 6 34V14z" fill="#0d1a22" stroke="#6FD6E8" stroke-width="2"/><path d="M24 11 35 17.5v13L24 37 13 30.5v-13z" fill="#6FD6E8" opacity=".25" stroke="#BDF2FA" stroke-width="1.5"/><path d="M24 11v26M13 17.5l22 13M35 17.5l-22 13" stroke="#BDF2FA" stroke-width="1" opacity=".6"/></svg>';
+const PP_SVG='<svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="#0d1a22" stroke="#D9B45E" stroke-width="2"/><path d="M24 34s-9-5.6-9-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.4-9 12-9 12z" fill="#D9B45E"/></svg>';
+
+/* ---- v12 events ---- */
+document.addEventListener('click',async e=>{const t=e.target.closest('#gnew,#gcreate,#gcancel,[data-gleave],[data-gjoin]');if(!t)return;
+  if(t.id==='gnew'){state.newGroup=true;rerender();setTimeout(()=>$('#gname')&&$('#gname').focus(),30);return}
+  if(t.id==='gcancel'){state.newGroup=false;rerender();return}
+  if(t.id==='gcreate'){createGroup();return}
+  if(t.dataset.gleave){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again';setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.textContent='Leave'}},3000);return}gLeave(t.dataset.gleave);return}
+  if(t.dataset.gjoin){const [g,m]=t.dataset.gjoin.split('|');gJoin(g,m);return}},true);
+document.addEventListener('change',async e=>{const t=e.target;const gid=state.chat&&state.chat.startsWith('g:')?state.chat.slice(2):null;if(!gid)return;
+  if(t.id==='gadd'&&t.value){gAdd(gid,t.value);t.value=''}
+  if(t.id==='ginv'&&t.value){const x=(P.tasks||[]).find(y=>y.id===t.value);if(x){x.g=gid;saveProfile();try{await gpost(gid,{type:'task',task:{id:x.id,t:x.t,k:x.k,r:x.r}});toast('Invite sent to the group')}catch(err){toast('Couldn\'t send the invite.')}}t.value=''}});
+
 /* ---------- router ---------- */
-const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
@@ -1037,7 +1115,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   const dd=D.checks.filter(c=>gateOK(c[4]));const ddone=dd.filter(ckDone).length;
   const syn=D.synd.filter(e=>gateOK(e.gate)&&e.ranks.length);const near=syn.map(e=>{const st=synState(e),rr=rankRow(e,st.r);return [e,rr.max!=null?rr.max-st.s:1e9,st]}).filter(x=>x[1]>0&&x[1]<1e9).sort((a,b)=>a[1]-b[1])[0];
   const ez=easiest(5);
-  return `<div class="stack">${heroHTML()}${testBanner()}
+  return `<div class="stack"><a class="donate-mini" href="#donate">♥ Support Tennoform</a>${heroHTML()}${testBanner()}
   ${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Everything follows you to every device.</span></a>`:''}
   ${!P.at?`<a class="panel navcard cut" href="#tenno" data-ttab="account"><span class="eyebrow">Link your account</span><h3>Sync your Warframe profile</h3><span class="small muted">Fills in your ranks, missions, quests and syndicates automatically.</span></a>`:syncCard()}
   <div class="hub3"><div class="hc">${bdPanel()}</div>${hubLeft()}${hubRight()}</div>

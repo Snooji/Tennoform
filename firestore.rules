@@ -50,5 +50,35 @@ service cloud.firestore {
           || (me() != uid && request.resource.data.type in ['msg', 'task', 'taskok', 'taskno', 'taskdone'] && isFriendOf(uid, me()))
         );
     }
+  
+    // Group chats: only members can read, post or change the group.
+    match /groups/{gid} {
+      allow read: if signedIn() && me() in resource.data.members;
+      allow create: if signedIn() && request.resource.data.owner == me()
+        && me() in request.resource.data.members
+        && request.resource.data.members is list && request.resource.data.members.size() <= 25
+        && request.resource.data.keys().hasOnly(['name', 'owner', 'members', 'names', 'at'])
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40;
+      allow update: if signedIn() && me() in resource.data.members
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'members', 'names', 'at'])
+        && request.resource.data.owner == resource.data.owner
+        && request.resource.data.members is list && request.resource.data.members.size() <= 25
+        && request.resource.data.name is string && request.resource.data.name.size() <= 40;
+      allow delete: if signedIn() && resource.data.owner == me();
+
+      match /msgs/{id} {
+        function isMember() {
+          return me() in get(/databases/$(database)/documents/groups/$(gid)).data.members;
+        }
+        allow read: if signedIn() && isMember();
+        allow create: if signedIn() && isMember()
+          && request.resource.data.from == me()
+          && request.resource.data.keys().hasOnly(['from', 'fromName', 'type', 'text', 'task', 'at'])
+          && request.resource.data.at is number
+          && request.resource.data.type in ['msg', 'task', 'taskok', 'taskdone', 'sys']
+          && (!('text' in request.resource.data) || (request.resource.data.text is string && request.resource.data.text.size() <= 1000))
+          && (!('fromName' in request.resource.data) || (request.resource.data.fromName is string && request.resource.data.fromName.size() <= 40));
+      }
+    }
   }
 }
