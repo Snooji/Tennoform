@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pcl5ReFR4mD/ygArErhXtE6fFUasomHH2bbI/dic8tM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-0Se1lQtF.css"><script type="module" src="/assets/main-DFeTaYIB.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-a/2ESmk2EPrDrKEFMCWFGse2n5HUJyjQ9drKED3b1qM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-BOZM9AKB.css"><script type="module" src="/assets/main-BA5F0oGo.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0e0f12">
 
@@ -3166,7 +3166,7 @@ Object.assign(window.TF,{
 const _tasksRoute=routes.tasks;
 routes.tasks=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('tasks')?'':_tasksRoute()};
 /* ---------- bridge: Goals for the React page ---------- */
-const strip=h=>String(h||'').replace(/<a\b[^>]*>.*?<\/a>/g,'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s*·\s*$/,'').trim();
+const strip=h=>String(h||'').replace(/<br\s*\/?>/g,' · ').replace(/<a\b[^>]*>(farms by stage|\d+ options)<\/a>/g,'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s*·\s*$/,'').trim();
 function vaultOf(it){if(!it||!it.p)return null;const v=VAULT[it.n]||{};if(v.now)return {kind:'now',text:'Resurgence until '+fdate(v.now)};if(it.v)return {kind:'vaulted',text:'Vaulted'+(v.est?' · back ~'+fdate(v.est):'')};return {kind:'farmable',text:'Farmable'+(it.evd?' · vaults ~'+fdate(it.evd):'')}}
 function goalsData(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';let list=g.slice();
   if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
@@ -3296,6 +3296,180 @@ Object.assign(window.TF,{
 });
 const _syndRoute=routes.synd;
 routes.synd=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('synd')?'':_syndRoute()};
+/* ---------- bridge: Resources for the React page ---------- */
+const RSD={key:'',html:''};
+function resData(){const sel=state.resSel&&RES[state.resSel]?state.resSel:'';const q=(state.resQ||'').toLowerCase().trim();
+  const main=MAINRES.filter(n=>RES[n]);const rest=Object.keys(RES).filter(n=>!main.includes(n)).sort();
+  const gneed={};(P.goals||[]).filter(n=>I[n]&&!on('build|'+n)).forEach(n=>{const a=totals(n,1,{cr:0,r:{},pt:0},[]);for(const r in a.r)gneed[r]=(gneed[r]||0)+a.r[r]});
+  const rf=state.rsF||'all';let list=q?Object.keys(RES).filter(n=>n.toLowerCase().includes(q)):null;
+  if(rf!=='all'){list=(list||Object.keys(RES)).filter(n=>rf==='inv'?(P.inv&&P.inv[n]!=null):rf==='goal'?gneed[n]:rf==='short'?(gneed[n]&&!(P.inv&&+P.inv[n]>=gneed[n])):RT[n]);list.sort()}
+  const row=n=>({n,have:P.inv&&P.inv[n]!=null?+P.inv[n]:null,label:RT[n]?'by stage':(RSRC[n]||[]).length+' farms',need:gneed[n]||0});
+  if(sel){const k=sel+'|'+ISLV;if(RSD.key!==k){RSD.key=k;RSD.html=resDetail(sel)}}
+  return {q:state.resQ||'',filter:rf,sel,total:Object.keys(RES).length,list:list?list.map(row):null,main:list?[]:main.map(row),rest:list?[]:rest.map(row),detail:sel?RSD.html:''}}
+Object.assign(window.TF,{
+  res:()=>resData(),
+  resSet:o=>{if(o.q!=null)state.resQ=o.q;if(o.f!=null)state.rsF=o.f;saveUI();tfNotify()},
+  resPick:n=>{state.resSel=n||null;tfNotify()}
+});
+const _resRoute=routes.resources;
+routes.resources=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('resources')?'':_resRoute()};
+/* ---------- bridge: Warframes for the React page ---------- */
+const FRT={key:'',html:''};
+function framesData(){const ff=state.frF||'all';const allF=Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth');
+  let fr=allF.filter(i=>{const r=rankOf(i.n);return ff==='all'||(ff==='owned'&&r>0)||(ff==='not'&&r===0)||(ff==='mastered'&&r>=maxRank(i))||(ff==='prime'&&i.p)||(ff==='farm'&&i.p&&!i.v)||(ff==='goals'&&(P.goals||[]).includes(i.n))}).map(i=>i.n).sort();
+  const filteredEmpty=!fr.length;if(!fr.length)fr=allF.map(i=>i.n).sort();
+  if(!state.frame||!I[state.frame]||!fr.includes(state.frame))state.frame=fr.includes('Saryn Prime')?'Saryn Prime':fr[0];
+  const name=state.frame,base=baseOf(name);const builds=D.builds[base]||D.builds[name]||[];const bi=Math.max(0,Math.min(state.build||0,builds.length-1));
+  const k=name+'|'+ISLV;if(FRT.key!==k){FRT.key=k;FRT.html=itemTree(name)}
+  const modOf=modSlot;
+  let build=null;if(builds.length){const b=builds[bi];const sw=m=>state.budget&&D.budget[m]?D.budget[m]:m;
+    build={role:b.role,helminth:b.helminth,notes:b.notes||'',mods:[modOf('Aura',sw(b.aura)),modOf('Exilus',sw(b.exilus)),...b.mods.map(m=>modOf('Mod',sw(m)))],arcanes:b.arcanes.map(a=>modOf('Arcane',a,true))}}
+  return {filter:ff,filteredEmpty,list:fr,name,img:IMG(name),base,prime:I[base+' Prime']&&name!==base+' Prime'?base+' Prime':'',baseVer:name!==base&&I[base]?base:'',tree:FRT.html,
+    builds:builds.map((b,i)=>({value:String(i),label:b.name})),bi:String(bi),budget:!!state.budget,build}}
+Object.assign(window.TF,{
+  frames:()=>framesData(),
+  framesSet:o=>{if(o.f!=null)state.frF=o.f;if(o.frame!=null){state.frame=o.frame;state.build=0}if(o.build!=null)state.build=+o.build;if(o.budget!=null)state.budget=o.budget;saveUI();tfNotify()}
+});
+const _framesRoute=routes.frames;
+routes.frames=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('frames')?'':_framesRoute()};
+/* ---------- bridge: Open worlds and Market for the React pages ---------- */
+function worldData(){const tab=state.wTab||'fish';const out={tab};
+  if(tab==='fish'){const rg=state.fR||'Plains of Eidolon',rr=state.fRr||'all',tm=state.fT||'all';const regs=Object.keys(D.fishreg);const R=D.fishreg[rg]||{};
+    const times=[...new Set(D.fish.filter(f=>f.reg===rg).map(f=>f.time))].filter(Boolean).sort();
+    const all=D.fish.filter(f=>f.reg===rg);const list=all.filter(f=>(rr==='all'||f.r===rr||(rr==='todo'&&!on('fish|'+f.n)))&&(tm==='all'||f.time===tm));
+    let cyc='';if(WS){const c=rg==='Plains of Eidolon'?WS.cetusCycle:rg==='Orb Vallis'?WS.vallisCycle:WS.cambionCycle;if(c)cyc=(c.state||c.active||'')+(c.timeLeft?' · '+c.timeLeft:'')}else if(HOSTED&&!WSerr)loadWS();
+    Object.assign(out,{region:rg,regions:regs,rarity:rr,time:tm,times,cycle:cyc,info:{spears:R.sp||'',vendor:R.v||'',use:R.use||'',tips:R.tips||[]},caught:all.filter(f=>on('fish|'+f.n)).length,total:all.length,
+      fish:list.map(f=>({n:f.n,key:'fish|'+f.n,done:on('fish|'+f.n),rarity:f.r,bio:f.bio,time:f.time,spear:f.sp||'any',bait:f.bait||'',spots:f.spots||[],gives:f.dr.map(d=>({n:d,go:linkKey(d)})),hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='fish'&&x.r===f.n)}))})}
+  else{const M2=D.mine;const rg=state.mR||'Plains of Eidolon';const R=M2.reg[rg];const row=(n,r,kind)=>({n,key:'ore|'+n,done:on('ore|'+n),rarity:r,kind,go:linkKey(n),hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='ore'&&x.r===n)});
+    Object.assign(out,{region:rg,regions:Object.keys(M2.reg),spots:R.spots,vendor:R.v,ores:[...R.ore.map(([n,r])=>row(n,r,'ore · red vein')),...R.gem.map(([n,r])=>row(n,r,'gem · blue vein'))],
+      cutters:M2.cut.map(([n,w,d])=>({n,key:'cut|'+n,done:on('cut|'+n),where:w,desc:d})),tips:M2.tips})}
+  return out}
+function marketData(){const tab=state.mkTab||'sets';const out={tab,snapshot:D.meta.prices};
+  if(tab==='sets'){const rows=Object.entries(D.sets).map(([n,s])=>{const base=n.replace(/ Set$/,'');const it=I[base];let ps=0,du=0,okp=true;
+      if(it){const parts=it.parts.filter(p=>p.k==='p');const names=[base+' Blueprint',...parts.filter(p=>p.n!=='Blueprint').map(p=>p.full)];names.forEach(x=>{const p=PR[x];if(p&&(p.a7??p.a30)!=null)ps+=(p.a7??p.a30);else okp=false});parts.forEach(p=>du+=p.du||0)}
+      const sl=(SEL[n]||[]).filter(x=>x[0]!=='__buy');return {n,base,it,a7:s.a7,a30:s.a30,v7:s.v7,ps:okp&&ps?Math.round(ps):null,du:du||null,low:sl[0]?sl[0][1]:null,b:sl[0]||null}});
+    const q=(state.mkQ||'').toLowerCase().trim();const mf=state.mkF||'all';let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q)).filter(x=>{const v=VAULT[x.base]||{};return mf==='all'||(mf==='farm'&&x.it&&!x.it.v&&!v.now)||(mf==='vault'&&x.it&&x.it.v&&!v.now)||(mf==='now'&&v.now)||(mf==='goals'&&(P.goals||[]).includes(x.base))});
+    const k=state.mkSort||'a7';r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));const lim=state.mkLim||60;
+    Object.assign(out,{q:state.mkQ||'',filter:mf,sort:k,total:rows.length,count:r.length,more:Math.max(0,r.length-lim),
+      sets:r.slice(0,lim).map(x=>{const it=MIX[x.base];return {n:x.n,base:x.base,img:IMG(x.base),vault:vaultOf(x.it),left:it?mxp(it)-itemXP(x.base):0,xp:it?mxp(it):0,
+        price:x.a7!=null?Math.round(x.a7):null,meta:[x.ps!=null?'Parts '+x.ps+'p':'',x.du?x.du+' ducats':'',x.v7?fmt(x.v7)+' sold a week':''].filter(Boolean).join(' · '),
+        seller:x.b?{name:x.b[0],price:x.b[1],wh:whisper(x.n,x.b)}:null,url:'https://warframe.market/items/'+(MS[x.n]||'')}})})}
+  else{const primes=Object.values(I).filter(i=>i.p);const isNow=i=>VAULT[i.n]&&VAULT[i.n].now;
+    const now=primes.filter(isNow),farm=primes.filter(i=>!i.v&&!isNow(i)),vault=primes.filter(i=>i.v&&!isNow(i));
+    vault.sort((a,b)=>((VAULT[a.n]||{}).est||'9').localeCompare((VAULT[b.n]||{}).est||'9'));farm.sort((a,b)=>(a.evd||'9').localeCompare(b.evd||'9'));
+    const card=i=>{const v=VAULT[i.n]||{};return {n:i.n,c:i.c,img:IMG(i.n),text:v.now?`In Varzia's Prime Resurgence until ${fdate(v.now)} at ${D.vtnow.loc||"Maroo's Bazaar"}. Buy its relics with Aya or Regal Aya.`:
+      !i.v?(i.evd?`Drops from relics now. Expected to vault around ${fdate(i.evd)}.`:'Drops from relics now. Not scheduled to vault.'):
+      `Vaulted${i.vd?' since '+fdate(i.vd):''}.${v.last?` Last in Resurgence ${fdate(v.last)}.`:' Not seen in Resurgence yet.'}${v.est?` Rough estimate for its return: ${fdate(v.est)}.`:''}`}};
+    Object.assign(out,{gapMonths:Math.round(D.medgap/30),now:now.map(card),farm:farm.map(card),vault:vault.map(card)})}
+  return out}
+Object.assign(window.TF,{
+  world:()=>worldData(),
+  worldSet:o=>{if(o.tab!=null)state.wTab=o.tab;if(o.region!=null){if((state.wTab||'fish')==='fish')state.fR=o.region;else state.mR=o.region}if(o.rarity!=null)state.fRr=o.rarity;if(o.time!=null)state.fT=o.time;saveUI();tfNotify()},
+  market:()=>marketData(),
+  marketSet:o=>{if(o.tab!=null)state.mkTab=o.tab;if(o.q!=null){state.mkQ=o.q;state.mkLim=60}if(o.f!=null){state.mkF=o.f;state.mkLim=60}if(o.sort!=null)state.mkSort=o.sort;saveUI();tfNotify()},
+  marketMore:()=>{state.mkLim=(state.mkLim||60)+60;tfNotify()},
+  whisper:t=>tfAct('button',{'data-wh':t})
+});
+const _worldRoute=routes.world,_marketRoute=routes.market;
+routes.world=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('world')?'':_worldRoute()};
+routes.market=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('market')?'':_marketRoute()};
+/* ---------- bridge: Relics for the React page ---------- */
+function relicsData(){const tab=state.rlTab||'mine';const out={tab};
+  if(tab==='mine'){const mine=Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0);const ef=state.rlE||'all',so=state.rlO||'need';
+    let list=mine.filter(r=>ef==='all'||REL[r].era===ef||(ef==='need'&&relicAdvice(r).need.length));const val=r=>relicEV(r,'i').pl;
+    list.sort((a,b)=>so==='name'?a.localeCompare(b):so==='plat'?val(b)-val(a):so==='count'?relCount(b)-relCount(a):(relicAdvice(b).need.length-relicAdvice(a).need.length)||val(b)-val(a));
+    Object.assign(out,{era:ef,sort:so,kinds:mine.length,tot:mine.reduce((a,r)=>a+relCount(r),0),totPl:Math.round(mine.reduce((a,r)=>a+val(r)*relCount(r),0)),withNeed:mine.filter(r=>relicAdvice(r).need.length).length,traces:+P.traces||0,
+      cards:list.map(r=>{const R=REL[r];const a=relicAdvice(r);const x=P.rel[r]||{};return {r,vaulted:!!R.v,advice:{t:a.t,why:a.why,k:a.k},counts:{i:+x.i||0,e:+x.e||0,f:+x.f||0,r:+x.r||0},
+        rewards:R.rw.map(([n,rr])=>({n,rar:rr,go:linkKey(n),need:!/Forma/.test(n)&&partNeeded(n),goal:!!partGoal(n),plat:pv(n)!=null?Math.round(pv(n)):null,du:partDu(n)||0})),evI:Math.round(relicEV(r,'i').pl),evR:Math.round(relicEV(r,'r').pl)}})})}
+  else if(tab==='add'){const q=(state.raQ||'').toLowerCase().trim(),ef=state.raE||'all';
+    const list=Object.keys(REL).filter(r=>(!q||r.toLowerCase().includes(q))&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v)||(ef==='need'&&REL[r].rw.some(([n])=>!/Forma/.test(n)&&partNeeded(n)&&partGoal(n))))).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+    Object.assign(out,{q:state.raQ||'',filter:ef,total:list.length,list:list.slice(0,150).map(r=>{const R=REL[r];const rare=R.rw.find(x=>x[1]==='R');return {r,vaulted:!!R.v,rare:rare?rare[0]:'',count:+(((P.rel||{})[r]||{}).i)||0}})})}
+  else{const so=state.duO||'ratio',f=state.duF||'all',q=(state.duQ||'').toLowerCase().trim();const dup=P.dup||{};
+    let list=allParts().filter(x=>x.du&&(!q||x.n.toLowerCase().includes(q))).map(x=>({...x,r:x.p?x.du/x.p:null,c:+dup[x.n]||0}));
+    list=list.filter(x=>f==='all'||(f==='mine'&&x.c>0)||(f==='baro'&&x.r!=null&&x.r>=10)||(f==='plat'&&x.p!=null&&x.p>=8)||(f==='junk'&&x.p!=null&&x.p<=4));
+    list.sort((a,b)=>so==='plat'?((b.p??-1)-(a.p??-1)):so==='du'?b.du-a.du:so==='name'?a.n.localeCompare(b.n):so==='mine'?b.c-a.c:((b.r??-1)-(a.r??-1)));
+    const mine=allParts().filter(x=>(+dup[x.n]||0)>0);const vt=WS&&WS.voidTrader;const now=new Date();const act=!!(vt&&new Date(vt.activation)<=now&&now<new Date(vt.expiry));if(HOSTED&&!WS&&!WSerr)loadWS();
+    Object.assign(out,{q:state.duQ||'',filter:f,sort:so,snapshot:D.meta.prices,spares:mine.reduce((a,x)=>a+(+dup[x.n]),0),plat:Math.round(mine.reduce((a,x)=>a+(x.p||0)*(+dup[x.n]),0)),ducats:mine.reduce((a,x)=>a+(x.du||0)*(+dup[x.n]),0),
+      baro:{state:vt?(act?'Here now':'Away'):'—',text:vt?(act?'leaves in '+untilIso(vt.expiry)+' · '+(vt.location||''):'arrives in '+untilIso(vt.activation)):!HOSTED?'live on the hosted site':WSerr?'live data unavailable':'checking…'},
+      count:list.length,rows:list.slice(0,250).map(x=>({n:x.n,go:linkKey(x.n),plat:x.p!=null?Math.round(x.p):null,du:x.du,spares:x.c,tag:x.r!=null&&x.r>=10?'Baro':x.p!=null&&x.p>=8?'Sell':''})),
+      stock:act&&vt.inventory?vt.inventory.map(i=>({item:i.item,go:linkKey(i.item),ducats:i.ducats,credits:i.credits})):[]})}
+  return out}
+const relClean=r=>{if(!relCount(r))delete P.rel[r]};
+Object.assign(window.TF,{
+  relics:()=>relicsData(),
+  relicsSet:o=>{const m={tab:'rlTab',era:'rlE',sort:'rlO',raq:'raQ',rae:'raE',duq:'duQ',duf:'duF',duo:'duO'};for(const k in o)if(m[k])state[m[k]]=o[k];saveUI();tfNotify()},
+  relAdj:(r,k,d)=>{P.rel=P.rel||{};const x=P.rel[r]=P.rel[r]||{};x[k]=Math.max(0,(+x[k]||0)+d);relClean(r);saveProfile();tfNotify()},
+  relSet:(r,k,v)=>{P.rel=P.rel||{};const x=P.rel[r]=P.rel[r]||{};x[k]=Math.max(0,+v||0);relClean(r);saveProfile();tfNotify()},
+  setTraces:v=>{P.traces=Math.max(0,+v||0);saveProfile();tfNotify()},
+  setDup:(n,v)=>{P.dup=P.dup||{};const c=Math.max(0,+v||0);if(c)P.dup[n]=c;else delete P.dup[n];saveProfile();tfNotify()}
+});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')))return;
+  e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
+const _relicsRoute=routes.relics;
+routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
+/* ---------- bridge: Builds (arsenal) for the React page ---------- */
+function modSlot(slot,m,arc){const md=(arc?ARC[m]:MODS[m])||{};const key=(arc?'arc|':'mod|')+m;
+  return {slot,m,key,pol:arc?'':(md.pol||''),done:on(key),price:strip(priceChip(m)),src:md.src?md.src:(md.dr&&md.dr.length?strip(dropsList(md.dr,2)):'Trade on warframe.market'),seller:sellerRow(m)}}
+const ART={key:'',html:''};
+function buildsData(src,kind){const cats=[...new Set(Object.keys(src).map(n=>I[n]?I[n].c:'Other'))].sort();const cf=kind==='w'?(state.wbC||'all'):'all',of=state.wbO||'all';
+  let names=Object.keys(src).filter(n=>(cf==='all'||(I[n]&&I[n].c===cf))&&(of==='all'||(of==='own'&&ownedItem(n))||(of==='not'&&!ownedItem(n))||(of==='unmastered'&&!on('m|'+n)))).sort();
+  const filteredEmpty=!names.length;if(!names.length)names=Object.keys(src).sort();
+  const key=kind==='w'?'wbSel':'cbSel';let cur=state[key];if(!cur||!names.includes(cur))cur=names[0];state[key]=cur;
+  const bs=src[cur]||[];const bi=Math.max(0,Math.min(state.wbI||0,bs.length-1));const b=bs[bi];
+  const k=cur+'|'+ISLV;if(ART.key!==k){ART.key=k;ART.html=I[cur]?itemTree(cur):''}
+  return {cats:kind==='w'?cats:[],cat:cf,own:of,names,cur,img:IMG(cur),filteredEmpty,tree:ART.html,builds:bs.map((x,i)=>({value:String(i),label:x.name})),bi:String(bi),
+    build:b?{role:b.role,name:b.name,notes:b.notes||'',mods:[...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.map(m=>modSlot('Mod',m))],arcanes:b.arcanes.map(a=>modSlot('Arcane',a,true))}:null}}
+function arsenalData(){const tab=state.aTab||'builds';const out={tab};
+  if(tab==='builds')Object.assign(out,buildsData(D.wbuilds,'w'));
+  else if(tab==='comp')Object.assign(out,buildsData(D.cbuilds,'c'));
+  else if(tab==='lich'){const ff=state.lF||'all',sf=state.lS||'all';const L2=P.lich||{};const own=n=>on('lich|'+n)||ownedItem(n);
+    const list=D.lich.filter(w=>(ff==='all'||w.f===ff)&&(sf==='all'||(sf==='own'&&own(w.n))||(sf==='miss'&&!own(w.n))||(sf==='low'&&own(w.n)&&(+((L2[w.n]||{}).b)||0)<60)||(sf==='unm'&&!on('m|'+w.n)))).sort((a,b)=>a.f.localeCompare(b.f)||a.n.localeCompare(b.n));
+    Object.assign(out,{faction:ff,status:sf,total:D.lich.length,have:D.lich.filter(w=>own(w.n)).length,mastered:D.lich.filter(w=>on('m|'+w.n)).length,
+      factions:['Kuva','Tenet','Coda'].map(f=>{const a=D.lich.filter(w=>w.f===f);return {f,have:a.filter(w=>own(w.n)).length,total:a.length}}),
+      how:Object.entries(D.lichsrc).map(([f,s])=>({f,who:s.who,how:s.how,vanq:s.vanq,alt:s.alt})),elements:ELEM.slice(1),
+      list:list.map(w=>{const v=L2[w.n]||{};const it=MIX[w.n];return {n:w.n,f:w.f,c:w.c,go:linkKey(w.n),own:own(w.n),key:'lich|'+w.n,rank:rankOf(w.n)&&!on('m|'+w.n)?rankOf(w.n):0,left:it?mxp(it)-itemXP(w.n):0,xp:it?mxp(it):0,price:strip(priceChip(w.n)),el:v.e||'',bonus:+v.b||0}})})}
+  else if(tab==='arc'){const q=(state.arQ||'').toLowerCase().trim(),tf=state.arT||'all',sf=state.arS||'all',so=state.arO||'use';const A=P.arc||{};const U2=arcUses();
+    const types=[...new Set(Object.values(ARC).map(a=>a.ty).filter(Boolean))].sort();
+    let list=Object.values(ARC).filter(a=>(!q||a.n.toLowerCase().includes(q))&&(tf==='all'||a.ty===tf)).filter(a=>{const c=+A[a.n]||0,mx=arcCopies(a.mx||5);return sf==='all'||(sf==='used'&&U2[a.n])||(sf==='own'&&c>0)||(sf==='max'&&c>=mx)||(sf==='part'&&c>0&&c<mx)||(sf==='none'&&!c)});
+    list.sort((a,b)=>so==='name'?a.n.localeCompare(b.n):so==='price'?((pv(b.n)??-1)-(pv(a.n)??-1)):so==='need'?((arcCopies(b.mx||5)-(+A[b.n]||0))-(arcCopies(a.mx||5)-(+A[a.n]||0))):(((U2[b.n]?U2[b.n].size:0)-(U2[a.n]?U2[a.n].size:0))||a.n.localeCompare(b.n)));
+    Object.assign(out,{q:state.arQ||'',type:tf,status:sf,sort:so,types,count:Object.keys(ARC).length,owned:Object.values(ARC).filter(a=>(+A[a.n]||0)>0).length,maxed:Object.values(ARC).filter(a=>(+A[a.n]||0)>=arcCopies(a.mx||5)).length,
+      arcs:list.slice(0,200).map(a=>{const c=+A[a.n]||0,mx=a.mx||5,need=arcCopies(mx);const u=U2[a.n];return {n:a.n,go:linkKey(a.n),copies:c,need,maxRank:mx,rank:arcRank(c),price:strip(priceChip(a.n)),type:a.ty||'',uses:u?[...u]:[],drops:a.dr&&a.dr.length?strip(dropsList(a.dr,2)):''}})})}
+  else{const sf=state.kmS||'all',tf=state.kmT||'all';const all=keyMods();const types=[...new Set(all.map(x=>x.md.ty).filter(Boolean))].sort();
+    const list=all.filter(x=>(tf==='all'||x.md.ty===tf)&&(sf==='all'||(sf==='miss'&&!on('mod|'+x.n))||(sf==='have'&&on('mod|'+x.n))||(sf==='trade'&&x.md.tr)));
+    Object.assign(out,{type:tf,status:sf,types,have:all.filter(x=>on('mod|'+x.n)).length,total:all.length,
+      mods:list.map(x=>({n:x.n,go:linkKey(x.n),key:'mod|'+x.n,done:on('mod|'+x.n),price:strip(priceChip(x.n)),type:x.md.ty||'',uses:x.s.size,src:x.md.src?x.md.src:x.md.dr&&x.md.dr.length?strip(dropsList(x.md.dr,2)):'Trade on warframe.market'}))})}
+  return out}
+Object.assign(window.TF,{
+  arsenal:()=>arsenalData(),
+  arsenalSet:o=>{const m={tab:'aTab',cat:'wbC',own:'wbO',lf:'lF',ls:'lS',arq:'arQ',art:'arT',ars:'arS',aro:'arO',kmt:'kmT',kms:'kmS'};for(const k in o)if(m[k])state[m[k]]=o[k];
+    if(o.sel!=null){state[(state.aTab||'builds')==='comp'?'cbSel':'wbSel']=o.sel;state.wbI=0}if(o.bi!=null)state.wbI=+o.bi;saveUI();tfNotify()},
+  arcAdj:(n,d)=>{P.arc=P.arc||{};P.arc[n]=Math.max(0,(+P.arc[n]||0)+d);if(!P.arc[n])delete P.arc[n];saveProfile();tfNotify()},
+  arcSet:(n,v)=>{P.arc=P.arc||{};const c=Math.max(0,+v||0);if(c)P.arc[n]=c;else delete P.arc[n];saveProfile();tfNotify()},
+  lichSet:(n,o)=>{P.lich=P.lich||{};const v=P.lich[n]=P.lich[n]||{};if(o.e!=null)v.e=o.e;if(o.b!=null)v.b=Math.max(0,Math.min(60,+o.b||0));saveProfile();tfNotify()}
+});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-atab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')))return;
+  e.preventDefault();e.stopPropagation();state.aTab=t.dataset.atab;saveUI();if(location.hash!=='#arsenal')location.hash='arsenal';else tfNotify()},true);
+const _arsenalRoute=routes.arsenal;
+routes.arsenal=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')?'':_arsenalRoute()};
+/* ---------- bridge: Profile (tenno) for the React page. Most tabs keep their existing panels; Inventory is rebuilt. ---------- */
+const TTABS=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['friends','Compare profiles'],['backup','Backup & export']];
+function tennoData(){const tab=state.tTab||'profile';const t=totalXP(),m=mrInfo(t.total);
+  const out={tab,tabs:TTABS.map(([value,label])=>({value,label})),name:P.tname||(P.prof&&P.prof.name)||'Your Tenno',synced:P.at?fdate(P.at):'',inGame:P.prof&&P.prof.mr!=null?mrLabel(P.prof.mr):'',
+    mrLabel:mrLabel(m.mr),pct:m.pct,showSign:canAcct()&&!signedIn(),html:''};
+  if(tab==='inventory'){const q=(state.invQ||'').toLowerCase().trim();const common=['Ferrite','Rubedo','Alloy Plate','Nano Spores','Polymer Bundle','Salvage','Plastids','Circuits','Cryotic','Oxium','Gallium','Morphics','Neural Sensors','Neurodes','Orokin Cell','Control Module','Argon Crystal','Tellurium','Nitain Extract','Kuva','Hexenon','Detonite Injector','Fieldron','Mutagen Mass'].filter(n=>RES[n]);
+    const list=q?Object.keys(RES).filter(n=>n.toLowerCase().includes(q)):[...new Set([...common,...Object.keys(P.inv||{}).filter(n=>RES[n])])];
+    out.q=state.invQ||'';out.total=list.length;out.inv=list.slice(0,120).map(n=>({n,have:P.inv&&P.inv[n]!=null?+P.inv[n]:null}))}
+  else out.html=tab==='account'?accountTab():tab==='breakdown'?bdPanel()+breakdownTab():tab==='helminth'?helminthTab():tab==='foundry'?foundryTab():tab==='backup'?backupTab():tab==='friends'?friendsTab():profileTab();
+  return out}
+Object.assign(window.TF,{
+  tenno:()=>tennoData(),
+  tennoSet:o=>{if(o.tab!=null)state.tTab=o.tab;if(o.q!=null)state.invQ=o.q;saveUI();tfNotify()}
+});
+/* tab links from anywhere (e.g. "Full breakdown", "Foundry", "Sync your profile") */
+document.addEventListener('click',e=>{const t=e.target.closest('[data-ttab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')))return;
+  e.preventDefault();e.stopPropagation();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else tfNotify()},true);
+const _tennoRoute=routes.tenno;
+routes.tenno=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')?'':_tennoRoute()};
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
