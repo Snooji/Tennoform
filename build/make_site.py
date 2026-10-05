@@ -7,7 +7,7 @@ D = dict(base)
 D['prices'] = mk['prices']
 D['sellers'] = mk['sellers']
 D['sets'] = {k: v for k, v in mk['prices'].items() if k.endswith(' Set')}
-D['meta'] = dict(base['meta'], prices=mk.get('date') or base['meta'].get('prices'))
+D['meta'] = dict(base['meta'], prices=mk.get('date') or base['meta'].get('prices'), site=datetime.date.today().strftime('%b %-d, %Y'))
 data = json.dumps(D, separators=(',', ':'), ensure_ascii=False).replace('<', '\\u003c')
 body = open(os.path.join(H, 'template.html')).read().replace('/*DATA*/', data)
 # Content Security Policy: only this site's own script (pinned by hash) and Google sign-in may run.
