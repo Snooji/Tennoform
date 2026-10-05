@@ -106,6 +106,12 @@ export type TFApi = {
   resPick(n: string | null): void
   frames(): FramesData
   framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
+  world(): WorldData
+  worldSet(o: { tab?: string; region?: string; rarity?: string; time?: string }): void
+  market(): MarketData
+  marketSet(o: { tab?: string; q?: string; f?: string; sort?: string }): void
+  marketMore(): void
+  whisper(text: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -233,6 +239,23 @@ export type FramesData = {
   filter: string; filteredEmpty: boolean; list: string[]; name: string; img: string; base: string; prime: string; baseVer: string; tree: string
   builds: { value: string; label: string }[]; bi: string; budget: boolean
   build: { role: string; helminth: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
+}
+export type Linked = { n: string; go: string }
+export type WorldData = {
+  tab: "fish" | "mine"; region: string; regions: string[]
+  rarity?: string; time?: string; times?: string[]; cycle?: string; caught?: number; total?: number
+  info?: { spears: string; vendor: string; use: string; tips: string[] }
+  fish?: { n: string; key: string; done: boolean; rarity: string; bio: string; time: string; spear: string; bait: string; spots: string[]; gives: Linked[]; hasTask: boolean }[]
+  spots?: string[]; vendor?: string
+  ores?: { n: string; key: string; done: boolean; rarity: string; kind: string; go: string; hasTask: boolean }[]
+  cutters?: { n: string; key: string; done: boolean; where: string; desc: string }[]; tips?: string[]
+}
+export type VaultCard = { n: string; c: string; img: string; text: string }
+export type MarketData = {
+  tab: "sets" | "vault"; snapshot: string
+  q?: string; filter?: string; sort?: string; total?: number; count?: number; more?: number
+  sets?: { n: string; base: string; img: string; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null; left: number; xp: number; price: number | null; meta: string; seller: { name: string; price: number; wh: string } | null; url: string }[]
+  gapMonths?: number; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

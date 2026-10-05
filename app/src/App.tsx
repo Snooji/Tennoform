@@ -23,6 +23,8 @@ import { MissionsPage } from "@/pages/missions/missions-page"
 import { SyndPage } from "@/pages/synd/synd-page"
 import { ResourcesPage } from "@/pages/resources/resources-page"
 import { FramesPage } from "@/pages/frames/frames-page"
+import { WorldPage } from "@/pages/world/world-page"
+import { MarketPage } from "@/pages/market/market-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
@@ -39,6 +41,8 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   synd: SyndPage,
   resources: ResourcesPage,
   frames: FramesPage,
+  world: WorldPage,
+  market: MarketPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
