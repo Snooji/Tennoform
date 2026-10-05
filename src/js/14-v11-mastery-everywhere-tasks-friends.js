@@ -1,13 +1,13 @@
 /* ---------- v11: mastery everywhere, tasks, friends & messages ---------- */
 const MIX={};MI.forEach(i=>MIX[i.n]=i);
 function mxChip(n){const it=MIX[n];if(!it)return'';const tot=mxp(it),left=tot-itemXP(n);
-  return left<=0?`<span class="chip mxc done" title="Mastery XP earned">✓ ${fmt(tot)} MR XP</span>`:`<span class="chip mxc" title="Mastery XP still to earn">+${fmt(left)} MR XP</span>`}
+  return left<=0?`<span class="chip mxc done" title="Mastery XP earned">${ic('check')}${fmt(tot)} MR XP</span>`:`<span class="chip mxc" title="Mastery XP still to earn">+${fmt(left)} MR XP</span>`}
 function inGameBase(){const g=[];if(P.gxp)g.push({x:+P.gxp,src:'your in-game total'});const mr=P.prof&&P.prof.mr;if(mr!=null&&(P.at||P.gmr!=null))g.push({x:mrNeed(mr),src:'MR '+mrLabel(mr)+' in game'});return g.sort((a,b)=>b.x-a.x)[0]||null}
 
 /* ---- tasks ---- */
 const TK={res:'Farm',item:'Build',relic:'Crack',quest:'Do quest',mod:'Get',arc:'Get',node:'Clear',synd:'Rank up',fish:'Catch',ore:'Mine',lich:'Get',note:''};
 function taskBtn(k,r,label){const has=(P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r);
-  return `<button class="btn sm tb${has?' on':''}" data-addtask="${esc(k+'|'+r)}" data-tlabel="${esc(label||'')}" title="${has?'Already in your tasks':'Add to your tasks'}">${has?'✓ In tasks':'+ Task'}</button>`}
+  return `<button class="btn sm tb${has?' on':''}" data-addtask="${esc(k+'|'+r)}" data-tlabel="${esc(label||'')}" title="${has?'Already in your tasks':'Add to your tasks'}">${has?ic('check')+'In tasks':ic('plus')+'Task'}</button>`}
 function newId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function addTask(k,r,t,extra){P.tasks=P.tasks||[];if(k!=='note'&&P.tasks.some(x=>!x.d&&x.k===k&&x.r===r)){toast('Already in your tasks');return null}
   const task={id:newId(),t:t||((TK[k]?TK[k]+' ':'')+r),k,r,d:0,at:Date.now(),...(extra||{})};P.tasks.unshift(task);saveProfile();return task}
@@ -16,7 +16,7 @@ function taskGo(x){if(x.k==='quest')return `href="#quests" data-q="${esc(x.r)}"`
 function taskRow(x,compact){const go=taskGo(x);
   return `<div class="trow${x.d?' done':''}"><input type="checkbox" class="ck sm" data-tdone="${esc(x.id)}" ${x.d?'checked':''} aria-label="Done"><div class="tmain">${go?`<a class="ln" ${go}>${esc(x.t)}</a>`:`<span>${esc(x.t)}</span>`}${taskMeta(x)}
    ${(x.with||[]).length?`<div class="small muted">with ${x.with.map(w=>esc(w.name)).join(', ')}</div>`:''}${x.from?`<div class="small muted">from ${esc(x.from.name)}</div>`:''}</div>
-   <div class="tact"><button type="button" class="btn sm" data-tedit="${esc(x.id)}" aria-expanded="${state.tEdit===x.id}" aria-label="Notes, repeat and due date" title="Notes, repeat and due date">⋯</button>${SO.uid&&!x.d?`<button class="btn sm" data-tshare="${esc(x.id)}" title="Invite a friend">Invite</button>`:''}${compact?'':`<button class="btn sm" data-tdel="${esc(x.id)}" aria-label="Delete task">✕</button>`}</div></div>
+   <div class="tact"><button type="button" class="btn sm" data-tedit="${esc(x.id)}" aria-expanded="${state.tEdit===x.id}" aria-label="Notes, repeat and due date" title="Notes, repeat and due date">${ic('more')}</button>${SO.uid&&!x.d?`<button class="btn sm" data-tshare="${esc(x.id)}" title="Invite a friend">Invite</button>`:''}${compact?'':`<button class="btn sm" data-tdel="${esc(x.id)}" aria-label="Delete task">${ic('close')}</button>`}</div></div>
    ${state.tShare===x.id?shareBox(x):''}${state.tEdit===x.id?taskEditor(x):''}`}
 function shareBox(x){const fr=SO.friends.filter(f=>!f.pending);
   return `<div class="sharebox">${fr.length?`<span class="small">Invite to <b>${esc(x.t)}</b>:</span><div class="row">${fr.map(f=>`<button class="btn sm${(x.with||[]).some(w=>w.uid===f.uid)?' on':''}" data-tinvite="${esc(x.id+'|'+f.uid)}">${esc(f.name||'Friend')}</button>`).join('')}</div>`:`<span class="small muted">Add friends on the <a class="ln" href="#friends">Friends</a> page first.</span>`}</div>`}

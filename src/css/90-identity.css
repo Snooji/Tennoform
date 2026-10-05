@@ -124,3 +124,7 @@ textarea{font:14px/1.5 var(--f-body)}
 a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
 .chip.gold{border-color:transparent;padding-inline:2px;font-weight:600}
 .where b,.src b{color:var(--ink)}
+.ic{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.ic.fill{fill:currentColor}
+.btn .ic{width:16px;height:16px}
+.card.syn{border-left:3px solid var(--sc)}

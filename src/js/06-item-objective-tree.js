@@ -21,7 +21,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
   const depth=opts.depth||0;const rk=P.rk[name];
   let h=`<section class="obj" data-scope><div class="obj-h">${depth===0?art(name,'hero-art'):''}<div class="title"><h3>${esc(name)}</h3>
     <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set '):''}
-    ${mxChip(name)}${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<span class="row" style="margin-left:auto;gap:4px">${it.t?`<button class="btn sm" data-fstart="${esc(name)}" title="Start a Foundry timer">⏱ Foundry</button>`:''}${taskBtn('item',name,'Build '+name)}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}">${(P.goals||[]).includes(name)?'★ Tracking':'☆ Track'}</button></span></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
+    ${mxChip(name)}${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<span class="row" style="margin-left:auto;gap:4px">${it.t?`<button class="btn sm" data-fstart="${esc(name)}" title="Start a Foundry timer">${ic('timer')}Foundry</button>`:''}${taskBtn('item',name,'Build '+name)}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}">${(P.goals||[]).includes(name)?ic('star','fill')+'Tracking':ic('star')+'Track'}</button></span></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
   h+=step('bp|'+name,'Get the blueprint',bpSource(it,opts.note));
   let pi=0;for(const p of it.parts){pi++;
     if(p.k==='p'&&p.n==='Blueprint')continue;
@@ -29,7 +29,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
       let src='';if(p.rel)src=`${priceChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
       h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
-      if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">⏱ Start Foundry timer</button>`);
+      if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">${ic('timer')}Start Foundry timer</button>`);
     }else if(p.k==='i'){
       h+=step('have|'+name+'|'+p.n+'|'+pi,`Have a spare ${L(p.n)}${p.q>1?' ×'+p.q:''} (used up by the recipe)`,
         depth<3?`<details class="more lazy" data-tree="${esc(p.n)}" data-depth="${depth+1}"><summary>${esc(p.n)} steps</summary><div class="sub"></div></details>`:'');
