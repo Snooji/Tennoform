@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-h/2t8CZ2nPZZC+si6PVTP8T1BMFTAKMjMwZXSOVpzj4=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-k2bqgP22LKfyA/ui00oezZG+DZ9qtLF7rwR0Fe5VRKM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="robots" content="noindex"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -795,6 +795,7 @@ body.typing .bnav{display:none}
 .donrow:first-child{border-top:0}
 .donamt{font:600 18px/1 var(--f-display);color:var(--gold)}
 .dont{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
+.uidbox{font:13px var(--f-code);padding:6px 8px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--sunk);overflow-wrap:anywhere;user-select:all}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -1517,7 +1518,7 @@ function liveSync(uid){const base=FB.fs.collection('users').doc(uid).collection(
 /* ---- feedback ---- */
 const FBK={list:null,admin:false,tried:false};
 async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
-  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;if(location.hash==='#feedback')liveRender()}catch(e){FBK.admin=false}}
+  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;FBK.err='';if(location.hash==='#feedback'||location.hash==='#admin')liveRender()}catch(e){FBK.admin=false;FBK.err=(e&&e.code)||'error';if(location.hash==='#admin')liveRender()}}
 function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Feedback</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
@@ -2154,7 +2155,17 @@ function donTotals(list){const now=new Date(),m0=Date.UTC(now.getUTCFullYear(),n
 function backend(){const head=`<div class="stack"><div class="head"><h1>Backend</h1></div>`;
   if(!HOSTED||!FB||!SO.uid)return head+`<div class="panel">Sign in with your admin account on tennoform.com to see this page.</div></div>`;
   if(!FBK.tried){loadFeedback().then(()=>{if(FBK.admin)loadDonations()});return head+`<div class="panel" role="status">Checking access…</div></div>`}
-  if(!FBK.admin)return head+`<div class="panel stack"><b>This page is for the site owner.</b><span class="small muted">Your account isn't listed as an admin. Add your user ID to the <code>admins</code> collection in Firebase to get access.</span></div></div>`;
+  if(!FBK.admin){const pd=/permission/.test(FBK.err||'');
+    return head+`<div class="panel stack" style="gap:10px"><b>No admin access for this account yet.</b>
+     <div class="small">Signed in as <b>${esc((acct&&(acct.email||acct.name))||'this account')}</b>. Your user ID:</div>
+     <div class="row"><code class="uidbox">${esc(SO.uid)}</code><button type="button" class="btn sm" data-copy="${esc(SO.uid)}">Copy</button></div>
+     <ol class="small" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
+      <li>In Firebase, open <b>Firestore Database → Data</b>.</li>
+      <li>Open the <code>admins</code> collection. There must be a document whose ID is exactly the user ID above (no spaces).</li>
+      <li>On the <b>Rules</b> tab, paste the rules from GitHub and tap <b>Publish</b>.</li>
+      <li>Come back here and tap <b>Check again</b>.</li></ol>
+     <div class="small muted">Firebase said: ${esc(pd?'permission denied (the ID isn\'t in admins, or the rules aren\'t published)':FBK.err||'unknown')}</div>
+     <div><button type="button" class="btn primary" id="adrecheck">Check again</button></div></div></div>`}
   if(!DON.tried)loadDonations();const tab=state.adTab||'feedback';const fl=FBK.list||[],open=fl.filter(x=>!x.done).length;const dl=DON.list||[];const t=donTotals(dl);
   let h=head+`<div class="tiles"><div class="tile"><span class="k">Open feedback</span><span class="v num">${open}</span><span class="x">${fl.length} total</span></div>
    <div class="tile"><span class="k">PayPal this month</span><span class="v num">${money(t.usdM)}</span><span class="x">${money(t.usd)} all time</span></div>
@@ -2179,6 +2190,7 @@ async function addDonation(){const amt=parseFloat(($('#damt')||{}).value);if(!(a
   try{const r=await FB.fs.collection('donations').add(d);DON.list=[{id:r.id,...d},...(DON.list||[])].sort((a,b)=>b.at-a.at);toast('Donation logged');rerender()}catch(e){toast("Couldn't save. Are the latest Firestore rules published?")}}
 function donCSV(){const rows=[['date','type','amount','from','note']].concat((DON.list||[]).map(d=>[new Date(d.at).toISOString().slice(0,10),d.kind,d.amount,d.who||'',d.note||'']));
   const csv=rows.map(r=>r.map(v=>/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':v).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='tennoform-donations.csv';document.body.appendChild(a);a.click();a.remove()}
+document.addEventListener('click',e=>{if(e.target.closest('#adrecheck')){FBK.tried=false;loadFeedback().then(()=>{if(FBK.admin){DON.tried=false;loadDonations()}rerender()})}});
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-adtab],#dadd,#dreload,#dcsv,[data-ddel]');if(!t)return;
   if(t.dataset.adtab){state.adTab=t.dataset.adtab;rerender();return}
   if(t.id==='dadd'){t.disabled=true;await addDonation();t.disabled=false;return}
