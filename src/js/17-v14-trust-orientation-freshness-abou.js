@@ -18,7 +18,12 @@ function liveStatus(){if(!HOSTED)return `<span class="fresh"><span class="dot" a
   const age=WS?Date.now()-WSat:null;const stale=age!=null&&age>15*60e3;const cls=WSerr?'bad':stale?'warn':WS?'ok':'';
   const txt=WSload?'Updating…':WSerr?(WS?'Offline · showing data from '+left(age)+' ago':'Couldn\'t reach live data'):WS?(stale?'Data is '+left(age)+' old':'Updated '+(age<60e3?'just now':left(age)+' ago')):'Loading…';
   return `<span class="fresh ${cls}" role="status"><span class="dot" aria-hidden="true"></span>${txt} · source <a class="ln" href="https://docs.warframestat.us" target="_blank" rel="noopener">warframestat.us</a><button type="button" class="btn sm" id="wsretry">${WSerr?'Retry':'Refresh'}</button></span>`}
-function siteFoot(){return `<footer class="sitefoot"><div>Site updated ${esc(D.meta.site||D.meta.built)} · Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+' · ':''}${esc(D.meta.built)} · Market prices ${esc(D.meta.prices)}</div>
+/* one status per data feed: fresh, delayed or unavailable */
+function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(Date.now()-t)/864e5};const dot=k=>`<span class="fdot ${k}" aria-hidden="true"></span>`;
+  const g=age(D.meta.built),p=age(D.meta.prices);const gk=g==null||g<21?'ok':'warn',pk=p==null||p<3?'ok':'warn';
+  const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
+  return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
+function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);

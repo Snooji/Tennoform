@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-hcEqcihZ2WdlW/87APqHymRW+Mla5uHQjKXogug2qiU=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-nPRaj7KDl8HI400b01YIa/k5h4LH1EC2z/cherBkaxI=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -726,6 +726,35 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .hrow>.hrt{grid-column:2}.hrow>.small{grid-column:3}
 .nextup .nu>.nut{grid-column:2}
 @media (max-width:599px){.mkrow>.mkp{grid-column:2}}
+/* ---- search, shortcuts, feeds ---- */
+.srch{flex:none;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px;margin-left:auto;margin-right:12px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--sunk);color:var(--muted);cursor:pointer;font:400 14px var(--f-body)}
+.srch:hover{color:var(--ink);border-color:var(--ink)}
+.srch .srcht{min-width:110px;text-align:left}
+kbd,.srchk{font:600 11px/1 var(--f-body);padding:3px 5px;border:1px solid var(--line2);border-radius:4px;color:var(--muted);background:var(--panel)}
+.srch+.mrb{margin-left:0}
+@media (max-width:899px){.srch{width:40px;padding:0;justify-content:center;margin-right:8px}.srch .srcht,.srch .srchk{display:none}}
+#cmdbk{align-items:start;padding-top:min(12vh,96px)}
+.cmd{width:min(640px,100%);max-height:min(72vh,620px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);box-shadow:0 20px 60px color-mix(in srgb,#000 45%,transparent);overflow:hidden}
+.cmdin{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--muted)}
+.cmdin input{border:0!important;background:transparent!important;font-size:17px;padding:8px 0;min-height:40px}
+.cmdin input:focus{outline:none}
+#cmdres{overflow:auto;padding:6px}
+.cmdg{padding:10px 10px 4px}
+.cmdo{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;min-height:44px;padding:4px 10px;border-radius:var(--r-sm);cursor:pointer}
+.cmdo:not(:has(.mini)){grid-template-columns:minmax(0,1fr) auto}
+.cmdo .mini{width:32px;height:32px}
+.cmdo.on,.cmdo:hover{background:var(--sunk)}
+.cmdo.on{box-shadow:inset 3px 0 0 var(--gold)}
+.cmdn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmdhint{padding:14px 10px}
+.cmdfoot{padding:8px 14px;border-top:1px solid var(--line)}
+@media (max-width:599px){#cmdbk{padding:0}.cmd{width:100%;max-height:100%;height:100%;border-radius:0;border:0}.cmdfoot{display:none}}
+body.typing .bnav{display:none}
+@media (max-width:899px){body.typing main{padding-bottom:24px!important}}
+.feeds{display:flex;flex-wrap:wrap;gap:4px 16px}
+.feeds>span{display:inline-flex;align-items:center;gap:6px}
+.fdot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.fdot.ok{background:var(--ok)}.fdot.warn{background:var(--warn)}.fdot.bad{background:var(--bad)}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -745,7 +774,7 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
     <span>Tenno<b>form</b></span>
   </a>
   <nav class="tabs" aria-label="Sections"></nav>
-  <a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
+  <button type="button" class="srch" id="srchbtn" aria-label="Search (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zM16 16l5 5"/></svg><span class="srcht">Search</span><kbd class="srchk">Ctrl K</kbd></button><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
 </div></header>
 <main id="app"></main>
 <nav class="bnav" aria-label="Sections"></nav>
@@ -807,7 +836,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set]
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
   pin:'M9 3.5h6M10 3.5v6l-3.5 4h11L14 9.5v-6M12 13.5V21',more:'M5.5 12h.01M12 12h.01M18.5 12h.01',repeat:'M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3',
   timer:'M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM12 9v4l2.5 2M9.5 2.5h5',ext:'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
-  edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',plus:'M12 5v14M5 12h14',warn:'M12 4l9 16H3zM12 10v4M12 17.5h.01'};
+  edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',plus:'M12 5v14M5 12h14',warn:'M12 4l9 16H3zM12 10v4M12 17.5h.01',search:'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zM16 16l5 5'};
 function ic(n,cls){return `<svg class="ic${cls?' '+cls:''}" viewBox="0 0 24 24" aria-hidden="true"><path d="${IC[n]}"/></svg>`}
 /* ---------- storage ---------- */
 let C={},P={rk:{},other:0,intr:0,mr:null,name:'',at:'',adj:0,wfid:'',prof:null,mc:{},inv:{},foundry:[]};
@@ -1497,7 +1526,12 @@ function liveStatus(){if(!HOSTED)return `<span class="fresh"><span class="dot" a
   const age=WS?Date.now()-WSat:null;const stale=age!=null&&age>15*60e3;const cls=WSerr?'bad':stale?'warn':WS?'ok':'';
   const txt=WSload?'Updating…':WSerr?(WS?'Offline · showing data from '+left(age)+' ago':'Couldn\'t reach live data'):WS?(stale?'Data is '+left(age)+' old':'Updated '+(age<60e3?'just now':left(age)+' ago')):'Loading…';
   return `<span class="fresh ${cls}" role="status"><span class="dot" aria-hidden="true"></span>${txt} · source <a class="ln" href="https://docs.warframestat.us" target="_blank" rel="noopener">warframestat.us</a><button type="button" class="btn sm" id="wsretry">${WSerr?'Retry':'Refresh'}</button></span>`}
-function siteFoot(){return `<footer class="sitefoot"><div>Site updated ${esc(D.meta.site||D.meta.built)} · Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+' · ':''}${esc(D.meta.built)} · Market prices ${esc(D.meta.prices)}</div>
+/* one status per data feed: fresh, delayed or unavailable */
+function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(Date.now()-t)/864e5};const dot=k=>`<span class="fdot ${k}" aria-hidden="true"></span>`;
+  const g=age(D.meta.built),p=age(D.meta.prices);const gk=g==null||g<21?'ok':'warn',pk=p==null||p<3?'ok':'warn';
+  const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
+  return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
+function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
@@ -1878,6 +1912,63 @@ window.addEventListener('popstate',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SHEET)sheetClose(false)});
 window.addEventListener('hashchange',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('click',e=>{if(e.target.closest('#mkmore')){state.mkLim=(state.mkLim||60)+60;rerender()}});
+/* ---------- search: Ctrl+K, "/" or the header button; any page, item, relic, quest or planet ---------- */
+const PAGE_ALIAS={today:'dailies daily reset fissures sortie nightwave baro arbitration',synd:'standing reputation rep sigil',market:'prices plat platinum trade sell',missions:'nodes planets junctions star chart',ranks:'mastery mr level',mastery:'rank up plan mr test',farm:'drop drops where farm',relics:'void relic refine radiant ducats',friends:'squad clan chat message group',tasks:'todo to-do checklist',goals:'wishlist track tracked',world:'fishing mining fish ore',arsenal:'builds mods loadout arcane lich sister',frames:'warframe frames helminth',tenno:'profile account sync backup foundry inventory',quests:'story quest',resources:'materials resources',donate:'support donate paypal',feedback:'bug idea',about:'privacy changelog new'};
+let CMDX=null;
+function cmdIndex(){if(CMDX)return CMDX;const x=[];const add=(n,g,act,extra)=>x.push({n,g,act,l:n.toLowerCase(),a:(extra||'').toLowerCase()});
+  for(const [r,l] of PAGES)add(SUBL[r]||l,'Pages','#'+r,PAGE_ALIAS[r]);
+  for(const n in I)add(n,'Gear','item|'+n,I[n].c);
+  for(const n in RES)add(n,'Resources','res|'+n);
+  for(const n in REL)add(n+' Relic','Relics','relic|'+n);
+  for(const n in MODS)add(n,'Mods','mod|'+n);
+  for(const n in ARC)add(n,'Arcanes','arc|'+n);
+  for(const q of Q)add(q.n,'Quests','quest|'+q.n);
+  for(const p of [...new Set(ALLN.map(n=>n.p).filter(Boolean))])add(p,'Planets','node|'+p);
+  for(const e of D.synd)add(e.n,'Syndicates','#synd');
+  return CMDX=x}
+const CMDG=['Pages','Gear','Resources','Relics','Quests','Planets','Syndicates','Mods','Arcanes'];
+function cmdFind(q){q=q.toLowerCase().trim().replace(/\s+/g,' ');if(!q)return [];const w=q.split(' ');const out=[];
+  for(const e of cmdIndex()){const words=e.l.split(/[\s\-']+/);let s=null;
+    if(e.l===q)s=0;else if(w.every(t=>words.includes(t)))s=1;else if(e.l.startsWith(q))s=1.5;else if(w.every(t=>words.some(x=>x.startsWith(t))))s=2;else if(e.a&&w.every(t=>e.a.split(' ').some(x=>x.startsWith(t))))s=2.5;else if(q.length>2&&e.l.includes(q))s=3;
+    if(s!=null)out.push([s+CMDG.indexOf(e.g)*.01+e.n.length*.0001,e])}
+  out.sort((a,b)=>a[0]-b[0]);const per={};return out.map(x=>x[1]).filter(e=>(per[e.g]=(per[e.g]||0)+1)<=(e.g==='Pages'?4:6)).slice(0,24)}
+let CMDI=0,CMDR=[],CMDLAST=null;
+function cmdOpen(){if($('#cmdbk'))return;CMDLAST=document.activeElement;document.body.insertAdjacentHTML('beforeend',`<div class="dlgbk" id="cmdbk"><div class="cmd" role="dialog" aria-modal="true" aria-label="Search Tennoform">
+  <div class="cmdin">${ic('search')}<input id="cmdq" type="text" role="combobox" aria-expanded="true" aria-controls="cmdres" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Search gear, relics, quests, planets, pages…" enterkeyhint="go"><button type="button" class="btn sm" data-cmdx>Esc</button></div>
+  <div id="cmdres" role="listbox" aria-label="Results"></div><div class="cmdfoot small muted">↑ ↓ to move · Enter to open · Esc to close · <kbd>?</kbd> for shortcuts</div></div></div>`);
+  cmdPaint();setTimeout(()=>$('#cmdq').focus(),10)}
+function cmdClose(){const b=$('#cmdbk');if(b)b.remove();if(CMDLAST&&CMDLAST.focus&&document.contains(CMDLAST))CMDLAST.focus()}
+function cmdPaint(){const q=$('#cmdq')?$('#cmdq').value:'';CMDR=cmdFind(q);CMDI=Math.min(CMDI,Math.max(0,CMDR.length-1));const box=$('#cmdres');if(!box)return;
+  if(!q.trim()){box.innerHTML=`<div class="cmdhint small muted">Try “mag p”, “neuro”, “axi”, “vox”, “fissures” or “standing”.</div>`;$('#cmdq').removeAttribute('aria-activedescendant');return}
+  if(!CMDR.length){box.innerHTML=`<div class="cmdhint small muted">Nothing matches “${esc(q)}”.</div>`;return}
+  let h='',g=null;CMDR.forEach((e,i)=>{if(e.g!==g){if(g)h+='</div>';g=e.g;h+=`<div role="group" aria-label="${e.g}"><div class="cmdg small muted" aria-hidden="true">${e.g}</div>`}
+    h+=`<div class="cmdo${i===CMDI?' on':''}" role="option" id="cmd-${i}" aria-selected="${i===CMDI}" data-cmdi="${i}">${e.g==='Gear'?art(e.n,'mini')||'<span class="mini"></span>':''}<span class="cmdn">${esc(e.n)}</span><span class="small muted">${e.g==='Gear'?esc(I[e.n].c):e.g==='Pages'?'Page':esc(e.g.replace(/s$/,''))}</span></div>`});
+  box.innerHTML=h+'</div>';$('#cmdq').setAttribute('aria-activedescendant','cmd-'+CMDI);const on=$('#cmd-'+CMDI);on&&on.scrollIntoView({block:'nearest'})}
+function cmdGo(e){cmdClose();if(!e)return;const a=e.act;
+  if(a[0]==='#'){if(location.hash===a)render();else location.hash=a.slice(1);return}
+  if(a.startsWith('quest|')){state.qFocus=a.slice(6);state.qF='all';if(location.hash==='#quests')render();else location.hash='quests';return}
+  go(a)}
+document.addEventListener('input',e=>{if(e.target.id==='cmdq'){CMDI=0;cmdPaint()}});
+document.addEventListener('keydown',e=>{const typing=e.target&&e.target.matches&&e.target.matches('input,textarea,select,[contenteditable]');
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#cmdbk')?cmdClose():cmdOpen();return}
+  if($('#cmdbk')){if(e.key==='Escape'){e.preventDefault();cmdClose()}else if(e.key==='ArrowDown'){e.preventDefault();CMDI=Math.min(CMDI+1,CMDR.length-1);cmdPaint()}else if(e.key==='ArrowUp'){e.preventDefault();CMDI=Math.max(CMDI-1,0);cmdPaint()}else if(e.key==='Enter'&&e.target.id==='cmdq'){e.preventDefault();cmdGo(CMDR[CMDI])}else if(e.key==='Tab'){e.preventDefault();$('#cmdq').focus()}return}
+  if(typing||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key==='/'){e.preventDefault();e.stopImmediatePropagation();cmdOpen();return}
+  if(e.key==='?'){e.preventDefault();keysOpen();return}
+  if(/^[1-5]$/.test(e.key)&&!$('#keysbk')&&!$('#prevbk')){const p=PLACES[+e.key-1];location.hash=placeLast(p)}},true);
+document.addEventListener('click',e=>{if(e.target.closest('#srchbtn')){cmdOpen();return}
+  const o=e.target.closest('[data-cmdi]');if(o){cmdGo(CMDR[+o.dataset.cmdi]);return}
+  if(e.target.closest('[data-cmdx]')||e.target.id==='cmdbk'){cmdClose();return}
+  if(e.target.closest('[data-keysx]')||e.target.id==='keysbk'){keysClose()}});
+/* shortcuts sheet */
+function keysOpen(){if($('#keysbk'))return;CMDLAST=document.activeElement;const k=[['Ctrl K or /','Search everything'],['1 – 5','Home, Plan, Farm, Today, Squad'],['?','Show these shortcuts'],['Esc','Close a menu, sheet or dialog'],['← →','Move between category buttons'],['Enter (in a rank box)','Save and jump to the next item']];
+  document.body.insertAdjacentHTML('beforeend',`<div class="dlgbk" id="keysbk"><div class="dlg panel stack" role="dialog" aria-modal="true" aria-labelledby="keys-h" style="gap:10px"><h2 id="keys-h" tabindex="-1">Keyboard shortcuts</h2><div class="kv small">${k.map(([a,b])=>`<span><kbd>${a}</kbd></span><span>${b}</span>`).join('')}</div><div class="row" style="justify-content:flex-end"><button type="button" class="btn" data-keysx>Close</button></div></div></div>`);
+  setTimeout(()=>$('#keys-h').focus(),10)}
+function keysClose(){const b=$('#keysbk');if(b)b.remove();if(CMDLAST&&CMDLAST.focus&&document.contains(CMDLAST))CMDLAST.focus()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#keysbk'))keysClose()});
+/* phones: hide the bottom bar while typing and keep the field in view */
+document.addEventListener('focusin',e=>{if(window.innerWidth<900&&e.target.matches('input:not([type=checkbox]):not([type=radio]),textarea,select')){document.body.classList.add('typing');setTimeout(()=>{try{e.target.scrollIntoView({block:'center'})}catch(x){}},250)}});
+document.addEventListener('focusout',()=>setTimeout(()=>{if(!(document.activeElement&&document.activeElement.matches('input:not([type=checkbox]),textarea,select')))document.body.classList.remove('typing')},50));
 /* ---------- router ---------- */
 const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
