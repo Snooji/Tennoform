@@ -104,6 +104,8 @@ export type TFApi = {
   res(): ResData
   resSet(o: { q?: string; f?: string }): void
   resPick(n: string | null): void
+  frames(): FramesData
+  framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -226,6 +228,12 @@ export type SyndData = {
 }
 export type ResRow = { n: string; have: number | null; label: string; need: number }
 export type ResData = { q: string; filter: string; sel: string; total: number; list: ResRow[] | null; main: ResRow[]; rest: ResRow[]; detail: string }
+export type ModSlot = { slot: string; m: string; key: string; pol: string; done: boolean; price: string; src: string; seller: string }
+export type FramesData = {
+  filter: string; filteredEmpty: boolean; list: string[]; name: string; img: string; base: string; prime: string; baseVer: string; tree: string
+  builds: { value: string; label: string }[]; bi: string; budget: boolean
+  build: { role: string; helminth: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
+}
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
   openSearch?: () => void

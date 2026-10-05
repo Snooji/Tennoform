@@ -1,5 +1,5 @@
 /* ---------- bridge: Goals for the React page ---------- */
-const strip=h=>String(h||'').replace(/<a\b[^>]*>.*?<\/a>/g,'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s*·\s*$/,'').trim();
+const strip=h=>String(h||'').replace(/<br\s*\/?>/g,' · ').replace(/<a\b[^>]*>(farms by stage|\d+ options)<\/a>/g,'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s*·\s*$/,'').trim();
 function vaultOf(it){if(!it||!it.p)return null;const v=VAULT[it.n]||{};if(v.now)return {kind:'now',text:'Resurgence until '+fdate(v.now)};if(it.v)return {kind:'vaulted',text:'Vaulted'+(v.est?' · back ~'+fdate(v.est):'')};return {kind:'farmable',text:'Farmable'+(it.evd?' · vaults ~'+fdate(it.evd):'')}}
 function goalsData(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';let list=g.slice();
   if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
