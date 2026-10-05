@@ -112,6 +112,12 @@ export type TFApi = {
   marketSet(o: { tab?: string; q?: string; f?: string; sort?: string }): void
   marketMore(): void
   whisper(text: string): void
+  relics(): RelicsData
+  relicsSet(o: Partial<Record<"tab" | "era" | "sort" | "raq" | "rae" | "duq" | "duf" | "duo", string>>): void
+  relAdj(r: string, k: string, d: number): void
+  relSet(r: string, k: string, v: string): void
+  setTraces(v: string): void
+  setDup(n: string, v: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -256,6 +262,18 @@ export type MarketData = {
   q?: string; filter?: string; sort?: string; total?: number; count?: number; more?: number
   sets?: { n: string; base: string; img: string; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null; left: number; xp: number; price: number | null; meta: string; seller: { name: string; price: number; wh: string } | null; url: string }[]
   gapMonths?: number; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]
+}
+export type RelicCard = {
+  r: string; vaulted: boolean; advice: { t: string; why: string; k: string }; counts: Record<"i" | "e" | "f" | "r", number>
+  rewards: { n: string; rar: string; go: string; need: boolean; goal: boolean; plat: number | null; du: number }[]; evI: number; evR: number
+}
+export type RelicsData = {
+  tab: "mine" | "add" | "ducats"
+  era?: string; sort?: string; kinds?: number; tot?: number; totPl?: number; withNeed?: number; traces?: number; cards?: RelicCard[]
+  q?: string; filter?: string; total?: number; list?: { r: string; vaulted: boolean; rare: string; count: number }[]
+  snapshot?: string; spares?: number; plat?: number; ducats?: number; baro?: { state: string; text: string }; count?: number
+  rows?: { n: string; go: string; plat: number | null; du: number; spares: number; tag: string }[]
+  stock?: { item: string; go: string; ducats: number; credits: number }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
