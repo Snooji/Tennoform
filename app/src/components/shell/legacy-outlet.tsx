@@ -7,5 +7,5 @@ export function LegacyOutlet() {
     const app = document.getElementById("app")
     if (app && slot.current && app.parentElement !== slot.current) slot.current.appendChild(app)
   }, [])
-  return <div ref={slot} className="tf-legacy min-w-0 flex-1" />
+  return <div ref={slot} className="tf-legacy mx-auto w-full max-w-6xl min-w-0 flex-1" />
 }
