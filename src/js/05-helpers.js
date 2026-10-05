@@ -3,7 +3,7 @@ function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
 function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}" for ${s[1]} platinum. (warframe.market)`}
 function sellerRow(item){const s=(SEL[item]||[]).filter(x=>x[0]!=='__buy');if(!s.length)return'';const b=s[0];
-  return `<div class="seller"><span class="muted">Cheapest seller:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
+  return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
 function farmFor(rn){const r=RES[rn];
   if(RT[rn]){const t=RT[rn].tiers;const best=r&&r.best;const pick=(t['Mid game']||[])[0]||(t['Early game']||[])[0];return (best?`<b>${esc(best)}</b>`:pick?`<b>${esc(pick[0])}</b> (${esc(pick[1])})`:'')+` · <a class="ln" href="#" data-go="res|${esc(rn)}">farms by stage</a>`}
   const s=RSRC[rn];if(s&&s.length)return `<b>${esc(s[0][0])}</b>${s[0][1]?' — '+esc(s[0][1]):''}${s.length>1?` · <a class="ln" href="#" data-go="res|${esc(rn)}">${s.length} options</a>`:''}`;
@@ -13,9 +13,9 @@ function relSort(a,b){return 'CUR'.indexOf(a[1])-'CUR'.indexOf(b[1])}
 function relicChips(list){if(!list||!list.length)return'';
   const open=list.filter(x=>!REL[x[0]]?.v).sort(relSort),vault=list.filter(x=>REL[x[0]]?.v).sort(relSort);
   let h='';
-  if(open.length)h+=`<div class="small" style="margin-top:6px;color:var(--ok);font-weight:600">${open.length} relic${open.length>1?'s':''} farmable now. Tap one for the best nodes.</div><div class="relics">${open.map(([r,rr])=>relicDetails(r,rr)).join('')}</div>`;
-  else h+=`<div class="small" style="margin-top:6px"><span class="vault">All relics vaulted.</span> Buy the part or a relic on warframe.market, or wait for Prime Resurgence (Varzia).</div>`;
-  if(vault.length)h+=`<details class="more"><summary>${vault.length} vaulted relic${vault.length>1?'s':''} (trade only)</summary><div class="relics">${vault.slice(0,24).map(([r,rr])=>relicDetails(r,rr)).join('')}</div></details>`;
+  if(open.length)h+=`<div class="small" style="margin-top:6px;color:var(--ok);font-weight:600">Farm from ${open.length} relic${open.length>1?'s':''}:</div><div class="relics">${open.map(([r,rr])=>relicDetails(r,rr)).join('')}</div>`;
+  else h+=`<div class="small" style="margin-top:6px"><span class="vault">Vaulted.</span> Buy it, or wait for Resurgence.</div>`;
+  if(vault.length)h+=`<details class="more"><summary>${vault.length} vaulted relic${vault.length>1?'s':''}</summary><div class="relics">${vault.slice(0,24).map(([r,rr])=>relicDetails(r,rr)).join('')}</div></details>`;
   return h}
 function relicDetails(r,rar){const v=REL[r]?.v;
   return `<details class="relic"><summary><span class="dot rar-${rar}"></span>${esc(r)} <span class="rar-${rar}">${RAR[rar]||''}</span>${v?' <span class="tag-v">vaulted</span>':''}</summary><div class="body">${relicBody(r)}</div></details>`}

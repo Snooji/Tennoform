@@ -1,8 +1,8 @@
 /* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
-async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){bootSync();return}bootSync();
+async function fbInit(){if(!HOSTED)return;try{await loadScript('/firebase-config.js')}catch(e){bootSync();return}bootSync();
   let cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey){FBST='off';render();return}
-  const B='vendor/firebase-10.12.2/';
+  const B='/vendor/firebase-10.12.2/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){FBST='off';render();return}
   if(window.TENNO_SELF_AUTH&&location.hostname==='tennoform.com'&&(STANDALONE||IOS))cfg=Object.assign({},cfg,{authDomain:'tennoform.com'});
   firebase.initializeApp(cfg);const auth=firebase.auth();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};FBST='ready';render();

@@ -1,7 +1,7 @@
 /* ---------- mastery ---------- */
 function mastery(){const tab=state.mTab;
   const tabs=[['path','Path to max'],['ladder','Rank ladder'],['sheet','Sheet MR 0–12'],['sframes','Sheet frames'],['craft','Craft-ups'],['xp','XP farms']];
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">MR plan</div><h1>Rank up plan</h1><p class="lede">What to do next to reach your target rank, the full rank ladder, and your sheet. Enter what you've already ranked on the <a class="ln" href="#ranks">Ranks</a> page.</p></div>${bigMR()}<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-mtab="${k}" role="tab" aria-selected="${tab===k}">${l}</button>`).join('')}</div>`;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">MR plan</div><h1>MR plan</h1><p class="lede">What to do next to reach your target rank, the full rank ladder, and your sheet. Enter what you've already ranked on the <a class="ln" href="#ranks">Ranks</a> page.</p></div>${bigMR()}<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-mtab="${k}" role="tab" aria-selected="${tab===k}">${l}</button>`).join('')}</div>`;
   if(tab==='path')h+=pathTab();
   if(tab==='ladder')h+=ladderTab();
   if(tab==='all')h+=allTab();

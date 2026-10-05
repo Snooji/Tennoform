@@ -34,15 +34,15 @@ let NU=[];
 function nextCard(){NU=nextUp();const nz=Object.values(P.nuSnz||{}).filter(z=>z>=lastDaily()).length;
   const open=x=>x.go?`<a class="ln" href="#" data-go="${esc(x.go)}">${esc(x.t)}</a>`:x.q?`<a class="ln" href="#quests" data-q="${esc(x.q)}">${esc(x.t)}</a>`:x.href?`<a class="ln" href="${x.href}" ${x.tt?`data-ttab="${x.tt}"`:''}>${esc(x.t)}</a>`:esc(x.t);
   return `<section class="panel cut stack nextup" style="gap:8px" aria-labelledby="nu-h"><div class="row" style="justify-content:space-between"><h2 id="nu-h">Next up</h2><span class="small muted">${esc(stage())}</span></div>
-  ${NU.map((x,i)=>`<div class="nu"><span class="nun" aria-hidden="true">${i+1}</span><div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
+  ${NU.map((x,i)=>`<div class="nu">${x.go&&x.go.startsWith('item|')&&art(x.go.slice(5),'mini')||`<span class="nun" aria-hidden="true">${i+1}</span>`}<div class="nut"><b>${open(x)}</b><div class="small muted">${esc(x.why)}</div>
    ${x.pre&&x.pre.length?`<details class="nupre"><summary class="small">Details</summary><ul class="small">${x.pre.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></details>`:''}
-   <div class="nuact">${x.done?`<button type="button" class="btn sm" data-nudone="${i}">✓ ${esc(x.doneL||'Done')}</button>`:''}${x.task?taskBtn(...x.task):''}<button type="button" class="btn sm ghost" data-nusnz="${i}" aria-label="Not now: ${esc(x.t)}">Not now</button></div></div></div>`).join('')||'<div class="small muted">You\'re all caught up. Pick something from Goals or the rank-up plan.</div>'}
+   <div class="nuact">${x.done?`<button type="button" class="btn sm" data-nudone="${i}">${ic('check')}${esc(x.doneL||'Done')}</button>`:''}${x.task?taskBtn(...x.task):''}<button type="button" class="btn sm ghost" data-nusnz="${i}" aria-label="Not now: ${esc(x.t)}">Not now</button></div></div></div>`).join('')||'<div class="small muted">You\'re all caught up. Pick something from Goals or the rank-up plan.</div>'}
   ${nz?`<button type="button" class="small linkbtn" id="nuunsnz">Show ${nz} snoozed suggestion${nz>1?'s':''}</button>`:''}</section>`}
 
 /* customize: first-use hint, saved status, focus kept */
 const _hubGrid=hubGrid;
 hubGrid=function(){let g=_hubGrid();const hint=!P.hub&&!lsGet('tf-hubhint',0)&&!state.hubEdit;
-  if(state.hubEdit)g=g.replace('<div class="hub3">',`<div class="callout small hubhelp" id="hubhelp">Move cards with the arrow buttons, or hide the ones you don't use. Changes save automatically. ${state.hubSaved?'<span class="chip ok" id="hubsaved">✓ Saved</span>':''}</div><div class="hub3">`);
+  if(state.hubEdit)g=g.replace('<div class="hub3">',`<div class="callout small hubhelp" id="hubhelp">Move cards with the arrow buttons, or hide the ones you don't use. Changes save automatically. ${state.hubSaved?'<span class="chip ok" id="hubsaved">'+ic('check')+'Saved</span>':''}</div><div class="hub3">`);
   else if(hint)g=g.replace('<div class="hub3">',`<div class="callout small row hubhint" style="justify-content:space-between"><span>You can move or hide these cards with <b>Customize</b>, above.</span><button type="button" class="btn sm" id="hubhintx">Got it</button></div><div class="hub3">`);
   return g};
 const _hubMove=hubMove;
@@ -84,7 +84,7 @@ document.addEventListener('keydown',e=>{const bk=$('#prevbk');if(!bk)return;if(e
 
 /* live events: quick actions */
 function ymd(t){const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function ltBtn(t,exp,lab){const has=(P.tasks||[]).some(x=>!x.d&&x.t===t);return `<button type="button" class="btn sm tb${has?' on':''}" data-livetask="${esc(t)}" data-ltexp="${esc(exp||'')}" aria-label="${has?'In your tasks':'Add to your tasks'}: ${esc(t)}">${has?'✓ In tasks':'+ '+(lab||'Task')}</button>`}
+function ltBtn(t,exp,lab){const has=(P.tasks||[]).some(x=>!x.d&&x.t===t);return `<button type="button" class="btn sm tb${has?' on':''}" data-livetask="${esc(t)}" data-ltexp="${esc(exp||'')}" aria-label="${has?'In your tasks':'Add to your tasks'}: ${esc(t)}">${has?ic('check')+'In tasks':ic('plus')+(lab||'Task')}</button>`}
 function relBtn(era){const n=Object.keys(P.rel||{}).filter(r=>REL[r]&&REL[r].era===era&&relCount(r)>0).length;return `<button type="button" class="btn sm" data-fisrel="${esc(era)}" title="${n?'Open your '+era+' relics':'Find '+era+' relics to farm'}">${n?`My ${esc(era)} relics (${n})`:`Find ${esc(era)} relics`}</button>`}
 
 /* tracked by you */

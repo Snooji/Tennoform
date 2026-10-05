@@ -7,7 +7,7 @@ function search(q){if(!IDX)buildIdx();q=q.toLowerCase().trim();if(!q)return[];co
   const r=IDX.filter(([n])=>{const l=n.toLowerCase();return w.every(x=>l.includes(x))});
   r.sort((a,b)=>{const al=a[0].toLowerCase(),bl=b[0].toLowerCase();return (bl.startsWith(q)-al.startsWith(q))||a[0].length-b[0].length});return r.slice(0,50)}
 function farm(){const sel=state.farmSel;
-  return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>What do you want to farm?</h1></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>Farm finder</h1></div>
   <div class="split two"><div class="stack" style="gap:8px"><input id="fq" type="search" placeholder="Saryn Prime, Neo S10, Primed Flow, Orokin Cell…" value="${esc(state.farmQ)}" autocomplete="off" enterkeyhint="search" aria-label="Search">
   <div class="row">${`<select id="fft" aria-label="Result type" style="width:auto">${[['all','Everything'],['item','Gear & sets'],['part','Prime parts'],['relic','Relics'],['mod','Mods'],['arc','Arcanes'],['res','Resources']].map(([k,l])=>`<option value="${k}" ${(state.ffT||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}<button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
   <div class="results" id="fres">${resultsHTML()}</div></div><div id="fdet">${sel?detail(sel):''}</div></div></div>`}

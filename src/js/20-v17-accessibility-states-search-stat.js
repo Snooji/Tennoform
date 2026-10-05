@@ -4,7 +4,7 @@ const plain=h=>{const d=document.createElement('div');d.innerHTML=String(h||'');
 ck=function(k,cls,lab){return `<input type="checkbox" class="ck ${cls||''}" data-k="${esc(k)}" ${on(k)?'checked':''} aria-label="${esc(lab?'Done: '+lab:'Mark done')}">`};
 step=function(k,label,body){return `<li class="step${on(k)?' done':''}">${ck(k,'',plain(label))}<div><div class="lbl">${label}</div>${body?`<div class="src">${body}</div>`:''}</div></li>`};
 hit=function([n,t,l]){const s=state.farmSel===t+'|'+n;let st='';
-  if(t==='item'&&I[n]){const it=I[n];st=(on('m|'+n)?'<span class="chip good">✓ Mastered</span>':mxChip(n))+(it.p?(it.v&&!(VAULT[n]&&VAULT[n].now)?'<span class="chip bad">Vaulted</span>':'<span class="chip ok">Farmable</span>'):'')}
+  if(t==='item'&&I[n]){const it=I[n];st=(on('m|'+n)?'<span class="chip good">'+ic('check')+'Mastered</span>':mxChip(n))+(it.p?(it.v&&!(VAULT[n]&&VAULT[n].now)?'<span class="chip bad">Vaulted</span>':'<span class="chip ok">Farmable</span>'):'')}
   else if(t==='relic'&&REL[n])st=REL[n].v?'<span class="chip bad">Vaulted</span>':'<span class="chip ok">Farmable</span>';
   else if(t==='mod')st=on('mod|'+n)?'<span class="chip good">✓ Owned</span>':'';
   else if(t==='res'&&P.inv&&P.inv[n]!=null)st=`<span class="chip">Have ${fmt(P.inv[n])}</span>`;
