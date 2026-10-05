@@ -13,10 +13,11 @@ import { DemoBanner } from "@/components/shell/demo-banner"
 import { HomePage } from "@/pages/home/home-page"
 import { RanksPage } from "@/pages/ranks/ranks-page"
 import { FarmPage } from "@/pages/farm/farm-page"
+import { TodayPage } from "@/pages/today/today-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
-const OWNED = new Set(["home", "ranks", "farm"])
+const OWNED = new Set(["home", "ranks", "farm", "today"])
 
 const sidebarOpen = () => !document.cookie.includes("sidebar_state=false")
 
@@ -58,6 +59,7 @@ export default function App() {
             {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
             {s.route === "ranks" ? <RanksPage /> : null}
             {s.route === "farm" ? <FarmPage /> : null}
+            {s.route === "today" ? <TodayPage /> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>

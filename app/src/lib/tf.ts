@@ -62,6 +62,15 @@ export type TFApi = {
   farmMore(): void
   farmPick(key: string | null): void
   island(el: HTMLElement | null): void
+  today(): TodayData
+  todaySet(o: { ckF?: string; fiF?: string; fiM?: string }): void
+  ckTick(id: string, v: boolean): void
+  ckPin(id: string): void
+  ckHide(id: string): void
+  ckAdd(text: string, per: string): boolean
+  liveTask(text: string, expiry: string): void
+  fisRelics(era: string): void
+  retryLive(): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -92,6 +101,32 @@ export type FarmData = {
   types: { value: string; label: string }[]; cats: { value: string; label: string; n: number }[]
   total: number; count: number; items: FarmItem[]; more: number; filtered: boolean
   sel: string; selName: string; detail: string
+}
+export type LiveList = { head: string; list: { t: string; s: string; n: string }[] }
+export type CheckRow = {
+  id: string; per: "d" | "w"; title: string; desc: string; gate: string; locked: boolean; done: boolean; doneAt: number
+  pinned: boolean; hidden: boolean; custom: boolean; resetIn: string; resetAt: string; endIso: string; hasTask: boolean
+  link: { route: string; label: string } | null; live: LiveList | null
+}
+type Tasky = { task: string; hasTask: boolean; expiry: string; left: string }
+export type TodayLive = {
+  cycles: { name: string; state: string; left: string }[]
+  sortie?: Tasky & { boss: string; faction: string; variants: { t: string; s: string; n: string }[] }
+  archon?: Tasky & { boss: string; missions: { t: string; s: string }[] }
+  baro?: { here: boolean; left: string; location: string; inv: { item: string; ducats: number; credits: number }[] }
+  steel?: { name: string; cost: number }
+  arbitration?: Tasky & { type: string; node: string; enemy: string }
+  nightwave?: (Tasky & { id: string; title: string; desc: string; rep: number; kind: string; done: boolean })[]
+  fissures: {
+    era: string; mode: string; need: { era: string; relics: string[]; more: number }[]
+    list: (Tasky & { id: string; tier: string; need: boolean; mission: string; node: string; hard: boolean; storm: boolean; mine: number })[]
+  }
+  invasions: { id: string; node: string; desc: string; rewards: string; good: boolean; pct: number }[]
+}
+export type TodayData = {
+  filter: string; rows: CheckRow[]; hiddenCount: number; hosted: boolean
+  tiles: { k: string; v: string; x: string; done?: number; total?: number }[]
+  live: TodayLive | null; liveState: "ok" | "loading" | "error" | "offline"
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
