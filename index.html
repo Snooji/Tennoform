@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jb1J7tt+WM76MCTbIaF+CGMYIB1D5VeHaM+l+NpChAY=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Jc9rBX82M9RjaMC2XzDEMwdhdntltqQCo8rroDRn5jc=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -625,10 +625,42 @@ textarea{font:14px/1.5 var(--f-body)}
 .donate-mini{opacity:1;font-family:var(--f-body)}
 .themesw .btn{min-height:40px;min-width:44px}
 @media (max-width:899px){.ck,.ck.sm{width:36px;height:36px}}
+/* ---- places: five sections, sub-tabs, avatar menu ---- */
+.me{flex:none;position:relative;display:grid;place-items:center;width:40px;height:40px;margin-left:8px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
+.me:hover,.me[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
+.me.in svg{display:none}
+.me .mei{font:600 16px/1 var(--f-display);color:var(--ink)}
+.me .nbadge{position:absolute;top:-4px;right:-4px}
+nav.tabs{gap:4px}
+nav.tabs a{padding:14px 12px}
+.subnav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:-6px -12px 14px;padding:0;border-bottom:1px solid var(--line)}
+.subnav::-webkit-scrollbar{display:none}
+.subnav a{flex:none;display:flex;align-items:center;min-height:44px;padding:0 12px;color:var(--muted);text-decoration:none;font:600 15px/1 var(--f-body);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.subnav a:hover{color:var(--ink)}
+.subnav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
+/* page openers: the section tabs already say where you are */
+.head>.eyebrow,.head>.lede{display:none}
+.head{padding-bottom:0}
+/* avatar menu: dropdown on desktop, bottom sheet on phones */
+.drawer.open{display:block;position:fixed;inset:0;z-index:40;background:color-mix(in srgb,#000 35%,transparent)}
+.drawer .sheet{display:flex!important;flex-direction:column;gap:2px;padding:10px!important;border:1px solid var(--line2)}
+.drawer .sheet a{display:flex;align-items:center;min-height:46px;padding:0 12px;border:0;background:transparent;color:var(--ink);text-decoration:none;font:600 15px var(--f-body);border-radius:var(--r-sm)}
+.drawer .sheet a:hover,.drawer .sheet a:focus-visible{background:var(--sunk)}
+.drawer .sheet a[aria-current="page"]{background:var(--sunk);color:var(--ink)}
+.mehead{padding:8px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:4px;overflow-wrap:anywhere}
+.mefoot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px 4px;border-top:1px solid var(--line);margin-top:4px;color:var(--muted)}
+@media (min-width:900px){.drawer .sheet{position:absolute;top:58px;left:auto!important;right:max(12px,calc((100vw - 1480px)/2 + 12px));width:320px!important;max-height:calc(100vh - 80px);overflow:auto;border-radius:var(--r);box-shadow:0 12px 40px color-mix(in srgb,#000 35%,transparent)}}
+@media (max-width:899px){.drawer .sheet{position:absolute;top:auto!important;left:0!important;right:0;bottom:0;width:auto!important;border-radius:var(--r) var(--r) 0 0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))!important}
+  .subnav{margin-top:-8px}}
+/* phone detail sheet */
+.msheet{position:fixed!important;left:0;right:0;bottom:0;z-index:45;max-height:88vh;overflow:auto;overscroll-behavior:contain;background:var(--bg);border-top:1px solid var(--line2);border-radius:var(--r) var(--r) 0 0;padding:0 12px calc(20px + env(safe-area-inset-bottom,0px));box-shadow:0 -12px 40px color-mix(in srgb,#000 35%,transparent)}
+.msheet-bar{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:flex-end;padding:8px 0;background:var(--bg)}
+.msheet-grip{position:absolute;left:50%;top:6px;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:var(--line2)}
+body.sheet-on{overflow:hidden}
+body.sheet-on::before{content:"";position:fixed;inset:0;z-index:44;background:color-mix(in srgb,#000 45%,transparent)}
 </style>
 
 <header class="bar"><div class="bar-in">
-  <button type="button" class="hamb" id="hamb" aria-label="All pages" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   <a class="brand" href="#home" aria-label="Home">
     <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
 <defs>
@@ -645,7 +677,7 @@ textarea{font:14px/1.5 var(--f-body)}
     <span>Tenno<b>form</b></span>
   </a>
   <nav class="tabs" aria-label="Sections"></nav>
-  <a class="acct" href="#tenno" id="acctbtn" data-ttab="account" hidden aria-label="Account"></a><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a>
+  <a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
 </div></header>
 <main id="app"></main>
 <nav class="bnav" aria-label="Sections"></nav>
@@ -672,15 +704,27 @@ const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
 const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['relics','Relics'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['arsenal','Arsenal'],['world','Fishing & Mining'],['farm','Farm Finder'],['market','Market'],['tasks','Tasks'],['friends','Friends'],['donate','Support'],['feedback','Feedback'],['about','About']];
-const BAR=['home','today','ranks','tasks'];
-const ICON={tasks:'M9 4h11v2H9zm0 7h11v2H9zm0 7h11v2H9zM3.5 3.5l1.5 1.5 3-3 1 1-4 4-2.5-2.5zm0 7l1.5 1.5 3-3 1 1-4 4-2.5-2.5zM4 17h3v3H4z',home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
-const TOP=['home','today','ranks','tasks','friends','missions','relics','market'];
-const GROUPS=[['Progress',['home','today','ranks','mastery','goals','tenno']],['World',['missions','quests','synd','world']],['Gear',['frames','arsenal']],['Farm & trade',['resources','farm','relics','market']],['Community',['tasks','friends','feedback','donate','about']]];
+const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM1 21v-1c0-3.9 3.1-7 7-7s7 3.1 7 7v1zm15.4-7.9c3.2.2 5.6 2.8 5.6 6V21h-5v-1c0-2.6-.9-5-2.5-6.7.6-.1 1.2-.2 1.9-.2z',me:'M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z',tasks:'M9 4h11v2H9zm0 7h11v2H9zm0 7h11v2H9zM3.5 3.5l1.5 1.5 3-3 1 1-4 4-2.5-2.5zm0 7l1.5 1.5 3-3 1 1-4 4-2.5-2.5zM4 17h3v3H4z',home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
+/* Five places. Every page belongs to one; the place link reopens the last page used in it. */
+const PLACES=[['home','Home','home',['home']],['plan','Plan','ranks',['ranks','mastery','goals','tasks','missions','quests']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd']],['squad','Squad','friends',['friends']]];
+const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
+const SUBL={ranks:'Ranks',mastery:'MR plan',goals:'Goals',tasks:'Tasks',missions:'Star chart',quests:'Quests',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates'};
+const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about',"About & what's new"]];
+const BAR=PLACES.flatMap(p=>p[3]);
 const PL=Object.fromEntries(PAGES);
-$('nav.tabs').innerHTML=TOP.map(r=>`<a href="#${r}">${PL[r]}</a>`).join('');
-$('.bnav').innerHTML=BAR.map(r=>`<a href="#${r}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[r]}"/></svg>${PAGES.find(p=>p[0]===r)[1]}</a>`).join('')+`<button type="button" id="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>`;
-$('#sheet').innerHTML=GROUPS.map(([g,rs])=>`<div class="mg"><div class="mgh">${g}</div>${rs.filter(r=>PL[r]).map(r=>`<a href="#${r}">${PL[r]}</a>`).join('')}</div>`).join('');
-function setMenu(o){$('#drawer').classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false')}
+const GROUPS=PLACES.filter(p=>p[3].length>1).map(p=>[p[1],p[3]]).concat([['More',MENU.map(m=>m[0])]]);
+function placeOf(r){return PLACES.find(p=>p[3].includes(r))||null}
+function placeLast(p){const m=lsGet('tf-place',{})||{};return p[3].includes(m[p[0]])?m[p[0]]:p[2]}
+function navPaint(key){const pl=placeOf(key);if(pl&&pl[3].length>1){const m=lsGet('tf-place',{})||{};m[pl[0]]=key;lsSet('tf-place',m)}
+  document.querySelectorAll('[data-place]').forEach(a=>{const p=PLACES.find(x=>x[0]===a.dataset.place);a.setAttribute('href','#'+placeLast(p));if(pl&&pl[0]===p[0])a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')})}
+function subnav(key){const pl=placeOf(key);if(!pl||pl[3].length<2)return'';
+  return `<nav class="subnav" aria-label="${esc(pl[1])}">${pl[3].map(r=>`<a href="#${r}"${r===key?' aria-current="page"':''}>${SUBL[r]||PL[r]}</a>`).join('')}</nav>`}
+const navIcon=k=>`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[k]}"/></svg>`;
+$('nav.tabs').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${p[1]}</a>`).join('');
+$('.bnav').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${navIcon(PICON[p[0]])}${p[1]}</a>`).join('');
+function menuHTML(){const who=typeof acct!=='undefined'&&acct&&acct.kind==='fb'?`Signed in as <b>${esc(acct.name||acct.email||'you')}</b>`:'Not signed in · progress is saved on this device';
+  return `<div class="mehead small muted">${who}</div>${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}<div class="mefoot small">Theme ${themeSw()}</div>`}
+function setMenu(o){const d=$('#drawer');if(o)$('#sheet').innerHTML=menuHTML();d.classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(()=>{const a=$('#sheet a');a&&a.focus()},30)}
 $('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classList.contains('open')));
 $('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
@@ -781,7 +825,7 @@ const mrNeed=m=>m<=30?2500*m*m:2250000+(m-30)*147500;
 function mrInfo(x){let mr=0;while(mr<30&&mrNeed(mr+1)<=x)mr++;if(mr===30)mr=30+Math.max(0,Math.floor((x-2250000)/147500));
   const cur=mrNeed(mr),next=mrNeed(mr+1);return {mr,cur,next,pct:Math.max(0,Math.min(100,(x-cur)/(next-cur)*100))}}
 const mrLabel=m=>m>30?'L'+(m-30):String(m);
-function updateMR(){const ab=$('#acctbtn');if(ab){ab.hidden=!(HOSTED&&FB);ab.textContent=acct&&acct.kind==='fb'?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'Sign in';ab.classList.toggle('in',!!(acct&&acct.kind==='fb'));document.body.classList.toggle('has-acct',!ab.hidden)}const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
+function updateMR(){{const mi=$('#mei');if(mi){const on=!!(acct&&acct.kind==='fb');mi.hidden=!on;mi.textContent=on?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'';$('#hamb').classList.toggle('in',on)}}const ab=$('#acctbtn');if(ab){ab.hidden=!(HOSTED&&FB);ab.textContent=acct&&acct.kind==='fb'?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'Sign in';ab.classList.toggle('in',!!(acct&&acct.kind==='fb'));document.body.classList.toggle('has-acct',!ab.hidden)}const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
   $('#mrb-s').textContent=fmt(m.next-t.total)+' XP to next';$('#mrb-r').style.setProperty('--p',m.pct.toFixed(1));const b=$('#bigmr');if(b)b.outerHTML=bigMR();const hh=$('#hero');if(hh)hh.outerHTML=heroHTML();if(typeof rkHdr==='function')rkHdr()}
 
 /* ---------- linking ---------- */
@@ -1381,7 +1425,6 @@ function liveStatus(){if(!HOSTED)return `<span class="fresh"><span class="dot" a
   return `<span class="fresh ${cls}" role="status"><span class="dot" aria-hidden="true"></span>${txt} · source <a class="ln" href="https://docs.warframestat.us" target="_blank" rel="noopener">warframestat.us</a><button type="button" class="btn sm" id="wsretry">${WSerr?'Retry':'Refresh'}</button></span>`}
 function siteFoot(){return `<footer class="sitefoot"><div>Site updated ${esc(D.meta.site||D.meta.built)} · Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+' · ':''}${esc(D.meta.built)} · Market prices ${esc(D.meta.prices)}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
- <div class="row">Theme ${themeSw()}</div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
@@ -1745,6 +1788,21 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-nudone],[d
 document.addEventListener('click',e=>{const t=e.target.closest('#hubreset');if(!t)return;e.stopPropagation();const o=P.hub;delete P.hub;saveProfile();rerender();announce('Layout reset');
   toastAction('Home layout reset','Undo',()=>{P.hub=o;saveProfile();rerender()})},true);
 
+/* ---------- phone detail sheet: picking a result opens its detail over the list ---------- */
+let SHEET=null;
+const isPhone=()=>window.innerWidth<900;
+function sheetOpen(sel,push){const el=$(sel);if(!el||!isPhone()||!el.innerHTML.trim())return;SHEET=sel;el.classList.add('msheet');el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Details');
+  if(!el.querySelector(':scope > .msheet-bar'))el.insertAdjacentHTML('afterbegin','<div class="msheet-bar"><span class="msheet-grip" aria-hidden="true"></span><button type="button" class="btn sm" data-sheetx>Close</button></div>');
+  document.body.classList.add('sheet-on');if(push)history.pushState({sheet:1},'');el.scrollTop=0;setTimeout(()=>{const b=el.querySelector('[data-sheetx]');b&&b.focus()},40)}
+function sheetClose(fromPop){const el=SHEET&&$(SHEET);SHEET=null;document.body.classList.remove('sheet-on');if(el){el.classList.remove('msheet');el.removeAttribute('role');el.removeAttribute('aria-modal');const bar=el.querySelector(':scope > .msheet-bar');bar&&bar.remove()}
+  if(!fromPop&&history.state&&history.state.sheet)history.back()}
+function sheetRestore(){if(SHEET){const s=SHEET;SHEET=null;if($(s)&&$(s).innerHTML.trim())sheetOpen(s,false);else{document.body.classList.remove('sheet-on')}}}
+document.addEventListener('click',e=>{if(e.target.closest('[data-sheetx]')){sheetClose(false);return}
+  if(!isPhone())return;const p=e.target.closest('#fres [data-pick]');if(p){setTimeout(()=>sheetOpen('#fdet',true),60);return}
+  const r=e.target.closest('#rres [data-go^="res|"]');if(r)setTimeout(()=>sheetOpen('#rdet',true),80)});
+window.addEventListener('popstate',()=>{if(SHEET)sheetClose(true)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SHEET)sheetClose(false)});
+window.addEventListener('hashchange',()=>{if(SHEET)sheetClose(true)});
 /* ---------- router ---------- */
 const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
@@ -1752,10 +1810,9 @@ Object.assign(state,lsGet('tenno-ui',{}));Object.assign(state,(()=>{const q=lsGe
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
 function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,syF:state.syF,syS:state.syS,syH:state.syH,gS:state.gS,hF:state.hF,qF:state.qF,misType:state.misType,rsF:state.rsF,ffT:state.ffT,frF:state.frF,mkF:state.mkF,rkS:state.rkS,rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide,aTab:state.aTab,wbC:state.wbC,wbO:state.wbO,wbSel:state.wbSel,cbSel:state.cbSel,lF:state.lF,lS:state.lS,arT:state.arT,arS:state.arS,arO:state.arO,kmT:state.kmT,kmS:state.kmS,rlTab:state.rlTab,rlE:state.rlE,rlO:state.rlO,raE:state.raE,duF:state.duF,duO:state.duO,wTab:state.wTab,fR:state.fR,fRr:state.fRr,fT:state.fT,mR:state.mR,tkF:state.tkF,tkS:state.tkS})}
 function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
-  document.querySelectorAll('nav.tabs a,.bnav a,#sheet a').forEach(a=>{if(a.getAttribute('href')==='#'+key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-  const mb=$('#menu');if(mb){if(BAR.includes(key))mb.removeAttribute('aria-current');else mb.setAttribute('aria-current','page')}
+  navPaint(key);
   setMenu(false);
-  $('#app').innerHTML=routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive()}
+  $('#app').innerHTML=subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 
 /* ---------- home ---------- */
