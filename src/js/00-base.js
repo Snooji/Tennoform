@@ -23,7 +23,7 @@ const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 
 const PLACES=[['home','Home','home',['home']],['plan','Plan','ranks',['ranks','mastery','goals','tasks','missions','quests']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','friends',['friends']]];
 const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
 const SUBL={ranks:'Ranks',mastery:'MR plan',goals:'Goals',tasks:'Tasks',missions:'Star chart',quests:'Quests',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements'};
-const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about',"About & what's new"]];
+const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about','About & privacy']];
 const BAR=PLACES.flatMap(p=>p[3]);
 const PL=Object.fromEntries(PAGES);PL.admin='Backend';PL.home='Home';
 const GROUPS=PLACES.filter(p=>p[3].length>1).map(p=>[p[1],p[3]]).concat([['More',MENU.map(m=>m[0])]]);
@@ -37,7 +37,7 @@ const navIcon=k=>`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true
 if($('nav.tabs'))$('nav.tabs').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${p[1]}</a>`).join('');
 if($('.bnav'))$('.bnav').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${navIcon(PICON[p[0]])}${p[1]}</a>`).join('');
 function menuHTML(){const who=signedIn()?`<div class="mehead small muted">Signed in as <b>${esc(acct.name||acct.email||'you')}</b></div>`:canAcct()?signBlock('inmenu'):'<div class="mehead small muted">Progress is saved on this device</div>';
-  return `${who}${typeof FBK!=='undefined'&&FBK.admin?'<a href="#admin">Backend</a>':''}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
+  return `${who}${typeof FBK!=='undefined'&&FBK.admin?'<a href="#admin">Backend</a>':''}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}<a href="#about" data-about="changes">What's new</a>${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
 function setMenu(o){if(window.TF_UI&&TF_UI.openMenu){if(o)TF_UI.openMenu();return}const d=$('#drawer');if(!d)return;if(o)$('#sheet').innerHTML=menuHTML();d.classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(()=>{const a=$('#sheet a');a&&a.focus()},30)}
 $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classList.contains('open')));
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});

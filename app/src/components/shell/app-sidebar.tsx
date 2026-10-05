@@ -171,7 +171,7 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
                 <MessageSquare /> Feedback
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => go("about")}>
-                <Info /> About &amp; what's new
+                <Info /> About &amp; privacy
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
