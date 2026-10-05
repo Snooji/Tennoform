@@ -201,6 +201,20 @@ details>summary::-webkit-details-marker{display:none}
 .inv input{min-height:38px;padding:6px 8px;text-align:right}
 .ft{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0}
 .ready{color:var(--ok);font-weight:600}
+.hubgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:start}
+@media (min-width:900px){.hubgrid{grid-template-columns:minmax(0,380px) minmax(0,1fr)}}
+.bdp{padding:16px;border:1px solid var(--line2);background:linear-gradient(100deg,rgba(14,22,30,.95) 0%,rgba(40,34,18,.92) 55%,rgba(14,22,30,.95) 100%);display:flex;flex-direction:column;gap:10px}
+.bdg{display:flex;flex-direction:column;gap:2px}
+.bdl{display:flex;gap:10px;align-items:baseline;background:none;border:0;padding:3px 0;text-align:left;color:var(--ink);cursor:pointer;font:600 16px var(--f-display);letter-spacing:.03em}
+.bdl b{color:#fff;min-width:78px}
+.bdl span{color:#F3E3B0}
+.bdl small{margin-left:auto;color:var(--muted);font-size:11px}
+.bdl .ovt{margin-left:6px;color:var(--gold)}
+.bdl:hover span{color:var(--cyan)}
+.bdtot{display:flex;justify-content:space-between;border-top:1px solid var(--gold-dim);padding-top:8px;font:700 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.bdtot b{color:var(--gold)}
+.card.locked{opacity:.65}
+.qrow input.ck:disabled{opacity:.35;cursor:not-allowed}
 .hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:18px;border:1px solid var(--gold-dim);background:radial-gradient(ellipse at 0% 0%,rgba(217,180,94,.16),transparent 60%),linear-gradient(180deg,var(--panel2),var(--panel))}
 .ring.big{width:128px;height:128px}
 .ring.big>span{width:108px;height:108px;font-size:52px;color:var(--gold);text-shadow:0 0 18px rgba(217,180,94,.4)}
@@ -272,9 +286,9 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['ranks','Ranks'],['quests','Quests'],['missions','Missions'],['resources','Resources'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['farm','Farm Finder'],['market','Market']];
-const BAR=['home','ranks','quests','resources'];
-const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Missions'],['resources','Resources'],['goals','Goals'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['farm','Farm Finder'],['market','Market']];
+const BAR=['home','today','ranks','resources'];
+const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 $('nav.tabs').innerHTML=PAGES.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('');
 $('.bnav').innerHTML=BAR.map(r=>`<a href="#${r}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[r]}"/></svg>${PAGES.find(p=>p[0]===r)[1]}</a>`).join('')+`<button type="button" id="menu" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Menu</button>`;
 $('#sheet').innerHTML=PAGES.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('');
@@ -340,10 +354,10 @@ function accountPanel(){if(!HOSTED)return '';
   <div class="row"><button class="btn" id="lgin">Sign in</button><button class="btn" id="lgnew">Create account</button><button class="btn sm" id="lgreset">Forgot password</button></div></div>`}
 
 /* ---------- mastery math ---------- */
-const BIG=['Warframe','Companion','Archwing','K-Drive','Necramech'];
-const CATS=['Warframe','Primary','Secondary','Melee','Companion','Robotic Weapon','Archwing','Arch-Gun','Arch-Melee','Necramech','Zaw','Kitgun','K-Drive','Amp'];
-const CATL={Warframe:'Warframes',Primary:'Primary',Secondary:'Secondary',Melee:'Melee',Companion:'Companions','Robotic Weapon':'Robotic weapons',Archwing:'Archwings','Arch-Gun':'Arch-guns','Arch-Melee':'Arch-melee',Necramech:'Necramechs',Zaw:'Zaws','Kitgun':'Kitguns','K-Drive':'K-Drives',Amp:'Amps'};
-const EXTRA=[['chart','Star chart'],['sp','Steel Path'],['rail','Railjack intrinsics'],['drift','Drifter intrinsics'],['other','Other gear (MOAs, Hounds, Amps, etc.)']];
+const BIG=['Warframe','Sentinel','Companion','Archwing','K-Drive','Necramech'];
+const CATS=['Warframe','Primary','Secondary','Melee','Sentinel','Robotic Weapon','Companion','Archwing','Arch-Gun','Arch-Melee','Necramech','K-Drive','Zaw','Kitgun','Amp'];
+const CATL={Warframe:'Warframes',Primary:'Primary Weapons',Secondary:'Secondary Weapons',Melee:'Melee Weapons',Sentinel:'Sentinels','Robotic Weapon':'Sentinel Weapons',Companion:'Companions',Archwing:'Archwing','Arch-Gun':'Archgun','Arch-Melee':'Archmelee',Necramech:'Necramechs','K-Drive':'K-Drives',Zaw:'Zaws',Kitgun:'Kitguns',Amp:'Amps'};
+const EXTRA=[['chart','Missions'],['sp','The Steel Path Missions'],['rail','Railjack Intrinsics'],['drift','Drifter Intrinsics'],['other','Other gear (MOAs, Hounds, Amps…)']];
 const IR=['Tactical','Piloting','Gunnery','Engineering','Command'],ID=['Riding','Combat','Opportunity','Endurance'];
 const MI=Object.values(I).filter(i=>i.n!=='Helminth');
 function isMech(it){return it&&it.c==='Necramech'}
@@ -443,7 +457,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
   const depth=opts.depth||0;const rk=P.rk[name];
   let h=`<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(name)}</h3>
     <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set '):''}
-    ${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}</div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
+    ${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}" style="margin-left:auto">${(P.goals||[]).includes(name)?'★ Tracking':'☆ Track'}</button></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
   h+=step('bp|'+name,'Get the blueprint',bpSource(it,opts.note));
   let pi=0;for(const p of it.parts){pi++;
     if(p.k==='p'&&p.n==='Blueprint')continue;
@@ -465,11 +479,11 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
   return h+'</section>'}
 
 /* ---------- router ---------- */
-const routes={home,ranks,tenno,missions,resources,mastery,frames,farm,quests,market};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
-function saveUI(){lsSet('tenno-ui',{rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide})}
+function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,syF:state.syF,syS:state.syS,syH:state.syH,gS:state.gS,hF:state.hF,qF:state.qF,misType:state.misType,rsF:state.rsF,ffT:state.ffT,frF:state.frF,mkF:state.mkF,rkS:state.rkS,rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide})}
 function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
   document.querySelectorAll('nav.tabs a,.bnav a,#sheet a').forEach(a=>{if(a.getAttribute('href')==='#'+key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   const mb=$('#menu');if(mb){if(BAR.includes(key))mb.removeAttribute('aria-current');else mb.setAttribute('aria-current','page')}
@@ -491,26 +505,33 @@ function heroHTML(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.p
   <div class="nextbar"><i style="width:${m.pct.toFixed(1)}%"></i></div>
   <div class="small muted">${fmt(m.next-t.total)} XP to ${m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1)} · ${maxed} items mastered</div>
   <div class="row" style="margin-top:6px"><a class="btn primary" href="#ranks">Update ranks</a><a class="btn" href="#tenno" data-ttab="breakdown">Breakdown</a><a class="btn" href="#mastery">Rank-up plan</a></div></div></section>`}
-function home(){const t=totalXP();const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
+function syncCard(){const L2=P.lastSync;if(!L2)return'';return `<div class="panel cut stack" style="gap:6px"><div class="row" style="justify-content:space-between"><span class="eyebrow">Last sync · ${fdate(L2.at)}</span><a class="small ln" href="#tenno" data-ttab="account">Sync again</a></div>
+  <div class="row small" style="gap:6px"><span class="chip good">${L2.maxed} mastered</span><span class="chip teal">${L2.partial} in progress</span><span class="chip">${L2.nodes} nodes</span><span class="chip">${L2.quests.length} quests detected</span><span class="chip">${L2.synd} syndicates</span><span class="chip">${L2.owned} items owned → crafting steps ticked</span></div>
+  ${L2.quests.length?`<div class="small muted">Quests detected from your account: ${L2.quests.map(q=>esc(q)).join(', ')}.</div>`:''}</div>`}
+function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   const now=Date.now();const fl=(P.foundry||[]).slice().sort((a,b)=>(a.t0+a.dur*1000)-(b.t0+b.dur*1000));const ready=fl.filter(f=>now>=f.t0+f.dur*1000).length;
   const nd=ALLN.filter(n=>on('n|'+n.id)).length,sd=ALLN.filter(n=>on('sp|'+n.id)).length;
-  const tiles=CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);const x=catXP(c);return `<button class="tile cut" data-rkcat="${esc(c)}"><span class="k">${CATL[c]}</span><span class="v num">${a.m}<small>/${a.t}</small></span><span class="tbar"><i style="width:${a.t?a.m/a.t*100:0}%"></i></span><span class="x num">${fmt(x)} XP${isOv(c)?' · set':''}</span></button>`}).join('');
-  const ext=[[`Star chart`,`${nd}`,`/${ALLN.length}`,nd/ALLN.length,fmt(catXP('chart'))+' XP','#missions'],[`Steel Path`,`${sd}`,`/${ALLN.length}`,sd/ALLN.length,fmt(catXP('sp'))+' XP','#missions'],[`Intrinsics`,`${intrSum(P.intrR)+intrSum(P.intrD)||+P.intr||0}`,'/90',(intrSum(P.intrR)+intrSum(P.intrD)||+P.intr||0)/90,fmt(catXP('rail')+catXP('drift'))+' XP','#ranks|Intrinsics'],[`Quests`,`${qd}`,`/${Q.length}`,qd/Q.length,'Story & frame quests','#quests']]
-    .map(([k,v,s,p,x,h])=>{const [hh,cat]=h.split('|');return `<a class="tile cut" href="${hh}" ${cat?`data-rkcat="${cat}"`:''}><span class="k">${k}</span><span class="v num">${v}<small>${s}</small></span><span class="tbar"><i style="width:${Math.min(100,p*100)}%"></i></span><span class="x">${x}</span></a>`}).join('');
+  const dd=D.checks.filter(c=>gateOK(c[4]));const ddone=dd.filter(ckDone).length;
+  const syn=D.synd.filter(e=>gateOK(e.gate)&&e.ranks.length);const near=syn.map(e=>{const st=synState(e),rr=rankRow(e,st.r);return [e,rr.max!=null?rr.max-st.s:1e9,st]}).filter(x=>x[1]>0&&x[1]<1e9).sort((a,b)=>a[1]-b[1])[0];
   const ez=easiest(5);
-  return `<div class="stack">${heroHTML()}${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Your ranks, quests and missions follow you to every device.</span></a>`:''}
-  <div class="sec-h"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust to match in-game</a></div>
-  <div class="tiles">${tiles}</div>
-  <div class="sec-h"><h2>Progress</h2></div>
-  <div class="tiles">${ext}</div>
-  <div class="sec-h"><h2>Up next</h2></div>
-  <div class="grid">
-   ${nq?`<a class="panel navcard cut" href="#quests" data-q="${esc(nq.n)}"><span class="eyebrow">Next quest</span><h3>${esc(nq.n)}</h3><span class="small muted">${esc(nq.req.join(' · ')||'No requirements')}</span></a>`:`<div class="panel cut"><span class="eyebrow">Quests</span><h3>All quests done</h3></div>`}
+  return `<div class="stack">${heroHTML()}${testBanner()}
+  ${HOSTED&&FB&&!synced?`<a class="panel navcard cut" href="#tenno" data-ttab="account" style="border-color:var(--gold-dim)"><span class="eyebrow">Free account</span><h3>Sign in so you never lose progress</h3><span class="small muted">Google or email. Everything follows you to every device.</span></a>`:''}
+  ${!P.at?`<a class="panel navcard cut" href="#tenno" data-ttab="account"><span class="eyebrow">Link your account</span><h3>Sync your Warframe profile</h3><span class="small muted">Fills in your ranks, missions, quests and syndicates automatically.</span></a>`:syncCard()}
+  <div class="hubgrid">${bdPanel()}
+  <div class="stack">
+   <div class="tiles">
+    <a class="tile cut" href="#today"><span class="k">Today</span><span class="v num">${ddone}<small>/${dd.length}</small></span><span class="tbar"><i style="width:${dd.length?ddone/dd.length*100:0}%"></i></span><span class="x">Daily reset in ${left(lastDaily()+DAY-now)}</span></a>
+    <a class="tile cut" href="#quests"><span class="k">Quests</span><span class="v num">${qd}<small>/${Q.length}</small></span><span class="tbar"><i style="width:${qd/Q.length*100}%"></i></span><span class="x">${nq?'Next: '+esc(nq.n):'All done'}</span></a>
+    <a class="tile cut" href="#missions"><span class="k">Star chart</span><span class="v num">${nd}<small>/${ALLN.length}</small></span><span class="tbar"><i style="width:${nd/ALLN.length*100}%"></i></span><span class="x">Steel Path ${sd}</span></a>
+    <a class="tile cut" href="#synd"><span class="k">Syndicates</span><span class="v num">${syn.filter(e=>synState(e).r>0).length}<small>/${syn.length}</small></span><span class="tbar"><i style="width:${syn.length?syn.filter(e=>synState(e).r>0).length/syn.length*100:0}%"></i></span><span class="x">${near?'Closest: '+esc(near[0].n):'Ranked up'}</span></a>
+    <a class="tile cut" href="#goals"><span class="k">Goals</span><span class="v num">${(P.goals||[]).length}</span><span class="tbar"><i style="width:${(P.goals||[]).length?(P.goals.filter(n=>on('build|'+n)).length/P.goals.length*100):0}%"></i></span><span class="x">Tracked items</span></a>
+    <a class="tile cut" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?'Ready to claim':'Nothing building'}</span></a>
+   </div>
    <div class="panel cut stack" style="gap:6px"><span class="eyebrow">Easiest Mastery XP right now</span>${ez.map(x=>`<div class="row" style="justify-content:space-between;gap:6px"><a class="ln" href="#" data-go="item|${esc(x.it.n)}">${esc(x.it.n)}</a><span class="chip">+${fmt(x.gain)}</span></div>`).join('')||'<span class="small muted">Everything you can use is mastered.</span>'}<a class="small ln" href="#mastery">Full rank-up plan</a></div>
-   <a class="panel navcard cut" href="#tenno" data-ttab="foundry"><span class="eyebrow">Foundry</span><h3>${fl.length?`${ready} ready · ${fl.length-ready} building`:'Nothing building'}</h3><span class="small muted">${fl.length?fl.slice(0,3).map(f=>{const l=f.t0+f.dur*1000-now;return esc(f.n)+(l<=0?' (ready)':' ('+hrs(l/1000)+')')}).join(' · '):'Start a timer from any craft.'}</span></a>
-  </div>
+   ${near?`<a class="panel navcard cut" href="#synd"><span class="eyebrow">Closest syndicate rank-up</span><h3>${esc(near[0].n)}</h3><span class="small muted">${fmt(near[1])} standing to ${esc(rankRow(near[0],near[2].r+1).t||'next rank')}</span></a>`:''}
+  </div></div>
   <div class="sec-h"><h2>Explore</h2></div>
-  <div class="grid">${[['ranks','Rank tracker','Ranks','Set the rank of every weapon, frame and companion.'],['missions','Star chart','Missions','Every node, Normal and Steel Path.'],['resources','Farming guide','Resources','Best farms by game stage.'],['mastery','MR 0 → Legendary','MR Plan','What to do next to rank up.'],['tenno','Your account','Tenno','Profile, breakdown, Foundry, inventory, sync.'],['frames','Arsenal','Warframes','Crafting steps, meta builds, mod sources.'],['farm','Search anything','Farm Finder','Prime parts → relics → best node.'],['market','warframe.market','Market','Prices, sellers, vault tracker.']].map(([h,e,t,d])=>`<a class="panel navcard cut" href="#${h}"><span class="eyebrow">${e}</span><h3>${t}</h3><span class="muted small">${d}</span></a>`).join('')}</div>
+  <div class="grid">${PAGES.filter(p=>p[0]!=='home').map(([h,t])=>`<a class="panel navcard cut" href="#${h}"><h3>${t}</h3></a>`).join('')}</div>
   <div class="callout small">${synced?(acct&&acct.kind==='fb'?'Signed in as '+esc(acct.email||acct.name||'you')+'. Everything saves to your account.':'Signed in: everything saves to your claude.ai account and follows you to any device.'):HOSTED?(FB?'Saving in this browser only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep your progress forever on any device.':'Your progress saves in this browser. To move it to another device, use Tenno → Backup.'):'Your progress saves on this device. Sign in to claude.ai to sync it across devices.'}</div>
   </div>`}
 
@@ -522,14 +543,14 @@ function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLow
   if(cat==='Intrinsics'&&!q){body=intrHTML();head=`<b>Intrinsics</b><span class="small muted">Each rank is worth 1,500 Mastery XP</span>`}
   else{let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)):MI.filter(i=>i.c===cat);
     if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
-    list.sort((a,b)=>a.n.localeCompare(b.n));state._rkList=list.map(i=>i.n);
+    const rs=state.rkS||'name';list.sort((a,b)=>rs==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):rs==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):rs==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));state._rkList=list.map(i=>i.n);
     const a=q?null:autoCat(cat);
     head=`<b>${q?'Search results':CATL[cat]}</b><span class="small muted" id="rkhdr">${a?`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`:list.length+' items'}</span>${list.length?`<button class="btn sm" id="rkmaxall">Max all ${list.length} shown</button>`:''}`;
     body=list.slice(0,400).map(rkRow).join('')||'<div class="empty">Nothing matches this filter.</div>'}
   return `<div class="stack"><div class="head"><div class="eyebrow">Rank tracker</div><h1>Ranks</h1><p class="lede">Set the rank of everything you've leveled. Mastered gear counts in full and partial ranks count too. Your MR, breakdown and rank-up plan update right away.</p></div>
   ${bigMR()}
   <div class="seg">${chips}</div>
-  <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select>${`<select id="rks" aria-label="Sort" style="width:auto">${[['name','Sort: name'],['mr','Sort: MR needed'],['close','Sort: closest to mastered'],['left','Sort: most XP left']].map(([k,l])=>`<option value="${k}" ${(state.rkS||'name')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   <div class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between">${head}</div></div><div id="rklist">${body}</div></div></div>`}
 function rkRow(it){const r=rankOf(it.n),mx=maxRank(it);
   return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:6px"><a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">Mastered</span>':''}</div>
@@ -546,19 +567,142 @@ function breakdownTab(){const t=totalXP(),m=mrInfo(t.total);
   return `<div class="panel stack cut"><h2>Mastery breakdown</h2>
   <p class="small" style="margin:0">In Warframe, open <b>Profile → Mastery</b> to see your XP in each category. Type a number here to match the game exactly; leave it blank to use what you set on the Ranks page. Your rank and rank-up plan update as you type.</p>
   <div class="bdr hd"><span>Category</span><span>In-game XP</span><span>Counted</span></div>
-  ${CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);return row(c,CATL[c],a.x,`${a.m}/${a.t} mastered · from Ranks: ${fmt(a.x)}`)}).join('')}
-  ${EXTRA.map(([k,l])=>row(k,l,autoExtra(k),k==='other'?'Gear this app doesn\'t list (from sync or your entry)':'From your ticks: '+fmt(autoExtra(k)))).join('')}
+  ${BDG.flat().map(k=>CATS.includes(k)?(()=>{const a=autoCat(k);return row(k,CATL[k],a.x,`${a.m}/${a.t} mastered · from Ranks: ${fmt(a.x)}`)})():row(k,bdLabel(k),autoExtra(k),k==='other'?'Gear this app doesn\'t list (from sync or your entry)':'From your ticks: '+fmt(autoExtra(k)))).join('')}
   <div class="bdr"><div><b>Adjustment</b><div class="small muted">Anything else, to match your in-game total</div></div><input id="adj" type="number" inputmode="numeric" value="${+P.adj||0}" aria-label="Adjustment XP"><span class="num">${fmt(+P.adj||0)}</span></div>
   <div class="bdr tot"><b>Total</b><span></span><span class="num">${fmt(t.total)}</span></div>
   <div class="row"><span class="chip gold">${m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr}</span><span class="small muted">${fmt(m.next-t.total)} XP to the next rank</span><button class="btn sm" id="boreset">Clear in-game numbers</button></div></div>`}
 
+/* ---------- owned items, quest detection ---------- */
+function stepKeys(n){const it=I[n];if(!it)return[];const k=['bp|'+n];let pi=0;for(const p of it.parts){pi++;if(p.k==='p'&&p.n==='Blueprint')continue;
+  if(p.k==='p'){k.push('part|'+n+'|'+p.n);if(p.sub){k.push('built|'+n+'|'+p.n);p.sub.forEach(([r])=>k.push('res|'+n+'|'+p.n+'|'+r))}}else if(p.k==='i')k.push('have|'+n+'|'+p.n+'|'+pi);else if(p.k==='r')k.push('res|'+n+'|main|'+p.n)}
+  k.push('build|'+n);return k}
+function setQ(k){const e=kenc(k);if(C[e])return;C[e]=1;if(docRef)pending[e]=1}
+function exclusive(it){return it&&!it.p&&!it.bc&&!(it.bpd&&it.bpd.length)&&!(it.dr&&it.dr.length)&&!it.bprel}
+function detectQuests(j,mis,owned){const det=new Set(['Awakening',"Vor's Prize"]);const nq=s=>s.toLowerCase().replace(/^the /,'').replace(/[^a-z0-9]/g,'');
+  const ch=(j.ChallengeProgress||[]).map(c=>String(c.Name||'').toLowerCase());
+  Q.forEach(q=>{const k=nq(q.n);if(k.length>=6&&ch.some(c=>c.includes(k)))det.add(q.n)});
+  const PQ={Lua:'The Second Dream','Kuva Fortress':'The War Within',Deimos:'Heart of Deimos',Zariman:'Angels of the Zariman','Höllvania':'The Hex',Duviri:'The Duviri Paradox'};
+  for(const m of mis){const nd=NX[m.Tag];if(nd&&m.Completes>0&&!/Junction|Hub|Relay/.test(nd.t)&&PQ[nd.p])det.add(PQ[nd.p])}
+  for(const q of Q)for(const r of q.rw){const m=Object.keys(I).find(n=>r===n||r.toLowerCase().startsWith(n.toLowerCase()+' '));if(m&&owned.has(m)&&exclusive(I[m]))det.add(q.n)}
+  if([...owned].some(n=>I[n].c==='Archwing'))det.add('The Archwing');
+  if([...owned].some(n=>I[n].c==='Companion'&&/Kubrow/.test(n)))det.add('Howl of the Kubrow');
+  const add=n=>{det.add(n);const q=Q.find(x=>x.n===n);if(q)qPrereqs(q).forEach(p=>{if(!det.has(p.n))add(p.n)})};[...det].forEach(add);
+  return [...det].filter(n=>Q.some(q=>q.n===n))}
+
+/* ---------- mastery breakdown (in-game layout) ---------- */
+const BDG=[['Warframe','Primary','Secondary','Melee'],['chart','sp','rail','drift'],['Sentinel','Robotic Weapon','Companion'],['Archwing','Arch-Gun','Arch-Melee'],['Necramech','K-Drive','Zaw','Kitgun','Amp','other']];
+function bdLabel(k){return CATL[k]||(EXTRA.find(e=>e[0]===k)||[])[1]||k}
+function bdPanel(){const t=totalXP(),m=mrInfo(t.total);
+  const row=k=>{const x=catXP(k);const isC=CATS.includes(k);const a=isC?autoCat(k):null;const tgt=isC?`data-rkcat="${esc(k)}"`:k==='rail'||k==='drift'?'data-rkcat="Intrinsics"':`data-go="node|"`;
+    return `<button class="bdl" ${tgt}><b class="num">${fmt(x)}</b><span>${bdLabel(k)}</span>${a?`<small class="mono">${a.m}/${a.t}</small>`:''}${isOv(k)?'<small class="ovt">set</small>':''}</button>`};
+  return `<section class="bdp cut" id="bdp"><div class="row" style="justify-content:space-between"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust</a></div>
+  ${BDG.map((g,i)=>{const rows=g.filter(k=>i<4||catXP(k)>0||(CATS.includes(k)&&autoCat(k).p));return rows.length?`<div class="bdg">${rows.map(row).join('')}</div>`:''}).join('')}
+  <div class="bdtot"><span>Total</span><b class="num">${fmt(t.total)}</b></div></section>`}
+function testBanner(){const t=totalXP(),m=mrInfo(t.total);const g=P.prof&&P.prof.mr!=null?P.prof.mr:null;if(g==null||m.mr<=g)return'';
+  return `<div class="callout small" style="border-color:var(--ok)"><b style="color:var(--ok)">Rank-up test ready.</b> You have the XP for ${m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr}; your account is still MR ${g} in game. Take the test from the Mastery shrine in a Relay or your Orbiter.</div>`}
+
+/* ---------- today: resets, checklist, live world ---------- */
+const DAY=864e5;
+function lastDaily(){const d=new Date();return Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())}
+function lastWeekly(){const t=lastDaily();return t-((new Date(t).getUTCDay()+6)%7)*DAY}
+function lastSortie(){let t=lastDaily()+16*3600e3;if(t>Date.now())t-=DAY;return t}
+function left(ms){ms=Math.max(0,ms);const d=Math.floor(ms/DAY),h=Math.floor(ms%DAY/36e5),m=Math.floor(ms%36e5/6e4);return d?`${d}d ${h}h`:h?`${h}h ${m}m`:`${m}m`}
+function untilIso(s){return left(new Date(s)-Date.now())}
+function ckReset(c){return c[0]==='d'?(c[1]==='sortie'?lastSortie():lastDaily()):lastWeekly()}
+function ckDone(c){const ts=(P.dw||{})[c[1]];return !!ts&&ts>=ckReset(c)}
+function gateOK(g){return !g||qDone(g)}
+let WS=null,WSat=0,WSerr=false,WSload=false;
+async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{const r=await fetch('https://api.warframestat.us/pc/?language=en');if(!r.ok)throw 0;WS=await r.json();WSat=Date.now();WSerr=false}catch(e){WSerr=true}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
+function neededEras(){const s={};const names=new Set([...(P.goals||[]),...Object.keys(I).filter(n=>I[n].p&&(on('bp|'+n)||I[n].parts.some(p=>on('part|'+n+'|'+p.n)))&&!on('build|'+n))]);
+  names.forEach(n=>{const it=I[n];if(!it||!it.p)return;const lists=[];if(!on('bp|'+n)&&it.bprel)lists.push(it.bprel);it.parts.forEach(p=>{if(p.rel&&!on('part|'+n+'|'+p.n))lists.push(p.rel)});lists.flat().forEach(([r])=>{if(REL[r]&&!REL[r].v){const e=REL[r].era;(s[e]=s[e]||new Set()).add(r)}})});return s}
+function today(){const f=state.ckF||'todo';const now=Date.now();
+  const rows=D.checks.filter(c=>f==='all'||(f==='todo'&&!ckDone(c)&&gateOK(c[4]))||(f===c[0])||(f==='locked'&&!gateOK(c[4])));
+  const dd=D.checks.filter(c=>c[0]==='d'&&gateOK(c[4])),wd=D.checks.filter(c=>c[0]==='w'&&gateOK(c[4]));
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Today</div><h1>Daily & weekly</h1><p class="lede">Resets, your daily and weekly checklist, and what's live in the game right now.</p></div>
+  <div class="tiles"><div class="tile cut"><span class="k">Daily reset</span><span class="v num">${left(lastDaily()+DAY-now)}</span><span class="x">${dd.filter(ckDone).length}/${dd.length} done</span></div>
+  <div class="tile cut"><span class="k">Sortie reset</span><span class="v num">${left(lastSortie()+DAY-now)}</span><span class="x">16:00 UTC</span></div>
+  <div class="tile cut"><span class="k">Weekly reset</span><span class="v num">${left(lastWeekly()+7*DAY-now)}</span><span class="x">${wd.filter(ckDone).length}/${wd.length} done</span></div></div>
+  <div class="sec-h"><h2>Checklist</h2><select id="ckf" aria-label="Filter checklist" style="width:auto">${[['todo','To do (unlocked)'],['d','Daily'],['w','Weekly'],['all','Everything'],['locked','Locked by quests']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="obj">${rows.map(c=>{const ok=gateOK(c[4]);return `<div class="qrow${ckDone(c)?' done':''}"><input type="checkbox" class="ck" data-dw="${c[1]}" ${ckDone(c)?'checked':''} ${ok?'':'disabled'} aria-label="${esc(c[2])}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(c[4])}">Needs ${esc(c[4])}</a>`}</div><div class="small muted">${esc(c[3])}</div></div></div>`}).join('')||'<div class="empty">All done. Nice work, Tenno.</div>'}</div>`;
+  h+=`<div class="sec-h"><h2>Live in the game</h2>${WS?`<span class="small muted">Updated ${left(now-WSat)} ago</span>`:''}</div>`;
+  if(!WS){loadWS();h+=`<div class="panel empty cut">${WSerr?'Live game info is only available on the website version of this app.':'Loading live game info…'}</div>`;return h+'</div>'}
+  const w=WS;const cyc=(n,c,lab)=>c?`<div class="tile cut"><span class="k">${n}</span><span class="v" style="font-size:20px">${esc(lab(c))}</span><span class="x">${untilIso(c.expiry)} left</span></div>`:'';
+  h+=`<div class="tiles">${cyc('Cetus',w.cetusCycle,c=>c.isDay?'Day':'Night')}${cyc('Orb Vallis',w.vallisCycle,c=>c.isWarm?'Warm':'Cold')}${cyc('Cambion Drift',w.cambionCycle,c=>c.state==='vome'?'Vome':'Fass')}${cyc('Duviri',w.duviriCycle,c=>c.state.charAt(0).toUpperCase()+c.state.slice(1))}</div>`;
+  if(w.sortie&&w.sortie.variants)h+=`<div class="panel stack cut"><div class="row" style="justify-content:space-between"><h3>Sortie${w.sortie.boss?' · '+esc(w.sortie.boss):''}</h3><span class="chip">${untilIso(w.sortie.expiry)} left</span></div>${w.sortie.variants.map((v,i)=>`<div class="small"><b>${i+1}. ${esc(v.missionType)}</b> · ${esc(v.node)}<div class="muted">${esc(v.modifier)}</div></div>`).join('')}</div>`;
+  if(w.archonHunt&&w.archonHunt.missions)h+=`<div class="panel stack cut"><div class="row" style="justify-content:space-between"><h3>Archon Hunt${w.archonHunt.boss?' · '+esc(w.archonHunt.boss):''}</h3><span class="chip">${untilIso(w.archonHunt.expiry)} left</span></div>${w.archonHunt.missions.map((v,i)=>`<div class="small"><b>${i+1}. ${esc(v.type)}</b> · ${esc(v.node)}</div>`).join('')}</div>`;
+  const vt=w.voidTrader;if(vt){const act=new Date(vt.activation)<=now&&now<new Date(vt.expiry);h+=`<div class="panel stack cut"><div class="row" style="justify-content:space-between"><h3>Baro Ki'Teer</h3><span class="chip ${act?'ok':''}">${act?'Here now · leaves in '+untilIso(vt.expiry):'Arrives in '+untilIso(vt.activation)}</span></div><div class="small muted">${esc(vt.location||'')}</div>${act&&vt.inventory&&vt.inventory.length?`<div class="kv small">${vt.inventory.map(x=>`<span>${L(x.item)}</span><span class="num">${x.ducats} ducats · ${fmt(x.credits)} cr</span>`).join('')}</div>`:''}</div>`}
+  if(w.steelPath&&w.steelPath.currentReward)h+=`<div class="panel cut row" style="justify-content:space-between"><div><div class="eyebrow">Steel Path Honors this week</div><h3>${esc(w.steelPath.currentReward.name)}</h3></div><span class="chip gold">${w.steelPath.currentReward.cost} Steel Essence</span></div>`;
+  if(w.arbitration&&!w.arbitration.expired&&w.arbitration.type!=='Unknown')h+=`<div class="panel cut"><div class="eyebrow">Arbitration</div><h3>${esc(w.arbitration.type)} · ${esc(w.arbitration.node)}</h3><div class="small muted">${esc(w.arbitration.enemy)} · ${untilIso(w.arbitration.expiry)} left</div></div>`;
+  if(w.nightwave&&w.nightwave.activeChallenges){const ac=w.nightwave.activeChallenges;h+=`<details class="obj grp" open><summary><h3>Nightwave acts</h3><span class="chip">${ac.filter(c=>(P.dw||{})['nw|'+c.id]).length}/${ac.length}</span></summary>${ac.map(c=>`<div class="qrow${(P.dw||{})['nw|'+c.id]?' done':''}"><input type="checkbox" class="ck" data-dw="nw|${esc(c.id)}" ${(P.dw||{})['nw|'+c.id]?'checked':''} aria-label="${esc(c.title)}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c.title)}</span><span class="chip">${c.isDaily?'Daily':c.isElite?'Elite weekly':'Weekly'}</span><span class="chip gold">${fmt(c.reputation)}</span></div><div class="small muted">${esc(c.desc)} · ${untilIso(c.expiry)} left</div></div></div>`).join('')}</details>`}
+  const need=neededEras();const ff=state.fiF||'all',fm=state.fiM||'all';
+  let fis=(w.fissures||[]).filter(x=>!x.expired&&new Date(x.expiry)>now).filter(x=>(ff==='all'||x.tier===ff||(ff==='need'&&need[x.tier]))&&(fm==='all'||(fm==='sp'&&x.isHard)||(fm==='n'&&!x.isHard&&!x.isStorm)||(fm==='storm'&&x.isStorm)));
+  fis.sort((a,b)=>(a.tierNum-b.tierNum)||(new Date(a.expiry)-new Date(b.expiry)));
+  h+=`<details class="obj grp" open><summary><h3>Void Fissures</h3><span class="chip">${fis.length}</span></summary><div style="padding:10px 14px" class="stack"><div class="row"><select id="fif" aria-label="Relic era" style="width:auto">${[['all','All eras'],['need','Eras I need'],['Lith','Lith'],['Meso','Meso'],['Neo','Neo'],['Axi','Axi'],['Requiem','Requiem'],['Omnia','Omnia']].map(([k,l])=>`<option value="${k}" ${ff===k?'selected':''}>${l}</option>`).join('')}</select><select id="fim" aria-label="Mode" style="width:auto">${[['all','All modes'],['n','Normal'],['sp','Steel Path'],['storm','Void Storm (Railjack)']].map(([k,l])=>`<option value="${k}" ${fm===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  ${Object.keys(need).length?`<div class="small">You need relics from: ${Object.entries(need).map(([e,s])=>`<b>${e}</b> (${[...s].slice(0,4).join(', ')}${s.size>4?'…':''})`).join(' · ')}</div>`:'<div class="small muted">Track a Prime item under Goals to highlight the fissures you need.</div>'}
+  <div class="kv">${fis.map(x=>`<span><b class="${need[x.tier]?'rar-R':''}">${esc(x.tier)}</b> · ${esc(x.missionType)} · ${esc(x.node)}${x.isHard?' <span class="chip warn">Steel Path</span>':''}${x.isStorm?' <span class="chip teal">Void Storm</span>':''}</span><span class="num small">${untilIso(x.expiry)}</span>`).join('')}</div></div></details>`;
+  const GOOD=/Catalyst|Reactor|Forma|Exilus|Wraith|Vandal|Mutalist|Detonite|Fieldron|Mutagen/;const inv=(w.invasions||[]).filter(x=>!x.completed);const rw=s=>((s&&s.countedItems)||[]).map(c=>(c.count>1?c.count+'× ':'')+c.type).join(', ');
+  if(inv.length)h+=`<details class="obj grp"><summary><h3>Invasions</h3><span class="chip">${inv.length}</span></summary><div style="padding:10px 14px" class="kv">${inv.map(x=>{const a=rw(x.attacker&&x.attacker.reward),d=rw(x.defender&&x.defender.reward);return `<span>${esc(x.node)} · ${esc(x.desc)}<div class="small ${GOOD.test(a+d)?'':'muted'}">${esc([a,d].filter(Boolean).join(' / '))}</div></span><span class="num small">${Math.round(x.completion||0)}%</span>`}).join('')}</div></details>`;
+  return h+'</div>'}
+
+/* ---------- syndicates ---------- */
+function synState(e){const s=(P.syn||{})[e.n]||{};return {r:s.r!=null?+s.r:(e.kind==='faction'?0:0),s:+s.s||0,sync:s.sync}}
+function rankRow(e,r){return e.ranks.find(x=>x.r===r)||{}}
+function dailyCap(){const g=P.prof&&P.prof.mr!=null?P.prof.mr:Math.min(30,mrInfo(totalXP().total).mr);return 16000+500*g}
+function dailyLeft(e){if(!P.daily||!e.dkey||P.daily.ts<lastDaily())return null;const v=P.daily.v[e.dkey];return v==null?null:v}
+function synd(){const f=state.syF||'all',srt=state.syS||'next',hide=state.syH;
+  let list=D.synd.slice();if(f!=='all')list=list.filter(e=>e.kind===f);if(hide)list=list.filter(e=>gateOK(e.gate));
+  const prog=e=>{const st=synState(e),rr=rankRow(e,st.r);if(rr.max==null)return 0;return (st.s-(rr.min||0))/((rr.max||1)-(rr.min||0))};
+  list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));
+  return `<div class="stack"><div class="head"><div class="eyebrow">Syndicates</div><h1>Standing</h1><p class="lede">Your rank with every syndicate, what the next rank costs, and the easiest way to earn standing at your stage. Sync your account to fill this in, or set ranks by hand.</p></div>
+  <div class="tiles"><div class="tile cut"><span class="k">Daily cap (each)</span><span class="v num">${fmt(dailyCap())}</span><span class="x">16,000 + 500 × MR</span></div>
+  <div class="tile cut"><span class="k">Faction standing left today</span><span class="v num">${dailyLeft(D.synd[0])==null?'—':fmt(dailyLeft(D.synd[0]))}</span><span class="x">${P.daily&&P.daily.ts>=lastDaily()?'From today\'s sync':'Sync to see today\'s caps'}</span></div>
+  <div class="tile cut"><span class="k">Daily reset</span><span class="v num">${left(lastDaily()+DAY-Date.now())}</span><span class="x">00:00 UTC</span></div></div>
+  <div class="row"><select id="syf" aria-label="Filter" style="width:auto">${[['all','All syndicates'],['faction','Factions'],['open','Open world'],['other','Other']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select><select id="sys" aria-label="Sort" style="width:auto">${[['next','Closest to rank-up'],['rank','Highest rank'],['name','Name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>Sort: ${l}</option>`).join('')}</select><button class="btn ${hide?'on':''}" id="syh">Unlocked only</button></div>
+  <div class="cards">${list.map(synCard).join('')}</div>${P.nw&&P.nw.length?`<div class="panel cut"><div class="eyebrow">Nightwave</div><div class="kv small">${P.nw.map(([t,s,r])=>`<span>${esc(t)}</span><span class="num">Rank ${r} · ${fmt(s)}</span>`).join('')}</div></div>`:''}</div>`}
+function synCard(e){const st=synState(e),ok=gateOK(e.gate);const cur=rankRow(e,st.r),nx=rankRow(e,st.r+1);const top=e.ranks.length?e.ranks[e.ranks.length-1].r:0;
+  const pct=cur.max!=null?Math.max(0,Math.min(100,(st.s-(cur.min||0))/((cur.max||1)-(cur.min||0))*100)):0;const dl=dailyLeft(e);
+  const stages=(e.farm||[]);let si=0;stages.forEach((s,i)=>{if(st.r>=s[1])si=i});
+  const offers=(e.offers||[]).filter(o=>o[2]<=st.r+1).slice(0,40);
+  return `<div class="card cut${ok?'':' locked'}"><div class="top"><span class="nm">${esc(e.n)}</span><span class="row" style="gap:6px">${st.sync?'<span class="chip teal">Synced</span>':''}<span class="chip">${e.kind==='faction'?'Faction':e.kind==='open'?'Open world':'Other'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(e.gate)}">Unlocks after ${esc(e.gate)}</a>`}</span></div>
+  ${e.ranks.length?`<div class="row" style="gap:8px"><b style="color:var(--gold)">${esc(cur.t||'Rank '+st.r)}</b><span class="small muted">Rank ${st.r}${top?' of '+top:''}</span><span class="small mono">${fmt(st.s)}${cur.max!=null?' / '+fmt(cur.max):''}</span></div><div class="nextbar"><i style="width:${pct}%"></i></div>
+  ${nx.t?`<div class="small">Next: <b>${esc(nx.t)}</b> at ${fmt(cur.max)} standing${cur.max!=null&&st.s<cur.max?` (${fmt(cur.max-st.s)} to go${dl?`, about ${Math.ceil((cur.max-st.s)/Math.max(1,dailyCap()))} days at the daily cap`:''})`:' · ready to rank up'}. Costs ${nx.cr?fmt(nx.cr)+' credits':''}${nx.items&&nx.items.length?(nx.cr?' + ':'')+nx.items.map(([q,n])=>`${fmt(q)} × ${L(n)}`).join(', '):''}${nx.sc?` and ${fmt(nx.sc)} standing`:''}.</div>`:`<div class="small" style="color:var(--ok)">Max rank.</div>`}`:''}
+  ${dl!=null?`<div class="small muted">Standing left today: <b class="num">${fmt(dl)}</b></div>`:''}
+  ${e.kind==='faction'?`<div class="small muted">Allied: ${esc(e.ally)} · Opposed: ${esc(e.opp)} · Enemy: ${esc(e.enemy)}. Earning standing here also raises your ally and lowers the opposed and enemy syndicates.</div>`:''}
+  ${stages.length?`<div class="tier cut"><h4>Best way to earn now · ${esc(stages[si][0])}</h4><ul style="margin:0;padding-left:18px">${stages[si][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul>${stages[si+1]?`<details class="more"><summary>Next stage: ${esc(stages[si+1][0])}</summary><ul style="margin:0;padding-left:18px">${stages[si+1][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul></details>`:''}</div>`:''}
+  ${offers.length?`<details class="more"><summary>What you can buy (${offers.length})</summary><div class="kv small">${offers.map(o=>`<span>${L(o[0])}${o[2]>st.r?' <span class="chip">next rank</span>':''}</span><span class="num">${fmt(o[1])}</span>`).join('')}</div></details>`:''}
+  ${e.ranks.length?`<details class="more"><summary>Set rank by hand</summary><div class="row"><select data-synr="${esc(e.n)}" aria-label="Rank" style="width:auto">${e.ranks.map(r=>`<option value="${r.r}" ${r.r===st.r?'selected':''}>${r.r}: ${esc(r.t)}</option>`).join('')}</select><input type="number" inputmode="numeric" data-syns="${esc(e.n)}" value="${st.s||''}" placeholder="Standing" style="width:140px" aria-label="Standing"></div></details>`:''}
+  <a class="small" href="${e.w}" target="_blank" rel="noopener">wiki</a></div>`}
+
+/* ---------- goals (wishlist) ---------- */
+function goals(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';
+  let list=g.slice();if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
+  const acc={cr:0,r:{},pt:0};g.filter(n=>!on('build|'+n)).forEach(n=>totals(n,1,acc,[]));const tr=Object.entries(acc.r).sort((a,b)=>b[1]-a[1]);const short=state.gShort;
+  const need=neededEras();
+  return `<div class="stack"><div class="head"><div class="eyebrow">Goals</div><h1>What I'm working toward</h1><p class="lede">Tap <b>Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.</p></div>
+  ${g.length?`<div class="row"><select id="gs" aria-label="Sort goals" style="width:auto">${[['added','Sort: order added'],['progress','Sort: most complete'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="cards">${list.map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(n)}">${esc(n)}</a><span class="row" style="gap:6px">${vaultChip(I[n])}${on('build|'+n)?'<span class="chip good">Built</span>':''}<button class="btn sm" data-goal="${esc(n)}">Remove</button></span></div><div class="nextbar"><i style="width:${d/k.length*100}%"></i></div><div class="small muted">${d}/${k.length} steps · ${fmt(mxp(I[n]))} Mastery XP</div></div>`}).join('')}</div>
+  <div class="panel stack cut"><div class="row" style="justify-content:space-between"><h2>Shopping list</h2><button class="btn sm ${short?'on':''}" id="gshort">Only what I'm short on</button></div><div class="small muted">${fmt(acc.cr)} credits for everything not built yet. Set your counts in Tenno → Inventory.</div>
+  <ul class="reslist">${tr.filter(([n,q])=>!short||!(P.inv&&+P.inv[n]>=q)).map(([n,q])=>`<li><span></span><span class="q">${fmt(q)} × ${L(n)}${haveTag(n,q)}</span><span class="where">${farmFor(n)}</span></li>`).join('')||'<li class="small muted">Nothing left to farm.</li>'}</ul></div>
+  ${Object.keys(need).length?`<div class="panel stack cut"><h2>Relics to crack</h2>${Object.entries(need).map(([e,s])=>`<div class="small"><b>${e}:</b> ${[...s].map(r=>`<a class="ln" href="#" data-go="relic|${esc(r)}">${esc(r)}</a>`).join(', ')}</div>`).join('')}<a class="btn sm" href="#today">See open fissures</a></div>`:''}`
+  :`<div class="panel empty cut">No goals yet. Open any Warframe, weapon or Prime set and tap <b>Track</b>.<div style="margin-top:10px"><a class="btn primary" href="#frames">Browse Warframes</a></div></div>`}</div>`}
+
+/* ---------- helminth ---------- */
+function helminthTab(){const f=state.hF||'all';let fr=MI.filter(i=>i.c==='Warframe'&&!i.p&&!/Umbra$/.test(i.n)).map(i=>i.n).sort();
+  const owned=n=>rankOf(n)>0||rankOf(n+' Prime')>0;
+  if(f==='done')fr=fr.filter(n=>on('hel|'+n));if(f==='ready')fr=fr.filter(n=>!on('hel|'+n)&&owned(n));if(f==='todo')fr=fr.filter(n=>!on('hel|'+n));
+  const all=MI.filter(i=>i.c==='Warframe'&&!i.p&&!/Umbra$/.test(i.n));
+  return `<div class="panel stack cut"><h2>Helminth</h2><p class="small" style="margin:0">Tick each Warframe you've fed to the Helminth to unlock its ability for infusing. Unlock the Helminth chamber by buying its segment from Son in the Necralisk (needs Heart of Deimos).</p>
+  <div class="row"><span class="chip gold">${all.filter(i=>on('hel|'+i.n)).length}/${all.length} subsumed</span><select id="hf" aria-label="Filter" style="width:auto">${[['all','All Warframes'],['ready','Owned, not fed yet'],['todo','Not fed yet'],['done','Fed']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="obj">${fr.map(n=>`<div class="qrow${on('hel|'+n)?' done':''}">${ck('hel|'+n)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(n)}</span>${owned(n)?'<span class="chip teal">Owned</span>':''}</div></div></div>`).join('')||'<div class="empty">Nothing here.</div>'}</div></div>`}
+
 /* ---------- tenno (character) ---------- */
-function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['backup','Backup']];
+function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['backup','Backup']];
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Tenno</div><h1>${esc(P.tname||(P.prof&&P.prof.name)||'Your Tenno')}</h1>${P.at?`<div class="small muted">Last synced ${fdate(P.at)}${P.prof&&P.prof.mr!=null?` · In-game MR ${mrLabel(P.prof.mr)}`:''}</div>`:''}</div>
   <div class="seg">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-ttab="${k}">${l}</button>`).join('')}</div>`;
   if(tab==='account')h+=accountTab();
   if(tab==='profile')h+=profileTab();
   if(tab==='breakdown')h+=breakdownTab();
+  if(tab==='helminth')h+=helminthTab();
   if(tab==='foundry')h+=foundryTab();
   if(tab==='inventory')h+=inventoryTab();
   if(tab==='backup')h+=backupTab();
@@ -615,8 +759,8 @@ function missions(){const planets=[...new Set(ALLN.map(n=>n.p))];const sel=state
   const totN=ALLN.filter(n=>on('n|'+n.id)).length,totS=ALLN.filter(n=>on('sp|'+n.id)).length;
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Star chart</div><h1>Missions</h1><p class="lede">Every node with its level, mission type and Mastery XP. Tick clears yourself or sync your account. Tap a planet to open it.</p></div>
   <div class="panel cut"><div class="stats"><div class="stat"><span class="v num">${totN}/${ALLN.length}</span><span class="k">Nodes cleared</span></div><div class="stat"><span class="v num">${totS}/${ALLN.length}</span><span class="k">Steel Path</span></div><div class="stat"><span class="v num">${planets.filter(p=>{const s=pStat(p);return s[0]===s[2]}).length}/${planets.length}</span><span class="k">Planets complete</span></div></div></div>
-  <div class="row"><button class="btn ${state.misHide?'on':''}" id="mishide">Show unfinished only</button></div>`;
-  h+=planets.map(p=>{let ns=ALLN.filter(n=>n.p===p);const [a,b,c]=pStat(p);if(state.misHide)ns=ns.filter(n=>!on('n|'+n.id)||!on('sp|'+n.id));if(state.misHide&&!ns.length)return'';
+  <div class="row"><button class="btn ${state.misHide?'on':''}" id="mishide">Show unfinished only</button>${`<select id="mtype" aria-label="Mission type" style="width:auto">${[['all','All mission types'],...[...new Set(ALLN.map(n=>n.t))].sort().map(t=>[t,t])].map(([k,l])=>`<option value="${k}" ${(state.misType||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>`;
+  h+=planets.map(p=>{let ns=ALLN.filter(n=>n.p===p&&(!state.misType||state.misType==='all'||n.t===state.misType));if(!ns.length)return'';const [a,b,c]=pStat(p);if(state.misHide)ns=ns.filter(n=>!on('n|'+n.id)||!on('sp|'+n.id));if(state.misHide&&!ns.length)return'';
     const rr=(D.regres[p]||D.regres[p==='Zariman'?'Zariman Ten Zero':p]||[]);
     return `<details class="obj grp" data-scope="input.ck.nd" ${sel===p?'open':''} id="pl-${esc(p.replace(/\W/g,''))}"><summary><h3>${esc(p)}</h3>${progHTML()}<span class="mono small muted">SP ${b}/${c}</span></summary><div style="padding:0 14px 10px">
     ${rr.length?`<div class="small" style="padding:10px 0 4px">Resources here: ${rr.map(r=>L(r)).join(' · ')}</div>`:''}
@@ -628,10 +772,12 @@ function missions(){const planets=[...new Set(ALLN.map(n=>n.p))];const sel=state
 const MAINRES=['Ferrite','Rubedo','Alloy Plate','Nano Spores','Polymer Bundle','Salvage','Plastids','Circuits','Cryotic','Oxium','Gallium','Morphics','Neural Sensors','Neurodes','Orokin Cell','Control Module','Argon Crystal','Tellurium','Nitain Extract','Kuva','Hexenon','Detonite Ampule','Fieldron Sample','Mutagen Sample'];
 function resources(){const sel=state.resSel&&RES[state.resSel]?state.resSel:null;const q=state.resQ.toLowerCase();
   const main=MAINRES.filter(n=>RES[n]);const rest=Object.keys(RES).filter(n=>!main.includes(n)).sort();
-  const list=q?Object.keys(RES).filter(n=>n.toLowerCase().includes(q)):null;
+  const gneed={};(P.goals||[]).filter(n=>I[n]&&!on('build|'+n)).forEach(n=>{const a=totals(n,1,{cr:0,r:{},pt:0},[]);for(const r in a.r)gneed[r]=(gneed[r]||0)+a.r[r]});
+  const rf=state.rsF||'all';let list=q?Object.keys(RES).filter(n=>n.toLowerCase().includes(q)):null;
+  if(rf!=='all'){list=(list||Object.keys(RES)).filter(n=>rf==='inv'?(P.inv&&P.inv[n]!=null):rf==='goal'?gneed[n]:rf==='short'?(gneed[n]&&!(P.inv&&+P.inv[n]>=gneed[n])):RT[n]);list.sort()}
   const hitR=n=>`<button class="hit ${sel===n?'sel':''}" data-go="res|${esc(n)}"><span>${esc(n)}</span><span class="row">${P.inv&&P.inv[n]!=null?`<span class="have ok">${fmt(P.inv[n])}</span>`:''}<span class="chip">${RT[n]?'by stage':(RSRC[n]||[]).length+' farms'}</span></span></button>`;
   return `<div class="stack"><div class="head"><div class="eyebrow">Farming guide</div><h1>Resources</h1><p class="lede">Tap a material to see the best farms for early, mid and late game, picked from real node levels and mission types.</p></div>
-  <div class="split two"><div class="stack" style="gap:8px"><input id="rq" type="search" placeholder="Find a material" value="${esc(state.resQ)}" autocomplete="off" aria-label="Find a material">
+  <div class="split two"><div class="stack" style="gap:8px"><input id="rq" type="search" placeholder="Find a material" value="${esc(state.resQ)}" autocomplete="off" aria-label="Find a material">${`<select id="rsf" aria-label="Filter materials" style="width:auto">${[['all','All materials'],['planet','Planet resources'],['goal','Needed for my goals'],['short','Short for my goals'],['inv','In my inventory']].map(([k,l])=>`<option value="${k}" ${(state.rsF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}
   <div class="results" id="rres">${list?list.map(hitR).join('')||'<div class="small muted">No matches.</div>':`<div class="eyebrow" style="margin:6px 0">Planet resources</div>${main.map(hitR).join('')}<details class="more"><summary>All other materials (${rest.length})</summary><div class="results">${rest.map(hitR).join('')}</div></details>`}</div></div>
   <div id="rdet">${sel?resDetail(sel):`<div class="panel empty cut">Pick a material to see where to farm it.</div>`}</div></div></div>`}
 function resDetail(n){const r=RES[n]||{};const t=RT[n];const s=RSRC[n]||[];
@@ -702,11 +848,12 @@ function allTab(){const cats=['Warframe','Primary','Secondary','Melee','Companio
 
 /* ---------- warframes ---------- */
 function baseOf(n){return n.replace(/ Prime$/,'').replace(/ Umbra$/,'')}
-function frames(){const fr=Object.values(I).filter(i=>i.c==='Warframe'&&!['Helminth','Bonewidow','Voidrig'].includes(i.n)).map(i=>i.n).sort();
-  if(!state.frame||!I[state.frame])state.frame=fr.includes('Saryn Prime')?'Saryn Prime':fr[0];
+function frames(){const ff=state.frF||'all';const fr=Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth').filter(i=>{const r=rankOf(i.n);return ff==='all'||(ff==='owned'&&r>0)||(ff==='not'&&r===0)||(ff==='mastered'&&r>=maxRank(i))||(ff==='prime'&&i.p)||(ff==='farm'&&i.p&&!i.v)||(ff==='goals'&&(P.goals||[]).includes(i.n))}).map(i=>i.n).sort();
+  if(!fr.length)fr.push(...Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth').map(i=>i.n).sort());
+  if(!state.frame||!I[state.frame]||!fr.includes(state.frame))state.frame=fr.includes('Saryn Prime')?'Saryn Prime':fr[0];
   const name=state.frame,base=baseOf(name);const builds=D.builds[base]||D.builds[name]||[];const bi=Math.max(0,Math.min(state.build,builds.length-1));
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Arsenal</div><h1>${esc(name)}</h1></div>
-  <div class="row"><select id="fsel" aria-label="Choose a Warframe" style="flex:1 1 200px">${fr.map(n=>`<option ${n===name?'selected':''}>${esc(n)}</option>`).join('')}</select>
+  <div class="row">${`<select id="frf" aria-label="Filter Warframes" style="width:auto">${[['all','All Warframes'],['owned','Owned'],['not','Not owned'],['mastered','Mastered'],['prime','Prime'],['farm','Prime, farmable now'],['goals','In my goals']].map(([k,l])=>`<option value="${k}" ${(state.frF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}<select id="fsel" aria-label="Choose a Warframe" style="flex:1 1 200px">${fr.map(n=>`<option ${n===name?'selected':''}>${esc(n)}</option>`).join('')}</select>
   ${I[base+' Prime']&&name!==base+' Prime'?`<button class="btn" data-frame="${esc(base+' Prime')}">Prime version</button>`:''}${name!==base&&I[base]?`<button class="btn" data-frame="${esc(base)}">Base version</button>`:''}</div>
   <div class="split wf">${itemTree(name)}`;
   if(builds.length){const b=builds[bi];const sw=m=>state.budget&&D.budget[m]?D.budget[m]:m;
@@ -734,9 +881,9 @@ function search(q){if(!IDX)buildIdx();q=q.toLowerCase().trim();if(!q)return[];co
 function farm(){const sel=state.farmSel;
   return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>What do you want to farm?</h1></div>
   <div class="split two"><div class="stack" style="gap:8px"><input id="fq" type="search" placeholder="Saryn Prime, Neo S10, Primed Flow, Orokin Cell…" value="${esc(state.farmQ)}" autocomplete="off" enterkeyhint="search" aria-label="Search">
-  <div class="row"><button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
+  <div class="row">${`<select id="fft" aria-label="Result type" style="width:auto">${[['all','Everything'],['item','Gear & sets'],['part','Prime parts'],['relic','Relics'],['mod','Mods'],['arc','Arcanes'],['res','Resources']].map(([k,l])=>`<option value="${k}" ${(state.ffT||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}<button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
   <div class="results" id="fres">${resultsHTML()}</div></div><div id="fdet">${sel?detail(sel):''}</div></div></div>`}
-function resultsHTML(){let r=state.farmQ?search(state.farmQ):[];
+function resultsHTML(){let r=state.farmQ?search(state.farmQ):[];const ft=state.ffT||'all';if(ft!=='all')r=r.filter(x=>x[1]===ft);
   if(state.unvOnly)r=r.filter(([n,t])=>t==='relic'?!REL[n].v:t==='part'?D.partrel[n].some(x=>!REL[x[0]]?.v):t==='item'&&I[n].p?!I[n].v:true);
   if(!state.farmQ){const sets=Object.values(I).filter(i=>i.p&&!i.v&&i.c!=='Companion').map(i=>[i.n,'item','Farmable Prime']);
     return `<div class="small muted">Prime gear you can farm right now (${sets.length}):</div>`+sets.map(hit).join('')}
@@ -760,7 +907,8 @@ function nextQuest(){return Q.find(q=>!qDone(q.n)&&qPrereqs(q).every(p=>qDone(p.
 function quests(){const groups=[...new Set(Q.map(q=>q.g))];const nq=nextQuest();
   return `<div class="stack"><div class="head"><div class="eyebrow">Codex</div><h1>Quest log</h1><p class="lede">Story order from the in-game Codex, with requirements and rewards from the wiki.</p></div>
   ${nq?`<div class="callout small">Next up: <a class="ln" href="#quests" data-q="${esc(nq.n)}"><b>${esc(nq.n)}</b></a>. Its quest prerequisites are done.</div>`:''}
-  ${groups.map(g=>`<details class="obj grp" data-scope open><summary><h3>${esc(g)}</h3>${progHTML()}</summary>${Q.filter(q=>q.g===g).map(qrow).join('')}</details>`).join('')}</div>`}
+  <div class="row">${`<select id="qf" aria-label="Filter quests" style="width:auto">${[['all','All quests'],['avail','Available now'],['todo','Not done'],['locked','Locked'],['done','Done']].map(([k,l])=>`<option value="${k}" ${(state.qF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
+  ${groups.map(g=>{const f=state.qF||'all';const qs=Q.filter(q=>q.g===g).filter(q=>{const lk=qPrereqs(q).some(p=>!qDone(p.n));return f==='all'||(f==='done'&&qDone(q.n))||(f==='todo'&&!qDone(q.n))||(f==='locked'&&!qDone(q.n)&&lk)||(f==='avail'&&!qDone(q.n)&&!lk)});return qs.length?`<details class="obj grp" data-scope open><summary><h3>${esc(g)}</h3>${progHTML()}</summary>${qs.map(qrow).join('')}</details>`:''}).join('')||'<div class="panel empty cut">No quests match this filter.</div>'}</div>`}
 function rewardLink(r){const m=Object.keys(I).find(n=>r.toLowerCase().startsWith(n.toLowerCase()+' ')||r===n);if(m)return `<a class="ln" href="#" data-go="item|${esc(m)}">${esc(r)}</a>`;if(MODS[r]||RES[r]||ARC[r])return L(r);return esc(r)}
 function qrow(q){const k='q|'+q.n;const pre=qPrereqs(q);const locked=pre.some(p=>!qDone(p.n));
   return `<div class="qrow${qDone(q.n)?' done':''}" id="q-${esc(q.n.replace(/\W/g,''))}">${ck(k)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(q.n)}</span>${locked&&!qDone(q.n)?'<span class="chip warn">Locked</span>':''}<a class="small" href="${q.w}" target="_blank" rel="noopener">wiki</a>${!qDone(q.n)&&Q.indexOf(q)>0?`<button class="btn sm" data-qupto="${esc(q.n)}">Done up to here</button>`:''}</div>
@@ -778,10 +926,10 @@ function setsTab(){const rows=Object.entries(D.sets).map(([n,s])=>{const base=n.
       names.forEach(x=>{const p=PR[x];if(p&&(p.a7??p.a30)!=null)ps+=(p.a7??p.a30);else okp=false});parts.forEach(p=>du+=p.du||0)}
     const sl=(SEL[n]||[]).filter(x=>x[0]!=='__buy');
     return {n,base,it,a7:s.a7,a30:s.a30,v7:s.v7,ps:okp&&ps?Math.round(ps):null,du:du||null,low:sl[0]?sl[0][1]:null}});
-  const q=state.mkQ.toLowerCase();let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q));const k=state.mkSort;
+  const q=state.mkQ.toLowerCase();const mf=state.mkF||'all';let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q)).filter(x=>{const v=VAULT[x.base]||{};return mf==='all'||(mf==='farm'&&x.it&&!x.it.v&&!v.now)||(mf==='vault'&&x.it&&x.it.v&&!v.now)||(mf==='now'&&v.now)||(mf==='goals'&&(P.goals||[]).includes(x.base))});const k=state.mkSort;
   r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));
   return `<p class="small muted" style="margin:0">7-day average sale price, the cheapest online seller when the snapshot was taken, and a ready-to-paste whisper. Sellers go offline, so check <b>Live listings</b> before you trade.</p>
-  <div class="row"><input id="mq" type="search" placeholder="Filter sets" value="${esc(state.mkQ)}" style="flex:1 1 200px" aria-label="Filter sets"><select id="msort" aria-label="Sort by" style="flex:0 1 200px">${[['a7','7-day price'],['low','Cheapest seller'],['v7','Trades'],['ps','Parts total'],['du','Ducats'],['n','Name']].map(([c,l])=>`<option value="${c}" ${k===c?'selected':''}>Sort: ${l}</option>`).join('')}</select></div>
+  <div class="row"><input id="mq" type="search" placeholder="Filter sets" value="${esc(state.mkQ)}" style="flex:1 1 200px" aria-label="Filter sets"><select id="msort" aria-label="Sort by" style="flex:0 1 200px">${[['a7','7-day price'],['low','Cheapest seller'],['v7','Trades'],['ps','Parts total'],['du','Ducats'],['n','Name']].map(([c,l])=>`<option value="${c}" ${k===c?'selected':''}>Sort: ${l}</option>`).join('')}</select>${`<select id="mkf" aria-label="Filter sets" style="width:auto">${[['all','All sets'],['farm','Farmable now'],['now','In Prime Resurgence'],['vault','Vaulted'],['goals','In my goals']].map(([k,l])=>`<option value="${k}" ${(state.mkF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   <div class="cards">${r.map(x=>`<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(x.base)}">${esc(x.base)}</a>${vaultChip(x.it)}</div>
    <div class="row small"><span class="chip gold">${x.a7!=null?Math.round(x.a7)+'p':'—'} avg</span><span class="muted">Parts ${x.ps!=null?x.ps+'p':'—'} · ${fmt(x.v7)} trades/wk${x.du?` · ${x.du} ducats`:''}</span></div>
    ${sellerRow(x.n)}<div><a class="small" href="https://warframe.market/items/${MS[x.n]||''}" target="_blank" rel="noopener">Live listings ↗</a></div></div>`).join('')}</div>`}
@@ -816,7 +964,16 @@ function importProfile(txt){let raw;try{raw=JSON.parse(txt.trim())}catch(e){retu
   let intr=0;const ib={};const IL={LPS_PILOTING:'Railjack · Piloting',LPS_GUNNERY:'Railjack · Gunnery',LPS_TACTICAL:'Railjack · Tactical',LPS_ENGINEERING:'Railjack · Engineering',LPS_COMMAND:'Railjack · Command',LPS_DRIFT_RIDING:'Drifter · Riding',LPS_DRIFT_COMBAT:'Drifter · Combat',LPS_DRIFT_OPPORTUNITY:'Drifter · Opportunity',LPS_DRIFT_ENDURANCE:'Drifter · Endurance'};
   const iR={},iD={};for(const k in skills){if(/^LPS_/.test(k)&&typeof skills[k]==='number'){intr+=skills[k];ib[IL[k]||pretty(k)]=skills[k];const nm2=k.replace(/^LPS_(DRIFT_)?/,'');const lab=nm2.charAt(0)+nm2.slice(1).toLowerCase();if(/^LPS_DRIFT_/.test(k))iD[lab]=skills[k];else if(IR.includes(lab))iR[lab]=skills[k]}}
   if(intr){P.intrR=iR;P.intrD=iD}
-  const qk=findKey(j,'QuestKeys',0)||[];let qn=0;for(const q of qk){const n=QU[q.ItemType];if(n&&q.Completed){setK('q|'+n,1);qn++}}
+  const owned=new Set();for(const e of xpi){const n=U[e.ItemType];if(n&&(e.XP||0)>0)owned.add(n)}
+  owned.forEach(n=>stepKeys(n).forEach(setQ));
+  let sp=0;for(const m of mis)if(m.Tier===1&&m.Completes>0)sp++;
+  const qk=findKey(j,'QuestKeys',0)||[];for(const q of qk){const n=QU[q.ItemType];if(n&&q.Completed)setQ('q|'+n)}
+  const dq=detectQuests(j,mis,owned);dq.forEach(n=>setQ('q|'+n));const qn=dq.length;
+  P.syn=P.syn||{};let sn=0;for(const e of D.synd){const a=(j.Affiliations||[]).find(x=>x.Tag===e.tag);if(a){P.syn[e.n]={r:a.Title||0,s:a.Standing||0,sync:1};sn++}}
+  P.nw=(j.Affiliations||[]).filter(a=>/^RadioLegion/.test(a.Tag)).map(a=>[pretty(a.Tag).replace('Radio Legion','Nightwave').replace(/Intermission ?/,'Intermission '),a.Standing||0,a.Title||0]);
+  const dv={};for(const k in j)if(/^DailyAffiliation/.test(k))dv[k]=j[k];if(Object.keys(dv).length)P.daily={ts:Date.now(),v:dv};
+  if(docRef){clearTimeout(timer);timer=setTimeout(flush,SAVE_MS)}lsSet('tenno-codex',C);
+  P.lastSync={at:new Date().toISOString(),maxed,partial,nodes,sp,quests:dq,synd:sn,owned:owned.size};
   const lo=j.LoadOutInventory||{};const loadout=[];['Suits','LongGuns','Pistols','Melee'].forEach(k=>(lo[k]||[]).forEach(x=>{if(x&&x.ItemType)loadout.push(nm(x.ItemType))}));
   let created='';const cr=j.Created;if(cr){const v=cr.$date&&cr.$date.$numberLong?+cr.$date.$numberLong:(cr.$date||cr);const d=new Date(v);if(!isNaN(d))created=d.toISOString().slice(0,10)}
   const kills=(st.Enemies||[]).reduce((a,e)=>a+(e.kills||0),0);
@@ -858,6 +1015,10 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='tgt'){state.target=+t.value;render()}
   if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='wfid'){P.wfid=t.value.trim();saveProfile();render();if(P.wfid&&!/^[0-9a-f]{24}$/i.test(P.wfid))toast('An account ID is 24 characters: 0–9 and a–f')}
+  if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
+  if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
+  const SEL2={ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',frf:'frF',mkf:'mkF',rks:'rkS'};
+  if(SEL2[t.id]){state[SEL2[t.id]]=t.value;saveUI();const y=scrollY;render();scrollTo(0,y);return}
   if(t.matches('[data-rkin]')){const row=t.closest('.rk');const n=row.dataset.n;setRank(n,t.value);row.outerHTML=rkRow(I[n])}
   if(t.dataset.intrin){setIntr(t.dataset.intrin,t.value);const y=window.scrollY;render();window.scrollTo(0,y)}
   if(t.id==='rkf'){state.rkF=t.value;saveUI();render()}
@@ -868,9 +1029,12 @@ document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches(
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){$('#drawer').classList.remove('open');return}
   const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
-  const t=e.target.closest('#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
+  const t=e.target.closest('[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){$('#drawer').classList.toggle('open');return}
+  if(t.dataset.goal){const n=t.dataset.goal;P.goals=P.goals||[];const i=P.goals.indexOf(n);if(i>=0)P.goals.splice(i,1);else P.goals.push(n);saveProfile();toast(i>=0?'Removed from Goals':'Added to Goals');const y=scrollY;render();scrollTo(0,y);return}
+  if(t.id==='syh'){state.syH=!state.syH;saveUI();render();return}
+  if(t.id==='gshort'){state.gShort=!state.gShort;render();return}
   if(t.id==='lggoogle'){signGoogle();return}
   if(t.id==='lgin'){signEmail(false);return}
   if(t.id==='lgnew'){signEmail(true);return}
