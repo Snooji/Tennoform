@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState, type KeyboardEvent } from "react"
-import { Check, ChevronsUp, Minus, Plus, Search, X } from "lucide-react"
+import { Check, ChevronsUp, Hexagon, Minus, Plus, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,12 @@ const FILTERS = [
   { value: "todo", label: "Not started" },
   { value: "prog", label: "In progress" },
   { value: "max", label: "Mastered" },
+]
+const TYPES = [
+  { value: "all", label: "Prime and normal" },
+  { value: "prime", label: "Prime only" },
+  { value: "normal", label: "Normal only" },
+  { value: "relics", label: "Your relics drop parts" },
 ]
 const SORTS = [
   { value: "name", label: "Name" },
@@ -85,6 +91,10 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
               <Check /> Mastered
             </Badge>
           ) : null}
+          {!done && it.owned ? <Badge variant="outline" className="text-muted-foreground">Owned</Badge> : null}
+          {it.vaulted ? <Badge variant="outline" className="border-red-500/40 text-red-700 dark:text-red-300">Vaulted</Badge> : null}
+          {it.resurgence ? <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 dark:text-emerald-400">Resurgence</Badge> : null}
+          {it.relics ? <Badge variant="outline" className="border-primary/40 text-primary"><Hexagon /> Your relics drop parts</Badge> : null}
         </div>
         <div className="flex items-center gap-3">
           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted" aria-hidden>
@@ -190,7 +200,7 @@ export function RanksPage() {
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search everything that ranks up"
+            placeholder="Search gear or parts"
             aria-label="Search gear"
             className="h-10 pr-9 pl-9"
           />
@@ -207,6 +217,18 @@ export function RanksPage() {
           </SelectTrigger>
           <SelectContent>
             {FILTERS.map((o) => (
+              <SelectItem key={o.value} value={o.value}>
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select items={TYPES} value={d.t} onValueChange={(v) => tf().ranksSet({ t: String(v) })}>
+          <SelectTrigger className="h-10 w-full sm:w-auto sm:min-w-44" aria-label="Prime or normal">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {TYPES.map((o) => (
               <SelectItem key={o.value} value={o.value}>
                 {o.label}
               </SelectItem>

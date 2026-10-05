@@ -51,7 +51,7 @@ export type TFApi = {
   addTask(text: string): boolean
   sync(): void
   ranks(fresh?: boolean): RanksData
-  ranksSet(o: { cat?: string; q?: string; f?: string; s?: string }): void
+  ranksSet(o: { cat?: string; q?: string; f?: string; s?: string; t?: string }): void
   ranksMore(all?: boolean): void
   ranksRefresh(): void
   setRank(n: string, r: number): void
@@ -144,9 +144,9 @@ export type HomeData = {
   tasks: { id: string; title: string; kind: string; due: string; over: boolean; rep: string; open: TFAction | null }[]; taskCount: number
   showSign: boolean; demo: boolean; stage: string
 }
-export type RankItem = { n: string; img: string; mr: number; r: number; mx: number; xp: number; max: number; per: number }
+export type RankItem = { n: string; img: string; mr: number; r: number; mx: number; xp: number; max: number; per: number; prime: boolean; vaulted: boolean; resurgence: boolean; owned: boolean; relics: boolean }
 export type RanksData = {
-  cat: string; q: string; f: string; s: string
+  cat: string; q: string; f: string; s: string; t: string
   cats: { id: string; label: string; m: number; t: number }[]
   island: string; items: RankItem[]; total: number; shown: number; notMax: number
   head: { label: string; m: number; t: number; p: number; x: number; search: boolean }
