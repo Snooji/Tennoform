@@ -440,6 +440,8 @@ const QU={};Q.forEach(q=>{if(q.u)QU[q.u]=q.n});
 const NX={};ALLN.forEach(n=>NX[n.id]=n);
 const $=s=>document.querySelector(s);
 const HOSTED=!(window.claude&&window.claude.use);
+const STANDALONE=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>n==null||n===''||isNaN(n)?'—':Number(Math.round(n)).toLocaleString('en-US');
 const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed(1))+' d':(+h.toFixed(1))+' h'};
@@ -497,24 +499,26 @@ window.addEventListener('pagehide',flushNow);document.addEventListener('visibili
 /* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
 async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){bootSync();return}bootSync();
-  const cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey)return;
+  let cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey)return;
   const B='vendor/firebase-10.12.2/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){return}
-  firebase.initializeApp(cfg);const auth=firebase.auth();const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};render();
+  if(window.TENNO_SELF_AUTH&&location.hostname==='tennoform.com')cfg=Object.assign({},cfg,{authDomain:'tennoform.com'});
+  firebase.initializeApp(cfg);const auth=firebase.auth();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};render();
   try{await auth.getRedirectResult()}catch(e){toast(authMsg(e))}
   auth.onAuthStateChanged(async u=>{if(u){const base=fs.collection('users').doc(u.uid).collection('data');
       const wrap=r=>({get:()=>r.get(),set:o=>r.set(o),update:o=>r.set(o,{merge:true})});const wrapP=r=>{const put=o=>r.set({j:JSON.stringify(o),edited:o.edited||''});return {get:async()=>{const sn=await r.get();const d=sn.exists?(sn.data()||{}):null;return {exists:!!d,data:()=>d&&typeof d.j==='string'?JSON.parse(d.j):d}},set:put,update:put}};
       try{await attach(wrap(base.doc('progress')),wrapP(base.doc('profile')),{kind:'fb',email:u.email,name:u.displayName||'',uid:u.uid})}catch(e){toast('Signed in, but your saved data could not load. Check your connection.')}socialInit(u.uid)}
     else{socialStop();if(acct&&acct.kind==='fb')detach()}})}
 function authMsg(e){const c=(e&&e.code)||'';return ({'auth/invalid-credential':'Wrong email or password.','auth/wrong-password':'Wrong email or password.','auth/user-not-found':'No account with that email. Tap Create account.','auth/email-already-in-use':'That email already has an account. Tap Sign in.','auth/weak-password':'Use a password with at least 6 characters.','auth/invalid-email':'That email address doesn\'t look right.','auth/popup-closed-by-user':'Sign-in was cancelled.','auth/too-many-requests':'Too many tries. Wait a minute and try again.','auth/network-request-failed':'No connection. Check your internet and try again.'})[c]||'Sign-in failed. Try again.'}
-async function signGoogle(){if(!FB)return;const pr=new firebase.auth.GoogleAuthProvider();try{await FB.auth.signInWithPopup(pr)}catch(e){if(/popup-blocked|operation-not-supported|cancelled-popup/.test(e.code||''))await FB.auth.signInWithRedirect(pr);else toast(authMsg(e))}}
+async function signGoogle(){if(!FB)return;const pr=new firebase.auth.GoogleAuthProvider();pr.setCustomParameters({prompt:'select_account'});if(STANDALONE||IOS){try{await FB.auth.signInWithRedirect(pr)}catch(e){toast(authMsg(e))}return}try{await FB.auth.signInWithPopup(pr)}catch(e){if(/popup-blocked|operation-not-supported|cancelled-popup/.test(e.code||''))await FB.auth.signInWithRedirect(pr);else toast(authMsg(e))}}
 async function signEmail(create){if(!FB)return;const em=($('#lgemail')||{}).value?.trim(),pw=($('#lgpw')||{}).value||'';if(!em||!pw){toast('Enter your email and password');return}
   try{if(create)await FB.auth.createUserWithEmailAndPassword(em,pw);else await FB.auth.signInWithEmailAndPassword(em,pw);toast(create?'Account created. Your progress now saves to it.':'Signed in')}catch(e){toast(authMsg(e))}}
 async function resetPw(){if(!FB)return;const em=($('#lgemail')||{}).value?.trim();if(!em){toast('Type your email first');return}try{await FB.auth.sendPasswordResetEmail(em);toast('Password reset email sent')}catch(e){toast(authMsg(e))}}
 function accountPanel(){if(!HOSTED)return '';
   if(!FB)return `<div class="panel stack cut"><h2>Sign in</h2><p class="small muted" style="margin:0">Accounts aren't switched on for this site yet. Progress saves in this browser; use Backup to move it.</p></div>`;
-  if(acct&&acct.kind==='fb')return `<div class="panel stack cut"><h2>Signed in</h2><div class="kv"><span>Account</span><span>${esc(acct.email||acct.name||'Google account')}</span></div><p class="small muted" style="margin:0">Everything saves to your account automatically, so you can sign in on any device and pick up where you left off.</p><div class="row"><button class="btn" id="lgout">Sign out</button></div></div>`;
+  if(acct&&acct.kind==='fb')return `<div class="panel stack cut"><h2>Signed in</h2><div class="kv"><span>Account</span><span>${esc(acct.email||acct.name||'Google account')}</span></div><p class="small muted" style="margin:0">Everything saves to your account automatically, so you can sign in on any device and pick up where you left off. You stay signed in on this device until you sign out.</p><div class="row"><button class="btn" id="lgout">Sign out</button></div></div>`;
   return `<div class="panel stack cut" id="signin"><h2>Sign in to save forever</h2><p class="small" style="margin:0">Make a free account so your ranks, quests, missions and builds are never lost and follow you to any device. What you've already done here carries over.</p>
+  ${IOS&&!STANDALONE?'<div class="callout small"><b>iPhone tip:</b> tap <b>Share → Add to Home Screen</b> in Safari, then open Tennoform from your home screen and sign in once. It keeps you signed in like an app.</div>':''}
   <button class="btn primary" id="lggoogle">Continue with Google</button>
   <div class="small muted">or use email</div>
   <input id="lgemail" type="text" inputmode="email" autocomplete="email" placeholder="Email" aria-label="Email"><input id="lgpw" type="password" autocomplete="current-password" placeholder="Password (6+ characters)" aria-label="Password">

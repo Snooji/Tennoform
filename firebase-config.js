@@ -14,3 +14,7 @@ window.TENNO_FIREBASE = {
 // 2) One-tap profile sync (optional): the address of your free Cloudflare Worker relay
 //    (see cloudflare-worker.js and SETUP.md). Leave empty to use the copy-and-paste method.
 window.TENNO_PROXY = "";
+
+// 3) iPhone home-screen sign-in: set to true after adding https://tennoform.com/__/auth/handler
+//    to the Google OAuth client's "Authorized redirect URIs" (see SETUP.md).
+window.TENNO_SELF_AUTH = false;

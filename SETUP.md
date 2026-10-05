@@ -26,3 +26,12 @@ Feedback from the **Feedback** page is stored in Firestore and only admins can r
 2. Firebase console → **Security → Authentication → Users**: copy that account's **User UID**.
 3. **Firestore Database → Data → + Start collection**: Collection ID `admins`, Document ID = the UID you copied, add a field `role` = `owner`, **Save**.
 4. Open the site's **Feedback** page while signed in. The **Feedback inbox** appears under the form.
+
+# Staying signed in on iPhone (home-screen app)
+
+Safari blocks the cross-site cookies Google sign-in normally relies on. The site hosts Firebase's sign-in helper itself (`__/auth/`), so sign-in can stay on tennoform.com:
+
+1. console.cloud.google.com → project **tennoform** → **APIs & Services → Credentials** → open the **OAuth 2.0 Client ID** called "Web client (auto created by Google Service)".
+2. **Authorized JavaScript origins:** add `https://tennoform.com`.
+3. **Authorized redirect URIs:** add `https://tennoform.com/__/auth/handler`. **Save**.
+4. In `firebase-config.js`, set `window.TENNO_SELF_AUTH = true;` and commit.
