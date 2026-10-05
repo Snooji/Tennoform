@@ -98,6 +98,9 @@ export type TFApi = {
   chartSet(o: { p?: string; q?: string; type?: string; sort?: string; hide?: boolean }): void
   nodeTick(key: string, v: boolean): void
   planetAll(p: string, mode: "n" | "sp"): void
+  synd(): SyndData
+  syndSet(o: { f?: string; s?: string; hide?: boolean }): void
+  synSet(n: string, o: { r?: string; s?: string }): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -204,6 +207,19 @@ export type ChartData = {
   junctions: JunctionRow[]; juncHtml?: string
   colors?: string[]; xd?: number; type?: string; types?: string[]; sort?: string; hide?: boolean; q?: string; resources?: string[]; hasTask?: boolean
   nodes?: { id: string; name: string; type: string; lv: string; xp: number; ds: boolean; runs: number; done: boolean; sp: boolean }[]
+}
+export type SyndCard = {
+  n: string; color: string; kind: string; locked: boolean; gate: string; synced: boolean; set: boolean; hasRanks: boolean
+  rank: number; top: number; title: string; standing: number; max: number | null; pct: number; ready: boolean
+  next: { t: string; in: number; days: number; cr: number; items: { q: number; n: string; go: string }[] } | null
+  dailyLeft: number | null; effects: { ally: string; opp: string; enemy: string; warn: string[] } | null
+  earn: { now: string[]; later: string[] } | null; mrxp: number
+  offers: { n: string; cost: number; nextRank: boolean; go: string; left: number; xp: number }[]
+  ranks: { value: string; label: string }[]; hasTask: boolean
+}
+export type SyndData = {
+  filter: string; sort: string; hide: boolean; cap: number; factionLeft: number | null; synced: boolean; reset: string
+  nightwave: { t: string; s: number; r: number }[]; list: SyndCard[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
