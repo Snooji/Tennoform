@@ -1,4 +1,4 @@
-// Tenno Codex profile relay — paste this into a free Cloudflare Worker.
+// Ordis profile relay — paste this into a free Cloudflare Worker.
 // Warframe's public profile endpoint doesn't allow websites to call it directly (no CORS),
 // so this relays the request and adds the header. It only accepts a 24-character account ID
 // and only answers requests coming from your own site.
