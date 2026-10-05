@@ -176,7 +176,7 @@ export function TasksCard({ d }: { d: HomeData }) {
                     <span className="flex flex-wrap gap-1">
                       {x.kind ? <Badge variant="outline">{x.kind}</Badge> : null}
                       {x.rep ? <Badge variant="outline">{x.rep === "d" ? "Daily" : "Weekly"}</Badge> : null}
-                      {x.due ? <Badge variant={x.over ? "destructive" : "outline"}>{x.over ? "Overdue" : "Due " + x.due}</Badge> : null}
+                      {x.due ? <Badge variant="outline" className={x.over ? "border-red-500/50 text-red-700 dark:text-red-300" : undefined}>{x.over ? "Overdue" : "Due " + x.due}</Badge> : null}
                     </span>
                   ) : null}
                 </span>

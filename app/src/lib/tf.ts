@@ -74,6 +74,13 @@ export type TFApi = {
   ach(): AchData
   achSet(p: string): void
   logUndo(id: string): void
+  tasks(): TasksData
+  tasksSet(o: { f?: string; s?: string }): void
+  taskUndone(id: string): Promise<void>
+  taskEdit(id: string, o: { note?: string; rep?: string; due?: string; title?: string }): void
+  taskDel(id: string): void
+  taskClearDone(): void
+  taskInvite(id: string, uid: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -137,6 +144,14 @@ export type AchData = {
   days: { label: string; n: number; xp: number; today: boolean }[]
   groups: { d: string; items: { id: string; k: string; label: string; time: string; extra: string; xp: number; canUndo: boolean }[] }[]
   note: string; empty: boolean
+}
+export type TaskRow = {
+  id: string; title: string; kind: string; done: boolean; due: string; over: boolean; rep: string; note: string
+  with: string[]; from: string; open: TFAction | null
+}
+export type TasksData = {
+  filter: string; sort: string; todo: number; done: number; signedIn: boolean
+  friends: { uid: string; name: string }[]; list: TaskRow[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
