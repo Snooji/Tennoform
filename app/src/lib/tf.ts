@@ -71,6 +71,9 @@ export type TFApi = {
   liveTask(text: string, expiry: string): void
   fisRelics(era: string): void
   retryLive(): void
+  ach(): AchData
+  achSet(p: string): void
+  logUndo(id: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -127,6 +130,13 @@ export type TodayData = {
   filter: string; rows: CheckRow[]; hiddenCount: number; hosted: boolean
   tiles: { k: string; v: string; x: string; done?: number; total?: number }[]
   live: TodayLive | null; liveState: "ok" | "loading" | "error" | "offline"
+}
+export type AchData = {
+  period: "today" | "week" | "all"
+  tiles: { k: string; v: string; x: string }[]
+  days: { label: string; n: number; xp: number; today: boolean }[]
+  groups: { d: string; items: { id: string; k: string; label: string; time: string; extra: string; xp: number; canUndo: boolean }[] }[]
+  note: string; empty: boolean
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

@@ -14,16 +14,24 @@ import { HomePage } from "@/pages/home/home-page"
 import { RanksPage } from "@/pages/ranks/ranks-page"
 import { FarmPage } from "@/pages/farm/farm-page"
 import { TodayPage } from "@/pages/today/today-page"
+import { AchievementsPage } from "@/pages/achievements/achievements-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
-const OWNED = new Set(["home", "ranks", "farm", "today"])
+const PAGES: Record<string, () => React.JSX.Element> = {
+  ranks: RanksPage,
+  farm: FarmPage,
+  today: TodayPage,
+  achievements: AchievementsPage,
+}
+const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
 const sidebarOpen = () => !document.cookie.includes("sidebar_state=false")
 
 export default function App() {
   const s = useTF()
   const [searchOpen, setSearchOpen] = useState(false)
+  const Page = PAGES[s.route]
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -57,9 +65,7 @@ export default function App() {
           {s.demo ? <DemoBanner /> : null}
           <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
             {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
-            {s.route === "ranks" ? <RanksPage /> : null}
-            {s.route === "farm" ? <FarmPage /> : null}
-            {s.route === "today" ? <TodayPage /> : null}
+            {Page ? <Page key={s.route} /> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>
