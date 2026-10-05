@@ -11,7 +11,7 @@ names = names[:int(os.environ.get('LIMIT', len(names)))]
 def get(url):
     for a in range(4):
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'ordis-refresh'})
+            req = urllib.request.Request(url, headers={'User-Agent': 'tennoform-refresh'})
             return json.load(urllib.request.urlopen(req, timeout=20))
         except Exception:
             time.sleep(2 + 3 * a)

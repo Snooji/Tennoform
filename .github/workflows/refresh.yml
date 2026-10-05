@@ -17,8 +17,8 @@ jobs:
       - run: python build/refresh_market.py
       - run: python build/make_site.py
       - run: |
-          git config user.name "ordis-bot"
-          git config user.email "ordis-bot@users.noreply.github.com"
+          git config user.name "tennoform-bot"
+          git config user.email "tennoform-bot@users.noreply.github.com"
           git add -A
           git diff --cached --quiet || git commit -m "Refresh market prices"
           git push
