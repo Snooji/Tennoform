@@ -94,6 +94,10 @@ export type TFApi = {
   masterySet(o: { tab?: string; target?: string }): void
   gearTick(n: string, v: boolean): void
   itemTree(n: string, note?: string): string
+  chart(): ChartData
+  chartSet(o: { p?: string; q?: string; type?: string; sort?: string; hide?: boolean }): void
+  nodeTick(key: string, v: boolean): void
+  planetAll(p: string, mode: "n" | "sp"): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -191,6 +195,15 @@ export type MasteryData = {
   sheetXp?: number
   craft?: { title: string; recipes: { recipe: string; xp: number; note: string; items: GearRow[] }[] }[]
   xpHtml?: string
+}
+export type JunctionRow = { id: string; label: string; from: string; done: boolean; sp: boolean }
+export type ChartData = {
+  sel: string; total: number; nd: number; sd: number
+  jt?: number; jd?: number; xp?: number; xpMax?: number
+  planets?: { name: string; colors: string[]; done: number; sp: number; total: number }[]
+  junctions: JunctionRow[]; juncHtml?: string
+  colors?: string[]; xd?: number; type?: string; types?: string[]; sort?: string; hide?: boolean; q?: string; resources?: string[]; hasTask?: boolean
+  nodes?: { id: string; name: string; type: string; lv: string; xp: number; ds: boolean; runs: number; done: boolean; sp: boolean }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
