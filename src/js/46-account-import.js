@@ -54,7 +54,8 @@ async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/
   try{let j=null;if(window.TENNO_PROXY){try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}catch(e){}}
     if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
-  catch(e){if(!quiet){const el=$('#asres');if(el)el.textContent="Couldn't reach your profile automatically. Use the copy-and-paste steps below.";toast('Automatic sync unavailable. Use the paste steps.')}return false}}
+  catch(e){if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+      toast("Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
 async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;
