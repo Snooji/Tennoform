@@ -18,7 +18,10 @@ export default {
     if (!/^[0-9a-f]{24}$/i.test(id)) {
       return new Response(JSON.stringify({ error: 'Send ?playerId= with a 24-character account ID' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
     }
-    const r = await fetch('https://api.warframe.com/cdn/getProfileViewingData.php?playerId=' + id, { cf: { cacheTtl: 300, cacheEverything: true } });
+    const r = await fetch('https://api.warframe.com/cdn/getProfileViewingData.php?playerId=' + id, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36', 'Accept': 'application/json,text/plain,*/*' },
+      cf: { cacheTtl: 300, cacheEverything: true },
+    });
     return new Response(await r.text(), { status: r.status, headers: { ...cors, 'Content-Type': 'application/json', 'Cache-Control': 'max-age=300' } });
   },
 };
