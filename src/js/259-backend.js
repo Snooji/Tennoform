@@ -10,7 +10,17 @@ function donTotals(list){const now=new Date(),m0=Date.UTC(now.getUTCFullYear(),n
 function backend(){const head=`<div class="stack"><div class="head"><h1>Backend</h1></div>`;
   if(!HOSTED||!FB||!SO.uid)return head+`<div class="panel">Sign in with your admin account on tennoform.com to see this page.</div></div>`;
   if(!FBK.tried){loadFeedback().then(()=>{if(FBK.admin)loadDonations()});return head+`<div class="panel" role="status">Checking access…</div></div>`}
-  if(!FBK.admin)return head+`<div class="panel stack"><b>This page is for the site owner.</b><span class="small muted">Your account isn't listed as an admin. Add your user ID to the <code>admins</code> collection in Firebase to get access.</span></div></div>`;
+  if(!FBK.admin){const pd=/permission/.test(FBK.err||'');
+    return head+`<div class="panel stack" style="gap:10px"><b>No admin access for this account yet.</b>
+     <div class="small">Signed in as <b>${esc((acct&&(acct.email||acct.name))||'this account')}</b>. Your user ID:</div>
+     <div class="row"><code class="uidbox">${esc(SO.uid)}</code><button type="button" class="btn sm" data-copy="${esc(SO.uid)}">Copy</button></div>
+     <ol class="small" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px">
+      <li>In Firebase, open <b>Firestore Database → Data</b>.</li>
+      <li>Open the <code>admins</code> collection. There must be a document whose ID is exactly the user ID above (no spaces).</li>
+      <li>On the <b>Rules</b> tab, paste the rules from GitHub and tap <b>Publish</b>.</li>
+      <li>Come back here and tap <b>Check again</b>.</li></ol>
+     <div class="small muted">Firebase said: ${esc(pd?'permission denied (the ID isn\'t in admins, or the rules aren\'t published)':FBK.err||'unknown')}</div>
+     <div><button type="button" class="btn primary" id="adrecheck">Check again</button></div></div></div>`}
   if(!DON.tried)loadDonations();const tab=state.adTab||'feedback';const fl=FBK.list||[],open=fl.filter(x=>!x.done).length;const dl=DON.list||[];const t=donTotals(dl);
   let h=head+`<div class="tiles"><div class="tile"><span class="k">Open feedback</span><span class="v num">${open}</span><span class="x">${fl.length} total</span></div>
    <div class="tile"><span class="k">PayPal this month</span><span class="v num">${money(t.usdM)}</span><span class="x">${money(t.usd)} all time</span></div>
@@ -35,6 +45,7 @@ async function addDonation(){const amt=parseFloat(($('#damt')||{}).value);if(!(a
   try{const r=await FB.fs.collection('donations').add(d);DON.list=[{id:r.id,...d},...(DON.list||[])].sort((a,b)=>b.at-a.at);toast('Donation logged');rerender()}catch(e){toast("Couldn't save. Are the latest Firestore rules published?")}}
 function donCSV(){const rows=[['date','type','amount','from','note']].concat((DON.list||[]).map(d=>[new Date(d.at).toISOString().slice(0,10),d.kind,d.amount,d.who||'',d.note||'']));
   const csv=rows.map(r=>r.map(v=>/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':v).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='tennoform-donations.csv';document.body.appendChild(a);a.click();a.remove()}
+document.addEventListener('click',e=>{if(e.target.closest('#adrecheck')){FBK.tried=false;loadFeedback().then(()=>{if(FBK.admin){DON.tried=false;loadDonations()}rerender()})}});
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-adtab],#dadd,#dreload,#dcsv,[data-ddel]');if(!t)return;
   if(t.dataset.adtab){state.adTab=t.dataset.adtab;rerender();return}
   if(t.id==='dadd'){t.disabled=true;await addDonation();t.disabled=false;return}

@@ -36,3 +36,4 @@ body.typing .bnav{display:none}
 .donrow:first-child{border-top:0}
 .donamt{font:600 18px/1 var(--f-display);color:var(--gold)}
 .dont{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
+.uidbox{font:13px var(--f-code);padding:6px 8px;border:1px solid var(--line2);border-radius:var(--r-sm);background:var(--sunk);overflow-wrap:anywhere;user-select:all}
