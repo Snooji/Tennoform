@@ -20,6 +20,7 @@ function liveStatus(){if(!HOSTED)return `<span class="fresh"><span class="dot" a
   return `<span class="fresh ${cls}" role="status"><span class="dot" aria-hidden="true"></span>${txt} · source <a class="ln" href="https://docs.warframestat.us" target="_blank" rel="noopener">warframestat.us</a><button type="button" class="btn sm" id="wsretry">${WSerr?'Retry':'Refresh'}</button></span>`}
 function siteFoot(){return `<footer class="sitefoot"><div>Site updated ${esc(D.meta.site||D.meta.built)} · Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+' · ':''}${esc(D.meta.built)} · Market prices ${esc(D.meta.prices)}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a></div>
+ <div class="row">Theme ${themeSw()}</div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
