@@ -1,5 +1,5 @@
 /* ---------- router ---------- */
-const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about};
+const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about,admin:backend};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
 Object.assign(state,lsGet('tenno-ui',{}));Object.assign(state,(()=>{const q=lsGet('tenno-uiq',{})||{};return {resQ:q.resQ||state.resQ||'',farmQ:q.farmQ||state.farmQ||'',mkQ:q.mkQ||state.mkQ||'',mkSort:q.mkSort||state.mkSort||'a7'}})());
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';

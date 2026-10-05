@@ -27,3 +27,12 @@ body.typing .bnav{display:none}
 .feeds>span{display:inline-flex;align-items:center;gap:6px}
 .fdot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
 .fdot.ok{background:var(--ok)}.fdot.warn{background:var(--warn)}.fdot.bad{background:var(--bad)}
+/* ---- backend ---- */
+.donform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:10px}
+.donform label{display:flex;flex-direction:column;gap:4px;color:var(--muted)}
+.donform .dnote{grid-column:1/-1}
+.donlist{display:flex;flex-direction:column}
+.donrow{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.donrow:first-child{border-top:0}
+.donamt{font:600 18px/1 var(--f-display);color:var(--gold)}
+.dont{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}
