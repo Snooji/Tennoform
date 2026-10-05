@@ -214,6 +214,25 @@ details>summary::-webkit-details-marker{display:none}
 .bdtot{display:flex;justify-content:space-between;border-top:1px solid var(--gold-dim);padding-top:8px;font:700 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
 .bdtot b{color:var(--gold)}
 .card.locked{opacity:.65}
+.planets{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:8px}
+@media (max-width:520px){.planets{grid-template-columns:1fr 1fr}}
+.planet{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border:1px solid var(--line);background:radial-gradient(circle at 50% 30%,rgba(111,214,232,.08),transparent 70%),linear-gradient(180deg,var(--panel2),var(--panel));color:var(--ink);cursor:pointer;text-align:center}
+.planet:hover{border-color:var(--cyan)}.planet.full{border-color:var(--gold-dim)}
+.planet .pn{font:700 16px var(--f-display);letter-spacing:.1em;text-transform:uppercase}
+.pring{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gold) calc(var(--p)*1%),#1B2A35 0)}
+.orb{display:inline-block;border-radius:50%;background:radial-gradient(circle at 32% 30%,var(--a),var(--b) 70%,#05080b);box-shadow:0 0 12px color-mix(in srgb,var(--a) 40%,transparent),inset -4px -6px 10px rgba(0,0,0,.45);vertical-align:middle;margin-right:6px;flex:none}
+.pring .orb{margin:0}
+.schools{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.school{border:1px solid var(--line2);border-top:2px solid var(--sc);padding:14px;background:linear-gradient(180deg,color-mix(in srgb,var(--sc) 8%,var(--panel2)),var(--panel));display:flex;flex-direction:column;gap:12px}
+.school h3{color:var(--sc);text-transform:uppercase;letter-spacing:.12em}
+.iskill{display:flex;flex-direction:column;gap:4px}
+.pips{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:2px}
+.pip{height:22px;border:1px solid var(--line2);background:var(--sunk);cursor:pointer;transform:skewX(-14deg);padding:0}
+.pip.on{background:var(--sc);border-color:var(--sc);box-shadow:0 0 8px color-mix(in srgb,var(--sc) 50%,transparent)}
+.pip:hover{border-color:var(--sc)}
+.thumb{width:44px;height:44px;object-fit:contain;flex:none;background:radial-gradient(circle,rgba(111,214,232,.12),transparent 70%)}
+.mini{width:30px;height:30px;object-fit:contain;flex:none}
+.hero-art{width:100%;max-height:220px;object-fit:contain;background:radial-gradient(ellipse at 50% 60%,rgba(217,180,94,.16),transparent 65%)}
 .qrow input.ck:disabled{opacity:.35;cursor:not-allowed}
 .hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:18px;border:1px solid var(--gold-dim);background:radial-gradient(ellipse at 0% 0%,rgba(217,180,94,.16),transparent 60%),linear-gradient(180deg,var(--panel2),var(--panel))}
 .ring.big{width:128px;height:128px}
@@ -286,7 +305,7 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Missions'],['resources','Resources'],['goals','Goals'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['farm','Farm Finder'],['market','Market']];
+const PAGES=[['home','Hub'],['today','Today'],['ranks','Ranks'],['synd','Syndicates'],['quests','Quests'],['missions','Star Chart'],['resources','Resources'],['goals','Goals'],['mastery','MR Plan'],['tenno','Tenno'],['frames','Warframes'],['farm','Farm Finder'],['market','Market']];
 const BAR=['home','today','ranks','resources'];
 const ICON={home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 $('nav.tabs').innerHTML=PAGES.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('');
@@ -371,7 +390,7 @@ function setRank(n,r){const it=I[n];const mx=maxRank(it);r=Math.max(0,Math.min(m
 function autoCat(c){let x=0,m=0,t=0,p=0;for(const it of MI)if(it.c===c){t++;const v=itemXP(it.n);x+=v;if(v>=mxp(it))m++;else if(v>0)p++}return {x,m,t,p}}
 function intrSum(o){return Object.values(o||{}).reduce((a,v)=>a+(+v||0),0)}
 function autoExtra(k){if(k==='chart')return NODES.reduce((a,n)=>a+(on('n|'+n.id)?n.x:0),0);if(k==='sp')return NODES.reduce((a,n)=>a+(on('sp|'+n.id)?n.x:0),0);
-  if(k==='rail'){const s=intrSum(P.intrR);return (s||(!P.intrD&&+P.intr)||0)*1500}if(k==='drift')return intrSum(P.intrD)*1500;if(k==='other')return +P.other||0;return 0}
+  if(k==='rail'){const s=intrSum(P.intrR);return (s||(!P.intrD&&+P.intr)||0)*1500}if(k==='drift')return intrSum(P.intrD)*1500;if(k==='other')return (+P.other||0)+othXP();return 0}
 function isOv(k){return P.bo&&P.bo[k]!=null&&P.bo[k]!==''}
 function catXP(k){if(isOv(k))return +P.bo[k];return CATS.includes(k)?autoCat(k).x:autoExtra(k)}
 function totalXP(){const rows=[...CATS,...EXTRA.map(e=>e[0])].map(k=>[k,catXP(k)]);const g=k=>rows.find(r=>r[0]===k)[1];
@@ -393,7 +412,7 @@ function L(name,label){label=label??name;const n=String(name);
 function go(t){const i=t.indexOf('|');const ty=t.slice(0,i),n=t.slice(i+1);
   if(ty==='res'){state.resSel=n;state.resQ='';if(location.hash!=='#resources')location.hash='resources';else{render();window.scrollTo(0,0)}return}
   if(ty==='item'&&I[n]&&I[n].c==='Warframe'){state.frame=n;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}return}
-  if(ty==='node'){state.planet=n;if(location.hash!=='#missions')location.hash='missions';else render();return}
+  if(ty==='node'){state.scP=n||null;state.planet=null;if(location.hash!=='#missions')location.hash='missions';else render();return}
   state.farmSel=t;if(location.hash!=='#farm')location.hash='farm';else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
 
 /* ---------- helpers ---------- */
@@ -455,7 +474,7 @@ function bpSource(it,note){const n=it.n;
 function resRows(list,prefix){return `<ul class="reslist">`+list.map(([n,q])=>`<li>${ck(prefix+'|'+n,'sm')}<span class="q">${fmt(q)} × ${L(n)}${haveTag(n,q)}</span><span class="where">${farmFor(n)}</span></li>`).join('')+'</ul>'}
 function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div class="panel">No data for ${esc(name)}</div>`;
   const depth=opts.depth||0;const rk=P.rk[name];
-  let h=`<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(name)}</h3>
+  let h=`<section class="obj" data-scope><div class="obj-h">${depth===0?art(name,'hero-art'):''}<div class="title"><h3>${esc(name)}</h3>
     <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set '):''}
     ${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}" style="margin-left:auto">${(P.goals||[]).includes(name)?'★ Tracking':'☆ Track'}</button></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
   h+=step('bp|'+name,'Get the blueprint',bpSource(it,opts.note));
@@ -527,7 +546,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
     <a class="tile cut" href="#goals"><span class="k">Goals</span><span class="v num">${(P.goals||[]).length}</span><span class="tbar"><i style="width:${(P.goals||[]).length?(P.goals.filter(n=>on('build|'+n)).length/P.goals.length*100):0}%"></i></span><span class="x">Tracked items</span></a>
     <a class="tile cut" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?'Ready to claim':'Nothing building'}</span></a>
    </div>
-   <div class="panel cut stack" style="gap:6px"><span class="eyebrow">Easiest Mastery XP right now</span>${ez.map(x=>`<div class="row" style="justify-content:space-between;gap:6px"><a class="ln" href="#" data-go="item|${esc(x.it.n)}">${esc(x.it.n)}</a><span class="chip">+${fmt(x.gain)}</span></div>`).join('')||'<span class="small muted">Everything you can use is mastered.</span>'}<a class="small ln" href="#mastery">Full rank-up plan</a></div>
+   <div class="panel cut stack" style="gap:6px"><span class="eyebrow">Easiest Mastery XP right now</span>${ez.map(x=>`<div class="row" style="justify-content:space-between;gap:6px">${art(x.it.n,'mini')}<a class="ln" style="flex:1" href="#" data-go="item|${esc(x.it.n)}">${esc(x.it.n)}</a><span class="chip">+${fmt(x.gain)}</span></div>`).join('')||'<span class="small muted">Everything you can use is mastered.</span>'}<a class="small ln" href="#mastery">Full rank-up plan</a></div>
    ${near?`<a class="panel navcard cut" href="#synd"><span class="eyebrow">Closest syndicate rank-up</span><h3>${esc(near[0].n)}</h3><span class="small muted">${fmt(near[1])} standing to ${esc(rankRow(near[0],near[2].r+1).t||'next rank')}</span></a>`:''}
   </div></div>
   <div class="sec-h"><h2>Explore</h2></div>
@@ -538,9 +557,10 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
 /* ---------- ranks ---------- */
 function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';
   const cats=CATS.filter(c=>MI.some(i=>i.c===c));
-  const chips=cats.map(c=>{const a=autoCat(c);return `<button class="btn ${c===cat&&!q?'on':''}" data-rkcat="${esc(c)}">${CATL[c]} <span class="mono small">${a.m}/${a.t}</span></button>`}).join('')+`<button class="btn ${cat==='Intrinsics'&&!q?'on':''}" data-rkcat="Intrinsics">Intrinsics</button>`;
+  const chips=cats.map(c=>{const a=autoCat(c);return `<button class="btn ${c===cat&&!q?'on':''}" data-rkcat="${esc(c)}">${CATL[c]} <span class="mono small">${a.m}/${a.t}</span></button>`}).join('')+`<button class="btn ${cat==='Intrinsics'&&!q?'on':''}" data-rkcat="Intrinsics">Intrinsics</button><button class="btn ${cat==='Other'&&!q?'on':''}" data-rkcat="Other">Other gear</button>`;
   let body,head;
-  if(cat==='Intrinsics'&&!q){body=intrHTML();head=`<b>Intrinsics</b><span class="small muted">Each rank is worth 1,500 Mastery XP</span>`}
+  if(cat==='Intrinsics'&&!q){body=intrHTML();head=`<b>Intrinsics</b><span class="small muted">${fmt(catXP('rail')+catXP('drift'))} XP</span>`}
+  else if(cat==='Other'&&!q){body=othHTML();head=`<b>Other gear</b><span class="small muted">${fmt(othXP())} XP</span>`}
   else{let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)):MI.filter(i=>i.c===cat);
     if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
     const rs=state.rkS||'name';list.sort((a,b)=>rs==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):rs==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):rs==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));state._rkList=list.map(i=>i.n);
@@ -553,11 +573,9 @@ function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLow
   <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select>${`<select id="rks" aria-label="Sort" style="width:auto">${[['name','Sort: name'],['mr','Sort: MR needed'],['close','Sort: closest to mastered'],['left','Sort: most XP left']].map(([k,l])=>`<option value="${k}" ${(state.rkS||'name')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   <div class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between">${head}</div></div><div id="rklist">${body}</div></div></div>`}
 function rkRow(it){const r=rankOf(it.n),mx=maxRank(it);
-  return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:6px"><a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">Mastered</span>':''}</div>
+  return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:8px">${art(it.n)}<a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">Mastered</span>':''}</div>
   <div class="rkbar"><i style="width:${r/mx*100}%"></i></div><div class="small muted mono">${fmt(r*perRank(it))} / ${fmt(mxp(it))} XP</div></div>
   <div class="stepper"><button class="sbtn" data-rk="-1" aria-label="Lower rank">−</button><input type="number" inputmode="numeric" min="0" max="${mx}" value="${r}" data-rkin aria-label="Rank of ${esc(it.n)}"><button class="sbtn" data-rk="1" aria-label="Raise rank">+</button><button class="sbtn mx" data-rk="max">Max</button></div></div>`}
-function intrHTML(){const g=(key,names,label)=>`<div class="sub-h">${label}</div>`+names.map(n=>{const v=+((P[key]||{})[n]||0);return `<div class="rk${v>=10?' done':''}"><div class="rk-main"><b>${n}</b><div class="rkbar"><i style="width:${v*10}%"></i></div><div class="small muted mono">${fmt(v*1500)} / 15,000 XP</div></div><div class="stepper"><button class="sbtn" data-intr="${key}|${n}" data-d="-1" aria-label="Lower">−</button><input type="number" inputmode="numeric" min="0" max="10" value="${v}" data-intrin="${key}|${n}" aria-label="${n} rank"><button class="sbtn" data-intr="${key}|${n}" data-d="1" aria-label="Raise">+</button><button class="sbtn mx" data-intr="${key}|${n}" data-d="max">Max</button></div></div>`}).join('');
-  return g('intrR',IR,'Railjack')+g('intrD',ID,'Drifter')}
 function setIntr(spec,v){const [key,n]=spec.split('|');P[key]=P[key]||{};P[key][n]=Math.max(0,Math.min(10,Math.round(+v||0)));if(!P[key][n])delete P[key][n];P.intr=intrSum(P.intrR)+intrSum(P.intrD);saveProfile();updateMR()}
 function rkHdr(){const h=$('#rkhdr');if(h&&state.rkCat&&CATS.includes(state.rkCat)&&!state.rkQ){const a=autoCat(state.rkCat);h.textContent=`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`}}
 
@@ -570,6 +588,7 @@ function breakdownTab(){const t=totalXP(),m=mrInfo(t.total);
   ${BDG.flat().map(k=>CATS.includes(k)?(()=>{const a=autoCat(k);return row(k,CATL[k],a.x,`${a.m}/${a.t} mastered · from Ranks: ${fmt(a.x)}`)})():row(k,bdLabel(k),autoExtra(k),k==='other'?'Gear this app doesn\'t list (from sync or your entry)':'From your ticks: '+fmt(autoExtra(k)))).join('')}
   <div class="bdr"><div><b>Adjustment</b><div class="small muted">Anything else, to match your in-game total</div></div><input id="adj" type="number" inputmode="numeric" value="${+P.adj||0}" aria-label="Adjustment XP"><span class="num">${fmt(+P.adj||0)}</span></div>
   <div class="bdr tot"><b>Total</b><span></span><span class="num">${fmt(t.total)}</span></div>
+  <div class="panel stack cut" style="margin-top:6px"><b>Check against the game</b><div class="small muted">Type the totals from your in-game profile. The app shows where the difference is.</div><div class="row"><label class="small" for="gmr">In-game MR</label><input id="gmr" type="number" inputmode="numeric" value="${P.gmr??''}" style="width:90px"><label class="small" for="gxp">In-game total XP</label><input id="gxp" type="number" inputmode="numeric" value="${P.gxp??''}" style="width:140px"></div>${P.gxp?`<div class="small">${+P.gxp===t.total?'<b style="color:var(--ok)">Matches the game exactly.</b>':`Tracked total is <b>${fmt(Math.abs(t.total-P.gxp))} XP ${t.total>P.gxp?'more':'less'}</b> than the game. ${t.total<P.gxp?'Most often this is junctions or Steel Path nodes not ticked on the Star Chart, intrinsics, or MOAs, Hounds and Amps under Ranks → Other gear.':'Check for gear marked mastered that isn\'t, or a typed number that\'s too high.'}`}</div>`:''}${P.gmr!=null&&P.gmr!==''&&+P.gmr!==m.mr?`<div class="small">In game you're MR ${P.gmr}; tracked is MR ${m.mr}. ${+P.gmr>m.mr?`MR ${+P.gmr} needs ${fmt(mrNeed(+P.gmr))} XP, so at least ${fmt(mrNeed(+P.gmr)-t.total)} XP is missing from what you've entered.`:`If your in-game XP really reaches MR ${m.mr}, your rank-up test is waiting. Otherwise something is counted that shouldn't be.`}</div>`:''}</div>
   <div class="row"><span class="chip gold">${m.mr>30?'Legendary '+(m.mr-30):'MR '+m.mr}</span><span class="small muted">${fmt(m.next-t.total)} XP to the next rank</span><button class="btn sm" id="boreset">Clear in-game numbers</button></div></div>`}
 
 /* ---------- owned items, quest detection ---------- */
@@ -593,7 +612,7 @@ function detectQuests(j,mis,owned){const det=new Set(['Awakening',"Vor's Prize"]
 const BDG=[['Warframe','Primary','Secondary','Melee'],['chart','sp','rail','drift'],['Sentinel','Robotic Weapon','Companion'],['Archwing','Arch-Gun','Arch-Melee'],['Necramech','K-Drive','Zaw','Kitgun','Amp','other']];
 function bdLabel(k){return CATL[k]||(EXTRA.find(e=>e[0]===k)||[])[1]||k}
 function bdPanel(){const t=totalXP(),m=mrInfo(t.total);
-  const row=k=>{const x=catXP(k);const isC=CATS.includes(k);const a=isC?autoCat(k):null;const tgt=isC?`data-rkcat="${esc(k)}"`:k==='rail'||k==='drift'?'data-rkcat="Intrinsics"':`data-go="node|"`;
+  const row=k=>{const x=catXP(k);const isC=CATS.includes(k);const a=isC?autoCat(k):null;const tgt=isC?`data-rkcat="${esc(k)}"`:k==='rail'||k==='drift'?'data-rkcat="Intrinsics"':`data-scp=""`;
     return `<button class="bdl" ${tgt}><b class="num">${fmt(x)}</b><span>${bdLabel(k)}</span>${a?`<small class="mono">${a.m}/${a.t}</small>`:''}${isOv(k)?'<small class="ovt">set</small>':''}</button>`};
   return `<section class="bdp cut" id="bdp"><div class="row" style="justify-content:space-between"><h2>Mastery breakdown</h2><a class="small ln" href="#tenno" data-ttab="breakdown">Adjust</a></div>
   ${BDG.map((g,i)=>{const rows=g.filter(k=>i<4||catXP(k)>0||(CATS.includes(k)&&autoCat(k).p));return rows.length?`<div class="bdg">${rows.map(row).join('')}</div>`:''}).join('')}
@@ -680,7 +699,7 @@ function goals(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'adde
   const need=neededEras();
   return `<div class="stack"><div class="head"><div class="eyebrow">Goals</div><h1>What I'm working toward</h1><p class="lede">Tap <b>Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.</p></div>
   ${g.length?`<div class="row"><select id="gs" aria-label="Sort goals" style="width:auto">${[['added','Sort: order added'],['progress','Sort: most complete'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select></div>
-  <div class="cards">${list.map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(n)}">${esc(n)}</a><span class="row" style="gap:6px">${vaultChip(I[n])}${on('build|'+n)?'<span class="chip good">Built</span>':''}<button class="btn sm" data-goal="${esc(n)}">Remove</button></span></div><div class="nextbar"><i style="width:${d/k.length*100}%"></i></div><div class="small muted">${d}/${k.length} steps · ${fmt(mxp(I[n]))} Mastery XP</div></div>`}).join('')}</div>
+  <div class="cards">${list.map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<div class="card cut"><div class="top">${art(n,'mini')}<a class="nm ln" style="flex:1" href="#" data-go="item|${esc(n)}">${esc(n)}</a><span class="row" style="gap:6px">${vaultChip(I[n])}${on('build|'+n)?'<span class="chip good">Built</span>':''}<button class="btn sm" data-goal="${esc(n)}">Remove</button></span></div><div class="nextbar"><i style="width:${d/k.length*100}%"></i></div><div class="small muted">${d}/${k.length} steps · ${fmt(mxp(I[n]))} Mastery XP</div></div>`}).join('')}</div>
   <div class="panel stack cut"><div class="row" style="justify-content:space-between"><h2>Shopping list</h2><button class="btn sm ${short?'on':''}" id="gshort">Only what I'm short on</button></div><div class="small muted">${fmt(acc.cr)} credits for everything not built yet. Set your counts in Tenno → Inventory.</div>
   <ul class="reslist">${tr.filter(([n,q])=>!short||!(P.inv&&+P.inv[n]>=q)).map(([n,q])=>`<li><span></span><span class="q">${fmt(q)} × ${L(n)}${haveTag(n,q)}</span><span class="where">${farmFor(n)}</span></li>`).join('')||'<li class="small muted">Nothing left to farm.</li>'}</ul></div>
   ${Object.keys(need).length?`<div class="panel stack cut"><h2>Relics to crack</h2>${Object.entries(need).map(([e,s])=>`<div class="small"><b>${e}:</b> ${[...s].map(r=>`<a class="ln" href="#" data-go="relic|${esc(r)}">${esc(r)}</a>`).join(', ')}</div>`).join('')}<a class="btn sm" href="#today">See open fissures</a></div>`:''}`
@@ -695,8 +714,84 @@ function helminthTab(){const f=state.hF||'all';let fr=MI.filter(i=>i.c==='Warfra
   <div class="row"><span class="chip gold">${all.filter(i=>on('hel|'+i.n)).length}/${all.length} subsumed</span><select id="hf" aria-label="Filter" style="width:auto">${[['all','All Warframes'],['ready','Owned, not fed yet'],['todo','Not fed yet'],['done','Fed']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
   <div class="obj">${fr.map(n=>`<div class="qrow${on('hel|'+n)?' done':''}">${ck('hel|'+n)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(n)}</span>${owned(n)?'<span class="chip teal">Owned</span>':''}</div></div></div>`).join('')||'<div class="empty">Nothing here.</div>'}</div></div>`}
 
+/* ---------- star chart ---------- */
+const ORB={Mercury:'#9a8f86,#4d453f',Venus:'#e6c27a,#8a6a2c',Earth:'#5fa8d8,#2f6a3a',Lua:'#d8dde2,#6c7480',Mars:'#d9774e,#6e2c1c',Phobos:'#b9a58e,#5c4c3b',Deimos:'#b45a5a,#3d1d27',Ceres:'#8fa3a8,#3e4c50',Jupiter:'#e3b98a,#8a5a35',Europa:'#cfe6f2,#5d86a0',Saturn:'#e8d49a,#8f7a3c',Uranus:'#8fe3e0,#2f7d86',Neptune:'#5b7ee8,#20307a',Pluto:'#c9b3a0,#5e4d44',Sedna:'#d06a6a,#5a2222',Eris:'#9ad08a,#2f5a2a',Void:'#f2d27a,#3a2c08','Kuva Fortress':'#e05050,#3a0d0d',Zariman:'#d9e2ff,#4a4f7a','Höllvania':'#c07ad9,#3d1f4f',Duviri:'#e08ab0,#4f1f3a'};
+const isJ=n=>/Junction/.test(n.t);
+const jLabel=n=>{const m=n.id.match(/^(\w+?)To(\w+?)Junction$/);return m?`${m[1]} → ${m[2]}`:n.n};
+function orb(p,size){const c=(ORB[p]||'#6fd6e8,#1e3440').split(',');return `<span class="orb" style="--a:${c[0]};--b:${c[1]};width:${size}px;height:${size}px" aria-hidden="true"></span>`}
+function planetStats(p){const ns=ALLN.filter(n=>n.p===p&&!isJ(n));return {ns,d:ns.filter(n=>on('n|'+n.id)).length,s:ns.filter(n=>on('sp|'+n.id)).length,x:ns.reduce((a,n)=>a+n.x,0),xd:ns.reduce((a,n)=>a+(on('n|'+n.id)?n.x:0)+(on('sp|'+n.id)?n.x:0),0)}}
+const PORD=['Mercury','Venus','Earth','Lua','Mars','Deimos','Phobos','Ceres','Jupiter','Europa','Saturn','Uranus','Neptune','Pluto','Sedna','Eris','Void','Kuva Fortress','Zariman','Duviri','Höllvania'];
+function missions(){const planets=[...new Set(ALLN.filter(n=>!isJ(n)).map(n=>n.p))].sort((a,b)=>{const ia=PORD.indexOf(a),ib=PORD.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib)||a.localeCompare(b)});const sel=state.scP&&planets.includes(state.scP)?state.scP:null;
+  const J=ALLN.filter(isJ).sort((a,b)=>jLabel(a).localeCompare(jLabel(b)));
+  const all=ALLN.filter(n=>!isJ(n));const nd=all.filter(n=>on('n|'+n.id)).length,sd=all.filter(n=>on('sp|'+n.id)).length,jd=J.filter(n=>on('n|'+n.id)).length;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Star chart</div><h1>${sel?esc(sel):'Star Chart'}</h1><p class="lede">${sel?'Tick each node you\'ve cleared. Steel Path pays the Mastery XP a second time.':'Pick a planet to tick off its nodes, and clear every junction. Each node and junction gives Mastery XP the first time you complete it.'}</p></div>`;
+  if(!sel){h+=`<div class="tiles"><div class="tile cut"><span class="k">Nodes</span><span class="v num">${nd}<small>/${all.length}</small></span><span class="tbar"><i style="width:${nd/all.length*100}%"></i></span></div>
+    <div class="tile cut"><span class="k">Junctions</span><span class="v num">${jd}<small>/${J.length}</small></span><span class="tbar"><i style="width:${jd/J.length*100}%"></i></span><span class="x">1,000 XP each</span></div>
+    <div class="tile cut"><span class="k">Steel Path</span><span class="v num">${sd}<small>/${all.length}</small></span><span class="tbar"><i style="width:${sd/all.length*100}%"></i></span></div>
+    <div class="tile cut"><span class="k">Mission XP</span><span class="v num">${fmt(catXP('chart')+catXP('sp'))}</span><span class="x">of ${fmt(NODES.reduce((a,n)=>a+n.x,0)*2)}</span></div></div>
+    <div class="planets">${planets.map(p=>{const s=planetStats(p);const pct=s.ns.length?s.d/s.ns.length*100:0;return `<button class="planet cut${s.d===s.ns.length?' full':''}" data-scp="${esc(p)}"><span class="pring" style="--p:${pct.toFixed(0)}">${orb(p,46)}</span><span class="pn">${esc(p)}</span><span class="small mono">${s.d}/${s.ns.length}${s.s?` · SP ${s.s}`:''}</span></button>`}).join('')}</div>
+    <details class="obj grp" open data-scope="input.ck.jn"><summary><h3>Junctions</h3>${progHTML()}</summary><div class="small muted" style="padding:10px 14px 0">Beat the junction's Specter after finishing its tasks to open the next planet. 1,000 Mastery XP each, and again on Steel Path.</div>
+    <div style="padding:0 14px 10px"><div class="nodes"><div class="h">Junction</div><div class="h c">Done</div><div class="h c">Steel</div>${J.map(n=>`<div><span>${orb(n.id.match(/^(\w+?)To/)?.[1]||'',18)}<b>${esc(jLabel(n))}</b> <span class="small muted">1,000 XP</span></span></div><div class="c">${ck('n|'+n.id,'sm jn')}</div><div class="c">${ck('sp|'+n.id,'sm')}</div>`).join('')}</div></div></details></div>`;return h}
+  const s=planetStats(sel);const tf=state.misType||'all',hide=state.misHide,q=(state.scQ||'').toLowerCase();
+  let ns=s.ns.filter(n=>(tf==='all'||n.t===tf)&&(!hide||!on('n|'+n.id)||!on('sp|'+n.id))&&(!q||n.n.toLowerCase().includes(q)));
+  const srt=state.scS||'lv';ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);
+  const rr=(D.regres[sel]||D.regres[sel==='Zariman'?'Zariman Ten Zero':sel]||[]);const pj=ALLN.filter(n=>isJ(n)&&(n.id.startsWith(sel)));
+  h+=`<div class="row"><button class="btn" data-scp="">← All planets</button>${orb(sel,34)}<span class="small mono">${s.d}/${s.ns.length} nodes · SP ${s.s}/${s.ns.length} · ${fmt(s.xd)} XP earned</span></div>
+  ${rr.length?`<div class="small">Resources here: ${rr.map(r=>L(r)).join(' · ')}</div>`:''}
+  <div class="row"><input id="scq" type="search" placeholder="Find a node" value="${esc(state.scQ||'')}" style="flex:1 1 160px" aria-label="Find a node"><select id="mtype" aria-label="Mission type" style="width:auto">${[['all','All types'],...[...new Set(s.ns.map(n=>n.t))].sort().map(t=>[t,t])].map(([k,l])=>`<option value="${esc(k)}" ${tf===k?'selected':''}>${esc(l)}</option>`).join('')}</select><select id="scs" aria-label="Sort" style="width:auto">${[['lv','Sort: level'],['xp','Sort: XP'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select><button class="btn ${hide?'on':''}" id="mishide">Unfinished only</button></div>
+  <div class="obj" data-scope="input.ck.nd"><div class="obj-h">${progHTML()}<div class="row"><button class="btn sm" data-planet="${esc(sel)}" data-mode="n">Mark all done</button><button class="btn sm" data-planet="${esc(sel)}" data-mode="sp">Mark all Steel Path</button></div></div>
+  <div style="padding:0 14px 10px"><div class="nodes"><div class="h">Node</div><div class="h c">Done</div><div class="h c">Steel</div>${ns.map(n=>`<div><span><b>${esc(n.n)}</b> <span class="small muted">${esc(n.t)} · Lv ${n.lv[0]}–${n.lv[1]}${n.x?` · ${n.x} XP`:''}${n.ds?' · Dark Sector':''}${P.mc&&P.mc[n.id]?` · ${fmt(P.mc[n.id])} runs`:''}</span></span></div><div class="c">${ck('n|'+n.id,'sm nd')}</div><div class="c">${ck('sp|'+n.id,'sm nd')}</div>`).join('')||'<div class="small muted">No nodes match.</div>'}</div></div></div>
+  ${pj.length?`<div class="panel cut stack"><div class="eyebrow">Junctions from ${esc(sel)}</div>${pj.map(n=>`<div class="row" style="justify-content:space-between">${ck('n|'+n.id,'sm jn')}<b style="flex:1">${esc(jLabel(n))}</b><span class="small muted">1,000 XP</span></div>`).join('')}</div>`:''}`;
+  return h+'</div>'}
+
+/* ---------- intrinsics (rework) ---------- */
+const IDESC={Tactical:'Crew orders and Railjack battle abilities',Piloting:'Railjack handling, boost and evasive moves',Gunnery:'Turret damage and critical hits',Engineering:'Repairs, crafting Railjack parts, Forge efficiency',Command:'Hire and level up your crew',Riding:'Kaithe horse riding in Duviri',Combat:'Drifter weapons, melee and abilities',Opportunity:'Loot, resources and Duviri rewards',Endurance:'Drifter health, shields and survival'};
+function intrHTML(){const sch=(key,names,label,col)=>{const tot=names.reduce((a,n)=>a+(+((P[key]||{})[n]||0)),0);
+  return `<div class="school cut" style="--sc:${col}"><div class="row" style="justify-content:space-between"><h3>${label}</h3><span class="chip gold">${tot}/${names.length*10} ranks · ${fmt(tot*1500)} XP</span></div>
+  ${names.map(n=>{const v=+((P[key]||{})[n]||0);return `<div class="iskill"><div class="row" style="justify-content:space-between"><b>${n}</b><span class="mono small">${v}/10</span></div><div class="small muted">${IDESC[n]||''}</div>
+  <div class="pips" role="group" aria-label="${n} rank">${Array.from({length:10},(_,i)=>`<button class="pip${i<v?' on':''}" data-ipip="${key}|${n}|${i+1===v?i:i+1}" aria-label="Set ${n} to rank ${i+1}"></button>`).join('')}</div></div>`}).join('')}</div>`};
+  return `<div style="padding:12px 14px" class="stack"><p class="small muted" style="margin:0">Tap a pip to set the rank (tap your current rank again to lower it by one). Each intrinsic rank is worth 1,500 Mastery XP.</p><div class="schools">${sch('intrR',IR,'Railjack','#6FD6E8')}${sch('intrD',ID,'Drifter','#D9B45E')}</div></div>`}
+
+/* ---------- other gear counters ---------- */
+const OTH=[['moa','MOAs',6000,'Modular companion (Fortuna)'],['hound','Hounds',6000,'Modular companion (Sisters of Parvos)'],['amp','Amps',3000,'Each Amp prism you rank up'],['kitgun','Extra Kitgun forms',3000,'Kitgun chambers ranked as primary and secondary'],['pred','Predasites & Vulpaphylas',6000,'Infested companions not listed above'],['plexus','Other (enter XP)',1,'Any other mastery XP the app does not list']];
+function othXP(){const o=P.oth||{};return OTH.reduce((a,[k,,x])=>a+(+o[k]||0)*x,0)}
+function othHTML(){const o=P.oth||{};return `<div style="padding:12px 14px" class="stack"><p class="small muted" style="margin:0">Modular and extra gear the item list doesn't cover. Enter how many you've mastered (rank 30).</p>
+  ${OTH.map(([k,l,x,d])=>`<div class="rk"><div class="rk-main"><b>${l}</b><div class="small muted">${d}${x>1?` · ${fmt(x)} XP each`:''}</div></div><div class="stepper"><button class="sbtn" data-oth="${k}" data-d="-1" aria-label="Fewer">−</button><input type="number" inputmode="numeric" min="0" value="${+o[k]||0}" data-othin="${k}" aria-label="${l}" style="width:${x>1?54:110}px"><button class="sbtn" data-oth="${k}" data-d="1" aria-label="More">+</button></div></div>`).join('')}
+  <div class="small">Total from other gear: <b class="num">${fmt(othXP())}</b> XP${P.other?` (plus ${fmt(P.other)} found by sync)`:''}</div></div>`}
+
+/* ---------- item art ---------- */
+function art(n,cls){const it=I[n];if(!it||!it.img)return'';return `<img class="${cls||'thumb'}" src="https://cdn.warframestat.us/img/${encodeURIComponent(it.img)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`}
+
+/* ---------- export report ---------- */
+function reportHTML(){const t=totalXP(),m=mrInfo(t.total);const now=new Date();const e=s=>esc(s);
+  const sec=(title,body)=>`<section><h2>${title}</h2>${body}</section>`;
+  const tbl=(head,rows)=>`<table><thead><tr>${head.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const bd=BDG.flat().map(k=>{const a=CATS.includes(k)?autoCat(k):null;return [e(bdLabel(k)),fmt(CATS.includes(k)?a.x:autoExtra(k)),isOv(k)?fmt(P.bo[k]):'',fmt(catXP(k)),a?`${a.m}/${a.t} (${a.p} partial)`:'']});
+  const items=MI.filter(i=>rankOf(i.n)>0).sort((a,b)=>a.c.localeCompare(b.c)||a.n.localeCompare(b.n)).map(i=>[e(CATL[i.c]||i.c),e(i.n),rankOf(i.n)+'/'+maxRank(i),fmt(itemXP(i.n)),on('m|'+i.n)?'yes':'']);
+  const nodes=ALLN.filter(n=>on('n|'+n.id)||on('sp|'+n.id)).map(n=>[e(n.p),e(isJ(n)?jLabel(n):n.n),e(n.t),n.x,on('n|'+n.id)?'yes':'',on('sp|'+n.id)?'yes':'',P.mc&&P.mc[n.id]||'']);
+  const syn=D.synd.map(s=>{const st=synState(s);return [e(s.n),st.r,e(rankRow(s,st.r).t||''),fmt(st.s),st.sync?'sync':'manual']});
+  const css='body{font:14px/1.5 system-ui,sans-serif;background:#0b1016;color:#dce6ea;margin:0;padding:24px}h1{color:#d9b45e;margin:0 0 4px}h2{color:#6fd6e8;border-bottom:1px solid #2b4a58;padding-bottom:4px;margin-top:28px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid #1e3440;padding:5px 8px;text-align:left}th{color:#8fa3ac;text-transform:uppercase;font-size:11px;letter-spacing:.08em}.k{display:inline-block;margin:4px 14px 4px 0}.k b{color:#d9b45e;font-size:20px}pre{white-space:pre-wrap;word-break:break-all;font-size:11px;background:#121d27;padding:12px}';
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tenno Codex report · ${e(P.tname||(P.prof&&P.prof.name)||'Tenno')}</title><style>${css}</style></head><body>
+  <h1>Tenno Codex report</h1><div>${e(P.tname||(P.prof&&P.prof.name)||'Tenno')} · exported ${now.toLocaleString()}</div>
+  <div style="margin-top:12px"><span class="k">Tracked MR <b>${mrLabel(m.mr)}</b></span><span class="k">Total XP <b>${fmt(t.total)}</b></span><span class="k">Next rank at <b>${fmt(m.next)}</b></span>${P.prof&&P.prof.mr!=null?`<span class="k">In-game MR (last sync) <b>${mrLabel(P.prof.mr)}</b></span>`:''}<span class="k">Adjustment <b>${fmt(+P.adj||0)}</b></span></div>
+  ${sec('Mastery breakdown',tbl(['Category','Tracked','In-game override','Counted','Mastered'],bd))}
+  ${sec(`Ranked gear (${items.length})`,tbl(['Category','Item','Rank','XP','Mastered'],items))}
+  ${sec(`Star chart (${nodes.length} nodes)`,tbl(['Planet','Node','Type','XP','Done','Steel Path','Runs'],nodes))}
+  ${sec('Intrinsics',tbl(['School','Skill','Rank'],[...IR.map(n=>['Railjack',n,+((P.intrR||{})[n]||0)]),...ID.map(n=>['Drifter',n,+((P.intrD||{})[n]||0)])]))}
+  ${sec('Other gear',tbl(['Type','Count','XP'],OTH.map(([k,l,x])=>[l,+((P.oth||{})[k]||0),fmt((+((P.oth||{})[k]||0))*x)])))}
+  ${sec(`Quests (${Q.filter(q=>qDone(q.n)).length}/${Q.length})`,tbl(['Group','Quest','Done'],Q.map(q=>[e(q.g),e(q.n),qDone(q.n)?'yes':''])))}
+  ${sec('Syndicates',tbl(['Syndicate','Rank','Title','Standing','Source'],syn))}
+  ${sec('Helminth',`<p>${MI.filter(i=>on('hel|'+i.n)).map(i=>e(i.n)).join(', ')||'None ticked'}</p>`)}
+  ${sec('Goals',`<p>${(P.goals||[]).map(e).join(', ')||'None'}</p>`)}
+  ${sec('Inventory',tbl(['Material','Count'],Object.entries(P.inv||{}).map(([k,v])=>[e(k),fmt(v)])))}
+  ${sec('Last sync',`<pre>${e(JSON.stringify(P.lastSync||null,null,1))}</pre>`)}
+  ${sec('Raw data',`<details><summary>Show</summary><pre>${e(JSON.stringify({v:3,c:C,p:P}))}</pre></details>`)}
+  </body></html>`}
+async function saveFile(name,text,type){if(HOSTED){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast('Saved '+name);return}
+  try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:name,data:text});toast('Saved '+name)}catch(e){toast('Saving files isn\'t available here.')}}
+
 /* ---------- tenno (character) ---------- */
-function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['backup','Backup']];
+function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['backup','Backup & export']];
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Tenno</div><h1>${esc(P.tname||(P.prof&&P.prof.name)||'Your Tenno')}</h1>${P.at?`<div class="small muted">Last synced ${fdate(P.at)}${P.prof&&P.prof.mr!=null?` · In-game MR ${mrLabel(P.prof.mr)}`:''}</div>`:''}</div>
   <div class="seg">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-ttab="${k}">${l}</button>`).join('')}</div>`;
   if(tab==='account')h+=accountTab();
@@ -725,7 +820,7 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');
 function profileTab(){const p=P.prof;const t=totalXP(),m=mrInfo(t.total);
   const top=`<div class="panel stack cut"><h2>Tenno</h2><label class="small" for="tname">Your in-game name</label><input id="tname" type="text" value="${esc(P.tname||(p&&p.name)||'')}" placeholder="Shown on your hub" autocomplete="off">
   <div class="kv"><span>Mastery Rank (tracked)</span><span class="num">${m.mr>30?'L'+(m.mr-30):m.mr}</span><span>Mastery XP</span><span class="num">${fmt(t.total)}</span><span>Gear mastered</span><span class="num">${MI.filter(i=>rankOf(i.n)>=maxRank(i)).length}/${MI.length}</span><span>Quests completed</span><span class="num">${Q.filter(q=>on('q|'+q.n)).length}/${Q.length}</span><span>Nodes cleared</span><span class="num">${ALLN.filter(n=>on('n|'+n.id)).length}/${ALLN.length}</span><span>Steel Path nodes</span><span class="num">${ALLN.filter(n=>on('sp|'+n.id)).length}/${ALLN.length}</span></div>
-  <div class="row"><button class="btn" data-ttab="breakdown">Adjust mastery breakdown</button><a class="btn" href="#ranks">Update ranks</a></div></div>`;
+  <div class="row"><button class="btn" data-ttab="breakdown">Adjust mastery breakdown</button><a class="btn" href="#ranks">Update ranks</a><button class="btn primary" id="exhtml">Export report</button></div></div>`;
   if(!p)return top+`<div class="panel empty cut">Sync your account to add career stats, loadout and syndicates here.<div style="margin-top:10px"><button class="btn" data-ttab="account">Go to sync</button></div></div>`;
   const kv=(k,v)=>v==null||v===''||v==='—'?'':`<span>${k}</span><span class="num">${v}</span>`;
   let h=top+`<div class="panel stack cut"><h2>Career</h2><div class="kv">${kv('In-game Mastery Rank',p.mr!=null?mrLabel(p.mr):'')}${kv('Account created',p.created?fdate(p.created):'')}${kv('Clan',esc(p.guild||''))}${kv('Time played',p.time?fmt(p.time/3600)+' h':'')}${kv('Missions completed',fmt(p.mcomp))}${kv('Missions failed',fmt(p.mfail))}${kv('Enemies killed',fmt(p.kills))}${kv('Melee kills',fmt(p.melee))}${kv('Deaths',fmt(p.deaths))}${kv('Revives',fmt(p.revives))}${kv('Credits earned',fmt(p.income))}${kv('Items picked up',fmt(p.pickups))}</div></div>`;
@@ -747,26 +842,12 @@ function inventoryTab(){const q=state.invQ.toLowerCase();const common=['Ferrite'
   <div class="inv">${list.slice(0,120).map(n=>{const id='inv-'+n.replace(/\W/g,'');return `<label for="${esc(id)}" class="small">${L(n)}</label><input id="${esc(id)}" type="number" inputmode="numeric" min="0" data-inv="${esc(n)}" value="${P.inv&&P.inv[n]!=null?esc(P.inv[n]):''}" placeholder="0">`}).join('')}</div></div>`}
 function backupTab(){return `<div class="panel stack cut"><h2>Backup</h2>
   <p class="small" style="margin:0">${synced?'Progress already syncs to your claude.ai account on its own.':'Progress is saved on this device.'} A backup code restores everything anywhere, even after clearing your browser.</p>
+  <div class="row"><button class="btn primary" id="exhtml">Export report (HTML)</button><button class="btn" id="exjson">Export data (JSON)</button></div><div class="small muted">The report lists your breakdown, every ranked item, star chart, quests, syndicates and raw data, so you can check it against the game.</div>
   <div class="row"><button class="btn" id="bk-copy">Copy backup code</button><button class="btn" id="bk-file">Save backup file</button></div>
   <label for="bk-in" class="small">Restore</label><textarea id="bk-in" placeholder="Paste a backup code here"></textarea><div class="row"><button class="btn" id="bk-restore">Restore from code</button></div></div>
   <div class="panel stack cut"><h2>Fine-tune MR</h2>
   <div class="row"><label class="small" for="intr" style="flex:1 1 200px">Total intrinsic ranks (1,500 XP each)</label><input id="intr" type="number" min="0" inputmode="numeric" value="${+P.intr||0}" style="width:120px"></div>
   <div class="row"><label class="small" for="adj" style="flex:1 1 200px">XP adjustment to match in-game</label><input id="adj" type="number" inputmode="numeric" value="${+P.adj||0}" style="width:120px"></div></div>`}
-
-/* ---------- missions ---------- */
-function missions(){const planets=[...new Set(ALLN.map(n=>n.p))];const sel=state.planet;
-  const pStat=p=>{const ns=ALLN.filter(n=>n.p===p);return [ns.filter(n=>on('n|'+n.id)).length,ns.filter(n=>on('sp|'+n.id)).length,ns.length]};
-  const totN=ALLN.filter(n=>on('n|'+n.id)).length,totS=ALLN.filter(n=>on('sp|'+n.id)).length;
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Star chart</div><h1>Missions</h1><p class="lede">Every node with its level, mission type and Mastery XP. Tick clears yourself or sync your account. Tap a planet to open it.</p></div>
-  <div class="panel cut"><div class="stats"><div class="stat"><span class="v num">${totN}/${ALLN.length}</span><span class="k">Nodes cleared</span></div><div class="stat"><span class="v num">${totS}/${ALLN.length}</span><span class="k">Steel Path</span></div><div class="stat"><span class="v num">${planets.filter(p=>{const s=pStat(p);return s[0]===s[2]}).length}/${planets.length}</span><span class="k">Planets complete</span></div></div></div>
-  <div class="row"><button class="btn ${state.misHide?'on':''}" id="mishide">Show unfinished only</button>${`<select id="mtype" aria-label="Mission type" style="width:auto">${[['all','All mission types'],...[...new Set(ALLN.map(n=>n.t))].sort().map(t=>[t,t])].map(([k,l])=>`<option value="${k}" ${(state.misType||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>`;
-  h+=planets.map(p=>{let ns=ALLN.filter(n=>n.p===p&&(!state.misType||state.misType==='all'||n.t===state.misType));if(!ns.length)return'';const [a,b,c]=pStat(p);if(state.misHide)ns=ns.filter(n=>!on('n|'+n.id)||!on('sp|'+n.id));if(state.misHide&&!ns.length)return'';
-    const rr=(D.regres[p]||D.regres[p==='Zariman'?'Zariman Ten Zero':p]||[]);
-    return `<details class="obj grp" data-scope="input.ck.nd" ${sel===p?'open':''} id="pl-${esc(p.replace(/\W/g,''))}"><summary><h3>${esc(p)}</h3>${progHTML()}<span class="mono small muted">SP ${b}/${c}</span></summary><div style="padding:0 14px 10px">
-    ${rr.length?`<div class="small" style="padding:10px 0 4px">Resources here: ${rr.map(r=>L(r)).join(' · ')}</div>`:''}
-    <div class="nodes"><div class="h">Node</div><div class="h c">Done</div><div class="h c">Steel</div>${ns.map(n=>`<div><span><b>${esc(n.n)}</b> <span class="small muted">${esc(n.t)} · Lv ${n.lv[0]}–${n.lv[1]}${n.x?` · ${n.x} XP`:''}${n.ds?' · Dark Sector':''}${P.mc&&P.mc[n.id]?` · ${fmt(P.mc[n.id])} runs`:''}</span></span></div><div class="c">${ck('n|'+n.id,'sm nd')}</div><div class="c">${ck('sp|'+n.id,'sm nd')}</div>`).join('')}</div>
-    <div class="row" style="margin-top:10px"><button class="btn sm" data-planet="${esc(p)}" data-mode="n">Mark all done</button><button class="btn sm" data-planet="${esc(p)}" data-mode="sp">Mark all Steel Path</button></div></div></details>`}).join('');
-  return h+'</div>'}
 
 /* ---------- resources ---------- */
 const MAINRES=['Ferrite','Rubedo','Alloy Plate','Nano Spores','Polymer Bundle','Salvage','Plastids','Circuits','Cryotic','Oxium','Gallium','Morphics','Neural Sensors','Neurodes','Orokin Cell','Control Module','Argon Crystal','Tellurium','Nitain Extract','Kuva','Hexenon','Detonite Ampule','Fieldron Sample','Mutagen Sample'];
@@ -1015,23 +1096,30 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='tgt'){state.target=+t.value;render()}
   if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='wfid'){P.wfid=t.value.trim();saveProfile();render();if(P.wfid&&!/^[0-9a-f]{24}$/i.test(P.wfid))toast('An account ID is 24 characters: 0–9 and a–f')}
+  if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
-  const SEL2={ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',frf:'frF',mkf:'mkF',rks:'rkS'};
+  const SEL2={scs:'scS',ckf:'ckF',fif:'fiF',fim:'fiM',syf:'syF',sys:'syS',gs:'gS',hf:'hF',qf:'qF',mtype:'misType',rsf:'rsF',fft:'ffT',frf:'frF',mkf:'mkF',rks:'rkS'};
   if(SEL2[t.id]){state[SEL2[t.id]]=t.value;saveUI();const y=scrollY;render();scrollTo(0,y);return}
   if(t.matches('[data-rkin]')){const row=t.closest('.rk');const n=row.dataset.n;setRank(n,t.value);row.outerHTML=rkRow(I[n])}
   if(t.dataset.intrin){setIntr(t.dataset.intrin,t.value);const y=window.scrollY;render();window.scrollTo(0,y)}
   if(t.id==='rkf'){state.rkF=t.value;saveUI();render()}
   if(t.dataset.bo!==undefined&&t.matches('[data-bo]')){P.bo=P.bo||{};const v=t.value.trim();if(v==='')delete P.bo[t.dataset.bo];else P.bo[t.dataset.bo]=+v;saveProfile();updateMR();const y=window.scrollY;render();window.scrollTo(0,y)}
+  if(t.id==='gmr'||t.id==='gxp'){P[t.id]=t.value===''?null:+t.value;if(t.id==='gmr'&&t.value!==''){P.prof=P.prof||{};P.prof.mr=+t.value}saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   if(t.id==='tname'){P.tname=t.value.trim();saveProfile();render()}
   if(t.dataset.inv){P.inv=P.inv||{};const v=t.value.trim();if(v==='')delete P.inv[t.dataset.inv];else P.inv[t.dataset.inv]=+v;saveProfile()}});
 document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.lazy')&&d.open){const b=d.querySelector(':scope > .lazybody, :scope > .sub');if(b&&!b.dataset.f){b.dataset.f=1;b.innerHTML=itemTree(d.dataset.tree,{note:d.dataset.note,depth:+d.dataset.depth||0});refresh()}}},true);
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){$('#drawer').classList.remove('open');return}
   const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
-  const t=e.target.closest('[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
+  const t=e.target.closest('[data-scp],[data-ipip],[data-oth],#exhtml,#exjson,[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){$('#drawer').classList.toggle('open');return}
+  if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(location.hash!=='#missions')location.hash='missions';else{render();scrollTo(0,0)}return}
+  if(t.dataset.ipip){const [key,n,v]=t.dataset.ipip.split('|');setIntr(key+'|'+n,+v);const y=scrollY;render();scrollTo(0,y);return}
+  if(t.dataset.oth){P.oth=P.oth||{};const k=t.dataset.oth;P.oth[k]=Math.max(0,(+P.oth[k]||0)+(+t.dataset.d));saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
+  if(t.id==='exhtml'){const nm=(P.tname||(P.prof&&P.prof.name)||'tenno').replace(/\W+/g,'-');saveFile('tenno-codex-report-'+nm+'.html',reportHTML(),'text/html');return}
+  if(t.id==='exjson'){saveFile('tenno-codex-data.json',JSON.stringify({v:3,exported:new Date().toISOString(),c:C,p:P},null,1),'application/json');return}
   if(t.dataset.goal){const n=t.dataset.goal;P.goals=P.goals||[];const i=P.goals.indexOf(n);if(i>=0)P.goals.splice(i,1);else P.goals.push(n);saveProfile();toast(i>=0?'Removed from Goals':'Added to Goals');const y=scrollY;render();scrollTo(0,y);return}
   if(t.id==='syh'){state.syH=!state.syH;saveUI();render();return}
   if(t.id==='gshort'){state.gShort=!state.gShort;render();return}
@@ -1055,7 +1143,7 @@ document.addEventListener('click',async e=>{
   else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}}
   else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
   else if(t.dataset.cat){state.allCat=t.dataset.cat;state.allQ='';saveUI();render()}
-  else if(t.dataset.planet){const md=t.dataset.mode;ALLN.filter(n=>n.p===t.dataset.planet).forEach(n=>setK(md+'|'+n.id,1));state.planet=t.dataset.planet;render();toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
+  else if(t.dataset.planet){const md=t.dataset.mode;ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
   else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else focusQuest()}
   else if(t.dataset.wh){copy(t.dataset.wh,'Whisper copied. Paste it into in-game chat.')}
   else if(t.dataset.fstart){const n=t.dataset.fstart;const d=foundryFind(n)||43200;P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d});saveProfile();toast(n+' started · ready in '+hrs(d))}
@@ -1078,6 +1166,7 @@ function liveSearch(id,key){const q=$(id);if(!q)return;q.addEventListener('input
 function bindPage(r){
   if(r==='farm'){const q=$('#fq');q.addEventListener('input',()=>{state.farmQ=q.value;$('#fres').innerHTML=resultsHTML()})}
   if(r==='resources')liveSearch('#rq','resQ');
+  if(r==='missions')liveSearch('#scq','scQ');
   if(r==='ranks')liveSearch('#rkq','rkQ');
   if(r==='market')liveSearch('#mq','mkQ');
   if(r==='quests')setTimeout(focusQuest,50);
