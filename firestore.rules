@@ -34,6 +34,7 @@ service cloud.firestore {
     // Public card friends see. Readable one at a time (no listing everyone).
     match /public/{uid} {
       allow get: if signedIn();
+      allow delete: if signedIn() && me() == uid;
       allow write: if signedIn() && me() == uid
         && data().keys().hasOnly(['name', 'code', 'mr', 'xp', 'nodes', 'sp', 'maxed', 'cats', 'at'])
         && shortStr(data().name, 40) && shortStr(data().code, 6)
@@ -47,6 +48,7 @@ service cloud.firestore {
       allow get: if signedIn();
       allow create: if signedIn() && code.size() == 6
         && data().keys().hasOnly(['uid']) && data().uid == me();
+      allow delete: if signedIn() && resource.data.uid == me();
     }
 
     // Inbox: friend requests, messages and task invites.
