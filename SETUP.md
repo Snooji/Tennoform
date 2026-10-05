@@ -4,7 +4,7 @@ Accounts use Firebase's free Spark plan. No credit card needed.
 
 1. Go to https://console.firebase.google.com, tap **Add project**, name it (e.g. `tennoform`), and skip Google Analytics.
 2. **Build → Authentication → Get started.** Enable **Google** and **Email/Password**.
-3. **Authentication → Settings → Authorized domains:** add `snooji.github.io` (and your own domain if you add one).
+3. **Authentication → Settings → Authorized domains:** add `tennoform.com`, `www.tennoform.com` and `snooji.github.io`.
 4. **Build → Firestore Database → Create database.** Pick a location near your players, start in **production mode**.
 5. **Firestore → Rules:** replace everything with the contents of `firestore.rules` in this repo, then **Publish**.
 6. **Project settings (gear icon) → Your apps → Web (`</>`).** Register an app (no hosting needed) and copy the `firebaseConfig` values.

@@ -2,7 +2,7 @@
 // Warframe's public profile endpoint doesn't allow websites to call it directly (no CORS),
 // so this relays the request and adds the header. It only accepts a 24-character account ID
 // and only answers requests coming from your own site.
-const ALLOWED = ['https://snooji.github.io']; // add your custom domain here if you use one
+const ALLOWED = ['https://tennoform.com', 'https://www.tennoform.com', 'https://snooji.github.io'];
 
 export default {
   async fetch(request) {
