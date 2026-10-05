@@ -471,6 +471,14 @@ select,input[type=search],input[type=number],input[type=text],input[type=passwor
 h1:focus{outline:none}
 .hit[aria-pressed="true"]{border-left-color:var(--gold)}
 .hit>span:first-child{min-width:0;overflow-wrap:anywhere}.hitst{gap:4px;justify-content:flex-end;flex:0 1 auto;min-width:0}
+/* ---- v18 ---- */
+@media (min-width:900px){.seg.wrapseg{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}}
+.seg.scrolls{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent)}
+.more-row{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:12px}
+.qsgrid{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:8px 12px;align-items:center}
+@media (max-width:520px){.qsgrid{grid-template-columns:1fr}}
+.qsf{border:1px solid var(--line);padding:8px 10px;margin:0}.qsf legend{padding:0 4px}
+.linkbtn{background:none;border:0;padding:0;color:var(--cyan);font:inherit;text-decoration:underline dotted;cursor:pointer;min-height:0}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -956,7 +964,7 @@ function tasks(){taskResets();const f=state.tkF||'open',so=state.tkS||'new';let 
   return `<div class="stack"><div class="head"><div class="eyebrow">Checklist</div><h1>My tasks</h1><p class="lede">Your own to-do list. Add anything, or tap <b>+ Task</b> on a resource, item, relic, quest, mod, syndicate, fish or ore anywhere in the app. Invite friends to join you.</p></div>
   <div class="row" style="flex-wrap:nowrap"><input id="tnew" type="text" placeholder="Add something you want to do" maxlength="120" aria-label="New task"><button class="btn primary" id="taddb">Add</button></div>
   <div class="row">${sel('tkf',f,[['open','To do'],['done','Done'],['shared','Shared with friends'],['all','All'],['res','Resources'],['item','Builds'],['relic','Relics'],['quest','Quests'],['synd','Syndicates'],['note','My notes']],'Filter tasks')}${sel('tks',so,[['new','Newest first'],['due','By due date'],['old','Oldest first'],['kind','By type']],'Sort tasks')}<span class="chip gold">${all.length-dn} to do · ${dn} done</span>${dn?'<button class="btn sm" id="tclear">Clear done</button>':''}</div>
-  <div class="panel cut tlist">${L2.map(x=>taskRow(x,0)).join('')||'<div class="empty">No tasks here.</div>'}</div></div>`}
+  <div class="panel cut tlist">${L2.map(x=>taskRow(x,0)).join('')||`<div class="empty stack" style="gap:8px;text-align:left"><b>${f==='open'?'No tasks yet.':'Nothing matches this filter.'}</b><span class="small">Type above and press Enter, or add tasks from anywhere in Tennoform. For example: open <a class="ln" href="#goals">Goals</a>, find a material you're short on in the shopping list, and tap <b>+ Task</b>. Quests, relics, syndicates, resources and fish have the same button.</span>${f!=='open'?'<button type="button" class="btn sm" data-tkreset style="align-self:flex-start">Show my to-do tasks</button>':''}</div>`}</div></div>`}
 async function toggleTask(id,v){const x=(P.tasks||[]).find(t=>t.id===id);if(!x)return;x.d=v?1:0;x.dat=v?Date.now():0;saveProfile();
   if(v&&SO.uid&&x.g){gpost(x.g,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}}).catch(()=>{})}else if(v&&SO.uid){for(const w of x.with||[])sendMsg(w.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{});if(x.from)sendMsg(x.from.uid,{type:'taskdone',task:{id:x.src?x.src.id:x.id,t:x.t}},false).catch(()=>{})}}
 
@@ -1209,10 +1217,10 @@ const LOGO_HTML=()=>{const l=document.querySelector('.brand .logo');return l?l.o
 function isNew(){return !P.onb&&!P.at&&!Object.keys(P.rk||{}).length&&Object.keys(C).length<3&&!(P.tasks||[]).length&&!synced}
 function welcome(){return `<section class="welcome cut"><div class="wl">${LOGO_HTML()}<div><div class="eyebrow">Welcome, Tenno</div><h1>Tennoform</h1><p class="lede" style="margin:4px 0 0">${PITCH}</p></div></div>
  <div class="wchoices">
-  <button type="button" class="wchoice cut" data-onb="manual"><span class="wn" aria-hidden="true">1</span><b>Start tracking by hand</b><span class="small muted">Mark what you've already mastered on the Ranks page. Takes a few minutes, no account needed; everything saves in this browser.</span><span class="wgo">Open Ranks →</span></button>
+  <button type="button" class="wchoice cut" data-qsopen><span class="wn" aria-hidden="true">1</span><b>Quick start <span class="chip">1 minute</span></b><span class="small muted">Enter your Mastery Rank and tick any starter gear you've maxed. No account needed; it saves in this browser. Fill in individual items later, only if you want to.</span><span class="wgo">Quick start →</span></button>
   <button type="button" class="wchoice cut" data-onb="import"><span class="wn" aria-hidden="true">2</span><b>Import your public profile <span class="chip">optional</span></b><span class="small muted">Read-only. Tennoform reads the public profile Warframe shows for your account ID and fills in ranks, star chart, syndicates and quests. No password, nothing changes in game.</span><span class="wgo">Link my profile →</span></button>
  </div>
- <div class="row small" style="justify-content:space-between"><span class="muted">${HOSTED&&FB?'Already use Tennoform? <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to load your progress.':'You can switch between these any time.'}</span><button type="button" class="btn sm" data-onb="skip">Just exploring</button></div></section>`}
+ <div class="row small" style="justify-content:space-between"><span class="muted">${HOSTED&&FB?'Already use Tennoform? <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to load your progress. ':''}Prefer to tick every item yourself? <button type="button" class="linkbtn" data-onb="manual">Track by hand</button> (optional, can take a while).</span><button type="button" class="btn sm" data-onb="skip">Just exploring</button></div></section>`}
 const lt=ts=>new Date(ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
 const ltw=ts=>new Date(ts).toLocaleString([],{weekday:'short',hour:'numeric',minute:'2-digit'});
 function liveStatus(){if(!HOSTED)return `<span class="fresh"><span class="dot" aria-hidden="true"></span>Live info works on <a class="ln" href="https://tennoform.com/#today" target="_blank" rel="noopener">tennoform.com</a></span>`;
@@ -1438,6 +1446,30 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fblock],[d
     SO.inbox.filter(m=>m.from===uid&&m.type==='friend').forEach(m=>FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete().catch(()=>{}));state.chat=null;rerender();toast('Blocked. They can\'t message you or send requests.');return}
   if(t.dataset.freport){const [uid,name,code]=t.dataset.freport.split('|');state.fbPrefill=`Report: ${name} (friend code ${code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';location.hash='feedback'}});
 
+/* ---------- v18: friction fixes ---------- */
+const STARTERS=['Excalibur','Mag','Volt','Mk1-Braton','Mk1-Paris','Mk1-Strun','Braton','Lato','Mk1-Furis','Mk1-Kunai','Skana','Mk1-Bo','Mk1-Furax'].filter(n=>I[n]);
+function quickStart(){return `<section class="panel cut stack qs" style="gap:10px;border-color:var(--gold-dim)"><h2>Quick start</h2>
+ <p class="small" style="margin:0">Tell Tennoform where you are now; you can fill in details later. Ticking every item by hand is optional and can take a while with 800+ items.</p>
+ <div class="qsgrid"><label class="small" for="qsmr">Your Mastery Rank in game</label><input id="qsmr" type="number" min="0" max="60" inputmode="numeric" placeholder="e.g. 8">
+ <label class="small" for="qsxp">Total Mastery XP <span class="muted">(optional · Profile → Mastery in game)</span></label><input id="qsxp" type="number" min="0" inputmode="numeric" placeholder="e.g. 208697"></div>
+ <fieldset class="qsf"><legend class="small">Starter gear you've already maxed <span class="muted">(optional)</span></legend><div class="gpick">${STARTERS.map(n=>`<label class="small"><input type="checkbox" data-qsitem="${esc(n)}"> ${esc(n)}</label>`).join('')}</div></fieldset>
+ <div class="row"><button type="button" class="btn primary" id="qsgo">Save and show my dashboard</button><button type="button" class="btn" data-onb="manual">Skip, I'll track by hand</button></div>
+ <div class="small muted">Your MR and XP set your in-game baseline: anything you tick later fills the gap first, so your total always matches the game.</div></section>`}
+function moreRow(shown,total){return total>shown?`<div class="more-row" role="status"><span class="small muted">Showing ${fmt(shown)} of ${fmt(total)}</span><button type="button" class="btn" id="rkmore">Show ${fmt(Math.min(60,total-shown))} more</button><button type="button" class="btn sm" id="rkall">Show all</button></div>`:`<div class="more-row"><span class="small muted">${fmt(total)} item${total===1?'':'s'}</span></div>`}
+function segKeys(e){const b=e.target.closest&&e.target.closest('.seg .btn');if(!b||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;const all=[...b.parentElement.querySelectorAll('.btn')];let i=all.indexOf(b);
+  i=e.key==='Home'?0:e.key==='End'?all.length-1:i+(e.key==='ArrowRight'?1:-1);if(all[i]){e.preventDefault();all[i].focus();all[i].scrollIntoView({inline:'nearest',block:'nearest'})}}
+document.addEventListener('keydown',segKeys);
+function segActive(){document.querySelectorAll('#app .seg').forEach(s=>{const on=s.querySelector('.btn.on');if(on&&s.scrollWidth>s.clientWidth){const l=on.offsetLeft-s.clientWidth/2+on.offsetWidth/2;s.scrollLeft=Math.max(0,l)}s.classList.toggle('scrolls',s.scrollWidth>s.clientWidth+2)})}
+document.addEventListener('click',e=>{const t=e.target.closest('#rkmore,#rkall,#qsgo,[data-tkreset],[data-qsopen]');if(!t)return;
+  if(t.id==='rkmore'){state.rkLim=(state.rkLim||60)+60;rerender();return}
+  if(t.id==='rkall'){state.rkLim=1e5;rerender();return}
+  if(t.dataset.tkreset!==undefined){state.tkF='open';saveUI();rerender();return}
+  if(t.dataset.qsopen!==undefined){state.qs=true;rerender();setTimeout(()=>$('#qsmr')&&$('#qsmr').focus(),30);return}
+  if(t.id==='qsgo'){const mr=$('#qsmr').value.trim(),xp=$('#qsxp').value.trim();if(mr===''&&xp===''&&!document.querySelector('[data-qsitem]:checked')){toast('Enter your MR, or pick some starter gear');return}
+    if(mr!==''){P.gmr=+mr;P.prof=P.prof||{};P.prof.mr=+mr}if(xp!=='')P.gxp=+xp;document.querySelectorAll('[data-qsitem]:checked').forEach(i=>setRank(i.dataset.qsitem,99));
+    P.onb='quick';state.qs=false;saveProfile();updateMR();rerender();toast('Saved. Your dashboard now starts from your in-game rank.')}});
+setInterval(()=>{if(location.hash==='#today'&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){const y=scrollY;render();scrollTo(0,y)}},30000);
+
 /* ---------- router ---------- */
 const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
@@ -1448,7 +1480,7 @@ function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?
   document.querySelectorAll('nav.tabs a,.bnav a,#sheet a').forEach(a=>{if(a.getAttribute('href')==='#'+key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   const mb=$('#menu');if(mb){if(BAR.includes(key))mb.removeAttribute('aria-current');else mb.setAttribute('aria-current','page')}
   setMenu(false);
-  $('#app').innerHTML=routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false)}
+  $('#app').innerHTML=routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive()}
 window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
 
 /* ---------- home ---------- */
@@ -1474,7 +1506,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   const dd=allChecks().filter(c=>gateOK(c[4]));const ddone=dd.filter(ckDone).length;
   const syn=D.synd.filter(e=>gateOK(e.gate)&&e.ranks.length);const near=syn.map(e=>{const st=synState(e),rr=rankRow(e,st.r);return [e,rr.max!=null?rr.max-st.s:1e9,st]}).filter(x=>x[1]>0&&x[1]<1e9).sort((a,b)=>a[1]-b[1])[0];
   const ez=easiest(5);
-  return `<div class="stack"><div class="hubtop"><a class="donate-mini" href="#donate">♥ Support Tennoform <span class="muted">· built by one developer</span></a><a class="donate-mini" href="#feedback">✉ Feedback</a></div>${isNew()?welcome():`<p class="pitch">${PITCH}</p>`+heroHTML()}
+  return `<div class="stack"><div class="hubtop"><a class="donate-mini" href="#donate">♥ Support Tennoform <span class="muted">· built by one developer</span></a><a class="donate-mini" href="#feedback">✉ Feedback</a></div>${state.qs?quickStart():isNew()?welcome():`<p class="pitch">${PITCH}</p>`+heroHTML()}
   ${!isNew()&&HOSTED&&FB&&!synced?`<a class="nudge" href="#tenno" data-ttab="account"><span>💾</span><span><b>Sign in so you never lose progress.</b> <span class="muted">Free, with Google or email.</span></span><span class="go">Sign in →</span></a>`:''}
   ${isNew()?'':!P.at?`<a class="panel navcard cut" href="#tenno" data-ttab="account"><span class="eyebrow">Link your account</span><h3>Sync your Warframe profile</h3><span class="small muted">Optional. Fills in your ranks, missions, quests and syndicates from your public profile.</span></a>`:''}
   ${hubGrid()}${!isNew()&&P.at?syncCard():''}
@@ -1483,7 +1515,7 @@ function home(){const qd=Q.filter(q=>on('q|'+q.n)).length;const nq=nextQuest();
   </div>`}
 
 /* ---------- ranks ---------- */
-function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';
+function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';{const _k=cat+'|'+q+'|'+f+'|'+(state.rkS||'');if(state._rkKey!==_k){state._rkKey=_k;state.rkLim=60}}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c));
   const chips=cats.map(c=>{const a=autoCat(c);return `<button class="btn ${c===cat&&!q?'on':''}" data-rkcat="${esc(c)}">${CATL[c]} <span class="mono small">${a.m}/${a.t}</span></button>`}).join('')+`<button class="btn ${cat==='Intrinsics'&&!q?'on':''}" data-rkcat="Intrinsics">Intrinsics</button><button class="btn ${cat==='Other'&&!q?'on':''}" data-rkcat="Other">Other gear</button>`;
   let body,head;
@@ -1493,11 +1525,11 @@ function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLow
     if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
     const rs=state.rkS||'name';list.sort((a,b)=>rs==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):rs==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):rs==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));state._rkList=list.map(i=>i.n);
     const a=q?null:autoCat(cat);
-    head=`<b>${q?'Search results':CATL[cat]}</b><span class="small muted" id="rkhdr">${a?`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`:list.length+' items'}</span>${list.length?`<button class="btn sm" id="rkmaxall">Max all ${list.length} shown</button>`:''}`;
-    body=list.slice(0,400).map(rkRow).join('')||'<div class="empty">Nothing matches this filter.</div>'}
+    head=`<b>${q?'Search results':CATL[cat]}</b><span class="small muted" id="rkhdr">${a?`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`:list.length+' items'}</span>${list.filter(i=>rankOf(i.n)<maxRank(i)).length?`<button class="btn sm" id="rkmaxall">Max all in this list…</button>`:''}`;
+    body=list.slice(0,state.rkLim).map(rkRow).join('')+moreRow(Math.min(state.rkLim,list.length),list.length)||'<div class="empty">Nothing matches this filter.</div>'}
   return `<div class="stack"><div class="head"><div class="eyebrow">Rank tracker</div><h1>Ranks</h1><p class="lede">Set the rank of everything you've leveled. Mastered gear counts in full and partial ranks count too. Your MR, breakdown and rank-up plan update right away.</p><p class="small muted" style="margin:0">Why the numbers: Warframes, companions, Archwings and vehicles give 200 Mastery XP per rank and weapons 100. Most gear stops at rank 30 (6,000 or 3,000 XP); Kuva, Tenet, Coda, Paracesis and Necramechs go to 40. Type a rank and press Enter to jump to the next item.</p></div>
   ${bigMR()}
-  <div class="seg">${chips}</div>
+  <div class="seg wrapseg" role="toolbar" aria-label="Gear categories">${chips}</div>
   <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['notmax','Not mastered'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select>${`<select id="rks" aria-label="Sort" style="width:auto">${[['name','Sort: name'],['mr','Sort: MR needed'],['close','Sort: closest to mastered'],['left','Sort: most XP left']].map(([k,l])=>`<option value="${k}" ${(state.rkS||'name')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   <div class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between">${head}</div></div><div id="rklist">${body}</div></div></div>`}
 function rkRow(it){const r=rankOf(it.n),mx=maxRank(it);
@@ -1556,7 +1588,7 @@ function lastDaily(){const d=new Date();return Date.UTC(d.getUTCFullYear(),d.get
 function lastWeekly(){const t=lastDaily();return t-((new Date(t).getUTCDay()+6)%7)*DAY}
 function lastSortie(){let t=lastDaily()+16*3600e3;if(t>Date.now())t-=DAY;return t}
 function left(ms){ms=Math.max(0,ms);const d=Math.floor(ms/DAY),h=Math.floor(ms%DAY/36e5),m=Math.floor(ms%36e5/6e4);return d?`${d}d ${h}h`:h?`${h}h ${m}m`:`${m}m`}
-function untilIso(s){return left(new Date(s)-Date.now())}
+function untilIso(s){const ms=new Date(s)-Date.now();if(ms<=0){if(HOSTED&&WS&&!WSload&&Date.now()-WSat>30000){WSat=0;loadWS()}return 'updating…'}return ms<60000?'<1m':left(ms)}
 function ckReset(c){return c[0]==='d'?(c[1]==='sortie'?lastSortie():lastDaily()):lastWeekly()}
 function ckDone(c){const ts=(P.dw||{})[c[1]];return !!ts&&ts>=ckReset(c)}
 function gateOK(g){return !g||qDone(g)}
@@ -1568,9 +1600,9 @@ function today(){const f=state.ckF||'todo';const now=Date.now();
   const HID=P.ckHide||[],PIN=P.ckPin||[];const rows=allChecks().filter(c=>f==='hidden'?HID.includes(c[1]):!HID.includes(c[1])&&(f==='all'||(f==='todo'&&!ckDone(c)&&gateOK(c[4]))||(f===c[0])||(f==='locked'&&!gateOK(c[4])))).sort((a,b)=>PIN.includes(b[1])-PIN.includes(a[1]));
   const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])),wd=allChecks().filter(c=>c[0]==='w'&&gateOK(c[4]));
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Today</div><h1>Daily & weekly</h1><p class="lede">Resets, your daily and weekly checklist, and what's live in the game right now.</p></div>
-  <div class="tiles"><div class="tile cut"><span class="k">Daily reset</span><span class="v num">${left(lastDaily()+DAY-now)}</span><span class="x">${dd.filter(ckDone).length}/${dd.length} done · ${lt(lastDaily()+DAY)} your time (00:00 UTC)</span></div>
-  <div class="tile cut"><span class="k">Sortie reset</span><span class="v num">${left(lastSortie()+DAY-now)}</span><span class="x">${lt(lastSortie()+DAY)} your time (16:00 UTC)</span></div>
-  <div class="tile cut"><span class="k">Weekly reset</span><span class="v num">${left(lastWeekly()+7*DAY-now)}</span><span class="x">${wd.filter(ckDone).length}/${wd.length} done · ${ltw(lastWeekly()+7*DAY)} your time (Mon 00:00 UTC)</span></div></div>
+  <div class="tiles"><div class="tile cut"><span class="k">Daily reset</span><span class="v num">${lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now)}</span><span class="x">${dd.filter(ckDone).length}/${dd.length} done · ${lt(lastDaily()+DAY)} your time (00:00 UTC)</span></div>
+  <div class="tile cut"><span class="k">Sortie reset</span><span class="v num">${lastSortie()+DAY-now<60000?'Resetting…':left(lastSortie()+DAY-now)}</span><span class="x">${lt(lastSortie()+DAY)} your time (16:00 UTC)</span></div>
+  <div class="tile cut"><span class="k">Weekly reset</span><span class="v num">${lastWeekly()+7*DAY-now<60000?'Resetting…':left(lastWeekly()+7*DAY-now)}</span><span class="x">${wd.filter(ckDone).length}/${wd.length} done · ${ltw(lastWeekly()+7*DAY)} your time (Mon 00:00 UTC)</span></div></div>
   <div class="sec-h"><h2>Checklist</h2><select id="ckf" aria-label="Filter checklist" style="width:auto">${[['todo','To do (unlocked)'],['d','Daily'],['w','Weekly'],['all','Everything'],['locked','Locked by quests'],['hidden','Hidden ('+(P.ckHide||[]).length+')']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
   <div class="obj">${rows.map(c=>{const ok=gateOK(c[4]);return `<div class="qrow${ckDone(c)?' done':''}"><input type="checkbox" class="ck" data-dw="${c[1]}" ${ckDone(c)?'checked':''} ${ok?'':'disabled'} aria-label="${esc(c[2])}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(c[4])}">Needs ${esc(c[4])}</a>`}${ckTools(c)}</div><div class="small muted">${esc(c[3])}</div></div></div>`}).join('')||'<div class="empty">All done. Nice work, Tenno.</div>'}</div>
   <div class="row ckaddrow"><input id="cknew" type="text" maxlength="80" placeholder="Add your own (e.g. Run Arbitration)" aria-label="Add your own checklist item"><select id="ckper" aria-label="Repeats" style="width:auto"><option value="d">Daily</option><option value="w">Weekly</option></select><button type="button" class="btn" id="ckadd">Add</button></div>
@@ -2083,7 +2115,7 @@ document.addEventListener('click',async e=>{
   if(t.dataset.rk){const row=t.closest('.rk');const n=row.dataset.n;const r=rankOf(n);setRank(n,t.dataset.rk==='max'?99:r+(+t.dataset.rk));row.outerHTML=rkRow(I[n]);return}
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
   if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
-  if(t.id==='rkmaxall'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again to confirm';t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all shown'}},4000);return}
+  if(t.id==='rkmaxall'){if(!t.dataset.armed){const k=(state._rkList||[]).filter(n=>!on('m|'+n)).length;t.dataset.armed=1;t.textContent=`Mark ${k} item${k===1?'':'s'} mastered? Tap again`;t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all in this list…'}},5000);return}
     (state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)});render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
   if(t.id==='boreset'){P.bo={};saveProfile();render();toast('Using your Ranks page numbers again');return}
   if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)});const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
