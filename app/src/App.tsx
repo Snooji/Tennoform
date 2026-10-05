@@ -9,7 +9,12 @@ import { CommandMenu } from "@/components/shell/command-menu"
 import { LegacyOutlet } from "@/components/shell/legacy-outlet"
 import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { SiteHeader } from "@/components/shell/site-header"
+import { DemoBanner } from "@/components/shell/demo-banner"
+import { HomePage } from "@/pages/home/home-page"
 import { isDark, tf, useTF } from "@/lib/tf"
+
+/** Pages rebuilt in React. The old app renders nothing for these. */
+const OWNED = new Set(["home"])
 
 const sidebarOpen = () => !document.cookie.includes("sidebar_state=false")
 
@@ -26,6 +31,7 @@ export default function App() {
           : toast(text),
       openSearch: () => setSearchOpen(true),
       openMenu: () => setMenuOpen(true),
+      owns: (route) => OWNED.has(route),
     }
     tf().refresh()
     return () => {
@@ -45,7 +51,9 @@ export default function App() {
         <AppSidebar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <SidebarInset className="min-w-0">
           <SiteHeader onSearch={() => setSearchOpen(true)} />
+          {s.demo ? <DemoBanner /> : null}
           <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
+            {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>

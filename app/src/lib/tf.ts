@@ -22,6 +22,7 @@ export type TFState = {
   theme: "dark" | "light" | "auto"
   demo: boolean
   isNew: boolean
+  qs: boolean
 }
 export type TFNavPlace = { id: string; label: string; pages: { route: string; label: string }[] }
 export type TFHit = { name: string; group: string; act: string; sub: string; img: string }
@@ -40,11 +41,38 @@ export type TFApi = {
   share(): void
   keys(): void
   refresh(): void
+  home(): HomeData
+  act(tag: string, attrs: Record<string, string>): void
+  nuDone(i: number): void
+  nuSnooze(i: number): void
+  nuUnsnooze(): void
+  addTaskFrom(key: string, label: string): void
+  taskDone(id: string, v: boolean): Promise<void>
+  addTask(text: string): boolean
+  sync(): void
+}
+/** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
+export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
+export type HomeNext = {
+  i: number; id: string; title: string; why: string; steps: string[]; done: boolean; doneLabel: string; img: string
+  open: TFAction | null; task: { has: boolean; key: string; label: string } | null
+}
+export type HomeTile = { k: string; v: string; x: string; route: string; ttab?: string; done?: number; total?: number }
+export type HomeData = {
+  name: string; mr: number; mrLabel: string; mrShort: string; inGame: string; maxed: number
+  xp: number; next: number; toNext: number; nextLabel: string; pct: number; parts: { label: string; xp: number }[]
+  action: "link" | "sync" | "plan"; since: string[]; foundryReady: number
+  upNext: HomeNext[]; snoozed: number; today: HomeTile[]; doneToday: { n: number; xp: number }
+  goals: { name: string; img: string; done: number; total: number }[]; goalCount: number
+  tasks: { id: string; title: string; kind: string; due: string; over: boolean; rep: string; open: TFAction | null }[]; taskCount: number
+  showSign: boolean; demo: boolean; stage: string
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
   openSearch?: () => void
   openMenu?: () => void
+  /** Routes the shell draws itself; the old page renders nothing for them. */
+  owns?: (route: string) => boolean
 }
 
 declare global {
@@ -98,3 +126,24 @@ export const isDark = (t: TFState["theme"]) =>
 
 export const fmt = (n: number) => Math.round(n).toLocaleString("en-US")
 export { version as _tfVersion }
+
+/** Read derived data from the app (e.g. tf().home()); recomputed whenever the app updates. */
+export function useTFData<T>(read: () => T): T {
+  const [, force] = useState(0)
+  useEffect(() => {
+    const on = () => force((n) => n + 1)
+    window.addEventListener("tf:update", on)
+    window.addEventListener("hashchange", on)
+    const tick = window.setInterval(on, 30000)
+    return () => {
+      window.removeEventListener("tf:update", on)
+      window.removeEventListener("hashchange", on)
+      window.clearInterval(tick)
+    }
+  }, [])
+  return read()
+}
+
+/** Run an existing action from the app, e.g. open an item or a quest. */
+export const runAct = (a: TFAction) => tf().act(a.tag, a.attrs)
+export const hrefOf = (a: TFAction | null) => (a && a.attrs.href && a.attrs.href !== "#" ? a.attrs.href : "#")
