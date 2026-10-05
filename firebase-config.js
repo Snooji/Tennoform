@@ -17,4 +17,4 @@ window.TENNO_PROXY = "";
 
 // 3) iPhone home-screen sign-in: set to true after adding https://tennoform.com/__/auth/handler
 //    to the Google OAuth client's "Authorized redirect URIs" (see SETUP.md).
-window.TENNO_SELF_AUTH = false;
+window.TENNO_SELF_AUTH = true;

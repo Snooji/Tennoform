@@ -571,7 +571,7 @@ async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.
   let cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey){FBST='off';render();return}
   const B='vendor/firebase-10.12.2/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){FBST='off';render();return}
-  if(window.TENNO_SELF_AUTH&&location.hostname==='tennoform.com')cfg=Object.assign({},cfg,{authDomain:'tennoform.com'});
+  if(window.TENNO_SELF_AUTH&&location.hostname==='tennoform.com'&&(STANDALONE||IOS))cfg=Object.assign({},cfg,{authDomain:'tennoform.com'});
   firebase.initializeApp(cfg);const auth=firebase.auth();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};FBST='ready';render();
   try{await auth.getRedirectResult()}catch(e){toast(authMsg(e))}
   auth.onAuthStateChanged(async u=>{if(u){const base=fs.collection('users').doc(u.uid).collection('data');
