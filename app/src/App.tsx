@@ -12,10 +12,11 @@ import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
 import { HomePage } from "@/pages/home/home-page"
 import { RanksPage } from "@/pages/ranks/ranks-page"
+import { FarmPage } from "@/pages/farm/farm-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
-const OWNED = new Set(["home", "ranks"])
+const OWNED = new Set(["home", "ranks", "farm"])
 
 const sidebarOpen = () => !document.cookie.includes("sidebar_state=false")
 
@@ -56,6 +57,7 @@ export default function App() {
           <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
             {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
             {s.route === "ranks" ? <RanksPage /> : null}
+            {s.route === "farm" ? <FarmPage /> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>

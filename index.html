@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-0FJ44DI7hqm8Qxo9j8ZDYl9iqXucdRbZlbisQJPuDjc=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DeMRCta5.css"><script type="module" src="/assets/main-f9auThhk.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-koS6fwnC9C05jKRamEQEUC5TdNIr05VWF/AjUbNCV0k=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-BQ9QdAex.css"><script type="module" src="/assets/main-B_UrutE7.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0e0f12">
 
@@ -3013,6 +3013,8 @@ routes.home=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('home')&&!sta
 const _demoBar=demoBar;demoBar=function(){return window.TF_UI&&TF_UI.owns?'':_demoBar()};
 /* live game info arrives after the first paint; let the shell know */
 const _loadWS=loadWS;loadWS=async function(){const r=await _loadWS();tfNotify();return r};
+/* pages the shell draws have no old controls to wire up */
+const _bindPage=bindPage;bindPage=function(r){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns(r))return;return _bindPage(r)};
 /* ---------- bridge: Ranks for the React page. The row order is kept while you edit, so rows don't jump under your finger. ---------- */
 const RKC={key:'',order:[]};
 function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it)}}
@@ -3040,6 +3042,32 @@ Object.assign(window.TF,{
 });
 const _ranksRoute=routes.ranks;
 routes.ranks=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('ranks')?'':_ranksRoute()};
+/* ---------- bridge: Farm finder for the React page ---------- */
+/* embedded old markup ("islands"): rebuilt when a button inside is used, kept as is when a step is ticked so open sections stay open */
+let ISLV=0;
+document.addEventListener('click',e=>{if(e.target.closest('.tf-island')&&e.target.closest('button,a'))ISLV++},true);
+const FFD={key:'',html:''};
+function farmDetail(){const sel=state.farmSel||'';if(!sel)return '';const k=sel+'|'+ISLV;if(FFD.key!==k){FFD.key=k;FFD.html=detail(sel)}return FFD.html}
+function farmData(){const ft=state.ffT||'all';const cats=ffCats(ft);const cat=cats.some(c=>c[0]===state.ffC)?state.ffC:'';const q=state.farmQ||'';
+  const total=search('',ft,cat).length;const r=unvFilter(search(q,ft,cat));const lim=state.ffLim||60;
+  const items=r.slice(0,lim).map(([n,t,l])=>{const it=t==='item'?MIX[n]:null;const left=it?mxp(it)-itemXP(n):0;return {n,t,label:l,key:t+'|'+n,xp:it?mxp(it):0,left,img:t==='item'||t==='part'?IMG(t==='part'?((partOwner(n)||{}).n||''):n):''}});
+  const sel=state.farmSel||'';const si=sel.indexOf('|');
+  return {q,ty:ft,cat,unv:!!state.unvOnly,types:FFT.map(([value,label])=>({value,label})),cats:cats.map(([c,n])=>({value:c,label:c,n})),
+    total,count:r.length,items,more:Math.max(0,r.length-lim),filtered:!!(q||ft!=='all'||cat||state.unvOnly),
+    sel,selName:si>0?sel.slice(si+1):'',detail:farmDetail()}}
+Object.assign(window.TF,{
+  farm:()=>farmData(),
+  farmSet:o=>{if(o.q!=null)state.farmQ=o.q;if(o.ty!=null){state.ffT=o.ty;state.ffC=''}if(o.cat!=null)state.ffC=o.cat;if(o.unv!=null)state.unvOnly=o.unv;state.ffLim=60;saveUI();tfNotify()},
+  farmClear:()=>{state.farmQ='';state.ffT='all';state.ffC='';state.unvOnly=false;state.ffLim=60;saveUI();tfNotify()},
+  farmMore:()=>{state.ffLim=(state.ffLim||60)+60;tfNotify()},
+  farmPick:key=>{state.farmSel=key||null;tfNotify()},
+  island:el=>{if(el)refresh(el)}
+});
+/* picks from anywhere (search, links inside details) land in the React page instead of the old #fdet panel */
+document.addEventListener('click',e=>{const t=e.target.closest('[data-pick]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')))return;
+  e.preventDefault();e.stopPropagation();state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else tfNotify()},true);
+const _farmRoute=routes.farm;
+routes.farm=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')?'':_farmRoute()};
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}

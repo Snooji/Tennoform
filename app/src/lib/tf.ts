@@ -56,6 +56,12 @@ export type TFApi = {
   ranksRefresh(): void
   setRank(n: string, r: number): void
   maxAll(): number
+  farm(): FarmData
+  farmSet(o: { q?: string; ty?: string; cat?: string; unv?: boolean }): void
+  farmClear(): void
+  farmMore(): void
+  farmPick(key: string | null): void
+  island(el: HTMLElement | null): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -79,6 +85,13 @@ export type RanksData = {
   cats: { id: string; label: string; m: number; t: number }[]
   island: string; items: RankItem[]; total: number; shown: number; notMax: number
   head: { label: string; m: number; t: number; p: number; x: number; search: boolean }
+}
+export type FarmItem = { n: string; t: string; label: string; key: string; xp: number; left: number; img: string }
+export type FarmData = {
+  q: string; ty: string; cat: string; unv: boolean
+  types: { value: string; label: string }[]; cats: { value: string; label: string; n: number }[]
+  total: number; count: number; items: FarmItem[]; more: number; filtered: boolean
+  sel: string; selName: string; detail: string
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

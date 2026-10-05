@@ -51,3 +51,5 @@ routes.home=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('home')&&!sta
 const _demoBar=demoBar;demoBar=function(){return window.TF_UI&&TF_UI.owns?'':_demoBar()};
 /* live game info arrives after the first paint; let the shell know */
 const _loadWS=loadWS;loadWS=async function(){const r=await _loadWS();tfNotify();return r};
+/* pages the shell draws have no old controls to wire up */
+const _bindPage=bindPage;bindPage=function(r){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns(r))return;return _bindPage(r)};

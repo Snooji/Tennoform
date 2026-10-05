@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { fmt, tf, useTF, useTFData, type RankItem } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Thumb } from "@/components/tf/thumb"
+import { Island } from "@/components/tf/island"
 
 const FILTERS = [
   { value: "all", label: "All" },
@@ -122,10 +123,6 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
     </li>
   )
 })
-
-function Island({ html }: { html: string }) {
-  return <div className="tf-island" dangerouslySetInnerHTML={{ __html: html }} />
-}
 
 export function RanksPage() {
   const fresh = useRef(true)
