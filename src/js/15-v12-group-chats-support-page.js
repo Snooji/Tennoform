@@ -41,7 +41,7 @@ async function gJoin(gid,mid){const m=(SO.gm[gid]||[]).find(x=>x.id===mid);if(!m
 
 /* ---- support page ---- */
 function donate(){const ign=DONATE.ign,pp=DONATE.paypal;const wh=ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:'';
-  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Tennoform is free, has no ads and always will. If it helped you, you can chip in to keep it running and growing. Totally optional, and thank you.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Free, no ads. Made by Snooji. If it saved you time, plat or PayPal both help.</p></div>
   <div class="split two dongrid">
    <section class="panel cut stack dcard"><div class="dic">${PLAT_SVG}</div><h2>Donate platinum</h2>
     ${ign?`<p class="small" style="margin:0">Send any amount of platinum in game to <b class="mono" style="color:var(--gold)">${esc(ign)}</b>.</p>

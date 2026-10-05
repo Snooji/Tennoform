@@ -1,6 +1,6 @@
 /* ---------- fishing & mining ---------- */
 function world(){const tab=state.wTab||'fish';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Open worlds</div><h1>Fishing & mining</h1><p class="lede">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Open worlds</div><h1>Open worlds</h1><p class="lede">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p></div>
   ${segBtns('wtab',tab,[['fish','Fishing'],['mine','Mining']])}`;
   h+=tab==='mine'?mineTab():fishTab();return h+'</div>'}
 function fishTab(){const rg=state.fR||'Plains of Eidolon',rr=state.fRr||'all',tm=state.fT||'all';const regs=Object.keys(D.fishreg);const R=D.fishreg[rg]||{};

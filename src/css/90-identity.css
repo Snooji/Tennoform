@@ -117,3 +117,10 @@ textarea{font:14px/1.5 var(--f-body)}
 .donate-mini{opacity:1;font-family:var(--f-body)}
 .themesw .btn{min-height:40px;min-width:44px}
 @media (max-width:899px){.ck,.ck.sm{width:36px;height:36px}}
+.tile .k{color:var(--muted)}
+.card>a.small,.card>a.ln{align-self:flex-start}
+/* only state gets a chip (vaulted, mastered, ready, overdue, MR XP); plain labels read as text */
+.chip:not(.ok):not(.bad):not(.warn):not(.good):not(.gold):not(.mxc):not(.trk){border-color:transparent;background:none;padding-inline:0;font-weight:400;color:var(--muted)}
+a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
+.chip.gold{border-color:transparent;padding-inline:2px;font-weight:600}
+.where b,.src b{color:var(--ink)}

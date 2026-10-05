@@ -4,7 +4,7 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
   <div class="seg">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-ttab="${k}">${l}</button>`).join('')}</div>`;
   if(tab==='account')h+=accountTab();
   if(tab==='profile')h+=profileTab();
-  if(tab==='breakdown')h+=breakdownTab();
+  if(tab==='breakdown')h+=bdPanel()+breakdownTab();
   if(tab==='helminth')h+=helminthTab();
   if(tab==='foundry')h+=foundryTab();
   if(tab==='inventory')h+=inventoryTab();

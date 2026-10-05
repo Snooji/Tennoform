@@ -43,3 +43,15 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .bdlab{margin-bottom:-6px}
 .bdbar{height:6px}
 @media (max-width:599px){.mrcard{padding:16px}.mrtop{gap:14px}.mrcard .ring.big{width:64px;height:64px}.mrcard .ring.big>span{width:52px;height:52px;font-size:24px}.mrtxt h1{font-size:24px}}
+/* market rows */
+.mklist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.mkrow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.mkrow:first-child{border-top:0}
+.mkt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mkp{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.mkp>b{font:600 18px/1 var(--f-display)}
+@media (max-width:599px){.mkrow{grid-template-columns:40px minmax(0,1fr);padding:10px 12px}.mkp{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between}}
+.mkrow>.mkt{grid-column:2}.mkrow>.mkp{grid-column:3}
+.hrow>.hrt{grid-column:2}.hrow>.small{grid-column:3}
+.nextup .nu>.nut{grid-column:2}
+@media (max-width:599px){.mkrow>.mkp{grid-column:2}}

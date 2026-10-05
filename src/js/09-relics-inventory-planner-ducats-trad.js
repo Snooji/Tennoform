@@ -10,7 +10,7 @@ function relicAdvice(r){const R=REL[r];const need=R.rw.filter(([n])=>!/Forma/.te
   if(gain>8)return {t:'Radiant for plat',why:`Radiant adds about ${Math.round(gain)}p of value per run.`,k:'r',need};
   return {t:'Crack Intact',why:'Nothing you need. Farm traces or sell the drops.',k:'i',need}}
 function relicsPage(){const tab=state.rlTab||'mine';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Void relics</div><h1>Relics & trading</h1><p class="lede">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Void relics</div><h1>Relics</h1><p class="lede">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p></div>
   ${segBtns('rltab',tab,[['mine','My relics'],['add','Add relics'],['ducats','Ducats & trading']])}`;
   h+=tab==='add'?relicAdd():tab==='ducats'?ducatTab():relicMine();return h+'</div>'}
 function relCount(r){const x=(P.rel||{})[r]||{};return ['i','e','f','r'].reduce((a,k)=>a+(+x[k]||0),0)}

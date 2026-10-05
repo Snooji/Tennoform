@@ -34,7 +34,7 @@ function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   <div class="row">${pre?`<button type="button" class="btn" id="undosync">Undo last sync</button>`:''}${P.at?'<button type="button" class="btn" id="clearimp">Clear imported data</button>':''}${P.wfid?'<button type="button" class="btn" id="unlink">Unlink ID</button>':''}</div>
   <div class="small muted">${pre?`Undo last sync puts everything back the way it was before the sync on ${esc(new Date(pre.at).toLocaleString())}. `:''}Clear imported data removes the in-game snapshot (in-game MR, synced syndicates, Nightwave, run counts). Your ranks and ticks stay; change them on the Ranks page.</div></details>`}
 function about(){const sec=state.aboutSec;
-  return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About Tennoform</h1><p class="lede">${PITCH}</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About</h1><p class="lede">${PITCH}</p></div>
   <div class="small muted">Actively maintained by one developer · site updated ${esc(D.meta.site||D.meta.built)} · see What's new below.</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
   <section class="panel cut stack"><h2>Where the data comes from</h2><div class="kv small">
    <span>Items, mastery, relics, mods, arcanes</span><span><a class="ln" href="https://github.com/WFCD/warframe-items" target="_blank" rel="noopener">WFCD warframe-items</a> v${esc(D.meta.wfcd||'')}</span>

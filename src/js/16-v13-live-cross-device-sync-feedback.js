@@ -14,7 +14,7 @@ const FBK={list:null,admin:false,tried:false};
 async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
   try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;if(location.hash==='#feedback')liveRender()}catch(e){FBK.admin=false}}
 function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Help improve Tennoform</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Feedback</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
   if(!FB)h+=`<div class="panel cut">Loading…</div>`;
   else if(!SO.uid)h+=`<div class="panel cut stack"><b>Sign in to send feedback.</b><span class="small muted">It only takes a moment with Google, and keeps spam out so every message gets read.</span><a class="btn primary" href="#tenno" data-ttab="account" style="align-self:flex-start">Sign in</a></div>`;

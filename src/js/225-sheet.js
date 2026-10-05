@@ -13,3 +13,4 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-sheetx]')){shee
 window.addEventListener('popstate',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SHEET)sheetClose(false)});
 window.addEventListener('hashchange',()=>{if(SHEET)sheetClose(true)});
+document.addEventListener('click',e=>{if(e.target.closest('#mkmore')){state.mkLim=(state.mkLim||60)+60;rerender()}});

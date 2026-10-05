@@ -81,7 +81,7 @@ function taskEditor(x){return `<div class="tedit"><label class="small" for="tn-$
 
 /* syndicate consequences */
 function synEffects(e){if(e.kind!=='faction')return'';const st=n=>((P.syn||{})[n]||{});const warn=[e.opp,e.enemy].filter(n=>(+st(n).r||0)>0);
-  return `<div class="small syneff"><b>Side effects.</b> Every 1,000 standing earned here gives <span style="color:var(--ok)">+500 ${esc(e.ally)}</span>, <span style="color:var(--warn)">−500 ${esc(e.opp)}</span> and <span style="color:var(--bad)">−1,000 ${esc(e.enemy)}</span>.${warn.length?`<div class="warnline">⚠ You have rank with ${warn.map(esc).join(' and ')}; earning here lowers it.</div>`:''}</div>`}
+  return `<div class="small syneff"><span class="muted">Per 1,000 earned:</span> <span style="color:var(--ok)">+500 ${esc(e.ally)}</span> · <span style="color:var(--warn)">−500 ${esc(e.opp)}</span> · <span style="color:var(--bad)">−1,000 ${esc(e.enemy)}</span>${warn.length?`<div class="warnline">Lowers your rank with ${warn.map(esc).join(' and ')}.</div>`:''}</div>`}
 
 /* resources: stage-aware farms */
 function planetOpen(p){if(['Earth','Mercury','Venus'].includes(p))return true;if(ALLN.some(n=>n.p===p&&!isJ(n)&&on('n|'+n.id)))return true;return ALLN.some(n=>isJ(n)&&new RegExp('To'+p.replace(/\W/g,'')+'Junction$').test(n.id)&&on('n|'+n.id))}

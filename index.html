@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DlDC9ggbPfgu56K+fLRGY3ZkjdOdry2FZyH1O1ACHCk=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-lMUCzJEaUyLyoVY6Dc8DfBQjAL7XMWuRgvJMz0rhdOA=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -625,6 +625,13 @@ textarea{font:14px/1.5 var(--f-body)}
 .donate-mini{opacity:1;font-family:var(--f-body)}
 .themesw .btn{min-height:40px;min-width:44px}
 @media (max-width:899px){.ck,.ck.sm{width:36px;height:36px}}
+.tile .k{color:var(--muted)}
+.card>a.small,.card>a.ln{align-self:flex-start}
+/* only state gets a chip (vaulted, mastered, ready, overdue, MR XP); plain labels read as text */
+.chip:not(.ok):not(.bad):not(.warn):not(.good):not(.gold):not(.mxc):not(.trk){border-color:transparent;background:none;padding-inline:0;font-weight:400;color:var(--muted)}
+a.chip:not(.ok):not(.bad):not(.warn){text-decoration:underline;text-decoration-color:var(--gold-dim)}
+.chip.gold{border-color:transparent;padding-inline:2px;font-weight:600}
+.where b,.src b{color:var(--ink)}
 /* ---- places: five sections, sub-tabs, avatar menu ---- */
 .me{flex:none;position:relative;display:grid;place-items:center;width:40px;height:40px;margin-left:8px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
 .me:hover,.me[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
@@ -703,6 +710,18 @@ img.mini,span.mini{width:40px;height:40px;object-fit:contain;flex:none}
 .bdlab{margin-bottom:-6px}
 .bdbar{height:6px}
 @media (max-width:599px){.mrcard{padding:16px}.mrtop{gap:14px}.mrcard .ring.big{width:64px;height:64px}.mrcard .ring.big>span{width:52px;height:52px;font-size:24px}.mrtxt h1{font-size:24px}}
+/* market rows */
+.mklist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.mkrow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.mkrow:first-child{border-top:0}
+.mkt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mkp{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.mkp>b{font:600 18px/1 var(--f-display)}
+@media (max-width:599px){.mkrow{grid-template-columns:40px minmax(0,1fr);padding:10px 12px}.mkp{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between}}
+.mkrow>.mkt{grid-column:2}.mkrow>.mkp{grid-column:3}
+.hrow>.hrt{grid-column:2}.hrow>.small{grid-column:3}
+.nextup .nu>.nut{grid-column:2}
+@media (max-width:599px){.mkrow>.mkp{grid-column:2}}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -890,7 +909,7 @@ function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
 function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}" for ${s[1]} platinum. (warframe.market)`}
 function sellerRow(item){const s=(SEL[item]||[]).filter(x=>x[0]!=='__buy');if(!s.length)return'';const b=s[0];
-  return `<div class="seller"><span class="muted">Cheapest seller:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
+  return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
 function farmFor(rn){const r=RES[rn];
   if(RT[rn]){const t=RT[rn].tiers;const best=r&&r.best;const pick=(t['Mid game']||[])[0]||(t['Early game']||[])[0];return (best?`<b>${esc(best)}</b>`:pick?`<b>${esc(pick[0])}</b> (${esc(pick[1])})`:'')+` · <a class="ln" href="#" data-go="res|${esc(rn)}">farms by stage</a>`}
   const s=RSRC[rn];if(s&&s.length)return `<b>${esc(s[0][0])}</b>${s[0][1]?' — '+esc(s[0][1]):''}${s.length>1?` · <a class="ln" href="#" data-go="res|${esc(rn)}">${s.length} options</a>`:''}`;
@@ -900,9 +919,9 @@ function relSort(a,b){return 'CUR'.indexOf(a[1])-'CUR'.indexOf(b[1])}
 function relicChips(list){if(!list||!list.length)return'';
   const open=list.filter(x=>!REL[x[0]]?.v).sort(relSort),vault=list.filter(x=>REL[x[0]]?.v).sort(relSort);
   let h='';
-  if(open.length)h+=`<div class="small" style="margin-top:6px;color:var(--ok);font-weight:600">${open.length} relic${open.length>1?'s':''} farmable now. Tap one for the best nodes.</div><div class="relics">${open.map(([r,rr])=>relicDetails(r,rr)).join('')}</div>`;
-  else h+=`<div class="small" style="margin-top:6px"><span class="vault">All relics vaulted.</span> Buy the part or a relic on warframe.market, or wait for Prime Resurgence (Varzia).</div>`;
-  if(vault.length)h+=`<details class="more"><summary>${vault.length} vaulted relic${vault.length>1?'s':''} (trade only)</summary><div class="relics">${vault.slice(0,24).map(([r,rr])=>relicDetails(r,rr)).join('')}</div></details>`;
+  if(open.length)h+=`<div class="small" style="margin-top:6px;color:var(--ok);font-weight:600">Farm from ${open.length} relic${open.length>1?'s':''}:</div><div class="relics">${open.map(([r,rr])=>relicDetails(r,rr)).join('')}</div>`;
+  else h+=`<div class="small" style="margin-top:6px"><span class="vault">Vaulted.</span> Buy it, or wait for Resurgence.</div>`;
+  if(vault.length)h+=`<details class="more"><summary>${vault.length} vaulted relic${vault.length>1?'s':''}</summary><div class="relics">${vault.slice(0,24).map(([r,rr])=>relicDetails(r,rr)).join('')}</div></details>`;
   return h}
 function relicDetails(r,rar){const v=REL[r]?.v;
   return `<details class="relic"><summary><span class="dot rar-${rar}"></span>${esc(r)} <span class="rar-${rar}">${RAR[rar]||''}</span>${v?' <span class="tag-v">vaulted</span>':''}</summary><div class="body">${relicBody(r)}</div></details>`}
@@ -980,7 +999,7 @@ const rerender=()=>{const y=scrollY;render();scrollTo(0,y)};
 
 /* ---------- arsenal: builds, adversary weapons, arcanes, key mods ---------- */
 function arsenal(){const tab=state.aTab||'builds';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Arsenal</div><h1>Builds & collections</h1><p class="lede">Weapon and companion builds, your Kuva, Tenet and Coda weapons, arcanes and the mods every build leans on.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Arsenal</div><h1>Builds</h1><p class="lede">Weapon and companion builds, your Kuva, Tenet and Coda weapons, arcanes and the mods every build leans on.</p></div>
   ${segBtns('atab',tab,[['builds','Weapon builds'],['comp','Companion builds'],['lich','Kuva · Tenet · Coda'],['arc','Arcanes'],['mods','Key mods']])}`;
   h+=tab==='comp'?buildsTab(D.cbuilds,'comp'):tab==='lich'?lichTab():tab==='arc'?arcTab():tab==='mods'?keyModsTab():buildsTab(D.wbuilds,'w');
   return h+'</div>'}
@@ -1056,7 +1075,7 @@ function relicAdvice(r){const R=REL[r];const need=R.rw.filter(([n])=>!/Forma/.te
   if(gain>8)return {t:'Radiant for plat',why:`Radiant adds about ${Math.round(gain)}p of value per run.`,k:'r',need};
   return {t:'Crack Intact',why:'Nothing you need. Farm traces or sell the drops.',k:'i',need}}
 function relicsPage(){const tab=state.rlTab||'mine';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Void relics</div><h1>Relics & trading</h1><p class="lede">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Void relics</div><h1>Relics</h1><p class="lede">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p></div>
   ${segBtns('rltab',tab,[['mine','My relics'],['add','Add relics'],['ducats','Ducats & trading']])}`;
   h+=tab==='add'?relicAdd():tab==='ducats'?ducatTab():relicMine();return h+'</div>'}
 function relCount(r){const x=(P.rel||{})[r]||{};return ['i','e','f','r'].reduce((a,k)=>a+(+x[k]||0),0)}
@@ -1099,7 +1118,7 @@ function ducatTab(){const so=state.duO||'ratio',f=state.duF||'all',q=(state.duQ|
 
 /* ---------- fishing & mining ---------- */
 function world(){const tab=state.wTab||'fish';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Open worlds</div><h1>Fishing & mining</h1><p class="lede">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Open worlds</div><h1>Open worlds</h1><p class="lede">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p></div>
   ${segBtns('wtab',tab,[['fish','Fishing'],['mine','Mining']])}`;
   h+=tab==='mine'?mineTab():fishTab();return h+'</div>'}
 function fishTab(){const rg=state.fR||'Plains of Eidolon',rr=state.fRr||'all',tm=state.fT||'all';const regs=Object.keys(D.fishreg);const R=D.fishreg[rg]||{};
@@ -1202,7 +1221,7 @@ function tasks(){taskResets();const f=state.tkF||'open',so=state.tkS||'new';let 
   L2=L2.filter(x=>f==='all'||(f==='open'&&!x.d)||(f==='done'&&x.d)||(f==='shared'&&((x.with||[]).length||x.from))||(f===x.k));
   L2.sort((a,b)=>so==='due'?((a.due||'9999')<(b.due||'9999')?-1:(a.due||'9999')>(b.due||'9999')?1:b.at-a.at):so==='old'?a.at-b.at:so==='kind'?(a.k||'').localeCompare(b.k||'')||b.at-a.at:b.at-a.at);
   const all=P.tasks||[];const dn=all.filter(x=>x.d).length;
-  return `<div class="stack"><div class="head"><div class="eyebrow">Checklist</div><h1>My tasks</h1><p class="lede">${TRK} Your own to-do list. Add anything, or tap <b>+ Task</b> on a resource, item, relic, quest, mod, syndicate, fish or ore anywhere in the app. Invite friends to join you.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Checklist</div><h1>Tasks</h1><p class="lede">${TRK} Your own to-do list. Add anything, or tap <b>+ Task</b> on a resource, item, relic, quest, mod, syndicate, fish or ore anywhere in the app. Invite friends to join you.</p></div>
   <div class="row" style="flex-wrap:nowrap"><input id="tnew" type="text" placeholder="Add something you want to do" maxlength="120" aria-label="New task"><button class="btn primary" id="taddb">Add</button></div>
   <div class="row">${sel('tkf',f,[['open','To do'],['done','Done'],['shared','Shared with friends'],['all','All'],['res','Resources'],['item','Builds'],['relic','Relics'],['quest','Quests'],['synd','Syndicates'],['note','My notes']],'Filter tasks')}${sel('tks',so,[['new','Newest first'],['due','By due date'],['old','Oldest first'],['kind','By type']],'Sort tasks')}<span class="chip gold">${all.length-dn} to do · ${dn} done</span>${dn?'<button class="btn sm" id="tclear">Clear done</button>':''}</div>
   <div class="panel cut tlist">${L2.map(x=>taskRow(x,0)).join('')||`<div class="empty stack" style="gap:8px;text-align:left"><b>${f==='open'?'No tasks yet.':'Nothing matches this filter.'}</b><span class="small">Type above and press Enter, or add tasks from anywhere in Tennoform. For example: open <a class="ln" href="#goals">Goals</a>, find a material you're short on in the shopping list, and tap <b>+ Task</b>. Quests, relics, syndicates, resources and fish have the same button.</span>${f!=='open'?'<button type="button" class="btn sm" data-tkreset style="align-self:flex-start">Show my to-do tasks</button>':''}</div>`}</div></div>`}
@@ -1380,7 +1399,7 @@ async function gJoin(gid,mid){const m=(SO.gm[gid]||[]).find(x=>x.id===mid);if(!m
 
 /* ---- support page ---- */
 function donate(){const ign=DONATE.ign,pp=DONATE.paypal;const wh=ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:'';
-  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Tennoform is free, has no ads and always will. If it helped you, you can chip in to keep it running and growing. Totally optional, and thank you.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Free, no ads. Made by Snooji. If it saved you time, plat or PayPal both help.</p></div>
   <div class="split two dongrid">
    <section class="panel cut stack dcard"><div class="dic">${PLAT_SVG}</div><h2>Donate platinum</h2>
     ${ign?`<p class="small" style="margin:0">Send any amount of platinum in game to <b class="mono" style="color:var(--gold)">${esc(ign)}</b>.</p>
@@ -1421,7 +1440,7 @@ const FBK={list:null,admin:false,tried:false};
 async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
   try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;if(location.hash==='#feedback')liveRender()}catch(e){FBK.admin=false}}
 function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Help improve Tennoform</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Feedback</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
   if(!FB)h+=`<div class="panel cut">Loading…</div>`;
   else if(!SO.uid)h+=`<div class="panel cut stack"><b>Sign in to send feedback.</b><span class="small muted">It only takes a moment with Google, and keeps spam out so every message gets read.</span><a class="btn primary" href="#tenno" data-ttab="account" style="align-self:flex-start">Sign in</a></div>`;
@@ -1484,7 +1503,7 @@ function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   <div class="row">${pre?`<button type="button" class="btn" id="undosync">Undo last sync</button>`:''}${P.at?'<button type="button" class="btn" id="clearimp">Clear imported data</button>':''}${P.wfid?'<button type="button" class="btn" id="unlink">Unlink ID</button>':''}</div>
   <div class="small muted">${pre?`Undo last sync puts everything back the way it was before the sync on ${esc(new Date(pre.at).toLocaleString())}. `:''}Clear imported data removes the in-game snapshot (in-game MR, synced syndicates, Nightwave, run counts). Your ranks and ticks stay; change them on the Ranks page.</div></details>`}
 function about(){const sec=state.aboutSec;
-  return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About Tennoform</h1><p class="lede">${PITCH}</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">About</div><h1>About</h1><p class="lede">${PITCH}</p></div>
   <div class="small muted">Actively maintained by one developer · site updated ${esc(D.meta.site||D.meta.built)} · see What's new below.</div><div class="callout small"><b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes, and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.</div>
   <section class="panel cut stack"><h2>Where the data comes from</h2><div class="kv small">
    <span>Items, mastery, relics, mods, arcanes</span><span><a class="ln" href="https://github.com/WFCD/warframe-items" target="_blank" rel="noopener">WFCD warframe-items</a> v${esc(D.meta.wfcd||'')}</span>
@@ -1606,7 +1625,7 @@ function taskEditor(x){return `<div class="tedit"><label class="small" for="tn-$
 
 /* syndicate consequences */
 function synEffects(e){if(e.kind!=='faction')return'';const st=n=>((P.syn||{})[n]||{});const warn=[e.opp,e.enemy].filter(n=>(+st(n).r||0)>0);
-  return `<div class="small syneff"><b>Side effects.</b> Every 1,000 standing earned here gives <span style="color:var(--ok)">+500 ${esc(e.ally)}</span>, <span style="color:var(--warn)">−500 ${esc(e.opp)}</span> and <span style="color:var(--bad)">−1,000 ${esc(e.enemy)}</span>.${warn.length?`<div class="warnline">⚠ You have rank with ${warn.map(esc).join(' and ')}; earning here lowers it.</div>`:''}</div>`}
+  return `<div class="small syneff"><span class="muted">Per 1,000 earned:</span> <span style="color:var(--ok)">+500 ${esc(e.ally)}</span> · <span style="color:var(--warn)">−500 ${esc(e.opp)}</span> · <span style="color:var(--bad)">−1,000 ${esc(e.enemy)}</span>${warn.length?`<div class="warnline">Lowers your rank with ${warn.map(esc).join(' and ')}.</div>`:''}</div>`}
 
 /* resources: stage-aware farms */
 function planetOpen(p){if(['Earth','Mercury','Venus'].includes(p))return true;if(ALLN.some(n=>n.p===p&&!isJ(n)&&on('n|'+n.id)))return true;return ALLN.some(n=>isJ(n)&&new RegExp('To'+p.replace(/\W/g,'')+'Junction$').test(n.id)&&on('n|'+n.id))}
@@ -1848,6 +1867,7 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-sheetx]')){shee
 window.addEventListener('popstate',()=>{if(SHEET)sheetClose(true)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SHEET)sheetClose(false)});
 window.addEventListener('hashchange',()=>{if(SHEET)sheetClose(true)});
+document.addEventListener('click',e=>{if(e.target.closest('#mkmore')){state.mkLim=(state.mkLim||60)+60;rerender()}});
 /* ---------- router ---------- */
 const routes={home,today,ranks,synd,goals,tenno,missions,resources,mastery,frames,farm,quests,market,arsenal,relics:relicsPage,world,tasks,friends,donate,feedback,about};
 let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7',mkQ:'',budget:false,build:0,unvOnly:false,allCat:'Warframe',allHide:false,allQ:'',qFocus:null,resSel:null,resQ:'',planet:null,misHide:false,target:null,tTab:'profile',invQ:'',rkCat:'Warframe',rkQ:'',rkF:'all'};
@@ -1951,13 +1971,13 @@ function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLow
     const a=q?null:autoCat(cat);
     head=`<b>${q?'Search results':CATL[cat]}</b><span class="small muted" id="rkhdr">${a?`${a.m}/${a.t} mastered · ${a.p} in progress · ${fmt(a.x)} XP`:list.length+' items'}</span>${list.filter(i=>rankOf(i.n)<maxRank(i)).length?`<button class="btn sm" id="rkmaxall">Max all in this list…</button>`:''}`;
     body=list.slice(0,state.rkLim).map(rkRow).join('')+moreRow(Math.min(state.rkLim,list.length),list.length)||'<div class="empty">Nothing matches this filter.</div>'}
-  return `<div class="stack"><div class="head"><div class="eyebrow">Rank tracker</div><h1>Ranks</h1><p class="lede">Set the rank of everything you've leveled. Mastered gear counts in full and partial ranks count too. Your MR, breakdown and rank-up plan update right away.</p><p class="small muted" style="margin:0">Why the numbers: Warframes, companions, Archwings and vehicles give 200 Mastery XP per rank and weapons 100. Most gear stops at rank 30 (6,000 or 3,000 XP); Kuva, Tenet, Coda, Paracesis and Necramechs go to 40. Type a rank and press Enter to jump to the next item.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Rank tracker</div><h1>Ranks</h1><p class="lede">Set the rank of everything you've leveled. Mastered gear counts in full and partial ranks count too. Your MR, breakdown and rank-up plan update right away.</p><p class="small muted" style="margin:0">Frames and companions: 200 XP a rank. Weapons: 100. Kuva, Tenet, Coda, Paracesis and Necramechs go to rank 40. Enter jumps to the next item.</p></div>
   ${bigMR()}
   <div class="seg wrapseg" role="toolbar" aria-label="Gear categories">${chips}</div>
   <div class="row"><input id="rkq" type="search" placeholder="Search everything that ranks up" value="${esc(state.rkQ||'')}" style="flex:1 1 200px" aria-label="Search gear"><select id="rkf" aria-label="Filter" style="flex:0 1 180px">${[['all','All'],['notmax','Not mastered'],['todo','Not started'],['prog','In progress'],['max','Mastered']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select>${`<select id="rks" aria-label="Sort" style="width:auto">${[['name','Sort: name'],['mr','Sort: MR needed'],['close','Sort: closest to mastered'],['left','Sort: most XP left']].map(([k,l])=>`<option value="${k}" ${(state.rkS||'name')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   <div class="obj"><div class="obj-h"><div class="row" style="justify-content:space-between">${head}</div></div><div id="rklist">${body}</div></div></div>`}
 function rkRow(it){const r=rankOf(it.n),mx=maxRank(it);
-  return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:8px">${art(it.n)}<a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">✓ Mastered</span>':r>0?'<span class="chip teal">In progress</span>':'<span class="chip">Not started</span>'}</div>
+  return `<div class="rk${r>=mx?' done':''}" data-n="${esc(it.n)}"><div class="rk-main"><div class="row" style="gap:8px">${art(it.n)}<a class="ln nm" href="#" data-go="item|${esc(it.n)}">${esc(it.n)}</a>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${r>=mx?'<span class="chip good">Mastered</span>':''}</div>
   <div class="rkbar"><i style="width:${r/mx*100}%"></i></div><div class="small muted mono">${fmt(r*perRank(it))} / ${fmt(mxp(it))} XP</div></div>
   <div class="stepper"><button class="sbtn" data-rk="-1" aria-label="Lower rank of ${esc(it.n)}">−</button><input type="number" inputmode="numeric" min="0" max="${mx}" value="${r}" data-rkin aria-label="Rank of ${esc(it.n)}"><button class="sbtn" data-rk="1" aria-label="Raise rank of ${esc(it.n)}">+</button><button class="sbtn mx" data-rk="max" aria-label="Set ${esc(it.n)} to max rank">Max</button></div></div>`}
 function setIntr(spec,v){const [key,n]=spec.split('|');P[key]=P[key]||{};P[key][n]=Math.max(0,Math.min(10,Math.round(+v||0)));if(!P[key][n])delete P[key][n];P.intr=intrSum(P.intrR)+intrSum(P.intrD);saveProfile();updateMR()}
@@ -2023,12 +2043,12 @@ function neededEras(){const s={};const names=new Set([...(P.goals||[]),...Object
 function today(){const f=state.ckF||'todo';const now=Date.now();
   const HID=P.ckHide||[],PIN=P.ckPin||[];const rows=allChecks().filter(c=>f==='hidden'?HID.includes(c[1]):!HID.includes(c[1])&&(f==='all'||(f==='todo'&&!ckDone(c)&&gateOK(c[4]))||(f===c[0])||(f==='locked'&&!gateOK(c[4])))).sort((a,b)=>PIN.includes(b[1])-PIN.includes(a[1]));
   const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])),wd=allChecks().filter(c=>c[0]==='w'&&gateOK(c[4]));
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Today</div><h1>Daily & weekly</h1><p class="lede">Resets, your daily and weekly checklist, and what's live in the game right now.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Today</div><h1>Today</h1><p class="lede">Resets, your daily and weekly checklist, and what's live in the game right now.</p></div>
   <div class="tiles"><div class="tile cut"><span class="k">Daily reset</span><span class="v num">${lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now)}</span><span class="x">${dd.filter(ckDone).length}/${dd.length} done · ${lt(lastDaily()+DAY)} your time (00:00 UTC)</span></div>
   <div class="tile cut"><span class="k">Sortie reset</span><span class="v num">${lastSortie()+DAY-now<60000?'Resetting…':left(lastSortie()+DAY-now)}</span><span class="x">${lt(lastSortie()+DAY)} your time (16:00 UTC)</span></div>
   <div class="tile cut"><span class="k">Weekly reset</span><span class="v num">${lastWeekly()+7*DAY-now<60000?'Resetting…':left(lastWeekly()+7*DAY-now)}</span><span class="x">${wd.filter(ckDone).length}/${wd.length} done · ${ltw(lastWeekly()+7*DAY)} your time (Mon 00:00 UTC)</span></div></div>
   <div class="sec-h"><h2>Checklist</h2>${TRK}<select id="ckf" aria-label="Filter checklist" style="width:auto">${[['todo','To do (unlocked)'],['d','Daily'],['w','Weekly'],['all','Everything'],['locked','Locked by quests'],['hidden','Hidden ('+(P.ckHide||[]).length+')']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
-  <div class="obj">${rows.map(c=>{const ok=gateOK(c[4]);return `<div class="qrow${ckDone(c)?' done':''}"><input type="checkbox" class="ck" data-dw="${c[1]}" ${ckDone(c)?'checked':''} ${ok?'':'disabled'} aria-label="${esc(c[2])}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(c[4])}">Needs ${esc(c[4])}</a>`}${ckTools(c)}</div><div class="small muted">${esc(c[3])}</div></div></div>`}).join('')||'<div class="empty">All done. Nice work, Tenno.</div>'}</div>
+  <div class="obj">${rows.map(c=>{const ok=gateOK(c[4]);return `<div class="qrow${ckDone(c)?' done':''}"><input type="checkbox" class="ck" data-dw="${c[1]}" ${ckDone(c)?'checked':''} ${ok?'':'disabled'} aria-label="${esc(c[2])}"><div><div class="row" style="gap:6px"><span class="nm lbl">${esc(c[2])}</span><span class="chip">${c[0]==='d'?'Daily':'Weekly'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(c[4])}">Needs ${esc(c[4])}</a>`}${ckTools(c)}</div><div class="small muted">${esc(c[3])}</div></div></div>`}).join('')||`<div class="empty">Done for today. Resets in ${left(lastDaily()+DAY-Date.now())}.</div>`}</div>
   <div class="row ckaddrow"><input id="cknew" type="text" maxlength="80" placeholder="Add your own (e.g. Run Arbitration)" aria-label="Add your own checklist item"><select id="ckper" aria-label="Repeats" style="width:auto"><option value="d">Daily</option><option value="w">Weekly</option></select><button type="button" class="btn" id="ckadd">Add</button></div>
   <div class="small muted">Daily items reset at 00:00 UTC (${lt(lastDaily()+DAY)} your time), the Sortie at 16:00 UTC, and weekly items on Monday 00:00 UTC. Warframe doesn't share daily progress, so these ticks are tracked by you; they're saved and clear themselves at each reset. Pin ☆ what matters, hide what you never do.</div>`;
   h+=`<div class="sec-h"><h2>Live in the game</h2>${liveStatus()}</div>`;
@@ -2060,7 +2080,7 @@ function synd(){const f=state.syF||'all',srt=state.syS||'next',hide=state.syH;
   let list=D.synd.slice();if(f!=='all')list=list.filter(e=>e.kind===f);if(hide)list=list.filter(e=>gateOK(e.gate));
   const prog=e=>{const st=synState(e),rr=rankRow(e,st.r);if(rr.max==null)return 0;return (st.s-(rr.min||0))/((rr.max||1)-(rr.min||0))};
   list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));
-  return `<div class="stack"><div class="head"><div class="eyebrow">Syndicates</div><h1>Standing</h1><p class="lede">Your rank with every syndicate, what the next rank costs, and the easiest way to earn standing at your stage. Sync your account to fill this in, or set ranks by hand.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Syndicates</div><h1>Syndicates</h1><p class="lede">Your rank with every syndicate, what the next rank costs, and the easiest way to earn standing at your stage. Sync your account to fill this in, or set ranks by hand.</p></div>
   <div class="tiles"><div class="tile cut"><span class="k">Daily cap (each)</span><span class="v num">${fmt(dailyCap())}</span><span class="x">16,000 + 500 × MR</span></div>
   <div class="tile cut"><span class="k">Faction standing left today</span><span class="v num">${dailyLeft(D.synd[0])==null?'—':fmt(dailyLeft(D.synd[0]))}</span><span class="x">${P.daily&&P.daily.ts>=lastDaily()?'From today\'s sync':'Sync to see today\'s caps'}</span></div>
   <div class="tile cut"><span class="k">Daily reset</span><span class="v num">${left(lastDaily()+DAY-Date.now())}</span><span class="x">00:00 UTC</span></div></div>
@@ -2070,23 +2090,23 @@ function synCard(e){const st=synState(e),ok=gateOK(e.gate);const cur=rankRow(e,s
   const pct=cur.max!=null?Math.max(0,Math.min(100,(st.s-(cur.min||0))/((cur.max||1)-(cur.min||0))*100)):0;const dl=dailyLeft(e);
   const stages=(e.farm||[]);let si=0;stages.forEach((s,i)=>{if(st.r>=s[1])si=i});
   const offers=(e.offers||[]).filter(o=>o[2]<=st.r+1).slice(0,40);
-  return `<div class="card cut${ok?'':' locked'}"><div class="top"><span class="nm">${esc(e.n)}</span><span class="row" style="gap:6px">${taskBtn('synd',e.n,'Rank up '+e.n)}${st.sync?'<span class="chip teal">From game sync</span>':(st.r||st.s)?TRK.replace('Tracked by you','Set by you'):''}<span class="chip">${e.kind==='faction'?'Faction':e.kind==='open'?'Open world':'Other'}</span>${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(e.gate)}">Unlocks after ${esc(e.gate)}</a>`}</span></div>
-  ${e.ranks.length?`<div class="row" style="gap:8px"><b style="color:var(--gold)">${esc(cur.t||'Rank '+st.r)}</b><span class="small muted">Rank ${st.r}${top?' of '+top:''}</span><span class="small mono">${cur.max!=null&&st.s>=cur.max&&nx.t?`${fmt(st.s)}</span><span class="small" style="color:var(--ok)">Ready to rank up`:fmt(st.s)+(cur.max!=null?' / '+fmt(cur.max):'')}</span></div><div class="nextbar"><i style="width:${pct}%"></i></div>
-  ${nx.t?`<div class="small">Next: <b>${esc(nx.t)}</b> at ${fmt(cur.max)} standing${cur.max!=null&&st.s<cur.max?` (${fmt(cur.max-st.s)} to go${dl?`, about ${Math.ceil((cur.max-st.s)/Math.max(1,dailyCap()))} days at the daily cap`:''})`:' · ready to rank up'}. Costs ${nx.cr?fmt(nx.cr)+' credits':''}${nx.items&&nx.items.length?(nx.cr?' + ':'')+nx.items.map(([q,n])=>`${fmt(q)} × ${L(n)}`).join(', '):''}${nx.sc?` and ${fmt(nx.sc)} standing`:''}.</div>`:`<div class="small" style="color:var(--ok)">Max rank.</div>`}`:''}
-  ${dl!=null?`<div class="small muted">Standing left today: <b class="num">${fmt(dl)}</b></div>`:''}
+  return `<div class="card cut${ok?'':' locked'}"><div class="top"><span class="nm">${esc(e.n)}</span><span class="row" style="gap:6px">${taskBtn('synd',e.n,'Rank up '+e.n)}${st.sync?'<span class="chip teal">From game sync</span>':(st.r||st.s)?TRK.replace('Tracked by you','Set by you'):''}${ok?'':`<a class="chip warn" href="#quests" data-q="${esc(e.gate)}">Unlocks after ${esc(e.gate)}</a>`}</span></div>
+  ${e.ranks.length?`<div class="row" style="gap:8px"><b style="color:var(--gold)">${esc(cur.t||'Rank '+st.r)}</b><span class="small muted">${st.r}${top?' of '+top:''}</span><span class="small mono">${cur.max!=null&&st.s>=cur.max&&nx.t?`${fmt(st.s)}</span><span class="small" style="color:var(--ok)">Ready to rank up`:fmt(st.s)+(cur.max!=null?' / '+fmt(cur.max):'')}</span></div><div class="nextbar"><i style="width:${pct}%"></i></div>
+  ${nx.t?`<div class="small">Next: <b>${esc(nx.t)}</b>${cur.max!=null&&st.s<cur.max?` in ${fmt(cur.max-st.s)}${dl?` (~${Math.ceil((cur.max-st.s)/Math.max(1,dailyCap()))} d)`:''}`:''} · ${nx.cr?fmt(nx.cr)+' cr':''}${nx.items&&nx.items.length?(nx.cr?' + ':'')+nx.items.map(([q,n])=>`${q>1?fmt(q)+' ':''}${L(n)}`).join(', '):''}</div>`:`<div class="small" style="color:var(--ok)">Max rank</div>`}`:''}
+  ${dl!=null?`<div class="small muted">${fmt(dl)} left today</div>`:''}
   ${synEffects(e)}
-  ${stages.length?`<div class="tier cut"><h4>Best way to earn now · ${esc(stages[si][0])}</h4><ul style="margin:0;padding-left:18px">${stages[si][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul>${stages[si+1]?`<details class="more"><summary>Next stage: ${esc(stages[si+1][0])}</summary><ul style="margin:0;padding-left:18px">${stages[si+1][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul></details>`:''}</div>`:''}
-  ${(()=>{const mo=(e.offers||[]).filter(o=>MIX[o[0]]&&itemXP(o[0])<mxp(MIX[o[0]]));const sum=mo.reduce((a,o)=>a+mxp(MIX[o[0]])-itemXP(o[0]),0);return sum?`<div class="small"><span class="chip mxc">+${fmt(sum)} MR XP</span> in gear you can buy here with standing (${mo.length} item${mo.length>1?'s':''})</div>`:''})()}
+  ${stages.length?`<details class="more"><summary>How to earn standing</summary><div class="tier"><ul style="margin:0;padding-left:18px">${stages[si][2].map(t=>`<li class="small">${esc(t)}</li>`).join('')}</ul>${stages[si+1]?`<div class="small muted" style="margin-top:6px">Later: ${stages[si+1][2].map(esc).join(' ')}</div>`:''}</div></details>`:''}
+  ${(()=>{const mo=(e.offers||[]).filter(o=>MIX[o[0]]&&itemXP(o[0])<mxp(MIX[o[0]]));const sum=mo.reduce((a,o)=>a+mxp(MIX[o[0]])-itemXP(o[0]),0);return sum?`<div class="small"><span class="chip mxc">+${fmt(sum)} MR XP</span> to buy here</div>`:''})()}
   ${offers.length?`<details class="more"><summary>What you can buy (${offers.length})</summary><div class="kv small">${offers.map(o=>`<span>${L(o[0])}${o[2]>st.r?' <span class="chip">next rank</span>':''} ${mxChip(o[0])}</span><span class="num">${fmt(o[1])}</span>`).join('')}</div></details>`:''}
   ${e.ranks.length?`<details class="more"><summary>Set rank by hand</summary><div class="row"><select data-synr="${esc(e.n)}" aria-label="Rank" style="width:auto">${e.ranks.map(r=>`<option value="${r.r}" ${r.r===st.r?'selected':''}>${r.r}: ${esc(r.t)}</option>`).join('')}</select><input type="number" inputmode="numeric" data-syns="${esc(e.n)}" value="${st.s||''}" placeholder="Standing" style="width:140px" aria-label="Standing"></div></details>`:''}
-  <a class="small" href="${e.w}" target="_blank" rel="noopener">wiki</a></div>`}
+  <a class="small ln" href="${e.w}" target="_blank" rel="noopener">Wiki</a></div>`}
 
 /* ---------- goals (wishlist) ---------- */
 function goals(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';
   let list=g.slice();if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
   const acc={cr:0,r:{},pt:0};g.filter(n=>!on('build|'+n)).forEach(n=>totals(n,1,acc,[]));const tr=Object.entries(acc.r).sort((a,b)=>b[1]-a[1]);const short=state.gShort;
   const need=neededEras();
-  return `<div class="stack"><div class="head"><div class="eyebrow">Goals</div><h1>What I'm working toward</h1><p class="lede">Tap <b>Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.</p></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Goals</div><h1>Goals</h1><p class="lede">Tap <b>Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.</p></div>
   ${g.length?`<div class="row"><select id="gs" aria-label="Sort goals" style="width:auto">${[['added','Sort: order added'],['progress','Sort: most complete'],['name','Sort: name']].map(([k,l])=>`<option value="${k}" ${srt===k?'selected':''}>${l}</option>`).join('')}</select></div>
   <div class="cards">${list.map(n=>{const k=stepKeys(n);const d=k.filter(on).length;return `<div class="card cut"><div class="top">${art(n,'mini')}<a class="nm ln" style="flex:1" href="#" data-go="item|${esc(n)}">${esc(n)}</a><span class="row" style="gap:6px">${vaultChip(I[n])}${on('build|'+n)?'<span class="chip good">Built</span>':''}<button class="btn sm" data-goal="${esc(n)}">Remove</button></span></div><div class="nextbar"><i style="width:${d/k.length*100}%"></i></div><div class="small muted">${d}/${k.length} steps · ${fmt(mxp(I[n]))} Mastery XP</div></div>`}).join('')}</div>
   <div class="panel stack cut"><div class="row" style="justify-content:space-between"><h2>Shopping list</h2><button class="btn sm ${short?'on':''}" id="gshort">Only what I'm short on</button></div><div class="small muted">${fmt(acc.cr)} credits for everything not built yet. Set what you have in Tenno → Inventory (or on any resource page) to see what's left, then turn the rest into tasks.</div>
@@ -2185,7 +2205,7 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
   <div class="seg">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-ttab="${k}">${l}</button>`).join('')}</div>`;
   if(tab==='account')h+=accountTab();
   if(tab==='profile')h+=profileTab();
-  if(tab==='breakdown')h+=breakdownTab();
+  if(tab==='breakdown')h+=bdPanel()+breakdownTab();
   if(tab==='helminth')h+=helminthTab();
   if(tab==='foundry')h+=foundryTab();
   if(tab==='inventory')h+=inventoryTab();
@@ -2278,7 +2298,7 @@ function resDetail(n){const r=RES[n]||{};const t=RT[n];const s=RSRC[n]||[];
 /* ---------- mastery ---------- */
 function mastery(){const tab=state.mTab;
   const tabs=[['path','Path to max'],['ladder','Rank ladder'],['sheet','Sheet MR 0–12'],['sframes','Sheet frames'],['craft','Craft-ups'],['xp','XP farms']];
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">MR plan</div><h1>Rank up plan</h1><p class="lede">What to do next to reach your target rank, the full rank ladder, and your sheet. Enter what you've already ranked on the <a class="ln" href="#ranks">Ranks</a> page.</p></div>${bigMR()}<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-mtab="${k}" role="tab" aria-selected="${tab===k}">${l}</button>`).join('')}</div>`;
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">MR plan</div><h1>MR plan</h1><p class="lede">What to do next to reach your target rank, the full rank ladder, and your sheet. Enter what you've already ranked on the <a class="ln" href="#ranks">Ranks</a> page.</p></div>${bigMR()}<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-mtab="${k}" role="tab" aria-selected="${tab===k}">${l}</button>`).join('')}</div>`;
   if(tab==='path')h+=pathTab();
   if(tab==='ladder')h+=ladderTab();
   if(tab==='all')h+=allTab();
@@ -2360,7 +2380,7 @@ function search(q){if(!IDX)buildIdx();q=q.toLowerCase().trim();if(!q)return[];co
   const r=IDX.filter(([n])=>{const l=n.toLowerCase();return w.every(x=>l.includes(x))});
   r.sort((a,b)=>{const al=a[0].toLowerCase(),bl=b[0].toLowerCase();return (bl.startsWith(q)-al.startsWith(q))||a[0].length-b[0].length});return r.slice(0,50)}
 function farm(){const sel=state.farmSel;
-  return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>What do you want to farm?</h1></div>
+  return `<div class="stack"><div class="head"><div class="eyebrow">Farm Finder</div><h1>Farm finder</h1></div>
   <div class="split two"><div class="stack" style="gap:8px"><input id="fq" type="search" placeholder="Saryn Prime, Neo S10, Primed Flow, Orokin Cell…" value="${esc(state.farmQ)}" autocomplete="off" enterkeyhint="search" aria-label="Search">
   <div class="row">${`<select id="fft" aria-label="Result type" style="width:auto">${[['all','Everything'],['item','Gear & sets'],['part','Prime parts'],['relic','Relics'],['mod','Mods'],['arc','Arcanes'],['res','Resources']].map(([k,l])=>`<option value="${k}" ${(state.ffT||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}<button class="btn ${state.unvOnly?'on':''}" id="unv">Farmable now only</button>${sel?`<button class="btn" id="jump">Jump to result ↓</button>`:''}</div>
   <div class="results" id="fres">${resultsHTML()}</div></div><div id="fdet">${sel?detail(sel):''}</div></div></div>`}
@@ -2386,14 +2406,14 @@ const qClean=r=>r.replace(/^Completed /,'').replace(/ \(Quest\)$/,'').replace(/ 
 function qPrereqs(q){return Q.filter(o=>o.n!==q.n&&q.req.some(r=>qClean(r)===o.n))}
 function nextQuest(){return Q.find(q=>!qDone(q.n)&&qPrereqs(q).every(p=>qDone(p.n)))||null}
 function quests(){const groups=[...new Set(Q.map(q=>q.g))];const nq=nextQuest();
-  return `<div class="stack"><div class="head"><div class="eyebrow">Codex</div><h1>Quest log</h1><p class="lede">Story order from the in-game Codex, with requirements and rewards from the wiki.</p></div>
-  ${nq?`<div class="callout small">Next up: <a class="ln" href="#quests" data-q="${esc(nq.n)}"><b>${esc(nq.n)}</b></a>. Its quest prerequisites are done.</div>`:''}
+  return `<div class="stack"><div class="head"><div class="eyebrow">Codex</div><h1>Quests</h1><p class="lede">Story order from the in-game Codex, with requirements and rewards from the wiki.</p></div>
+  ${nq?`<div class="callout small">Next: <a class="ln" href="#quests" data-q="${esc(nq.n)}"><b>${esc(nq.n)}</b></a></div>`:''}
   <div class="row">${`<select id="qf" aria-label="Filter quests" style="width:auto">${[['all','All quests'],['avail','Available now'],['todo','Not done'],['locked','Locked'],['done','Done']].map(([k,l])=>`<option value="${k}" ${(state.qF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
   ${groups.map(g=>{const f=state.qF||'all';const qs=Q.filter(q=>q.g===g).filter(q=>{const lk=qPrereqs(q).some(p=>!qDone(p.n));return f==='all'||(f==='done'&&qDone(q.n))||(f==='todo'&&!qDone(q.n))||(f==='locked'&&!qDone(q.n)&&lk)||(f==='avail'&&!qDone(q.n)&&!lk)});return qs.length?`<details class="obj grp" data-scope open><summary><h3>${esc(g)}</h3>${progHTML()}</summary>${qs.map(qrow).join('')}</details>`:''}).join('')||'<div class="panel empty cut">No quests match this filter.</div>'}</div>`}
 function rewardLink(r){const m=Object.keys(I).find(n=>r.toLowerCase().startsWith(n.toLowerCase()+' ')||r===n);if(m)return `<a class="ln" href="#" data-go="item|${esc(m)}">${esc(r)}</a> ${mxChip(m)}`;if(MODS[r]||RES[r]||ARC[r])return L(r);return esc(r)}
 function qrow(q){const k='q|'+q.n;const pre=qPrereqs(q);const locked=pre.some(p=>!qDone(p.n));
-  return `<div class="qrow${qDone(q.n)?' done':''}" id="q-${esc(q.n.replace(/\W/g,''))}">${ck(k)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(q.n)}</span>${locked&&!qDone(q.n)?'<span class="chip warn">Locked</span>':''}<a class="small" href="${q.w}" target="_blank" rel="noopener">wiki</a>${!qDone(q.n)?taskBtn('quest',q.n,'Do quest: '+q.n):''}${!qDone(q.n)&&Q.indexOf(q)>0?`<button class="btn sm" data-qupto="${esc(q.n)}">Done up to here</button>`:''}</div>
-   ${q.d?`<div class="small muted" style="margin-top:2px">${esc(q.d)}</div>`:''}
+  return `<div class="qrow${qDone(q.n)?' done':''}" id="q-${esc(q.n.replace(/\W/g,''))}">${ck(k)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(q.n)}</span>${locked&&!qDone(q.n)?'<span class="chip warn">Locked</span>':''}<a class="small ln" href="${q.w}" target="_blank" rel="noopener">Wiki</a>${!qDone(q.n)?taskBtn('quest',q.n,'Do quest: '+q.n):''}${!qDone(q.n)&&Q.indexOf(q)>0?`<button class="btn sm" data-qupto="${esc(q.n)}">Done to here</button>`:''}</div>
+   ${q.d&&!qDone(q.n)?`<div class="small muted" style="margin-top:2px">${esc(q.d)}</div>`:''}
    ${q.req.length?`<div class="small" style="margin-top:6px"><b>Needs:</b> ${q.req.map(r=>{const p=pre.find(x=>qClean(r)===x.n);return p?`<a class="ln" href="#quests" data-q="${esc(p.n)}" style="color:var(--${qDone(p.n)?'ok':'warn'})">${esc(r)}</a>`:esc(r)}).join(' · ')}</div>`:''}
    ${q.rw.length?`<details class="more"><summary>Rewards (${q.rw.length})</summary><ul>${q.rw.map(r=>`<li>${rewardLink(r)}</li>`).join('')}</ul></details>`:''}</div></div>`}
 
@@ -2409,11 +2429,9 @@ function setsTab(){const rows=Object.entries(D.sets).map(([n,s])=>{const base=n.
     return {n,base,it,a7:s.a7,a30:s.a30,v7:s.v7,ps:okp&&ps?Math.round(ps):null,du:du||null,low:sl[0]?sl[0][1]:null}});
   const q=state.mkQ.toLowerCase();const mf=state.mkF||'all';let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q)).filter(x=>{const v=VAULT[x.base]||{};return mf==='all'||(mf==='farm'&&x.it&&!x.it.v&&!v.now)||(mf==='vault'&&x.it&&x.it.v&&!v.now)||(mf==='now'&&v.now)||(mf==='goals'&&(P.goals||[]).includes(x.base))});const k=state.mkSort;
   r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));
-  return `<p class="small muted" style="margin:0">7-day average sale price, the cheapest online seller when the snapshot was taken, and a ready-to-paste whisper. Sellers go offline, so check <b>Live listings</b> before you trade.</p>
+  return `<p class="small muted" style="margin:0">7-day average price. Whisper copies a message to the cheapest seller in the daily snapshot; they may be offline.</p>
   <div class="row"><input id="mq" type="search" placeholder="Filter sets" value="${esc(state.mkQ)}" style="flex:1 1 200px" aria-label="Filter sets"><select id="msort" aria-label="Sort by" style="flex:0 1 200px">${[['a7','7-day price'],['low','Cheapest seller'],['v7','Trades'],['ps','Parts total'],['du','Ducats'],['n','Name']].map(([c,l])=>`<option value="${c}" ${k===c?'selected':''}>Sort: ${l}</option>`).join('')}</select>${`<select id="mkf" aria-label="Filter sets" style="width:auto">${[['all','All sets'],['farm','Farmable now'],['now','In Prime Resurgence'],['vault','Vaulted'],['goals','In my goals']].map(([k,l])=>`<option value="${k}" ${(state.mkF||'all')===k?'selected':''}>${l}</option>`).join('')}</select>`}</div>
-  ${countLine(r.length,rows.length,'sets',!!(q||mf!=='all'),'mkclear')}<div class="cards">${r.map(x=>`<div class="card cut"><div class="top"><a class="nm ln" href="#" data-go="item|${esc(x.base)}">${esc(x.base)}</a><span class="row" style="gap:4px">${mxChip(x.base)}${vaultChip(x.it)}</span></div>
-   <div class="row small"><span class="chip gold">${x.a7!=null?Math.round(x.a7)+'p':'—'} avg</span><span class="muted">Parts ${x.ps!=null?x.ps+'p':'—'} · ${fmt(x.v7)} trades/wk${x.du?` · ${x.du} ducats`:''}</span></div>
-   ${sellerRow(x.n)}<div><a class="small" href="https://warframe.market/items/${MS[x.n]||''}" target="_blank" rel="noopener">Live listings ↗</a></div></div>`).join('')}</div>`}
+  ${countLine(r.length,rows.length,'sets',!!(q||mf!=='all'),'mkclear')}<div class="mklist">${r.slice(0,state.mkLim||60).map(x=>{const b=(SEL[x.n]||[]).filter(y=>y[0]!=='__buy')[0];return `<div class="mkrow">${art(x.base,'mini')||'<span class="mini"></span>'}<div class="mkt"><span class="row" style="gap:6px"><a class="nm ln" href="#" data-go="item|${esc(x.base)}">${esc(x.base)}</a>${vaultChip(x.it)}${mxChip(x.base)}</span><span class="small muted">${[x.ps!=null?'Parts '+x.ps+'p':'',x.du?x.du+' ducats':'',x.v7?fmt(x.v7)+' sold a week':''].filter(Boolean).join(' · ')}</span></div><div class="mkp"><b>${x.a7!=null?Math.round(x.a7)+'p':'—'}</b><span class="row" style="gap:6px;justify-content:flex-end">${b?`<button class="btn sm" data-wh="${esc(whisper(x.n,b))}" aria-label="Copy a whisper to ${esc(b[0])}, selling at ${b[1]} platinum">Whisper · ${b[1]}p</button>`:''}<a class="btn sm" href="https://warframe.market/items/${MS[x.n]||''}" target="_blank" rel="noopener" aria-label="${esc(x.base)} listings on warframe.market">Listings</a></span></div></div>`}).join('')}</div>${r.length>(state.mkLim||60)?`<button type="button" class="btn" id="mkmore">Show ${Math.min(60,r.length-(state.mkLim||60))} more</button>`:''}`}
 function vaultTab(){const primes=Object.values(I).filter(i=>i.p);
   const isNow=i=>VAULT[i.n]&&VAULT[i.n].now;
   const now=primes.filter(isNow),farm=primes.filter(i=>!i.v&&!isNow(i)),vault=primes.filter(i=>i.v&&!isNow(i));

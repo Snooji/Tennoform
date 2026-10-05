@@ -1,6 +1,6 @@
 /* ---------- arsenal: builds, adversary weapons, arcanes, key mods ---------- */
 function arsenal(){const tab=state.aTab||'builds';
-  let h=`<div class="stack"><div class="head"><div class="eyebrow">Arsenal</div><h1>Builds & collections</h1><p class="lede">Weapon and companion builds, your Kuva, Tenet and Coda weapons, arcanes and the mods every build leans on.</p></div>
+  let h=`<div class="stack"><div class="head"><div class="eyebrow">Arsenal</div><h1>Builds</h1><p class="lede">Weapon and companion builds, your Kuva, Tenet and Coda weapons, arcanes and the mods every build leans on.</p></div>
   ${segBtns('atab',tab,[['builds','Weapon builds'],['comp','Companion builds'],['lich','Kuva · Tenet · Coda'],['arc','Arcanes'],['mods','Key mods']])}`;
   h+=tab==='comp'?buildsTab(D.cbuilds,'comp'):tab==='lich'?lichTab():tab==='arc'?arcTab():tab==='mods'?keyModsTab():buildsTab(D.wbuilds,'w');
   return h+'</div>'}
