@@ -38,3 +38,9 @@
 .lgb{height:56px;width:100%;max-width:36px;display:flex;align-items:flex-end;background:var(--sunk);border-radius:4px;overflow:hidden}
 .lgb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:2px}
 @media (max-width:560px){.lgrow{grid-template-columns:24px minmax(0,1fr) auto}.lgrow .chip.mxc{grid-column:2;justify-self:start}.lgrow .btn,.lgrow .lgnote{grid-row:1;grid-column:3}}
+
+/* footer: support, feedback and what's new on every page */
+.footcta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.footcta .btn{min-height:36px}
+.footcta .ic{width:14px;height:14px}
+body:has(#tf-home-links) .footcta{display:none}

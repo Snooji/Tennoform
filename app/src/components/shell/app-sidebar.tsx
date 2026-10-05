@@ -12,6 +12,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { HaloProgress } from "@/components/ui/halo-progress"
 import { PAGE_ICON } from "./nav-icons"
+import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 
 export function Logo({ className }: { className?: string }) {
@@ -64,6 +65,26 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
         ))}
       </SidebarContent>
       <SidebarFooter>
+          <SidebarGroup className="p-0">
+            <SidebarGroupLabel className="sr-only">Tennoform</SidebarGroupLabel>
+            <SidebarMenu>
+              {TF_LINKS.map((l) => {
+                const active = s.route === l.route && !("whatsNew" in l)
+                return (
+                  <SidebarMenuItem key={l.label}>
+                    <SidebarMenuButton
+                      isActive={active}
+                      tooltip={l.label}
+                      render={<a href={`#${l.route}`} aria-current={active ? "page" : undefined} onClick={(e) => { openLink(l, e); close() }} />}
+                    >
+                      <l.icon className={l.accent ? "text-primary" : undefined} />
+                      <span>{l.label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroup>
         <MasteryMeter s={s} />
         <AccountMenu s={s} open={menuOpen} setOpen={setMenuOpen} onNavigate={close} />
       </SidebarFooter>

@@ -4,6 +4,10 @@ import { tf, useTFData } from "@/lib/tf"
 import { MasteryHero } from "./mastery-hero"
 import { NextUp } from "./next-up"
 import { GoalsCard, SignInCard, TasksCard, TodayCard } from "./side-cards"
+import { buttonVariants } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
+import { cn } from "@/lib/utils"
 
 /** Home dashboard: rank progress first, then what to do next, then today, goals and tasks. */
 export function HomePage() {
@@ -59,6 +63,20 @@ export function HomePage() {
           </motion.div>
         </div>
       </div>
+      <motion.div {...rise(6)}>
+        <Card id="tf-home-links" size="sm" className="flex-row flex-wrap items-center gap-3 px-4">
+          <p className="min-w-0 flex-1 basis-56 text-sm text-muted-foreground">
+            <b className="font-medium text-foreground">Tennoform is free and made by one player.</b> Support helps keep it running, and feedback decides what gets built next.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {TF_LINKS.map((l) => (
+              <a key={l.label} href={`#${l.route}`} onClick={(e) => openLink(l, e)} className={cn(buttonVariants({ variant: l.accent ? "default" : "outline" }), "h-9 px-3")}>
+                <l.icon /> {l.label}
+              </a>
+            ))}
+          </div>
+        </Card>
+      </motion.div>
     </div>
   )
 }
