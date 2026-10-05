@@ -90,6 +90,10 @@ export type TFApi = {
   questTick(n: string, v: boolean): void
   questUpto(n: string): void
   questFocused(): void
+  mastery(): MasteryData
+  masterySet(o: { tab?: string; target?: string }): void
+  gearTick(n: string, v: boolean): void
+  itemTree(n: string, note?: string): string
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -176,6 +180,17 @@ export type QuestRow = {
 export type QuestsData = {
   filter: string; next: string; focus: string; total: number; done: number
   groups: { name: string; done: number; total: number; quests: QuestRow[] }[]
+}
+export type GearRow = { n: string; img: string; mr: number; rk: number; xp: number; done: boolean; price: string; note: string }
+export type MasteryData = {
+  tab: string; cur: number
+  target?: string; targetLabel?: string; targets?: { value: string; label: string }[]
+  need?: number; gearLeft?: number; nx?: number; sx?: number; nodesLeft?: number; spLeft?: number; overflow?: boolean
+  groups?: { title: string; xp?: number; open?: boolean; items: GearRow[] }[]
+  ladder?: { m: number; label: string; xp: number; reached: boolean; next: boolean; trades: number; cap: number; quests: string[]; gear: { n: string; done: boolean }[] }[]
+  sheetXp?: number
+  craft?: { title: string; recipes: { recipe: string; xp: number; note: string; items: GearRow[] }[] }[]
+  xpHtml?: string
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

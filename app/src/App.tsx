@@ -18,6 +18,7 @@ import { AchievementsPage } from "@/pages/achievements/achievements-page"
 import { TasksPage } from "@/pages/tasks/tasks-page"
 import { GoalsPage } from "@/pages/goals/goals-page"
 import { QuestsPage } from "@/pages/quests/quests-page"
+import { MasteryPage } from "@/pages/mastery/mastery-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
@@ -29,6 +30,7 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   tasks: TasksPage,
   goals: GoalsPage,
   quests: QuestsPage,
+  mastery: MasteryPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
