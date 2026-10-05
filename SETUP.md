@@ -11,3 +11,14 @@ Accounts use Firebase's free Spark plan. No credit card needed.
 7. Paste them into `firebase-config.js` in this repo and commit. The site picks it up on the next page load.
 
 Free limits: about 50,000 reads and 20,000 saves per day. The site batches saves, so that covers roughly a thousand active players a day. If a limit is hit, saving pauses until the next day; nothing is ever charged on the Spark plan.
+
+# One-tap profile sync (free)
+
+Warframe's profile data can't be read by a website directly, so a tiny free relay does it.
+
+1. Sign up at https://dash.cloudflare.com (free plan, no card).
+2. **Workers & Pages → Create → Create Worker.** Name it `tenno-relay`, then **Deploy**.
+3. **Edit code**, replace everything with `cloudflare-worker.js` from this repo, and **Deploy** again.
+4. Copy the worker's address (like `https://tenno-relay.yourname.workers.dev`) into `TENNO_PROXY` in `firebase-config.js` and commit.
+
+Free limit: 100,000 requests a day. Each player uses one per sync, and the relay caches for 5 minutes.

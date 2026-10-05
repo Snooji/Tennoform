@@ -214,6 +214,15 @@ details>summary::-webkit-details-marker{display:none}
 .bdtot{display:flex;justify-content:space-between;border-top:1px solid var(--gold-dim);padding-top:8px;font:700 18px var(--f-display);letter-spacing:.06em;text-transform:uppercase}
 .bdtot b{color:var(--gold)}
 .card.locked{opacity:.65}
+.steps-v{display:flex;flex-direction:column;gap:14px}
+.sv{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.sv>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.svn{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--gold);color:var(--gold);font:700 16px var(--f-display);clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.svn::first-line{}
+.filebtn{align-self:flex-start;cursor:pointer}
+.drop{border:1px dashed var(--line2);padding:12px;text-align:center;color:var(--muted);font-size:13px}
+.drop.over{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-soft)}
+.sel{user-select:all;background:var(--sunk);padding:1px 4px}
 .planets{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:8px}
 @media (max-width:520px){.planets{grid-template-columns:1fr 1fr}}
 .planet{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border:1px solid var(--line);background:radial-gradient(circle at 50% 30%,rgba(111,214,232,.08),transparent 70%),linear-gradient(180deg,var(--panel2),var(--panel));color:var(--ink);cursor:pointer;text-align:center}
@@ -348,7 +357,7 @@ window.addEventListener('pagehide',flushNow);document.addEventListener('visibili
 }catch(e){}})();
 /* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
-async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){return}
+async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){bootSync();return}bootSync();
   const cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey)return;
   const V='10.12.2',B='https://www.gstatic.com/firebasejs/'+V+'/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){return}
@@ -802,21 +811,30 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
   if(tab==='inventory')h+=inventoryTab();
   if(tab==='backup')h+=backupTab();
   return h+'</div>'}
-function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');
-  return accountPanel()+`<div class="panel stack cut"><h2>Warframe link</h2>
-  <p class="small" style="margin:0">${synced?'You\'re signed in with claude.ai, and that is your account here. Everything below saves to it.':HOSTED?'Your profile lives in this browser. Use Backup to copy it to another device.':'Sign in to claude.ai to save this to your account. For now it saves on this device.'}</p>
-  <label class="small" for="wfid"><b>Warframe account ID</b> (24 characters, saved to your account)</label>
-  <input id="wfid" type="text" placeholder="e.g. 5a1b2c3d4e5f60718293a4b5" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">
-  <div class="small muted">Where to find it: on PC open <span class="mono">%localappdata%\\Warframe\\EE.log</span> in Notepad and search for <span class="mono">AccountId</span>. Not sure? Ask Claude in chat.</div></div>
-  <div class="panel stack cut"><h2>Sync from Warframe</h2>
-  <p class="small" style="margin:0">Warframe publishes a public profile for each account. Pages here can't reach outside sites by themselves, so syncing is a tap, a copy and a paste:</p>
-  <div class="row"><button class="btn primary" id="autosync">Sync automatically</button><span class="small muted" id="asres"></span></div>
-  <div class="small muted">If automatic sync can't reach your profile, use these steps instead:</div>
+function findId(text){text=String(text||'');const pri=[/Logged in[^\n(]*\(([0-9a-f]{24})\)/i,/AccountId[^0-9a-f]{0,12}([0-9a-f]{24})/i,/playerId=([0-9a-f]{24})/i,/accountId[":\s$oid{]*([0-9a-f]{24})/i];
+  for(const r of pri){const m=text.match(r);if(m)return m[1].toLowerCase()}const all=text.match(/\b[0-9a-f]{24}\b/gi);return all&&all.length===1?all[0].toLowerCase():null}
+async function readLog(f){try{const txt=await f.text();const id=findId(txt);if(id)setWfid(id,f.name);else toast('Couldn\'t find an account ID in '+f.name+'. Make sure it\'s EE.log from the Warframe folder.')}catch(e){toast('Couldn\'t read that file.')}}
+function setWfid(id,how){P.wfid=id;lsSet('tenno-acct',id);saveProfile();render();toast('Found your account ID'+(how?' in '+how:'')+'. Syncing…');setTimeout(()=>autoSync(false),300)}
+function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=window.TENNO_PROXY;
+  return accountPanel()+`<div class="panel stack cut"><h2>Link your Warframe account</h2>
+  ${ok?`<div class="row"><span class="chip good">Linked</span><span class="mono small">${esc(P.wfid)}</span><button class="btn sm" id="unlink">Change</button></div>`:`
+  <div class="steps-v">
+   <div class="sv"><span class="svn">1</span><div><b>PC players: pick your Warframe log file</b><div class="small muted">Tap the button, then in the file window paste <span class="mono sel">%localappdata%\\Warframe</span> into the address bar, press Enter and choose <b>EE.log</b>. The app reads your ID out of it. Nothing is uploaded.</div>
+    <label class="btn primary filebtn" for="eelog">Choose EE.log</label><input id="eelog" type="file" accept=".log,.txt,text/plain" hidden>
+    <div class="drop" id="drop">or drag EE.log here</div></div></div>
+   <div class="sv"><span class="svn">2</span><div><b>Already have it?</b><div class="small muted">Paste your ID, a profile link, or any line that contains it. The app finds the 24-character ID by itself.</div>
+    <input id="wfid" type="text" placeholder="Paste your ID or anything containing it" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false"></div></div>
+   <div class="sv"><span class="svn">3</span><div><b>Console or mobile only?</b><div class="small muted">Warframe only shows the ID in the PC log. If you've ever logged in on PC (cross-save), use that log. Otherwise skip linking and set your progress by hand on the Ranks, Star Chart and Quests pages.</div></div></div>
+  </div>`}</div>
+  <div class="panel stack cut"><h2>Sync</h2>
+  <div class="row"><button class="btn primary" id="autosync" ${ok?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
+  ${HOSTED?(px?'<div class="small muted">Syncs every time you open the app.</div>':'<div class="small muted">If automatic sync can\'t reach Warframe, use the backup method below.</div>'):'<div class="small muted">Automatic sync works on the website version. Here, use the backup method below.</div>'}
+  <details class="more" ${HOSTED?'':'open'}><summary>Backup method: copy and paste</summary><div class="stack" style="gap:8px;margin-top:6px">
   <div class="row"><a class="btn" id="openprof" ${ok?`href="https://api.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>1 · Open my profile data ↗</a></div>
-  <div class="small muted">2 · On that page, select all and copy. 3 · Paste below.</div>
+  <div class="small muted">2 · Select all on that page and copy. 3 · Paste here.</div>
   <textarea id="pj" placeholder='Paste your profile data here (starts with {"Results":…)'></textarea>
-  <div class="row"><button class="btn primary" id="imp">Sync my progress</button></div>
-  <div class="small muted">What syncs: every item's rank (mastered gear ticks itself), completed missions and Steel Path, mission completion counts, intrinsics, syndicate standing, equipped loadout and career stats. Warframe keeps Foundry and resource counts private, so track those in the Foundry and Inventory tabs.</div></div>`}
+  <div class="row"><button class="btn primary" id="imp">Sync my progress</button></div></div></details>
+  <div class="small muted">What syncs: every item's rank, completed missions and junctions, Steel Path, intrinsics, syndicate standing, finished quests it can detect, loadout and career stats. Warframe keeps Foundry and resource counts private, so track those in the Foundry and Inventory tabs.</div></div>`}
 function profileTab(){const p=P.prof;const t=totalXP(),m=mrInfo(t.total);
   const top=`<div class="panel stack cut"><h2>Tenno</h2><label class="small" for="tname">Your in-game name</label><input id="tname" type="text" value="${esc(P.tname||(p&&p.name)||'')}" placeholder="Shown on your hub" autocomplete="off">
   <div class="kv"><span>Mastery Rank (tracked)</span><span class="num">${m.mr>30?'L'+(m.mr-30):m.mr}</span><span>Mastery XP</span><span class="num">${fmt(t.total)}</span><span>Gear mastered</span><span class="num">${MI.filter(i=>rankOf(i.n)>=maxRank(i)).length}/${MI.length}</span><span>Quests completed</span><span class="num">${Q.filter(q=>on('q|'+q.n)).length}/${Q.length}</span><span>Nodes cleared</span><span class="num">${ALLN.filter(n=>on('n|'+n.id)).length}/${ALLN.length}</span><span>Steel Path nodes</span><span class="num">${ALLN.filter(n=>on('sp|'+n.id)).length}/${ALLN.length}</span></div>
@@ -1075,7 +1093,8 @@ function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
 async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
-  try{const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);const j=await r.json();if(j.error)throw new Error(j.error);
+  try{let j=null;if(window.TENNO_PROXY){try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}catch(e){}}
+    if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
   catch(e){if(!quiet){const el=$('#asres');if(el)el.textContent="Couldn't reach your profile automatically. Use the copy-and-paste steps below.";toast('Automatic sync unavailable. Use the paste steps.')}return false}}
 async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
@@ -1095,7 +1114,8 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='msort'){state.mkSort=t.value;render()}
   if(t.id==='tgt'){state.target=+t.value;render()}
   if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
-  if(t.id==='wfid'){P.wfid=t.value.trim();saveProfile();render();if(P.wfid&&!/^[0-9a-f]{24}$/i.test(P.wfid))toast('An account ID is 24 characters: 0–9 and a–f')}
+  if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast('No 24-character account ID found in that text.')}
+  if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.dw){P.dw=P.dw||{};if(t.checked)P.dw[t.dataset.dw]=Date.now();else delete P.dw[t.dataset.dw];saveProfile();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.synr||t.dataset.syns){const n=t.dataset.synr||t.dataset.syns;P.syn=P.syn||{};const cur=P.syn[n]||{};if(t.dataset.synr)cur.r=+t.value;else cur.s=+t.value||0;cur.sync=0;P.syn[n]=cur;saveProfile();const y=scrollY;render();scrollTo(0,y);return}
@@ -1112,9 +1132,10 @@ document.addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches(
 document.addEventListener('click',async e=>{
   if(e.target.id==='drawer'){$('#drawer').classList.remove('open');return}
   const lbl=e.target.closest('.lbl');if(lbl&&!e.target.closest('a,button')){const row=lbl.closest('.step,.mod,.qrow');const c=row&&row.querySelector('input.ck');if(c){c.click();return}}
-  const t=e.target.closest('[data-scp],[data-ipip],[data-oth],#exhtml,#exjson,[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
+  const t=e.target.closest('#unlink,[data-scp],[data-ipip],[data-oth],#exhtml,#exjson,[data-goal],#syh,#gshort,#lggoogle,#lgin,#lgnew,#lgreset,#lgout,#acctbtn,#autosync,[data-rk],[data-intr],[data-rkcat],[data-qupto],#rkmaxall,#boreset,[data-go],[data-mtab],[data-ttab],[data-mk],[data-build],[data-frame],[data-pick],[data-cat],[data-planet],[data-q],[data-wh],[data-fstart],[data-fclaim],[data-fdel],#menu,#budget,#unv,#allhide,#mishide,#imp,#bk-copy,#bk-file,#bk-restore,#jump,#faddb,#openprof');
   if(!t)return;
   if(t.id==='menu'){$('#drawer').classList.toggle('open');return}
+  if(t.id==='unlink'){P.wfid='';lsSet('tenno-acct','');saveProfile();render();return}
   if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(location.hash!=='#missions')location.hash='missions';else{render();scrollTo(0,0)}return}
   if(t.dataset.ipip){const [key,n,v]=t.dataset.ipip.split('|');setIntr(key+'|'+n,+v);const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.oth){P.oth=P.oth||{};const k=t.dataset.oth;P.oth[k]=Math.max(0,(+P.oth[k]||0)+(+t.dataset.d));saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
@@ -1174,8 +1195,12 @@ function bindPage(r){
   if(r==='mastery'&&state.mTab==='all')liveSearch('#allq','allQ');
   if(r==='tenno'&&state.tTab==='inventory')liveSearch('#invq','invQ');
   if(r==='resources'&&state.resSel&&window.innerWidth<900&&!state.resQ)setTimeout(()=>$('#rdet')?.scrollIntoView({block:'start'}),30)}
-liveResurgence();if(P.wfid&&(!P.auto||Date.now()-new Date(P.auto)>6*3600e3))autoSync(true);
+liveResurgence();
+function bootSync(){if(HOSTED&&P.wfid&&(!P.auto||Date.now()-new Date(P.auto)>6*3600e3))autoSync(true)}
 setInterval(()=>{if(location.hash==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
 render();fbInit();
+document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();d.classList.add('over')}});
+document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d)d.classList.remove('over')});
+document.addEventListener('drop',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();d.classList.remove('over');const f=e.dataTransfer.files[0];if(f)readLog(f)}});
 })();
 </script>
