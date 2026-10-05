@@ -13,7 +13,7 @@ function demoStart(){if(DEMO)return;DEMO={c:JSON.stringify(C),p:JSON.stringify(P
   const c={};const m=k=>{c[kenc(k)]=1};const pool=MI.filter(i=>(i.mr||0)<=8).sort((a,b)=>(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n));
   pool.slice(0,62).forEach(i=>m('m|'+i.n));ALLN.filter(n=>!isJ(n)).slice(0,140).forEach(n=>m('n|'+n.id));Q.slice(0,14).forEach(q=>m('q|'+q.n));
   const now=Date.now();C=c;P={rk:{},other:0,intr:0,mr:null,name:'',at:'',adj:0,wfid:'',mc:{},inv:{},prof:{mr:11,name:'Sample Tenno'},tname:'Sample Tenno',onb:'demo',
-    foundry:[{id:'d1',n:'Nikana Prime',t0:now-4*36e5,dur:3*36e5},{id:'d2',n:'Rhino',t0:now,dur:3*864e5}],goals:['Saryn Prime','Nikana Prime'],
+    foundry:[{id:'d1',n:'Nikana Prime',t0:now-4*36e5,dur:3*3600},{id:'d2',n:'Rhino',t0:now,dur:3*86400}],goals:['Saryn Prime','Nikana Prime'],
     tasks:[{id:'t1',t:'Farm 10 Orokin Cells',k:'res',r:'Orokin Cell',d:0,at:now}],syn:{'Cephalon Suda':{r:2,s:46000},'Ostron':{r:1,s:4000}}};
   pool.slice(62,70).forEach((i,k)=>{P.rk[i.n]=10+k*2});
   lastMR=null;updateMR();document.body.classList.add('demo');if(location.hash&&location.hash!=='#home')location.hash='home';else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
