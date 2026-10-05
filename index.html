@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sdp/oJ2dBckph9Qm5ezErElgBn2HNjKsmfS7odASxtw=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7eiG5HR6vsGq1njfaPeFRws2l64d6Y/UhA/ok7z1X64=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -507,10 +507,10 @@ h1:focus{outline:none}
 @media (max-width:480px){.nextup .nu{grid-template-columns:minmax(0,1fr)}.nextup .nun{display:none}.nuact{gap:4px}.nuact .btn{padding-inline:10px}.nuact .ghost{margin-left:auto}}
 .ezr .ezt{grid-column:2}.ezr .mxc{grid-column:3}
 /* ---- identity: type, surfaces, controls (loaded last, so it sets the final look) ---- */
-@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/source-sans-3-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/source-sans-3-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/barlow-semi-condensed-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-semi-condensed-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/source-sans-3-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/source-sans-3-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/barlow-semi-condensed-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Semi Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/barlow-semi-condensed-latin-600-normal.woff2) format("woff2")}
 
 html,body{background:var(--bg)}
 body{font:15.5px/1.55 var(--f-body);background-image:none;font-variant-numeric:tabular-nums}
@@ -669,6 +669,25 @@ nav.tabs a{padding:14px 12px}
 .msheet-grip{position:absolute;left:50%;top:6px;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:var(--line2)}
 body.sheet-on{overflow:hidden}
 body.sheet-on::before{content:"";position:fixed;inset:0;z-index:44;background:color-mix(in srgb,#000 45%,transparent)}
+/* sign in */
+.signbtn{flex:none;order:0;height:40px;padding:0 14px;margin-left:auto;margin-right:10px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold);color:var(--gold-ink);font:600 14px var(--f-body);cursor:pointer}
+.signbtn[hidden]{display:none}
+.signbtn:not([hidden])+.srch{margin-left:0}
+.signbox{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--gold-dim);border-radius:var(--r);background:var(--panel)}
+.signtxt{display:flex;flex-direction:column;gap:2px;min-width:min(100%,260px);flex:1}
+.signtxt b{font:600 17px/1.25 var(--f-display)}
+.signbtns{display:flex;flex-wrap:wrap;gap:8px}
+.gbtn{background:#fff!important;color:#1f1f1f!important;border-color:#dadce0!important;gap:10px}
+.glogo{width:18px;height:18px;flex:none}
+.signbox.inmenu{flex-direction:column;align-items:stretch;border:0;padding:6px 6px 12px;margin-bottom:4px;border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+.signbox.inmenu .signbtns{flex-direction:column}
+.signbox.inmenu .btn{justify-content:center;min-height:44px}
+.drawer .sheet .signbox a.btn{border:1px solid var(--line2)}
+.melink{display:flex;align-items:center;min-height:46px;padding:0 12px;border:0;background:transparent;color:var(--ink);font:600 15px var(--f-body);text-align:left;border-radius:var(--r-sm);cursor:pointer}
+.melink:hover{background:var(--sunk)}
+@media (max-width:899px){.signbtn{padding:0 10px;margin-right:6px;font-size:13px}}
+@media (max-width:520px){.has-sign .mrb .t{display:none}.has-sign .bar-in{gap:6px}.has-sign .srch{margin-right:4px}}
+@media (max-width:360px){.has-sign .brand span{display:none}}
 /* ---- home ---- */
 .home2{display:flex;flex-direction:column;gap:16px}
 .mrcard{position:relative;display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel)}
@@ -786,7 +805,7 @@ body.typing .bnav{display:none}
     <span>Tenno<b>form</b></span>
   </a>
   <nav class="tabs" aria-label="Sections"></nav>
-  <button type="button" class="srch" id="srchbtn" aria-label="Search (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zM16 16l5 5"/></svg><span class="srcht">Search</span><kbd class="srchk">Ctrl K</kbd></button><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
+  <button type="button" class="signbtn" id="signbtn" hidden>Sign in</button><button type="button" class="srch" id="srchbtn" aria-label="Search (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zM16 16l5 5"/></svg><span class="srcht">Search</span><kbd class="srchk">Ctrl K</kbd></button><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
 </div></header>
 <main id="app"></main>
 <nav class="bnav" aria-label="Sections"></nav>
@@ -831,8 +850,8 @@ function subnav(key){const pl=placeOf(key);if(!pl||pl[3].length<2)return'';
 const navIcon=k=>`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[k]}"/></svg>`;
 $('nav.tabs').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${p[1]}</a>`).join('');
 $('.bnav').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${navIcon(PICON[p[0]])}${p[1]}</a>`).join('');
-function menuHTML(){const who=typeof acct!=='undefined'&&acct&&acct.kind==='fb'?`Signed in as <b>${esc(acct.name||acct.email||'you')}</b>`:'Not signed in · progress is saved on this device';
-  return `<div class="mehead small muted">${who}</div>${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}<div class="mefoot small">Theme ${themeSw()}</div>`}
+function menuHTML(){const who=signedIn()?`<div class="mehead small muted">Signed in as <b>${esc(acct.name||acct.email||'you')}</b></div>`:canAcct()?signBlock('inmenu'):'<div class="mehead small muted">Progress is saved on this device</div>';
+  return `${who}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
 function setMenu(o){const d=$('#drawer');if(o)$('#sheet').innerHTML=menuHTML();d.classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(()=>{const a=$('#sheet a');a&&a.focus()},30)}
 $('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classList.contains('open')));
 $('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
@@ -886,9 +905,9 @@ window.addEventListener('pagehide',flushNow);document.addEventListener('visibili
 }catch(e){}})();
 /* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
-async function fbInit(){if(!HOSTED)return;try{await loadScript('firebase-config.js')}catch(e){bootSync();return}bootSync();
+async function fbInit(){if(!HOSTED)return;try{await loadScript('/firebase-config.js')}catch(e){bootSync();return}bootSync();
   let cfg=window.TENNO_FIREBASE;if(!cfg||!cfg.apiKey){FBST='off';render();return}
-  const B='vendor/firebase-10.12.2/';
+  const B='/vendor/firebase-10.12.2/';
   try{await loadScript(B+'firebase-app-compat.js');await loadScript(B+'firebase-auth-compat.js');await loadScript(B+'firebase-firestore-compat.js')}catch(e){FBST='off';render();return}
   if(window.TENNO_SELF_AUTH&&location.hostname==='tennoform.com'&&(STANDALONE||IOS))cfg=Object.assign({},cfg,{authDomain:'tennoform.com'});
   firebase.initializeApp(cfg);const auth=firebase.auth();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}const fs=firebase.firestore();if(window.TENNO_EMU){auth.useEmulator('http://127.0.0.1:9099');fs.useEmulator('127.0.0.1',8085)}FB={auth,fs};FBST='ready';render();
@@ -940,7 +959,7 @@ const mrNeed=m=>m<=30?2500*m*m:2250000+(m-30)*147500;
 function mrInfo(x){let mr=0;while(mr<30&&mrNeed(mr+1)<=x)mr++;if(mr===30)mr=30+Math.max(0,Math.floor((x-2250000)/147500));
   const cur=mrNeed(mr),next=mrNeed(mr+1);return {mr,cur,next,pct:Math.max(0,Math.min(100,(x-cur)/(next-cur)*100))}}
 const mrLabel=m=>m>30?'L'+(m-30):String(m);
-function updateMR(){{const mi=$('#mei');if(mi){const on=!!(acct&&acct.kind==='fb');mi.hidden=!on;mi.textContent=on?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'';$('#hamb').classList.toggle('in',on)}}const ab=$('#acctbtn');if(ab){ab.hidden=!(HOSTED&&FB);ab.textContent=acct&&acct.kind==='fb'?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'Sign in';ab.classList.toggle('in',!!(acct&&acct.kind==='fb'));document.body.classList.toggle('has-acct',!ab.hidden)}const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
+function updateMR(){{const mi=$('#mei');if(mi){const on=!!(acct&&acct.kind==='fb');mi.hidden=!on;mi.textContent=on?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'';$('#hamb').classList.toggle('in',on)}const sb=$('#signbtn');if(sb){sb.hidden=!(canAcct()&&!signedIn());document.body.classList.toggle('has-sign',!sb.hidden)}}const ab=$('#acctbtn');if(ab){ab.hidden=!(HOSTED&&FB);ab.textContent=acct&&acct.kind==='fb'?((acct.name||acct.email||'?').trim()[0]||'?').toUpperCase():'Sign in';ab.classList.toggle('in',!!(acct&&acct.kind==='fb'));document.body.classList.toggle('has-acct',!ab.hidden)}const t=totalXP(),m=mrInfo(t.total);$('#mrb-n').textContent=mrLabel(m.mr);$('#mrb-t').textContent=(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr);
   $('#mrb-s').textContent=fmt(m.next-t.total)+' XP to next';$('#mrb-r').style.setProperty('--p',m.pct.toFixed(1));const b=$('#bigmr');if(b)b.outerHTML=bigMR();const hh=$('#hero');if(hh)hh.outerHTML=heroHTML();if(typeof rkHdr==='function')rkHdr()}
 
 /* ---------- linking ---------- */
@@ -2027,8 +2046,7 @@ function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.pro
    <div class="small muted bdlab">Where your Mastery XP comes from</div>
    <div class="bdbar" role="img" aria-label="Mastery XP by source: ${parts.map(p=>p[0]+' '+fmt(p[1])).join(', ')}">${parts.map(p=>`<i style="width:${(p[1]/sum*100).toFixed(2)}%;background:${p[2]}"></i>`).join('')}</div>
    <div class="bdleg small">${parts.map(p=>`<span><i style="background:${p[2]}" aria-hidden="true"></i>${p[0]} <b>${fmt(p[1])}</b></span>`).join('')}</div>
-   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a><button type="button" class="linkbtn small" data-share>Share progress</button></div>
-   ${!isNew()&&HOSTED&&FB&&!synced?`<div class="small muted mrsave">Saved on this device only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep it on every device.</div>`:''}</section>`}
+   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a><button type="button" class="linkbtn small" data-share>Share progress</button></div></section>`}
 
 /* since last time: compare with the totals from the previous visit (at least 30 minutes ago) */
 let SEEN=null;
@@ -2056,7 +2074,7 @@ function homeGoals(){const g=(P.goals||[]).filter(n=>I[n]&&!on('build|'+n));
    :`<p class="small muted" style="margin:0">Nothing tracked. Open any item and choose <b>Track</b>.</p>`}</section>`}
 
 function home(){if(state.qs)return `<div class="stack">${quickStart()}</div>`;if(isNew())return `<div class="stack">${welcome()}</div>`;
-  return `<div class="home2">${mrCard()}${sinceLast()}
+  return `<div class="home2">${mrCard()}${signBlock('home')}${sinceLast()}
    <div class="hgrid"><div class="hmain">${nextCard()}</div><div class="hside">${todayStrip()}${homeGoals()}${taskPanel()}</div></div></div>`}
 /* ---------- first visit: sync first, quick start, or look around a sample account ---------- */
 function welcome(){return `<section class="welcome"><div class="wl">${LOGO_HTML()}<div><h1>Know what to rank next</h1><p class="lede" style="margin:4px 0 0;display:block">Tennoform reads your Warframe profile and tells you what to master, farm and do before reset.</p></div></div>
@@ -2065,7 +2083,7 @@ function welcome(){return `<section class="welcome"><div class="wl">${LOGO_HTML(
   <button type="button" class="wchoice" data-qsopen><b>Quick start</b><span class="small muted">Enter your Mastery Rank and tick the gear you've maxed. About a minute.</span><span class="wgo">Start →</span></button>
   <button type="button" class="wchoice" data-demo><b>Look around first</b><span class="small muted">Open a sample MR 11 account. Nothing is saved.</span><span class="wgo">Open sample →</span></button>
  </div>
- <div class="small muted">${HOSTED&&FB?'Already use Tennoform? <a class="ln" href="#tenno" data-ttab="account">Sign in</a>. ':''}Or <button type="button" class="linkbtn" data-onb="manual">track every item by hand</button>.</div></section>`}
+ ${signBlock('welcome')}<div class="small muted">Or <button type="button" class="linkbtn" data-onb="manual">track every item by hand</button>.</div></section>`}
 
 /* sample account: swaps in made-up progress, saves nothing, and puts everything back on exit */
 let DEMO=null;
@@ -2105,6 +2123,15 @@ async function shareCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tnam
   if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'My Warframe progress'});return}catch(e){if(e&&e.name==='AbortError')return}}
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tennoform-progress.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast('Image saved')}
 document.addEventListener('click',e=>{if(e.target.closest('[data-share]'))shareCard()});
+/* ---------- accounts front and centre: sign in from the header, the menu, home and the first visit ---------- */
+function canAcct(){return HOSTED&&!!(window.TENNO_FIREBASE&&window.TENNO_FIREBASE.apiKey)}
+function signedIn(){return !!(acct&&acct.kind==='fb')}
+const G_LOGO='<svg class="glogo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.2C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.2 5.6c4.2-3.9 7.1-9.6 7.1-17.1z"/><path fill="#FBBC05" d="M10.6 28.5c-.5-1.4-.8-2.9-.8-4.5s.3-3.1.8-4.5l-7.9-6.2C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.2-5.6c-2 1.4-4.7 2.3-8.7 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.2C6.6 42.6 14.6 48 24 48z"/></svg>';
+function signBlock(where){if(!canAcct()||signedIn())return'';
+  return `<div class="signbox ${where||''}"><div class="signtxt"><b>Save your progress to an account</b><span class="small muted">Free. Sign in on any phone or computer and your ranks, goals, tasks and friends are there.</span></div>
+   <div class="signbtns"><button type="button" class="btn gbtn" data-google>${G_LOGO}Continue with Google</button><a class="btn" href="#tenno" data-ttab="account">Sign up or sign in with email</a></div></div>`}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-google]');if(!g)return;if(typeof setMenu==='function')setMenu(false);if(!FB){toast('Sign-in is still loading. Try again in a moment.');return}signGoogle()});
+document.addEventListener('click',e=>{if(e.target.closest('#signbtn')){setMenu(true)}});
 /* ---------- ranks ---------- */
 function ranks(){const cat=state.rkCat||'Warframe';const q=(state.rkQ||'').toLowerCase();const f=state.rkF||'all';{const _k=cat+'|'+q+'|'+f+'|'+(state.rkS||'');if(state._rkKey!==_k){state._rkKey=_k;state.rkLim=60}}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c));

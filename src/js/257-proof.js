@@ -5,7 +5,7 @@ function welcome(){return `<section class="welcome"><div class="wl">${LOGO_HTML(
   <button type="button" class="wchoice" data-qsopen><b>Quick start</b><span class="small muted">Enter your Mastery Rank and tick the gear you've maxed. About a minute.</span><span class="wgo">Start →</span></button>
   <button type="button" class="wchoice" data-demo><b>Look around first</b><span class="small muted">Open a sample MR 11 account. Nothing is saved.</span><span class="wgo">Open sample →</span></button>
  </div>
- <div class="small muted">${HOSTED&&FB?'Already use Tennoform? <a class="ln" href="#tenno" data-ttab="account">Sign in</a>. ':''}Or <button type="button" class="linkbtn" data-onb="manual">track every item by hand</button>.</div></section>`}
+ ${signBlock('welcome')}<div class="small muted">Or <button type="button" class="linkbtn" data-onb="manual">track every item by hand</button>.</div></section>`}
 
 /* sample account: swaps in made-up progress, saves nothing, and puts everything back on exit */
 let DEMO=null;

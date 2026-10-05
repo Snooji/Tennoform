@@ -14,8 +14,7 @@ function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.pro
    <div class="small muted bdlab">Where your Mastery XP comes from</div>
    <div class="bdbar" role="img" aria-label="Mastery XP by source: ${parts.map(p=>p[0]+' '+fmt(p[1])).join(', ')}">${parts.map(p=>`<i style="width:${(p[1]/sum*100).toFixed(2)}%;background:${p[2]}"></i>`).join('')}</div>
    <div class="bdleg small">${parts.map(p=>`<span><i style="background:${p[2]}" aria-hidden="true"></i>${p[0]} <b>${fmt(p[1])}</b></span>`).join('')}</div>
-   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a><button type="button" class="linkbtn small" data-share>Share progress</button></div>
-   ${!isNew()&&HOSTED&&FB&&!synced?`<div class="small muted mrsave">Saved on this device only. <a class="ln" href="#tenno" data-ttab="account">Sign in</a> to keep it on every device.</div>`:''}</section>`}
+   <div class="row mract">${act}<a class="btn" href="#ranks">Update ranks</a><a class="ln small" href="#tenno" data-ttab="breakdown">Full breakdown</a><button type="button" class="linkbtn small" data-share>Share progress</button></div></section>`}
 
 /* since last time: compare with the totals from the previous visit (at least 30 minutes ago) */
 let SEEN=null;
@@ -43,5 +42,5 @@ function homeGoals(){const g=(P.goals||[]).filter(n=>I[n]&&!on('build|'+n));
    :`<p class="small muted" style="margin:0">Nothing tracked. Open any item and choose <b>Track</b>.</p>`}</section>`}
 
 function home(){if(state.qs)return `<div class="stack">${quickStart()}</div>`;if(isNew())return `<div class="stack">${welcome()}</div>`;
-  return `<div class="home2">${mrCard()}${sinceLast()}
+  return `<div class="home2">${mrCard()}${signBlock('home')}${sinceLast()}
    <div class="hgrid"><div class="hmain">${nextCard()}</div><div class="hside">${todayStrip()}${homeGoals()}${taskPanel()}</div></div></div>`}

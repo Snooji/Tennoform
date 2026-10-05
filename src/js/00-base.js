@@ -36,8 +36,8 @@ function subnav(key){const pl=placeOf(key);if(!pl||pl[3].length<2)return'';
 const navIcon=k=>`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="${ICON[k]}"/></svg>`;
 $('nav.tabs').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${p[1]}</a>`).join('');
 $('.bnav').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${navIcon(PICON[p[0]])}${p[1]}</a>`).join('');
-function menuHTML(){const who=typeof acct!=='undefined'&&acct&&acct.kind==='fb'?`Signed in as <b>${esc(acct.name||acct.email||'you')}</b>`:'Not signed in · progress is saved on this device';
-  return `<div class="mehead small muted">${who}</div>${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}<div class="mefoot small">Theme ${themeSw()}</div>`}
+function menuHTML(){const who=signedIn()?`<div class="mehead small muted">Signed in as <b>${esc(acct.name||acct.email||'you')}</b></div>`:canAcct()?signBlock('inmenu'):'<div class="mehead small muted">Progress is saved on this device</div>';
+  return `${who}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
 function setMenu(o){const d=$('#drawer');if(o)$('#sheet').innerHTML=menuHTML();d.classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(()=>{const a=$('#sheet a');a&&a.focus()},30)}
 $('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classList.contains('open')));
 $('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
