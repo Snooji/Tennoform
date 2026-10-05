@@ -16,6 +16,7 @@ import { FarmPage } from "@/pages/farm/farm-page"
 import { TodayPage } from "@/pages/today/today-page"
 import { AchievementsPage } from "@/pages/achievements/achievements-page"
 import { TasksPage } from "@/pages/tasks/tasks-page"
+import { GoalsPage } from "@/pages/goals/goals-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
@@ -25,6 +26,7 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   today: TodayPage,
   achievements: AchievementsPage,
   tasks: TasksPage,
+  goals: GoalsPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 

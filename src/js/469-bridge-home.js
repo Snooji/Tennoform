@@ -39,7 +39,7 @@ Object.assign(window.TF,{
   nuDone:i=>tfAct('button',{'data-nudone':String(i)}),
   nuSnooze:i=>tfAct('button',{'data-nusnz':String(i)}),
   nuUnsnooze:()=>tfAct('button',{id:'nuunsnz'}),
-  addTaskFrom:(key,label)=>tfAct('button',{'data-addtask':key,'data-tlabel':label||''}),
+  addTaskFrom:(key,label)=>{tfAct('button',{'data-addtask':key,'data-tlabel':label||''});tfNotify()},
   taskDone:async(id,v)=>{await toggleTask(id,v);if(v){const x=(P.tasks||[]).find(t=>t.id===id);toastAction((x?x.t:'Task')+' done','Undo',async()=>{await toggleTask(id,false);rerender()})}rerender()},
   addTask:text=>{const v=String(text||'').trim();if(!v)return false;const r=addTask('note',v,v);rerender();return !!r},
   sync:()=>tfAct('button',{id:'autosync'}),

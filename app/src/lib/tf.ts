@@ -81,6 +81,10 @@ export type TFApi = {
   taskDel(id: string): void
   taskClearDone(): void
   taskInvite(id: string, uid: string): void
+  goals(): GoalsData
+  goalsSet(o: { s?: string; short?: boolean }): void
+  goalRemove(n: string): void
+  setInv(n: string, v: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -152,6 +156,12 @@ export type TaskRow = {
 export type TasksData = {
   filter: string; sort: string; todo: number; done: number; signedIn: boolean
   friends: { uid: string; name: string }[]; list: TaskRow[]
+}
+export type GoalsData = {
+  sort: string; short: boolean; credits: number
+  goals: { name: string; img: string; done: number; total: number; xp: number; built: boolean; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null }[]
+  shop: { n: string; need: number; have: number | null; left: number; where: string; task: { has: boolean; key: string; label: string } }[]
+  relics: { era: string; relics: string[] }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void
