@@ -123,6 +123,8 @@ export type TFApi = {
   arcAdj(n: string, d: number): void
   arcSet(n: string, v: string): void
   lichSet(n: string, o: { e?: string; b?: string }): void
+  tenno(): TennoData
+  tennoSet(o: { tab?: string; q?: string }): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -291,6 +293,10 @@ export type ArsenalData = {
   q?: string; type?: string; sort?: string; types?: string[]; count?: number; owned?: number; maxed?: number
   arcs?: { n: string; go: string; copies: number; need: number; maxRank: number; rank: number; price: string; type: string; uses: string[]; drops: string }[]
   mods?: { n: string; go: string; key: string; done: boolean; price: string; type: string; uses: number; src: string }[]
+}
+export type TennoData = {
+  tab: string; tabs: { value: string; label: string }[]; name: string; synced: string; inGame: string; mrLabel: string; pct: number; showSign: boolean; html: string
+  q?: string; total?: number; inv?: { n: string; have: number | null }[]
 }
 export type TFUi = {
   toast?: (text: string, action?: { label: string; fn: () => void }) => void

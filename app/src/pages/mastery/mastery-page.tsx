@@ -155,9 +155,11 @@ export function MasteryPage() {
         </Card>
       </header>
       <Tabs value={d.tab} onValueChange={(v) => tf().masterySet({ tab: String(v) })}>
-        <TabsList className="h-auto max-w-full flex-wrap justify-start">
-          {TABS.map((t) => <TabsTrigger key={t.value} value={t.value} className="h-8 flex-none px-3">{t.label}</TabsTrigger>)}
+        <div className="-mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
+        <TabsList className="min-w-max justify-start">
+          {TABS.map((t) => <TabsTrigger key={t.value} value={t.value} className="flex-none px-3">{t.label}</TabsTrigger>)}
         </TabsList>
+        </div>
       </Tabs>
       {d.tab === "path" ? <Path d={d} /> : null}
       {d.tab === "ladder" ? <Ladder d={d} /> : null}
