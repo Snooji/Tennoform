@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-dl/RnDwmN06AFfkh074Mmy3pEZa1f+tw9mknk8Y2Mbg=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-RQ8eDjHsONfXpxmGhg+IjCuMqmvLZZPeandgkNNyuX0=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 
@@ -842,6 +842,12 @@ body.typing .bnav{display:none}
 .lgb{height:56px;width:100%;max-width:36px;display:flex;align-items:flex-end;background:var(--sunk);border-radius:4px;overflow:hidden}
 .lgb i{display:block;width:100%;background:var(--gold);border-radius:4px 4px 0 0;min-height:2px}
 @media (max-width:560px){.lgrow{grid-template-columns:24px minmax(0,1fr) auto}.lgrow .chip.mxc{grid-column:2;justify-self:start}.lgrow .btn,.lgrow .lgnote{grid-row:1;grid-column:3}}
+
+/* footer: support, feedback and what's new on every page */
+.footcta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.footcta .btn{min-height:36px}
+.footcta .ic{width:14px;height:14px}
+body:has(#tf-home-links) .footcta{display:none}
 </style>
 
 <header class="bar"><div class="bar-in">
@@ -893,7 +899,7 @@ const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 
 const PLACES=[['home','Home','home',['home']],['plan','Plan','ranks',['ranks','mastery','goals','tasks','missions','quests']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','friends',['friends']]];
 const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
 const SUBL={ranks:'Ranks',mastery:'MR plan',goals:'Goals',tasks:'Tasks',missions:'Star chart',quests:'Quests',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements'};
-const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about',"About & what's new"]];
+const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about','About & privacy']];
 const BAR=PLACES.flatMap(p=>p[3]);
 const PL=Object.fromEntries(PAGES);PL.admin='Backend';
 const GROUPS=PLACES.filter(p=>p[3].length>1).map(p=>[p[1],p[3]]).concat([['More',MENU.map(m=>m[0])]]);
@@ -907,7 +913,7 @@ const navIcon=k=>`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true
 $('nav.tabs').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${p[1]}</a>`).join('');
 $('.bnav').innerHTML=PLACES.map(p=>`<a href="#${p[2]}" data-place="${p[0]}">${navIcon(PICON[p[0]])}${p[1]}</a>`).join('');
 function menuHTML(){const who=signedIn()?`<div class="mehead small muted">Signed in as <b>${esc(acct.name||acct.email||'you')}</b></div>`:canAcct()?signBlock('inmenu'):'<div class="mehead small muted">Progress is saved on this device</div>';
-  return `${who}${typeof FBK!=='undefined'&&FBK.admin?'<a href="#admin">Backend</a>':''}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
+  return `${who}${typeof FBK!=='undefined'&&FBK.admin?'<a href="#admin">Backend</a>':''}${MENU.map(([r,l])=>`<a href="#${r}">${l}</a>`).join('')}<a href="#about" data-about="changes">What's new</a>${signedIn()?'<button type="button" class="melink" id="lgout">Sign out</button>':''}<div class="mefoot small">Theme ${themeSw()}</div>`}
 function setMenu(o){const d=$('#drawer');if(o)$('#sheet').innerHTML=menuHTML();d.classList.toggle('open',o);$('#hamb').setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(()=>{const a=$('#sheet a');a&&a.focus()},30)}
 $('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classList.contains('open')));
 $('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
@@ -1601,7 +1607,7 @@ const CHANGES=[
  ['2026-10-05','Big usability update: welcome screen with two clear starts, customizable dashboard with a reasoned Next up list, undo for rank changes, sync, restores and hidden checklist items, need/have/left shopping lists that turn into tasks, task notes, repeats and due dates, your own daily/weekly checklist items, syndicate side effects, farms marked for your stage, phone-friendly layout with larger tap targets, full accessibility pass, block and report for friends, About & privacy page, delete-account option.'],
  ['2026-10-05','Security hardening, stay signed in on the iPhone home-screen app, feedback page, group chats, friends and messages, shared tasks, live sync across devices.'],
  ['2026-10-04','Tennoform launched: mastery tracking, star chart, quests, syndicates, resources, relics, market prices, builds.']];
-const LOGO_HTML=()=>{const l=document.querySelector('.brand .logo');return l?l.outerHTML:''};
+const LOGO_HTML=()=>{const l=document.getElementById('tf-logo');return l?l.innerHTML.trim():''};
 function isNew(){return !P.onb&&!P.at&&!Object.keys(P.rk||{}).length&&Object.keys(C).length<3&&!(P.tasks||[]).length&&!synced}
 function welcome(){return `<section class="welcome cut"><div class="wl">${LOGO_HTML()}<div><div class="eyebrow">Welcome, Tenno</div><h1>Tennoform</h1><p class="lede" style="margin:4px 0 0">${PITCH}</p></div></div>
  <div class="wchoices">
@@ -1620,7 +1626,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   const g=age(D.meta.built),p=age(D.meta.prices);const gk=g==null||g<21?'ok':'warn',pk=p==null||p<3?'ok':'warn';
   const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
-function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
+function siteFoot(){return `<footer class="sitefoot"><div class="footcta" role="navigation" aria-label="Tennoform"><a class="btn sm primary" href="#donate">${ic('star','fill')}Support Tennoform</a><a class="btn sm" href="#feedback">Send feedback</a><a class="btn sm" href="#about" data-about="changes">What's new</a></div><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
@@ -1667,7 +1673,7 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
 /* ---- v14 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-onb],#wsretry,#undosync,#clearimp,#delacct,[data-about]');if(!t)return;
   if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';location.hash='ranks'}else if(t.dataset.onb==='import'){state.tTab='account';location.hash='tenno'}else rerender();return}
-  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}return}
+  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
   if(t.id==='wsretry'){WSat=0;WSerr=false;const p=loadWS();rerender();await p;rerender();return}
   if(t.id==='undosync'){const s=lsGet('tf-presync',null);if(!s)return;C=s.C||{};for(const k in P)delete P[k];Object.assign(P,s.P||{});lsSet('tenno-codex',C);try{localStorage.removeItem('tf-presync')}catch(err){}pushAll();updateMR();rerender();toast('Sync undone. Everything is back the way it was.');return}
   if(t.id==='clearimp'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again to clear';return}

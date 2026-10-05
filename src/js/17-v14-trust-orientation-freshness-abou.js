@@ -5,7 +5,7 @@ const CHANGES=[
  ['2026-10-05','Big usability update: welcome screen with two clear starts, customizable dashboard with a reasoned Next up list, undo for rank changes, sync, restores and hidden checklist items, need/have/left shopping lists that turn into tasks, task notes, repeats and due dates, your own daily/weekly checklist items, syndicate side effects, farms marked for your stage, phone-friendly layout with larger tap targets, full accessibility pass, block and report for friends, About & privacy page, delete-account option.'],
  ['2026-10-05','Security hardening, stay signed in on the iPhone home-screen app, feedback page, group chats, friends and messages, shared tasks, live sync across devices.'],
  ['2026-10-04','Tennoform launched: mastery tracking, star chart, quests, syndicates, resources, relics, market prices, builds.']];
-const LOGO_HTML=()=>{const l=document.querySelector('.brand .logo');return l?l.outerHTML:''};
+const LOGO_HTML=()=>{const l=document.getElementById('tf-logo');return l?l.innerHTML.trim():''};
 function isNew(){return !P.onb&&!P.at&&!Object.keys(P.rk||{}).length&&Object.keys(C).length<3&&!(P.tasks||[]).length&&!synced}
 function welcome(){return `<section class="welcome cut"><div class="wl">${LOGO_HTML()}<div><div class="eyebrow">Welcome, Tenno</div><h1>Tennoform</h1><p class="lede" style="margin:4px 0 0">${PITCH}</p></div></div>
  <div class="wchoices">
@@ -24,7 +24,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   const g=age(D.meta.built),p=age(D.meta.prices);const gk=g==null||g<21?'ok':'warn',pk=p==null||p<3?'ok':'warn';
   const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
-function siteFoot(){return `<footer class="sitefoot"><div class="feeds">${feedStatus()}</div>
+function siteFoot(){return `<footer class="sitefoot"><div class="footcta" role="navigation" aria-label="Tennoform"><a class="btn sm primary" href="#donate">${ic('star','fill')}Support Tennoform</a><a class="btn sm" href="#feedback">Send feedback</a><a class="btn sm" href="#about" data-about="changes">What's new</a></div><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
  <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
@@ -71,7 +71,7 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
 /* ---- v14 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-onb],#wsretry,#undosync,#clearimp,#delacct,[data-about]');if(!t)return;
   if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';location.hash='ranks'}else if(t.dataset.onb==='import'){state.tTab='account';location.hash='tenno'}else rerender();return}
-  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}return}
+  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
   if(t.id==='wsretry'){WSat=0;WSerr=false;const p=loadWS();rerender();await p;rerender();return}
   if(t.id==='undosync'){const s=lsGet('tf-presync',null);if(!s)return;C=s.C||{};for(const k in P)delete P[k];Object.assign(P,s.P||{});lsSet('tenno-codex',C);try{localStorage.removeItem('tf-presync')}catch(err){}pushAll();updateMR();rerender();toast('Sync undone. Everything is back the way it was.');return}
   if(t.id==='clearimp'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again to clear';return}
