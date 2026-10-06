@@ -1,5 +1,5 @@
-/* ---- places: five sections, sub-tabs, avatar menu ---- */
-.me{flex:none;position:relative;display:grid;place-items:center;width:40px;height:40px;margin-left:8px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--muted);cursor:pointer}
+/* ---- places: five sections,sub-tabs,avatar menu ---- */
+.me{flex:none;position:relative;display:grid;place-items:center;width:40px;height:40px;margin-left:8px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--ink2);cursor:pointer}
 .me:hover,.me[aria-expanded="true"]{color:var(--ink);border-color:var(--ink)}
 .me.in svg{display:none}
 .me .mei{font:600 16px/1 var(--f-display);color:var(--ink)}
@@ -8,20 +8,20 @@ nav.tabs{gap:4px}
 nav.tabs a{padding:14px 12px}
 .subnav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:-6px -12px 14px;padding:0;border-bottom:1px solid var(--line)}
 .subnav::-webkit-scrollbar{display:none}
-.subnav a{flex:none;display:flex;align-items:center;min-height:44px;padding:0 12px;color:var(--muted);text-decoration:none;font:600 15px/1 var(--f-body);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.subnav a{flex:none;display:flex;align-items:center;min-height:44px;padding:0 12px;color:var(--ink2);text-decoration:none;font:600 15px/1 var(--f-body);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .subnav a:hover{color:var(--ink)}
 .subnav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
 /* page openers: the section tabs already say where you are */
 .head>.eyebrow,.head>.lede{display:none}
 .head{padding-bottom:0}
-/* avatar menu: dropdown on desktop, bottom sheet on phones */
+/* avatar menu: dropdown on desktop,bottom sheet on phones */
 .drawer.open{display:block;position:fixed;inset:0;z-index:40;background:color-mix(in srgb,#000 35%,transparent)}
 .drawer .sheet{display:flex!important;flex-direction:column;gap:2px;padding:10px!important;border:1px solid var(--line2)}
 .drawer .sheet a{display:flex;align-items:center;min-height:46px;padding:0 12px;border:0;background:transparent;color:var(--ink);text-decoration:none;font:600 15px var(--f-body);border-radius:var(--r-sm)}
 .drawer .sheet a:hover,.drawer .sheet a:focus-visible{background:var(--sunk)}
 .drawer .sheet a[aria-current="page"]{background:var(--sunk);color:var(--ink)}
 .mehead{padding:8px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:4px;overflow-wrap:anywhere}
-.mefoot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px 4px;border-top:1px solid var(--line);margin-top:4px;color:var(--muted)}
+.mefoot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px 4px;border-top:1px solid var(--line);margin-top:4px;color:var(--ink2)}
 @media (min-width:900px){.drawer .sheet{position:absolute;top:58px;left:auto!important;right:max(12px,calc((100vw - 1480px)/2 + 12px));width:320px!important;max-height:calc(100vh - 80px);overflow:auto;border-radius:var(--r);box-shadow:0 12px 40px color-mix(in srgb,#000 35%,transparent)}}
 @media (max-width:899px){.drawer .sheet{position:absolute;top:auto!important;left:0!important;right:0;bottom:0;width:auto!important;border-radius:var(--r) var(--r) 0 0;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px))!important}
   .subnav{margin-top:-8px}}

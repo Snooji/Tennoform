@@ -30,7 +30,7 @@ function refresh(root){(root||document).querySelectorAll('[data-scope]').forEach
   const p=sc.querySelector(':scope > summary .prog, :scope > .obj-h .prog');if(p){p.querySelector('.fill').style.width=(all.length?n/all.length*100:0)+'%';p.querySelector('.txt').textContent=n+'/'+all.length}})}
 function ck(k,cls){return `<input type="checkbox" class="ck ${cls||''}" data-k="${esc(k)}" ${on(k)?'checked':''} aria-label="Mark done">`}
 function step(k,label,body){return `<li class="step${on(k)?' done':''}">${ck(k)}<div><div class="lbl">${label}</div>${body?`<div class="src">${body}</div>`:''}</div></li>`}
-function toast(t){document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3200)}
+function toast(t){if(window.TF_UI&&TF_UI.toast){TF_UI.toast(t);return}document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),3200)}
 function vaultChip(it){if(!it||!it.p)return'';const v=VAULT[it.n]||{};
   if(v.now)return `<span class="chip ok">Resurgence until ${fdate(v.now)}</span>`;
   if(it.v)return `<span class="chip bad">Vaulted${v.est?' · back ~'+fdate(v.est):''}</span>`;

@@ -1,13 +1,15 @@
 <title>Tennoform</title>
-<meta name="theme-color" content="#0C0C0E" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#100f0d">
 
 
 
-<style>/*CSS*/</style>
+<style>@layer legacy{
+/*CSS*/
+}</style>
 
-<header class="bar"><div class="bar-in">
-  <a class="brand" href="#home" aria-label="Home">
-    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+<div id="app" tabindex="-1"></div>
+<div id="tf-root"></div>
+<template id="tf-logo"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
 <defs>
 <linearGradient id="tfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEBB5"/><stop offset=".45" stop-color="#D9B45E"/><stop offset="1" stop-color="#8A6526"/></linearGradient>
 <radialGradient id="tfv" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#E9FBFF"/><stop offset=".35" stop-color="#6FD6E8"/><stop offset="1" stop-color="#0E3B46"/></radialGradient>
@@ -18,15 +20,7 @@
 <circle cx="32" cy="32" r="8.2" fill="#0A0F14" stroke="url(#tfg)" stroke-width="2"/>
 <circle cx="32" cy="32" r="4.6" fill="url(#tfv)"/>
 <circle cx="32" cy="9.5" r="1.6" fill="url(#tfg)"/><circle cx="32" cy="54.5" r="1.6" fill="url(#tfg)"/>
-</svg>
-    <span>Tenno<b>form</b></span>
-  </a>
-  <nav class="tabs" aria-label="Sections"></nav>
-  <button type="button" class="signbtn" id="signbtn" hidden>Sign in</button><button type="button" class="srch" id="srchbtn" aria-label="Search (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zM16 16l5 5"/></svg><span class="srcht">Search</span><kbd class="srchk">Ctrl K</kbd></button><a class="mrb" href="#mastery" id="mrb" aria-label="Your mastery rank"><span class="t"><b id="mrb-t">MR 0</b><small id="mrb-s">0 XP</small></span><span class="ring" id="mrb-r"><span id="mrb-n">0</span></span></a><button type="button" class="me" id="hamb" aria-label="Account, settings and more" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z"/></svg><span class="mei" id="mei" hidden></span></button>
-</div></header>
-<main id="app"></main>
-<nav class="bnav" aria-label="Sections"></nav>
-<div class="drawer" id="drawer"><div class="sheet" id="sheet"></div></div>
+</svg></template>
 
 <script id="data" type="application/json">/*DATA*/</script>
 <script>/*JS*/</script>
