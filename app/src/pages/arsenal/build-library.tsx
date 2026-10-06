@@ -134,7 +134,7 @@ export function BuildLibrary() {
         ))}
         {d.shared.online ? <Button variant="ghost" className="h-9" onClick={() => tf().buildLibReload()} disabled={d.shared.loading}><RefreshCw className={cn(d.shared.loading && "animate-spin")} /> Refresh</Button> : null}
       </div>
-      {d.shared.err ? <p className="text-sm text-muted-foreground">Player builds couldn't load right now. Community picks are still here.</p> : null}
+      {d.shared.err ? <p className="text-sm text-muted-foreground">Player builds are offline for a moment. Top community builds below still work.</p> : null}
       {d.src === "players" && !d.shared.loading && !d.shared.count ? (
         <p className="rounded-2xl border border-dashed px-4 py-3 text-sm text-muted-foreground">No player builds yet. Make one under <b className="font-medium text-foreground">My builds</b> and share it to be the first.</p>
       ) : null}

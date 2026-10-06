@@ -13,6 +13,7 @@ import { DemoBanner } from "@/components/shell/demo-banner"
 import { HomePage } from "@/pages/home/home-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
+import { useNavReset } from "@/lib/nav-reset"
 
 /* Each page loads on first visit; Home ships with the shell. */
 const RanksPage = lazy(() => import("@/pages/ranks/ranks-page").then((m) => ({ default: m.RanksPage })))
@@ -85,6 +86,7 @@ export default function App() {
   const Page = PAGES[s.route]
   useAccent(s.mr, s.pct)
   const [menuOpen, setMenuOpen] = useState(false)
+  useNavReset(() => { setSearchOpen(false); setMenuOpen(false) })
 
   useEffect(() => {
     window.TF_UI = {

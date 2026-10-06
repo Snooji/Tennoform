@@ -10,7 +10,7 @@ function bpSource(it,note){const n=it.n;
   let h='';if(it.bpd&&it.bpd.length)h+=dropsList(it.bpd,2);
   if(it.bc)h+=(h?'<br>':'')+`Buy the blueprint in the in-game <b>Market for ${fmt(it.bc)} credits</b>`;
   if(it.dr&&it.dr.length&&!it.bpd)h+=(h?'<br>':'')+dropsList(it.dr,2);
-  if(note)h+=(h?'<br>':'')+`<b>Your sheet:</b> ${esc(note)}`;
+  if(note)h+=(h?'<br>':'')+`<b>Tip:</b> ${esc(note)}`;
   const qs=Q.filter(q=>q.rw.some(r=>r.toLowerCase().startsWith(n.toLowerCase()+' ')));
   if(qs.length)h+=(h?'<br>':'')+`Quest reward: ${qs.map(q=>`<a class="ln" href="#quests" data-q="${esc(q.n)}">${esc(q.n)}</a>`).join(', ')}`;
   if(!h)h=`Special source (syndicate, vendor or event). ${it.w?`<a href="${it.w}" target="_blank" rel="noopener">Wiki</a>`:''}`;

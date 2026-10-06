@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTF, useTFData, type RankItem } from "@/lib/tf"
+import { useNavReset } from "@/lib/nav-reset"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Thumb } from "@/components/tf/thumb"
 import { Island } from "@/components/tf/island"
@@ -143,6 +144,7 @@ export function RanksPage() {
   })
   const [q, setQ] = useState(d.q)
   const [confirm, setConfirm] = useState(false)
+  useNavReset(() => setConfirm(false))
   useEffect(() => {
     const t = window.setTimeout(() => {
       if (q !== d.q) tf().ranksSet({ q })

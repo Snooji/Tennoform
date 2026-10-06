@@ -15,8 +15,8 @@ import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Helper } from "./helper"
 
 const TABS = [
-  { value: "path", label: "Path to max" }, { value: "helper", label: "Helper" }, { value: "ladder", label: "Rank ladder" }, { value: "sheet", label: "Sheet MR 0–12" },
-  { value: "sframes", label: "Sheet frames" }, { value: "craft", label: "Craft-ups" }, { value: "xp", label: "XP farms" },
+  { value: "path", label: "Path to max" }, { value: "helper", label: "Quick wins" }, { value: "ladder", label: "Rank ladder" }, { value: "sheet", label: "Starter weapons (MR 0–12)" },
+  { value: "sframes", label: "Easy Warframes" }, { value: "craft", label: "Crafting chains" }, { value: "xp", label: "XP farms" },
 ]
 const linkCls = "underline decoration-primary/50 underline-offset-4 hover:decoration-primary"
 
@@ -143,7 +143,7 @@ export function MasteryPage() {
         <div className="flex max-w-2xl flex-col gap-1">
           <h1 className="font-heading text-3xl font-semibold">MR plan</h1>
           <p className="text-sm text-muted-foreground">
-            What to do next to reach your target rank, the full rank ladder, and your sheet. Enter what you've already ranked on the{" "}
+            What to do next to reach your target rank, the full rank ladder, and the easiest gear to rank first. Enter what you've already ranked on the{" "}
             <a href="#ranks" className={linkCls}>Ranks</a> page.
           </p>
         </div>
@@ -167,7 +167,7 @@ export function MasteryPage() {
       {d.tab === "ladder" ? <Ladder d={d} /> : null}
       {d.tab === "sheet" ? (
         <>
-          <p className="text-xs text-muted-foreground">From your "Easy Mastery Rank" sheet ({fmt(d.sheetXp || 0)} XP, enough for MR 12). "Path to max" carries on from here.</p>
+          <p className="text-xs text-muted-foreground">The cheapest weapons to rank, grouped by the Mastery Rank you need to build them. Together they give {fmt(d.sheetXp || 0)} XP, enough to reach MR 12. "Path to max" carries on from there.</p>
           {d.groups!.map((g) => <Section key={g.title} title={g.title} items={g.items} open={g.open} />)}
         </>
       ) : null}

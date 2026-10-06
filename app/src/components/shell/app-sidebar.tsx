@@ -15,6 +15,7 @@ import { PAGE_ICON } from "./nav-icons"
 import { ACCENTS, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
+import { useNavReset } from "@/lib/nav-reset"
 
 export function Logo({ className }: { className?: string }) {
   return <span aria-hidden className={className} dangerouslySetInnerHTML={{ __html: tf().logo() }} />
@@ -25,6 +26,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
   const nav = tf().nav()
   const { setOpenMobile } = useSidebar()
   const close = () => setOpenMobile(false)
+  useNavReset(close)
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>

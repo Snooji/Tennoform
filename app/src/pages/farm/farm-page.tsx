@@ -9,9 +9,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
+import { WayView } from "./way-detail"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useNarrow, useTFData, type FarmItem } from "@/lib/tf"
+import { useNavReset } from "@/lib/nav-reset"
 
 function Hit({ x, selected }: { x: FarmItem; selected: boolean }) {
   return (
@@ -60,6 +62,7 @@ export function FarmPage() {
   const narrow = useNarrow()
   const [q, setQ] = useState(d.q)
   const [sheet, setSheet] = useState(false)
+  useNavReset(() => setSheet(false))
   useEffect(() => {
     const t = window.setTimeout(() => {
       if (q !== d.q) tf().farmSet({ q })
@@ -173,18 +176,18 @@ export function FarmPage() {
         </div>
         {narrow ? null : (
           <div className="min-w-0">
-            <div className="lg:sticky lg:top-16">{d.sel && d.detail ? <Island html={d.detail} /> : <EmptyDetail />}</div>
+            <div className="lg:sticky lg:top-16">{d.way ? <WayView w={d.way} /> : d.sel && d.detail ? <Island html={d.detail} /> : <EmptyDetail />}</div>
           </div>
         )}
       </div>
       {narrow ? (
         <Sheet open={sheet && !!d.detail} onOpenChange={setSheet}>
-          <SheetContent side="bottom" className="max-h-[88dvh] gap-0 rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="max-h-[calc(88dvh-4rem)] gap-0 rounded-t-2xl p-0">
             <SheetHeader className="shrink-0 border-b px-4 py-3">
               <SheetTitle className="pr-8 font-heading text-lg">{d.selName}</SheetTitle>
               <SheetDescription className="sr-only">Where to farm {d.selName}</SheetDescription>
             </SheetHeader>
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">{d.detail ? <Island html={d.detail} /> : null}</div>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">{d.way ? <WayView w={d.way} inSheet /> : d.detail ? <Island html={d.detail} /> : null}</div>
           </SheetContent>
         </Sheet>
       ) : null}

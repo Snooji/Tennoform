@@ -23,7 +23,7 @@ function homeData(){const t=totalXP(),m=mrInfo(t.total);const g=P.prof&&P.prof.m
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)today.push({k:'Steel Path reward',v:WS.steelPath.currentReward.name,x:WS.steelPath.currentReward.cost+' essence',route:'today'});
   if(fl.length)today.push({k:'Foundry',v:`${ready}/${fl.length} ready`,x:ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000),route:'tenno',ttab:'foundry'});
   today.push({k:'Weekly reset',v:left(lastWeekly()+7*DAY-now),x:`${wd.filter(ckDone).length}/${wd.length} weekly done`,route:'today'});
-  const lg=logList().filter(e=>e.t>=lastDaily());
+  const lg=logList().filter(e=>e.t>=lastDaily()&&e.k!=='sync');
   /* goals and tasks */
   const goals=(P.goals||[]).filter(n=>I[n]&&!on('build|'+n));taskResets();const open=(P.tasks||[]).filter(x=>!x.d);
   return {name:P.tname||(P.prof&&P.prof.name)||'',mr:m.mr,mrLabel:m.mr>30?'Legendary '+(m.mr-30):'Mastery rank '+m.mr,mrShort:mrLabel(m.mr),inGame:g!=null&&g!==m.mr?mrLabel(g):'',

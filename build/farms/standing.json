@@ -1,0 +1,1002 @@
+[
+ {
+  "id": "faction-syndicates",
+  "n": "Faction syndicates",
+  "cat": "Standing",
+  "aka": [
+   "steel meridian",
+   "arbiters of hexis",
+   "cephalon suda",
+   "perrin sequence",
+   "red veil",
+   "new loka",
+   "pledge",
+   "medallions"
+  ],
+  "sum": "The six Relay syndicates that sell augment mods and syndicate weapons; pledge to one, then do its three daily Syndicate Alerts and grab every medallion for the fastest standing.",
+  "ways": [
+   {
+    "t": "Syndicate Alerts + medallions",
+    "how": "Do all three daily Syndicate Alerts for each syndicate you are Rank 1 or higher with, and pick up the medallions hidden around the map. Redeem them at the syndicate's Relay enclave.",
+    "why": "Each alert spawns 8 medallions (500, 1,000 or 5,000 standing each, with one 5,000 guaranteed), about 10,125 standing on average if you find them all. Alert rewards and medallions do not count against the daily cap, so they stack on top of it.",
+    "req": "Rank 1 with the syndicate",
+    "tags": [
+     "fastest",
+     "daily"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Defense and Interception alerts on the right tiles",
+    "how": "When a Syndicate Alert is Defense or Interception, run it. On the Grineer Galleon, Corpus Ice Planet and Grineer Sealab defense tiles, medallions still spawn.",
+    "why": "These missions pay a bigger end reward to make up for spawning fewer medallions, and the maps are small, which makes them the easiest and most rewarding alerts.",
+    "req": "Rank 1 with the syndicate",
+    "tags": [
+     "daily",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Pledge and play for affinity",
+    "how": "Pledge to a syndicate at the Syndicate segment in your Orbiter, then play any missions that give lots of affinity.",
+    "why": "15% of the affinity you earn becomes standing with your pledged syndicate, and its ally gets 50% of that. This is the part limited by the daily cap.",
+    "req": "Syndicate segment in the Orbiter",
+    "tags": [
+     "beginner",
+     "afk"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Rank up, then rerun the alerts",
+    "how": "As soon as you have enough standing, rank up with the syndicate.",
+    "why": "Ranking up resets that syndicate's alerts, so you can run a fresh set of three, with more medallions, the same day.",
+    "req": "Enough standing and the rank-up sacrifice",
+    "tags": [
+     "daily"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Universal Medallions from Disruption",
+    "how": "Play higher-level Disruption missions and trade any Universal Medallions you get at the syndicate you want.",
+    "why": "Each one is worth 1,000 standing with whichever syndicate you choose, but unlike normal medallions it counts against the daily cap.",
+    "req": "",
+    "tags": [
+     "squad"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. All six faction syndicates share one cap, and the cap only limits your pledged syndicate.",
+   "An Affinity Booster effectively doubles affinity-based standing. Resource Boosters do not double medallions.",
+   "Loot Detector, Thief's Wit, Animal Instinct, Golden Instinct and the Parallax's Orokin Eye help you find medallions.",
+   "Allied syndicates gain 50% of what you earn, the opposed one loses 50% and the enemy loses 100%. Steel Meridian, Arbiters of Hexis and Cephalon Suda can all be raised together, and so can New Loka, The Perrin Sequence and Red Veil."
+  ],
+  "w": "https://wiki.warframe.com/w/Syndicates"
+ },
+ {
+  "id": "cephalon-simaris",
+  "n": "Cephalon Simaris",
+  "cat": "Standing",
+  "aka": [
+   "simaris",
+   "synthesis",
+   "scanner",
+   "sanctuary",
+   "scan",
+   "relay"
+  ],
+  "sum": "Simaris sells Lost & Found items, Riven slots and blueprints for standing that you earn by scanning things; his daily Synthesis target plus stealth scans of high-level enemies is the fastest route.",
+  "ways": [
+   {
+    "t": "Daily Synthesis target",
+    "how": "Take Simaris's daily Synthesis task, find and fully scan the target in missions (on the Steel Path if you can), and turn it in after you've finished the rest of the day's farming.",
+    "why": "The turn-in gives 2,500 standing per daily target and does not count against the daily cap. A fully synthesized target also gives the whole squad several thousand standing, and more at higher enemy levels.",
+    "req": "Synthesis Scanner",
+    "tags": [
+     "fastest",
+     "daily"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Steel Path stealth scans",
+    "how": "Scan high-level enemies on the Steel Path without being noticed, using an invisible Warframe like Ash, Loki, Ivara or Octavia.",
+    "why": "Standing grows with enemy level and is tripled for stealth scans, which makes this the most effective way to earn Simaris standing.",
+    "req": "The Steel Path",
+    "tags": [
+     "endgame",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Archwing scanning in Steel Path open worlds",
+    "how": "Fly your Archwing high over the Plains of Eidolon, Orb Vallis or Cambion Drift on the Steel Path and scan everything below.",
+    "why": "Enemies can't detect you that high up, so every enemy, turret, animal, Eidolon Lure and world boss scans as a stealth scan, for 300+ standing each.",
+    "req": "The Steel Path and an Archwing",
+    "tags": [
+     "endgame",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Grineer Shipyard scanning",
+    "how": "Run Grineer Shipyard missions and scan enemies before they spot you.",
+    "why": "Enemies there have a short detection range, which makes stealth scans easy.",
+    "req": "",
+    "tags": [
+     "beginner",
+     "solo"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. Simaris has no ranks; you can hold up to 125,000 standing.",
+   "Don't turn in the daily task while you're at 125,000; the reward is wasted.",
+   "Kinetic Siphon Traps from Simaris hold Synthesis targets in place.",
+   "Scans from Helios's Investigator give no Simaris standing.",
+   "Universal Medallions can be traded to Simaris."
+  ],
+  "w": "https://wiki.warframe.com/w/Cephalon_Simaris"
+ },
+ {
+  "id": "conclave",
+  "n": "Conclave",
+  "cat": "Standing",
+  "aka": [
+   "teshin",
+   "pvp",
+   "conclave standing",
+   "lunaro",
+   "faceoff",
+   "pvp mods"
+  ],
+  "sum": "Teshin's Conclave sells PvP mods, cosmetics and skins; daily Challenges and the three Weekly Missions give the most standing because they ignore the daily cap.",
+  "ways": [
+   {
+    "t": "Weekly Missions",
+    "how": "Win 6 matches, complete 20 matches and finish 10 daily Challenges in the same week.",
+    "why": "Finishing all three sends you 50,000 Conclave standing plus 100,000 credits, a Stance mod and 10 rare resources. This standing does not count against the daily cap. Resets Friday 00:00 GMT.",
+    "req": "",
+    "tags": [
+     "fastest",
+     "weekly",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Daily Challenges",
+    "how": "Check the Challenges dropdown in the Conclave console and complete as many of the up to eight daily Challenges as you can.",
+    "why": "Challenge standing is bonus standing outside the daily cap, and 'Focused' challenges pay 6,000. Challenges reset at 19:15 GMT.",
+    "req": "",
+    "tags": [
+     "daily",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Faceoff Squad vs Squad during Xtra Cheese",
+    "how": "Play Faceoff at Vehrvod District during Xtra Cheese hours (00:00-02:00, 08:00-10:00 and 16:00-18:00 GMT).",
+    "why": "Faceoff pays 2,000 Conclave standing for all three objectives (3,000 on the Steel Path), and Xtra Cheese doubles it. You fight Scaldra and Techrot enemies, not other players.",
+    "req": "The Hex quest",
+    "tags": [
+     "squad"
+    ],
+    "node": "Vehrvod District (Höllvania)"
+   },
+   {
+    "t": "Play several matches in one lobby",
+    "how": "Stay in the same lobby and keep playing any Conclave mode. Wins, kills, killstreaks and goals all give standing.",
+    "why": "Every match after the first gives everyone a 10% Consecutive Match Bonus, and winning pays more.",
+    "req": "",
+    "tags": [
+     "beginner",
+     "squad"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. Challenge and Weekly Mission standing are outside it.",
+   "Don't quit matches early: quitting five gives you a demotion penalty, and you earn no Conclave standing for a week.",
+   "Private matches give no standing.",
+   "Universal Medallions can't be used for Conclave."
+  ],
+  "w": "https://wiki.warframe.com/w/Conclave"
+ },
+ {
+  "id": "ostrons",
+  "n": "Ostrons",
+  "cat": "Standing",
+  "aka": [
+   "cetus",
+   "konzu",
+   "plains of eidolon",
+   "ostron standing",
+   "poe",
+   "zaw"
+  ],
+  "sum": "The Ostrons of Cetus sell Zaw parts, mining and fishing gear, and Eidolon resources; the highest-tier Konzu bounty you can run, with every bonus objective, is the main source of standing.",
+  "ways": [
+   {
+    "t": "Konzu's highest-tier bounties",
+    "how": "Take the highest-level bounty your Mastery Rank allows from Konzu and complete every stage's bonus objective.",
+    "why": "Higher tiers pay more standing per stage, and bonus objectives add extra standing on top. The board shows each bounty's standing before you accept. Repeating a bounty pays standing again.",
+    "req": "MR 5 for the 40-60 tier; MR 10 and the Steel Path for the 100-100 tier",
+    "tags": [
+     "fastest",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Eidolon Hunt bounty",
+    "how": "At night, take Konzu's Eidolon Hunt bounty and take down the Teralyst, Gantulyst and Hydrolyst.",
+    "why": "The three-Eidolon bounty pays 5,000 standing and the Teralyst-only bounty pays 1,000. The Sentient Cores you collect also go to the Quills.",
+    "req": "An Amp",
+    "tags": [
+     "endgame",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Fishing and conservation",
+    "how": "Fish for baited species, especially Murkray, Norg, Cuthol and Glappid, and turn them in to Fisher Hai-Luk. Or tranquilize animals for conservation, especially from an Archwing, where they often spawn in groups of three.",
+    "why": "Both are relaxed solo farms that pay well once you have the right bait and gear.",
+    "req": "Fishing spear and bait, or conservation gear",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Shrine Defense",
+    "how": "Run Shrine Defense at Koumei's shrine near the Cetus entrance.",
+    "why": "Each completion gives 800 Ostron standing.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Gems and Zaws",
+    "how": "Trade raw gems to Old Man Suumbaat, or turn in a built, max-ranked Zaw to Hok (it doesn't need to be gilded).",
+    "why": "A cheap way to turn spare materials and leveled gear into standing.",
+    "req": "Nosam Cutter for mining",
+    "tags": [
+     "beginner",
+     "solo"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "Universal Medallions can be traded to the Ostrons for 1,000 standing.",
+   "Field bounties refresh every 150 minutes, so new ones come up often."
+  ],
+  "w": "https://wiki.warframe.com/w/Ostrons"
+ },
+ {
+  "id": "the-quills",
+  "n": "The Quills",
+  "cat": "Standing",
+  "aka": [
+   "quills",
+   "onkko",
+   "sentient core",
+   "amp",
+   "eidolon",
+   "operator"
+  ],
+  "sum": "The Quills sell Amp parts, Operator gear and arcanes for standing that comes from Sentient Cores; Eidolon hunts are the best source of cores.",
+  "ways": [
+   {
+    "t": "Eidolon hunts",
+    "how": "Hunt Eidolons at night on the Plains of Eidolon. Capture them with Eidolon Lures, destroy their Synovia joints and kill Vomvalysts.",
+    "why": "Flawless Cores (1,500 standing) drop from captured Eidolons, Exceptional Cores (750) from Synovia joints and Intact Cores (250) from Vomvalysts. Lures drop more cores the tougher the Eidolon, with the Hydrolyst dropping the most.",
+    "req": "Amp and The War Within",
+    "tags": [
+     "fastest",
+     "endgame",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Narmer Bounties",
+    "how": "Run Narmer Bounties from Cetus or Fortuna and trade the Narmer Isoplasts to Onkko.",
+    "why": "Each Isoplast is worth 2,000 standing, and Narmer Bounties have no Mastery Rank requirement.",
+    "req": "The New War",
+    "tags": [
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Upgrade Intact cores",
+    "how": "Buy the reusable Exceptional Sentient Core Conversion blueprint from the Quills and craft your Intact cores into Exceptional ones.",
+    "why": "It costs 500 standing and turns 250-standing cores into 750-standing ones.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Sentients on Lua, Veil Proxima and Archon Hunts",
+    "how": "Kill Battalysts, Conculysts and Brachiolysts on Lua or in Veil Proxima Murex, or collect Intact cores during Archon Hunts.",
+    "why": "These Sentients drop Intact cores, and sometimes Exceptional ones on Lua and in Murex.",
+    "req": "",
+    "tags": [
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Trade in max-ranked Amps",
+    "how": "Build an Amp, rank it to max and trade it to Onkko (it doesn't need to be gilded).",
+    "why": "Gives a one-off chunk of standing.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "Intact cores are also needed to rank up: 10 for Mote and 20 for Observer.",
+   "Universal Medallions can be traded to the Quills.",
+   "Golden Instinct finds Sentient Cores."
+  ],
+  "w": "https://wiki.warframe.com/w/The_Quills"
+ },
+ {
+  "id": "solaris-united",
+  "n": "Solaris United",
+  "cat": "Standing",
+  "aka": [
+   "fortuna",
+   "eudico",
+   "orb vallis",
+   "solaris standing",
+   "kitgun",
+   "debt-bond"
+  ],
+  "sum": "Solaris United in Fortuna sells Kitgun and MOA parts, fishing and mining gear; Eudico's highest-tier bounties with bonus objectives are the core of the farm.",
+  "ways": [
+   {
+    "t": "Eudico's highest-tier bounties",
+    "how": "Take the highest-level bounty your Mastery Rank allows from Eudico, complete every bonus objective, and trade the Debt-Bonds you get to Ticker.",
+    "why": "Higher tiers pay more standing per stage, bonus objectives add more, and the board shows the standing up front. Debt-Bonds are worth 100-500 standing each at Ticker.",
+    "req": "MR 5 for the 40-60 tier; MR 10 and the Steel Path for the 100-100 tier",
+    "tags": [
+     "fastest",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Exploiter Bounty",
+    "how": "Take the Exploiter Bounty to fight the Exploiter Orb.",
+    "why": "It pays 1,000 Solaris United standing, and the Orb drops a Lazulite Toroid worth 12,000 Vox Solaris standing.",
+    "req": "One Diluted Thermia",
+    "tags": [
+     "squad",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Fishing and mining",
+    "how": "Fish for Tromyzon, Charamote and Synathid for The Business, or mine Amarast, Thyst and Zodian for Smokefinger.",
+    "why": "These catches and gems pay the most standing for the effort.",
+    "req": "Shock spear and bait, or a Sunpoint Plasma Drill",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Kitguns, MOAs and Granum Crowns",
+    "how": "Trade max-ranked Kitguns to Rude Zuud or max-ranked MOAs to Legs, or free captured Solaris on Corpus Ship missions using Granum Crowns.",
+    "why": "A good way to cash in leveled gear and side activities.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "Reaching Rank 5 (Old Mate) unlocks the Profit-Taker heists, which also drop Debt-Bonds.",
+   "Universal Medallions can be traded to Solaris United.",
+   "A cheap Basic Nosam Cutter from Cetus lets you mine gems early on."
+  ],
+  "w": "https://wiki.warframe.com/w/Solaris_United"
+ },
+ {
+  "id": "vox-solaris",
+  "n": "Vox Solaris",
+  "cat": "Standing",
+  "aka": [
+   "vox solaris",
+   "little duck",
+   "toroid",
+   "profit-taker",
+   "exploiter",
+   "amp"
+  ],
+  "sum": "Vox Solaris sells Amp parts, Operator arcanes and Profit-Taker components for Toroids; the Exploiter and Profit-Taker Orbs drop the most valuable ones.",
+  "ways": [
+   {
+    "t": "Exploiter Orb",
+    "how": "Use a Diluted Thermia to start the Exploiter Bounty and defeat the Exploiter Orb.",
+    "why": "It drops a Lazulite Toroid worth 12,000 standing.",
+    "req": "Diluted Thermia from Thermia Fractures",
+    "tags": [
+     "fastest",
+     "endgame",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Profit-Taker heist",
+    "how": "Do the Profit-Taker heist bounties from the back room behind Eudico and kill the Orb in Phase 4.",
+    "why": "It drops a Crisma Toroid worth 6,000 standing.",
+    "req": "Rank 5 (Old Mate) with Solaris United",
+    "tags": [
+     "endgame",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Common Toroids at the Corpus bases",
+    "how": "Farm enemies around the Spaceport (Vega), Enrichment Labs (Calda) and Temple of Profit (Sola). Let a Reinforcement Beacon reach Alert Level 4 so enemies keep spawning.",
+    "why": "Each common Toroid is worth 1,000 standing. A Resource Booster doubles Toroid drops, and Nekros's Desecrate, Khora's Pilfering Strangledome, Hydroid's Pilfering Swarm, Atlas's Ore Gaze and Ivara's Prowl raise your chances.",
+    "req": "",
+    "tags": [
+     "solo",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Narmer Bounties",
+    "how": "Run Narmer Bounties and trade the Narmer Isoplasts to Little Duck.",
+    "why": "Each Isoplast is worth 2,000 standing.",
+    "req": "The New War",
+    "tags": [
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Cave Toroids and Amps",
+    "how": "Search the secluded parts of Orb Vallis caves for Toroid pickups, or trade a max-ranked Amp.",
+    "why": "Caves usually hold 2-4 Toroids per run.",
+    "req": "",
+    "tags": [
+     "beginner",
+     "solo"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "To access Vox Solaris, finish the Vox Solaris quest and The War Within, then speak to Onkko once.",
+   "Universal Medallions can be traded to Vox Solaris."
+  ],
+  "w": "https://wiki.warframe.com/w/Vox_Solaris_(Syndicate)"
+ },
+ {
+  "id": "ventkids",
+  "n": "Ventkids",
+  "cat": "Standing",
+  "aka": [
+   "ventkids",
+   "k-drive",
+   "roky",
+   "races",
+   "tricks",
+   "fortuna"
+  ],
+  "sum": "The Ventkids sell K-Drive parts and mods; K-Drive races in the Orb Vallis or Cambion Drift give far more standing than trick chains.",
+  "ways": [
+   {
+    "t": "K-Drive races",
+    "how": "Find the most rewarding race marked on your map while riding a K-Drive, then run it over and over as fast as you can.",
+    "why": "Each gate pays 200 and each second left on the timer pays 10. Starting a race costs 5 per gate (125 at most), but that is refunded to your daily cap. Even a 10-gate race beats a 6,000-point trick chain.",
+    "req": "Vox Solaris quest",
+    "tags": [
+     "fastest",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Trick chains",
+    "how": "Chain tricks anywhere you can ride a K-Drive. The big pipe near the Fortuna elevator is a popular spot.",
+    "why": "You get 25% of a chain's score as standing. A chain is capped at 3,000 points (750 standing) by default, so tricks are mainly for earning race entry fees.",
+    "req": "",
+    "tags": [
+     "beginner",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Universal Medallions",
+    "how": "Trade Universal Medallions from Disruption to the Ventkids.",
+    "why": "Each one is worth 1,000 standing.",
+    "req": "",
+    "tags": [
+     "squad"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "Extreme Velocity and Nitro Boost make race clears much faster.",
+   "Primo Flair raises the trick point limit; Inertia Dampeners raise the base multiplier.",
+   "The race selection changes at 00:00 UTC."
+  ],
+  "w": "https://wiki.warframe.com/w/Ventkids"
+ },
+ {
+  "id": "entrati",
+  "n": "Entrati",
+  "cat": "Standing",
+  "aka": [
+   "entrati",
+   "necralisk",
+   "mother",
+   "grandmother",
+   "family tokens",
+   "deimos",
+   "cambion drift"
+  ],
+  "sum": "The Entrati of the Necralisk pay in Family Tokens you trade to Grandmother; Mother's Tier 5 bounties fill the daily cap in two or three runs.",
+  "ways": [
+   {
+    "t": "Mother's Tier 5 bounties",
+    "how": "Run Mother's top-tier bounties in the Cambion Drift and trade the Mother Tokens you earn.",
+    "why": "These bounties give a lot of Mother Tokens; two or three Tier 5 runs are enough to reach the daily cap.",
+    "req": "Heart of Deimos",
+    "tags": [
+     "fastest",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Convert to Grandmother Tokens first",
+    "how": "Trade your other family tokens to Grandmother for Grandmother Tokens, then turn those in.",
+    "why": "Grandmother Tokens are worth 3,000 each, 50% more standing than the tokens you trade for them.",
+    "req": "",
+    "tags": [
+     "daily"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Fishing, mining and conservation",
+    "how": "Give fish parts to Daughter, Cambion Drift gems to Otak, conservation tags to Son, and Drift resources to Father.",
+    "why": "Daughter, Otak and Father tokens are worth 500 each and Son tokens 1,000, before converting.",
+    "req": "",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Mend the Family",
+    "how": "Check Grandmother's 'Mend the Family' trades and buy tokens with spare Cambion Drift resources.",
+    "why": "Eight trades are on offer at a time and they change every eight hours.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "Grandmother Tokens are also needed to rank up: 10 buy the Seriglass Shard for rank 5.",
+   "Universal Medallions can be traded to Grandmother for Entrati standing."
+  ],
+  "w": "https://wiki.warframe.com/w/Entrati"
+ },
+ {
+  "id": "necraloid",
+  "n": "Necraloid",
+  "cat": "Standing",
+  "aka": [
+   "necraloid",
+   "loid",
+   "orokin matrix",
+   "isolation vault",
+   "necramech",
+   "deimos"
+  ],
+  "sum": "The Necraloid sells Necramech parts and mods for Orokin Matrices; the third-tier Isolation Vault bounty gives the most valuable matrices.",
+  "ways": [
+   {
+    "t": "Tier 3 Isolation Vault bounty",
+    "how": "Run Mother's highest Isolation Vault bounty and kill every Necramech in stage 3.",
+    "why": "Tier 3 gives Orokin Animus Matrices worth 5,000 standing each, and more Necramechs spawn the higher the tier. Matrices drop from each Necramech and as completion rewards.",
+    "req": "Heart of Deimos and The War Within",
+    "tags": [
+     "fastest",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Lower Isolation Vault tiers",
+    "how": "Run the first or second Isolation Vault tier if you're still gearing up.",
+    "why": "Tier 1 gives Orientation Matrices (1,000 standing) and tier 2 gives Ballistics Matrices (2,500).",
+    "req": "Heart of Deimos and The War Within",
+    "tags": [
+     "beginner",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Universal Medallions",
+    "how": "Trade Universal Medallions from Disruption to Loid.",
+    "why": "Each one is worth 1,000 standing.",
+    "req": "",
+    "tags": [
+     "squad"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC.",
+   "A Resource Booster doubles Orokin Matrices, and so does Nekros's Desecrate.",
+   "Father Tokens are part of the Necraloid rank-up sacrifices.",
+   "After Whispers in the Walls you can talk to Loid without switching to your Operator."
+  ],
+  "w": "https://wiki.warframe.com/w/Necraloid"
+ },
+ {
+  "id": "the-holdfasts",
+  "n": "The Holdfasts",
+  "cat": "Standing",
+  "aka": [
+   "holdfasts",
+   "zariman",
+   "voidplume",
+   "quinn",
+   "yonta",
+   "chrysalith"
+  ],
+  "sum": "The Holdfasts on the Zariman pay standing for Voidplumes; Quinn's Tier 5 bounties (more on the Steel Path) plus the plumes scattered in every Zariman mission are the fastest source.",
+  "ways": [
+   {
+    "t": "Quinn's Tier 5 bounties (Steel Path)",
+    "how": "Run the Tier 5 Zariman bounty, on the Steel Path if you can, and collect plumes after the objective is done.",
+    "why": "Tier 5 gives 5 Voidplume Quills (2,500 standing each). Steel Path bounties give 150% Quills, rounded up, plus a Steel Essence.",
+    "req": "Angels of the Zariman",
+    "tags": [
+     "fastest",
+     "endgame",
+     "squad"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Halako Perimeter and other short missions",
+    "how": "Run a short Zariman mission like the Halako Perimeter Exterminate and explore for the 8 plume pickups once the objective is done.",
+    "why": "Each mission has one Crest (2,000), two or more Vanes (1,000) and Downs (500). Collecting them gives 16,500-19,000 Holdfasts standing per mission outside Void Armageddon.",
+    "req": "Angels of the Zariman",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": "Halako Perimeter (Zariman)"
+   },
+   {
+    "t": "Dormant Void Angels and Melica caches",
+    "how": "Kill the dormant Void Angel in Zariman missions, and deliver Zarium Accolades to Cephalon Melica caches.",
+    "why": "A dormant Angel always drops a Voidplume Pinion worth 5,000, and each cache (usually two per mission) gives a Quill worth 2,500.",
+    "req": "",
+    "tags": [
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Yonta's resource trades",
+    "how": "Buy Voidplumes from Archimedean Yonta with Zariman resources.",
+    "why": "The offers change every 8 hours.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. Voidplumes can't take you past the Holdfasts daily cap.",
+   "Lost Spirit children run to the nearest Voidplume or Accolade; follow them.",
+   "Loot Detector, Thief's Wit, Animal Instinct, Golden Instinct and the Orokin Eye make plumes easy to spot.",
+   "Universal Medallions can be traded to the Holdfasts for 1,000 standing."
+  ],
+  "w": "https://wiki.warframe.com/w/The_Holdfasts"
+ },
+ {
+  "id": "cavia",
+  "n": "Cavia",
+  "cat": "Standing",
+  "aka": [
+   "cavia",
+   "voca",
+   "fibonacci",
+   "sanctum anatomica",
+   "albrecht's laboratories",
+   "netracells"
+  ],
+  "sum": "The Cavia sell Qorvex, weapons and Incarnon items; weekly Netracells and Deep Archimedea plus Fibonacci's Steel Path Tier 5 bounties give the most standing.",
+  "ways": [
+   {
+    "t": "Netracells and Deep Archimedea",
+    "how": "Spend your weekly Search Pulses on Netracells and Deep Archimedea.",
+    "why": "Each Netracell pays 5,000 Cavia standing, and finishing all three Deep Archimedea missions pays 15,000. You get 5 Search Pulses a week; Deep Archimedea costs 2.",
+    "req": "Whispers in the Walls",
+    "tags": [
+     "fastest",
+     "weekly",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Fibonacci's Tier 5 bounties (Steel Path)",
+    "how": "Run the top-tier Sanctum Anatomica bounty, on the Steel Path if you can, and grab Voca after both objectives are done.",
+    "why": "Bounties pay 1,000 standing at Tier 1 up to 5,000 at Tier 5. Steel Path versions pay 150% plus a Steel Essence, and Tier 5 can drop an Echo Voca.",
+    "req": "Whispers in the Walls",
+    "tags": [
+     "squad",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Voca in Albrecht's Laboratories",
+    "how": "Explore any Albrecht's Laboratories mission (except Mirror Defense) and pick up the 8 Voca, then trade them to Loid.",
+    "why": "Each mission has one Echo (2,000), two or more Bellows (1,000) and Shrills (500). Steel Path Incursions spawn 10.",
+    "req": "Whispers in the Walls",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Gruzzlings and Loid's trades",
+    "how": "Kill Gruzzlings for Echo Voca, and buy Voca from Loid with Laboratory resources.",
+    "why": "Loid's offers change every 8 hours.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. Voca can't take you past the Cavia daily cap.",
+   "Voca are often in secret rooms behind breakable vents and grates, and they make a low throat-singing sound.",
+   "Golden Instinct and the Orokin Eye are the most efficient ways to find Voca.",
+   "Universal Medallions can be traded to the Cavia for 1,000 standing."
+  ],
+  "w": "https://wiki.warframe.com/w/Cavia"
+ },
+ {
+  "id": "the-hex",
+  "n": "The Hex",
+  "cat": "Standing",
+  "aka": [
+   "hex",
+   "hollvania",
+   "protoframes",
+   "hex treasure",
+   "1999",
+   "leticia"
+  ],
+  "sum": "The Hex sell Protoframe gear and Antivirus mods; high-tier Höllvania bounties and the weekly Temporal Archimedea give the most standing.",
+  "ways": [
+   {
+    "t": "Antivirus and Tier 6 bounties",
+    "how": "Run the highest Höllvania Central Mall bounty you can handle.",
+    "why": "Bounties pay from 1,000 standing at Tier 1 up to 6,000 at Tier 6 and 7,500 for Tier 7 Antivirus bounties. Steel Path versions pay more and give a Steel Essence.",
+    "req": "The Hex quest",
+    "tags": [
+     "fastest",
+     "squad",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Temporal Archimedea",
+    "how": "Complete all three Temporal Archimedea missions each week.",
+    "why": "Finishing all three pays 15,000 Hex standing.",
+    "req": "The Hex quest",
+    "tags": [
+     "weekly",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Hex Treasures",
+    "how": "Explore any Höllvania mission for its 8 Hex Treasures and trade them to Leticia. In Hell-Scrub, open the Techrot Safe with a Biocode for one more.",
+    "why": "Each mission has a Big Bytes Pizza (2,500), an Argon Burger Meal (1,500) and six 750-standing treasures.",
+    "req": "The Hex quest",
+    "tags": [
+     "solo",
+     "beginner"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Technocyte Coda Mercy kills",
+    "how": "Use a Parazon Mercy on Technocyte Codas.",
+    "why": "They can give Hex Treasures.",
+    "req": "",
+    "tags": [
+     "solo"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Daily standing cap: 16,000 + 500 per Mastery Rank, tracked separately for each syndicate and reset at 00:00 UTC. Hex Treasures can't take you past the Hex daily cap.",
+   "You'll need one of each 750 treasure to rank up to Rank 3 and again for Rank 5, so keep a set.",
+   "Treasures make a sound and have a green outline; loot radar mods and Golden Instinct help too."
+  ],
+  "w": "https://wiki.warframe.com/w/The_Hex_(Syndicate)"
+ },
+ {
+  "id": "kahls-garrison",
+  "n": "Kahl's Garrison",
+  "cat": "Standing",
+  "aka": [
+   "kahl",
+   "garrison",
+   "break narmer",
+   "chipper",
+   "stock",
+   "drifter's camp"
+  ],
+  "sum": "Kahl's Garrison has no standing: it ranks up once each week you finish Kahl's Break Narmer mission, so it takes four weeks to max.",
+  "ways": [
+   {
+    "t": "Weekly Break Narmer mission",
+    "how": "Talk to Kahl at the Drifter's Camp and finish that week's solo Break Narmer mission.",
+    "why": "Each completion ranks up the Garrison. Missions rotate every Monday at 00:00 UTC, so it takes four weeks to max out.",
+    "req": "Veilbreaker quest",
+    "tags": [
+     "weekly",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Bonus challenges for Stock",
+    "how": "Do the up to 6 bonus challenges in each Break Narmer mission, replaying it to finish any you missed.",
+    "why": "Stock, which you spend at Chipper, is awarded as soon as you finish a challenge, even if you then abort. Deathless is always one of the challenges.",
+    "req": "Veilbreaker quest",
+    "tags": [
+     "weekly",
+     "solo"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Stock crates",
+    "how": "Open the blue Stock crates in the mission and reach extraction.",
+    "why": "Each crate gives 2 Stock, up to 5 crates (10 bonus Stock) per mission.",
+    "req": "",
+    "tags": [
+     "beginner"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Kahl's Garrison is not affected by the daily standing cap, because it has no standing.",
+   "Dying in Break Narmer just respawns Kahl at the last checkpoint.",
+   "Progress on multi-part challenges is saved between runs."
+  ],
+  "w": "https://wiki.warframe.com/w/Kahl%27s_Garrison"
+ },
+ {
+  "id": "nightwave",
+  "n": "Nightwave",
+  "cat": "Standing",
+  "aka": [
+   "nightwave",
+   "nora",
+   "acts",
+   "creds",
+   "battle pass",
+   "nora night"
+  ],
+  "sum": "Nightwave is a season pass ranked by doing Acts; Elite Weekly and Weekly Acts give the most standing, and every rank takes 10,000.",
+  "ways": [
+   {
+    "t": "Elite Weekly Acts",
+    "how": "Complete both Elite Weekly Acts each week.",
+    "why": "Each pays 7,000 standing, the most of any Act.",
+    "req": "The Teacher quest",
+    "tags": [
+     "fastest",
+     "weekly",
+     "endgame"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Weekly and Permanent Weekly Acts",
+    "how": "Clear the 2 Weekly and 3 Permanent Weekly Acts every week.",
+    "why": "Each pays 4,500 standing. Weekly Acts refresh every Sunday at 00:00 UTC.",
+    "req": "The Teacher quest",
+    "tags": [
+     "weekly"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Daily Acts",
+    "how": "Do the Daily Acts as they come in; each lasts 3 days.",
+    "why": "Each pays 1,000 standing and they're the easiest tasks.",
+    "req": "The Teacher quest",
+    "tags": [
+     "beginner",
+     "daily"
+    ],
+    "node": ""
+   },
+   {
+    "t": "Recovered Acts",
+    "how": "Finish your current weeklies so missed Acts from past weeks come back as 'Recovered', three at a time.",
+    "why": "Weeks you miss don't count against you; you can still earn that standing later.",
+    "req": "",
+    "tags": [
+     "weekly"
+    ],
+    "node": ""
+   }
+  ],
+  "tips": [
+   "Ranks take 10,000 standing each; most seasons have 30 ranks, and prestige ranks after that give 15 Creds each.",
+   "Creds expire when a Series ends, so spend them at the Cred Offerings before that.",
+   "A countdown appears when the season has two weeks left."
+  ],
+  "w": "https://wiki.warframe.com/w/Nightwave"
+ }
+]

@@ -14,7 +14,7 @@ function frames(){const ff=state.frF||'all';const fr=Object.values(I).filter(i=>
       <div class="seg">${builds.map((x,i)=>`<button class="btn ${i===bi?'on':''}" data-build="${i}">${esc(x.name)}</button>`).join('')}<button class="btn ${state.budget?'on':''}" id="budget">Budget mods</button></div>${progHTML()}</div>
       <div style="padding:12px 14px" class="stack"><div class="row"><span class="chip teal">${esc(b.role)}</span><span class="small">Helminth: <b>${esc(b.helminth)}</b></span></div>${b.notes?`<div class="small muted">${esc(b.notes)}</div>`:''}
       <div class="mods">${slots.map(([s,m])=>modCard(s,m)).join('')}${b.arcanes.map(a=>arcCard(a)).join('')}</div>
-      <div class="small muted">Based on current community consensus. Forma the slots to match each mod's polarity.</div></div></section>`}
+      <div class="small muted">Forma each slot to match its mod's polarity.</div></div></section>`}
   return h+'</div></div>'}
 function modCard(slot,m){const md=MODS[m]||{};const k='mod|'+m;
   const src=md.src?esc(md.src):(md.dr&&md.dr.length?dropsList(md.dr,2):'Trade on warframe.market');
