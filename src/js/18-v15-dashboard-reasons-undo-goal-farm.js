@@ -71,7 +71,7 @@ function ckTools(c){const pin=(P.ckPin||[]).includes(c[1]),hid=(P.ckHide||[]).in
   return `<span class="cktools"><button type="button" class="btn sm ${pin?'on':''}" data-ckpin="${esc(c[1])}" aria-label="${pin?'Unpin':'Pin'} ${esc(c[2])}" title="${pin?'Unpin':'Pin to top'}">${ic('pin',pin?'fill':'')}</button><button type="button" class="btn sm" data-ckhide="${esc(c[1])}" aria-label="${cu?'Delete':hid?'Show':'Hide'} ${esc(c[2])}" title="${cu?'Delete':hid?'Show again':'Hide'}">${cu?ic('close'):hid?'Show':'Hide'}</button></span>`}
 
 /* tasks: notes, repeat, due */
-const TKL={res:'Resource',item:'Build',relic:'Relic',quest:'Quest',mod:'Mod',arc:'Arcane',node:'Planet',synd:'Syndicate',fish:'Fish',ore:'Ore',lich:'Weapon',note:'Note'};
+const TKL={res:'Resource',item:'Build',relic:'Relic',quest:'Quest',mod:'Mod',arc:'Arcane',node:'Planet',synd:'Syndicate',fish:'Fish',ore:'Ore',lich:'Weapon',guide:'Guide',note:'Note'};
 function taskResets(){let ch=false;for(const x of P.tasks||[]){if(x.d&&x.rep&&x.dat&&x.dat<(x.rep==='d'?lastDaily():lastWeekly())){x.d=0;ch=true}}if(ch)saveProfile()}
 function taskMeta(x){const due=x.due?new Date(x.due+'T23:59:59'):null;const over=due&&!x.d&&due<new Date();
   return `<span class="tmeta">${x.k&&x.k!=='note'?`<span class="chip">${esc(TKL[x.k]||x.k)}</span>`:''}${x.rep?`<span class="chip teal">${ic('repeat')} ${x.rep==='d'?'Daily':'Weekly'}</span>`:''}${due?`<span class="chip ${over?'bad':''}">${over?'Overdue · ':'Due '}${esc(fdate(x.due))}</span>`:''}${x.note?'<span class="chip" title="Has notes">✎</span>':''}</span>`}

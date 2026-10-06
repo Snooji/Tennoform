@@ -10,7 +10,7 @@ function buildsData(src,kind){const cats=[...new Set(Object.keys(src).map(n=>I[n
   const k=cur+'|'+ISLV;if(ART.key!==k){ART.key=k;ART.html=I[cur]?itemTree(cur):''}
   return {cats:kind==='w'?cats:[],cat:cf,own:of,names,cur,img:IMG(cur),filteredEmpty,tree:ART.html,builds:bs.map((x,i)=>({value:String(i),label:x.name})),bi:String(bi),
     build:b?{role:b.role,name:b.name,notes:b.notes||'',mods:[...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.map(m=>modSlot('Mod',m))],arcanes:b.arcanes.map(a=>modSlot('Arcane',a,true))}:null}}
-function arsenalData(){const tab=state.aTab||'builds';const out={tab};
+function arsenalData(){const tab=state.aTab||'top';const out={tab};
   if(tab==='builds')Object.assign(out,buildsData(D.wbuilds,'w'));
   else if(tab==='comp')Object.assign(out,buildsData(D.cbuilds,'c'));
   else if(tab==='lich'){const ff=state.lF||'all',sf=state.lS||'all';const L2=P.lich||{};const own=n=>on('lich|'+n)||ownedItem(n);

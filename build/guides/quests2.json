@@ -1,0 +1,1028 @@
+[
+ {
+  "id": "chimera-prologue",
+  "n": "Chimera Prologue",
+  "kind": "quest",
+  "aka": [
+   "chimera",
+   "chimera quest",
+   "paracesis quest",
+   "prelude to war",
+   "ballas vision",
+   "ropalolyst unlock"
+  ],
+  "sum": "A short main quest and the first act of the Prelude to War. It gives you the Paracesis blueprint and unlocks the Ropalolyst boss, which drops Wisp.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Sacrifice"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start the quest from the Codex (Prelude to War chapters) after finishing The Sacrifice.",
+    "tip": "Starting it from the Codex clears your other active quests so the interaction triggers."
+   },
+   {
+    "t": "Go to your Orbiter's Personal Quarters and touch the Lotus's helmet on its plinth."
+   },
+   {
+    "t": "On Lua, follow the figure wearing the helmet through the Reservoir.",
+    "tip": "Three times you'll be trapped in a barrier and have to kill shadowy copies of the Lotus."
+   },
+   {
+    "t": "Go through the Chamber of the Lotus and enter the portal at the end."
+   },
+   {
+    "t": "In the Sentient chamber, press fire to Void Sling to each glowing spot."
+   },
+   {
+    "t": "Stay hidden from Ballas's gaze by dashing between Void Dash points until the sword forms, then grab it.",
+    "tip": "If the meter at the top empties, the mission fails."
+   },
+   {
+    "t": "Wake up on the Orbiter with the Paracesis blueprint."
+   }
+  ],
+  "fast": [
+   "Any Warframe works; the only fighting is a few waves of shadow Lotus enemies on Lua, so bring something with good area damage to clear the barrier fights fast.",
+   "During the Ballas stealth part, keep moving between cover points and don't linger in his line of sight.",
+   "Run the Ropalolyst assassination on Jupiter right after if you want Wisp."
+  ],
+  "rw": [
+   "Paracesis blueprint",
+   "Ropalolyst unlocked"
+  ],
+  "time": "Short",
+  "go": [
+   "Paracesis",
+   "Ropalolyst",
+   "Wisp",
+   "Erra"
+  ],
+  "w": "https://wiki.warframe.com/w/Chimera_Prologue"
+ },
+ {
+  "id": "erra",
+  "n": "Erra",
+  "kind": "quest",
+  "aka": [
+   "erra quest",
+   "shedu quest",
+   "prelude to war",
+   "new war chapters",
+   "sentient flashback"
+  ],
+  "sum": "A short, mostly cinematic main quest and the second act of the Prelude to War. It sets up The New War and rewards the Shedu blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Chimera Prologue"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start Erra from the Codex under the Prelude to War chapters."
+   },
+   {
+    "t": "Go to your Orbiter's Personal Quarters."
+   },
+   {
+    "t": "Touch the Lotus's headgear (it glows purple)."
+   },
+   {
+    "t": "Watch the flashback and vision cutscenes to the end."
+   },
+   {
+    "t": "Collect the Shedu blueprint once you're back on the Orbiter."
+   }
+  ],
+  "fast": [
+   "There is no combat to prepare for; it's almost entirely cutscenes, so just start it from the Codex and watch.",
+   "Do it right after Chimera Prologue, then play The Maker straight away to finish the Prelude to War."
+  ],
+  "rw": [
+   "Shedu blueprint"
+  ],
+  "time": "Short",
+  "go": [
+   "Shedu",
+   "Chimera Prologue",
+   "The Maker"
+  ],
+  "w": "https://wiki.warframe.com/w/Erra_(Quest)"
+ },
+ {
+  "id": "the-maker",
+  "n": "The Maker",
+  "kind": "quest",
+  "aka": [
+   "maker",
+   "maker cutscene",
+   "prelude to war",
+   "third act",
+   "new war prelude"
+  ],
+  "sum": "The third and final act of the Prelude to War: a single cutscene. Watching it finishes the Prelude to War so you can move on to The New War.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Erra"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Open the Codex and find The Maker under the Prelude to War quests."
+   },
+   {
+    "t": "Select it to play the cutscene.",
+    "tip": "It has no diorama or Begin button; selecting it plays the cutscene straight away."
+   },
+   {
+    "t": "Watch to the end; the Prelude to War is now complete."
+   }
+  ],
+  "fast": [
+   "It's only a cutscene, so there is nothing to bring or prepare.",
+   "Use the time to get ready for The New War: own a Railjack and an Amp before you start it."
+  ],
+  "rw": [],
+  "time": "One cutscene",
+  "go": [
+   "Erra",
+   "The New War"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Maker"
+ },
+ {
+  "id": "the-new-war",
+  "n": "The New War",
+  "kind": "quest",
+  "aka": [
+   "new war",
+   "newwar",
+   "drifter unlock",
+   "sirocco",
+   "nataruk",
+   "narmer",
+   "archons"
+  ],
+  "sum": "A long cinematic main quest where the Sentient invasion comes to a head. It unlocks the Drifter, the Sirocco amp and Narmer bounties, and is required for many later quests.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Prelude to War"
+   ],
+   "other": [
+    "Own a Railjack",
+    "Own an Amp"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Prepare your arsenal, then start the quest from the Codex and type NEWWAR to confirm.",
+    "tip": "Loadout access is limited and normal activities are locked until you finish, but progress is saved between missions."
+   },
+   {
+    "t": "Play the opening chapter as Kahl, Veso and Teshin, including a Railjack battle in the Veil Proxima.",
+    "tip": "Kahl's part uses stealth around Sentient search parties; Veso orders a Breacher MOA to solve puzzles."
+   },
+   {
+    "t": "As the Drifter, sneak through Fortuna and the Spaceport while avoiding Narmer Deacons.",
+    "tip": "Deacons that spot you can blow the Narmer veil."
+   },
+   {
+    "t": "Take the Nataruk bow and escape back to the surface."
+   },
+   {
+    "t": "Hunt down and defeat the three Archons.",
+    "tip": "The first two must be fought with the Drifter and Nataruk only; the final one lets you use your Warframe."
+   },
+   {
+    "t": "Choose whether the Drifter or the Operator faces Ballas (cosmetic only)."
+   },
+   {
+    "t": "On your Orbiter, gear up and head to Cetus with the Paracesis equipped.",
+    "tip": "If you never built a Paracesis, you get a temporary unranked one."
+   },
+   {
+    "t": "Free Konzu and rescue Fisher Hai-Luk, Master Teasonai and Hok, then climb Unum's Tower using Void damage on the crystals.",
+    "tip": "At the top you have 60 seconds to activate two crystals."
+   },
+   {
+    "t": "Fight through the Murex, then fly your Railjack to Praghasa, using wreckage as cover from the heat waves."
+   },
+   {
+    "t": "Push through Praghasa in a Necramech, then beat the final boss by luring beams onto the Narmer lenses.",
+    "tip": "If you don't own a Necramech, you're given a Bonewidow."
+   },
+   {
+    "t": "Choose the Lotus's name at the end; it is permanent."
+   }
+  ],
+  "fast": [
+   "Build and mod a Paracesis before starting; otherwise you're stuck with an unranked, unmoddable one for the Cetus and Praghasa parts.",
+   "Have a decently equipped Railjack: the wiki says Sigma MK I components and an Engineer crew member are enough.",
+   "Owning a modded Necramech helps on Praghasa; without one you get a loaner Bonewidow.",
+   "Saving the 10 optional Ostrons in Cetus takes extra time and can be skipped.",
+   "If the button-mashing escapes are hard, switch them to hold in Settings > Accessibility > Repeated Button Presses."
+  ],
+  "rw": [
+   "Sirocco Amp",
+   "Drifter unlocked",
+   "Nataruk",
+   "Rumblejack",
+   "Sirocco Amp Skin",
+   "A Lost Time Decoration",
+   "Ballas' Narmer Staff Decoration",
+   "The Drifter Camp Captura Scene",
+   "3 Day Affinity Booster",
+   "3 Day Credit Booster",
+   "Narmer Bounties (Caliban)",
+   "Deepmines access (Nokko)"
+  ],
+  "time": "~2-6 hours",
+  "go": [
+   "Paracesis",
+   "Sirocco",
+   "Nataruk",
+   "Rumblejack",
+   "Bonewidow",
+   "Caliban",
+   "Nokko",
+   "Railjack"
+  ],
+  "w": "https://wiki.warframe.com/w/The_New_War"
+ },
+ {
+  "id": "the-duviri-paradox",
+  "n": "The Duviri Paradox",
+  "kind": "quest",
+  "aka": [
+   "duviri",
+   "duviri quest",
+   "drifter",
+   "dominus thrax",
+   "kaithe",
+   "sun and moon",
+   "circuit unlock"
+  ],
+  "sum": "A solo main quest that follows the Drifter through the kingdom of Duviri. It unlocks The Duviri Experience, The Lone Story and The Circuit, plus a Kaithe and the Sun & Moon blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Uranus Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the quest and follow the Drifter's escape through Duviri.",
+    "tip": "Use Guiding Hand to find the way, Restorative to heal and Smoke Screen to go invisible."
+   },
+   {
+    "t": "Summon a Kaithe, reach Teshin's cave and unlock Summon Kaithe with your Intrinsics."
+   },
+   {
+    "t": "Learn melee basics in the ambush, then pick a Warframe (Excalibur, Mag or Volt) and weapons."
+   },
+   {
+    "t": "Clear the two Exterminate waves in the Undercroft and find the book."
+   },
+   {
+    "t": "Prince of Fire: finish the anger-day objectives (Dax patrols, guarded chest, Exterminate) and return the figurine piece."
+   },
+   {
+    "t": "Harbinger of Joy: finish the joy-day objectives (maze, Liminus, chest hacking, 5-minute Survival)."
+   },
+   {
+    "t": "Covetous Courtier: finish the envy-day objectives (power lines, high-ground Dax, 3-wave Defense)."
+   },
+   {
+    "t": "Escape the Undercroft and defeat the impostor."
+   },
+   {
+    "t": "Fight your way to Thrax's stronghold, take control of the Orowyrm and recover the last figurine piece."
+   }
+  ],
+  "fast": [
+   "Pick Volt or Excalibur for the Warframe segments; Volt's speed and Excalibur's melee clear the Exterminate and Survival stages fast, while Mag offers crowd control for Defense.",
+   "Use Smoke Screen to skip fights you don't need while traveling between objectives.",
+   "Ride the Kaithe between objective markers instead of running.",
+   "Afterwards, The Lone Story is the quickest way to replay the Spiral's story with no side content."
+  ],
+  "rw": [
+   "Histornam Kaithe",
+   "Sun & Moon blueprint",
+   "Mountain's Edge",
+   "The Duviri Experience",
+   "The Lone Story",
+   "The Circuit"
+  ],
+  "time": "",
+  "go": [
+   "Sun & Moon",
+   "Kaithe",
+   "Excalibur",
+   "Mag",
+   "Volt",
+   "Kullervo"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Duviri_Paradox"
+ },
+ {
+  "id": "whispers-in-the-walls",
+  "n": "Whispers in the Walls",
+  "kind": "quest",
+  "aka": [
+   "whispers",
+   "wiw",
+   "qorvex quest",
+   "grimoire",
+   "cavia",
+   "albrecht laboratories",
+   "sanctum anatomica"
+  ],
+  "sum": "A solo main quest set beneath Deimos in Albrecht Entrati's laboratories. It gives Qorvex, a pre-ranked Grimoire, melee Exilus and Arcane slots, and opens the Cavia syndicate.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Heart of Deimos",
+    "The New War"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Read Loid's inbox message and meet him in the Necralisk."
+   },
+   {
+    "t": "Follow Loid down into Albrecht's Laboratories and fight off the hostile Necramechs."
+   },
+   {
+    "t": "Pick up the Grimoire, defeat the Murmur and wake the Sleeper."
+   },
+   {
+    "t": "Hack the old computer in the Sanctum Anatomica to link with the Vessel.",
+    "tip": "Match the scrolling symbols while avoiding the red dots."
+   },
+   {
+    "t": "Equip the fully ranked Grimoire in your Arsenal."
+   },
+   {
+    "t": "Survive the two-wave Mirror Defense, collecting glyphs to reinforce the objective."
+   },
+   {
+    "t": "Take Tagfer's Keyglyph to the Netracell, hack the three marked terminals, clear the security wave and grab the Pom-2 Board."
+   },
+   {
+    "t": "Build Albrecht's Blueprint in the Foundry and activate the Jahu Gargoyle.",
+    "tip": "It needs 1 Shrill Voca and takes 99 seconds."
+   },
+   {
+    "t": "Find the missing page in an Exterminate mission."
+   },
+   {
+    "t": "Return to the Sanctum and defeat The Fragmented Suzerain, using the Grimoire linked to the Gargoyle."
+   }
+  ],
+  "fast": [
+   "Bring a Warframe with strong area damage or crowd control for the Mirror Defense and the Netracell security phase.",
+   "Use the free Grimoire: it is rank 30 with a Catalyst and infinite ammo, and its Void attacks are what hurt the Murmur in the final fight.",
+   "Start building Albrecht's Blueprint the moment you get it; the build only takes 99 seconds.",
+   "Exterminate stages end as soon as the kill count is met, so bring a fast mover."
+  ],
+  "rw": [
+   "Qorvex blueprint",
+   "Weapon Slot",
+   "Grimoire (rank 30, Catalyst installed)",
+   "Melee Upgrade Segment",
+   "Mentor's Legacy",
+   "Melee Arcane Adapter",
+   "Cavia syndicate",
+   "New Deimos nodes"
+  ],
+  "time": "",
+  "go": [
+   "Qorvex",
+   "Grimoire",
+   "Heart of Deimos",
+   "The Lotus Eaters",
+   "Mandonel"
+  ],
+  "w": "https://wiki.warframe.com/w/Whispers_in_the_Walls"
+ },
+ {
+  "id": "the-lotus-eaters",
+  "n": "The Lotus Eaters",
+  "kind": "quest",
+  "aka": [
+   "lotus eaters",
+   "hex prologue",
+   "kinepage",
+   "kalymos",
+   "1999 prologue"
+  ],
+  "sum": "A short, solo main quest that bridges Whispers in the Walls and The Hex. The Drifter answers a strange call and gets a first glimpse of 1999.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Whispers in the Walls"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Go to the Sanctum Anatomica."
+   },
+   {
+    "t": "Walk to the Void expanse behind the defeated Vessel, where the Lotus waits."
+   },
+   {
+    "t": "Answer the ringing KinePage as the Drifter."
+   },
+   {
+    "t": "Follow Kalymos the Kavat through the abandoned mall to the next ringing pager."
+   },
+   {
+    "t": "Return to the present to finish, then read Loid's inbox message."
+   }
+  ],
+  "fast": [
+   "No combat gear matters; it's a short story walk with quick-time prompts.",
+   "Play it soon after Whispers in the Walls, since it's needed for both The Hex and The Old Peace."
+  ],
+  "rw": [
+   "Arthur's KinePage"
+  ],
+  "time": "Short",
+  "go": [
+   "Whispers in the Walls",
+   "The Hex",
+   "The Old Peace"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Lotus_Eaters"
+ },
+ {
+  "id": "the-hex",
+  "n": "The Hex",
+  "kind": "quest",
+  "aka": [
+   "hex quest",
+   "1999",
+   "hollvania",
+   "kalymos",
+   "cyte-09",
+   "atomicycle",
+   "protoframes"
+  ],
+  "sum": "A solo main quest where the Drifter goes to 1999 Höllvania and teams up with the Protoframes of The Hex. It unlocks Höllvania missions, The Hex syndicate, the Atomicycle and Cyte-09.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Duviri Paradox",
+    "The Lotus Eaters"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start the quest from the Codex and type KALYMOS to confirm.",
+    "tip": "Only the Drifter's Amps and gear are used; normal activities are locked until you finish."
+   },
+   {
+    "t": "Play as Arthur through Höllvania and destroy the H-04 Efervon Tank.",
+    "tip": "Shoot the 8 vents, then grab a Thermian RPG from Scaldra troops to finish it."
+   },
+   {
+    "t": "Take your loaner Excalibur and Atomicycle and run the Exterminate against Scaldra."
+   },
+   {
+    "t": "Survive the 10-minute Hell-Scrub with Quincy."
+   },
+   {
+    "t": "Chase the convoy and blow up the escorts with the Thermian RPG."
+   },
+   {
+    "t": "Choose which Hex member takes point and fight the waves, then clear the Rotpods and defeat the Legacyte as Eleanor."
+   },
+   {
+    "t": "Make your way through the Zariman section."
+   },
+   {
+    "t": "Hold out in the New Year's Eve finale defense as each Hex member in turn."
+   }
+  ],
+  "fast": [
+   "You can't bring your own gear, so practise the loaner Excalibur's kit early; Exalted Blade clears most stages quickly.",
+   "In Hell-Scrub, kill Techrot Babau fast so they don't drain life support.",
+   "Summon the Atomicycle to travel; Atomi-Barrage and Atomi-Bomb also deal heavy damage.",
+   "The Finale needs 'Liked' Chemistry with all six Hex members on KIM, which you can only raise once a day, so start chatting and doing their bounties right away."
+  ],
+  "rw": [
+   "Cyte-09 blueprint",
+   "Magnetic Might",
+   "Forma",
+   "Atomicycle",
+   "Atomicycle Summon",
+   "Hex syndicate",
+   "Höllvania missions and Bounties",
+   "Isleweaver access",
+   "The Hex Noggle Collection (Finale)"
+  ],
+  "time": "~1.5 hours",
+  "go": [
+   "Cyte-09",
+   "Atomicycle",
+   "AX-52",
+   "Vesper 77",
+   "Excalibur",
+   "The Lotus Eaters"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Hex_(Quest)"
+ },
+ {
+  "id": "the-old-peace",
+  "n": "The Old Peace",
+  "kind": "quest",
+  "aka": [
+   "old peace",
+   "uriel quest",
+   "tau",
+   "dark refractory",
+   "hunhullus",
+   "adis",
+   "descendia"
+  ],
+  "sum": "A main quest where the Operator dives into forgotten memories of the Tau system. It rewards the Uriel blueprint and unlocks the Dark Refractory modes and La Cathédrale.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Lotus Eaters"
+   ],
+   "other": [
+    "Do not have the Backroom set as your Base of Operations"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the quest and go to the Sanctum Anatomica."
+   },
+   {
+    "t": "As Excalibur Prime, lure the Hunhullus into the crater and break its knee joints to damage it.",
+    "tip": "Destroy Marrowticks to make grapple points that also add Void damage."
+   },
+   {
+    "t": "Explore Tauron Academy, then fight alongside the Grineer against the Dax and defeat the Dactolyst."
+   },
+   {
+    "t": "Capture the three Anarch Liberators with the Vinquibus, scrambling the Targeting Node with Authorization Codes."
+   },
+   {
+    "t": "Escort the Palanquin through Perintol Crater."
+   },
+   {
+    "t": "Attend the ceremony at Tokh-Amn, then go to World-Seeder."
+   },
+   {
+    "t": "Defeat the Commandeered Protea Prime and Commandeered Caliban Prime in Zariman Five-Nine.",
+    "tip": "You may get a 90-second Somatic Bearer buff from another player; leave your own after."
+   },
+   {
+    "t": "Defeat the Hunhullus for good, breaking the chest joint for the last health bar."
+   },
+   {
+    "t": "Take control of Uriel and storm Tauron Academy."
+   }
+  ],
+  "fast": [
+   "The quest gives you your loadouts for the memory sections, so the main preparation is knowing the boss mechanics: hit the Hunhullus's Synovia joints, not its body.",
+   "Use the Marrowtick grapple points in the Hunhullus fights for mobility and bonus Void damage.",
+   "Dying sends you back to the last checkpoint with no revive, so play the boss fights carefully rather than rushing.",
+   "Switch your Base of Operations away from the Backroom before you start, or the quest won't begin."
+  ],
+  "rw": [
+   "Uriel blueprint",
+   "Operator Atmosphor accessory",
+   "75 Lyroic Bridge",
+   "75 Ren Hypercore",
+   "75 Ascaris Prime",
+   "Dark Refractory access",
+   "La Cathédrale access"
+  ],
+  "time": "",
+  "go": [
+   "Uriel",
+   "Vinquibus",
+   "Excalibur Prime",
+   "The Lotus Eaters"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Old_Peace"
+ },
+ {
+  "id": "jade-shadows",
+  "n": "Jade Shadows",
+  "kind": "quest",
+  "aka": [
+   "jade quest",
+   "stalker quest",
+   "jade",
+   "sorren",
+   "ascension unlock",
+   "shadows"
+  ],
+  "sum": "A solo main quest played as the Stalker as he tries to save Jade. It rewards the Jade blueprint and unlocks the Ascension mode on Uranus.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The New War"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start from the Codex and type SHADOWS to confirm.",
+    "tip": "It contains scenes of trauma related to motherhood."
+   },
+   {
+    "t": "As Stalker, follow the jade feathers through his lair on Uranus."
+   },
+   {
+    "t": "Raid the Corpus ship on Phobos for Bioplasma in a 4-vault Spy mission.",
+    "tip": "Stalker always breaches consoles and his Smoke Screen gets you through lasers."
+   },
+   {
+    "t": "Destroy the Corpus proxies that ambush you."
+   },
+   {
+    "t": "Sneak into the Tenno's Orbiter past Ordis and reach the Transference room."
+   },
+   {
+    "t": "Defeat the Juggernaut Behemoth on Eris for Cortichrome."
+   },
+   {
+    "t": "Time your jumps to the chorus to give the medicine.",
+    "tip": "The quest continues even if you miss."
+   },
+   {
+    "t": "Escape the Corpus assault carrying the child, then name him."
+   }
+  ],
+  "fast": [
+   "Stalker's kit is preset and powerful (Dread, Despair, Hate, and a passive bonus against enemies that can't see him), so nothing needs preparing.",
+   "In the Spy mission, use Smoke Screen to walk through laser barriers instead of solving the vaults.",
+   "On the Orbiter, wait for Ordis to open the Transference room door and slip in behind him."
+  ],
+  "rw": [
+   "Jade blueprint",
+   "Stalker's Lair Captura Scene",
+   "Alone Portrait",
+   "United Portrait",
+   "Protector Portrait"
+  ],
+  "time": "~30-40 min",
+  "go": [
+   "Jade",
+   "Stalker",
+   "Evensong",
+   "Jade Shadows: Constellations"
+  ],
+  "w": "https://wiki.warframe.com/w/Jade_Shadows"
+ },
+ {
+  "id": "jade-shadows-constellations",
+  "n": "Jade Shadows: Constellations",
+  "kind": "quest",
+  "aka": [
+   "constellations",
+   "sirius and orion quest",
+   "sirius & orion",
+   "stalker quest 2",
+   "father",
+   "uranus proxima"
+  ],
+  "sum": "A solo main quest that continues Stalker's story as he deals with his sons from the future. It rewards the Sirius & Orion blueprint and unlocks Uranus Proxima missions.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Jade Shadows"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start from the Codex and type FATHER to confirm."
+   },
+   {
+    "t": "Head to the Orb Vallis and defeat the dual boss Emerald X Crimson.",
+    "tip": "You play Stalker with infinite revives."
+   },
+   {
+    "t": "Return to the lair and talk to Hunhow."
+   },
+   {
+    "t": "Sneak onto the Tenno's Orbiter, use the Helminth to distract Ordis, and reach Excalibur Umbra."
+   },
+   {
+    "t": "Win a one-round Interception on Venus with Umbra."
+   },
+   {
+    "t": "Choose who to hunt first, then take down both mentors: Vena (Spy) and Ryoku (Capture).",
+    "tip": "The choice only sets the order; you fight both."
+   },
+   {
+    "t": "Go to Uranus Proxima, collect the Void Spark and defeat the phantom."
+   },
+   {
+    "t": "Deliver the Void Spark to Hunhow back at the lair to finish."
+   }
+  ],
+  "fast": [
+   "Stalker's preset kit plus infinite revives makes the boss fights forgiving; focus on dodging the charges.",
+   "In The Kuva Wytch Spy mission, stealth isn't needed because there are no alarms or cameras, so just run to the terminals.",
+   "After the first hunt, switch to Umbra's weapons if you prefer them for the second mentor."
+  ],
+  "rw": [
+   "Sirius & Orion blueprint",
+   "Sirius' and Orion's Swaddle Syandanas",
+   "Stay Together Display",
+   "Sirius Alone Display",
+   "Orion Alone Display",
+   "Uranus Proxima missions"
+  ],
+  "time": "~30-40 min",
+  "go": [
+   "Sirius & Orion",
+   "Excalibur Umbra",
+   "Jade Shadows",
+   "Pride",
+   "Wrath"
+  ],
+  "w": "https://wiki.warframe.com/w/Jade_Shadows:_Constellations"
+ },
+ {
+  "id": "angels-of-the-zariman",
+  "n": "Angels of the Zariman",
+  "kind": "quest",
+  "aka": [
+   "aotz",
+   "zariman quest",
+   "zariman ten zero",
+   "holdfasts",
+   "void angel",
+   "chrysalith",
+   "incarnon"
+  ],
+  "sum": "A solo main quest aboard the Zariman Ten Zero. It unlocks the Zariman missions, the Holdfasts syndicate, Incarnon weapons from Cavalero and Gyre bounties.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The New War"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Upgrade your Operator/Drifter and spend unused Focus, then start the quest.",
+    "tip": "Swap a Mote Amp for a stronger one such as Sirocco."
+   },
+   {
+    "t": "Head to the Zariman and find the source of the song."
+   },
+   {
+    "t": "Stop the Void Cascade by closing the rifts on each Exolizer with Void damage.",
+    "tip": "Then kill the Void Manifestation and the Thrax Centurion."
+   },
+   {
+    "t": "Talk to Quinn."
+   },
+   {
+    "t": "Stop the Void Flood: bring Vitoplast to the Void Ruptures to seal them.",
+    "tip": "Each sealed rupture lowers the gauge by 30%."
+   },
+   {
+    "t": "Get the defense briefing from Cavalero."
+   },
+   {
+    "t": "Protect the Reliquary Drive: collect Argozene and build turrets to guard the Exodampers."
+   },
+   {
+    "t": "Defeat the Void Angel: knock down its first bar, jump into the bubble as Operator and destroy its ethereal form.",
+    "tip": "Falling out of bounds or dying in the bubble boots you out."
+   },
+   {
+    "t": "Retrieve Quinn's tablet to finish."
+   }
+  ],
+  "fast": [
+   "Bring a strong Amp like Sirocco and a ranked Operator or Drifter; the Void Cascade and Void Angel stages rely on Void damage.",
+   "Use a fast Warframe for Void Flood so you can collect Vitoplast and reach ruptures quickly.",
+   "In the Reliquary Drive defense, build a turret early to start the enemy wave and earn more Argozene from kills."
+  ],
+  "rw": [
+   "1 Voidplume Pinion",
+   "Operator Voidshell Set",
+   "Drifter Voidshell Set",
+   "Dormizone access",
+   "The Holdfasts syndicate",
+   "Chrysalith Bounties (Gyre)"
+  ],
+  "time": "",
+  "go": [
+   "Sirocco",
+   "Gyre",
+   "Narin",
+   "Aeolak",
+   "Hespar"
+  ],
+  "w": "https://wiki.warframe.com/w/Angels_of_the_Zariman"
+ },
+ {
+  "id": "sayas-vigil",
+  "n": "Saya's Vigil",
+  "kind": "quest",
+  "aka": [
+   "saya",
+   "sayas vigil",
+   "gara quest",
+   "plains of eidolon quest",
+   "shatter-lock",
+   "konzu"
+  ],
+  "sum": "A solo side quest on the Plains of Eidolon to help Saya find out what happened to her husband. It rewards the Gara blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Vor's Prize"
+   ],
+   "other": [
+    "Complete at least 1 Plains of Eidolon bounty from Konzu"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Konzu in Cetus, finish one bounty, then return to him to start."
+   },
+   {
+    "t": "Talk to Saya in Cetus and agree to help."
+   },
+   {
+    "t": "Go to the Grineer drilling site on the Plains, clear the area and destroy the drill's augers."
+   },
+   {
+    "t": "Pick up the Ostron Coffer in the cave."
+   },
+   {
+    "t": "On the Orbiter, examine the coffer in the Codex and equip Codex Scanners in your Gear.",
+    "tip": "You can't continue without scanners equipped."
+   },
+   {
+    "t": "Scan the Shatter-lock key shards at the Grineer camp and kill the reinforcements."
+   },
+   {
+    "t": "Board Hek's Galleon, defeat the Nox ambush and reach the shard vault."
+   },
+   {
+    "t": "Back on the Plains at night, find the round rock on the mound, remove it and scan the last shard, then extract."
+   }
+  ],
+  "fast": [
+   "Bring Helios with Investigator; it scans the glass shards automatically when you're in range.",
+   "Synthesis Scanners also work for the shards if you have them.",
+   "Avoid the Eidolon fight in the final stage; use the side cave and go straight to extraction.",
+   "Don't destroy the Tusk Bolkor during the reinforcements phase; the wiki lists this as a quest-breaking bug."
+  ],
+  "rw": [
+   "Gara blueprint",
+   "Shrine Defense access (Koumei, with Once Awake)"
+  ],
+  "time": "",
+  "go": [
+   "Gara",
+   "Helios",
+   "Koumei",
+   "Vor's Prize"
+  ],
+  "w": "https://wiki.warframe.com/w/Saya%27s_Vigil"
+ },
+ {
+  "id": "howl-of-the-kubrow",
+  "n": "Howl of the Kubrow",
+  "kind": "quest",
+  "aka": [
+   "kubrow quest",
+   "incubator",
+   "kubrow egg",
+   "pet",
+   "incubator segment"
+  ],
+  "sum": "A short solo side quest that gets you the Incubator Segment and your first Kubrow (or other incubated pet).",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Venus to Mercury Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the quest from the Codex."
+   },
+   {
+    "t": "Survive 5 minutes on Unda, Venus to get the Incubator Segment."
+   },
+   {
+    "t": "Install the Incubator Segment in your Orbiter."
+   },
+   {
+    "t": "Find a Kubrow Egg by destroying Kubrow Dens on E Prime, Earth.",
+    "tip": "Dens drop an egg 100% of the time during the quest; skip this step if you already own an egg."
+   },
+   {
+    "t": "Get an Incubator Power Core and incubate the egg.",
+    "tip": "Incubation takes 1 minute during the quest."
+   },
+   {
+    "t": "Defend your new pet for 3 waves on Gaia, Earth.",
+    "tip": "It can be revived if it goes down."
+   }
+  ],
+  "fast": [
+   "Claim the Incubator Power Core from the Venus to Mercury Junction task (after Vox Solaris) instead of crafting it.",
+   "Already own an egg (e.g. from the Market) to skip the Earth egg hunt.",
+   "In the final Defense, bring crowd control or area damage so enemies don't focus the fragile pet."
+  ],
+  "rw": [
+   "Incubator Segment",
+   "Balanced Posture"
+  ],
+  "time": "",
+  "go": [
+   "Kubrow",
+   "Helminth Charger"
+  ],
+  "w": "https://wiki.warframe.com/w/Howl_of_the_Kubrow"
+ },
+ {
+  "id": "stolen-dreams",
+  "n": "Stolen Dreams",
+  "kind": "quest",
+  "aka": [
+   "maroo",
+   "arcane codices",
+   "ether daggers",
+   "ayatan hunt",
+   "orokin catalyst quest"
+  ],
+  "sum": "A side quest where you hunt the thief Maroo and recover the Arcane Codices. It rewards the Ether Daggers and an Orokin Catalyst blueprint, and unlocks Maroo's weekly Ayatan hunt.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Phobos Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Capture Maroo on Tharsis, Mars.",
+    "tip": "She turns invisible and fights back when downed, so be careful finishing the capture."
+   },
+   {
+    "t": "Steal the Arcane Codex data in a Spy mission on Unda, Venus."
+   },
+   {
+    "t": "Do the Spy mission on a Grineer Galleon on Pantheon, Mercury."
+   },
+   {
+    "t": "Do the Spy mission on a Corpus ship on Roche, Phobos."
+   },
+   {
+    "t": "Fight through the Infested on Alator, Mars, take the portal to the Derelict and find the Arcane Machine."
+   },
+   {
+    "t": "Defeat the Arcane Boiler and Infested, then extract."
+   }
+  ],
+  "fast": [
+   "Bring Loki or Ash for the three Spy missions; invisibility makes the vaults much easier.",
+   "Each Spy mission has three Data Vaults; avoid alarms so the data isn't destroyed.",
+   "Don't sell the Ether Daggers: replaying the quest won't give the blueprint again."
+  ],
+  "rw": [
+   "Ether Daggers blueprint",
+   "Orokin Catalyst blueprint",
+   "Weekly Ayatan Treasure Hunt"
+  ],
+  "time": "",
+  "go": [
+   "Ether Daggers",
+   "Orokin Catalyst",
+   "Maroo",
+   "The New Strange"
+  ],
+  "w": "https://wiki.warframe.com/w/Stolen_Dreams"
+ }
+]

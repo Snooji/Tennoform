@@ -157,6 +157,25 @@ export type TFApi = {
   groupCreate(name: string, uids: string[]): Promise<boolean>
   groupAdd(uid: string): void
   groupLeave(): void
+  guides(): GuidesData
+  guidesSet(o: { filter?: string; q?: string; sel?: string | null }): void
+  guideStep(id: string, i: number, v: boolean): void
+  guideReset(id: string): void
+  guideTask(id: string): void
+  buildLib(): BuildLibData
+  buildLibSet(o: { q?: string; kind?: string; src?: string; sort?: string; sel?: string | null; more?: boolean }): void
+  buildLibReload(): void
+  buildGoal(id: string): void
+  buildGoalRemove(id: string): void
+  buildCopy(id: string): void
+  buildVote(id: string, v: 1 | -1): void
+  myBuilds(): MyBuildsData
+  myBuildEdit(o: null | { id?: string; item?: string }): void
+  myBuildSave(d: BuildDraft): boolean
+  myBuildDel(id: string): void
+  myBuildPublish(id: string): void
+  myBuildUnpublish(id: string): void
+  sharedDelete(doc: string): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -229,13 +248,16 @@ export type TasksData = {
   filter: string; sort: string; todo: number; done: number; signedIn: boolean
   friends: { uid: string; name: string }[]; list: TaskRow[]
 }
+export type BuildGoal = { id: string; from: string; item: string; img: string; name: string; have: number; total: number; missing: ModSlot[] }
 export type GoalsData = {
+  bgoals: BuildGoal[]
   sort: string; short: boolean; credits: number
   goals: { name: string; img: string; done: number; total: number; xp: number; built: boolean; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null }[]
   shop: { n: string; need: number; have: number | null; left: number; where: string; task: { has: boolean; key: string; label: string } }[]
   relics: { era: string; relics: string[] }[]
 }
 export type QuestRow = {
+  guide: string
   n: string; id: string; done: boolean; locked: boolean; desc: string; wiki: string
   req: { text: string; quest: string; done: boolean }[]; rewards: { text: string; go: string; left: number; xp: number }[]
   hasTask: boolean; upto: boolean
@@ -329,7 +351,7 @@ export type RelicsData = {
   stock?: { item: string; go: string; ducats: number; credits: number }[]
 }
 export type ArsenalData = {
-  tab: "builds" | "comp" | "lich" | "arc" | "mods"
+  tab: "top" | "mine" | "builds" | "comp" | "lich" | "arc" | "mods"
   cats?: string[]; cat?: string; own?: string; names?: string[]; cur?: string; img?: string; filteredEmpty?: boolean; tree?: string
   builds?: { value: string; label: string }[]; bi?: string
   build?: { role: string; name: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
@@ -458,4 +480,40 @@ export type SquadData = {
     addable: { uid: string; name: string }[]; log: SquadMsg[]
   }
   compare: null | { names: string[]; rows: { label: string; vals: { v: string; top: boolean }[] }[] }
+}
+
+export type GuideKind = "quest" | "system" | "mode"
+export type GuideCard = { id: string; n: string; kind: GuideKind; sum: string; time: string; steps: number; doneSteps: number; ready: boolean; done: boolean }
+export type GuideDetail = GuideCard & {
+  aka: string[]; fast: string[]; rw: string[]; w: string; questKey: string; hasTask: boolean
+  unlock: { mr: number | null; mrHave: number; mrOk: boolean; quests: { n: string; done: boolean; guide: string }[]; other: string[]; ready: boolean }
+  stepList: { t: string; tip: string; done: boolean }[]
+  go: { n: string; key: string }[]
+  opens: { id: string; n: string; kind: GuideKind }[]
+}
+export type GuidesData = {
+  filter: string; q: string; total: number
+  counts: Record<"all" | GuideKind, number>
+  list: GuideCard[]; sel: GuideDetail | null
+}
+
+export type BuildCard = {
+  id: string; src: "meta" | "player" | "mine"; item: string; img: string; kind: string; cat: string; name: string; role: string
+  author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number
+}
+export type BuildDetail = BuildCard & {
+  notes: string; helminth: string; mine: boolean; doc: string; mods: ModSlot[]; arcanes: ModSlot[]
+  itemOwned: boolean; itemGoal: boolean; canVote: boolean
+}
+export type BuildLibData = {
+  q: string; kind: string; src: string; sort: string; total: number; more: boolean; list: BuildCard[]
+  shared: { loading: boolean; err: string; count: number; online: boolean }; signedIn: boolean; sel: BuildDetail | null
+}
+export type BuildDraft = {
+  id?: string; item: string; name: string; role: string; aura: string; exilus: string; mods: string[]; arcanes: string[]; helminth: string; notes: string
+}
+export type MyBuildsData = {
+  list: (BuildCard & { pub: string; updated: number })[]
+  items: string[]; signedIn: boolean; online: boolean
+  edit: (BuildDraft & { cat: string; opts: { mods: string[]; arcanes: string[]; slots: { aura: string; exilus: string; arcanes: number; helminth: boolean } } | null }) | null
 }
