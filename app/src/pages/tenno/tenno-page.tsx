@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Search, X } from "lucide-react"
+import { Search, ShieldCheck, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GoLink } from "@/components/tf/go-link"
 import { Island } from "@/components/tf/island"
 import { NumField } from "@/components/tf/num-field"
-import { fmt, tf, useTFData, type TennoData } from "@/lib/tf"
+import { fmt, tf, useTF, useTFData, type TennoData } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { SignInCard } from "@/pages/home/side-cards"
 import { InventoryImport } from "./inventory-import"
@@ -44,6 +44,7 @@ function Inventory({ d }: { d: TennoData }) {
 
 export function TennoPage() {
   const d = useTFData(() => tf().tenno())
+  const s = useTF()
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex items-center gap-4">
@@ -53,6 +54,7 @@ export function TennoPage() {
           <h1 className="truncate font-heading text-3xl font-semibold">{d.name}</h1>
           {d.synced ? <span className="text-sm text-muted-foreground">Last synced {d.synced}{d.inGame ? ` · In-game MR ${d.inGame}` : ""}</span> : null}
         </div>
+        {s.admin ? <Button variant="outline" className="ml-auto h-10 shrink-0" onClick={() => tf().go("admin")}><ShieldCheck /> Backend</Button> : null}
       </header>
       {d.showSign && d.tab !== "account" ? <SignInCard /> : null}
       <Tabs value={d.tab} onValueChange={(v) => tf().tennoSet({ tab: String(v) })}>

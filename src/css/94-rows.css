@@ -44,3 +44,4 @@
 .footcta .btn{min-height:36px}
 .footcta .ic{width:14px;height:14px}
 body:has(#tf-home-links) .footcta{display:none}
+.sitefoot .feeds .linkbtn{padding:8px 4px;margin:-8px 0}

@@ -9,7 +9,7 @@ It should never read like a game launcher or overlay, and it should stay clearly
   No navy or indigo backgrounds, no purple, no neon.
 - **Accent follows your rank.** `data-accent` on `<html>` picks the accent: bronze (MR 0–9), silver (10–19), gold (20–29), radiant (30+).
   People can pin a fixed colour (bronze, silver, gold, radiant, jade) from the menu's "Colour" option; it's stored in `tf-accent`.
-  Every accent must pass WCAG AA in both themes (`taccent.js`).
+  Every accent must pass WCAG AA in both themes.
 - **Progress drives the glow.** The ambient background gradient (`--glow-a`, `--glow-b`) grows as you near your next rank, and `--progress` (0–1)
   is available to any component that wants to react to it.
 - **Glass surfaces.** Cards, the sidebar, header and phone tab bar use `.tf-glass` (translucent, blurred, hairline border).

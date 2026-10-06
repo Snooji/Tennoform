@@ -7,31 +7,39 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
-import { fmt, tf, type TodayData, type TodayLive } from "@/lib/tf"
+import { fmt, tf, useTFData, type TodayLive } from "@/lib/tf"
 import { TaskButton } from "./checklist"
 
 const H = ({ children }: { children: React.ReactNode }) => <h3 className="font-heading text-base leading-tight font-semibold">{children}</h3>
 
+const ended = (t: string) => t.startsWith("Ended")
+
 function Left({ t }: { t: string }) {
-  return <Badge variant="outline" className="text-muted-foreground tabular-nums">{t} left</Badge>
+  return <Badge variant="outline" className={cn("tabular-nums", ended(t) ? "border-amber-500/40 text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{t}</Badge>
 }
 
-export function LiveStatus({ d }: { d: TodayData }) {
-  if (d.liveState === "ok") return null
+const DOT = { ok: "bg-emerald-500", loading: "bg-muted-foreground/50", delayed: "bg-amber-500", stale: "bg-amber-500", error: "bg-destructive", offline: "bg-muted-foreground/50" }
+
+/** Connection and freshness of the live feed, shown above the live sections at all times. */
+export function LiveStatus() {
+  const L = useTFData(() => tf().liveInfo())
   return (
-    <Card size="sm" className="flex-row items-center gap-3 px-4 text-sm text-muted-foreground">
-      <span className="flex-1">
-        {d.liveState === "offline"
-          ? "Live game info (cycles, fissures, Baro, Sortie) works on tennoform.com."
-          : d.liveState === "error"
-            ? "Couldn't reach the live game feed. Check your connection, then try again."
-            : "Loading live game info…"}
-      </span>
-      {d.liveState === "error" ? (
-        <Button variant="outline" size="sm" className="h-8" onClick={() => tf().retryLive()}>
-          <RefreshCw /> Retry
-        </Button>
-      ) : null}
+    <Card size="sm" className="gap-1 px-4" role="status" aria-live="polite">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span className="flex min-w-0 flex-1 items-center gap-2 text-sm">
+          <span aria-hidden className={cn("size-2 shrink-0 rounded-full", DOT[L.state], L.busy && "animate-pulse")} />
+          <span className="min-w-0"><b className="font-medium">{L.conn}</b>{L.at ? <span className="text-muted-foreground"> · updated {L.at}</span> : null}</span>
+        </span>
+        {L.retry ? (
+          <Button variant="outline" size="sm" className="h-8" disabled={L.busy} onClick={() => tf().retryLive()}>
+            <RefreshCw className={cn(L.busy && "animate-spin")} /> {L.state === "error" ? "Try again" : "Refresh"}
+          </Button>
+        ) : null}
+      </div>
+      {L.state === "offline" ? <p className="text-sm text-muted-foreground">Cycles, fissures, Baro and the Sortie show live on tennoform.com.</p> : null}
+      {L.state === "loading" ? <p className="text-sm text-muted-foreground">Getting cycles, fissures, Baro and the Sortie…</p> : null}
+      {L.state === "error" && !L.at ? <p className="text-sm text-muted-foreground">Couldn't get live game info. Check your connection, then try again.</p> : null}
+      {L.fresh && L.state !== "ok" ? <p className={cn("text-sm", L.state === "delayed" || L.state === "stale" ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{L.fresh}</p> : null}
     </Card>
   )
 }
@@ -44,7 +52,7 @@ export function Cycles({ L }: { L: TodayLive }) {
         <Card key={c.name} size="sm" className="gap-0.5 px-3">
           <span className="text-xs text-muted-foreground">{c.name}</span>
           <b className="font-heading text-lg leading-tight font-semibold">{c.state}</b>
-          <span className="text-xs text-muted-foreground tabular-nums">{c.left} left</span>
+          <span className={cn("text-xs tabular-nums", ended(c.left) ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{c.left}</span>
         </Card>
       ))}
     </div>
@@ -118,8 +126,8 @@ export function Missions({ L }: { L: TodayLive }) {
           <CardHeader>
             <CardTitle><H>Baro Ki'Teer</H></CardTitle>
             <CardAction>
-              <Badge variant="outline" className={cn(L.baro.here ? "border-emerald-500/40 text-emerald-700 dark:text-emerald-400" : "text-muted-foreground")}>
-                {L.baro.here ? "Here now · leaves in " + L.baro.left : "Arrives in " + L.baro.left}
+              <Badge variant="outline" className={cn(L.baro.gone ? "border-amber-500/40 text-amber-800 dark:text-amber-300" : L.baro.here ? "border-emerald-500/40 text-emerald-700 dark:text-emerald-400" : "text-muted-foreground")}>
+                {L.baro.gone ? "Left · next visit loading" : L.baro.here ? "Here now · " + (L.baro.left ? "leaves in " + L.baro.left : "leaving now") : L.baro.left ? "Arrives in " + L.baro.left : "Arriving now"}
               </Badge>
             </CardAction>
           </CardHeader>
@@ -161,7 +169,7 @@ export function Nightwave({ L }: { L: TodayLive }) {
                 <Badge variant="outline" className="text-muted-foreground">{c.kind}</Badge>
                 <Badge variant="outline" className="border-primary/40 text-primary tabular-nums">{fmt(c.rep)}</Badge>
               </span>
-              <span className="text-sm text-muted-foreground">{c.desc} · {c.left} left</span>
+              <span className="text-sm text-muted-foreground">{c.desc} · {c.left}</span>
             </div>
             <TaskButton text={c.task} expiry={c.expiry} has={c.hasTask} />
           </li>

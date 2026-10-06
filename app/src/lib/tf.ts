@@ -71,6 +71,9 @@ export type TFApi = {
   liveTask(text: string, expiry: string): void
   fisRelics(era: string): void
   retryLive(): void
+  liveInfo(): LiveInfo
+  syncStatus(): { state: "off" | "none" | "stale" | "ok" | "busy"; at: string; linked: boolean }
+  feeds(): Feed[]
   ach(): AchData
   achSet(p: string): void
   logUndo(id: string): void
@@ -224,7 +227,7 @@ export type TodayLive = {
   cycles: { name: string; state: string; left: string }[]
   sortie?: Tasky & { boss: string; faction: string; variants: { t: string; s: string; n: string }[] }
   archon?: Tasky & { boss: string; missions: { t: string; s: string }[] }
-  baro?: { here: boolean; left: string; location: string; inv: { item: string; ducats: number; credits: number }[] }
+  baro?: { here: boolean; gone: boolean; left: string; location: string; inv: { item: string; ducats: number; credits: number }[] }
   steel?: { name: string; cost: number }
   arbitration?: Tasky & { type: string; node: string; enemy: string }
   nightwave?: (Tasky & { id: string; title: string; desc: string; rep: number; kind: string; done: boolean })[]
@@ -234,6 +237,8 @@ export type TodayLive = {
   }
   invasions: { id: string; node: string; desc: string; rewards: string; good: boolean; pct: number }[]
 }
+export type LiveInfo = { state: "ok" | "loading" | "delayed" | "stale" | "error" | "offline"; conn: string; fresh: string; at: string; ended: string[]; busy: boolean; retry: boolean }
+export type Feed = { id: string; name: string; k: "ok" | "warn" | "bad" | "off"; t: string; retry: boolean }
 export type TodayData = {
   filter: string; rows: CheckRow[]; hiddenCount: number; hosted: boolean
   tiles: { k: string; v: string; x: string; done?: number; total?: number }[]

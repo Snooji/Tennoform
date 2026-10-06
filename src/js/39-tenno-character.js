@@ -14,17 +14,29 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
 function findId(text){text=String(text||'');const pri=[/Logged in[^\n(]*\(([0-9a-f]{24})\)/i,/AccountId[^0-9a-f]{0,12}([0-9a-f]{24})/i,/playerId=([0-9a-f]{24})/i,/accountId[":\s$oid{]*([0-9a-f]{24})/i,/user_?id["'\s:=]*([0-9a-f]{24})/i];
   for(const r of pri){const m=text.match(r);if(m)return m[1].toLowerCase()}const all=text.match(/\b[0-9a-f]{24}\b/gi);return all&&all.length===1?all[0].toLowerCase():null}
 async function readLog(f){try{const txt=await f.text();const id=findId(txt);if(id)setWfid(id,f.name);else toast('Couldn\'t find an account ID in '+f.name+'. Make sure it\'s EE.log from the Warframe folder.')}catch(e){toast('Couldn\'t read that file.')}}
-function setWfid(id,how){P.wfid=id;lsSet('tenno-acct',id);saveProfile();render();toast('Found your account ID'+(how?' in '+how:'')+'. Syncing…');setTimeout(()=>autoSync(false),300)}
+function setWfid(id,how,name){if(id!==P.wfid||name)P.wfName=name||'';P.wfid=id;lsSet('tenno-acct',id);saveProfile();render();toast(name?`Found ${name}'s account ID${how?' in '+how:''}. Linking and syncing…`:'Found your account ID'+(how?' in '+how:'')+'. Syncing…');setTimeout(()=>autoSync(false),300)}
 function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=window.TENNO_PROXY;
-  return accountPanel()+`<div class="panel stack cut"><h2>Link your Warframe account</h2>
-  ${ok?`<div class="row"><span class="chip good">Linked</span><span class="mono small">${esc(P.wfid)}</span><button class="btn sm" id="unlink">Change</button></div>`:`
-  <div class="steps-v">
-   <div class="sv"><span class="svn">1</span><div><b>PC players: pick your Warframe log file</b><div class="small muted">Tap the button, then in the file window paste <span class="mono sel">%localappdata%\\Warframe</span> into the address bar, press Enter and choose <b>EE.log</b>. The app reads your ID out of it. Nothing is uploaded.</div>
-    <label class="btn primary filebtn" for="eelog">Choose EE.log</label><input id="eelog" type="file" accept=".log,.txt,text/plain" hidden>
-    <div class="drop" id="drop">or drag EE.log here</div></div></div>
-   <div class="sv"><span class="svn">2</span><div><b>Already have it?</b><div class="small muted">Paste your ID, a profile link, or any line that contains it. The app finds the 24-character ID by itself. <a class="ln" href="#" data-go="guide|find-account-id">How to find your ID</a></div>
-    <input id="wfid" type="text" placeholder="Paste your ID or anything containing it" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false"></div></div>
-   <div class="sv"><span class="svn">3</span><div><b>Console or mobile only?</b><div class="small muted">Warframe only shows the ID in the PC log. If you've ever logged in on PC (cross-save), use that log. Otherwise skip linking and set your progress by hand on the Ranks, Star Chart and Quests pages.</div></div></div>
+  return accountPanel()+`<div class="panel stack cut"><h2>Link your Warframe profile</h2><p class="small muted" style="margin:0">Read-only: fills in ranks, mastered gear, star chart, syndicates and quests from Warframe, and updates them by itself. It doesn't save your Tennoform goals or tasks; signing in above does that.</p>
+  ${ok?`<div class="row"><span class="chip good">Linked</span>${P.wfName?`<b class="small">${esc(P.wfName)}</b>`:''}<span class="mono small">${esc(P.wfid)}</span><button class="btn sm" id="unlink">Change</button></div>`:`
+  <div class="steps-v idhelp">
+   <div class="sv"><span class="svn">1</span><div><b>Get your ID from warframe.com</b><div class="small muted">Works on any phone or PC, whatever platform you play on. It opens a page on warframe.com with your ID on it (log in there if it asks).</div>
+    <a class="btn primary" id="idopen" href="https://www.warframe.com/api/user-data" target="_blank" rel="noopener">Open my ID page</a></div></div>
+   <div class="sv"><span class="svn">2</span><div><b>Copy that whole page</b><div class="small muted">Phone: press and hold the text, tap <b>Select all</b>, then <b>Copy</b>. PC: press <span class="mono">Ctrl+A</span> then <span class="mono">Ctrl+C</span>. You don't need to find the ID yourself.</div></div></div>
+   <div class="sv"><span class="svn">3</span><div><b>Come back and paste</b><div class="small muted">Tennoform picks out the 24-character ID and links it. Only the ID is kept.</div>
+    <div class="row"><button type="button" class="btn ${state.idOpened?'primary':''}" id="idpaste">Paste and link</button></div>
+    <input id="wfid" type="text" placeholder="…or paste it here yourself" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Paste your account ID or the copied page"></div></div>
+  </div>
+  <details class="small eelog"${/Windows/.test(navigator.userAgent)?' open':''}><summary><b>On PC with Warframe installed? Use the game's log file instead</b></summary>
+   <ol class="stack" style="margin:8px 0 0;padding-left:20px">
+    <li>Start Warframe and log in until you reach your Orbiter. That writes your login into the log. You can close the game afterwards.</li>
+    <li>Tap <b>Choose EE.log</b> below. In the window that opens, click the address bar at the top (or the File name box), paste <span class="mono sel">%localappdata%\\Warframe</span> and press Enter.</li>
+    <li>Pick <b>EE.log</b>. Windows may show it as just <b>EE</b> (type: Text Document). Tennoform finds the line <span class="mono">Logged in YourName (ID)</span>, shows you the name it found, and links that ID. Nothing is uploaded.</li>
+   </ol>
+   <div class="row" style="margin-top:8px"><label class="btn primary filebtn" for="eelog">Choose EE.log</label><input id="eelog" type="file" accept=".log,.txt,text/plain" hidden></div>
+   <div class="drop" id="drop">or drag EE.log here</div>
+   <div class="muted">Rather copy it yourself? Open EE.log in Notepad, press <span class="mono">Ctrl+F</span> and search <span class="mono">Logged in</span>. Your ID is the 24 letters and numbers in brackets right after your name, for example <span class="mono">Logged in YourName (<b>0123456789abcdef01234567</b>)</span>. Copy only what's inside the brackets and paste it into the box in step 3. Ignore any other long codes in the log; they belong to other players or sessions.</div>
+  </details>
+  <div class="small muted">Page says <span class="mono">{}</span> or asks you to log in? Log in at warframe.com first, then open it again. <a class="ln" href="#" data-go="guide|find-account-id">Step-by-step guide</a></div>
   </div>`}</div>
   <div class="panel stack cut"><h2>Sync</h2>
   <div class="row"><button class="btn primary" id="autosync" ${ok?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
@@ -64,7 +76,7 @@ function inventoryTab(){const q=state.invQ.toLowerCase();const common=['Ferrite'
   <input id="invq" type="search" placeholder="Find another material" value="${esc(state.invQ)}">
   <div class="inv">${list.slice(0,120).map(n=>{const id='inv-'+n.replace(/\W/g,'');return `<label for="${esc(id)}" class="small">${L(n)}</label><input id="${esc(id)}" type="number" inputmode="numeric" min="0" data-inv="${esc(n)}" value="${P.inv&&P.inv[n]!=null?esc(P.inv[n]):''}" placeholder="0">`}).join('')}</div></div>`}
 function backupTab(){return `<div class="panel stack cut"><h2>Backup</h2>
-  <p class="small" style="margin:0">${synced?(acct&&acct.kind==='fb'?'You\'re signed in, so progress saves to your account automatically and follows you to every device.':'Progress saves to your claude.ai account automatically.'):'Progress is saved in this browser only. Sign in (Account &amp; sync) to keep it on every device, or use a backup to move it.'} Backups are dated and restore everything, even after clearing your browser.</p>
+  <p class="small" style="margin:0">${synced?(acct&&acct.kind==='fb'?'You\'re signed in, so progress saves to your account automatically and follows you to every device.':'Progress saves automatically.'):'Progress is saved in this browser only. Sign in (Account &amp; sync) to keep it on every device, or use a backup to move it.'} Backups are dated and restore everything, even after clearing your browser.</p>
   <div class="row"><button class="btn primary" id="exhtml">Export report (HTML)</button><button class="btn" id="exjson">Export data (JSON)</button></div><div class="small muted">The report lists your breakdown, every ranked item, star chart, quests, syndicates and raw data, so you can check it against the game.</div>
   <div class="row"><button class="btn" id="bk-copy">Copy backup code</button><button class="btn" id="bk-file">Save backup file</button></div>
   <label for="bk-in" class="small">Restore</label><textarea id="bk-in" placeholder="Paste a backup code or the contents of a backup file"></textarea><div class="row"><button type="button" class="btn" id="bkprev">Preview restore</button><label class="btn" for="bkfile">Open backup file</label><input id="bkfile" type="file" accept=".json,.txt,application/json,text/plain" hidden></div>

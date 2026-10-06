@@ -96,9 +96,13 @@
    "player id",
    "f12",
    "link account",
-   "ee.log"
+   "ee.log",
+   "logged in",
+   "eelog",
+   "log file",
+   "where is ee.log"
   ],
-  "sum": "The easy way to sync Tennoform, on any device. Your account ID is a 24-character code made of the numbers 0–9 and the letters a–f. Tennoform uses it to read your public profile (ranks, mastered gear, star chart, syndicates, quests) and keep it synced. It isn't a password and can't be used to log in.",
+  "sum": "The easy way to sync Tennoform, on any device. Your account ID is a 24-character code made of the numbers 0–9 and the letters a–f. Tennoform uses it to read your public profile (ranks, mastered gear, star chart, syndicates, quests) and keep it synced. It isn't a password and can't be used to log in. Warframe doesn't let sites look it up from your in-game name, so it takes one copy and paste.",
   "unlock": {
    "mr": null,
    "quests": [],
@@ -106,35 +110,39 @@
   },
   "steps": [
    {
-    "t": "On a PC that has Warframe installed, the quickest way: in Tennoform open Profile, then Account & sync, tap Choose EE.log, paste %localappdata%\\Warframe into the file window's address bar, press Enter and pick EE.log. Tennoform finds the ID in it and links your account.",
-    "tip": "Nothing is uploaded; the file is read on your device."
+    "t": "In Tennoform, open Profile, then Account & sync, and tap Open my ID page. It opens www.warframe.com/api/user-data in a new tab.",
+    "tip": "Works on phones and PCs, for an account on any platform."
    },
    {
-    "t": "On any device (PC, phone, console players too): go to warframe.com and log in at the top right with the account you play on."
+    "t": "If warframe.com asks you to log in, log in with the account you play on, then open the ID page again. The page shows a short block of plain text."
    },
    {
-    "t": "In the same browser, open www.warframe.com/api/user-data. You'll see a page of plain text."
+    "t": "Copy the whole page. On a phone: press and hold the text, tap Select all, then Copy. On PC: Ctrl+A, then Ctrl+C.",
+    "tip": "You don't need to find the ID in it. Tennoform does that."
    },
    {
-    "t": "Find \"user_id\" on that page. The 24 letters and numbers right after it are your account ID.",
-    "tip": "Easiest: select everything on the page and copy it all. Tennoform picks the ID out by itself."
+    "t": "Go back to Tennoform and tap Paste and link. Your browser may ask to allow pasting; allow it. Tennoform picks out the ID, links it and syncs straight away.",
+    "tip": "If the button can't read your clipboard, press and hold the box under it and tap Paste instead."
    },
    {
-    "t": "If that page doesn't show it, use the developer tools on a computer: on warframe.com (logged in) press F12, or right-click the page and choose Inspect, then open the Network tab."
+    "t": "On PC with Warframe installed, you can use the game's log instead. First start Warframe and log in until you reach your Orbiter; that writes your login into the log.",
+    "tip": "The log is rewritten every time the game starts, so do this after logging in at least once."
    },
    {
-    "t": "Reload the page with F5, type user in the Network tab's filter box, and click the request that appears (usually user-data)."
+    "t": "In Tennoform's Account & sync, open \"Use the game's log file instead\" and tap Choose EE.log. Click the address bar (or the File name box), paste %localappdata%\\Warframe and press Enter, then pick EE.log (Windows may show it as just EE).",
+    "tip": "Tennoform reads only the line \"Logged in YourName (ID)\" and shows you the name it found, so you can check it's your account."
    },
    {
-    "t": "Open its Response or Preview tab and find user_id (sometimes shown as accountId). Copy the 24-character value next to it."
+    "t": "Doing it by hand? Open EE.log in Notepad, press Ctrl+F and search Logged in. Copy only the 24 characters inside the brackets after your name, for example Logged in YourName (0123456789abcdef01234567), and paste them into the box under Paste and link.",
+    "tip": "Other long codes in the log belong to squadmates, clans or sessions. Use only the one on your Logged in line."
    },
    {
-    "t": "Back in Tennoform, open Profile, then Account & sync, and paste it into the box that says Paste your ID or anything containing it. Your profile syncs straight away."
+    "t": "Prefer to find it by hand? On the warframe.com page, the 24 letters and numbers after \"user_id\" are your ID. If that page doesn't show it, press F12 on warframe.com (logged in), open the Network tab, reload, filter for user, and look for user_id in the user-data response."
    }
   ],
   "fast": [
-   "On PC, the EE.log button is one tap and never needs a browser.",
-   "Copying the whole user-data page is fine: Tennoform only keeps the 24-character ID.",
+   "Open my ID page, Select all, Copy, Paste and link: about 20 seconds on a phone.",
+   "Copying the whole page is fine: Tennoform only keeps the 24-character ID.",
    "Once linked, your profile re-syncs by itself; you only do this once per device, or once in total if you're signed in to Tennoform."
   ],
   "rw": [],
@@ -147,7 +155,9 @@
   "was": [
    "The account ID is not the same as your in-game name (alias) or your platform's user name. It's always exactly 24 characters, using only 0–9 and a–f.",
    "The user-data page can also show your email address. Only paste it into Tennoform, never into a public chat or post. Tennoform keeps only the ID.",
-   "Developer tools (F12) aren't available on phones. On a phone, use the warframe.com/api/user-data page instead."
+   "Developer tools (F12) aren't available on phones. On a phone, use the warframe.com/api/user-data page instead.",
+   "There's no way to look up an account ID from an in-game name anymore. Warframe removed that in update 38.0.8, so every tool needs the ID itself.",
+   "EE.log has lots of 24-character codes. Only the one in brackets on the \"Logged in YourName (…)\" line is your account ID; the others belong to other players, clans or sessions."
   ],
   "w": ""
  }

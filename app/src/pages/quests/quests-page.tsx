@@ -69,7 +69,7 @@ const Quest = memo(function Quest({ q }: { q: QuestRow }) {
             ) : null}
             {q.rewards.length ? (
               <Collapsible className="basis-full">
-                <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
+                <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
                   <Gift className="size-4" aria-hidden /> Rewards ({q.rewards.length})
                   <ChevronDown aria-hidden className="size-3.5 transition-transform group-data-[panel-open]:rotate-180" />
                 </CollapsibleTrigger>

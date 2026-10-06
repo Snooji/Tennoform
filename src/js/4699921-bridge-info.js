@@ -2,13 +2,10 @@
 function supportData(){const ign=DONATE.ign;return {ign,paypal:DONATE.paypal,whisper:ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:''}}
 function feedbackData(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const from=state.fbFrom&&state.fbFrom!=='feedback'?state.fbFrom:'';
   return {hosted:HOSTED,ready:!!FB,signed:!!SO.uid,kind:state.fbKind||'bug',from:from?(PL[from]||from):'',prefill:state.fbPrefill||'',admin:!!FBK.admin}}
-function aboutData(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(Date.now()-t)/864e5};const g=age(D.meta.built),p=age(D.meta.prices);
-  const lk=!HOSTED?'off':WS?'ok':WSerr?'bad':'off';
+function aboutData(){
   return {pitch:PITCH,site:D.meta.site||D.meta.built,wfcd:D.meta.wfcd||'',built:D.meta.built,prices:D.meta.prices,sec:state.aboutSec||'',
     changes:CHANGES.map(([d,t])=>({d:fdate(d),t})),
-    feeds:[{k:g==null||g<21?'ok':'warn',t:`Game data ${D.meta.wfcd?'v'+D.meta.wfcd+', ':''}${D.meta.built}${g!=null&&g>=21?' (may be out of date)':''}`},
-      {k:p==null||p<3?'ok':'warn',t:`Prices ${D.meta.prices}${p!=null&&p>=3?' (delayed)':''}`},
-      {k:lk,t:`Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}`}]}}
+    feeds:feedsData().map(f=>({k:f.k,t:f.name+': '+f.t}))}}
 function adminData(){const base={state:'',email:(typeof acct!=='undefined'&&acct&&(acct.email||acct.name))||'',uid:SO.uid||'',err:''};
   if(!HOSTED||!FB||!SO.uid)return {...base,state:'signin'};
   if(!FBK.tried){loadFeedback().then(()=>{if(FBK.admin)loadDonations();tfNotify()});return {...base,state:'checking'}}

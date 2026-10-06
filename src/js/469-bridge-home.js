@@ -18,7 +18,7 @@ function homeData(){const t=totalXP(),m=mrInfo(t.total);const g=P.prof&&P.prof.m
   /* today */
   if(HOSTED&&!WS&&!WSerr)loadWS();const dd=allChecks().filter(c=>c[0]==='d'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]));const wd=allChecks().filter(c=>c[0]==='w'&&gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]));
   const today=[{k:'Daily reset',v:lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now),x:`${dd.filter(ckDone).length}/${dd.length} done`,route:'today',done:dd.filter(ckDone).length,total:dd.length}];
-  if(WS&&WS.sortie&&WS.sortie.variants)today.push({k:'Sortie',v:WS.sortie.boss||'Today',x:untilIso(WS.sortie.expiry)+' left',route:'today'});
+  if(WS&&WS.sortie&&WS.sortie.variants)today.push({k:'Sortie',v:WS.sortie.boss||'Today',x:leftOf(WS.sortie.expiry),route:'today'});
   if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)today.push({k:'Fissures you need',v:String(n),x:Object.keys(need).slice(0,3).join(', '),route:'today'})}
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)today.push({k:'Steel Path reward',v:WS.steelPath.currentReward.name,x:WS.steelPath.currentReward.cost+' essence',route:'today'});
   if(fl.length)today.push({k:'Foundry',v:`${ready}/${fl.length} ready`,x:ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000),route:'tenno',ttab:'foundry'});

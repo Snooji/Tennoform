@@ -2,8 +2,8 @@
 function mrCard(){const t=totalXP(),m=mrInfo(t.total);const name=P.tname||(P.prof&&P.prof.name)||'';const g=P.prof&&P.prof.mr!=null?P.prof.mr:null;
   const toNext=m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1);const maxed=MI.filter(i=>itemXP(i.n)>=mxp(i)).length;
   const stale=P.wfid&&(!P.auto||Date.now()-Date.parse(P.auto)>864e5);
-  const act=HOSTED&&!P.at&&!P.wfid?`<a class="btn primary" href="#tenno" data-ttab="account">Sync your profile</a>`
-    :HOSTED&&stale?`<button type="button" class="btn primary" id="autosync">Sync now</button>`
+  const act=HOSTED&&!P.at&&!P.wfid?`<a class="btn primary" href="#tenno" data-ttab="account">Link Warframe profile</a>`
+    :HOSTED&&stale?`<button type="button" class="btn primary" id="autosync">Update from Warframe</button>`
     :`<a class="btn primary" href="#mastery">See rank-up plan</a>`;
   const parts=[['Gear',t.it,'var(--gold)'],['Star chart',t.ch,'var(--gold-dim)'],['Steel Path',t.sp,'var(--ink2)'],['Intrinsics',t.intr,'var(--line2)'],['Other',(t.other||0)+(t.adj||0)+(t.un||0),'var(--line)']].filter(p=>p[1]>0);
   const sum=parts.reduce((a,p)=>a+p[1],0)||1;
@@ -30,7 +30,7 @@ function todayStrip(){const now=Date.now();if(HOSTED&&!WS&&!WSerr)loadWS();const
   const fl=(P.foundry||[]);const ready=fl.filter(f=>now>=f.t0+f.dur*1000).length;const tiles=[];
   tiles.push(`<a class="ts" href="#today"><span class="k">Daily reset</span><b>${lastDaily()+DAY-now<60000?'Resetting…':left(lastDaily()+DAY-now)}</b><span class="x">${done}/${dd.length} done</span></a>`);
   {const lg=logList().filter(e=>e.t>=lastDaily()&&e.k!=='sync');const xp=lg.reduce((a,e)=>a+(e.xp||0),0);tiles.push(`<a class="ts" href="#achievements"><span class="k">Done today</span><b>${lg.length} thing${lg.length===1?'':'s'}</b><span class="x">${xp?'+'+fmt(xp)+' XP · ':''}Achievements</span></a>`)}
-  if(WS&&WS.sortie&&WS.sortie.variants)tiles.push(`<a class="ts" href="#today"><span class="k">Sortie</span><b>${esc(WS.sortie.boss||'Today')}</b><span class="x">${untilIso(WS.sortie.expiry)} left</span></a>`);
+  if(WS&&WS.sortie&&WS.sortie.variants)tiles.push(`<a class="ts" href="#today"><span class="k">Sortie</span><b>${esc(WS.sortie.boss||'Today')}</b><span class="x">${leftOf(WS.sortie.expiry)}</span></a>`);
   if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)tiles.push(`<a class="ts" href="#today"><span class="k">Fissures you need</span><b>${n}</b><span class="x">${Object.keys(need).slice(0,3).join(', ')}</span></a>`)}
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)tiles.push(`<a class="ts" href="#today"><span class="k">Steel Path reward</span><b>${esc(WS.steelPath.currentReward.name)}</b><span class="x">${WS.steelPath.currentReward.cost} essence</span></a>`);
   if(fl.length)tiles.push(`<a class="ts" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><b>${ready}/${fl.length} ready</b><span class="x">${ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000)}</span></a>`);

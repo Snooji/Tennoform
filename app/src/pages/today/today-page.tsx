@@ -30,7 +30,7 @@ export function TodayPage() {
         </div>
         <section aria-labelledby="live-h" className="flex min-w-0 flex-col gap-4">
           <h2 id="live-h" className="font-heading text-lg leading-tight font-semibold">Live in the game</h2>
-          <LiveStatus d={d} />
+          <LiveStatus />
           {L ? (
             <>
               <Cycles L={L} />

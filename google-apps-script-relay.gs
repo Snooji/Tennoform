@@ -11,7 +11,7 @@
  *       Execute as: Me.   Who has access: Anyone.
  *  4. Click Deploy, allow access when Google asks, and copy the Web app URL
  *     (it ends in /exec).
- *  5. Send that URL to be put in firebase-config.js as window.TENNO_PROXY.
+ *  5. Put that URL in firebase-config.js as window.TENNO_PROXY.
  *
  * It only accepts a 24-character Warframe account ID and only reads the public profile.
  */
