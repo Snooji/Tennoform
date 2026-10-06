@@ -8,7 +8,7 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='msort'){state.mkSort=t.value;render()}
   if(t.id==='tgt'){state.target=+t.value;render()}
   if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
-  if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast('No 24-character account ID found in that text.')}
+  if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast(typeof idMiss==='function'?idMiss(t.value):'No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.dw){const id=t.dataset.dw;P.dw=P.dw||{};if(t.checked)P.dw[id]=Date.now();else delete P.dw[id];logDW(id,t.checked);saveProfile();const y=scrollY;render();scrollTo(0,y);
