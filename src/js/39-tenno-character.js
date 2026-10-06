@@ -11,7 +11,7 @@ function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakd
   if(tab==='backup')h+=backupTab();
   if(tab==='friends')h+=friendsTab();
   return h+'</div>'}
-function findId(text){text=String(text||'');const pri=[/Logged in[^\n(]*\(([0-9a-f]{24})\)/i,/AccountId[^0-9a-f]{0,12}([0-9a-f]{24})/i,/playerId=([0-9a-f]{24})/i,/accountId[":\s$oid{]*([0-9a-f]{24})/i];
+function findId(text){text=String(text||'');const pri=[/Logged in[^\n(]*\(([0-9a-f]{24})\)/i,/AccountId[^0-9a-f]{0,12}([0-9a-f]{24})/i,/playerId=([0-9a-f]{24})/i,/accountId[":\s$oid{]*([0-9a-f]{24})/i,/user_?id["'\s:=]*([0-9a-f]{24})/i];
   for(const r of pri){const m=text.match(r);if(m)return m[1].toLowerCase()}const all=text.match(/\b[0-9a-f]{24}\b/gi);return all&&all.length===1?all[0].toLowerCase():null}
 async function readLog(f){try{const txt=await f.text();const id=findId(txt);if(id)setWfid(id,f.name);else toast('Couldn\'t find an account ID in '+f.name+'. Make sure it\'s EE.log from the Warframe folder.')}catch(e){toast('Couldn\'t read that file.')}}
 function setWfid(id,how){P.wfid=id;lsSet('tenno-acct',id);saveProfile();render();toast('Found your account ID'+(how?' in '+how:'')+'. Syncing…');setTimeout(()=>autoSync(false),300)}
@@ -22,7 +22,7 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
    <div class="sv"><span class="svn">1</span><div><b>PC players: pick your Warframe log file</b><div class="small muted">Tap the button, then in the file window paste <span class="mono sel">%localappdata%\\Warframe</span> into the address bar, press Enter and choose <b>EE.log</b>. The app reads your ID out of it. Nothing is uploaded.</div>
     <label class="btn primary filebtn" for="eelog">Choose EE.log</label><input id="eelog" type="file" accept=".log,.txt,text/plain" hidden>
     <div class="drop" id="drop">or drag EE.log here</div></div></div>
-   <div class="sv"><span class="svn">2</span><div><b>Already have it?</b><div class="small muted">Paste your ID, a profile link, or any line that contains it. The app finds the 24-character ID by itself.</div>
+   <div class="sv"><span class="svn">2</span><div><b>Already have it?</b><div class="small muted">Paste your ID, a profile link, or any line that contains it. The app finds the 24-character ID by itself. <a class="ln" href="#" data-go="guide|find-account-id">How to find your ID</a></div>
     <input id="wfid" type="text" placeholder="Paste your ID or anything containing it" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false"></div></div>
    <div class="sv"><span class="svn">3</span><div><b>Console or mobile only?</b><div class="small muted">Warframe only shows the ID in the PC log. If you've ever logged in on PC (cross-save), use that log. Otherwise skip linking and set your progress by hand on the Ranks, Star Chart and Quests pages.</div></div></div>
   </div>`}</div>
