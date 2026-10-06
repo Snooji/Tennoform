@@ -123,6 +123,62 @@ service cloud.firestore {
         && (!('note' in data()) || shortStr(data().note, 200));
     }
 
+    // Shared builds: anyone can browse; you publish, edit and delete your own.
+    // Votes live in builds/{id}/votes/{uid}; the up/down counts must move by exactly your vote, in the same write.
+    match /builds/{bid} {
+      function strList(l, n, m) {
+        return l is list && l.size() <= n
+          && (l.size() < 1 || shortStr(l[0], m)) && (l.size() < 2 || shortStr(l[1], m))
+          && (l.size() < 3 || shortStr(l[2], m)) && (l.size() < 4 || shortStr(l[3], m))
+          && (l.size() < 5 || shortStr(l[4], m)) && (l.size() < 6 || shortStr(l[5], m))
+          && (l.size() < 7 || shortStr(l[6], m)) && (l.size() < 8 || shortStr(l[7], m))
+          && (l.size() < 9 || shortStr(l[8], m)) && (l.size() < 10 || shortStr(l[9], m));
+      }
+      function okBuild() {
+        return data().keys().hasOnly(['uid', 'author', 'item', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'at', 'up', 'down', 'score'])
+          && data().keys().hasAll(['uid', 'item', 'name', 'mods', 'at', 'up', 'down', 'score'])
+          && shortStr(data().item, 60) && data().item.size() > 0 && shortStr(data().name, 60)
+          && shortStr(data().get('author', ''), 40) && shortStr(data().get('role', ''), 60)
+          && shortStr(data().get('aura', ''), 60) && shortStr(data().get('exilus', ''), 60)
+          && shortStr(data().get('helminth', ''), 60) && shortStr(data().get('notes', ''), 600)
+          && strList(data().mods, 10, 60) && strList(data().get('arcanes', []), 2, 60)
+          && data().at is number && data().up is int && data().down is int && data().score is int;
+      }
+      function vote(path) { return exists(path) ? get(path).data.v : 0; }
+      function voteAfter(path) { return existsAfter(path) ? getAfter(path).data.v : 0; }
+      function countsMatchVote() {
+        let path = /databases/$(database)/documents/builds/$(bid)/votes/$(me());
+        let before = vote(path);
+        let after = voteAfter(path);
+        return before != after
+          && data().up == resource.data.up + (after == 1 ? 1 : 0) - (before == 1 ? 1 : 0)
+          && data().down == resource.data.down + (after == -1 ? 1 : 0) - (before == -1 ? 1 : 0)
+          && data().score == data().up - data().down;
+      }
+      allow read: if true;
+      allow create: if signedIn() && okBuild() && data().uid == me()
+        && data().up == 0 && data().down == 0 && data().score == 0;
+      // the author edits the build itself, never the counts
+      allow update: if signedIn() && okBuild() && resource.data.uid == me()
+        && data().diff(resource.data).affectedKeys().hasOnly(['author', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'item']);
+      // anyone signed in votes: only the counts change, and they match the vote they're writing
+      allow update: if signedIn()
+        && data().diff(resource.data).affectedKeys().hasOnly(['up', 'down', 'score'])
+        && countsMatchVote();
+      allow delete: if signedIn() && (resource.data.uid == me() || isAdmin());
+
+      match /votes/{uid} {
+        function countsMoved() {
+          let b = /databases/$(database)/documents/builds/$(bid);
+          return getAfter(b).data.score != get(b).data.score;
+        }
+        allow read: if signedIn() && me() == uid;
+        allow create, update: if signedIn() && me() == uid
+          && data().keys().hasOnly(['v']) && data().v in [1, -1] && countsMoved();
+        allow delete: if signedIn() && me() == uid && countsMoved();
+      }
+    }
+
     // Feedback: signed-in users can send; only admins can read.
     match /feedback/{id} {
       allow create: if signedIn() && data().uid == me()

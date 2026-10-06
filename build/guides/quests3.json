@@ -1,0 +1,955 @@
+[
+ {
+  "id": "veilbreaker",
+  "n": "Veilbreaker",
+  "kind": "quest",
+  "aka": [
+   "kahl quest",
+   "kahl-175",
+   "archon hunt unlock",
+   "kahl's garrison",
+   "break narmer",
+   "archon shards"
+  ],
+  "sum": "A solo side quest where you play as the Grineer Lancer Kahl-175 freeing his brothers from a Murex. Finishing it unlocks Archon Hunts, Kahl's Garrison and weekly Break Narmer missions.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The New War"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start Veilbreaker from the Codex and read Daughter's inbox message."
+   },
+   {
+    "t": "Board the Murex and disable the Medusa Hub by shooting its 9 floating energy nodes in sequence.",
+    "tip": "You have under a minute; shoot them in order quickly."
+   },
+   {
+    "t": "As Kahl, pick up a Grakata and free the trapped Grineer by standing in the dissipation field to fill the gauge.",
+    "tip": "The field moves around; Kahl's health regenerates and the Grakata has infinite reserve ammo."
+   },
+   {
+    "t": "Use Command Mode (waypoint key, G by default) to order your brothers to blow up debris, focus targets or hold fields.",
+    "tip": "Point at debris to plant a charge; point at a field to have a brother hold it while you stand in another."
+   },
+   {
+    "t": "Grab the Hellion jetpack and free the next captives by holding separate dissipation fields with your units."
+   },
+   {
+    "t": "Ride the Bolkor gunship, then continue on foot after it crashes and head to the hangar for evac."
+   },
+   {
+    "t": "Return to the Drifter's Camp and talk to Kahl to finish the quest."
+   }
+  ],
+  "fast": [
+   "Let your brothers hold extra dissipation fields while you stand in one; they cannot die, so send them anywhere.",
+   "Use command mode on blocking debris immediately instead of looking for another path.",
+   "Kahl regenerates health and has infinite Grakata reserve ammo, so keep pushing instead of waiting for cover.",
+   "Pick up the Grattler after the crash for much heavier firepower."
+  ],
+  "rw": [
+   "Archon Hunt access",
+   "Kahl's Garrison access",
+   "Break Narmer access",
+   "Helminth Archon Shard Segment Blueprint"
+  ],
+  "time": "~45 min",
+  "go": [
+   "Kahl-175",
+   "Styanax",
+   "Archon Shard",
+   "Helminth"
+  ],
+  "w": "https://wiki.warframe.com/w/Veilbreaker"
+ },
+ {
+  "id": "patient-zero",
+  "n": "Patient Zero",
+  "kind": "quest",
+  "aka": [
+   "mutalist alad v",
+   "mesa quest",
+   "alad v key",
+   "infested mesa",
+   "eris quest"
+  ],
+  "sum": "A short side quest on Eris where you track down Mutalist Alad V's lab. It rewards the Mutalist Alad V key blueprint, used to farm Mesa parts.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Once Awake"
+   ],
+   "other": [
+    "Complete the Pluto to Eris Junction (unlocks Eris)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start Patient Zero from the Codex after the Pluto to Eris Junction."
+   },
+   {
+    "t": "Run the Spy mission on Naeglar, Eris and collect the Corpus data.",
+    "tip": "Infested arrive after the second datamass; both factions will attack you."
+   },
+   {
+    "t": "Sabotage the Infested ship on Brugia, Eris (Hive Sabotage)."
+   },
+   {
+    "t": "Sabotage the Infested ship on Saxis, Eris."
+   },
+   {
+    "t": "Sabotage the Infested ship on Kala-azar, Eris."
+   },
+   {
+    "t": "On Xini, Eris, destroy the Corpus ship's reactor core, then kill the Infested Mesa before extracting.",
+    "tip": "Melee finishers can be used on the Infested Mesa for a quick kill."
+   }
+  ],
+  "fast": [
+   "Bring an Infested-focused loadout (Corrosive/Heat or Gas) for the Hive Sabotage stages.",
+   "In Hive Sabotage, a fast Warframe with good area damage clears the hives quickest.",
+   "Use a melee finisher on the Infested Mesa to end the fight quickly."
+  ],
+  "rw": [
+   "Mutalist Alad V Assassinate Key Blueprint"
+  ],
+  "time": "~40 min",
+  "go": [
+   "Mesa",
+   "Mutalist Alad V"
+  ],
+  "w": "https://wiki.warframe.com/w/Patient_Zero"
+ },
+ {
+  "id": "a-man-of-few-words",
+  "n": "A Man of Few Words",
+  "kind": "quest",
+  "aka": [
+   "clem quest",
+   "darvo quest",
+   "exilus adapter",
+   "help clem",
+   "grakata",
+   "clem clone"
+  ],
+  "sum": "A short Darvo side quest to rescue his Grineer contractor Clem on Uranus. It awards an Exilus Adapter and unlocks the weekly Help Clem mission.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Get the inbox message from Darvo, then talk to Darvo in any Relay and choose \"What's the job?\""
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Darvo in any Relay with \"What's the job?\" and start the quest from the Codex."
+   },
+   {
+    "t": "Rescue Clem on Stephano, Uranus before the 2:30 execution timer runs out.",
+    "tip": "The timer starts on arrival, so rush straight to the cells; don't stand on Clem's pod or you may get stuck."
+   },
+   {
+    "t": "On Caliban, Uranus, pick up Clem's Twin Grakatas in the barracks and kill Vem Tabook."
+   },
+   {
+    "t": "Survive on Puck, Uranus with Clem until the artifact is found, defeating Shik Tal when he arrives."
+   },
+   {
+    "t": "Visit Darvo in a Relay to collect your Exilus Adapter."
+   }
+  ],
+  "fast": [
+   "Use a fast Warframe (e.g. Loki or Volt) to reach Clem's cell before the timer ends.",
+   "Stealth Warframes avoid the Grineer reinforcements in the rescue stage.",
+   "You do not need Uranus unlocked to play the quest."
+  ],
+  "rw": [
+   "Exilus Adapter",
+   "Clem Clone Blueprint",
+   "Weekly Help Clem mission"
+  ],
+  "time": "~30 min",
+  "go": [
+   "Clem",
+   "Darvo",
+   "Twin Grakatas"
+  ],
+  "w": "https://wiki.warframe.com/w/A_Man_of_Few_Words"
+ },
+ {
+  "id": "the-deadlock-protocol",
+  "n": "The Deadlock Protocol",
+  "kind": "quest",
+  "aka": [
+   "protea quest",
+   "xoris",
+   "parvos granum",
+   "granum void",
+   "nef anyo quest"
+  ],
+  "sum": "A solo side quest about Nef Anyo's bid to lead the Corpus. It rewards the Protea blueprint and the Xoris glaive, and unlocks Armatus on Deimos.",
+  "unlock": {
+   "mr": 4,
+   "quests": [],
+   "other": [
+    "Complete the Saturn Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The Deadlock Protocol from the Codex."
+   },
+   {
+    "t": "Run the Venus Interception (two towers, three rounds) to decrypt Nef Anyo's memo."
+   },
+   {
+    "t": "Visit Eudico in the Fortuna backroom."
+   },
+   {
+    "t": "On Venus, find the Protean Sensors and capture then defend the Corpus Systems twice."
+   },
+   {
+    "t": "Return to Fortuna to learn about the Granum Crown."
+   },
+   {
+    "t": "On Phobos, kill the Treasurer, grab its Granum Crown and use it on a Granum Tribute.",
+    "tip": "Survive the Errant Specters until you are ejected."
+   },
+   {
+    "t": "Hack all three vaults in the Europa Spy mission for the Xoris parts, then build the Xoris."
+   },
+   {
+    "t": "On Neptune, enter the Granum Void, charge the Xoris on Specter Particles and detonate it near each captive.",
+    "tip": "Three melee kills charge it; detonate mid-flight with Alternate Fire."
+   },
+   {
+    "t": "Fight the Protea Specter and use the Xoris discharge to stop each Temporal Anchor rewind.",
+    "tip": "You must interrupt her rewind four times in total."
+   }
+  ],
+  "fast": [
+   "Bring a Spy-friendly stealth frame (Loki, Ivara) for the three Europa vaults.",
+   "Keep the Xoris equipped as your melee for the final mission; charge it on Specter Particles before approaching each captive.",
+   "Watch for Protea's Temporal Anchor and save a full Xoris charge to cancel it."
+  ],
+  "rw": [
+   "Protea Blueprint",
+   "Xoris",
+   "Granum Void Captura Scene",
+   "Armatus, Deimos unlocked"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Protea",
+   "Xoris",
+   "Call of the Tempestarii"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Deadlock_Protocol"
+ },
+ {
+  "id": "call-of-the-tempestarii",
+  "n": "Call of the Tempestarii",
+  "kind": "quest",
+  "aka": [
+   "sevagoth quest",
+   "tempestarii",
+   "railjack quest",
+   "sisters of parvos",
+   "vala glarios"
+  ],
+  "sum": "A solo Railjack side quest about a ghost ship in Void Storms. It rewards the Sevagoth blueprint and unlocks the Sisters of Parvos.",
+  "unlock": {
+   "mr": 4,
+   "quests": [
+    "The Deadlock Protocol"
+   ],
+   "other": [
+    "Own a Railjack and have retrieved the Reliquary Key"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the quest from the Codex and read Cephalon Cy's message."
+   },
+   {
+    "t": "In Veil Proxima (Arc Silver), scavenge the wrecks and fight off Corpus fighters until the ghost ship appears."
+   },
+   {
+    "t": "In Pluto Proxima (Seven Sirens), hack all three Spy vaults on the Corpus ship.",
+    "tip": "A Somachord fragment is above one vault; scan it now or you must replay the quest."
+   },
+   {
+    "t": "At Obol Crossing, hold out until Cy re-establishes contact, then board the Tempestarii.",
+    "tip": "Scan the second Somachord fragment in the forge area."
+   },
+   {
+    "t": "Play as Sevagoth's Shadow and fight off the Corpus waves.",
+    "tip": "You revive instantly on death, so just keep fighting."
+   },
+   {
+    "t": "Board the Corpus vessel, hack the console, kill the Jamming Drones and the Optio, then destroy the beam generator."
+   },
+   {
+    "t": "Return to the Tempestarii and repel Corpus fighters until its Ordnance is ready, then finish the final rescue jump."
+   }
+  ],
+  "fast": [
+   "Bring a Railjack with decent armaments and repair kits; the space fights are the slowest part.",
+   "Use a Spy-friendly frame for the three-vault Corpus mission.",
+   "If you want the Somachord song, scan both fragments in order the first time."
+  ],
+  "rw": [
+   "Sevagoth Blueprint",
+   "Tempestarii Railjack Skin",
+   "Sevagoth Prex",
+   "Sevagoth Statuette",
+   "The Cold Below Captura Scene",
+   "Sisters of Parvos access"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Sevagoth",
+   "Railjack",
+   "Sisters of Parvos",
+   "The Deadlock Protocol"
+  ],
+  "w": "https://wiki.warframe.com/w/Call_of_the_Tempestarii"
+ },
+ {
+  "id": "the-new-strange",
+  "n": "The New Strange",
+  "kind": "quest",
+  "aka": [
+   "chroma quest",
+   "simaris quest",
+   "synthesis",
+   "sanctuary onslaught unlock",
+   "scorched beacon"
+  ],
+  "sum": "A side quest for Cephalon Simaris tracking a rogue Warframe. It rewards the Chroma blueprint and unlocks Sanctuary Onslaught and daily Synthesis tasks.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Stolen Dreams"
+   ],
+   "other": [
+    "Complete the Europa Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Rescue Simaris' Sentinels on Nuovo, Ceres, then hack the lone data vault."
+   },
+   {
+    "t": "Talk to Simaris in a Relay; do his Synthesis tutorial first if the dialog option is missing.",
+    "tip": "He is on the upper level; take the blue lifts or fast travel to him."
+   },
+   {
+    "t": "Buy Synthesis Scanners (5,000 credits) from Simaris and synthesize three Elite Arid Lancers on Mars.",
+    "tip": "One target spawns per mission; scan all 4 nodes, then complete the mission objective."
+   },
+   {
+    "t": "Report to Simaris and build the Scorched Beacon."
+   },
+   {
+    "t": "Complete the Mobile Defense on Morax, Europa and build the Chroma Signal."
+   },
+   {
+    "t": "On Alator, Mars, reach the Arcane Machine and scan the hostile Chroma, then build the Chroma Mark.",
+    "tip": "Don't kill Chroma; scan it."
+   },
+   {
+    "t": "On Ose, Europa, defend the Arcane Machine for three waves and scan Chroma 5 times."
+   }
+  ],
+  "fast": [
+   "Equip Kinetic Siphon Traps (5,000 credits from Simaris) to hold Synthesis targets still.",
+   "Use Loki's Invisibility or another stealth frame so Synthesis targets don't panic.",
+   "Pick short Mars missions (e.g. Exterminate or Capture) for the three Arid Lancer scans.",
+   "Bring plenty of Synthesis Scanners for the Chroma stages."
+  ],
+  "rw": [
+   "Chroma Blueprint",
+   "Sanctuary Onslaught access",
+   "Daily Synthesis task access"
+  ],
+  "time": "~1-2 h",
+  "go": [
+   "Chroma",
+   "Cephalon Simaris",
+   "Sanctuary Onslaught",
+   "Stolen Dreams"
+  ],
+  "w": "https://wiki.warframe.com/w/The_New_Strange"
+ },
+ {
+  "id": "the-glast-gambit",
+  "n": "The Glast Gambit",
+  "kind": "quest",
+  "aka": [
+   "nidus quest",
+   "index quest",
+   "nef anyo",
+   "neewa",
+   "mycona colony",
+   "perrin sequence quest"
+  ],
+  "sum": "A side quest for Ergo Glast that pits you against Nef Anyo in the Index. It rewards the Nidus blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Speak to Ergo Glast in the Perrin Sequence room of any Relay"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Ergo Glast in a Relay and set the quest active."
+   },
+   {
+    "t": "On Monolith, Phobos, destroy the tumors at each of three gates and protect the Hunters while they close them, then destroy the 6 Spawn Pods.",
+    "tip": "The mission fails if all 6 Hunters die."
+   },
+   {
+    "t": "Win two Index matches on Neptune (100,000 then 120,000 credit wagers).",
+    "tip": "Bank several points at once for bonus score; carrying many drains your health."
+   },
+   {
+    "t": "Win the third Index match (140,000 wager).",
+    "tip": "Your first deposit attempt will kill you; this is scripted."
+   },
+   {
+    "t": "Win the fourth match (160,000 wager) while staying within the 20-point Victory Margin.",
+    "tip": "Puzzle: if you lead by more than 20 points, Nef backs out and you fail. Win narrowly."
+   },
+   {
+    "t": "Play the fifth match (180,000 wager) and try to deposit points.",
+    "tip": "You are meant to lose; you must try to deposit or the quest won't progress."
+   },
+   {
+    "t": "Hack at least two vaults in the Spy mission on Oceanum, Pluto."
+   },
+   {
+    "t": "Win the final Index match (no wager) and choose Neewa's fate in the inbox.",
+    "tip": "Any choice gives the Nidus blueprint."
+   }
+  ],
+  "fast": [
+   "Keep at least 180,000 credits on hand: wagers rise from 100,000 to 180,000, you get each back plus profit when you win, but the scripted fifth match costs you its wager.",
+   "If you run out of credits, set a different quest active and farm normal Index missions.",
+   "In the fourth match, watch the score and stop banking once you are about 15-20 points ahead.",
+   "Deposit points in small batches to avoid losing big stacks when you die."
+  ],
+  "rw": [
+   "Nidus Blueprint"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Nidus",
+   "The Index",
+   "Ergo Glast"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Glast_Gambit"
+ },
+ {
+  "id": "octavias-anthem",
+  "n": "Octavia's Anthem",
+  "kind": "quest",
+  "aka": [
+   "octavia quest",
+   "mandachord",
+   "suda quest",
+   "hydraulus puzzle",
+   "hunhow"
+  ],
+  "sum": "A solo side quest for Cephalon Suda involving the Mandachord and Hydraulus music puzzles. It rewards the Octavia blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Second Dream"
+   ],
+   "other": [
+    "Visit Cephalon Suda in a Relay to start it"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Cephalon Suda in a Relay to get the Mandachord blueprint."
+   },
+   {
+    "t": "On Sao, Neptune, follow the white light to collect the Mandachord Body, Fret and Bridge."
+   },
+   {
+    "t": "Build the Mandachord (3 Morphics, 5,000 credits)."
+   },
+   {
+    "t": "On Stephano, Uranus, find the Hydraulus and complete its song.",
+    "tip": "Puzzle: as the beat passes each column, set the top-row note to match the height of the glowing blue symbol above it (one of 3 positions). Effects Intensity must be above 0 to see the symbols."
+   },
+   {
+    "t": "On Tycho, Lua, clear the Sentients from the Hydraulus room and solve the second song.",
+    "tip": "Same idea, but in the second row with 5 positions per column."
+   },
+   {
+    "t": "In the Orokin Tower on Taranis, lock the room, clear it, solve the Hydraulus, then defend both signal amplifiers to 100%.",
+    "tip": "Kill Sentients near the amplifier to unfreeze the counter."
+   },
+   {
+    "t": "Talk to Simaris in a Relay (\"Suda's Datascape?\") to enter the datascape."
+   },
+   {
+    "t": "In the datascape, step on platforms with yellow orbs to reveal notes and remove red errant notes until Hunhow is destroyed over three stages.",
+    "tip": "Puzzle: don't step on empty dark-brown blocks (they create errant notes); grey blocks are safe. Duck or stand on pillars to dodge the beam."
+   }
+  ],
+  "fast": [
+   "Bring a frame with good air control (Zephyr, Titania, Wukong) for the datascape platforming.",
+   "Use your Operator's Void damage against Sentients to strip their damage adaptation.",
+   "Set graphics to Low in the final stage to make errant and correct notes easier to see.",
+   "Bring weapons with large ammo reserves; Eradicysts drop nothing."
+  ],
+  "rw": [
+   "Octavia Blueprint"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Octavia",
+   "Mandachord",
+   "Cephalon Suda"
+  ],
+  "w": "https://wiki.warframe.com/w/Octavia%27s_Anthem"
+ },
+ {
+  "id": "sands-of-inaros",
+  "n": "Sands of Inaros",
+  "kind": "quest",
+  "aka": [
+   "inaros quest",
+   "baro quest",
+   "sacred vessel",
+   "tomb guardian",
+   "desert tomb"
+  ],
+  "sum": "A side quest bought from Baro Ki'Teer that sends you through an ancient Martian tomb. It rewards all Inaros blueprints.",
+  "unlock": {
+   "mr": 5,
+   "quests": [],
+   "other": [
+    "Buy the Sands of Inaros quest blueprint from Baro Ki'Teer (100 Ducats + 25,000 credits) or trade for it",
+    "Craft it in the Foundry (Keys tab): 5,000 Nano Spores, 400 Oxium, 1 Nitain Extract"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Craft the quest key and read Baro's inbox message."
+   },
+   {
+    "t": "Explore the tomb on Mars and take the Sacred Vessel from the shrine."
+   },
+   {
+    "t": "Kill 60 of the enemy shown on the vessel (Detron Crewman, Seeker or Volatile Runner).",
+    "tip": "The quest must be active for kills to count; check the vessel next to the Codex table."
+   },
+   {
+    "t": "Return the vessel to the tomb door in Ara, Mars and take the next vessel, then fight off the Feral Kavats."
+   },
+   {
+    "t": "Kill 20 of the next enemy (Railgun MOA, Hyekka Master or Brood Mother), return the vessel and beat the splitting Tomb Guardian."
+   },
+   {
+    "t": "Kill 5 of the last enemy (Bursa, Manic or Juggernaut), return the vessel and defeat the Tomb Protector.",
+    "tip": "The final fight has about a 15-minute limit."
+   }
+  ],
+  "fast": [
+   "Kills still count if you abort the mission, so leave as soon as you hit the count.",
+   "For Juggernauts, Deimos Juggernauts in Cambion Drift or the Jordas Golem node work; for Manics, Tyl Regor on Uranus spawns Drekar Manics.",
+   "For Bursas, fail a Robotic Onslaught conduit in Corpus Disruption (Laomedeia, Neptune).",
+   "Equip a weak primary before the Tomb Protector fight; its Sand Shadow copies your primary.",
+   "Use area-damage weapons like Penta or Tonkor on the splitting Tomb Guardians."
+  ],
+  "rw": [
+   "Inaros Blueprint",
+   "Inaros Neuroptics Blueprint",
+   "Inaros Chassis Blueprint",
+   "Inaros Systems Blueprint",
+   "Sacred Urn Orbiter decoration"
+  ],
+  "time": "~1-2 h",
+  "go": [
+   "Inaros",
+   "Baro Ki'Teer"
+  ],
+  "w": "https://wiki.warframe.com/w/Sands_of_Inaros"
+ },
+ {
+  "id": "hidden-messages",
+  "n": "Hidden Messages",
+  "kind": "quest",
+  "aka": [
+   "mirage quest",
+   "riddle quest",
+   "ordis riddles",
+   "mirage parts",
+   "sedna junction quest"
+  ],
+  "sum": "A riddle side quest where Ordis' poems point you to three missions. It rewards all Mirage component blueprints.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Eris to Sedna Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start Hidden Messages from the Codex and read Ordis' first riddle."
+   },
+   {
+    "t": "Solve riddle one and complete the mission it points to for the Mirage Neuroptics blueprint.",
+    "tip": "Hint: the home of ancient Greek gods, and a mountain that is also on Mars (answer: Olympus, Mars)."
+   },
+   {
+    "t": "Solve riddle two and complete the mission for the Mirage Systems blueprint.",
+    "tip": "Hint: the nymph from the Odyssey who kept Odysseus on her island, a Saturn node (answer: Calypso, Saturn - Survival)."
+   },
+   {
+    "t": "Solve riddle three and complete the mission for the Mirage Chassis blueprint.",
+    "tip": "Hint: the sea monster that became a whirlpool, a Sedna node (answer: Charybdis, Sedna - Hive Sabotage)."
+   },
+   {
+    "t": "Buy the main Mirage blueprint from the Market to build her."
+   }
+  ],
+  "fast": [
+   "The riddles also appear in the Tenno Guide if you deleted the inbox messages.",
+   "You only need to earn each blueprint to progress, not craft it.",
+   "Bring an Infested-ready loadout; all three missions are Infested.",
+   "Calypso is a 15-minute Survival, so bring a frame that handles crowds, e.g. Saryn or Khora."
+  ],
+  "rw": [
+   "Mirage Neuroptics Blueprint",
+   "Mirage Systems Blueprint",
+   "Mirage Chassis Blueprint"
+  ],
+  "time": "~45 min",
+  "go": [
+   "Mirage"
+  ],
+  "w": "https://wiki.warframe.com/w/Hidden_Messages"
+ },
+ {
+  "id": "mask-of-the-revenant",
+  "n": "Mask of the Revenant",
+  "kind": "quest",
+  "aka": [
+   "revenant quest",
+   "nakak mask",
+   "mask of the lost one",
+   "plains of eidolon quest",
+   "quills quest"
+  ],
+  "sum": "A side quest on the Plains of Eidolon at night, following visions from a mask bought from Nakak. It rewards the Revenant blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Reach Observer rank with The Quills",
+    "Talk to Nakak in Cetus (\"Mask?\") and buy the Mask of the Lost One for 1 Cetus Wisp"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Buy the Mask of the Lost One from Nakak and equip it on your Operator.",
+    "tip": "Use the Operator, not the Drifter, with the hood closed."
+   },
+   {
+    "t": "At night, go to the southwest side of Gara Toht Lake and interact with the small energy blotch."
+   },
+   {
+    "t": "Do Cetus Bounties until you get and build any Revenant part."
+   },
+   {
+    "t": "At night, interact with the blotch on the northeast side of Gara Toht Lake."
+   },
+   {
+    "t": "Build a second Revenant part from Bounties."
+   },
+   {
+    "t": "At night, interact with the last blotch on the river between Gara Toht Lake and Renthi Spring, then defeat the Revenant Specter."
+   }
+  ],
+  "fast": [
+   "Set the quest active before buying Revenant from the Market if you want to skip farming parts.",
+   "Forced finishers (Excalibur's Radial Blind, Ash's Teleport) instantly defeat the Revenant Specter.",
+   "Atlas's Petrify or Mesa's Peacemaker also shred the Specter.",
+   "Check the Cetus day/night timer before heading out; the blotches only appear at night."
+  ],
+  "rw": [
+   "Revenant Blueprint"
+  ],
+  "time": "several days (night cycles and bounty farming)",
+  "go": [
+   "Revenant",
+   "Nakak",
+   "The Quills"
+  ],
+  "w": "https://wiki.warframe.com/w/Mask_of_the_Revenant"
+ },
+ {
+  "id": "the-silver-grove",
+  "n": "The Silver Grove",
+  "kind": "quest",
+  "aka": [
+   "titania quest",
+   "apothic",
+   "silver grove shrine",
+   "new loka quest",
+   "plant farming"
+  ],
+  "sum": "A New Loka side quest where you craft Apothics from Earth's plants and anoint a hidden shrine. It rewards all Titania blueprints.",
+  "unlock": {
+   "mr": 7,
+   "quests": [
+    "The Second Dream"
+   ],
+   "other": [
+    "Ask Amaryn of New Loka about \"The Silver Grove\" in a Relay"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Amaryn in a Relay and activate the quest from the Codex."
+   },
+   {
+    "t": "Gather plants and craft the Nightfall Apothic (2 Dusklight Sarracenia, 6 Moonlight Dragonlily, 12 Sunlight Threshcone, 2 Morphics).",
+    "tip": "Dragonlilies only spawn on Earth forest at night; Threshcones only by day. Sarracenia is in Ceres shipyard swamps."
+   },
+   {
+    "t": "Equip it, go to E Prime, Earth, find the shrine, anoint the altar and kill the Loki Specter."
+   },
+   {
+    "t": "Craft the Twilight Apothic (2 Moonlight Jadeleaf, 6 Ruk's Claw, 6 Lunar Pitcher, 2 Morphics) and repeat at the shrine.",
+    "tip": "Jadeleaf is rare, Earth night only; Ruk's Claw on Mars walls; Lunar Pitcher in Lua vases."
+   },
+   {
+    "t": "Craft the Sunrise Apothic (2 Sunlight Jadeleaf, 8 Frostleaf, 12 Vestan Moss, 2 Morphics).",
+    "tip": "Frostleaf grows on Corpus Outpost cliffs (may need a restart); Vestan Moss on Grineer Asteroid rocks."
+   },
+   {
+    "t": "Anoint the shrine again, defeat the Oberon Specter and defend the shrine for 2 minutes."
+   }
+  ],
+  "fast": [
+   "Run Capture missions so you can explore freely: Mantle (Earth), Pallas (Ceres), Ara (Mars), Copernicus (Lua), Venera (Venus), Elion (Mercury).",
+   "A Resource Booster doubles plants picked up, and Oxylus with Botanist loots plants for you.",
+   "Check the Cetus day/night timer to plan Earth day and night plant runs.",
+   "Don't use an Apothic outside the quest mission; it is consumed without progressing."
+  ],
+  "rw": [
+   "Titania Blueprint",
+   "Titania Neuroptics Blueprint",
+   "Titania Chassis Blueprint",
+   "Titania Systems Blueprint"
+  ],
+  "time": "~2-3 h",
+  "go": [
+   "Titania",
+   "New Loka",
+   "Silver Grove Shrine"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Silver_Grove"
+ },
+ {
+  "id": "the-waverider",
+  "n": "The Waverider",
+  "kind": "quest",
+  "aka": [
+   "yareli quest",
+   "ventkids quest",
+   "k-drive quest",
+   "waverider graphica",
+   "roky"
+  ],
+  "sum": "A solo Ventkids side quest where K-Drive feats unlock the pages of a comic. It rewards the Yareli blueprint and Orbiter decorations.",
+  "unlock": {
+   "mr": 3,
+   "quests": [
+    "Vox Solaris (Quest)"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Read Roky's inbox message and visit Roky and Boon in Fortuna."
+   },
+   {
+    "t": "Page 1: do 5 Copters, finish a K-Drive Race, and kill 5 enemies with a secondary while on a K-Drive."
+   },
+   {
+    "t": "Page 2: do 5 Nose or Tail Plankers, get 5 seconds of air-time, and 5 secondary headshot kills on a K-Drive."
+   },
+   {
+    "t": "Page 3: keep a trick chain going for 10 seconds, plus 5 Frontside and 5 Backside Rollouts."
+   },
+   {
+    "t": "Page 4: do two x10 combos, finish 2 different K-Drive Races, and get 5 K-Drive slam kills."
+   },
+   {
+    "t": "Page 5: kill 5 enemies with a secondary while airborne, collect 10,000 race points, and earn 500 points in one trick chain."
+   },
+   {
+    "t": "Return to the Ventkids in Fortuna to finish."
+   }
+  ],
+  "fast": [
+   "Get air-time by flying high with Archwing in the Orb Vallis and then switching to the K-Drive.",
+   "Grind the long pipe behind Fortuna's entrance back and forth for long trick chains and big combos.",
+   "Equip Inertia Dampeners on your K-Drive to help score points.",
+   "Check your current feats in the pause menu."
+  ],
+  "rw": [
+   "Yareli Blueprint",
+   "Noggle Statue - Yareli",
+   "K-Drive Booster Decoration",
+   "Yareli Prex",
+   "Waverider #1"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Yareli",
+   "K-Drive",
+   "Ventkids"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Waverider"
+ },
+ {
+  "id": "the-limbo-theorem",
+  "n": "The Limbo Theorem",
+  "kind": "quest",
+  "aka": [
+   "limbo quest",
+   "proof fragments",
+   "limbo theorem",
+   "archwing interception",
+   "limbo parts",
+   "proof fragment"
+  ],
+  "sum": "A side quest where Ordis pieces together a mysterious theorem. It rewards the Limbo component blueprints; buy the main blueprint from the Market.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Jupiter to Europa Junction",
+    "Own an Archwing"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the quest from the Codex and read Ordis' message with the Limbo Neuroptics Theorem blueprint."
+   },
+   {
+    "t": "Run the Archwing Interception on Syrtis, Mars and collect Proof Fragments from killed enemies.",
+    "tip": "Each Theorem needs 1 Proof Fragment, 3 for the whole quest. The game won't tell you when you have enough; check the Foundry."
+   },
+   {
+    "t": "Craft the Limbo Neuroptics Theorem."
+   },
+   {
+    "t": "Complete the Excavation on Cambria, Earth (300 Cryotic) for the Limbo Neuroptics blueprint."
+   },
+   {
+    "t": "Gather another Proof Fragment on Syrtis and craft the Limbo Systems Theorem, then excavate Martialis, Mars."
+   },
+   {
+    "t": "Craft the Limbo Chassis Theorem and excavate Ose, Europa to finish."
+   }
+  ],
+  "fast": [
+   "Collect all 3 Proof Fragments in one Syrtis run so you never have to go back.",
+   "Theorem crafting takes 10 seconds, so craft immediately after each run.",
+   "You only need to earn the blueprints to progress, not build them.",
+   "Bring a frame that defends extractors well for the three Excavations."
+  ],
+  "rw": [
+   "Limbo Neuroptics Blueprint",
+   "Limbo Systems Blueprint",
+   "Limbo Chassis Blueprint"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Limbo",
+   "Archwing",
+   "Proof Fragment"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Limbo_Theorem",
+  "was": [
+   "Older guides say each Theorem needs 3 Proof Fragments (9 in total). Update 34 cut it to 1 per Theorem, so the whole quest needs 3."
+  ]
+ },
+ {
+  "id": "the-jordas-precept",
+  "n": "The Jordas Precept",
+  "kind": "quest",
+  "aka": [
+   "atlas quest",
+   "jordas golem",
+   "pherliac pods",
+   "juggernaut",
+   "cephalon jordas"
+  ],
+  "sum": "A side quest to help the stranded Cephalon Jordas against the Infestation. It rewards the Atlas blueprint and unlocks the Jordas Golem Assassination.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Pluto to Eris Junction",
+    "Be able to use an Archwing for the final mission"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The Jordas Precept from the Codex."
+   },
+   {
+    "t": "Kill Infested Juggernauts to collect the Pherliac Pods blueprint and its four parts."
+   },
+   {
+    "t": "Craft the Pherliac Pods in the Foundry."
+   },
+   {
+    "t": "Equip the Pods and use one in the Exterminate on Isos, Eris."
+   },
+   {
+    "t": "Craft the Potent Pherliac Pod (Pherliac Pods + 3 Argon Crystals).",
+    "tip": "You only have to craft it, not use it."
+   },
+   {
+    "t": "Defeat the Juggernaut Behemoth and then the Jordas Golem in Archwing on Eris.",
+    "tip": "Shoot the Golem's engines on its back."
+   }
+  ],
+  "fast": [
+   "Farm Pod parts from Demolisher Juggernauts on Ur, Uranus (Disruption) or Deimos Juggernauts in Cambion Drift; they can spawn multiple times per mission.",
+   "Hit a Juggernaut's glowing belly or back maw while it attacks.",
+   "Argon Crystals decay daily, so farm them right before crafting the Potent Pod."
+  ],
+  "rw": [
+   "Atlas Blueprint",
+   "Jordas Golem Assassination"
+  ],
+  "time": "~1 h",
+  "go": [
+   "Atlas",
+   "Jordas Golem",
+   "Archwing"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Jordas_Precept"
+ }
+]

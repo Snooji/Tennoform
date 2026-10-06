@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react"
-import { Check, ChevronDown, ChevronsDown, ExternalLink, Gift, Lock, Plus, Sparkles } from "lucide-react"
+import { BookOpen, Check, ChevronDown, ChevronsDown, ExternalLink, Gift, Lock, Plus, Sparkles } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -50,8 +50,13 @@ const Quest = memo(function Quest({ q }: { q: QuestRow }) {
             ))}
           </p>
         ) : null}
-        {q.rewards.length || !q.done ? (
+        {q.rewards.length || !q.done || q.guide ? (
           <div className="flex flex-wrap items-center gap-2">
+            {q.guide ? (
+              <Button variant="outline" size="sm" className="h-8 border-primary/40" onClick={() => tf().open("guide|" + q.guide)} aria-label={`Step-by-step guide: ${q.n}`}>
+                <BookOpen /> Guide
+              </Button>
+            ) : null}
             {!q.done ? (
               <Button variant="outline" size="sm" className="h-8" disabled={q.hasTask} onClick={() => tf().addTaskFrom("quest|" + q.n, "Do quest: " + q.n)} aria-label={(q.hasTask ? "In your tasks: " : "Add task: ") + q.n}>
                 {q.hasTask ? <Check /> : <Plus />} {q.hasTask ? "In tasks" : "Task"}

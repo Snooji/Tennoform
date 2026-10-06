@@ -1,0 +1,2138 @@
+[
+ {
+  "id": "helminth",
+  "n": "Helminth",
+  "kind": "system",
+  "aka": [
+   "helminth chair",
+   "subsume",
+   "infuse",
+   "invigoration",
+   "helminth segment",
+   "secretions",
+   "metamorphosis",
+   "ability swap"
+  ],
+  "sum": "The Helminth is an Infested being in your Orbiter's Helminth Infirmary. Once you install the Helminth Segment you can sacrifice (subsume) Warframes to learn one of their abilities and infuse that ability onto other Warframes.",
+  "unlock": {
+   "mr": 8,
+   "quests": [
+    "Heart of Deimos"
+   ],
+   "other": [
+    "Reach Rank 3 - Associate with the Entrati on Deimos",
+    "Spend 15,000 Entrati standing on the Helminth Segment blueprint from Son"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish the Heart of Deimos quest to open the Necralisk and the Entrati family on Deimos.",
+    "tip": "You need Heart of Deimos done to fully access the Entrati syndicate."
+   },
+   {
+    "t": "Reach Mastery Rank 8."
+   },
+   {
+    "t": "Raise your Entrati standing to Rank 3 - Associate by earning family tokens and trading them to Grandmother for standing.",
+    "tip": "Each rank-up asks for a pair of family tokens as well as the standing."
+   },
+   {
+    "t": "Buy the Helminth Segment blueprint from Son in the Necralisk for 15,000 standing.",
+    "tip": "Or skip the grind: the Helminth Segments Bundle in the Market (300 platinum) gives the segment already built."
+   },
+   {
+    "t": "Build the segment in the Foundry: 50,000 credits, 5 Purple Velocipod Tags, 20 Adramal Alloy, 5 Saturated Muscle Mass and 15 Ganglion. It takes 24 hours.",
+    "tip": "You can rush the build for 50 platinum."
+   },
+   {
+    "t": "Go to the Helminth Infirmary on your Orbiter and sit in the chair to install the segment, then name your Helminth.",
+    "tip": "After this the room stays open for every Warframe and you can Fast Travel to it."
+   },
+   {
+    "t": "Feed the Helminth resources to fill its Secretions (Bile, Biotics, Calx, Oxides, Pheromones and Synthetics).",
+    "tip": "A green arrow means it wants that resource (up to 30% conversion) and a red arrow means it's sick of it (as low as 3%). Anything over 100% is wasted."
+   },
+   {
+    "t": "Feed it, subsume and infuse to raise its Metamorphosis rank. Rank 1 (2,250 experience) unlocks Warframe subsuming."
+   },
+   {
+    "t": "Subsume a Warframe: equip the one you want to give up, sit in the chair, choose Subsume Warframe and type CONFIRM. It finishes after 23 hours.",
+    "tip": "Only built non-Prime, non-Umbra Warframes can be subsumed, and the Warframe is gone for good. It doesn't need to be max rank. You can rush the 23 hours for 50 platinum."
+   },
+   {
+    "t": "Infuse an ability: sit in the chair with the Warframe you want to change, pick a subsumed ability, choose which ability it replaces and which mod configs get it.",
+    "tip": "You get one replaced ability per config. You can remove it later, but the Secretions you spent don't come back."
+   },
+   {
+    "t": "Optional: buy the Helminth Invigoration Segment blueprint from Son (30,000 standing, Rank 5 - Family) to give 3 random Warframes a week-long buff each week."
+   }
+  ],
+  "fast": [
+   "Run Mother's Tier 5 bounties in the Cambion Drift. Two or three runs give enough Mother Tokens to hit the daily standing cap.",
+   "Trade spare family tokens to Grandmother for Grandmother Tokens first. Those give 50% more standing than the original tokens would.",
+   "Lucent Teroglobe, Pustulite and Ganglion always give double Secretions when fed.",
+   "Subsume Warframes you've already mastered instead of selling them. Infusing and removing an ability with an even Secretion cost (like Nyx's Mind Control) over and over is a quick way to raise Metamorphosis rank.",
+   "The Helminth Segments Bundle (300 platinum) skips both the standing grind and the build."
+  ],
+  "rw": [
+   "Ability infusion",
+   "Helminth-only abilities",
+   "Invigorations",
+   "Free Warframe slots from subsuming"
+  ],
+  "time": "Several days (Entrati standing plus a 24h build)",
+  "go": [
+   "Heart of Deimos",
+   "Son",
+   "Entrati",
+   "Nidus",
+   "Helminth Invigoration Segment",
+   "Archon Shard"
+  ],
+  "w": "https://wiki.warframe.com/w/Helminth"
+ },
+ {
+  "id": "railjack",
+  "n": "Railjack",
+  "kind": "system",
+  "aka": [
+   "railjack",
+   "rising tide",
+   "dry dock",
+   "empyrean",
+   "build railjack",
+   "cy"
+  ],
+  "sum": "The Railjack is a crewable Orokin spacecraft for Empyrean space combat. You build your own during the Rising Tide quest, and you need it for things like Kuva Lich and Sister final fights.",
+  "unlock": {
+   "mr": 3,
+   "quests": [
+    "The War Within",
+    "Rising Tide"
+   ],
+   "other": [
+    "Build the Railjack Cephalon from a 35,000-credit Market blueprint to start Rising Tide",
+    "Access to a Dry Dock on a Saturn or Pluto Relay, or in a Clan Dojo"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The War Within."
+   },
+   {
+    "t": "Buy the Railjack Cephalon blueprint from the Market for 35,000 credits and build it: 5,000 credits, 15 Mutagen Samples, 15 Detonite Ampules and 15 Fieldron Samples. It takes 1 minute.",
+    "tip": "Building it starts the Rising Tide quest."
+   },
+   {
+    "t": "Go to a Dry Dock on the Saturn (Kronia) or Pluto (Orcus) Relay, or in your Clan Dojo."
+   },
+   {
+    "t": "Follow Cephalon Cy's leads to find each Railjack section, then repair it at the Dry Dock. Do this for all six sections.",
+    "tip": "You can donate repair resources a bit at a time. Each repair takes 1 minute and can't be rushed."
+   },
+   {
+    "t": "Board your finished Railjack from the bottom deck of your Orbiter."
+   },
+   {
+    "t": "Use the Reliquary Drive and do the short mission on Lua to get the Void Key that powers the ship."
+   },
+   {
+    "t": "Fly Empyrean missions to upgrade components, armaments and Intrinsics."
+   }
+  ],
+  "fast": [
+   "The Starter Railjack Bundle (175 platinum) gives a built Railjack and marks Rising Tide as complete.",
+   "Repairs take at least 6 minutes in total, so farm the resources first and then do all six repairs in one go.",
+   "You can join other players' Empyrean missions before you own a Railjack, using the button at the top right of the Navigation screen.",
+   "Stronger Sigma parts come from Clan Dojo research. Parts from the other Houses drop as wreckage in missions."
+  ],
+  "rw": [
+   "Railjack",
+   "Access to Empyrean missions"
+  ],
+  "time": "",
+  "go": [
+   "Rising Tide",
+   "The War Within",
+   "Plexus",
+   "Cephalon Cy"
+  ],
+  "w": "https://wiki.warframe.com/w/Railjack"
+ },
+ {
+  "id": "archwing",
+  "n": "Archwing",
+  "kind": "system",
+  "aka": [
+   "archwing",
+   "odonata",
+   "space flight",
+   "the archwing quest",
+   "archgun",
+   "archmelee"
+  ],
+  "sum": "Archwings are flight rigs for combat in space, underwater and in the open worlds. You get your first one, the Odonata, from The Archwing quest.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Archwing"
+   ],
+   "other": [
+    "Clear the Mars Junction to unlock The Archwing quest"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Clear the Mars Junction to unlock The Archwing quest."
+   },
+   {
+    "t": "Play through The Archwing quest and build the Odonata's Wings, Harness and Systems as the quest asks."
+   },
+   {
+    "t": "Finish the quest to get the Odonata plus the Imperator archgun and Veritux archmelee.",
+    "tip": "Finishing the quest also gives you the Plexus for Railjack."
+   },
+   {
+    "t": "Pick your Archwing and its weapons in the Arsenal's vehicle section (Select Mode)."
+   },
+   {
+    "t": "Play Archwing missions in Free Space or Corpus Ship tilesets, or Archwing sections on Uranus."
+   },
+   {
+    "t": "Research the Amesha, Elytron and Itzal in your Clan Dojo's Tenno Lab to get more Archwings."
+   }
+  ],
+  "fast": [
+   "Most Archwing weapon parts are offered by the six core Syndicates at Rank 2-3 for 20,000 standing.",
+   "In open worlds you can deploy your Archwing for fast travel, but you use your normal primary and secondary weapons there.",
+   "Finishing The Archwing quest is required before you can get any other Archwing."
+  ],
+  "rw": [
+   "Odonata",
+   "Imperator",
+   "Veritux",
+   "Plexus"
+  ],
+  "time": "",
+  "go": [
+   "The Archwing",
+   "Odonata",
+   "Amesha",
+   "Elytron",
+   "Itzal",
+   "Imperator",
+   "Veritux"
+  ],
+  "w": "https://wiki.warframe.com/w/Archwing"
+ },
+ {
+  "id": "operator",
+  "n": "Operator",
+  "kind": "system",
+  "aka": [
+   "operator",
+   "transference",
+   "void mode",
+   "amp",
+   "tenno child",
+   "somatic link"
+  ],
+  "sum": "The Operator is the Tenno who controls your Warframes. Once unlocked they can leave the Warframe and fight with Void powers, Amps and Focus abilities.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Second Dream",
+    "The War Within"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Finish the main quests up to The Second Dream. You get a limited form of control over the Operator (Transcendence) at the end."
+   },
+   {
+    "t": "Finish The War Within to unlock full Transference, so the Operator can fight on their own."
+   },
+   {
+    "t": "Customize your Operator at the Somatic Link in the Orbiter's Transference Room."
+   },
+   {
+    "t": "Visit The Quills in Cetus and Vox Solaris in Fortuna to get Amps and Operator Arcanes."
+   },
+   {
+    "t": "Choose and level a Focus school to power up your Operator and Warframe."
+   }
+  ],
+  "fast": [
+   "You can also open Operator options from Settings or the Fast Travel wheel (default Q) without going to the Transference Room.",
+   "The Operator counts as a separate body from your Warframe for pressure plates, which helps on puzzles that need two plates held at once."
+  ],
+  "rw": [
+   "Transference",
+   "Operator Amps",
+   "Focus abilities"
+  ],
+  "time": "",
+  "go": [
+   "The Second Dream",
+   "The War Within",
+   "Focus",
+   "The Quills",
+   "Vox Solaris"
+  ],
+  "w": "https://wiki.warframe.com/w/Operator"
+ },
+ {
+  "id": "focus",
+  "n": "Focus",
+  "kind": "system",
+  "aka": [
+   "focus",
+   "focus schools",
+   "focus lens",
+   "madurai",
+   "naramon",
+   "vazarin",
+   "zenurik",
+   "unairu"
+  ],
+  "sum": "Focus is the Operator's skill tree, split into five schools that give passive and active powers to the Operator and Warframe. You spend Focus Points on Ways in each tree.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Second Dream",
+    "The War Within",
+    "Saya's Vigil"
+   ],
+   "other": [
+    "Visit The Quills in Cetus to unlock the rest of each tree"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The Second Dream and pick your first school. You start with that school's two passive Ways."
+   },
+   {
+    "t": "Finish The War Within to unlock Transference, which lets Focus passives work from the start of every mission."
+   },
+   {
+    "t": "Finish Saya's Vigil, then visit The Quills in Cetus to reveal and unlock the rest of each Focus tree."
+   },
+   {
+    "t": "Put a Focus Lens on your gear so that Affinity you earn also turns into Focus Points."
+   },
+   {
+    "t": "Spend Focus Points on Ways in your school's tree and confirm your choices.",
+    "tip": "Focus can't be refunded once you confirm."
+   },
+   {
+    "t": "Unlock the other schools for 50,000 Focus Points each."
+   },
+   {
+    "t": "After The Old Peace, buy a school's Tektolyst Artifact from Marie to unlock its Tauron Strike."
+   }
+  ],
+  "fast": [
+   "Grab Convergence Orbs when they appear: they give 5,000 Focus right away and multiply Affinity-to-Focus by 10x for 45 seconds.",
+   "Eidolon Shards turn into Focus and don't count toward the daily cap (Brilliant: 25,000; Radiant: 40,000).",
+   "In Zariman missions, killing dormant Void Angels gives 15,000 Focus and Thrax Centurions/Legatus give 2,500 to the whole squad.",
+   "The daily Focus cap is 250,000 plus 5,000 per Mastery Rank and resets at 00:00 UTC."
+  ],
+  "rw": [
+   "Focus Ways",
+   "Way-Bound passives",
+   "Tauron Strike"
+  ],
+  "time": "",
+  "go": [
+   "The Second Dream",
+   "The War Within",
+   "Saya's Vigil",
+   "The Old Peace",
+   "The Quills",
+   "Focus Lens"
+  ],
+  "w": "https://wiki.warframe.com/w/Focus"
+ },
+ {
+  "id": "kuva-lich",
+  "n": "Kuva Lich",
+  "kind": "system",
+  "aka": [
+   "kuva lich",
+   "lich",
+   "larvling",
+   "requiem",
+   "kuva weapons",
+   "thrall",
+   "parazon"
+  ],
+  "sum": "Kuva Liches are personal Grineer nemeses that you create by Mercy-killing a Kuva Larvling. You beat one by finding the right sequence of Requiem Mods, and you get its Kuva weapon or turn it into an ally.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Own a Railjack",
+    "Have one Railjack Intrinsic at rank 5 to reach the final fight on the Saturn Proxima"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The War Within, reach Mastery Rank 5 and get a Railjack."
+   },
+   {
+    "t": "Play a regular Grineer mission of level 20 or higher. When the lights flicker yellow, kill 15 enemies in about 30 seconds to make a Kuva Larvling appear.",
+    "tip": "Sorties, Void Fissures, Invasions, quests and Dark Sectors don't count. Steel Path does."
+   },
+   {
+    "t": "Down the Larvling, check which Kuva weapon it shows, then Mercy it with your Parazon to create your Lich.",
+    "tip": "The Warframe you use sets the Lich's element. If you don't like the weapon, ignore the Larvling and find another."
+   },
+   {
+    "t": "Clear missions on the nodes your Lich controls and Mercy its Thralls to fill Requiem Murmurs, which reveal which Requiem Mods you need."
+   },
+   {
+    "t": "Get Requiem Mods by opening Requiem Eterna relics in Requiem Fissures on the Kuva Fortress.",
+    "tip": "Kuva Siphon and Kuva Flood missions drop the relics, and Thralls have a 5% chance."
+   },
+   {
+    "t": "When the Lich shows up, take down its health and stab it with your Parazon to test your Requiem order. If you get it wrong, change the order and try again."
+   },
+   {
+    "t": "Once the sequence is right, beat the Lich in its Railjack Skirmish on the Saturn Proxima."
+   },
+   {
+    "t": "Choose Vanquish to get its weapon (ready to claim in the Foundry) or Convert to make it an ally."
+   }
+  ],
+  "fast": [
+   "Don't stab the Lich until Murmurs have revealed your first Requiem. Then fill the other slots by trial and error so you need fewer attempts.",
+   "The Oull mod can stand in for any Requiem Mod, and a beaten Lich has a 25% chance to drop it.",
+   "While a Lich is in your mission it turns nearby enemies into Thralls, so you can farm Murmurs from them.",
+   "Hold off until you have a decent arsenal. Liches can show up before you know all three Requiems."
+  ],
+  "rw": [
+   "Kuva weapon",
+   "Ephemera (if the Lich has one)",
+   "Converted Lich ally",
+   "Reclaimed stolen loot"
+  ],
+  "time": "",
+  "go": [
+   "The War Within",
+   "Requiem Mods",
+   "Requiem Relic",
+   "Railjack",
+   "Parazon"
+  ],
+  "w": "https://wiki.warframe.com/w/Kuva_Lich"
+ },
+ {
+  "id": "sisters-of-parvos",
+  "n": "Sisters of Parvos",
+  "kind": "system",
+  "aka": [
+   "sisters of parvos",
+   "sister",
+   "tenet weapons",
+   "candidate",
+   "granum crown",
+   "parvos"
+  ],
+  "sum": "Sisters of Parvos are the Corpus version of Kuva Liches. You create one by Mercy-killing a Candidate, then beat her with the right Requiem sequence to get her Tenet weapon and her Hound companion.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within",
+    "Call of the Tempestarii"
+   ],
+   "other": [
+    "Have one Railjack Intrinsic at rank 3 to reach the final fight on the Neptune Proxima",
+    "Have no other active Lich, Sister or Technocyte Coda"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The War Within and Call of the Tempestarii, and reach Mastery Rank 5."
+   },
+   {
+    "t": "In a Corpus Ship mission of level 10 or higher, use a Zenith Granum Crown and clear the Granum Void with at least Rank 1 Nightmare rewards.",
+    "tip": "Don't finish the Granum Void too close to extraction (roughly 150-200 m), or no Candidate will spawn."
+   },
+   {
+    "t": "Down the Candidate that appears and Mercy it with your Parazon to create your Sister. The Warframe you use sets her element."
+   },
+   {
+    "t": "Clear her influenced nodes and Mercy her Hounds to reveal her Requiem Mods through Murmurs."
+   },
+   {
+    "t": "Get Requiem Mods from Requiem Eterna relics, opened in Requiem Fissures on the Kuva Fortress."
+   },
+   {
+    "t": "When she invades, beat her and stab her with your Requiem sequence. Adjust the order until it's right."
+   },
+   {
+    "t": "Finish her in the Railjack confrontation on the Neptune Proxima, then Vanquish or Convert her."
+   }
+  ],
+  "fast": [
+   "Mercy her Hounds to raise her Rage quickly so she invades more often.",
+   "When she invades, disable and Mercy her Hound before her first health bar is gone, or she makes it self-destruct.",
+   "Hounds have a 5% chance to drop Requiem Eterna relics."
+  ],
+  "rw": [
+   "Tenet weapon",
+   "Hound companion",
+   "Hound component blueprint",
+   "Ephemera (if she has one)"
+  ],
+  "time": "",
+  "go": [
+   "Call of the Tempestarii",
+   "Hound (Companion)",
+   "Requiem Mods",
+   "Kuva Lich",
+   "Railjack"
+  ],
+  "w": "https://wiki.warframe.com/w/Sisters_of_Parvos"
+ },
+ {
+  "id": "steel-path",
+  "n": "The Steel Path",
+  "kind": "system",
+  "aka": [
+   "steel path",
+   "sp",
+   "teshin",
+   "steel essence",
+   "incursions",
+   "hard mode"
+  ],
+  "sum": "The Steel Path is Teshin's harder version of the Star Chart, with enemies 100 levels higher and doubled resource and mod drop chances. It rewards Steel Essence and extra Mastery.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "Chimera Prologue"
+   ],
+   "other": [
+    "Complete every Star Chart node available before The New War, except the Mutalist Alad V, Jordas Golem and Brutus assassinations",
+    "Includes quest-locked nodes such as Tyana Pass, Follie's Hunt, Ropalolyst, Saya's Visions, and all of Lua and the Kuva Fortress"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish the main quests up to Chimera Prologue so every quest-locked node is open."
+   },
+   {
+    "t": "Talk to Teshin on any Relay and choose \"Steel Path?\" to see which nodes, quests or Mastery Rank you still need.",
+    "tip": "You need Mastery Rank 5 for Vay Hek's node on Earth."
+   },
+   {
+    "t": "Clear every remaining node on the list."
+   },
+   {
+    "t": "Talk to Teshin again and accept the Steel Path. A Steel Path toggle then shows on the right side of the Star Chart."
+   },
+   {
+    "t": "Clear Steel Path nodes again starting from E Prime on Earth."
+   },
+   {
+    "t": "Do the 6 daily Steel Path Incursions for 5 Steel Essence each and spend it in Teshin's shop."
+   }
+  ],
+  "fast": [
+   "Teshin's \"Steel Path?\" list shows exactly which nodes you're missing, so you don't have to search for them.",
+   "Finishing an Incursion unlocks its node, even if you haven't reached it on the Steel Path Star Chart yet.",
+   "For open-world nodes, enter with the 6th-tier bounty selected and go straight back to town to unlock the nearby nodes.",
+   "Harrow's Condemn or Khora's Ensnare can lock Acolytes in place. Both can be subsumed with the Helminth."
+  ],
+  "rw": [
+   "Steel Essence",
+   "Teshin's Steel Path Honors",
+   "Extra Mastery from Steel Path nodes",
+   "Steel Path Circuit rewards"
+  ],
+  "time": "",
+  "go": [
+   "Teshin",
+   "Chimera Prologue",
+   "The Duviri Paradox",
+   "Incarnon"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Steel_Path"
+ },
+ {
+  "id": "necramech",
+  "n": "Necramech",
+  "kind": "system",
+  "aka": [
+   "necramech",
+   "voidrig",
+   "bonewidow",
+   "mech",
+   "mausolon",
+   "necramech summon"
+  ],
+  "sum": "Necramechs are heavy Entrati war machines that your Operator can pilot in open worlds, Railjack ground sections and other modes. You build your own from damaged parts on Deimos.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Heart of Deimos",
+    "The War Within"
+   ],
+   "other": [
+    "Have a free Archwing weapon slot for the Mausolon that comes with it"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish Heart of Deimos. Father gives you the Necramech Casing, Engine, Capsule and Weapon Pod blueprints."
+   },
+   {
+    "t": "Finish The War Within so your Operator can pilot a Necramech."
+   },
+   {
+    "t": "Get the Damaged Necramech Casing, Engine, Pod and Weapon Pod by buying them from Father or killing enemy Necramechs in Isolation Vault bounties."
+   },
+   {
+    "t": "Build the four components and then the Necramech in your Foundry."
+   },
+   {
+    "t": "Make sure you have a free Archwing weapon slot for the Mausolon archgun."
+   },
+   {
+    "t": "Equip the Necramech Summon gear (you get it automatically) and use it in the Cambion Drift, Plains of Eidolon or Orb Vallis."
+   }
+  ],
+  "fast": [
+   "Try one out first: inactive Necramechs with a blue aura in the Cambion Drift can be boarded with Transference.",
+   "A pre-built Necramech costs 375 platinum in the Market and comes with an Orokin Reactor.",
+   "Get Tactical Intrinsic Rank 5 to summon it in the ground sections of Empyrean missions."
+  ],
+  "rw": [
+   "Voidrig",
+   "Mausolon",
+   "Necramech Summon"
+  ],
+  "time": "",
+  "go": [
+   "Heart of Deimos",
+   "Father",
+   "Voidrig",
+   "Bonewidow",
+   "Mausolon",
+   "Isolation Vault"
+  ],
+  "w": "https://wiki.warframe.com/w/Necramech"
+ },
+ {
+  "id": "k-drive",
+  "n": "K-Drive",
+  "kind": "system",
+  "aka": [
+   "k-drive",
+   "kdrive",
+   "hoverboard",
+   "ventkids",
+   "bondi",
+   "k-drive launcher"
+  ],
+  "sum": "K-Drives are hoverboards for getting around open worlds fast. You get a basic one from the Vox Solaris quest and build custom ones with the Ventkids in Fortuna.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Vox Solaris"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Talk to Eudico in Fortuna to start the Vox Solaris quest, then finish it."
+   },
+   {
+    "t": "You get the K-Drive Launcher gear and a basic Bondi K-Drive. Put the launcher on your gear wheel."
+   },
+   {
+    "t": "Summon the K-Drive in the Orb Vallis, Plains of Eidolon or Cambion Drift."
+   },
+   {
+    "t": "Do tricks and K-Drive Races to earn Ventkids standing.",
+    "tip": "25% of trick Affinity turns into Ventkids standing."
+   },
+   {
+    "t": "Buy a Board, Reactor, Nose and Jet from the Ventkids in their clubhouse (through the vent above Legs' shop) and assemble a custom K-Drive.",
+    "tip": "Only the Board gives Mastery. Your Bondi disappears once you own a custom K-Drive."
+   },
+   {
+    "t": "Mod your K-Drive in the Arsenal's vehicle section."
+   }
+  ],
+  "fast": [
+   "Each trick chain is capped at 3,000 Affinity (750 standing). Primo Flair raises that cap to 6,000.",
+   "Grab the blue crystals that appear while you ride to boost the standing multiplier for your current chain.",
+   "Five K-Drive races in the Orb Vallis refresh daily. Open your map while on the K-Drive to see them."
+  ],
+  "rw": [
+   "K-Drive Launcher",
+   "Bondi K-Drive",
+   "Custom K-Drives"
+  ],
+  "time": "",
+  "go": [
+   "Vox Solaris",
+   "Ventkids",
+   "Fortuna",
+   "Orb Vallis"
+  ],
+  "w": "https://wiki.warframe.com/w/K-Drive"
+ },
+ {
+  "id": "clan-dojo",
+  "n": "Clan Dojo",
+  "kind": "system",
+  "aka": [
+   "dojo",
+   "clan dojo",
+   "clan key",
+   "clan",
+   "dojo trading",
+   "clan base"
+  ],
+  "sum": "The Clan Dojo is your clan's home base. It's where you research and copy special gear, trade with other players, and use amenities like the Dry Dock and Obstacle Course.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Join or create a Clan",
+    "Build a Clan Key"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Join a clan or create your own from the Clan menu. You get a Clan Key blueprint when you join."
+   },
+   {
+    "t": "Build the Clan Key: 1,500 credits, 1 Morphics, 500 Polymer Bundle and 500 Ferrite. It takes 12 hours.",
+    "tip": "You can rush it for 10 platinum."
+   },
+   {
+    "t": "Pick your Dojo on the Star Chart as if it were a planet and enter it."
+   },
+   {
+    "t": "Use the research labs to replicate gear for credits, trade at Trading Posts or from the menu, and use rooms like the Dry Dock."
+   },
+   {
+    "t": "Donate resources to the Vault or to room construction to help the clan grow."
+   }
+  ],
+  "fast": [
+   "Joining an established clan that has already finished its research lets you buy those blueprints right away.",
+   "You can trade with non-members in your Dojo by inviting them to your squad.",
+   "Playing with clanmates puts bonus resources into the Clan Vault, on top of your own drops."
+  ],
+  "rw": [
+   "Clan research blueprints",
+   "Trading",
+   "Dry Dock access"
+  ],
+  "time": "~12 hours (Clan Key build)",
+  "go": [
+   "Research",
+   "Clan Key",
+   "Railjack"
+  ],
+  "w": "https://wiki.warframe.com/w/Clan_Dojo"
+ },
+ {
+  "id": "relays",
+  "n": "Relay",
+  "kind": "system",
+  "aka": [
+   "relay",
+   "relays",
+   "strata",
+   "larunda",
+   "kronia",
+   "maroo's bazaar",
+   "hub"
+  ],
+  "sum": "Relays are Tenno hub stations where you meet other players and find Syndicates, Cephalon Simaris, Darvo, Teshin, Baro Ki'Teer and Ducat kiosks.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Unlock a planet that has a Relay"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Open the Navigation console and pick a planet with a Relay, such as Mercury (Larunda), Earth (Strata), Mars (Maroo's Bazaar), Saturn (Kronia) or Pluto (Orcus)."
+   },
+   {
+    "t": "Select the Relay node and enter it like a mission."
+   },
+   {
+    "t": "Visit the Syndicate rooms in the side wings. Syndicate rewards need Mastery Rank 3."
+   },
+   {
+    "t": "Go up to the second floor of the North Wing to find Darvo's Market and Cephalon Simaris's Sanctuary."
+   },
+   {
+    "t": "Trade Prime parts for Ducats at the kiosks and check when Baro Ki'Teer arrives next."
+   }
+  ],
+  "fast": [
+   "Maroo's Bazaar on Mars has Maroo's weekly Ayatan mission and Varzia's Prime Resurgence shop.",
+   "Dry Docks for your Railjack are on the Saturn and Pluto Relays.",
+   "At Mastery Rank 30 you can use the True Master's Font to give everyone in the Relay a 3-hour 25% boost."
+  ],
+  "rw": [],
+  "time": "",
+  "go": [
+   "Baro Ki'Teer",
+   "Syndicates",
+   "Cephalon Simaris",
+   "Teshin",
+   "Maroo's Bazaar"
+  ],
+  "w": "https://wiki.warframe.com/w/Relay"
+ },
+ {
+  "id": "nightwave",
+  "n": "Nightwave",
+  "kind": "system",
+  "aka": [
+   "nightwave",
+   "nora night",
+   "battle pass",
+   "nightwave creds",
+   "acts",
+   "cred offerings"
+  ],
+  "sum": "Nightwave is Nora Night's battle-pass-style syndicate. You complete daily and weekly Acts for standing, rank up for rewards, and spend Creds in her shop.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Teacher"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Finish The Teacher quest."
+   },
+   {
+    "t": "Open Nightwave from the Navigation console, the banner at the lower right of the main menu, or the Radio Scanner in your Orbiter."
+   },
+   {
+    "t": "Complete Acts: Dailies give 1,000 standing, Weeklies 4,500 and Elite Weeklies 7,000."
+   },
+   {
+    "t": "Rank up every 10,000 standing (30 ranks per Series) and claim each rank's reward."
+   },
+   {
+    "t": "Spend the Nightwave Creds you earn in Cred Offerings, which refresh weekly."
+   }
+  ],
+  "fast": [
+   "Daily Acts last 3 days, so you can do several in one session.",
+   "Missed weekly Acts come back later as Recovered Acts, three at a time.",
+   "Elite Weeklies give the most standing per Act, so do them first when you can.",
+   "Past rank 30, each prestige rank gives 15 Creds."
+  ],
+  "rw": [
+   "Nightwave Creds",
+   "Mods",
+   "Cosmetics",
+   "Resources"
+  ],
+  "time": "",
+  "go": [
+   "The Teacher",
+   "Nora Night",
+   "Orokin Reactor",
+   "Orokin Catalyst"
+  ],
+  "w": "https://wiki.warframe.com/w/Nightwave"
+ },
+ {
+  "id": "void-relics",
+  "n": "Void Relic",
+  "kind": "system",
+  "aka": [
+   "void relic",
+   "relics",
+   "void fissure",
+   "prime parts",
+   "refine relic",
+   "void traces",
+   "radiant"
+  ],
+  "sum": "Void Relics are cracked open in Void Fissure missions to get Prime parts and Forma blueprints. Refining them with Void Traces improves your odds at rare rewards.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Get your first relic for Void Fissures to appear",
+    "Clear the Mars Junction (on Earth) and install the Void Relic Segment to refine relics"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Earn relics from missions, mostly endless missions. Any mission in the Void guarantees one."
+   },
+   {
+    "t": "Clear the Mars Junction on Earth and install the Void Relic Segment it gives you in your Orbiter."
+   },
+   {
+    "t": "Pick a Void Fissure mission whose tier (Lith, Meso, Neo or Axi) matches your relic, and equip the relic."
+   },
+   {
+    "t": "Collect 10 Reactant during the mission to crack the relic."
+   },
+   {
+    "t": "Finish the mission and choose one reward from your squad's opened relics."
+   },
+   {
+    "t": "Spend Void Traces at the Relic Segment to refine relics: Exceptional (25), Flawless (50) or Radiant (100)."
+   }
+  ],
+  "fast": [
+   "Four players with Radiant relics have the best chance at rare parts, since each player can pick from everyone's rewards.",
+   "Endless Fissures give pre-refined relics every fifth rotation, such as Radiant at 75 minutes of Survival.",
+   "Syndicates, Suumbaat, Smokefinger and Otak sell 3-relic packs for 20,000 standing. Teshin sells them for 15 Steel Essence.",
+   "Relics can be traded, which helps with vaulted ones."
+  ],
+  "rw": [
+   "Prime parts",
+   "Forma blueprints",
+   "Void Traces",
+   "Ducats (from selling Prime parts)"
+  ],
+  "time": "",
+  "go": [
+   "Prime Resurgence",
+   "Baro Ki'Teer",
+   "Forma",
+   "Requiem Relic"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Relic"
+ },
+ {
+  "id": "riven-mods",
+  "n": "Riven Mods",
+  "kind": "system",
+  "aka": [
+   "riven",
+   "riven mods",
+   "veiled riven",
+   "unveil riven",
+   "reroll riven",
+   "riven sliver",
+   "palladino"
+  ],
+  "sum": "Riven Mods are random, weapon-specific mods with two or three bonuses and sometimes a downside. You unveil one by finishing its challenge and can reroll its stats with Kuva.",
+  "unlock": {
+   "mr": 8,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Each unveiled Riven needs Mastery Rank 8 to 16 to equip, depending on the mod"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The War Within to get your first veiled Riven Mod."
+   },
+   {
+    "t": "Equip the veiled Riven on gear of the matching type to see its challenge."
+   },
+   {
+    "t": "Complete the challenge with the Riven equipped somewhere in your loadout.",
+    "tip": "Any weapon or ability can finish the challenge. The weapon you use has no effect on the result."
+   },
+   {
+    "t": "Check the unveiled Riven's weapon, stats, polarity and Mastery Rank requirement, then rank it up with Endo."
+   },
+   {
+    "t": "Reroll (Cycle) its stats with Kuva if you want better rolls."
+   },
+   {
+    "t": "Get more Rivens from Palladino in Iron Wake (10 Riven Slivers, twice per week, needs Chains of Harrow), Sorties, Acrithis (15 Pathos Clamps) and Steel Path sources."
+   }
+  ],
+  "fast": [
+   "Unveil several at once by putting a veiled Riven on each eligible piece of gear, especially if they share a challenge.",
+   "Sorties give Melee Rivens most often (about 8%).",
+   "Rivens you don't need can be traded to other players or dissolved into Endo."
+  ],
+  "rw": [
+   "Riven Mods"
+  ],
+  "time": "",
+  "go": [
+   "The War Within",
+   "Palladino",
+   "Chains of Harrow",
+   "Kuva",
+   "Endo"
+  ],
+  "w": "https://wiki.warframe.com/w/Riven_Mods"
+ },
+ {
+  "id": "incarnon",
+  "n": "Incarnon",
+  "kind": "system",
+  "aka": [
+   "incarnon",
+   "incarnon genesis",
+   "incarnon adapter",
+   "cavalero",
+   "evolution",
+   "the circuit"
+  ],
+  "sum": "Incarnon is a weapon upgrade system that adds evolution perks and an Incarnon Form. Many standard weapons can get it by installing an Incarnon Genesis earned from the Steel Path Circuit.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Duviri Paradox"
+   ],
+   "other": [
+    "Unlock The Steel Path",
+    "Own the weapon the Genesis is for"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The Duviri Paradox and unlock The Steel Path."
+   },
+   {
+    "t": "Run The Circuit with the Steel Path toggle on and earn up to two Incarnon Geneses per week from its reward track.",
+    "tip": "The weapons on offer change every week."
+   },
+   {
+    "t": "Bring the Genesis, the matching weapon and the Duviri resources needed to Cavalero in the Chrysalith on the Zariman to install it."
+   },
+   {
+    "t": "Complete evolution challenges to unlock perks: Evolution II is a solo mission with the weapon, and Evolution III is 100 kills in Incarnon Form (or 6 Incarnon activations in one mission for melee)."
+   },
+   {
+    "t": "For native Incarnon weapons, finish Angels of the Zariman (Cavalero blueprints, MR 14) or Whispers in the Walls and The Deadlock Protocol (Armatus on Deimos)."
+   }
+  ],
+  "fast": [
+   "Cavalero sells the Geneses from the current Circuit rotation for platinum, along with the resources to install them.",
+   "One Genesis covers all variants (Prime, Vandal, Wraith), and challenges done once count for every variant. Akimbo and dual versions are not covered.",
+   "Challenge progress carries over between missions."
+  ],
+  "rw": [
+   "Incarnon Form",
+   "Evolution perks"
+  ],
+  "time": "",
+  "go": [
+   "The Duviri Paradox",
+   "The Steel Path",
+   "Cavalero",
+   "Angels of the Zariman",
+   "Whispers in the Walls"
+  ],
+  "w": "https://wiki.warframe.com/w/Incarnon"
+ },
+ {
+  "id": "kavat",
+  "n": "Kavat",
+  "kind": "system",
+  "aka": [
+   "kavat",
+   "smeeta",
+   "adarza",
+   "kavat breeding",
+   "kavat genetic code",
+   "incubator"
+  ],
+  "sum": "Kavats are cat companions bred in your Orbiter's Incubator. The Smeeta and Adarza are the main breeds, and the Vasca comes from the Plains of Eidolon.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "Howl of the Kubrow"
+   ],
+   "other": [
+    "Install the Kavat Incubator Upgrade Segment (MR 5 to craft)",
+    "10 Kavat Genetic Codes and an Incubator Power Core per breeding"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish Howl of the Kubrow to get the Incubator in your Orbiter."
+   },
+   {
+    "t": "Get the Kavat Incubator Upgrade Segment blueprint from Clan Dojo Tenno Lab research or Hyekka Master drops, or buy it built from the Market for 175 platinum."
+   },
+   {
+    "t": "Scan living Feral Kavats with a Codex or Synthesis Scanner for Kavat Genetic Codes (25% chance per scan). They spawn on Deimos nodes like Horend, Phlegyas and Formido."
+   },
+   {
+    "t": "Build the segment (it needs 10 Kavat Genetic Codes) and install it in the Incubator."
+   },
+   {
+    "t": "Build an Incubator Power Core from its Market blueprint."
+   },
+   {
+    "t": "Start an incubation using 10 Kavat Genetic Codes, either random or with Genetic Code Templates to steer the breed.",
+    "tip": "It takes 48 hours (24 with the Nutrio upgrade), or you can rush it for 15 platinum."
+   },
+   {
+    "t": "Name your kitten, then mature it at the Incubator so it can join you in missions."
+   }
+  ],
+  "fast": [
+   "Kavat Genetic Codes cost 5 platinum each in the Market if you'd rather not farm them.",
+   "The Synthesis Scanner's Cross-Matrix widget has a 45% chance to scan a Kavat twice, and each scan can give a code.",
+   "The Nutrio Incubator Upgrade Segment halves incubation time to 24 hours."
+  ],
+  "rw": [
+   "Smeeta Kavat",
+   "Adarza Kavat",
+   "Vasca Kavat"
+  ],
+  "time": "~2 days incubation",
+  "go": [
+   "Howl of the Kubrow",
+   "Smeeta Kavat",
+   "Adarza Kavat",
+   "Vasca Kavat",
+   "Incubator Power Core"
+  ],
+  "w": "https://wiki.warframe.com/w/Kavat"
+ },
+ {
+  "id": "kubrow",
+  "n": "Kubrow",
+  "kind": "system",
+  "aka": [
+   "kubrow",
+   "kubrow egg",
+   "dog companion",
+   "incubator",
+   "howl of the kubrow",
+   "kubrow den"
+  ],
+  "sum": "Kubrows are dog companions you hatch from eggs in your Orbiter's Incubator. You learn how during the Howl of the Kubrow quest.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Howl of the Kubrow"
+   ],
+   "other": [
+    "Clear the Venus to Mercury Junction to unlock Howl of the Kubrow",
+    "A Kubrow Egg and an Incubator Power Core"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Clear the Venus to Mercury Junction and start Howl of the Kubrow."
+   },
+   {
+    "t": "Get a Kubrow Egg by destroying Kubrow Dens in Grineer Forest missions on Earth, or buy one for 10 platinum."
+   },
+   {
+    "t": "Get an Incubator Power Core from the Venus to Mercury Junction task reward (after the Vox Solaris quest), or build one from its reusable Market blueprint."
+   },
+   {
+    "t": "Incubate the egg: random, or with two Genetic Code Templates of the same breed.",
+    "tip": "It takes 48 hours (24 with the Nutrio upgrade), or you can rush it for 15 platinum."
+   },
+   {
+    "t": "Name your puppy, then mature it at the Incubator."
+   },
+   {
+    "t": "Finish the quest's defense mission to get your Kubrow's collar. You only need to do this once."
+   }
+  ],
+  "fast": [
+   "Farm eggs on the Mantle Capture mission on Earth: run around breaking the 2-4 dens, then capture and extract.",
+   "Xaku built for range can break many dens quickly with The Vast Untime.",
+   "Egg drop rates are much higher during the quest's egg-hunt mission."
+  ],
+  "rw": [
+   "Kubrow companion",
+   "Incubator"
+  ],
+  "time": "~2 days incubation",
+  "go": [
+   "Howl of the Kubrow",
+   "Kubrow Egg",
+   "Incubator Power Core",
+   "Kavat"
+  ],
+  "w": "https://wiki.warframe.com/w/Kubrow"
+ },
+ {
+  "id": "moa-companion",
+  "n": "MOA (Companion)",
+  "kind": "system",
+  "aka": [
+   "moa",
+   "moa companion",
+   "legs",
+   "gild moa",
+   "robotic companion",
+   "solaris united"
+  ],
+  "sum": "MOAs are modular robot companions built from Model, Core, Gyro and Bracket parts that you buy from Legs in Fortuna. Gild a MOA to unlock its full features and Mastery.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Solaris United standing in Fortuna",
+    "Doer rank with Solaris United to gild"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Go to Fortuna on Venus and earn Solaris United standing."
+   },
+   {
+    "t": "Buy MOA part blueprints from Legs: a Model, Core, Gyro and Bracket.",
+    "tip": "The Para Model costs 500 standing and is available at Neutral rank."
+   },
+   {
+    "t": "Build each part in the Foundry. Each one takes 24 hours."
+   },
+   {
+    "t": "Assemble the MOA and equip it with a Robotic weapon."
+   },
+   {
+    "t": "Level the MOA to rank 30."
+   },
+   {
+    "t": "Gild it at Legs (Doer rank, 10 Training Debt-Bonds and 5,000 standing) to add a polarity, name it, and start earning Mastery."
+   }
+  ],
+  "fast": [
+   "Mastery is tied to the Model, so try a different Model for each MOA you gild.",
+   "Donating a rank 30 MOA to Legs gives 1,800 standing, or 2,400 if it's gilded, which helps fund the next build.",
+   "You can install an Orokin Reactor before gilding."
+  ],
+  "rw": [
+   "MOA companion",
+   "MOA Precept mods"
+  ],
+  "time": "~1 day (part builds)",
+  "go": [
+   "Legs",
+   "Solaris United",
+   "Fortuna",
+   "Hound (Companion)"
+  ],
+  "w": "https://wiki.warframe.com/w/MOA_(Companion)"
+ },
+ {
+  "id": "hound-companion",
+  "n": "Hound (Companion)",
+  "kind": "system",
+  "aka": [
+   "hound",
+   "hound companion",
+   "sister hound",
+   "gild hound",
+   "robotic dog",
+   "bhaira"
+  ],
+  "sum": "Hounds are robot dog companions from the Sisters of Parvos. Beating your Sister gives you her Hound and a Hound part blueprint, which you can assemble and gild with Legs.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within",
+    "Call of the Tempestarii"
+   ],
+   "other": [
+    "Vanquish a Sister of Parvos",
+    "Doer rank with Solaris United to gild"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Unlock the Sisters of Parvos and create your Sister."
+   },
+   {
+    "t": "Vanquish your Sister. You get her Hound plus one random Hound component blueprint."
+   },
+   {
+    "t": "Collect Model, Core, Bracket and Stabilizer blueprints from more Sisters or by trading.",
+    "tip": "Some parts need Spectral Debris, which drops from Errant Specters in the Granum Void."
+   },
+   {
+    "t": "Build the parts and assemble the Hound with Legs in Fortuna."
+   },
+   {
+    "t": "Level it to rank 30, then gild it at Legs (Doer rank, 10 Training Debt-Bonds and 5,000 standing)."
+   }
+  ],
+  "fast": [
+   "Hound component blueprints can be traded, so you can buy the exact parts you want instead of farming Sisters.",
+   "Donating a gilded Hound with an Orokin Reactor gives 16,000 Solaris United standing.",
+   "Hounds attack on their own and don't need Assault Mode."
+  ],
+  "rw": [
+   "Hound companion",
+   "Hound weapons",
+   "Hound Precept mods"
+  ],
+  "time": "",
+  "go": [
+   "Sisters of Parvos",
+   "Legs",
+   "MOA (Companion)"
+  ],
+  "w": "https://wiki.warframe.com/w/Hound_(Companion)"
+ },
+ {
+  "id": "arcanes",
+  "n": "Arcane Enhancement",
+  "kind": "system",
+  "aka": [
+   "arcane",
+   "arcanes",
+   "arcane enhancement",
+   "vosfor",
+   "arcane dissolution",
+   "rank up arcane"
+  ],
+  "sum": "Arcanes are special upgrades that trigger buffs under certain conditions. You stack duplicates to rank them up, and you can dissolve unwanted ones at Loid.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Get your first Arcane. The Arcane Segment appears in your Orbiter after that.",
+    "Arcane Dissolution needs Whispers in the Walls"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Earn Arcanes from activities such as Eidolon hunts, Zariman, Cavia, Arbitrations, Steel Path and syndicate vendors like Vox Solaris."
+   },
+   {
+    "t": "Equip them from the item's upgrade screen. Warframes, Operators and Amps take two, and most weapons take one."
+   },
+   {
+    "t": "Rank them up by combining duplicates under Equipment > Arcanes. Each rank needs one more copy than the last."
+   },
+   {
+    "t": "After Whispers in the Walls, dissolve unwanted Arcanes into Vosfor at Loid."
+   },
+   {
+    "t": "Spend 200 Vosfor and 50,000 credits per Arcane Collection to get 3 random Arcanes from the pool you pick."
+   }
+  ],
+  "fast": [
+   "Eidolon Arcanes drop from Teralysts, Gantulysts and Hydrolysts (capturing gives better rewards) and from Orphix Rotation C.",
+   "Pick the collection whose pool has the Arcane you want. The Holdfasts collection only contains rare Arcanes.",
+   "Arbitrations give Arcanes like Arcane Pistoleer and Arcane Tanker."
+  ],
+  "rw": [
+   "Arcanes"
+  ],
+  "time": "",
+  "go": [
+   "Whispers in the Walls",
+   "Loid",
+   "Vosfor",
+   "Cavia",
+   "The Holdfasts"
+  ],
+  "w": "https://wiki.warframe.com/w/Arcane_Enhancement"
+ },
+ {
+  "id": "archon-shards",
+  "n": "Archon Shard",
+  "kind": "system",
+  "aka": [
+   "archon shard",
+   "archon shards",
+   "tauforged",
+   "archon hunt",
+   "shard fusion",
+   "imbue shard"
+  ],
+  "sum": "Archon Shards are permanent Warframe stat upgrades that the Helminth imbues into your Warframe. You mostly get them from the weekly Archon Hunt.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The New War",
+    "Veilbreaker"
+   ],
+   "other": [
+    "Build and install the Helminth Archon Shard Segment from the Veilbreaker reward"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Finish The New War, then Veilbreaker. Veilbreaker gives the Helminth Archon Shard Segment blueprint and Archon Hunt access."
+   },
+   {
+    "t": "Build the Helminth Archon Shard Segment and install it at your Helminth."
+   },
+   {
+    "t": "Clear the weekly Archon Hunt: Archon Amar gives Crimson, Archon Nira gives Amber, and Archon Boreal gives Azure.",
+    "tip": "Each shard has a 20% chance to be Tauforged, and the chance goes up every time you don't get one."
+   },
+   {
+    "t": "Imbue shards into your equipped Warframe at the Helminth, or from the Warframe's Arsenal once it has one socketed."
+   },
+   {
+    "t": "Reach Cavia Rank 2 and buy the Helminth Coalescent Segment from Bird 3 for 30,000 standing to fuse shards into Topaz, Violet and Emerald."
+   }
+  ],
+  "fast": [
+   "At Cavia Rank 5, Bird 3 sells one normal shard each week for 30,000 standing.",
+   "Netracells and Deep Archimedea also drop Crimson, Amber and Azure shards, including Tauforged ones.",
+   "Temporal Archimedea can give every shard type, including fused and Tauforged."
+  ],
+  "rw": [
+   "Archon Shards",
+   "Tauforged Archon Shards"
+  ],
+  "time": "",
+  "go": [
+   "Veilbreaker",
+   "Helminth",
+   "Archon Hunt",
+   "Bird 3",
+   "Cavia"
+  ],
+  "w": "https://wiki.warframe.com/w/Archon_Shard"
+ },
+ {
+  "id": "drifter-intrinsics",
+  "n": "Drifter Intrinsics",
+  "kind": "system",
+  "aka": [
+   "drifter intrinsics",
+   "intrinsics",
+   "drifter",
+   "duviri",
+   "combat intrinsic",
+   "riding intrinsic"
+  ],
+  "sum": "Drifter Intrinsics are the Drifter's skill points for Duviri, split into Combat, Riding, Opportunity and Endurance. Each rank also gives Mastery.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Duviri Paradox"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Finish The Duviri Paradox to unlock the Drifter and Duviri activities."
+   },
+   {
+    "t": "Earn Intrinsic points from Spirals, the Undercroft, the Orowyrm, side activities, The Circuit and Lost Islands Fragments."
+   },
+   {
+    "t": "Spend points at the well of golden rings in the Dormizone or Teshin's Cave."
+   },
+   {
+    "t": "Rank each of the four classes up to 10. Each rank gives 1,500 Mastery points.",
+    "tip": "Points can't be respecced, so plan before you spend."
+   }
+  ],
+  "fast": [
+   "Beating the Orowyrm gives 15 points (22 on Steel Path), more than any other single source.",
+   "Lost Islands of Duviri Fragments give 5 each, and the Undercroft gives 6.",
+   "Affinity Boosters don't help here, so don't spend one on Intrinsics.",
+   "Rank 9 in each class is the only part that helps outside Duviri."
+  ],
+  "rw": [
+   "Drifter skills",
+   "Mastery points"
+  ],
+  "time": "",
+  "go": [
+   "The Duviri Paradox",
+   "Drifter",
+   "Teshin",
+   "Dormizone"
+  ],
+  "w": "https://wiki.warframe.com/w/Drifter_Intrinsics"
+ },
+ {
+  "id": "mod-fusion-endo",
+  "n": "Endo",
+  "kind": "system",
+  "aka": [
+   "endo",
+   "mod fusion",
+   "rank up mods",
+   "fusion",
+   "dissolve mods",
+   "upgrade mods"
+  ],
+  "sum": "Endo is the resource used to fuse (rank up) Mods, making them stronger but raising their capacity cost. You get it from enemies and missions, by dissolving Mods, and by selling Ayatan treasures.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Teacher"
+   ],
+   "other": [
+    "The Mod Segment, obtained during The Teacher quest"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Get the Mod Segment during The Teacher quest to unlock modding and fusion."
+   },
+   {
+    "t": "Collect Endo from enemy drops and mission rewards."
+   },
+   {
+    "t": "Dissolve Mods you don't need in the Orbiter's Mods segment to turn them into Endo."
+   },
+   {
+    "t": "Pick a Mod in the Mods screen and rank it up by spending Endo and credits.",
+    "tip": "Each rank costs about twice as much as the one before, and Primed or Archon Mods cost the most."
+   },
+   {
+    "t": "Fill Ayatan Sculptures with Stars and sell them to Maroo for extra Endo."
+   }
+  ],
+  "fast": [
+   "Arbitrations give about 11,796 Endo per hour, counting filled Ayatan Sculptures.",
+   "Maroo's weekly Ayatan mission at her Bazaar on Mars gives a sculpture worth 1,425-2,700 Endo when filled.",
+   "The Daily Synthesis task gives 250-800 Endo.",
+   "Dissolving Rivens gives more Endo the higher their rank and the more they've been rerolled."
+  ],
+  "rw": [
+   "Endo",
+   "Ranked Mods"
+  ],
+  "time": "",
+  "go": [
+   "Ayatan Sculpture",
+   "Maroo",
+   "Arbitrations",
+   "Riven Mods"
+  ],
+  "w": "https://wiki.warframe.com/w/Endo"
+ },
+ {
+  "id": "orokin-reactor-catalyst",
+  "n": "Orokin Reactor",
+  "kind": "system",
+  "aka": [
+   "orokin reactor",
+   "orokin catalyst",
+   "potato",
+   "reactor",
+   "catalyst",
+   "double capacity"
+  ],
+  "sum": "An Orokin Reactor doubles the mod capacity of a Warframe, Archwing, K-Drive, Necramech or Companion. The Orokin Catalyst does the same for weapons.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Get a Reactor or Catalyst blueprint from Sorties, Daily Tribute, Archon Hunts, Gift of the Lotus alerts, Acrithis (20 Pathos Clamps) or Baro's Void Surplus."
+   },
+   {
+    "t": "Build an Orokin Reactor: 35,000 credits, 1 Morphics, 1 Neural Sensors, 1 Neurodes and 1 Orokin Cell. It takes 23 hours."
+   },
+   {
+    "t": "Build an Orokin Catalyst: 25,000 credits, 1 Morphics, 1 Gallium, 1 Control Module and 1 Orokin Cell. It takes 23 hours."
+   },
+   {
+    "t": "In the Arsenal, open the item's mod loadout, choose Action, then Upgrade, and apply it.",
+    "tip": "It's permanent and can't be moved to another item."
+   }
+  ],
+  "fast": [
+   "You can buy either one built from the Market for 20 platinum, or from Nightwave Offerings for 75 Creds.",
+   "The first Eris Junction task gives a free Catalyst, and the Stolen Dreams quest gives a Catalyst blueprint.",
+   "Warframes and Companions bought with platinum already have a Reactor installed."
+  ],
+  "rw": [
+   "Double mod capacity"
+  ],
+  "time": "~23 hours build",
+  "go": [
+   "Orokin Catalyst",
+   "Forma",
+   "Nightwave",
+   "Sortie"
+  ],
+  "w": "https://wiki.warframe.com/w/Orokin_Reactor"
+ },
+ {
+  "id": "forma",
+  "n": "Forma",
+  "kind": "system",
+  "aka": [
+   "forma",
+   "polarize",
+   "polarization",
+   "forma blueprint",
+   "add polarity",
+   "umbra forma"
+  ],
+  "sum": "Forma changes or adds a polarity on a mod slot so matching Mods cost less capacity. Using it resets the item to rank 0.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "The item must be rank 30 to polarize"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Get Forma blueprints from Void Relics, Daily Tribute, Acrithis (10 Pathos Clamps) or Teshin's weekly 3-Forma bundle."
+   },
+   {
+    "t": "Build Forma: 35,000 credits, 1 Morphics, 1 Neural Sensors, 1 Neurodes and 1 Orokin Cell. It takes 23 hours.",
+    "tip": "You can rush it for 10 platinum."
+   },
+   {
+    "t": "Level the item you want to polarize to rank 30."
+   },
+   {
+    "t": "In the Arsenal, open its mod loadout, choose Action, then Polarize, and click a slot to cycle through polarities."
+   },
+   {
+    "t": "Confirm, then level the item again. It goes back to rank 0 but keeps its new polarity."
+   }
+  ],
+  "fast": [
+   "A 3-Forma bundle costs 35 platinum in the Market, versus 20 for a single one.",
+   "Your Mastery Rank decides how many abilities stay unlocked after polarizing. At MR 30 you keep them all.",
+   "At MR 30 or higher, one Forma on a Warframe lets it enter Sorties and Arbitrations without being rank 30."
+  ],
+  "rw": [
+   "Polarized mod slots"
+  ],
+  "time": "~23 hours build",
+  "go": [
+   "Orokin Reactor",
+   "Void Relic",
+   "Teshin",
+   "Acrithis"
+  ],
+  "w": "https://wiki.warframe.com/w/Forma"
+ },
+ {
+  "id": "plexus",
+  "n": "Plexus",
+  "kind": "system",
+  "aka": [
+   "plexus",
+   "railjack mods",
+   "integrated mods",
+   "battle mods",
+   "tactical mods",
+   "railjack aura"
+  ],
+  "sum": "The Plexus is your personal Railjack mod loadout. It goes with you onto any Railjack you crew, and it ranks up and gives Mastery.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Archwing"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Finish The Archwing quest to receive the Plexus. It comes with an Orokin Reactor and three polarities."
+   },
+   {
+    "t": "Open it at the console at the front of the Orbiter between the Navigation and Syndicate segments, or at a Dry Dock."
+   },
+   {
+    "t": "Equip Plexus Mods found in Railjack missions: Integrated, Aura, Battle and Tactical."
+   },
+   {
+    "t": "Rank it to 30 in Railjack missions. Each rank gives 200 Mastery points."
+   }
+  ],
+  "fast": [
+   "You can join other players' Railjack missions to rank the Plexus before you own a Railjack.",
+   "The Plexus can take Forma, so polarize it for tougher builds."
+  ],
+  "rw": [
+   "Plexus",
+   "Mastery points"
+  ],
+  "time": "",
+  "go": [
+   "The Archwing",
+   "Railjack",
+   "Rising Tide"
+  ],
+  "w": "https://wiki.warframe.com/w/Plexus"
+ },
+ {
+  "id": "requiem-relics",
+  "n": "Requiem Relic",
+  "kind": "system",
+  "aka": [
+   "requiem relic",
+   "requiem eterna",
+   "requiem mods",
+   "kuva siphon",
+   "requiem fissure",
+   "oull",
+   "requiem i",
+   "requiem iv"
+  ],
+  "sum": "Requiem Relics hold the Requiem Mods you need to beat Kuva Liches and Sisters of Parvos. The current one is the Requiem Eterna, opened only in Requiem Fissures on the Kuva Fortress.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Unlocked together with Kuva Liches"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Unlock Kuva Liches (The War Within and Mastery Rank 5). Eligible players receive 8 Requiem Eterna relics in their inbox on login."
+   },
+   {
+    "t": "Farm more Requiem Eterna relics from Kuva Siphon missions (50% chance) and Kuva Floods.",
+    "tip": "You get one relic per Siphon or Flood, even if you don't destroy the Siphon."
+   },
+   {
+    "t": "Mercy Lich Thralls or Sister Hounds for a 5% chance at a relic."
+   },
+   {
+    "t": "Open the relics in Requiem Fissures on the Kuva Fortress. Omnia Fissures won't take them."
+   },
+   {
+    "t": "Equip the Requiem Mods you get on your Parazon. Each has three charges before it becomes Defiled."
+   }
+  ],
+  "fast": [
+   "The Requiem Eterna Relic Pack (85 platinum) has 6 relics.",
+   "Four Defiled or unwanted Requiem Mods can be transmuted into a new random one."
+  ],
+  "rw": [
+   "Requiem Mods"
+  ],
+  "time": "",
+  "go": [
+   "Kuva Lich",
+   "Sisters of Parvos",
+   "Requiem Mods",
+   "Palladino",
+   "Void Relic"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Relic#Requiem_Relics",
+  "was": [
+   "Older guides describe four separate relics, Requiem I to IV. They were replaced by Requiem Eterna; Palladino on Kuva Fortress still sells the old ones for 10 Riven Slivers each."
+  ]
+ },
+ {
+  "id": "grendel-locators",
+  "n": "Grendel",
+  "kind": "system",
+  "aka": [
+   "grendel locator",
+   "grendel parts",
+   "grendel farm",
+   "vitus essence",
+   "arbitration honors",
+   "europa"
+  ],
+  "sum": "Grendel's part blueprints come from three special Europa missions that you unlock with Locators bought from Arbitration Honors using Vitus Essence.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Unlock Arbitrations by reaching Pluto and doing the Eris Junction task \"Equip a Focus Lens\"",
+    "Arbitrations need a rank 30 Warframe (or MR 30 with a polarized Warframe)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Unlock Arbitrations with the Eris Junction task \"Equip a Focus Lens\"."
+   },
+   {
+    "t": "Run Arbitrations to earn Vitus Essence: one per rotation, and drones have a 6% chance to drop one."
+   },
+   {
+    "t": "Buy Grendel Locators from the Arbitration Honors vendor on any Relay for 25 Vitus Essence each."
+   },
+   {
+    "t": "Play the mission each Locator unlocks on Europa: Neuroptics in Archaeo-freighter (20-minute Survival), Chassis in Icefields of Riddah (6-wave Defense), and Systems in Mines of Karishh (Excavation, 800 Cryotic).",
+    "tip": "These missions have no Gear, Mods, Arcanes, Operator or Archon Shards, but Augments still work."
+   },
+   {
+    "t": "Buy Grendel's main blueprint from the Market and build him."
+   }
+  ],
+  "fast": [
+   "Only the host needs a Locator and everyone in the squad gets the part, so friends can take turns hosting.",
+   "These missions have no public matchmaking, so form a squad before you start.",
+   "The Locator is only used up when you complete the mission."
+  ],
+  "rw": [
+   "Grendel Neuroptics",
+   "Grendel Chassis",
+   "Grendel Systems"
+  ],
+  "time": "",
+  "go": [
+   "Grendel",
+   "Arbitrations",
+   "Vitus Essence",
+   "Arbitration Honors"
+  ],
+  "w": "https://wiki.warframe.com/w/Grendel"
+ },
+ {
+  "id": "ayatan-sculptures",
+  "n": "Ayatan Sculpture",
+  "kind": "system",
+  "aka": [
+   "ayatan",
+   "ayatan sculpture",
+   "ayatan stars",
+   "maroo",
+   "endo farm",
+   "treasures"
+  ],
+  "sum": "Ayatan Sculptures are Orokin treasures that you fill with Ayatan Stars and trade to Maroo for Endo, or display in your Orbiter.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Get Sculptures from Arbitrations, Sorties or Archon Hunts (Anasa), Maroo's weekly mission, or Loid (Kitha, at Necraloid rank 3, for 50,000 standing)."
+   },
+   {
+    "t": "Pick up Ayatan Stars found in containers during missions."
+   },
+   {
+    "t": "Open Mods > Ayatan Sculptures in your Orbiter and slot Stars into each socket."
+   },
+   {
+    "t": "Trade the filled Sculpture to Maroo at Maroo's Bazaar on Mars for Endo, or keep it as a decoration."
+   }
+  ],
+  "fast": [
+   "Do Maroo's weekly Ayatan mission at her Bazaar every Monday reset for a guaranteed Sculpture.",
+   "From Mastery Rank 10 you can use Auto Install to fill sockets in one click.",
+   "Anasa is worth a lot even with no Stars (2,000 Endo base), so you can sell it as is."
+  ],
+  "rw": [
+   "Endo",
+   "Orbiter decorations"
+  ],
+  "time": "",
+  "go": [
+   "Maroo",
+   "Endo",
+   "Arbitrations",
+   "Sortie"
+  ],
+  "w": "https://wiki.warframe.com/w/Ayatan_Sculpture"
+ },
+ {
+  "id": "baro-primed-mods",
+  "n": "Baro Ki'Teer",
+  "kind": "system",
+  "aka": [
+   "baro",
+   "baro ki'teer",
+   "void trader",
+   "primed mods",
+   "ducats",
+   "void surplus"
+  ],
+  "sum": "Baro Ki'Teer is the Void Trader who visits the Relays for a limited time and sells rare items, including Primed mods, mostly for Orokin Ducats.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Access to the Relay Baro is visiting",
+    "Orokin Ducats from trading in Prime parts"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Open Void Relics to collect Prime parts you don't need."
+   },
+   {
+    "t": "Trade the Prime parts for Orokin Ducats at the Ducat Kiosks in any Relay. Rarer parts give more."
+   },
+   {
+    "t": "Check any Ducat Kiosk for Baro's countdown and which Relay he's visiting next."
+   },
+   {
+    "t": "Visit him in that Relay's Concourse while he's there (up to 48 hours) and buy the Primed mods you want with your Ducats."
+   },
+   {
+    "t": "Fuse your Primed mods with Endo. They cost as much as Legendary mods."
+   }
+  ],
+  "fast": [
+   "Save Ducats between visits so you can buy right away. He's only around for up to 48 hours.",
+   "Turn in duplicate rare Prime parts first because they give the most Ducats.",
+   "He always sells a Void Surplus for 50,000 credits, limited to one per visit."
+  ],
+  "rw": [
+   "Primed mods",
+   "Exclusive cosmetics",
+   "Void Surplus"
+  ],
+  "time": "",
+  "go": [
+   "Relay",
+   "Void Relic",
+   "Orokin Ducats",
+   "Endo"
+  ],
+  "w": "https://wiki.warframe.com/w/Baro_Ki%27Teer"
+ },
+ {
+  "id": "mastery-rank-tests",
+  "n": "Mastery Rank",
+  "kind": "system",
+  "aka": [
+   "mastery rank",
+   "mr test",
+   "rank up test",
+   "mastery test",
+   "mr",
+   "legendary rank"
+  ],
+  "sum": "Mastery Rank shows how much of the game you've experienced. It unlocks gear, standing caps and more, and you pass a short test for each new rank.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Vor's Prize"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Finish Vor's Prize. Mastery Rank can't go up before that."
+   },
+   {
+    "t": "Earn Mastery points by ranking new weapons (100 per rank) and Warframes, Companions, Archwings and similar gear (200 per rank), and by clearing new nodes and Junctions."
+   },
+   {
+    "t": "When your bar is full, hover over your profile icon and choose Rank Up."
+   },
+   {
+    "t": "Take the test solo and pass it to rank up.",
+    "tip": "After passing, you have to wait 23 hours before the next test."
+   },
+   {
+    "t": "Practice old tests in Cephalon Simaris's room on the Relays."
+   }
+  ],
+  "fast": [
+   "Each new piece of gear only gives Mastery once, but Prime, Vandal, Wraith and similar variants count as separate items.",
+   "Your first win against each Junction specter gives 1,000 points, and you can earn it again on the Steel Path.",
+   "Each Railjack or Drifter Intrinsic rank gives 1,500 points.",
+   "The movement test isn't timed, so take your time with each jump."
+  ],
+  "rw": [
+   "Gear unlocks",
+   "Higher standing and Focus caps"
+  ],
+  "time": "",
+  "go": [
+   "Vor's Prize",
+   "Cephalon Simaris",
+   "Relay"
+  ],
+  "w": "https://wiki.warframe.com/w/Mastery_Rank"
+ },
+ {
+  "id": "prime-resurgence",
+  "n": "Prime Resurgence",
+  "kind": "system",
+  "aka": [
+   "prime resurgence",
+   "varzia",
+   "aya",
+   "regal aya",
+   "vaulted relics",
+   "unvault"
+  ],
+  "sum": "Prime Resurgence is Varzia's rotating shop of vaulted Prime items. You buy their relics with Aya, or buy the items directly with Regal Aya.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Access to Maroo's Bazaar on Mars"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Collect Aya. It drops in place of vaulted relics in Void missions and Bounties, and comes in relic packs."
+   },
+   {
+    "t": "Visit Varzia in Maroo's Bazaar on Mars, or use Visit Varzia in your Orbiter's Relic Segment or the Market."
+   },
+   {
+    "t": "Trade Aya for the vaulted relics in this rotation, then open them in Void Fissures."
+   },
+   {
+    "t": "Or spend Regal Aya to buy the Prime Warframes, weapons and accessories directly."
+   }
+  ],
+  "fast": [
+   "The offering changes every 28 days at 18:00 UTC, so check what's in rotation before spending.",
+   "Vaulted relics can be traded, so you can buy the exact relic you want from other players.",
+   "Items bought directly with Regal Aya skip Mastery Rank requirements and come with a slot plus a Reactor or Catalyst."
+  ],
+  "rw": [
+   "Vaulted Prime relics",
+   "Prime Warframes and weapons",
+   "Prime accessories"
+  ],
+  "time": "",
+  "go": [
+   "Varzia",
+   "Void Relic",
+   "Maroo's Bazaar"
+  ],
+  "w": "https://wiki.warframe.com/w/Prime_Resurgence"
+ },
+ {
+  "id": "syndicate-standing",
+  "n": "Syndicates",
+  "kind": "system",
+  "aka": [
+   "syndicate",
+   "syndicates",
+   "standing",
+   "steel meridian",
+   "syndicate medallions",
+   "augment mods",
+   "reputation"
+  ],
+  "sum": "Syndicates are factions whose standing you earn to unlock offerings like Warframe augment mods, Syndicate weapons and relic packs. Helping one can anger its rivals.",
+  "unlock": {
+   "mr": 3,
+   "quests": [],
+   "other": [
+    "The Syndicate console on the Orbiter unlocks at MR 3. You can reach Syndicates earlier at the Relays."
+   ]
+  },
+  "steps": [
+   {
+    "t": "Reach Mastery Rank 3 and open the Syndicate console on your Orbiter."
+   },
+   {
+    "t": "Pledge to a Syndicate by equipping its sigil. 15% of the Affinity you earn turns into its standing."
+   },
+   {
+    "t": "Earn standing up to your daily cap: 16,000 plus 500 per Mastery Rank, reset at 00:00 UTC."
+   },
+   {
+    "t": "Rank up when you're at the standing limit, offering the sacrifice it asks for.",
+    "tip": "Every Syndicate asks for Forma to reach Rank 2."
+   },
+   {
+    "t": "From Rank 1, do that Syndicate's daily Alerts and turn in Medallions at its Relay room."
+   },
+   {
+    "t": "Spend standing on offerings such as augment mods, Syndicate weapons and relic packs."
+   }
+  ],
+  "fast": [
+   "Syndicate Alerts and Medallions don't count toward the daily cap. Each Alert spawns 8 Medallions on most mission types.",
+   "Focus on a non-hostile group (for example New Loka, The Perrin Sequence and Red Veil) to raise them together without losing standing.",
+   "High-Affinity missions give more pledged standing, since kills, assists and ability kills all count."
+  ],
+  "rw": [
+   "Warframe augment mods",
+   "Syndicate weapons",
+   "Relic packs",
+   "Archwing parts"
+  ],
+  "time": "",
+  "go": [
+   "Relay",
+   "Steel Meridian",
+   "New Loka",
+   "Red Veil",
+   "Cephalon Suda",
+   "Arbiters of Hexis",
+   "The Perrin Sequence"
+  ],
+  "w": "https://wiki.warframe.com/w/Syndicates"
+ },
+ {
+  "id": "clan-research",
+  "n": "Research",
+  "kind": "system",
+  "aka": [
+   "clan research",
+   "research",
+   "dojo labs",
+   "tenno lab",
+   "oracle room",
+   "dojo blueprints"
+  ],
+  "sum": "Research is how your clan unlocks special weapons and items in Dojo labs. Once a project is done, members can buy its blueprint for credits.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Be in a Clan with a Dojo",
+    "Build an Oracle Room before any lab"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Join a clan and build your Clan Key to reach the Dojo."
+   },
+   {
+    "t": "Build the Oracle Room. It's required before any lab."
+   },
+   {
+    "t": "Build the labs you need, such as the Bio, Chem, Energy, Tenno and Orokin Labs."
+   },
+   {
+    "t": "Fund a research project with the resources and credits it lists.",
+    "tip": "Costs scale with clan size: Shadow is 3x Ghost, Storm 10x, Mountain 30x and Moon 100x."
+   },
+   {
+    "t": "Wait for the research to finish. It can't be rushed with platinum."
+   },
+   {
+    "t": "Buy the finished blueprint from the lab console for 15,000 credits."
+   }
+  ],
+  "fast": [
+   "A small Ghost clan pays the lowest research costs.",
+   "Joining a large clan that has finished all its research lets you buy every blueprint right away.",
+   "Research isn't lost if a lab is torn down. It's still unlocked when the lab is rebuilt."
+  ],
+  "rw": [
+   "Clan weapon blueprints",
+   "Archwing blueprints",
+   "Companion segments"
+  ],
+  "time": "",
+  "go": [
+   "Clan Dojo",
+   "Archwing",
+   "Kavat"
+  ],
+  "w": "https://wiki.warframe.com/w/Research"
+ }
+]

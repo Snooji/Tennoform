@@ -36,6 +36,7 @@ const SupportPage = lazy(() => import("@/pages/info/support-page").then((m) => (
 const FeedbackPage = lazy(() => import("@/pages/info/feedback-page").then((m) => ({ default: m.FeedbackPage })))
 const AboutPage = lazy(() => import("@/pages/info/about-page").then((m) => ({ default: m.AboutPage })))
 const AdminPage = lazy(() => import("@/pages/info/admin-page").then((m) => ({ default: m.AdminPage })))
+const GuidesPage = lazy(() => import("@/pages/guides/guides-page").then((m) => ({ default: m.GuidesPage })))
 const SquadPage = lazy(() => import("@/pages/squad/squad-page").then((m) => ({ default: m.SquadPage })))
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
@@ -62,6 +63,7 @@ const PAGES: Record<string, React.ComponentType> = {
   about: AboutPage,
   admin: AdminPage,
   friends: SquadPage,
+  guides: GuidesPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 

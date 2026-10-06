@@ -1,0 +1,1046 @@
+[
+ {
+  "id": "awakening",
+  "n": "Awakening",
+  "kind": "quest",
+  "aka": [
+   "awakening",
+   "first quest",
+   "tutorial",
+   "starter warframe",
+   "new player quest"
+  ],
+  "sum": "The opening tutorial quest: pick your first Warframe, learn movement and combat, and escape Captain Vor in your Liset.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Available on first login"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Watch the opening cinematic and choose your starter Warframe: Excalibur, Mag or Volt.",
+    "tip": "Excalibur is melee-focused, Mag is a crowd-control caster, Volt is fast and deals Electricity damage."
+   },
+   {
+    "t": "Use your first ability to fight off the Grineer soldiers around you."
+   },
+   {
+    "t": "Follow the tutorial prompts to learn jumping, sliding, wall dashing, bullet jumping and aim gliding."
+   },
+   {
+    "t": "Pick up one melee weapon (Skana or Bo), one sidearm (Lato or Kunai) and one primary (Braton or Paris) along the way.",
+    "tip": "You receive the primary you did not pick in your inventory afterwards."
+   },
+   {
+    "t": "Deplete Captain Vor's shields when he confronts you."
+   },
+   {
+    "t": "Hack the console to free your ship and let Ordis power it up."
+   },
+   {
+    "t": "Survive until the timer runs out, then board your Liset to escape."
+   }
+  ],
+  "fast": [
+   "The defense stage only requires you to survive until the timer ends; the ship itself does not need protecting.",
+   "Mag's crowd control or Volt's speed make the tutorial fights trivial; Excalibur is the easiest all-rounder.",
+   "The opening cinematic can be rewatched later from the Codex, so you can skip it without missing anything."
+  ],
+  "rw": [
+   "Starter Warframe (Excalibur, Mag or Volt)",
+   "Starter weapons"
+  ],
+  "time": "~15 min",
+  "go": [
+   "Excalibur",
+   "Mag",
+   "Volt",
+   "Skana",
+   "Bo",
+   "Lato",
+   "Kunai",
+   "Braton",
+   "Paris",
+   "Vor's Prize"
+  ],
+  "w": "https://wiki.warframe.com/w/Awakening"
+ },
+ {
+  "id": "vors-prize",
+  "n": "Vor's Prize",
+  "kind": "quest",
+  "aka": [
+   "vors prize",
+   "vor",
+   "ascaris",
+   "orbiter segments",
+   "second quest"
+  ],
+  "sum": "The follow-up to Awakening that walks you through Earth missions to rebuild your Orbiter's Communications and Foundry and break free of Captain Vor's Ascaris device.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Awakening"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start the quest right after Awakening and restore your Arsenal in the Orbiter."
+   },
+   {
+    "t": "Run the Spy mission on E Prime, Earth to recover the Communications segment.",
+    "tip": "Installing it unlocks the Market and matchmaking."
+   },
+   {
+    "t": "Rescue Darvo on Mariana, Earth.",
+    "tip": "He gives you the Ascaris Negator blueprint."
+   },
+   {
+    "t": "Grab the Foundry segment on Mantle, Earth, then clear the Grineer."
+   },
+   {
+    "t": "Destroy the three Corpus supply caches on Gaia, Earth to get the Negator materials.",
+    "tip": "The caches are guaranteed to drop what you need."
+   },
+   {
+    "t": "Build the Ascaris Negator in the Foundry."
+   },
+   {
+    "t": "Recover the navigation segment from the Galleon on Pacific, Earth.",
+    "tip": "Destroying the reactor afterwards is optional."
+   },
+   {
+    "t": "Assassinate Captain Vor on Cambria, Earth to finish the quest."
+   }
+  ],
+  "fast": [
+   "On Pacific, the reactor sabotage is optional; extract right after grabbing the navigation segment to save time.",
+   "The Ascaris Negator builds in about 10 seconds with no rush cost, so there is no waiting.",
+   "On Mariana a rare extraction tile always spawns with a hidden Kuria; bring Codex Scanners if you want to grab it.",
+   "First-time mission rewards are fixed, so just play straight through; replaying earlier steps gives nothing extra."
+  ],
+  "rw": [
+   "Starter Orbiter segments",
+   "Burston blueprint",
+   "25,000 Credits"
+  ],
+  "time": "~45 min",
+  "go": [
+   "Captain Vor",
+   "Darvo",
+   "Ascaris Negator",
+   "Burston",
+   "Awakening",
+   "The Teacher"
+  ],
+  "w": "https://wiki.warframe.com/w/Vor%27s_Prize"
+ },
+ {
+  "id": "the-teacher",
+  "n": "The Teacher",
+  "kind": "quest",
+  "aka": [
+   "the teacher",
+   "teshin",
+   "mod tutorial",
+   "modding",
+   "nightwave unlock",
+   "cetus unlock"
+  ],
+  "sum": "A short quest where Teshin teaches you how mods, elements and fusion work; it also unlocks Cetus and Nightwave.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Vor's Prize"
+   ],
+   "other": [
+    "Cannot be started while the Backroom is set as your base of operations"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The Teacher from the Codex in your Orbiter."
+   },
+   {
+    "t": "Fight through the Corpus in the Earth forest and reach the Mod Segment."
+   },
+   {
+    "t": "Duel Teshin with the Thornbak until two of his three health bars are gone."
+   },
+   {
+    "t": "Equip Stormbringer on the Thornbak in the Arsenal to break the Electricity-weak target drones.",
+    "tip": "Match the mod's polarity to lower its cost."
+   },
+   {
+    "t": "Add Cryo Rounds to combine Cold and Electricity into Magnetic for the next drones."
+   },
+   {
+    "t": "Equip Vitality on your Warframe, fight off the Corpus and escape with the Mod Segment within the time limit."
+   },
+   {
+    "t": "Install the Mod Segment, dissolve the spare Stormbringers into Endo and use it to rank up your equipped Stormbringer."
+   },
+   {
+    "t": "Board the Corpus ship, rescue and then capture Teshin, and sabotage the reactor to finish."
+   }
+  ],
+  "fast": [
+   "Follow each Arsenal prompt exactly (equip, dissolve, fuse); the quest will not advance until each one is done.",
+   "If you already have Vitality equipped, swap to the unranked copy Teshin gives you so the step registers.",
+   "On the final ship, hack the two adjacent terminals and shoot the reactor core straight away to finish the sabotage fast."
+  ],
+  "rw": [
+   "Thornbak",
+   "Mod Segment",
+   "Access to Cetus",
+   "Nightwave",
+   "Stormbringer, Cryo Rounds, Vitality",
+   "Pressure Point, Fury, Serration, Hornet Strike, Heated Charge, Continuity, Equilibrium, Redirection",
+   "500 Endo",
+   "30,000 Credits"
+  ],
+  "time": "~30 min",
+  "go": [
+   "Teshin",
+   "Thornbak",
+   "Vox Solaris"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Teacher"
+ },
+ {
+  "id": "vox-solaris-quest",
+  "n": "Vox Solaris",
+  "kind": "quest",
+  "aka": [
+   "vox solaris",
+   "fortuna quest",
+   "orb vallis",
+   "eudico",
+   "solaris united",
+   "garuda"
+  ],
+  "sum": "A solo quest in Fortuna and the Orb Vallis that unlocks the Solaris United syndicate, Fortuna bounties and the K-Drive Launcher.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Teacher"
+   ],
+   "other": [
+    "Complete the Junction leading to Venus so you can reach Fortuna",
+    "Talk with Eudico in Fortuna"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Go to Fortuna on Venus and talk to Eudico, then Thursby."
+   },
+   {
+    "t": "Loot the three Corpus supply caches in the Orb Vallis.",
+    "tip": "Look for barrel-like containers with smoke rising from them."
+   },
+   {
+    "t": "Shoot down the Corpus spy drone and kill the 20 reinforcements, then return to Fortuna."
+   },
+   {
+    "t": "Talk to Thursby and The Business, then hack the bunker terminal to steal the hit list."
+   },
+   {
+    "t": "Investigate the four bodies, then hack the terminal and defend it to free the captured field squad.",
+    "tip": "Killing Terra Jailers drops a data key that speeds up the hack."
+   },
+   {
+    "t": "Talk to Eudico, defend the excavator to dig up Amarast, and head for the coolant tower."
+   },
+   {
+    "t": "Talk to Eudico again, detonate the K-bomb outside Fortuna and fight off the Corpus waves."
+   },
+   {
+    "t": "Talk to Eudico, take the K-Drive past the Profit-Taker Orb, hack and defend the coolant tower, then deliver the Amarast."
+   },
+   {
+    "t": "Return to Fortuna to finish the quest."
+   }
+  ],
+  "fast": [
+   "Kill the Terra Jailers during the hostage hack; their data keys make the defense much shorter.",
+   "Use the K-Drive and your Archwing (if you have it) to cross the Orb Vallis quickly between objectives.",
+   "Bring a Warframe with area damage or crowd control for the excavator and coolant tower defenses."
+  ],
+  "rw": [
+   "K-Drive Launcher",
+   "Garuda blueprint",
+   "Access to Solaris United syndicate",
+   "Access to Fortuna bounties"
+  ],
+  "time": "~1 hr",
+  "go": [
+   "Eudico",
+   "The Business",
+   "Garuda",
+   "K-Drive",
+   "Fortuna",
+   "Orb Vallis"
+  ],
+  "w": "https://wiki.warframe.com/w/Vox_Solaris_(Quest)"
+ },
+ {
+  "id": "once-awake",
+  "n": "Once Awake",
+  "kind": "quest",
+  "aka": [
+   "once awake",
+   "infested quest",
+   "mercury quest",
+   "heat sword",
+   "dr tengus"
+  ],
+  "sum": "A short three-mission quest on Mercury that introduces the Infested and rewards Molten Impact and the Heat Sword blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Mercury Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start Once Awake from the Codex in your Orbiter."
+   },
+   {
+    "t": "Run the Spy mission on M Prime, Mercury and recover the data.",
+    "tip": "You only need to reach extraction with at least one data unit."
+   },
+   {
+    "t": "Exterminate the Infested on the Galleon at Terminus, Mercury."
+   },
+   {
+    "t": "Defend the Cascade Bomb on the power core in the Defense mission on Lares, Mercury."
+   }
+  ],
+  "fast": [
+   "On M Prime you can extract once you have a single data unit; you do not need all three.",
+   "Heat damage works well against the Infested; equip the Molten Impact mod you get after Terminus.",
+   "Bring a crowd-control Warframe such as Mag for the Lares defense."
+  ],
+  "rw": [
+   "Molten Impact",
+   "Heat Sword blueprint"
+  ],
+  "time": "~20 min",
+  "go": [
+   "Heat Sword",
+   "Molten Impact",
+   "Dr. Tengus",
+   "Heart of Deimos"
+  ],
+  "w": "https://wiki.warframe.com/w/Once_Awake"
+ },
+ {
+  "id": "heart-of-deimos",
+  "n": "Heart of Deimos",
+  "kind": "quest",
+  "aka": [
+   "heart of deimos",
+   "deimos quest",
+   "entrati",
+   "necralisk",
+   "cambion drift",
+   "xaku"
+  ],
+  "sum": "A solo quest on Deimos where you help the Entrati family repair the Heart; it unlocks the Entrati syndicate, Necralisk bounties and the Xaku blueprint.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Earth to Mars Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start Heart of Deimos from the Codex and go to the Cambion Drift."
+   },
+   {
+    "t": "Destroy the two Infested Hives (clear the Infested each one spawns) to enter the Necralisk."
+   },
+   {
+    "t": "Ask Mother all three questions."
+   },
+   {
+    "t": "Find Father in the Cambion Drift, then talk to Daughter in the Necralisk."
+   },
+   {
+    "t": "Collect 10 Fass Residue and catch 3 fish for Daughter.",
+    "tip": "A Fishing Spear is provided at the site if you do not own one."
+   },
+   {
+    "t": "Clear the Infested outside the Necralisk and talk to Daughter."
+   },
+   {
+    "t": "Take the Esophage down to the Heart and solve the Requiem Cipher door.",
+    "tip": "Hit the Reactive Crystals in the order of the symbols, top to bottom; retries are unlimited."
+   },
+   {
+    "t": "Sneak back to the surface past the Necramechs with your disabled Warframe."
+   },
+   {
+    "t": "Pilot the Voidrig, destroy the three Infested Hives, patch the Heart and defeat the rogue Necramech.",
+    "tip": "Aim for its shoulder joints, face plate and the blue Void scar on its back."
+   },
+   {
+    "t": "Talk to Grandmother in the Necralisk to finish."
+   }
+  ],
+  "fast": [
+   "You cannot fail the Voidrig stage because you respawn on death, so play aggressively.",
+   "Shoot the rogue Necramech's shoulder joints first to remove its guns and melee.",
+   "Fass Residue acts as bait, so fish right where it lands rather than wandering.",
+   "After destroying the first two hives the open world is quiet, so break containers for free starter resources."
+  ],
+  "rw": [
+   "Xaku blueprint",
+   "Voidrig blueprints (all parts)",
+   "Access to Entrati syndicate",
+   "Access to Necralisk bounties",
+   "Deimos Necralisk Captura scene",
+   "Mirror Defense"
+  ],
+  "time": "~1 hr",
+  "go": [
+   "Xaku",
+   "Voidrig",
+   "Necramech",
+   "Mother",
+   "Necralisk",
+   "The Archwing"
+  ],
+  "w": "https://wiki.warframe.com/w/Heart_of_Deimos"
+ },
+ {
+  "id": "the-archwing",
+  "n": "The Archwing",
+  "kind": "quest",
+  "aka": [
+   "the archwing",
+   "archwing quest",
+   "odonata",
+   "archwing launcher",
+   "space combat",
+   "empyrean unlock"
+  ],
+  "sum": "Build your first Archwing, the Odonata, and fly it in space; this unlocks Archwing missions, the Archwing Launcher and Empyrean.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete the Mars Junction"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The Archwing from the Codex to receive the Odonata blueprint."
+   },
+   {
+    "t": "Run the Orokin Sabotage on Tessera, Venus to recover the archive.",
+    "tip": "Reverse the portal, defend the generator, then grab the marked cache in the Void."
+   },
+   {
+    "t": "Run the Excavations on Aphrodite (Venus), Mantle (Earth) and E Gate (Venus) for the Wings, Harness and Systems blueprints.",
+    "tip": "You can extract after the first excavator finishes on each."
+   },
+   {
+    "t": "Build the three Odonata parts and the Odonata in the Foundry."
+   },
+   {
+    "t": "Run the Exterminate on Montes, Venus."
+   },
+   {
+    "t": "Equip your Archwing, destroy the Zeplen nets and fly to extraction away from the Balor Fomorian."
+   }
+  ],
+  "fast": [
+   "Extract after the first successful excavation on each node; one completion gives the blueprint.",
+   "The Odonata parts and the Odonata itself now take about a minute each to build, so farm the resources first and build right away.",
+   "On Tessera you can ignore the optional Orokin caches; only the marked one in the Void is needed."
+  ],
+  "rw": [
+   "Odonata Archwing",
+   "Imperator",
+   "Veritux",
+   "Archwing Launcher",
+   "Plexus",
+   "Access to other Archwings",
+   "Access to Empyrean"
+  ],
+  "time": "~45 min",
+  "go": [
+   "Odonata",
+   "Imperator",
+   "Veritux",
+   "Archwing Launcher",
+   "Plexus",
+   "Natah"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Archwing"
+ },
+ {
+  "id": "natah",
+  "n": "Natah",
+  "kind": "quest",
+  "aka": [
+   "natah",
+   "natah quest",
+   "oculyst",
+   "sentient quest",
+   "exilus adapter",
+   "hunhow",
+   "uranus junction"
+  ],
+  "sum": "A five-mission quest investigating strange drones that reveals the Lotus's secret and rewards an Exilus Warframe Adapter.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Archwing"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start Natah from the Codex in your Orbiter."
+   },
+   {
+    "t": "Scan the mysterious drones and the wreckage on Gaia, Earth.",
+    "tip": "Bring Codex Scanners; you must scan the marked targets or the mission fails."
+   },
+   {
+    "t": "Hack the three Grineer consoles in the Mobile Defense on Cassini, Saturn."
+   },
+   {
+    "t": "Capture Sergeant Scur on Sycorax, Uranus."
+   },
+   {
+    "t": "Survive for 10 minutes on Ariel, Uranus."
+   },
+   {
+    "t": "Defend the bomb for 5 waves on Desdemona, Uranus.",
+    "tip": "The objective you must protect switches between waves."
+   }
+  ],
+  "fast": [
+   "Buy Codex Scanners from the Market before starting; if your Oculyst Codex entry is already complete, use a Synthesis Scanner instead.",
+   "Bring a survival-friendly Warframe for Ariel's 10 minutes and a fast one for Desdemona, where the defended objective moves each wave.",
+   "Sycorax is a straightforward Capture: head to the marked target, down Sergeant Scur and capture him."
+  ],
+  "rw": [
+   "Exilus Warframe Adapter"
+  ],
+  "time": "~45 min",
+  "go": [
+   "Hunhow",
+   "Oculyst",
+   "Tyl Regor",
+   "Teshin",
+   "The Second Dream"
+  ],
+  "w": "https://wiki.warframe.com/w/Natah_(Quest)",
+  "was": [
+   "Older guides, and the info box on the wiki, say Natah needs the Uranus Junction or scanning Oculyst drones on Uranus. That was removed: Natah now starts automatically once you finish The Archwing."
+  ]
+ },
+ {
+  "id": "the-second-dream",
+  "n": "The Second Dream",
+  "kind": "quest",
+  "aka": [
+   "the second dream",
+   "tsd",
+   "operator quest",
+   "focus unlock",
+   "lua unlock",
+   "stalker quest"
+  ],
+  "sum": "A major story quest that reveals the Operator and unlocks Focus, Lua and the Broken War.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Natah"
+   ],
+   "other": [
+    "Complete the Neptune Junction",
+    "An Archwing (from The Archwing quest) for the two Uranus missions"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The Second Dream from the Codex (optionally watch its cinematic first)."
+   },
+   {
+    "t": "Hack both data vaults in the Spy mission on Umbriel, Uranus.",
+    "tip": "Archwing required."
+   },
+   {
+    "t": "Find the Sentient fragment underwater on Cressida, Uranus.",
+    "tip": "If you take about five minutes, a waypoint is added for you."
+   },
+   {
+    "t": "Follow the Stalker on Neso, Neptune: beat the Sentient, use the Void Key, then destroy the four vials to disable the tower."
+   },
+   {
+    "t": "On Plato, Lua, hack the console, reactivate the three void compasses and destroy the four Pendula."
+   },
+   {
+    "t": "Play Grimaldi, Lua solo and carry the person to extraction."
+   },
+   {
+    "t": "Fill the Somatic Link three times in your Orbiter while the Stalker attacks.",
+    "tip": "You do not need to defeat the Stalker."
+   },
+   {
+    "t": "Customize your Operator and choose a Focus school to finish."
+   }
+  ],
+  "fast": [
+   "In the final Orbiter fight, fire the Operator beam in short bursts to destroy the Stalker's energy waves; just fill the Somatic Link, the Stalker cannot be killed.",
+   "On Cressida, Alad V gives hints when you are near the fragment, and marks it for you after about five minutes.",
+   "Your Focus school choice is permanent as your first school; the dialogue answers only reorder the options.",
+   "A tanky Warframe with a defensive ability like Iron Skin helps on Grimaldi, where you cannot use weapons."
+  ],
+  "rw": [
+   "Operator",
+   "Focus",
+   "Broken War",
+   "Access to Lua",
+   "Scar Sigil",
+   "Rising Tide quest"
+  ],
+  "time": "~1.5 hr",
+  "go": [
+   "Operator",
+   "Focus",
+   "Broken War",
+   "Stalker",
+   "Hunhow",
+   "The War Within"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Second_Dream"
+ },
+ {
+  "id": "the-war-within",
+  "n": "The War Within",
+  "kind": "quest",
+  "aka": [
+   "the war within",
+   "tww",
+   "kuva fortress",
+   "transference",
+   "grineer queens",
+   "sortie unlock",
+   "kuva lich"
+  ],
+  "sum": "A major story quest where you chase Teshin to the Kuva Fortress and gain full Operator Transference; it unlocks Sorties, Kuva missions, The Quills and Vox Solaris.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Second Dream"
+   ],
+   "other": [
+    "Complete the Pluto Junction on Neptune"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start The War Within from the Codex after the Lotus's inbox message."
+   },
+   {
+    "t": "Chase and capture Teshin's Specter on Zeipel, Lua."
+   },
+   {
+    "t": "Capture another Teshin Specter on Carpo, Jupiter."
+   },
+   {
+    "t": "Solo the Archwing mission on Naga, Sedna: disable the security matrix, dodge the scanners and defend the console for 2 minutes.",
+    "tip": "Once you continue into the Fortress you cannot change gear or leave."
+   },
+   {
+    "t": "Infiltrate Dakata, Kuva Fortress and insert the three Elevator Keys to reach the Queens."
+   },
+   {
+    "t": "As the Operator, escape the Orbiter and climb the Mountain Pass on Earth."
+   },
+   {
+    "t": "Cross the Golden Maw bone chambers, unlocking Void Sling, Void Mode and Transference.",
+    "tip": "Keep moving between safe platforms."
+   },
+   {
+    "t": "Defeat the Kuva Guardians and destroy the nine red braids in the Queens' chamber.",
+    "tip": "Void Sling through a Guardian to make it vulnerable."
+   },
+   {
+    "t": "Defeat Teshin with your Warframe's melee, then Void Sling the Queen when she lowers her shield."
+   },
+   {
+    "t": "Return to the Mountain Pass, clear the obstacles with Void Sling and Void Beam, and meet Teshin at the summit."
+   }
+  ],
+  "fast": [
+   "Bring a strong melee weapon; only melee works for the Warframe in the Queens' chamber.",
+   "Void Sling through each Kuva Guardian to knock away its Kesheg, then finish it once it switches to pistols.",
+   "In the Fortress you can simply sprint past the scanners instead of sneaking.",
+   "Operator deaths add stacking Transference Static, so swap back to your Warframe before your Operator dies."
+  ],
+  "rw": [
+   "Broken Scepter",
+   "Orvius blueprint",
+   "Riven Mod",
+   "Transference",
+   "Personal Quarters segment",
+   "Access to Kuva Fortress",
+   "Access to Sorties",
+   "Access to The Quills, Vox Solaris and Necraloid"
+  ],
+  "time": "~2 hr",
+  "go": [
+   "Teshin",
+   "Kuva Fortress",
+   "Orvius",
+   "Broken Scepter",
+   "Operator",
+   "Rising Tide"
+  ],
+  "w": "https://wiki.warframe.com/w/The_War_Within"
+ },
+ {
+  "id": "rising-tide",
+  "n": "Rising Tide",
+  "kind": "quest",
+  "aka": [
+   "rising tide",
+   "railjack quest",
+   "cephalon cy",
+   "dry dock",
+   "build railjack"
+  ],
+  "sum": "Recover and repair six Railjack parts with Cephalon Cy to build your own Railjack.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Access to a Dry Dock in your Clan Dojo or a Saturn or Pluto Relay"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start Rising Tide from the Codex and build the Railjack Cephalon blueprint.",
+    "tip": "Needs 5,000 Credits, 15 Mutagen Samples, 15 Detonite Ampules and 15 Fieldron Samples."
+   },
+   {
+    "t": "Install Cephalon Cy at a Dry Dock."
+   },
+   {
+    "t": "Recover the Fuselage on Ares, Mars by defending the wreck while Cy scans it.",
+    "tip": "Kill the Interference Drones; the scan stalls while they are alive."
+   },
+   {
+    "t": "Deposit the repair resources at the Dry Dock after each part.",
+    "tip": "Each repair takes about one to two minutes and cannot be rushed."
+   },
+   {
+    "t": "Recover the Propulsion System on Cervantes, Earth."
+   },
+   {
+    "t": "Recover the Port Nacelle on Plato, Lua."
+   },
+   {
+    "t": "Recover the Starboard Nacelle on Tessera, Venus."
+   },
+   {
+    "t": "Recover the Tail Section on Berehynia, Sedna."
+   },
+   {
+    "t": "Recover the Engine Cowling on Orias, Europa."
+   },
+   {
+    "t": "Confirm Cephalon Cy's integration at the Dry Dock to finish."
+   }
+  ],
+  "fast": [
+   "Farm repair resources first: Plastids, Rubedo, Neural Sensors, Cryotic, an Orokin Cell, Nano Spores, Circuits, Alloy Plate, Polymer Bundle, Ferrite, Detonite Ampules and Salvage.",
+   "Kill Interference Drones the moment they appear; scan progress freezes while they live.",
+   "Stay inside the defense circle, and bring a crowd-control Warframe for the Sentient waves in later missions.",
+   "A fully built Railjack can be bought from the Market for 175 Platinum, which skips the quest entirely."
+  ],
+  "rw": [
+   "Railjack"
+  ],
+  "time": "~2 hr plus resource farming",
+  "go": [
+   "Railjack",
+   "Cephalon Cy",
+   "Dry Dock",
+   "Chains of Harrow"
+  ],
+  "w": "https://wiki.warframe.com/w/Rising_Tide"
+ },
+ {
+  "id": "chains-of-harrow",
+  "n": "Chains of Harrow",
+  "kind": "quest",
+  "aka": [
+   "chains of harrow",
+   "harrow quest",
+   "red veil",
+   "rell",
+   "palladino",
+   "iron wake"
+  ],
+  "sum": "A horror-themed quest with the Red Veil where you track down Rell's manifestations; it rewards the Harrow blueprint and Iron Wake access.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Visit Onkko in Cetus and get the Mote Amp"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Visit Onkko in Cetus as your Operator and get the Mote Amp, then start the quest from the Codex."
+   },
+   {
+    "t": "Investigate the derelict Galleon on Pacific, Earth and defend Palladino until the timer runs out."
+   },
+   {
+    "t": "Meet Palladino at Iron Wake, Earth.",
+    "tip": "Use Transference to enter the guest quarters."
+   },
+   {
+    "t": "Retrieve Rell's relic from the Corpus ship on Hydra, Pluto and escape."
+   },
+   {
+    "t": "Return to Iron Wake and finish the emotion card game."
+   },
+   {
+    "t": "Trap and kill three of Rell's emotions on Exequias, Deimos with Kinetic Siphon Traps.",
+    "tip": "Rell's main manifestation cannot be killed, so avoid it."
+   },
+   {
+    "t": "Repeat on Stephano, Uranus."
+   },
+   {
+    "t": "Repeat on Everest, Earth."
+   },
+   {
+    "t": "In the Tiwaz temple, kill the Red Veil Fanatics and break the glowing chains with your Operator's Void Beam."
+   }
+  ],
+  "fast": [
+   "Buy plenty of Kinetic Siphon Traps from Cephalon Simaris and equip them in your Gear before the three capture missions.",
+   "Unlock The Quills and Vox Solaris and build an Amp before the last mission; the Mote Amp alone boosts your Operator.",
+   "Keep moving as the Operator in the final fight and use Void Sling to knock down Fanatics who block.",
+   "Deploy a Specter or two with area-damage weapons to clear the Fanatics quickly."
+  ],
+  "rw": [
+   "Harrow blueprint",
+   "Access to Iron Wake",
+   "Access to Follie's Hunt"
+  ],
+  "time": "~1.5 hr",
+  "go": [
+   "Harrow",
+   "Palladino",
+   "Kinetic Siphon Trap",
+   "Mote Amp",
+   "Iron Wake",
+   "Apostasy Prologue"
+  ],
+  "w": "https://wiki.warframe.com/w/Chains_of_Harrow"
+ },
+ {
+  "id": "apostasy-prologue",
+  "n": "Apostasy Prologue",
+  "kind": "quest",
+  "aka": [
+   "apostasy prologue",
+   "apostasy",
+   "lotus quest",
+   "personal quarters orb",
+   "ballas"
+  ],
+  "sum": "A short story quest started from your Personal Quarters that sends you to Lua and the Void and sets up The Sacrifice.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Chains of Harrow"
+   ],
+   "other": [
+    "Own the Personal Quarters segment"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Touch the violet Lua orb at the end of your Orbiter's Personal Quarters.",
+    "tip": "You cannot be in a squad."
+   },
+   {
+    "t": "On Lua, touch the orb and follow the purple trail to the broken Reservoir."
+   },
+   {
+    "t": "Jump down the pit and continue as your Operator."
+   },
+   {
+    "t": "Walk to the pod at the end of the hall to trigger the final cutscene."
+   }
+  ],
+  "fast": [
+   "There is no combat; just follow the trail and listen to the dialogue.",
+   "Make sure you are solo before touching the orb, or it will not start."
+  ],
+  "rw": [],
+  "time": "~10 min",
+  "go": [
+   "Lotus",
+   "Ballas",
+   "The Sacrifice"
+  ],
+  "w": "https://wiki.warframe.com/w/Apostasy_Prologue"
+ },
+ {
+  "id": "the-sacrifice",
+  "n": "The Sacrifice",
+  "kind": "quest",
+  "aka": [
+   "the sacrifice",
+   "excalibur umbra",
+   "umbra quest",
+   "skiajati",
+   "umbra mods"
+  ],
+  "sum": "A story quest where you track a mysterious Warframe across the system; it rewards Excalibur Umbra, the Skiajati and Umbra mods.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Apostasy Prologue"
+   ],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "Start The Sacrifice from the Codex and examine the Lotus's helmet in your Personal Quarters."
+   },
+   {
+    "t": "On Lith, Earth, open the vine door and scan the Skiajati, shawl, helmet and remains in the courtyard.",
+    "tip": "Codex or Synthesis Scanners work."
+   },
+   {
+    "t": "Solve the two Orokin memory ciphers on Pavlov, Lua and bring back the Vitruvian.",
+    "tip": "Match the order of the symbol pairs you find nearby."
+   },
+   {
+    "t": "Build Excalibur Umbra in the Foundry and try to equip it.",
+    "tip": "Needs 10,000 Credits, 1 Orokin Cell, 60 Kuva, 1,200 Nano Spores and 1,600 Alloy Plate; it builds in seconds."
+   },
+   {
+    "t": "Track Umbra on Nuovo, Ceres and use Transference on him."
+   },
+   {
+    "t": "Pursue Umbra on Triton, Neptune and repeat."
+   },
+   {
+    "t": "Confront Umbra on Tycho, Lua as your Operator.",
+    "tip": "Break his shields with Void Beam, stun with Void Sling, then Transference."
+   },
+   {
+    "t": "Return to Lith, Earth and fight the Sentients and Ballas to finish."
+   }
+  ],
+  "fast": [
+   "Each Umbra fight follows the same pattern: Void Beam his shields, Void Sling to stun, then Transference into him.",
+   "Have an Orokin Cell, Nano Spores and Alloy Plate ready so you can build Umbra immediately (the 60 Kuva drops on Pavlov).",
+   "If you want the Somachord song, scan the fragment in every mission in order; missing one means replaying the quest.",
+   "If you wait too long on the second Lua cipher, Ordis solves it for you."
+  ],
+  "rw": [
+   "Excalibur Umbra",
+   "Skiajati",
+   "Umbra mods",
+   "Excalibur Umbra Sunder Helmet",
+   "Umbra's Courtyard Captura scene",
+   "Excalibur Umbra animation sets"
+  ],
+  "time": "~1.5 hr",
+  "go": [
+   "Excalibur Umbra",
+   "Skiajati",
+   "Ballas",
+   "Vitruvian",
+   "Prelude to War"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Sacrifice"
+ },
+ {
+  "id": "prelude-to-war",
+  "n": "Prelude to War",
+  "kind": "quest",
+  "aka": [
+   "prelude to war",
+   "chimera prologue",
+   "erra",
+   "the maker",
+   "paracesis",
+   "new war prelude"
+  ],
+  "sum": "A story arc of three short mini-quests (Chimera Prologue, Erra and The Maker) that leads into The New War and rewards the Paracesis and Shedu blueprints.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Sacrifice"
+   ],
+   "other": [
+    "Play Chimera Prologue, then Erra, then The Maker from the Codex"
+   ]
+  },
+  "steps": [
+   {
+    "t": "After The Sacrifice, start Chimera Prologue from the Codex and touch the Lotus's helmet in your Personal Quarters."
+   },
+   {
+    "t": "Follow The Man in the Wall through the Lua Reservoir and beat the shadow fights."
+   },
+   {
+    "t": "In the Sentient chamber, Void Sling between hiding spots so Ballas does not see you, then grab the sword.",
+    "tip": "If his sight bar empties, you fail."
+   },
+   {
+    "t": "Start Erra from the Codex and touch the Lotus's helmet again to watch the vision."
+   },
+   {
+    "t": "Start The Maker to watch the final cutscene."
+   }
+  ],
+  "fast": [
+   "Erra and The Maker are mostly cutscenes, so all three parts take only a few minutes each.",
+   "In the Chimera Prologue stealth section, move only when Ballas is looking away and wait at each Void Sling point.",
+   "Finishing Chimera Prologue also unlocks The Ropalolyst on Jupiter, which drops the Wisp Warframe."
+  ],
+  "rw": [
+   "Paracesis blueprint",
+   "Shedu blueprint",
+   "Access to The Ropalolyst"
+  ],
+  "time": "~20 min",
+  "go": [
+   "Chimera Prologue",
+   "Erra",
+   "The Maker",
+   "Paracesis",
+   "Shedu",
+   "The New War"
+  ],
+  "w": "https://wiki.warframe.com/w/Prelude_to_War"
+ }
+]
