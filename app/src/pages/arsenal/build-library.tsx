@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ModCard } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
+import { PersonMenu } from "@/components/tf/person"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type BuildCard, type BuildDetail } from "@/lib/tf"
 
@@ -75,7 +76,9 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
             <a href="#" className="text-xs text-muted-foreground underline-offset-4 hover:underline" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "item|" + b.item }) }}>{b.item}</a>
             <h2 className="font-heading text-2xl leading-tight font-semibold">{b.name}</h2>
             <span className="flex flex-wrap items-center gap-2 text-sm">
-              {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
+              {b.src === "player" ? (b.authorUid
+                ? <PersonMenu uid={b.authorUid} name={b.author || "Player"} className="rounded-4xl" label={`Shared by ${b.author || "a player"}: add friend or block`}><Badge variant="outline" className="text-muted-foreground hover:bg-muted"><Users /> Shared by {b.author || "a player"}</Badge></PersonMenu>
+                : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
               {b.role ? <span className="text-muted-foreground">{b.role}</span> : null}
               {b.helminth ? <span>Helminth: <b className="font-medium">{b.helminth}</b></span> : null}
             </span>

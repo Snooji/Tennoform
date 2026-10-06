@@ -12,6 +12,7 @@ import { fmt, tf, useTF, useTFData, type TennoData } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { SignInCard } from "@/pages/home/side-cards"
 import { InventoryImport } from "./inventory-import"
+import { MyPicture } from "@/components/tf/person"
 
 function Inventory({ d }: { d: TennoData }) {
   const [q, setQ] = useState(d.q || "")
@@ -49,6 +50,7 @@ export function TennoPage() {
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex items-center gap-4">
         <MasteryRing pct={d.pct} label={d.mrLabel} size={72} />
+        <MyPicture name={d.name} className="size-14" />
         <div className="flex min-w-0 flex-col gap-0.5">
           <span className="text-xs text-muted-foreground">Profile</span>
           <h1 className="truncate font-heading text-3xl font-semibold">{d.name}</h1>

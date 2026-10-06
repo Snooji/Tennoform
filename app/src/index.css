@@ -192,3 +192,18 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* chat bubbles from other people: a solid surface that stands out from the card and from room backgrounds */
+.bubble-in {
+  background: color-mix(in oklab, var(--foreground) 12%, var(--card));
+  color: var(--foreground);
+  border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
+}
+
+/* the chat window's default surface: a soft wash of your accent colour (a clan picture replaces it only when a leader sets one) */
+.chat-surface {
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--primary) 16%, transparent), transparent 60%),
+    radial-gradient(90% 80% at 0% 100%, color-mix(in oklab, var(--glow2, var(--primary)) 12%, transparent), transparent 60%),
+    var(--card);
+}

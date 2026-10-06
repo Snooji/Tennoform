@@ -14,9 +14,19 @@ Free limits: about 50,000 reads and 20,000 saves per day. The site batches saves
 
 # One-tap profile sync
 
-Works out of the box: the site syncs through warframestat.us's public profile service when someone taps **Sync**.
+PC (and cross-save) accounts work out of the box: the site syncs through warframestat.us's public profile service when someone taps **Sync**. That service only reads Warframe's PC server.
 
-`cloudflare-worker.js` (deployed by Cloudflare from `wrangler.jsonc` on every push) is a backup relay. Warframe's API currently refuses requests coming from Cloudflare Workers, so it isn't switched on in `firebase-config.js`. If that changes, set `TENNO_PROXY` to the worker's address.
+PlayStation, Xbox, Switch, iPhone and Android profiles live on their own servers, which don't let a website read them directly. `google-apps-script-relay.gs` is a small free relay on your Google account that asks the right server. To switch it on:
+
+1. Go to https://script.google.com and click **New project**.
+2. Delete what's there, paste the whole of `google-apps-script-relay.gs`, and name the project "Tennoform relay".
+3. Click **Deploy → New deployment**, pick **Web app**, set **Execute as: Me** and **Who has access: Anyone**, then **Deploy**. Allow access when Google asks.
+4. Copy the **Web app URL** (it ends in `/exec`).
+5. In `firebase-config.js`, set `window.TENNO_PROXY = "<that URL>";` and commit.
+
+Once it's set, one-tap sync works on every platform; PC players also go through the relay first, with warframestat.us as the fallback. The relay only accepts a 24-character account ID and only reads the public profile. If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
+
+`cloudflare-worker.js` (deployed by Cloudflare from `wrangler.jsonc` on every push) is an older backup relay. Warframe refuses requests from Cloudflare Workers, so it isn't used.
 
 # Reading feedback (owner only)
 

@@ -62,7 +62,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
                       <Icon />
                       <span>{p.label}</span>
                     </SidebarMenuButton>
-                    {p.route === "friends" && s.unread > 0 && <SidebarMenuBadge>{s.unread}</SidebarMenuBadge>}
+                    {p.route === "chat" && s.unread > 0 && <SidebarMenuBadge>{s.unread}</SidebarMenuBadge>}
                   </SidebarMenuItem>
                 )
               })}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AudgNLzHpTaw4Emq2f4RmTYJvFoqWzWtxhWEa8TOOWc=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-7F0kGB8n.css"><script type="module" src="/assets/main-BbxRyVrx.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-UwGRkwv5a8KXCkTVQtc44QYu/Sesa1d4htQgGLHdP50=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-B1mhxOFV.css"><script type="module" src="/assets/main-DJ5-xWWV.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#100f0d">
 
@@ -872,7 +872,7 @@ const U={};for(const n in I)U[I[n].u]=n;
 const QU={};Q.forEach(q=>{if(q.u)QU[q.u]=q.n});
 const NX={};ALLN.forEach(n=>NX[n.id]=n);
 const $=s=>document.querySelector(s);
-const HOSTED=!(window.claude&&window.claude.use);
+const HOSTED=true; /* the site always runs as tennoform.com now; kept so older checks still read */
 const STANDALONE=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
 const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -881,12 +881,12 @@ const hrs=s=>{if(!s)return'instant';const h=s/3600;return h>=24?(+(h/24).toFixed
 const fdate=s=>{if(!s)return'';const d=new Date(s.length===10?s+'T12:00:00Z':s);return isNaN(d)?'':d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})};
 const RAR={C:'Common',U:'Uncommon',R:'Rare'};
 const ERA_TIP={Lith:'Hepit, Void (Capture)',Meso:'Ukko, Void (Capture) or Io, Jupiter (Defense)',Neo:'Ukko, Void (Capture) or Mot, Void (Survival)',Axi:'Apollo, Lua (Disruption)',Requiem:'Kuva Lich / Sister requiem drops'};
-const PAGES=[['home','Home'],['today','Today'],['ranks','Ranks'],['collection','My collection'],['synd','Syndicates'],['quests','Quests'],['guides','Guides'],['missions','Star chart'],['resources','Resources'],['goals','Gear goals'],['relics','Relics'],['mastery','MR plan'],['tenno','Profile'],['frames','Warframes'],['arsenal','Builds'],['world','Open worlds'],['farm','Farm finder'],['market','Market'],['tasks','To-do list'],['achievements','Achievements'],['friends','Friends'],['donate','Support'],['feedback','Feedback'],['about','About']];
+const PAGES=[['home','Home'],['today','Today'],['ranks','Ranks'],['collection','My collection'],['synd','Syndicates'],['quests','Quests'],['guides','Guides'],['missions','Star chart'],['resources','Resources'],['goals','Gear goals'],['relics','Relics'],['mastery','MR plan'],['tenno','Profile'],['frames','Warframes'],['arsenal','Builds'],['world','Open worlds'],['farm','Farm finder'],['market','Market'],['tasks','To-do list'],['achievements','Achievements'],['chat','Chat'],['friends','Friends'],['donate','Support'],['feedback','Feedback'],['about','About']];
 const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM1 21v-1c0-3.9 3.1-7 7-7s7 3.1 7 7v1zm15.4-7.9c3.2.2 5.6 2.8 5.6 6V21h-5v-1c0-2.6-.9-5-2.5-6.7.6-.1 1.2-.2 1.9-.2z',me:'M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm-9 10c0-5 4-8 9-8s9 3 9 8z',tasks:'M9 4h11v2H9zm0 7h11v2H9zm0 7h11v2H9zM3.5 3.5l1.5 1.5 3-3 1 1-4 4-2.5-2.5zm0 7l1.5 1.5 3-3 1 1-4 4-2.5-2.5zM4 17h3v3H4z',home:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',tenno:'M12 2a5 5 0 0 1 5 5v3l3 3-3 1v6h-4v-4h-2v4H7v-6l-3-1 3-3V7a5 5 0 0 1 5-5z',missions:'M12 2l2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6z',resources:'M12 2l9 5v10l-9 5-9-5V7zm0 3.3L6 8.6v6.8l6 3.3 6-3.3V8.6z',ranks:'M4 20h4V10H4zm6 0h4V4h-4zm6 0h4v-7h-4z',today:'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z',quests:'M6 2h10l4 4v16H6zm3 7h8v2H9zm0 4h8v2H9zm0 4h5v2H9z'};
 /* Five places. Every page belongs to one; the place link reopens the last page used in it. */
-const PLACES=[['home','Home','home',['home']],['plan','Plan','mastery',['mastery','ranks','collection','goals','tasks','missions','quests','guides']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','friends',['friends']]];
+const PLACES=[['home','Home','home',['home']],['plan','Plan','mastery',['mastery','ranks','collection','goals','tasks','missions','quests','guides']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','chat',['chat','friends']]];
 const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
-const SUBL={ranks:'Ranks',mastery:'MR plan',collection:'My collection',goals:'Goals & to-dos',tasks:'To-do list',missions:'Star chart & quests',quests:'Quests',guides:'Guides',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements'};
+const SUBL={ranks:'Ranks',mastery:'MR plan',collection:'My collection',goals:'Goals & to-dos',tasks:'To-do list',missions:'Star chart & quests',quests:'Quests',guides:'Guides',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements',chat:'Chat',friends:'Friends'};
 const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about','About & privacy']];
 const BAR=PLACES.flatMap(p=>p[3]);
 /* paired pages share one menu entry (Gear goals + To-do list, Star chart + Quests); a switch on the page moves between them */
@@ -953,12 +953,6 @@ async function attach(dr,pr,info){docRef=dr;profRef=pr;
 function detach(){flushNow();docRef=null;profRef=null;synced=false;acct=null;render()}
 function flushNow(){if(!docRef)return;clearTimeout(timer);flush();clearTimeout(ptimer);if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})}
 window.addEventListener('pagehide',flushNow);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flushNow()});
-(async()=>{try{
-  if(!window.claude||!claude.use)return;
-  const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
-  if(!db||!user)return;const id=await user.id();if(!id)return;
-  await attach(db.doc('data/users/'+id+'/progress'),db.doc('data/users/'+id+'/profile'),{kind:'claude'});
-}catch(e){}})();
 /* ---------- hosted accounts (Firebase Auth + Firestore, free tier) ---------- */
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
 async function fbInit(){if(!HOSTED)return;try{await loadScript('/firebase-config.js')}catch(e){bootSync();return}bootSync();
@@ -2511,8 +2505,7 @@ function reportHTML(){const t=totalXP(),m=mrInfo(t.total);const now=new Date();c
   ${sec('Last sync',`<pre>${e(JSON.stringify(P.lastSync||null,null,1))}</pre>`)}
   ${sec('Raw data',`<details><summary>Show</summary><pre>${e(JSON.stringify({v:3,c:C,p:P}))}</pre></details>`)}
   </body></html>`}
-async function saveFile(name,text,type){if(HOSTED){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast('Saved '+name);return}
-  try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:name,data:text});toast('Saved '+name)}catch(e){toast('Saving files isn\'t available here.')}}
+function saveFile(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast('Saved '+name)}
 
 /* ---------- tenno (character) ---------- */
 function tenno(){const tab=state.tTab;const tabs=[['profile','Profile'],['breakdown','Mastery breakdown'],['account','Account & sync'],['foundry','Foundry'],['inventory','Inventory'],['helminth','Helminth'],['friends','Compare profiles'],['backup','Backup & export']];
@@ -2834,11 +2827,11 @@ function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
 async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
-  try{let j=null;if(window.TENNO_PROXY){try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}catch(e){}}
-    if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
+  try{let j=null;if(window.TENNO_PROXY){try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id+(typeof wfPlat==='function'&&wfPlat().id!=='pc'?'&platform='+wfPlat().id:''));if(r.ok)j=await r.json()}catch(e){}}
+    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
   catch(e){if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
-      toast("Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
+      toast(e&&e.msg?e.msg+' Or use the two quick steps on this page.':"Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
 async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;
@@ -3976,11 +3969,11 @@ document.addEventListener('change',e=>{const t=e.target;if(t&&t.id==='wfhfile'&&
 /* Each platform keeps its own profile unless cross-save is on. warframestat (one-tap sync) only reads the PC server,
    so other platforms use the copy-and-paste steps, pointed at that platform's own Warframe server. */
 const WF_PLATS=[['pc','PC or cross-save','api',true],['ps','PlayStation','api-ps4',false],['xb','Xbox','api-xb1',false],['sw','Switch','api-swi',false],['ios','iPhone / iPad','api-mob',false],['and','Android','api-and',false]];
-function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]}}
+function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]||!!window.TENNO_PROXY}}
 function platPickHTML(){const cur=wfPlat();
   return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there. Synced progress looks wrong or like an old account? That's usually the PC profile being read for a console or mobile account: pick your platform, then use Reset sync to clear what came in.</span></span>
   <div class="row" role="radiogroup" aria-label="Where you play" style="gap:6px">${WF_PLATS.map(([id,l])=>`<button type="button" class="btn sm${cur.id===id?' primary':''}" role="radio" aria-checked="${cur.id===id}" data-wfplat="${id}">${esc(l)}</button>`).join('')}</div>
-  ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
+  ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts until a profile relay is set up. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
 /* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
 {const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
@@ -4118,7 +4111,7 @@ setInterval(()=>{if(location.hash==='#admin'&&!document.hidden&&FBK.admin)loadPl
 function playerStats(){if(FBK.admin&&!PRES.data&&!PRES.loading&&!PRES.err)loadPlayerStats();
   const d=PRES.data;return {loading:PRES.loading,err:PRES.err,data:d?{...d,ago:d.at?(Date.now()-d.at<60e3?'just now':Math.floor((Date.now()-d.at)/6e4)+'m ago'):''}:null}}
 Object.assign(window.TF,{playerStats:()=>playerStats(),playerStatsReload:()=>loadPlayerStats(true)});
-/* ---------- Community chat: General, Trading, LFG, plus your clan and alliance from your synced profile ---------- */
+/* ---------- Chat rooms: General, Trading, LFG, plus your clan and alliance from your synced profile ---------- */
 /* These are Tennoform rooms; Warframe has no way to connect to in-game chat. Anyone can read the public rooms,
    posting needs an account. The filter below matches firestore.rules: a flagged message can't be posted, so it
    goes to the review queue in the Backend, where an admin publishes it, removes it or bans the sender. */
@@ -4147,7 +4140,7 @@ function chatOpen(room){if(!FB)return;if(CM.sub===room&&CM.unsub)return;if(CM.un
     CM.msgs=s.docs.map(d=>({id:d.id,...d.data()})).reverse();tfNotify()},e=>{CM.loading=false;CM.err=/permission/i.test((e&&e.code)||'')?'perm':'error';tfNotify()})}
 function chatClose(){if(CM.unsub)CM.unsub();CM.unsub=null;CM.sub=''}
 function communityData(){const rooms=chatRooms();if(!rooms.some(r=>r.id===CM.room))CM.room='general';
-  if(HOSTED&&FB&&(location.hash==='#friends'))chatOpen(CM.room);if(SO.uid)chatMeSync(false);
+  if(SO.uid)chatMeSync(false);
   const tm=t=>{const d=new Date(t);return (Date.now()-t<864e5?'':d.toLocaleDateString([],{month:'short',day:'numeric'})+' ')+d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})};
   const held=CM.held.filter(h=>h.room===CM.room);
   return {hosted:HOSTED,ready:!!FB,signed:!!SO.uid,admin:!!FBK.admin,banned:CM.banned,room:CM.room,rooms,loading:CM.loading,err:CM.err,
@@ -4155,12 +4148,12 @@ function communityData(){const rooms=chatRooms();if(!rooms.some(r=>r.id===CM.roo
     msgs:[...CM.msgs.map(m=>({id:m.id,who:String(m.name||'Tenno'),text:String(m.text||''),time:tm(+m.at||0),mine:m.uid===SO.uid,uid:m.uid,held:false})),
       ...held.map(h=>({id:h.id,who:myName(),text:h.text,time:tm(h.at),mine:true,uid:SO.uid,held:true}))]}}
 async function communitySend(text){text=String(text||'').trim().slice(0,500);if(!text)return false;
-  if(!FB||!SO.uid){toast('Sign in to post');return false}if(CM.banned){toast("You can't post in community chat.");return false}
+  if(!FB||!SO.uid){toast('Sign in to post');return false}if(CM.banned){toast("You can't post in chat.");return false}
   const room=CM.room,d={uid:SO.uid,name:myName(),text,at:Date.now()};const flag=chatFlag(text);
   try{if(flag){await FB.fs.collection('review').add({room,...d,flag});CM.held.push({id:'h'+d.at,room,text,at:d.at});tfNotify();
       toast('Held for review: this message may break the community rules, so only you can see it until it\'s checked.');return true}
     await FB.fs.collection('rooms').doc(room).collection('msgs').add(d);return true}
-  catch(e){await chatBanCheck();toast(CM.banned?"You can't post in community chat.":"Couldn't send. Try again in a moment.");tfNotify();return false}}
+  catch(e){await chatBanCheck();toast(CM.banned?"You can't post in chat.":"Couldn't send. Try again in a moment.");tfNotify();return false}}
 /* admin tools: review queue, delete, bans */
 const MOD={tried:false,list:null,bans:null,err:''};
 async function modLoad(force){if(!FB||!FBK.admin||(MOD.tried&&!force))return;MOD.tried=true;
@@ -4176,7 +4169,7 @@ async function modPublish(id){const x=(MOD.list||[]).find(y=>y.id===id);if(!x)re
 async function modRemove(id,ban){const x=(MOD.list||[]).find(y=>y.id===id);if(!x)return;
   try{await FB.fs.collection('review').doc(id).delete();MOD.list=MOD.list.filter(y=>y.id!==id);if(ban)await modBan(x.uid,x.name,'Flagged: '+(x.flag||'review'));else toast('Removed');tfNotify()}catch(e){toast("Couldn't remove")}}
 async function modBan(uid,name,reason){try{await FB.fs.collection('bans').doc(uid).set({at:Date.now(),name:String(name||'').slice(0,40),reason:String(reason||'').slice(0,120),by:SO.uid});
-  MOD.bans=[...(MOD.bans||[]).filter(b=>b.id!==uid),{id:uid,name,reason,at:Date.now()}];toast(`${name||'Player'} banned from community chat`);tfNotify()}catch(e){toast("Couldn't ban")}}
+  MOD.bans=[...(MOD.bans||[]).filter(b=>b.id!==uid),{id:uid,name,reason,at:Date.now()}];toast(`${name||'Player'} banned from chat`);tfNotify()}catch(e){toast("Couldn't ban")}}
 async function modUnban(uid){try{await FB.fs.collection('bans').doc(uid).delete();MOD.bans=(MOD.bans||[]).filter(b=>b.id!==uid);toast('Unbanned');tfNotify()}catch(e){toast("Couldn't unban")}}
 async function chatDelete(id){try{await FB.fs.collection('rooms').doc(CM.room).collection('msgs').doc(id).delete();toast('Message deleted')}catch(e){toast("Couldn't delete")}}
 /* the synced profile carries clan and alliance IDs: keep them, and refresh chat membership after each sync */
@@ -4186,7 +4179,109 @@ async function chatDelete(id){try{await FB.fs.collection('rooms').doc(CM.room).c
 {const _si=socialInit;socialInit=async function(uid){const r=await _si.apply(this,arguments);CM.me=null;CM.banned=false;chatMeSync(true);chatBanCheck();return r}}
 Object.assign(window.TF,{community:()=>communityData(),communitySet:o=>{if(o.room){CM.room=o.room;chatOpen(o.room)}tfNotify()},communitySend:t=>communitySend(t),chatDelete:id=>chatDelete(id),
   modData:()=>modData(),modReload:()=>modLoad(true),modPublish:id=>modPublish(id),modRemove:(id,ban)=>modRemove(id,ban),modBan:(uid,name,reason)=>modBan(uid,name,reason),modUnban:uid=>modUnban(uid)});
-window.addEventListener('hashchange',()=>{if(location.hash!=='#friends')chatClose()});
+/* ---------- Chat: one window, a tab for each room (General, Trading, LFG, clan, alliance) and each open friend or group conversation ---------- */
+/* Room tabs are always there; conversation tabs open when you pick a friend or group and close with ×. The open tabs and the one you're on are remembered on this device. */
+const CT=(()=>{const s=lsGet('tf-chattabs',{});return {open:Array.isArray(s.open)?s.open.slice(0,12):[],cur:typeof s.cur==='string'?s.cur:'general'}})();
+const ctSave=()=>lsSet('tf-chattabs',{open:CT.open,cur:CT.cur});
+const ctConv=id=>/^(f|g):/.test(id);
+function ctConvKey(id){return id.startsWith('f:')?id.slice(2):id}   /* the Friends bridge keys friends by uid and groups by g:id */
+function chatTabs(){const ur=SO.uid?unread().per:{};
+  const rooms=chatRooms().map(r=>({id:r.id,label:r.kind==='clan'?'Clan':r.label,title:r.label,hint:r.hint,kind:r.kind,unread:0,closable:false}));
+  /* a conversation whose friend or group is gone (removed, left, or not loaded yet) is hidden, not dropped */
+  const conv=SO.uid?CT.open.map(id=>{if(id.startsWith('f:')){const f=SO.friends.find(x=>x.uid===id.slice(2));return f?{id,label:sqName(f.uid),title:sqName(f.uid),hint:f.pending?'Waiting for them to accept':'Friend',kind:'friend',unread:ur[f.uid]||0,closable:true}:null}
+    const g=SO.groups.find(x=>'g:'+x.id===id);return g?{id,label:g.name,title:g.name,hint:`${g.members.length} members`,kind:'group',unread:ur[id]||0,closable:true}:null}).filter(Boolean):[];
+  /* friends and groups with unread messages show up as tabs on their own */
+  if(SO.uid){SO.friends.forEach(f=>{const id='f:'+f.uid;if(ur[f.uid]&&!conv.some(t=>t.id===id))conv.push({id,label:sqName(f.uid),title:sqName(f.uid),hint:'Friend',kind:'friend',unread:ur[f.uid],closable:true})});
+    SO.groups.forEach(g=>{const id='g:'+g.id;if(ur[id]&&!conv.some(t=>t.id===id))conv.push({id,label:g.name,title:g.name,hint:`${g.members.length} members`,kind:'group',unread:ur[id],closable:true})})}
+  return [...rooms,...conv]}
+function chatPageData(){const tabs=chatTabs();if(!tabs.some(t=>t.id===CT.cur))CT.cur='general';const cur=CT.cur;
+  const onPage=location.hash==='#chat';
+  if(ctConv(cur)){if(onPage){chatClose();state.chat=ctConvKey(cur)}}
+  else{CM.room=cur;if(onPage&&FB)chatOpen(cur)}
+  const openable=SO.uid?[...SO.groups.map(g=>({id:'g:'+g.id,label:g.name,kind:'group'})),...SO.friends.filter(f=>!f.pending).map(f=>({id:'f:'+f.uid,label:sqName(f.uid),kind:'friend'}))].filter(o=>!tabs.some(t=>t.id===o.id)):[];
+  return {tabs,cur,conv:ctConv(cur),openable,signed:!!SO.uid,synced:!!(P.prof&&P.prof.gid)}}
+function chatGo(id,nav){if(ctConv(id)&&!CT.open.includes(id))CT.open.push(id);CT.cur=id;ctSave();if(ctConv(id))state.chat=ctConvKey(id);if(nav&&location.hash!=='#chat')location.hash='chat';tfNotify()}
+function chatCloseTab(id){const i=CT.open.indexOf(id);if(i>=0)CT.open.splice(i,1);
+  if(id.startsWith('f:'))sqMarkRead(id.slice(2));else if(id.startsWith('g:'))sqMarkRead(id);
+  if(CT.cur===id){CT.cur=CT.open[Math.max(0,i-1)]||'general';if(!ctConv(CT.cur))state.chat=null}ctSave();tfNotify()}
+Object.assign(window.TF,{chat:()=>chatPageData(),chatGo:(id,nav)=>chatGo(id,nav!==false),chatCloseTab:id=>chatCloseTab(id)});
+routes.chat=function(){return ''};
+/* the Friends page now opens conversations here; keep live redraws for both pages */
+{const _sr=socialRender;socialRender=function(){if(location.hash==='#chat'){badge();tfNotify();return}_sr()}}
+window.addEventListener('hashchange',()=>{if(location.hash!=='#chat'){chatClose();state.chat=null}});
+/* a new group opens straight into its chat tab */
+{const _gc=window.TF.groupCreate;window.TF.groupCreate=async(name,uids)=>{const ok=await _gc(name,uids);if(ok&&state.chat)chatGo(state.chat,true);return ok}}
+/* ---------- Chat pictures: profile pictures for everyone, and backgrounds for clan and alliance rooms ---------- */
+/* Images are shrunk in the browser and stored inline in Firestore (no file storage needed): a 160px profile picture,
+   a 1280px room background. firestore.rules checks the size and format. Only leaders an admin appoints in the
+   Backend can change a clan or alliance room's background; admins can remove any picture. */
+const AV={};let AVq=new Set(),AVt=0;
+function imgShrink(file,max,limit){return new Promise((res,rej)=>{if(!file||!/^image\//.test(file.type||'')){rej(new Error('type'));return}
+  const url=URL.createObjectURL(file),im=new Image();im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('read'))};
+  im.onload=()=>{URL.revokeObjectURL(url);const sq=max<=200;let w=im.naturalWidth,h=im.naturalHeight,sx=0,sy=0,sw=w,sh=h;
+    if(sq){const m=Math.min(w,h);sx=(w-m)/2;sy=(h-m)/2;sw=sh=m;w=h=Math.min(max,m)}else{const k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k)}
+    const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,w,h);
+    for(const q of [.86,.78,.68,.56,.45,.35]){for(const t of ['image/webp','image/jpeg']){const d=c.toDataURL(t,q);if(d.startsWith('data:'+t)&&d.length<=limit){res(d);return}}}
+    rej(new Error('size'))};im.src=url})}
+const pickImage=()=>new Promise(res=>{const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>res(i.files&&i.files[0]||null);i.click()});
+/* profile pictures: fetched in small batches for whoever's on screen */
+function avatarOf(uid){if(!uid)return '';if(uid in AV)return AV[uid]||'';if(!FB)return '';AVq.add(uid);clearTimeout(AVt);AVt=setTimeout(avFetch,60);return ''}
+async function avFetch(){const ids=[...AVq].filter(u=>!(u in AV));AVq=new Set();if(!ids.length)return;ids.forEach(u=>AV[u]='');
+  await Promise.all(ids.map(u=>FB.fs.collection('avatars').doc(u).get().then(s=>{if(s.exists)AV[u]=String((s.data()||{}).img||'')}).catch(()=>{})));tfNotify()}
+async function avatarSet(){if(!FB||!SO.uid){toast('Sign in to add a profile picture');return}const f=await pickImage();if(!f)return;
+  try{const img=await imgShrink(f,160,60000);await FB.fs.collection('avatars').doc(SO.uid).set({img,at:Date.now()});AV[SO.uid]=img;toast('Profile picture updated');tfNotify()}
+  catch(e){toast(e&&e.message==='type'?'Pick an image file':e&&e.message==='size'?"That image is too detailed to shrink. Try another.":"Couldn't save the picture. Try again.")}}
+async function avatarRemove(uid){uid=uid||SO.uid;if(!FB||!uid)return;try{await FB.fs.collection('avatars').doc(uid).delete();AV[uid]='';toast(uid===SO.uid?'Profile picture removed':'Picture removed');tfNotify()}catch(e){toast("Couldn't remove the picture")}}
+/* room backgrounds and leaders, for the clan or alliance room you're looking at */
+const RB={room:'',img:'',leads:[],unsub:null};
+function roomMedia(room){if(!FB||!/^[ca]_/.test(room||'')){if(RB.unsub)RB.unsub();Object.assign(RB,{room:'',img:'',leads:[],unsub:null});return RB}
+  if(RB.room!==room){if(RB.unsub)RB.unsub();Object.assign(RB,{room,img:'',leads:[]});
+    RB.unsub=FB.fs.collection('roombg').doc(room).onSnapshot(s=>{RB.img=s.exists?String((s.data()||{}).img||''):'';tfNotify()},()=>{});
+    FB.fs.collection('roomlead').doc(room).get().then(s=>{RB.leads=s.exists?((s.data()||{}).uids||[]):[];tfNotify()}).catch(()=>{})}
+  return RB}
+async function roomBgSet(){const room=CM.room;if(!/^[ca]_/.test(room))return;const f=await pickImage();if(!f)return;
+  try{const img=await imgShrink(f,1280,400000);await FB.fs.collection('roombg').doc(room).set({img,by:SO.uid,at:Date.now()});toast('Background updated')}
+  catch(e){toast(e&&e.message==='type'?'Pick an image file':e&&e.message==='size'?"That image is too detailed to shrink. Try another.":"Couldn't save the background. Only this room's leaders can change it.")}}
+async function roomBgRemove(){const room=CM.room;try{await FB.fs.collection('roombg').doc(room).delete();toast('Background removed')}catch(e){toast("Couldn't remove the background")}}
+/* add avatars and the room's background to the chat data */
+{const _cd=communityData;communityData=function(){const d=_cd.apply(this,arguments);const rm=roomMedia(d.room);
+  d.msgs.forEach(m=>{m.av=avatarOf(m.uid)});d.bg=rm.img;d.lead=!!SO.uid&&(rm.leads.includes(SO.uid)||!!FBK.admin);d.leadRoom=/^[ca]_/.test(d.room);d.myAv=avatarOf(SO.uid);return d}}
+{const _sd=squadData;squadData=function(){const d=_sd.apply(this,arguments);if(d.friends)d.friends.forEach(f=>{f.av=avatarOf(f.uid)});if(d.chat&&d.chat.type==='friend')d.chat.av=avatarOf(d.chat.id);d.me=myName();return d}}
+/* Backend: appoint leaders for each clan and alliance room, from the members whose synced profiles put them there */
+const LD={list:null,leads:{},err:''};
+async function leadLoad(){if(!FB||!FBK.admin)return;try{const [m,l]=await Promise.all([FB.fs.collection('chatme').get(),FB.fs.collection('roomlead').get()]);
+  const rooms={};m.docs.forEach(d=>{const x=d.data()||{};if(x.g){const r=rooms['c_'+x.g]=rooms['c_'+x.g]||{id:'c_'+x.g,label:'Clan: '+(x.gn||x.g.slice(-6)),members:[]};r.members.push({uid:d.id,name:x.name||'Tenno'});if(x.gn&&r.label.endsWith(x.g.slice(-6)))r.label='Clan: '+x.gn}
+    if(x.a){const r=rooms['a_'+x.a]=rooms['a_'+x.a]||{id:'a_'+x.a,label:'Alliance '+x.a.slice(-6)+(x.gn?' (incl. '+x.gn+')':''),members:[]};r.members.push({uid:d.id,name:x.name||'Tenno'})}});
+  LD.list=Object.values(rooms).sort((a,b)=>b.members.length-a.members.length);LD.leads={};l.docs.forEach(d=>{LD.leads[d.id]=(d.data()||{}).uids||[]});LD.err=''}catch(e){LD.err=(e&&e.code)||'error'}tfNotify()}
+function leadData(){if(FBK.admin&&LD.list==null&&!LD.err&&!LD.busy){LD.busy=true;leadLoad().finally(()=>LD.busy=false)}
+  return {err:LD.err,loading:LD.list==null&&!LD.err,rooms:(LD.list||[]).map(r=>({...r,members:r.members.map(m=>({...m,lead:(LD.leads[r.id]||[]).includes(m.uid)}))}))}}
+async function leadToggle(room,uid){const cur=LD.leads[room]||[];if(!cur.includes(uid)&&cur.length>=10){toast('A room can have up to 10 leaders. Remove one first.');return}const next=cur.includes(uid)?cur.filter(u=>u!==uid):[...cur,uid];
+  try{if(next.length)await FB.fs.collection('roomlead').doc(room).set({uids:next,at:Date.now(),by:SO.uid});else await FB.fs.collection('roomlead').doc(room).delete();LD.leads[room]=next;toast(next.includes(uid)?'Leader added':'Leader removed');tfNotify()}
+  catch(e){toast("Couldn't save. Check the Firestore rules are published.")}}
+Object.assign(window.TF,{avatarSet:()=>avatarSet(),avatarRemove:uid=>avatarRemove(uid),myAvatar:()=>avatarOf(SO.uid),roomBgSet:()=>roomBgSet(),roomBgRemove:()=>roomBgRemove(),
+  leadData:()=>leadData(),leadReload:()=>{LD.list=null;LD.err='';tfNotify()},leadToggle:(room,uid)=>leadToggle(room,uid)});
+/* ---------- People you meet in chat or on shared builds: add them as a friend (they still have to accept) or block them ---------- */
+function personInfo(uid){const f=SO.friends.find(x=>x.uid===uid);
+  const rel=!uid?'none':uid===SO.uid?'me':blocked(uid)?'blocked':f?(f.pending?'pending':'friend'):SO.inbox.some(m=>m.type==='friend'&&m.from===uid)?'asked':'none';
+  return {rel,av:avatarOf(uid),signed:!!SO.uid}}
+async function friendAddUid(uid,name){if(!FB||!SO.uid){toast('Sign in to add friends');return}if(!uid||uid===SO.uid)return;
+  if(blocked(uid)){toast("You've blocked them. Unblock them on the Friends page first.");return}
+  if(SO.friends.some(f=>f.uid===uid)){toast(SO.friends.find(f=>f.uid===uid).pending?'Request already sent':'Already friends');return}
+  /* they asked you first: accepting is the same as adding */
+  const ask=SO.inbox.find(m=>m.type==='friend'&&m.from===uid);if(ask){await acceptFriend(ask.id);return}
+  try{await FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).set({name:String(name||'Pending').slice(0,40),code:'',pending:true,at:Date.now()});
+    await sendMsg(uid,{type:'friend',code:SO.code},false);toast(`Friend request sent to ${name||'them'}. You can message once they accept.`);tfNotify()}
+  catch(e){toast("Couldn't send the request. Try again.")}}
+/* the request card on Friends needs the sender so you can block them */
+{const _sd=squadData;squadData=function(){const d=_sd.apply(this,arguments);if(d.requests)d.requests.forEach(r=>{const m=SO.inbox.find(x=>x.id===r.id);r.from=m?m.from:''});return d}}
+/* shared builds carry their author's account, so you can add them from the build */
+{const _bd=bDetail;bDetail=function(b){const d=_bd.apply(this,arguments);d.authorUid=b&&b.src==='player'&&b.uid!==SO.uid?b.uid:'';return d}}
+/* blocking hides their room messages too, and the Friends page lists who you've blocked so you can undo it */
+{const _cd=communityData;communityData=function(){const d=_cd.apply(this,arguments);d.msgs=d.msgs.filter(m=>m.mine||!blocked(m.uid));return d}}
+{const _sd=squadData;squadData=function(){const d=_sd.apply(this,arguments);d.blocked=(P.block||[]).map(uid=>({uid,name:(P.blockN||{})[uid]||(SO.pub[uid]||{}).name||'Player'}));return d}}
+function blockPerson(uid,name){if(!uid||uid===SO.uid)return;P.blockN=P.blockN||{};if(name)P.blockN[uid]=String(name).slice(0,40);window.TF.friendBlock(uid)}
+function unblockPerson(uid){P.block=(P.block||[]).filter(u=>u!==uid);if(P.blockN)delete P.blockN[uid];saveProfile();toast('Unblocked');tfNotify()}
+Object.assign(window.TF,{blockPerson:(uid,name)=>blockPerson(uid,name),unblockPerson:uid=>unblockPerson(uid),person:uid=>personInfo(uid),friendAddUid:(uid,name)=>friendAddUid(uid,name)});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
@@ -4264,7 +4359,7 @@ document.addEventListener('click',async e=>{
   else if(t.id==='mishide'){state.misHide=!state.misHide;saveUI();render()}
   else if(t.id==='imp'){const msg=importProfile($('#pj').value);render();toast(msg)}
   else if(t.id==='bk-copy'){copy(backupCode(),'Backup code copied')}
-  else if(t.id==='bk-file'){if(HOSTED){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([backupCode()],{type:'text/plain'}));a.download='tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt';document.body.appendChild(a);a.click();a.remove();toast('Backup saved');return}try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:'tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt',data:backupCode()});toast('Backup saved')}catch(err){toast('Saving files isn\'t available here. Use Copy backup code instead.')}}
+  else if(t.id==='bk-file'){saveFile('tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt',backupCode(),'text/plain');}
   else if(t.id==='bk-restore'){if(restore($('#bk-in').value)){render();toast('Progress restored')}else toast('That code didn\'t work. Paste the full backup code.')}});
 function focusQuest(){if(!state.qFocus)return;const el=document.getElementById('q-'+state.qFocus.replace(/\W/g,''));state.qFocus=null;if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({block:'center',behavior:'smooth'});el.style.background='var(--cyan-soft)';setTimeout(()=>el.style.background='',1600)}}
 function liveSearch(id,key){const q=$(id);if(!q)return;q.addEventListener('input',()=>{state[key]=q.value;const pos=q.selectionStart;render();const n=$(id);n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}})}

@@ -1,4 +1,4 @@
-/* ---------- Community chat: General, Trading, LFG, plus your clan and alliance from your synced profile ---------- */
+/* ---------- Chat rooms: General, Trading, LFG, plus your clan and alliance from your synced profile ---------- */
 /* These are Tennoform rooms; Warframe has no way to connect to in-game chat. Anyone can read the public rooms,
    posting needs an account. The filter below matches firestore.rules: a flagged message can't be posted, so it
    goes to the review queue in the Backend, where an admin publishes it, removes it or bans the sender. */
@@ -27,7 +27,7 @@ function chatOpen(room){if(!FB)return;if(CM.sub===room&&CM.unsub)return;if(CM.un
     CM.msgs=s.docs.map(d=>({id:d.id,...d.data()})).reverse();tfNotify()},e=>{CM.loading=false;CM.err=/permission/i.test((e&&e.code)||'')?'perm':'error';tfNotify()})}
 function chatClose(){if(CM.unsub)CM.unsub();CM.unsub=null;CM.sub=''}
 function communityData(){const rooms=chatRooms();if(!rooms.some(r=>r.id===CM.room))CM.room='general';
-  if(HOSTED&&FB&&(location.hash==='#friends'))chatOpen(CM.room);if(SO.uid)chatMeSync(false);
+  if(SO.uid)chatMeSync(false);
   const tm=t=>{const d=new Date(t);return (Date.now()-t<864e5?'':d.toLocaleDateString([],{month:'short',day:'numeric'})+' ')+d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})};
   const held=CM.held.filter(h=>h.room===CM.room);
   return {hosted:HOSTED,ready:!!FB,signed:!!SO.uid,admin:!!FBK.admin,banned:CM.banned,room:CM.room,rooms,loading:CM.loading,err:CM.err,
@@ -35,12 +35,12 @@ function communityData(){const rooms=chatRooms();if(!rooms.some(r=>r.id===CM.roo
     msgs:[...CM.msgs.map(m=>({id:m.id,who:String(m.name||'Tenno'),text:String(m.text||''),time:tm(+m.at||0),mine:m.uid===SO.uid,uid:m.uid,held:false})),
       ...held.map(h=>({id:h.id,who:myName(),text:h.text,time:tm(h.at),mine:true,uid:SO.uid,held:true}))]}}
 async function communitySend(text){text=String(text||'').trim().slice(0,500);if(!text)return false;
-  if(!FB||!SO.uid){toast('Sign in to post');return false}if(CM.banned){toast("You can't post in community chat.");return false}
+  if(!FB||!SO.uid){toast('Sign in to post');return false}if(CM.banned){toast("You can't post in chat.");return false}
   const room=CM.room,d={uid:SO.uid,name:myName(),text,at:Date.now()};const flag=chatFlag(text);
   try{if(flag){await FB.fs.collection('review').add({room,...d,flag});CM.held.push({id:'h'+d.at,room,text,at:d.at});tfNotify();
       toast('Held for review: this message may break the community rules, so only you can see it until it\'s checked.');return true}
     await FB.fs.collection('rooms').doc(room).collection('msgs').add(d);return true}
-  catch(e){await chatBanCheck();toast(CM.banned?"You can't post in community chat.":"Couldn't send. Try again in a moment.");tfNotify();return false}}
+  catch(e){await chatBanCheck();toast(CM.banned?"You can't post in chat.":"Couldn't send. Try again in a moment.");tfNotify();return false}}
 /* admin tools: review queue, delete, bans */
 const MOD={tried:false,list:null,bans:null,err:''};
 async function modLoad(force){if(!FB||!FBK.admin||(MOD.tried&&!force))return;MOD.tried=true;
@@ -56,7 +56,7 @@ async function modPublish(id){const x=(MOD.list||[]).find(y=>y.id===id);if(!x)re
 async function modRemove(id,ban){const x=(MOD.list||[]).find(y=>y.id===id);if(!x)return;
   try{await FB.fs.collection('review').doc(id).delete();MOD.list=MOD.list.filter(y=>y.id!==id);if(ban)await modBan(x.uid,x.name,'Flagged: '+(x.flag||'review'));else toast('Removed');tfNotify()}catch(e){toast("Couldn't remove")}}
 async function modBan(uid,name,reason){try{await FB.fs.collection('bans').doc(uid).set({at:Date.now(),name:String(name||'').slice(0,40),reason:String(reason||'').slice(0,120),by:SO.uid});
-  MOD.bans=[...(MOD.bans||[]).filter(b=>b.id!==uid),{id:uid,name,reason,at:Date.now()}];toast(`${name||'Player'} banned from community chat`);tfNotify()}catch(e){toast("Couldn't ban")}}
+  MOD.bans=[...(MOD.bans||[]).filter(b=>b.id!==uid),{id:uid,name,reason,at:Date.now()}];toast(`${name||'Player'} banned from chat`);tfNotify()}catch(e){toast("Couldn't ban")}}
 async function modUnban(uid){try{await FB.fs.collection('bans').doc(uid).delete();MOD.bans=(MOD.bans||[]).filter(b=>b.id!==uid);toast('Unbanned');tfNotify()}catch(e){toast("Couldn't unban")}}
 async function chatDelete(id){try{await FB.fs.collection('rooms').doc(CM.room).collection('msgs').doc(id).delete();toast('Message deleted')}catch(e){toast("Couldn't delete")}}
 /* the synced profile carries clan and alliance IDs: keep them, and refresh chat membership after each sync */
@@ -66,4 +66,3 @@ async function chatDelete(id){try{await FB.fs.collection('rooms').doc(CM.room).c
 {const _si=socialInit;socialInit=async function(uid){const r=await _si.apply(this,arguments);CM.me=null;CM.banned=false;chatMeSync(true);chatBanCheck();return r}}
 Object.assign(window.TF,{community:()=>communityData(),communitySet:o=>{if(o.room){CM.room=o.room;chatOpen(o.room)}tfNotify()},communitySend:t=>communitySend(t),chatDelete:id=>chatDelete(id),
   modData:()=>modData(),modReload:()=>modLoad(true),modPublish:id=>modPublish(id),modRemove:(id,ban)=>modRemove(id,ban),modBan:(uid,name,reason)=>modBan(uid,name,reason),modUnban:uid=>modUnban(uid)});
-window.addEventListener('hashchange',()=>{if(location.hash!=='#friends')chatClose()});

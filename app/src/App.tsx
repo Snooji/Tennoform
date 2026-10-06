@@ -46,6 +46,7 @@ const FeedbackPage = page(() => import("@/pages/info/feedback-page"), (m) => m.F
 const AboutPage = page(() => import("@/pages/info/about-page"), (m) => m.AboutPage)
 const AdminPage = page(() => import("@/pages/info/admin-page"), (m) => m.AdminPage)
 const GuidesPage = page(() => import("@/pages/guides/guides-page"), (m) => m.GuidesPage)
+const ChatPage = page(() => import("@/pages/chat/chat-page"), (m) => m.ChatPage)
 const SquadPage = page(() => import("@/pages/squad/squad-page"), (m) => m.SquadPage)
 function preloadPages() {
   const run = () => IMPORTS.forEach((f, i) => window.setTimeout(() => void f().catch(() => {}), i * 120))
@@ -79,6 +80,7 @@ const PAGES: Record<string, React.ComponentType> = {
   about: AboutPage,
   admin: AdminPage,
   friends: SquadPage,
+  chat: ChatPage,
   guides: GuidesPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])

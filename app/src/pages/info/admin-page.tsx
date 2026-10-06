@@ -199,7 +199,7 @@ function ChatReview() {
           ) : <p className="text-sm text-muted-foreground">Nothing waiting for review.</p>}
       </Card>
       <Card className="gap-3 px-5">
-        <h2 className="font-heading text-lg leading-tight font-semibold">Banned from community chat ({m.bans.length})</h2>
+        <h2 className="font-heading text-lg leading-tight font-semibold">Banned from chat ({m.bans.length})</h2>
         {m.bans.length ? (
           <ul className="flex flex-col divide-y">
             {m.bans.map((b) => (
@@ -210,9 +210,45 @@ function ChatReview() {
             ))}
           </ul>
         ) : <p className="text-sm text-muted-foreground">No one is banned.</p>}
-        <p className="text-xs text-muted-foreground">Banned players can still read but can't post or send anything to review. You can also delete messages and ban from inside any chat room.</p>
+        <p className="text-xs text-muted-foreground">Banned players can still read but can't post or send anything to review. You can also delete messages, remove profile pictures and ban from inside any chat room.</p>
       </Card>
+      <Leaders />
     </div>
+  )
+}
+
+/** Clan and alliance chat leaders: only they (and you) can change that room's background. */
+function Leaders() {
+  const l = useTFData(() => tf().leadData())
+  const [q, setQ] = useState("")
+  const rooms = l.rooms.filter((r) => !q.trim() || (r.label + " " + r.members.map((m) => m.name).join(" ")).toLowerCase().includes(q.trim().toLowerCase()))
+  return (
+    <Card className="gap-3 px-5">
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 className="font-heading text-lg leading-tight font-semibold">Clan and alliance leaders</h2>
+        <Button variant="outline" size="sm" className="ml-auto h-8" onClick={() => tf().leadReload()}><RefreshCw /> Refresh</Button>
+      </div>
+      <p className="text-xs text-muted-foreground">Warframe doesn't say who leads a clan, so you choose. Leaders can change their room's background; nobody else can. Members appear here once they've synced their profile and opened Chat.</p>
+      {l.rooms.length > 6 ? <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a clan or player" aria-label="Find a clan or player" className="h-9" /> : null}
+      {l.err ? <p className="text-sm text-amber-800 dark:text-amber-300">{/permission/.test(l.err) ? "Firebase blocked this. Publish the latest firestore.rules from GitHub, then tap Refresh." : `Couldn't load (${l.err}).`}</p>
+        : l.loading ? <p className="text-sm text-muted-foreground" role="status">Loading…</p>
+        : rooms.length ? (
+          <ul className="flex flex-col divide-y">
+            {rooms.slice(0, 60).map((r) => (
+              <li key={r.id} className="flex flex-col gap-2 py-3">
+                <b className="text-sm font-medium">{r.label} <span className="font-normal text-muted-foreground">· {r.members.length} {r.members.length === 1 ? "member" : "members"}</span></b>
+                <span className="flex flex-wrap gap-1.5">
+                  {r.members.map((m) => (
+                    <Button key={m.uid} variant={m.lead ? "default" : "outline"} size="sm" className="h-8" aria-pressed={m.lead} onClick={() => tf().leadToggle(r.id, m.uid)}>
+                      {m.lead ? <Check /> : null}{m.name}
+                    </Button>
+                  ))}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : <p className="text-sm text-muted-foreground">No clan or alliance rooms yet.</p>}
+    </Card>
   )
 }
 

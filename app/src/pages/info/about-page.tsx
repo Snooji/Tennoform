@@ -23,7 +23,8 @@ const PRIVACY: [typeof Cloud, string, string][] = [
   [Cloud, "With an account", "Progress, tasks and settings are stored in Google Firebase so they follow you between devices. Only you can read them. Tennoform also notes when you were last active and which days you visited, only to count live and daily players; deleting your account removes it."],
   [Users, "Friends", "See your display name, friend code, MR, total Mastery XP and node counts. Messages are kept until you or they delete them."],
   [MessageSquare, "Feedback", "Readable only by the developer."],
-  [Cloud, "Community chat", "Messages in General, Trading and LFG can be read by anyone; clan and alliance rooms only by their members. Messages the filter flags are held, and only the site owner reviews them. Delete your own messages any time."],
+  [Cloud, "Chat", "Messages in General, Trading and LFG can be read by anyone; clan and alliance rooms only by their members. Messages the filter flags are held, and only the site owner reviews them. Delete your own messages any time."],
+  [Cloud, "Profile pictures", "If you add one, anyone who sees your name in Chat can see it. Remove it any time from your Profile. Clan and alliance backgrounds are only shown to that room's members."],
   [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase when you're signed in."],
   [Trash2, "Your data, your call", "Export it any time (Profile → Backup & export), or delete your account and everything stored with it (Profile → Account & sync)."],
 ]
