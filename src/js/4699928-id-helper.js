@@ -19,6 +19,7 @@ ${phone?`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone: u
     <div class="row"><button type="button" class="btn" id="idmarkcopy">Copy the bookmark</button></div></div></div>
 `:''}   <div class="sv"><span class="svn">${pcN}</span><div><b>On a computer: run one line in the console</b><div class="small muted">Copy the line, then on warframe.com press <span class="mono">F12</span> (Mac: <span class="mono">Cmd+Option+J</span>), open the <b>Console</b> tab, paste it and press Enter. You land back here with your ID ready to link.</div>
     <div class="row"><button type="button" class="btn primary" id="idcode">Copy the console line</button></div>
+    <div class="small muted">Using a web inspector instead (for example an iPhone inspector app)? Open its Resources or Application tab, find the cookie <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Not <span class="mono">_gsid</span>: that one is a Google Analytics ID.</div>
     <details class="small"><summary>See the line</summary><pre class="mono" style="white-space:pre-wrap;word-break:break-all;margin:6px 0 0">${esc(ID_CODE)}</pre></details>
     <div class="small muted">Chrome or Edge may say pasting is blocked: type <span class="mono">allow pasting</span>, press Enter, then paste again. The line only reads your account ID from warframe.com and changes nothing.</div>
     <div class="small muted">Prefer one click? Drag this button to your bookmarks bar, then click it while on warframe.com: <a class="btn sm" id="idmark" href="${esc(ID_MARK)}" draggable="true">Tennoform ID</a></div></div></div>
@@ -40,9 +41,9 @@ function idFromHash(){const m=/^#wfid=([0-9a-f]{24})$/i.exec(location.hash);if(!
 window.addEventListener('hashchange',idFromHash);setTimeout(idFromHash,0);
 /* why a pasted text has no ID: the usual mix-ups are other long codes that aren't the Warframe account ID */
 function idMiss(txt){const t=String(txt||'').trim();const hex=(t.match(/[0-9a-f]{20,}/i)||[''])[0];
-  if(hex&&hex.length!==24)return `That code is ${hex.length} characters long; a Warframe account ID is always 24 (0–9 and a–f). It's probably a ${hex.length===32?'game-log folder code or PlayStation/Xbox ID':'different ID'}, not your Warframe one. Use the warframe.com steps above to get the right one; they work for PS5, Xbox, Switch and PC accounts.`;
+  if(hex&&hex.length!==24)return `That code is ${hex.length} characters long; a Warframe account ID is always 24 (0–9 and a–f). It's probably ${hex.length===32?'the _gsid cookie (a Google Analytics ID) or the game-log folder code':'a different ID'}, not your Warframe one. In warframe.com's cookies, copy the user_id inside user-info instead. Use the warframe.com steps above to get the right one; they work for PS5, Xbox, Switch and PC accounts.`;
   return t?"No account ID in what you pasted. Use the warframe.com steps above to get it; they work for every platform.":''}
-function idFromText(txt,how){const l=logLogin(txt);const id=l?l.id:findId(txt);if(id){setWfid(id,how,l&&l.name);return true}return false}
+function idFromText(txt,how){try{if(/%22|%3A/i.test(txt))txt=decodeURIComponent(txt)}catch(e){}const l=logLogin(txt);const id=l?l.id:findId(txt);if(id){setWfid(id,how,l&&l.name);return true}return false}
 async function idPaste(){let txt='';
   try{txt=await navigator.clipboard.readText()}catch(e){}
   if(txt&&idFromText(txt))return;
@@ -60,7 +61,7 @@ document.addEventListener('paste',e=>{if(!$('#idpaste')||/^[0-9a-f]{24}$/i.test(
   const txt=(e.clipboardData||window.clipboardData).getData('text');if(!txt)return;if(idFromText(txt))e.preventDefault();else if(tg&&tg.id==='wfid'&&/[0-9a-f]{20,}/i.test(txt))toast(idMiss(txt))});
 /* EE.log: only trust the game's own login line, "Logged in <name> (<id>)". Other IDs in the log belong to squadmates, clans or sessions. */
 function logLogin(txt){const re=/Logged in (.+?) \(([0-9a-f]{24})\)/gi;let m,last=null;while((m=re.exec(String(txt||''))))last={name:m[1].trim(),id:m[2].toLowerCase()};return last}
-{const _fi=findId;findId=function(text){const l=logLogin(text);return l?l.id:_fi(text)}}
+{const _fi=findId;findId=function(text){try{if(/%22|%3A/i.test(text))text=decodeURIComponent(text)}catch(e){}const l=logLogin(text);return l?l.id:_fi(text)}}
 /* Files from the PC: WFHelper's codex-profile.json (account ID), an inventory.json (WFHelper or warframe-api-helper), or an old EE.log.
    Current game logs only say "Logging in as <name>" and carry no ID, so a log is a last resort. */
 const accountIdIn=txt=>{const m=/"accountId"\s*:\s*"([0-9a-f]{24})"/i.exec(txt)||/"AccountOwnerId"\s*:\s*\{\s*"\$oid"\s*:\s*"([0-9a-f]{24})"/i.exec(txt);return m?m[1].toLowerCase():null};

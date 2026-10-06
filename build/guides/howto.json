@@ -89,6 +89,7 @@
   "aka": [
    "24 character id",
    "24 digit id",
+   "_gsid",
    "account id",
    "bookmark",
    "bookmarklet",
@@ -98,14 +99,18 @@
    "ee.log",
    "f12",
    "gid",
+   "gsid",
+   "inspect",
    "link account",
    "log file",
    "logged in",
    "player id",
    "user id",
+   "user-info cookie",
    "user_id",
    "warframe id",
    "web console",
+   "web inspector",
    "wfhelper",
    "where is ee.log"
   ],
@@ -138,6 +143,10 @@
     "tip": "The file appears once WFHelper has loaded your inventory at least once."
    },
    {
+    "t": "Using a web inspector (desktop dev tools, or an inspector app on iPhone)? On warframe.com, logged in, open the Resources or Application tab, then Cookies. Open user-info and copy the 24 characters after \"user_id\":\". Paste them into Account & sync.",
+    "tip": "Don't use _gsid. It's 32 characters long and is a Google Analytics ID, not your Warframe account."
+   },
+   {
     "t": "Already know your ID? Paste it into the box under Already have your ID? and it links straight away."
    }
   ],
@@ -157,7 +166,8 @@
    "warframe.com/api/user-data used to show the ID as plain text. That page now returns a 404 (\"Ordis\" error page), so Tennoform reads the ID from warframe.com's login cookie instead.",
    "Warframe's EE.log used to show your ID on a \"Logged in Name (ID)\" line. Current logs only say \"Logging in as Name\", without the ID.",
    "There's no way to look up an account ID from an in-game name. Warframe removed that in update 38.0.8.",
-   "Only run console lines you trust. Tennoform's line is shown in full before you copy it in Account & sync; it reads one cookie and sends you back here, nothing else."
+   "Only run console lines you trust. Tennoform's line is shown in full before you copy it in Account & sync; it reads one cookie and sends you back here, nothing else.",
+   "The _gsid cookie on warframe.com looks like an ID but isn't: it's a 32-character Google Analytics session ID. Your Warframe account ID is the user_id inside the user-info cookie, always 24 characters."
   ],
   "w": ""
  }
