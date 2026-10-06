@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { Send } from "lucide-react"
+import { Check, Eye, Hammer, Send } from "lucide-react"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,7 @@ import { tf, useTFData } from "@/lib/tf"
 import { SignInCard } from "@/pages/home/side-cards"
 import { PageHead, linkCls } from "./page-head"
 
+const STATUS_CLS: Record<string, string> = { seen: "text-foreground", working: "border-primary/40 text-primary", done: "border-emerald-500/40 text-emerald-700 dark:text-emerald-300" }
 const KINDS = [{ value: "bug", label: "Something is wrong" }, { value: "idea", label: "Idea or request" }, { value: "other", label: "Other" }]
 
 export function FeedbackPage() {
@@ -67,10 +69,29 @@ export function FeedbackPage() {
           </label>
           <div className="flex flex-wrap items-center gap-3">
             <Button className="h-10 px-5" disabled={busy || text.trim().length < 3} onClick={send}><Send /> {busy ? "Sending…" : "Send feedback"}</Button>
-            <span className="text-xs text-muted-foreground">Only the developer can read this.</span>
+            <span className="text-xs text-muted-foreground">Only the developer can read this. You'll see when it's been read and worked on.</span>
           </div>
         </Card>
       )}
+      {d.signed && (d.mineLoading || d.mine.length) ? (
+        <Card className="gap-3 px-5">
+          <h2 className="font-heading text-lg leading-tight font-semibold">What you've sent</h2>
+          {d.mineLoading ? <p className="text-sm text-muted-foreground" role="status">Loading…</p> : (
+            <ul className="flex flex-col divide-y">
+              {d.mine.map((m) => (
+                <li key={m.id} className="flex flex-col gap-1 py-2.5">
+                  <span className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span className="tabular-nums">{m.at}</span>
+                    <Badge variant="outline" className={STATUS_CLS[m.status] || "text-muted-foreground"}>{m.status === "working" ? <Hammer /> : m.status === "done" ? <Check /> : m.status === "seen" ? <Eye /> : null}{m.label}</Badge>
+                  </span>
+                  <p className="line-clamp-3 text-sm whitespace-pre-wrap">{m.text}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="text-xs text-muted-foreground">Seen means the developer has read it; Working on it means a fix or feature is underway.</p>
+        </Card>
+      ) : null}
       {d.admin ? (
         <p className="rounded-2xl border border-dashed px-4 py-3 text-sm">You're an admin. <a href="#admin" className={linkCls}>Open the Backend</a> to read feedback and log donations.</p>
       ) : null}
