@@ -38,12 +38,16 @@ function idFromHash(){const m=/^#wfid=([0-9a-f]{24})$/i.exec(location.hash);if(!
   state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'',location.pathname+location.search+'#tenno');
   if(typeof render==='function')render();tfNotify();setTimeout(()=>{const c=$('#idpend');if(c)c.scrollIntoView({block:'center'})},300);return true}
 window.addEventListener('hashchange',idFromHash);setTimeout(idFromHash,0);
+/* why a pasted text has no ID: the usual mix-ups are other long codes that aren't the Warframe account ID */
+function idMiss(txt){const t=String(txt||'').trim();const hex=(t.match(/[0-9a-f]{20,}/i)||[''])[0];
+  if(hex&&hex.length!==24)return `That code is ${hex.length} characters long; a Warframe account ID is always 24 (0–9 and a–f). It's probably a ${hex.length===32?'game-log folder code or PlayStation/Xbox ID':'different ID'}, not your Warframe one. Use the warframe.com steps above to get the right one; they work for PS5, Xbox, Switch and PC accounts.`;
+  return t?"No account ID in what you pasted. Use the warframe.com steps above to get it; they work for every platform.":''}
 function idFromText(txt,how){const l=logLogin(txt);const id=l?l.id:findId(txt);if(id){setWfid(id,how,l&&l.name);return true}return false}
 async function idPaste(){let txt='';
   try{txt=await navigator.clipboard.readText()}catch(e){}
   if(txt&&idFromText(txt))return;
   const f=$('#wfid');if(f){f.focus();f.select&&f.select()}
-  toast(txt?"No account ID in what you copied. Use the console line or bookmark above to get it.":"Press and hold the box, then tap Paste.")}
+  toast(txt?idMiss(txt):"Press and hold the box, then tap Paste.")}
 document.addEventListener('click',e=>{const t=e.target.closest('#idpaste,#idcode,#idmark,#idmarkcopy,#idpendok,#idpendno');if(!t)return;e.preventDefault();
   if(t.id==='idpaste')idPaste();
   else if(t.id==='idcode')copy(ID_CODE,'Copied. Paste it into the console on warframe.com.');
@@ -53,7 +57,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('#idpaste,#idcode
   else{state.idPending='';render();toast('Not linked.')}});
 /* pasting the copied page anywhere on the Account tab works too */
 document.addEventListener('paste',e=>{if(!$('#idpaste')||/^[0-9a-f]{24}$/i.test(P.wfid||''))return;const tg=e.target;if(tg&&tg.matches&&tg.matches('input,textarea')&&tg.id!=='wfid')return;
-  const txt=(e.clipboardData||window.clipboardData).getData('text');if(txt&&idFromText(txt)){e.preventDefault()}});
+  const txt=(e.clipboardData||window.clipboardData).getData('text');if(!txt)return;if(idFromText(txt))e.preventDefault();else if(tg&&tg.id==='wfid'&&/[0-9a-f]{20,}/i.test(txt))toast(idMiss(txt))});
 /* EE.log: only trust the game's own login line, "Logged in <name> (<id>)". Other IDs in the log belong to squadmates, clans or sessions. */
 function logLogin(txt){const re=/Logged in (.+?) \(([0-9a-f]{24})\)/gi;let m,last=null;while((m=re.exec(String(txt||''))))last={name:m[1].trim(),id:m[2].toLowerCase()};return last}
 {const _fi=findId;findId=function(text){const l=logLogin(text);return l?l.id:_fi(text)}}

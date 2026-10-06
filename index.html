@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-slcjA2dZNL9HR4NXs5/o2GtvGtXnYKBgzCmC/3rq+Ns=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-CFb_6Ouf.css"><script type="module" src="/assets/main-D4YNKJUc.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1ae0jXf7p8htvxNFLhhdRj50mczxUTymoNHUirdvUdo=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-CFb_6Ouf.css"><script type="module" src="/assets/main-D4YNKJUc.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#100f0d">
 
@@ -3926,12 +3926,16 @@ function idFromHash(){const m=/^#wfid=([0-9a-f]{24})$/i.exec(location.hash);if(!
   state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'',location.pathname+location.search+'#tenno');
   if(typeof render==='function')render();tfNotify();setTimeout(()=>{const c=$('#idpend');if(c)c.scrollIntoView({block:'center'})},300);return true}
 window.addEventListener('hashchange',idFromHash);setTimeout(idFromHash,0);
+/* why a pasted text has no ID: the usual mix-ups are other long codes that aren't the Warframe account ID */
+function idMiss(txt){const t=String(txt||'').trim();const hex=(t.match(/[0-9a-f]{20,}/i)||[''])[0];
+  if(hex&&hex.length!==24)return `That code is ${hex.length} characters long; a Warframe account ID is always 24 (0–9 and a–f). It's probably a ${hex.length===32?'game-log folder code or PlayStation/Xbox ID':'different ID'}, not your Warframe one. Use the warframe.com steps above to get the right one; they work for PS5, Xbox, Switch and PC accounts.`;
+  return t?"No account ID in what you pasted. Use the warframe.com steps above to get it; they work for every platform.":''}
 function idFromText(txt,how){const l=logLogin(txt);const id=l?l.id:findId(txt);if(id){setWfid(id,how,l&&l.name);return true}return false}
 async function idPaste(){let txt='';
   try{txt=await navigator.clipboard.readText()}catch(e){}
   if(txt&&idFromText(txt))return;
   const f=$('#wfid');if(f){f.focus();f.select&&f.select()}
-  toast(txt?"No account ID in what you copied. Use the console line or bookmark above to get it.":"Press and hold the box, then tap Paste.")}
+  toast(txt?idMiss(txt):"Press and hold the box, then tap Paste.")}
 document.addEventListener('click',e=>{const t=e.target.closest('#idpaste,#idcode,#idmark,#idmarkcopy,#idpendok,#idpendno');if(!t)return;e.preventDefault();
   if(t.id==='idpaste')idPaste();
   else if(t.id==='idcode')copy(ID_CODE,'Copied. Paste it into the console on warframe.com.');
@@ -3941,7 +3945,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('#idpaste,#idcode
   else{state.idPending='';render();toast('Not linked.')}});
 /* pasting the copied page anywhere on the Account tab works too */
 document.addEventListener('paste',e=>{if(!$('#idpaste')||/^[0-9a-f]{24}$/i.test(P.wfid||''))return;const tg=e.target;if(tg&&tg.matches&&tg.matches('input,textarea')&&tg.id!=='wfid')return;
-  const txt=(e.clipboardData||window.clipboardData).getData('text');if(txt&&idFromText(txt)){e.preventDefault()}});
+  const txt=(e.clipboardData||window.clipboardData).getData('text');if(!txt)return;if(idFromText(txt))e.preventDefault();else if(tg&&tg.id==='wfid'&&/[0-9a-f]{20,}/i.test(txt))toast(idMiss(txt))});
 /* EE.log: only trust the game's own login line, "Logged in <name> (<id>)". Other IDs in the log belong to squadmates, clans or sessions. */
 function logLogin(txt){const re=/Logged in (.+?) \(([0-9a-f]{24})\)/gi;let m,last=null;while((m=re.exec(String(txt||''))))last={name:m[1].trim(),id:m[2].toLowerCase()};return last}
 {const _fi=findId;findId=function(text){const l=logLogin(text);return l?l.id:_fi(text)}}
@@ -3971,7 +3975,7 @@ document.addEventListener('change',e=>{const t=e.target;
   if(t.id==='msort'){state.mkSort=t.value;render()}
   if(t.id==='tgt'){state.target=+t.value;render()}
   if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
-  if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast('No 24-character account ID found in that text.')}
+  if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast(typeof idMiss==='function'?idMiss(t.value):'No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.dw){const id=t.dataset.dw;P.dw=P.dw||{};if(t.checked)P.dw[id]=Date.now();else delete P.dw[id];logDW(id,t.checked);saveProfile();const y=scrollY;render();scrollTo(0,y);
