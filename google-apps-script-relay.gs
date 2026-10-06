@@ -14,22 +14,28 @@
  *  5. Put that URL in firebase-config.js as window.TENNO_PROXY.
  *
  * It only accepts a 24-character Warframe account ID and only reads the public profile.
+ * Add &platform=ps|xb|sw|ios|and to read a console or mobile profile (each platform has its own server
+ * unless cross-save is on); without it, the PC server is used.
  */
+var HOSTS = { pc: 'api', ps: 'api-ps4', xb: 'api-xb1', sw: 'api-swi', ios: 'api-mob', and: 'api-and' };
 function doGet(e) {
   var id = String((e && e.parameter && e.parameter.playerId) || '').trim();
   if (!/^[0-9a-f]{24}$/i.test(id)) return json_({ error: 'Send ?playerId= with a 24-character account ID' });
+  var plat = String((e.parameter && e.parameter.platform) || 'pc');
+  var host = HOSTS[plat] || 'api';
   var cache = CacheService.getScriptCache();
-  var hit = cache.get('p' + id);
+  var hit = cache.get('p' + plat + id);
   if (hit) return text_(hit);
-  var r = UrlFetchApp.fetch('https://api.warframe.com/cdn/getProfileViewingData.php?playerId=' + id, {
+  var r = UrlFetchApp.fetch('https://' + host + '.warframe.com/cdn/getProfileViewingData.php?playerId=' + id, {
     muteHttpExceptions: true,
     followRedirects: true,
     headers: { 'Accept': 'application/json,text/plain,*/*' }
   });
   var code = r.getResponseCode();
   var body = r.getContentText();
+  if (code === 409) return json_({ error: 'No profile for this account on that platform. Check where you play.' });
   if (code !== 200 || body.indexOf('"Results"') < 0) return json_({ error: 'Warframe answered ' + code });
-  if (body.length < 95000) cache.put('p' + id, body, 300); // keep 5 minutes when it fits the cache
+  if (body.length < 95000) cache.put('p' + plat + id, body, 300); // keep 5 minutes when it fits the cache
   return text_(body);
 }
 function text_(s) { return ContentService.createTextOutput(s).setMimeType(ContentService.MimeType.JSON); }

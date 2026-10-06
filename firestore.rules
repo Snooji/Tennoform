@@ -233,6 +233,35 @@ service cloud.firestore {
         && data().uid == me() && shortStr(data().room, 40) && shortStr(data().name, 40) && shortStr(data().flag, 40)
         && data().text is string && data().text.size() > 0 && data().text.size() <= 500 && data().at is number;
     }
+    // Profile pictures, stored inline as small images. Anyone can look one up; you set or remove your own,
+    // and admins can remove any. Nobody but admins can list them all.
+    match /avatars/{uid} {
+      allow get: if true;
+      allow list: if isAdmin();
+      allow delete: if (signedIn() && me() == uid) || isAdmin();
+      allow create, update: if signedIn() && me() == uid && notBanned()
+        && data().keys().hasOnly(['img', 'at']) && data().at is number
+        && data().img is string && data().img.size() <= 60000
+        && data().img.matches('data:image/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+');
+    }
+    // Clan and alliance room leaders: only admins appoint them. Members of the room can see who they are.
+    match /roomlead/{room} {
+      allow get: if inRoom(room) || isAdmin();
+      allow list, write: if isAdmin();
+    }
+    // Clan and alliance room backgrounds: members can see them; only that room's leaders (or an admin) change them.
+    match /roombg/{room} {
+      function isLead() {
+        return signedIn() && exists(/databases/$(database)/documents/roomlead/$(room))
+          && me() in get(/databases/$(database)/documents/roomlead/$(room)).data.uids;
+      }
+      allow get: if inRoom(room) || isAdmin();
+      allow delete: if isAdmin() || (inRoom(room) && isLead());
+      allow create, update: if room.matches('(c|a)_[0-9a-f]{24}') && (isAdmin() || (notBanned() && inRoom(room) && isLead()))
+        && data().keys().hasOnly(['img', 'by', 'at']) && data().by == me() && data().at is number
+        && data().img is string && data().img.size() <= 400000
+        && data().img.matches('data:image/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+');
+    }
     // Banned players can't post or send to review. Only admins manage bans; you can see if you're banned.
     match /bans/{uid} {
       allow read: if isAdmin() || (signedIn() && me() == uid);

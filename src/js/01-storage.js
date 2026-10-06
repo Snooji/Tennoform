@@ -26,9 +26,3 @@ async function attach(dr,pr,info){docRef=dr;profRef=pr;
 function detach(){flushNow();docRef=null;profRef=null;synced=false;acct=null;render()}
 function flushNow(){if(!docRef)return;clearTimeout(timer);flush();clearTimeout(ptimer);if(profRef)profRef.set(JSON.parse(JSON.stringify(P))).catch(()=>{})}
 window.addEventListener('pagehide',flushNow);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flushNow()});
-(async()=>{try{
-  if(!window.claude||!claude.use)return;
-  const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
-  if(!db||!user)return;const id=await user.id();if(!id)return;
-  await attach(db.doc('data/users/'+id+'/progress'),db.doc('data/users/'+id+'/profile'),{kind:'claude'});
-}catch(e){}})();

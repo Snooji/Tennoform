@@ -59,6 +59,21 @@ export type TFApi = {
   communitySet(o: { room?: string }): void
   communitySend(text: string): Promise<boolean>
   chatDelete(id: string): void
+  chat(): ChatPageData
+  avatarSet(): void
+  avatarRemove(uid?: string): void
+  myAvatar(): string
+  roomBgSet(): void
+  roomBgRemove(): void
+  leadData(): LeadData
+  leadReload(): void
+  leadToggle(room: string, uid: string): void
+  person(uid: string): { rel: "me" | "friend" | "pending" | "asked" | "blocked" | "none"; av: string; signed: boolean }
+  friendAddUid(uid: string, name: string): void
+  blockPerson(uid: string, name: string): void
+  unblockPerson(uid: string): void
+  chatGo(id: string, nav?: boolean): void
+  chatCloseTab(id: string): void
   modData(): ModData
   modReload(): void
   modPublish(id: string): void
@@ -225,9 +240,13 @@ export type CollectionItem = { n: string; img: string; r: number; mx: number; ha
 export type CollectionData = { f: string; q: string; owned: number; mastered: number; level: number; total: number; inv: number
   cats: { id: string; label: string; owned: number; mastered: number; level: number; total: number; items: CollectionItem[] }[] }
 export type PlayerStats = { loading: boolean; err: string; data: { live: number; hour: number; dau: number; wau: number; mau: number; total: number; tracked: number; hist: { d: string; n: number }[]; ago: string } | null }
-export type CommunityMsg = { id: string; who: string; text: string; time: string; mine: boolean; uid: string; held: boolean }
+export type ChatTab = { id: string; label: string; title: string; hint: string; kind: "public" | "clan" | "alliance" | "friend" | "group"; unread: number; closable: boolean }
+export type ChatPageData = { tabs: ChatTab[]; cur: string; conv: boolean; signed: boolean; synced: boolean; openable: { id: string; label: string; kind: "friend" | "group" }[] }
+export type CommunityMsg = { id: string; who: string; text: string; time: string; mine: boolean; uid: string; held: boolean; av: string }
+export type LeadData = { err: string; loading: boolean; rooms: { id: string; label: string; members: { uid: string; name: string; lead: boolean }[] }[] }
 export type CommunityData = { hosted: boolean; ready: boolean; signed: boolean; admin: boolean; banned: boolean; room: string; synced: boolean
-  rooms: { id: string; label: string; hint: string; kind: "public" | "clan" | "alliance" }[]; loading: boolean; err: string; msgs: CommunityMsg[] }
+  rooms: { id: string; label: string; hint: string; kind: "public" | "clan" | "alliance" }[]; loading: boolean; err: string; msgs: CommunityMsg[]
+  bg: string; lead: boolean; leadRoom: boolean; myAv: string }
 export type ModData = { err: string; loading: boolean
   list: { id: string; room: string; uid: string; name: string; text: string; flag: string; at: string }[]
   bans: { uid: string; name: string; reason: string; at: string }[] }
@@ -513,15 +532,16 @@ export type SquadMsg = {
 }
 export type SquadData = {
   status: "ok" | "offline" | "loading" | "unavailable" | "signin"
-  code: string; newGroup: boolean
-  requests: { id: string; name: string; code: string }[]
+  code: string; newGroup: boolean; me?: string
+  requests: { id: string; name: string; code: string; from: string }[]
+  blocked: { uid: string; name: string }[]
   groups: { id: string; name: string; members: number; unread: number }[]
-  friends: { uid: string; name: string; pending: boolean; mr: string; xp: string; unread: number }[]
+  friends: { uid: string; name: string; pending: boolean; mr: string; xp: string; unread: number; av: string }[]
   pickable: { uid: string; name: string }[]
   tasks: { id: string; t: string }[]
   chat: null | {
     type: "friend" | "group"; id: string; name: string; code: string; pending: boolean; members: string
-    addable: { uid: string; name: string }[]; log: SquadMsg[]
+    addable: { uid: string; name: string }[]; log: SquadMsg[]; av?: string
   }
   compare: null | { names: string[]; rows: { label: string; vals: { v: string; top: boolean }[] }[] }
 }
@@ -548,7 +568,7 @@ export type BuildCard = {
 }
 export type BuildDetail = BuildCard & {
   notes: string; helminth: string; mine: boolean; doc: string; mods: ModSlot[]; arcanes: ModSlot[]
-  itemOwned: boolean; itemGoal: boolean; canVote: boolean
+  itemOwned: boolean; itemGoal: boolean; canVote: boolean; authorUid: string
 }
 export type BuildLibData = {
   q: string; kind: string; src: string; sort: string; total: number; more: boolean; list: BuildCard[]

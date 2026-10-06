@@ -75,7 +75,7 @@ document.addEventListener('click',async e=>{
   else if(t.id==='mishide'){state.misHide=!state.misHide;saveUI();render()}
   else if(t.id==='imp'){const msg=importProfile($('#pj').value);render();toast(msg)}
   else if(t.id==='bk-copy'){copy(backupCode(),'Backup code copied')}
-  else if(t.id==='bk-file'){if(HOSTED){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([backupCode()],{type:'text/plain'}));a.download='tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt';document.body.appendChild(a);a.click();a.remove();toast('Backup saved');return}try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:'tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt',data:backupCode()});toast('Backup saved')}catch(err){toast('Saving files isn\'t available here. Use Copy backup code instead.')}}
+  else if(t.id==='bk-file'){saveFile('tennoform-backup-'+new Date().toISOString().slice(0,10)+'.txt',backupCode(),'text/plain');}
   else if(t.id==='bk-restore'){if(restore($('#bk-in').value)){render();toast('Progress restored')}else toast('That code didn\'t work. Paste the full backup code.')}});
 function focusQuest(){if(!state.qFocus)return;const el=document.getElementById('q-'+state.qFocus.replace(/\W/g,''));state.qFocus=null;if(el){const d=el.closest('details');if(d)d.open=true;el.scrollIntoView({block:'center',behavior:'smooth'});el.style.background='var(--cyan-soft)';setTimeout(()=>el.style.background='',1600)}}
 function liveSearch(id,key){const q=$(id);if(!q)return;q.addEventListener('input',()=>{state[key]=q.value;const pos=q.selectionStart;render();const n=$(id);n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}})}

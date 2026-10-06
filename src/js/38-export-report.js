@@ -23,6 +23,5 @@ function reportHTML(){const t=totalXP(),m=mrInfo(t.total);const now=new Date();c
   ${sec('Last sync',`<pre>${e(JSON.stringify(P.lastSync||null,null,1))}</pre>`)}
   ${sec('Raw data',`<details><summary>Show</summary><pre>${e(JSON.stringify({v:3,c:C,p:P}))}</pre></details>`)}
   </body></html>`}
-async function saveFile(name,text,type){if(HOSTED){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast('Saved '+name);return}
-  try{const dl=window.claude&&claude.use?await claude.use('downloads'):null;if(!dl)throw 0;await dl.save({filename:name,data:text});toast('Saved '+name)}catch(e){toast('Saving files isn\'t available here.')}}
+function saveFile(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast('Saved '+name)}
 

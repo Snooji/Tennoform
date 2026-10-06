@@ -5,15 +5,18 @@ A free Warframe companion for keeping track of where you are and what to do next
 **https://tennoform.com**
 
 - Mastery rank: what you've ranked, what's left, and a plan for the next rank
+- My collection: everything you own and everything you've mastered in one place; mark what you own or don't, and undo an accidental rank
 - Star chart, quests and syndicates
 - Farm finder for resources, credits, standing and affinity
 - Relics, refinements, ducats and Prime parts you still need
 - Builds: community picks and player-shared builds you can vote on, copy or save as a goal
+- Market: warframe.market prices for Prime sets and parts, plus mods and arcanes with each seller's rank
 - Today: resets, Sortie, Archon Hunt, fissures, Baro and Nightwave
 - Guides for every quest and mission type
-- Friends, chats and shared tasks
+- Chat: one window with a tab for General, Trading, LFG, your clan, your alliance and each friend or group conversation. Profile pictures, clan and alliance backgrounds set by leaders, and a filter that holds illegal or extremely explicit messages for review
+- Friends: add by friend code or by tapping someone in Chat or on a shared build (they accept first), group chats, shared tasks, blocking
 
-Progress saves in your browser. Sign in to keep it on every device. Link your Warframe account ID to fill in ranks, star chart and quests from your public profile.
+Progress saves in your browser. Sign in to keep it on every device. Link your Warframe account ID to fill in ranks, star chart and quests from your public profile; pick where you play (PC, PlayStation, Xbox, Switch, iPhone or Android) so sync reads the right profile. **Reset sync** shows what a fresh sync would add or remove and lets you choose item by item. Tennoform never asks for your Warframe password.
 
 ## Data
 
@@ -35,6 +38,8 @@ python build/make_site.py                # src/ + data -> index.html
 - `build/guides/` and `build/farms/` hold the guide and farm-route data (each has a `SCHEMA.md` and `merge.py`).
 - `python build/refresh_market.py` updates prices; the `refresh` workflow runs it daily.
 
-Commit `src/`, `app/`, `assets/` and `index.html` together. Firebase setup is in `SETUP.md`.
+Commit `src/`, `app/`, `assets/` and `index.html` together. Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
+
+The Backend page (admins only) shows players online, daily and total users, feedback, donations, the chat review queue, bans, and who leads each clan and alliance chat.
 
 Not affiliated with Digital Extremes. Warframe is a trademark of Digital Extremes Ltd.
