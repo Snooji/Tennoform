@@ -83,7 +83,7 @@ document.addEventListener('change',e=>{const t=e.target;if(t&&t.id==='wfhfile'&&
 const WF_PLATS=[['pc','PC or cross-save','api',true],['ps','PlayStation','api-ps4',false],['xb','Xbox','api-xb1',false],['sw','Switch','api-swi',false],['ios','iPhone / iPad','api-mob',false],['and','Android','api-and',false]];
 function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]}}
 function platPickHTML(){const cur=wfPlat();
-  return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there.</span></span>
+  return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there. Synced progress looks wrong or like an old account? That's usually the PC profile being read for a console or mobile account: pick your platform, then use Reset sync to clear what came in.</span></span>
   <div class="row" role="radiogroup" aria-label="Where you play" style="gap:6px">${WF_PLATS.map(([id,l])=>`<button type="button" class="btn sm${cur.id===id?' primary':''}" role="radio" aria-checked="${cur.id===id}" data-wfplat="${id}">${esc(l)}</button>`).join('')}</div>
   ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});

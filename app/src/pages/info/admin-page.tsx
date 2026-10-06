@@ -123,6 +123,49 @@ function Donations({ d }: { d: AdminData }) {
   )
 }
 
+/** Signed-in players: live now, today, this week and month, total, and the last 14 days. */
+function Players() {
+  const s = useTFData(() => tf().playerStats())
+  const d = s.data
+  const max = d ? Math.max(1, ...d.hist.map((h) => h.n)) : 1
+  return (
+    <Card className="gap-3 px-5">
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 className="font-heading text-lg leading-tight font-semibold">Players</h2>
+        <span className="text-xs text-muted-foreground">{d ? `Signed-in players · updated ${d.ago} · refreshes every minute` : s.loading ? "Loading…" : ""}</span>
+        <Button variant="ghost" size="sm" className="ml-auto h-8" disabled={s.loading} onClick={() => tf().playerStatsReload()}><RefreshCw className={s.loading ? "animate-spin" : ""} /> Refresh</Button>
+      </div>
+      {s.err ? (
+        <p className="text-sm text-amber-800 dark:text-amber-300">{s.err === "permission" ? "Firebase blocked the player counts. Publish the latest firestore.rules from GitHub (Firestore Database → Rules → Publish), then tap Refresh." : `Couldn't load player counts (${s.err}).`}</p>
+      ) : d ? (
+        <>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            <Tile k="Live now" v={String(d.live)} x="active in the last 5 min" />
+            <Tile k="Last hour" v={String(d.hour)} x="active in the last hour" />
+            <Tile k="Today (DAU)" v={String(d.dau)} x="since 00:00 UTC" />
+            <Tile k="7 days" v={String(d.wau)} x="weekly active" />
+            <Tile k="30 days" v={String(d.mau)} x="monthly active" />
+            <Tile k="Total users" v={String(d.total)} x="have signed in" />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-xs text-muted-foreground">Daily players, last 14 days (UTC)</span>
+            <ol className="flex h-24 items-end gap-1" aria-label="Daily players, last 14 days">
+              {d.hist.map((h) => (
+                <li key={h.d} className="flex h-full flex-1 flex-col items-center justify-end gap-1" aria-label={`${h.d}: ${h.n}`}>
+                  <span className="text-[10px] text-muted-foreground tabular-nums">{h.n || ""}</span>
+                  <span className="w-full rounded-t bg-primary/70" style={{ height: `${(h.n / max) * 100}%`, minHeight: h.n ? 4 : 1 }} />
+                  <span className="text-[10px] text-muted-foreground tabular-nums">{h.d.slice(8)}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <p className="text-xs text-muted-foreground">Counts only signed-in players. Live and daily numbers start from this update; total includes everyone who has signed in before.</p>
+        </>
+      ) : <p className="text-sm text-muted-foreground" role="status">Loading player counts…</p>}
+    </Card>
+  )
+}
+
 export function AdminPage() {
   const d = useTFData(() => tf().admin())
   return (
@@ -149,6 +192,7 @@ export function AdminPage() {
           </Card>
         ) : (
           <>
+            <Players />
             <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
               <Tile k="Open feedback" v={String(d.open)} x={`${d.fbTotal} total`} />
               <Tile k="PayPal this month" v={d.totals!.usdM} x={`${d.totals!.usd} all time`} />

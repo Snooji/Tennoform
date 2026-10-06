@@ -45,3 +45,5 @@
 .footcta .ic{width:14px;height:14px}
 body:has(#tf-home-links) .footcta{display:none}
 .sitefoot .feeds .linkbtn{padding:8px 4px;margin:-8px 0}
+/* dialogs sit above the phone tab bar (z 70) */
+.dlgbk{z-index:80}

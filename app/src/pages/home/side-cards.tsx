@@ -72,6 +72,42 @@ export function TodayCard({ d }: { d: HomeData }) {
   )
 }
 
+/** What you have: owned and mastered gear, with a link to the full collection. */
+export function CollectionCard() {
+  const c = tf().collection()
+  return (
+    <Card size="sm">
+      <CardHeader>
+        <CardTitle>
+          <h2 className="font-heading text-lg leading-tight font-semibold">My collection</h2>
+        </CardTitle>
+        <CardAction>
+          <a href="#collection" className={cardLink}>See all</a>
+        </CardAction>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        <div className="grid grid-cols-3 gap-2 text-center">
+          {[["Owned", c.owned], ["Mastered", c.mastered], ["To level", c.level]].map(([k, v]) => (
+            <a key={k as string} href="#collection" onClick={() => tf().collectionSet({ f: k === "Owned" ? "owned" : k === "Mastered" ? "mastered" : "level" })} className="rounded-xl bg-muted/40 px-2 py-2 hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
+              <b className="block font-heading text-xl font-semibold tabular-nums">{v as number}</b>
+              <span className="text-xs text-muted-foreground">{k as string}</span>
+            </a>
+          ))}
+        </div>
+        <ul className="flex flex-col gap-1.5 text-sm">
+          {c.cats.filter((x) => x.owned).sort((a, b) => b.owned - a.owned).slice(0, 4).map((x) => (
+            <li key={x.id} className="flex items-center gap-2">
+              <span className="min-w-0 flex-1 truncate">{x.label}</span>
+              <span className="text-xs text-muted-foreground tabular-nums">{x.owned} owned · {x.mastered}/{x.total} mastered</span>
+            </li>
+          ))}
+          {!c.owned ? <li className="text-muted-foreground">Nothing yet. Sync your profile or tap what you own on Ranks.</li> : null}
+        </ul>
+      </CardContent>
+    </Card>
+  )
+}
+
 export function GoalsCard({ d }: { d: HomeData }) {
   return (
     <Card size="sm">

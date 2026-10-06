@@ -63,7 +63,7 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
   try{for(const g of SO.groups){if(g.owner===uid)await fs.collection('groups').doc(g.id).delete().catch(()=>{});else await fs.collection('groups').doc(g.id).update({members:firebase.firestore.FieldValue.arrayRemove(uid),at:Date.now()}).catch(()=>{})}
     const del=async col=>{const s=await col.get();await Promise.all(s.docs.map(d=>d.ref.delete()))};
     await del(fs.collection('inbox').doc(uid).collection('msgs')).catch(()=>{});await del(fs.collection('users').doc(uid).collection('friends')).catch(()=>{});
-    await fs.collection('public').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
+    await fs.collection('public').doc(uid).delete().catch(()=>{});await fs.collection('presence').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
     docRef=null;profRef=null;await fs.collection('users').doc(uid).collection('data').doc('progress').delete().catch(()=>{});await fs.collection('users').doc(uid).collection('data').doc('profile').delete().catch(()=>{});
     socialStop();await u.delete();toast('Your account and its data were deleted. Progress in this browser was kept.');render()}
   catch(e){toast(e&&e.code==='auth/requires-recent-login'?'Sign out and back in, then try again.':'Couldn\'t finish deleting. Try again.')}}

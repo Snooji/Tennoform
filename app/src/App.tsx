@@ -24,6 +24,7 @@ function page<M>(load: () => Promise<M>, pick: (m: M) => React.ComponentType) {
   return lazy(() => load().then((m) => ({ default: pick(m) })))
 }
 const RanksPage = page(() => import("@/pages/ranks/ranks-page"), (m) => m.RanksPage)
+const CollectionPage = page(() => import("@/pages/collection/collection-page"), (m) => m.CollectionPage)
 const FarmPage = page(() => import("@/pages/farm/farm-page"), (m) => m.FarmPage)
 const TodayPage = page(() => import("@/pages/today/today-page"), (m) => m.TodayPage)
 const AchievementsPage = page(() => import("@/pages/achievements/achievements-page"), (m) => m.AchievementsPage)
@@ -56,6 +57,7 @@ function preloadPages() {
 /** Pages rebuilt in React. The old app renders nothing for these. */
 const PAGES: Record<string, React.ComponentType> = {
   ranks: RanksPage,
+  collection: CollectionPage,
   farm: FarmPage,
   today: TodayPage,
   achievements: AchievementsPage,

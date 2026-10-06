@@ -1,9 +1,11 @@
 /* ---------- helpers ---------- */
 function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(v==null)return'';
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
-function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}" for ${s[1]} platinum. (warframe.market)`}
+/* sellers: [name, platinum, quantity, reputation, status, rank]; rank is set for mods and arcanes (0 = unranked) */
+const rankTxt=r=>r==null?'':r===0?'Unranked':'Rank '+r;
+function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}${s[5]!=null?` (rank ${s[5]})`:''}" for ${s[1]} platinum. (warframe.market)`}
 function sellerRow(item){const s=(SEL[item]||[]).filter(x=>x[0]!=='__buy');if(!s.length)return'';const b=s[0];
-  return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
+  return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[5]!=null?`<span class="chip" title="Rank of the mod or arcane being sold">${rankTxt(b[5])}</span>`:''}${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
 function farmFor(rn){const r=RES[rn];
   if(RT[rn]){const t=RT[rn].tiers;const best=r&&r.best;const pick=(t['Mid game']||[])[0]||(t['Early game']||[])[0];return (best?`<b>${esc(best)}</b>`:pick?`<b>${esc(pick[0])}</b> (${esc(pick[1])})`:'')+` · <a class="ln" href="#" data-go="res|${esc(rn)}">farms by stage</a>`}
   const s=RSRC[rn];if(s&&s.length)return `<b>${esc(s[0][0])}</b>${s[0][1]?' — '+esc(s[0][1]):''}${s.length>1?` · <a class="ln" href="#" data-go="res|${esc(rn)}">${s.length} options</a>`:''}`;

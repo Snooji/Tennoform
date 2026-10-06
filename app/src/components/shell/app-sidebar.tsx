@@ -21,6 +21,9 @@ export function Logo({ className }: { className?: string }) {
   return <span aria-hidden className={className} dangerouslySetInnerHTML={{ __html: tf().logo() }} />
 }
 
+/** Pages that share a menu entry with another page (the switch at the top of each moves between them). */
+const PAIRED_WITH: Record<string, string> = { tasks: "goals", quests: "missions" }
+
 export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (o: boolean) => void }) {
   const s = useTF()
   const nav = tf().nav()
@@ -48,7 +51,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
             <SidebarMenu>
               {place.pages.map((p) => {
                 const Icon = PAGE_ICON[p.route] ?? PAGE_ICON.home
-                const active = s.route === p.route
+                const active = s.route === p.route || PAIRED_WITH[s.route] === p.route
                 return (
                   <SidebarMenuItem key={p.route}>
                     <SidebarMenuButton
