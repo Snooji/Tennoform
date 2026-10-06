@@ -55,6 +55,16 @@ export type TFApi = {
   ranksMore(all?: boolean): void
   ranksRefresh(): void
   setRank(n: string, r: number): void
+  community(): CommunityData
+  communitySet(o: { room?: string }): void
+  communitySend(text: string): Promise<boolean>
+  chatDelete(id: string): void
+  modData(): ModData
+  modReload(): void
+  modPublish(id: string): void
+  modRemove(id: string, ban: boolean): void
+  modBan(uid: string, name: string, reason: string): void
+  modUnban(uid: string): void
   playerStats(): PlayerStats
   playerStatsReload(): void
   collection(): CollectionData
@@ -215,6 +225,12 @@ export type CollectionItem = { n: string; img: string; r: number; mx: number; ha
 export type CollectionData = { f: string; q: string; owned: number; mastered: number; level: number; total: number; inv: number
   cats: { id: string; label: string; owned: number; mastered: number; level: number; total: number; items: CollectionItem[] }[] }
 export type PlayerStats = { loading: boolean; err: string; data: { live: number; hour: number; dau: number; wau: number; mau: number; total: number; tracked: number; hist: { d: string; n: number }[]; ago: string } | null }
+export type CommunityMsg = { id: string; who: string; text: string; time: string; mine: boolean; uid: string; held: boolean }
+export type CommunityData = { hosted: boolean; ready: boolean; signed: boolean; admin: boolean; banned: boolean; room: string; synced: boolean
+  rooms: { id: string; label: string; hint: string; kind: "public" | "clan" | "alliance" }[]; loading: boolean; err: string; msgs: CommunityMsg[] }
+export type ModData = { err: string; loading: boolean
+  list: { id: string; room: string; uid: string; name: string; text: string; flag: string; at: string }[]
+  bans: { uid: string; name: string; reason: string; at: string }[] }
 export type RanksExtra = { owned?: number; signedIn?: boolean }
 export type RankItem = { n: string; img: string; mr: number; r: number; mx: number; xp: number; max: number; per: number; prime: boolean; vaulted: boolean; resurgence: boolean; owned: boolean; notOwned: boolean; has: boolean; relics: boolean }
 export type RanksData = {

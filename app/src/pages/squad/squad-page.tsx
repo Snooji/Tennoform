@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type SquadData, type SquadMsg } from "@/lib/tf"
 import { SignInCard } from "@/pages/home/side-cards"
+import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Community } from "./community"
 
 const initial = (n: string) => (n.trim()[0] || "T").toUpperCase()
 
@@ -296,11 +298,31 @@ function Compare({ d }: { d: SquadData }) {
 }
 
 export function SquadPage() {
+  const [view, setViewS] = useState<"friends" | "community">(() => { try { return localStorage.getItem("tf-squadview") === "community" ? "community" : "friends" } catch { return "friends" } })
+  const setView = (v: string) => { const x = v === "community" ? "community" : "friends"; setViewS(x); try { localStorage.setItem("tf-squadview", x) } catch { /* private mode */ } }
+  const sw = <HaloSegmented className="self-start" value={view} onValueChange={setView} items={[{ value: "friends", label: "Friends" }, { value: "community", label: "Community" }]} />
+  if (view === "community") {
+    return (
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
+        <header className="flex flex-col gap-1">
+          <span className="text-xs text-muted-foreground">Squad</span>
+          <h1 className="font-heading text-3xl font-semibold">Community</h1>
+        </header>
+        {sw}
+        <Community />
+      </div>
+    )
+  }
+  return <Friends sw={sw} />
+}
+
+function Friends({ sw }: { sw: React.ReactNode }) {
   const d = useTFData(() => tf().squad())
   if (d.status !== "ok") {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
         <Head />
+        {sw}
         {d.status === "signin" ? <><p className="text-sm">Friends, messages and shared tasks are tied to your account. Sign in to add friends.</p><SignInCard /></>
           : <Card className="px-5 text-sm" role="status">
               {d.status === "offline" ? <>Friends and messages work on <a href="https://tennoform.com/#friends" target="_blank" rel="noopener" className="underline decoration-primary/50 underline-offset-4">tennoform.com</a> after you sign in.</>
@@ -314,6 +336,7 @@ export function SquadPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <div className={cn("flex flex-col gap-4", inChat && "max-md:hidden")}>
         <Head />
+        {sw}
         <CodeCards d={d} />
         <Requests d={d} />
         {d.newGroup ? <NewGroup d={d} /> : null}
