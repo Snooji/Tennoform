@@ -13,7 +13,7 @@ const _cmdIndex=cmdIndex;cmdIndex=function(){if(CMDX)return CMDX;const x=_cmdInd
   return CMDX=x};
 CMDG.unshift('Guides');
 const CMD_STOP=new Set(['how','to','do','i','get','the','a','an','unlock','unlocking','unlocked','where','is','what','find','for','can','you','my','in','of','guide','quest','open','start','make','build','farm','obtain']);
-const _cmdFind=cmdFind;cmdFind=function(q){const raw=(q||'').toLowerCase().replace(/[.?!,:;]+/g,' ').trim();const k=raw.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w)).join(' ');
+const _cmdFind=cmdFind;cmdFind=function(q){const raw=(q||'').toLowerCase().replace(/[.?!,:;_]+/g,' ').trim();const k=raw.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w)).join(' ');
   if(k&&k!==raw){const r=_cmdFind(k);if(r.length)return r}return _cmdFind(raw)};
 const _go=go;go=function(t){if(t.startsWith('guide|')){state.gSel=t.slice(6);state.gQ='';if(location.hash!=='#guides')location.hash='guides';else render();window.scrollTo(0,0);return}_go(t)};
 function guides(){const k=state.gF||'all';const L=GUIDES.filter(g=>k==='all'||g.kind===k);

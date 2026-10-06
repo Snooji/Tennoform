@@ -62,8 +62,8 @@ export function TennoPage() {
         </TabsList>
         </div>
       </Tabs>
-      {d.tab === "account" ? <InventoryImport /> : null}
       {d.tab === "inventory" ? <Inventory d={d} /> : <Island key={d.tab} html={d.html} />}
+      {d.tab === "account" ? <InventoryImport /> : null}
     </div>
   )
 }

@@ -28,10 +28,12 @@ export function InventoryImport() {
   return (
     <Card className="gap-3 px-5">
       <div className="flex flex-col gap-1">
-        <h2 className="font-heading text-lg leading-tight font-semibold">Import your full inventory</h2>
+        <span className="text-xs text-muted-foreground">Optional · PC players</span>
+        <h2 className="font-heading text-lg leading-tight font-semibold">Add your full inventory</h2>
         <p className="text-sm text-muted-foreground">
-          The profile sync only sees ranks, missions and syndicates. Upload your <b className="font-medium text-foreground">inventory.json</b> to also fill in the gear you own,
-          blueprints and parts, mods, arcanes, relics, resources and your Foundry. The file is read on this device and never uploaded; only the results are saved.
+          Linking your account ID above is all most players need: it keeps your ranks, star chart, syndicates and quests in sync. If you play on PC and want
+          Tennoform to also know the gear you own, blueprints and parts, mods, arcanes, relics, resources and your Foundry, upload an <b className="font-medium text-foreground">inventory.json</b> here.
+          It's read on this device; only the results are saved.
         </p>
       </div>
       <div

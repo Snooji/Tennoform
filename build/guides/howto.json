@@ -1,37 +1,153 @@
 [
  {
   "id": "import-inventory",
-  "n": "Import your full inventory",
+  "n": "Add your full inventory (optional, PC)",
   "kind": "system",
-  "aka": ["inventory sync", "full sync", "import inventory", "inventory.json", "sync account", "sync inventory", "alecaframe", "warframe-api-helper", "upload inventory"],
-  "sum": "Warframe's public profile only shares ranks, missions and syndicates. To also fill in the gear you own, blueprints and parts, mods, arcanes, relics, resources and your Foundry, download your inventory file with a free community tool and upload it to Tennoform. Takes about two minutes on PC.",
+  "aka": [
+   "inventory sync",
+   "full sync",
+   "import inventory",
+   "inventory.json",
+   "sync account",
+   "sync inventory",
+   "alecaframe",
+   "warframe-api-helper",
+   "upload inventory"
+  ],
+  "sum": "Optional extra for PC players. Linking your 24-character account ID is the easy way and keeps your ranks, star chart, syndicates and quests in sync on any device. Uploading an inventory file adds what the ID can't see: the gear you own, blueprints and parts, mods, arcanes, relics, resources and your Foundry.",
   "unlock": {
    "mr": null,
    "quests": [],
-   "other": ["Warframe on PC (the tool reads the running game on Windows or Linux)", "A free community tool such as warframe-api-helper"]
+   "other": [
+    "Link your account ID first (the easy part)",
+    "Warframe on PC (the tool reads the running game on Windows or Linux)",
+    "A free community tool such as warframe-api-helper"
+   ]
   },
   "steps": [
-   {"t": "Download warframe-api-helper from its releases page on GitHub: github.com/Sainan/warframe-api-helper/releases. Pick the newest release and the file for your system.", "tip": "It's an open-source community tool. It isn't made by Tennoform or Digital Extremes."},
-   {"t": "Put the tool in a folder of its own, for example Documents\\warframe-api-helper, so the file it saves is easy to find."},
-   {"t": "Start Warframe and log in until you're standing in your Orbiter."},
-   {"t": "Run warframe-api-helper while the game is still open. It reads your login session from the running game and downloads your inventory from Warframe's own servers, then saves it as inventory.json.", "tip": "If Windows warns that the app is unrecognised, check you downloaded it from the GitHub releases page before choosing Run anyway."},
-   {"t": "Find inventory.json. It's usually in the same folder as the tool; if you can't see it, search your PC for inventory.json.", "tip": "On Linux, the warframe-helper tool saves it to ~/.warframe-helper/inventory.json instead."},
-   {"t": "In Tennoform, open Profile, then Account & sync, and choose the file under Import your full inventory (or drag it onto the box).", "tip": "The file is read on your device and never uploaded. Only the results (what you own and how many) are saved to your progress."},
-   {"t": "Check the summary. If something looks wrong, tap Undo last import to put everything back."},
-   {"t": "Repeat after a play session whenever you want fresh numbers. Each import replaces your relic, resource and Foundry counts with the new file."}
+   {
+    "t": "Download warframe-api-helper from its releases page on GitHub: github.com/Sainan/warframe-api-helper/releases. Pick the newest release and the file for your system.",
+    "tip": "It's an open-source community tool. It isn't made by Tennoform or Digital Extremes."
+   },
+   {
+    "t": "Put the tool in a folder of its own, for example Documents\\warframe-api-helper, so the file it saves is easy to find."
+   },
+   {
+    "t": "Start Warframe and log in until you're standing in your Orbiter."
+   },
+   {
+    "t": "Run warframe-api-helper while the game is still open. It reads your login session from the running game and downloads your inventory from Warframe's own servers, then saves it as inventory.json.",
+    "tip": "If Windows warns that the app is unrecognised, check you downloaded it from the GitHub releases page before choosing Run anyway."
+   },
+   {
+    "t": "Find inventory.json. It's usually in the same folder as the tool; if you can't see it, search your PC for inventory.json.",
+    "tip": "On Linux, the warframe-helper tool saves it to ~/.warframe-helper/inventory.json instead."
+   },
+   {
+    "t": "In Tennoform, open Profile, then Account & sync, and choose the file under Import your full inventory (or drag it onto the box).",
+    "tip": "The file is read on your device and never uploaded. Only the results (what you own and how many) are saved to your progress."
+   },
+   {
+    "t": "Check the summary. If something looks wrong, tap Undo last import to put everything back."
+   },
+   {
+    "t": "Repeat after a play session whenever you want fresh numbers. Each import replaces your relic, resource and Foundry counts with the new file."
+   }
   ],
   "fast": [
    "Keep the tool and its inventory.json in one folder, then importing again takes seconds.",
    "Sign in to Tennoform first: the imported progress then syncs to your phone and other devices.",
    "Run the profile sync too if you haven't: the inventory file and the profile overlap, but the profile sync is what keeps your Mastery Rank and star chart up to date automatically."
   ],
-  "rw": ["Owned gear filled in", "Blueprints and parts", "Mods and arcane copies", "Relics by refinement", "Resource counts", "Foundry timers"],
-  "go": [],
-  "act": {"label": "Open the importer", "route": "tenno", "tab": "account"},
+  "rw": [
+   "Owned gear filled in",
+   "Blueprints and parts",
+   "Mods and arcane copies",
+   "Relics by refinement",
+   "Resource counts",
+   "Foundry timers"
+  ],
+  "go": [
+   "Find your Warframe account ID"
+  ],
+  "act": {
+   "label": "Open the importer",
+   "route": "tenno",
+   "tab": "account"
+  },
   "was": [
    "AlecaFrame keeps its own copy of your inventory, but it's encrypted, so that file can't be uploaded here. Use a tool that saves a plain inventory.json instead.",
    "Tools that read the game's login session, like warframe-api-helper, aren't officially approved by Digital Extremes. They've confirmed Overwolf apps such as AlecaFrame are allowed. Using any third-party tool is at your own risk; Tennoform itself never touches the game.",
    "Tennoform will never ask for your Warframe password. Don't give it to any site or tool."
+  ],
+  "w": ""
+ },
+ {
+  "id": "find-account-id",
+  "n": "Find your Warframe account ID",
+  "kind": "system",
+  "aka": [
+   "account id",
+   "warframe id",
+   "user id",
+   "user_id",
+   "24 digit id",
+   "24 character id",
+   "player id",
+   "f12",
+   "link account",
+   "ee.log"
+  ],
+  "sum": "The easy way to sync Tennoform, on any device. Your account ID is a 24-character code made of the numbers 0–9 and the letters a–f. Tennoform uses it to read your public profile (ranks, mastered gear, star chart, syndicates, quests) and keep it synced. It isn't a password and can't be used to log in.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": []
+  },
+  "steps": [
+   {
+    "t": "On a PC that has Warframe installed, the quickest way: in Tennoform open Profile, then Account & sync, tap Choose EE.log, paste %localappdata%\\Warframe into the file window's address bar, press Enter and pick EE.log. Tennoform finds the ID in it and links your account.",
+    "tip": "Nothing is uploaded; the file is read on your device."
+   },
+   {
+    "t": "On any device (PC, phone, console players too): go to warframe.com and log in at the top right with the account you play on."
+   },
+   {
+    "t": "In the same browser, open www.warframe.com/api/user-data. You'll see a page of plain text."
+   },
+   {
+    "t": "Find \"user_id\" on that page. The 24 letters and numbers right after it are your account ID.",
+    "tip": "Easiest: select everything on the page and copy it all. Tennoform picks the ID out by itself."
+   },
+   {
+    "t": "If that page doesn't show it, use the developer tools on a computer: on warframe.com (logged in) press F12, or right-click the page and choose Inspect, then open the Network tab."
+   },
+   {
+    "t": "Reload the page with F5, type user in the Network tab's filter box, and click the request that appears (usually user-data)."
+   },
+   {
+    "t": "Open its Response or Preview tab and find user_id (sometimes shown as accountId). Copy the 24-character value next to it."
+   },
+   {
+    "t": "Back in Tennoform, open Profile, then Account & sync, and paste it into the box that says Paste your ID or anything containing it. Your profile syncs straight away."
+   }
+  ],
+  "fast": [
+   "On PC, the EE.log button is one tap and never needs a browser.",
+   "Copying the whole user-data page is fine: Tennoform only keeps the 24-character ID.",
+   "Once linked, your profile re-syncs by itself; you only do this once per device, or once in total if you're signed in to Tennoform."
+  ],
+  "rw": [],
+  "go": [],
+  "act": {
+   "label": "Open Account & sync",
+   "route": "tenno",
+   "tab": "account"
+  },
+  "was": [
+   "The account ID is not the same as your in-game name (alias) or your platform's user name. It's always exactly 24 characters, using only 0–9 and a–f.",
+   "The user-data page can also show your email address. Only paste it into Tennoform, never into a public chat or post. Tennoform keeps only the ID.",
+   "Developer tools (F12) aren't available on phones. On a phone, use the warframe.com/api/user-data page instead."
   ],
   "w": ""
  }
