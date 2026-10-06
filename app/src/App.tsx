@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { lazy, Suspense, useEffect, useState } from "react"
 import { toast } from "sonner"
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -11,33 +11,35 @@ import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
 import { HomePage } from "@/pages/home/home-page"
-import { RanksPage } from "@/pages/ranks/ranks-page"
-import { FarmPage } from "@/pages/farm/farm-page"
-import { TodayPage } from "@/pages/today/today-page"
-import { AchievementsPage } from "@/pages/achievements/achievements-page"
-import { TasksPage } from "@/pages/tasks/tasks-page"
-import { GoalsPage } from "@/pages/goals/goals-page"
-import { QuestsPage } from "@/pages/quests/quests-page"
-import { MasteryPage } from "@/pages/mastery/mastery-page"
-import { MissionsPage } from "@/pages/missions/missions-page"
-import { SyndPage } from "@/pages/synd/synd-page"
-import { ResourcesPage } from "@/pages/resources/resources-page"
-import { FramesPage } from "@/pages/frames/frames-page"
-import { WorldPage } from "@/pages/world/world-page"
-import { MarketPage } from "@/pages/market/market-page"
-import { RelicsPage } from "@/pages/relics/relics-page"
-import { ArsenalPage } from "@/pages/arsenal/arsenal-page"
-import { TennoPage } from "@/pages/tenno/tenno-page"
-import { SupportPage } from "@/pages/info/support-page"
-import { FeedbackPage } from "@/pages/info/feedback-page"
-import { AboutPage } from "@/pages/info/about-page"
-import { AdminPage } from "@/pages/info/admin-page"
-import { SquadPage } from "@/pages/squad/squad-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
 
+/* Each page loads on first visit; Home ships with the shell. */
+const RanksPage = lazy(() => import("@/pages/ranks/ranks-page").then((m) => ({ default: m.RanksPage })))
+const FarmPage = lazy(() => import("@/pages/farm/farm-page").then((m) => ({ default: m.FarmPage })))
+const TodayPage = lazy(() => import("@/pages/today/today-page").then((m) => ({ default: m.TodayPage })))
+const AchievementsPage = lazy(() => import("@/pages/achievements/achievements-page").then((m) => ({ default: m.AchievementsPage })))
+const TasksPage = lazy(() => import("@/pages/tasks/tasks-page").then((m) => ({ default: m.TasksPage })))
+const GoalsPage = lazy(() => import("@/pages/goals/goals-page").then((m) => ({ default: m.GoalsPage })))
+const QuestsPage = lazy(() => import("@/pages/quests/quests-page").then((m) => ({ default: m.QuestsPage })))
+const MasteryPage = lazy(() => import("@/pages/mastery/mastery-page").then((m) => ({ default: m.MasteryPage })))
+const MissionsPage = lazy(() => import("@/pages/missions/missions-page").then((m) => ({ default: m.MissionsPage })))
+const SyndPage = lazy(() => import("@/pages/synd/synd-page").then((m) => ({ default: m.SyndPage })))
+const ResourcesPage = lazy(() => import("@/pages/resources/resources-page").then((m) => ({ default: m.ResourcesPage })))
+const FramesPage = lazy(() => import("@/pages/frames/frames-page").then((m) => ({ default: m.FramesPage })))
+const WorldPage = lazy(() => import("@/pages/world/world-page").then((m) => ({ default: m.WorldPage })))
+const MarketPage = lazy(() => import("@/pages/market/market-page").then((m) => ({ default: m.MarketPage })))
+const RelicsPage = lazy(() => import("@/pages/relics/relics-page").then((m) => ({ default: m.RelicsPage })))
+const ArsenalPage = lazy(() => import("@/pages/arsenal/arsenal-page").then((m) => ({ default: m.ArsenalPage })))
+const TennoPage = lazy(() => import("@/pages/tenno/tenno-page").then((m) => ({ default: m.TennoPage })))
+const SupportPage = lazy(() => import("@/pages/info/support-page").then((m) => ({ default: m.SupportPage })))
+const FeedbackPage = lazy(() => import("@/pages/info/feedback-page").then((m) => ({ default: m.FeedbackPage })))
+const AboutPage = lazy(() => import("@/pages/info/about-page").then((m) => ({ default: m.AboutPage })))
+const AdminPage = lazy(() => import("@/pages/info/admin-page").then((m) => ({ default: m.AdminPage })))
+const SquadPage = lazy(() => import("@/pages/squad/squad-page").then((m) => ({ default: m.SquadPage })))
+
 /** Pages rebuilt in React. The old app renders nothing for these. */
-const PAGES: Record<string, () => React.JSX.Element> = {
+const PAGES: Record<string, React.ComponentType> = {
   ranks: RanksPage,
   farm: FarmPage,
   today: TodayPage,
@@ -62,6 +64,16 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   friends: SquadPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
+
+function PageLoading() {
+  return (
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6" role="status" aria-label="Loading page">
+      <div className="h-9 w-56 animate-pulse rounded-xl bg-muted" />
+      <div className="h-40 animate-pulse rounded-2xl bg-muted/60" />
+      <div className="h-64 animate-pulse rounded-2xl bg-muted/40" />
+    </div>
+  )
+}
 
 const sidebarOpen = () => !document.cookie.includes("sidebar_state=false")
 
@@ -103,7 +115,7 @@ export default function App() {
           {s.demo ? <DemoBanner /> : null}
           <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
             {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
-            {Page ? <Page key={s.route} /> : null}
+            {Page ? <Suspense fallback={<PageLoading />}><Page key={s.route} /></Suspense> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>
