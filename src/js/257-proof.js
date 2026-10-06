@@ -18,7 +18,7 @@ function demoStart(){if(DEMO)return;DEMO={c:JSON.stringify(C),p:JSON.stringify(P
   pool.slice(62,70).forEach((i,k)=>{P.rk[i.n]=10+k*2});
   lastMR=null;updateMR();document.body.classList.add('demo');if(location.hash&&location.hash!=='#home')location.hash='home';else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
 function demoExit(){if(!DEMO)return;C=JSON.parse(DEMO.c);P=JSON.parse(DEMO.p);docRef=DEMO.dr;profRef=DEMO.pr;lsSet=DEMO.ls;DEMO=null;document.body.classList.remove('demo');lastMR=null;updateMR();render();window.scrollTo(0,0)}
-function demoBar(){return DEMO?`<div class="demobar" role="status"><span><b>Sample account.</b> Nothing here is saved.</span><button type="button" class="btn sm primary" data-demox>Use my own</button></div>`:''}
+function demoBar(){return DEMO&&!window.TF_UI?`<div class="demobar" role="status"><span><b>Sample account.</b> These ranks, goals and tasks are examples, not yours, and nothing here is saved.</span><button type="button" class="btn sm primary" data-demox>Use my own</button></div>`:''}
 document.addEventListener('click',e=>{if(e.target.closest('[data-demo]')){demoStart();return}if(e.target.closest('[data-demox]')){demoExit()}});
 
 /* share card: a 1200 x 630 image of your progress, drawn in the browser */

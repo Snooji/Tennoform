@@ -16,7 +16,7 @@ function relicsData(){const tab=state.rlTab||'mine';const out={tab};
     list.sort((a,b)=>so==='plat'?((b.p??-1)-(a.p??-1)):so==='du'?b.du-a.du:so==='name'?a.n.localeCompare(b.n):so==='mine'?b.c-a.c:((b.r??-1)-(a.r??-1)));
     const mine=allParts().filter(x=>(+dup[x.n]||0)>0);const vt=WS&&WS.voidTrader;const now=new Date();const act=!!(vt&&new Date(vt.activation)<=now&&now<new Date(vt.expiry));if(HOSTED&&!WS&&!WSerr)loadWS();
     Object.assign(out,{q:state.duQ||'',filter:f,sort:so,snapshot:D.meta.prices,spares:mine.reduce((a,x)=>a+(+dup[x.n]),0),plat:Math.round(mine.reduce((a,x)=>a+(x.p||0)*(+dup[x.n]),0)),ducats:mine.reduce((a,x)=>a+(x.du||0)*(+dup[x.n]),0),
-      baro:{state:vt?(act?'Here now':'Away'):'—',text:vt?(act?'leaves in '+untilIso(vt.expiry)+' · '+(vt.location||''):'arrives in '+untilIso(vt.activation)):!HOSTED?'live on the hosted site':WSerr?'live data unavailable':'checking…'},
+      baro:{state:vt?(act?'Here now':'Away'):'—',text:vt?(act?(untilIso(vt.expiry)?'leaves in '+untilIso(vt.expiry):'leaving now')+' · '+(vt.location||''):(untilIso(vt.activation)?'arrives in '+untilIso(vt.activation):'arriving now')):!HOSTED?'live on the hosted site':WSerr?'live data unavailable':'checking…'},
       count:list.length,rows:list.slice(0,250).map(x=>({n:x.n,go:linkKey(x.n),plat:x.p!=null?Math.round(x.p):null,du:x.du,spares:x.c,tag:x.r!=null&&x.r>=10?'Baro':x.p!=null&&x.p>=8?'Sell':''})),
       stock:act&&vt.inventory?vt.inventory.map(i=>({item:i.item,go:linkKey(i.item),ducats:i.ducats,credits:i.credits})):[]})}
   return out}

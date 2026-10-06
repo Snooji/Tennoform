@@ -4,6 +4,8 @@ import { toast } from "sonner"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 import { AppSidebar } from "@/components/shell/app-sidebar"
 import { CommandMenu } from "@/components/shell/command-menu"
 import { LegacyOutlet } from "@/components/shell/legacy-outlet"
@@ -15,30 +17,41 @@ import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
 import { useNavReset } from "@/lib/nav-reset"
 
-/* Each page loads on first visit; Home ships with the shell. */
-const RanksPage = lazy(() => import("@/pages/ranks/ranks-page").then((m) => ({ default: m.RanksPage })))
-const FarmPage = lazy(() => import("@/pages/farm/farm-page").then((m) => ({ default: m.FarmPage })))
-const TodayPage = lazy(() => import("@/pages/today/today-page").then((m) => ({ default: m.TodayPage })))
-const AchievementsPage = lazy(() => import("@/pages/achievements/achievements-page").then((m) => ({ default: m.AchievementsPage })))
-const TasksPage = lazy(() => import("@/pages/tasks/tasks-page").then((m) => ({ default: m.TasksPage })))
-const GoalsPage = lazy(() => import("@/pages/goals/goals-page").then((m) => ({ default: m.GoalsPage })))
-const QuestsPage = lazy(() => import("@/pages/quests/quests-page").then((m) => ({ default: m.QuestsPage })))
-const MasteryPage = lazy(() => import("@/pages/mastery/mastery-page").then((m) => ({ default: m.MasteryPage })))
-const MissionsPage = lazy(() => import("@/pages/missions/missions-page").then((m) => ({ default: m.MissionsPage })))
-const SyndPage = lazy(() => import("@/pages/synd/synd-page").then((m) => ({ default: m.SyndPage })))
-const ResourcesPage = lazy(() => import("@/pages/resources/resources-page").then((m) => ({ default: m.ResourcesPage })))
-const FramesPage = lazy(() => import("@/pages/frames/frames-page").then((m) => ({ default: m.FramesPage })))
-const WorldPage = lazy(() => import("@/pages/world/world-page").then((m) => ({ default: m.WorldPage })))
-const MarketPage = lazy(() => import("@/pages/market/market-page").then((m) => ({ default: m.MarketPage })))
-const RelicsPage = lazy(() => import("@/pages/relics/relics-page").then((m) => ({ default: m.RelicsPage })))
-const ArsenalPage = lazy(() => import("@/pages/arsenal/arsenal-page").then((m) => ({ default: m.ArsenalPage })))
-const TennoPage = lazy(() => import("@/pages/tenno/tenno-page").then((m) => ({ default: m.TennoPage })))
-const SupportPage = lazy(() => import("@/pages/info/support-page").then((m) => ({ default: m.SupportPage })))
-const FeedbackPage = lazy(() => import("@/pages/info/feedback-page").then((m) => ({ default: m.FeedbackPage })))
-const AboutPage = lazy(() => import("@/pages/info/about-page").then((m) => ({ default: m.AboutPage })))
-const AdminPage = lazy(() => import("@/pages/info/admin-page").then((m) => ({ default: m.AdminPage })))
-const GuidesPage = lazy(() => import("@/pages/guides/guides-page").then((m) => ({ default: m.GuidesPage })))
-const SquadPage = lazy(() => import("@/pages/squad/squad-page").then((m) => ({ default: m.SquadPage })))
+/* Each page loads on first visit; Home ships with the shell. Once the first page is up, the rest load quietly in the background. */
+const IMPORTS: (() => Promise<unknown>)[] = []
+function page<M>(load: () => Promise<M>, pick: (m: M) => React.ComponentType) {
+  IMPORTS.push(load)
+  return lazy(() => load().then((m) => ({ default: pick(m) })))
+}
+const RanksPage = page(() => import("@/pages/ranks/ranks-page"), (m) => m.RanksPage)
+const FarmPage = page(() => import("@/pages/farm/farm-page"), (m) => m.FarmPage)
+const TodayPage = page(() => import("@/pages/today/today-page"), (m) => m.TodayPage)
+const AchievementsPage = page(() => import("@/pages/achievements/achievements-page"), (m) => m.AchievementsPage)
+const TasksPage = page(() => import("@/pages/tasks/tasks-page"), (m) => m.TasksPage)
+const GoalsPage = page(() => import("@/pages/goals/goals-page"), (m) => m.GoalsPage)
+const QuestsPage = page(() => import("@/pages/quests/quests-page"), (m) => m.QuestsPage)
+const MasteryPage = page(() => import("@/pages/mastery/mastery-page"), (m) => m.MasteryPage)
+const MissionsPage = page(() => import("@/pages/missions/missions-page"), (m) => m.MissionsPage)
+const SyndPage = page(() => import("@/pages/synd/synd-page"), (m) => m.SyndPage)
+const ResourcesPage = page(() => import("@/pages/resources/resources-page"), (m) => m.ResourcesPage)
+const FramesPage = page(() => import("@/pages/frames/frames-page"), (m) => m.FramesPage)
+const WorldPage = page(() => import("@/pages/world/world-page"), (m) => m.WorldPage)
+const MarketPage = page(() => import("@/pages/market/market-page"), (m) => m.MarketPage)
+const RelicsPage = page(() => import("@/pages/relics/relics-page"), (m) => m.RelicsPage)
+const ArsenalPage = page(() => import("@/pages/arsenal/arsenal-page"), (m) => m.ArsenalPage)
+const TennoPage = page(() => import("@/pages/tenno/tenno-page"), (m) => m.TennoPage)
+const SupportPage = page(() => import("@/pages/info/support-page"), (m) => m.SupportPage)
+const FeedbackPage = page(() => import("@/pages/info/feedback-page"), (m) => m.FeedbackPage)
+const AboutPage = page(() => import("@/pages/info/about-page"), (m) => m.AboutPage)
+const AdminPage = page(() => import("@/pages/info/admin-page"), (m) => m.AdminPage)
+const GuidesPage = page(() => import("@/pages/guides/guides-page"), (m) => m.GuidesPage)
+const SquadPage = page(() => import("@/pages/squad/squad-page"), (m) => m.SquadPage)
+function preloadPages() {
+  const run = () => IMPORTS.forEach((f, i) => window.setTimeout(() => void f().catch(() => {}), i * 120))
+  const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback
+  if (idle) idle(run, { timeout: 4000 })
+  else window.setTimeout(run, 2000)
+}
 
 /** Pages rebuilt in React. The old app renders nothing for these. */
 const PAGES: Record<string, React.ComponentType> = {
@@ -68,12 +81,29 @@ const PAGES: Record<string, React.ComponentType> = {
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
+/** Page-shaped placeholder: same column, header and card rhythm as a real page, so nothing jumps when it arrives. */
 function PageLoading() {
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const t = window.setTimeout(() => setShow(true), 180)
+    return () => window.clearTimeout(t)
+  }, [])
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6" role="status" aria-label="Loading page">
-      <div className="h-9 w-56 animate-pulse rounded-xl bg-muted" />
-      <div className="h-40 animate-pulse rounded-2xl bg-muted/60" />
-      <div className="h-64 animate-pulse rounded-2xl bg-muted/40" />
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6" aria-busy="true">
+      <span className="sr-only" role="status">Loading</span>
+      <div className={cn("flex flex-col gap-4 transition-opacity duration-300", show ? "opacity-100" : "opacity-0")} aria-hidden>
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-9 w-48 rounded-xl" />
+          <Skeleton className="h-4 w-full max-w-md" />
+        </div>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {[0, 1, 2].map((i) => <Skeleton key={i} className="h-20 rounded-2xl" />)}
+        </div>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+          <Skeleton className="h-72 rounded-2xl" />
+          <Skeleton className="h-48 rounded-2xl" />
+        </div>
+      </div>
     </div>
   )
 }
@@ -99,6 +129,7 @@ export default function App() {
       owns: (route) => OWNED.has(route),
     }
     tf().refresh()
+    preloadPages()
     return () => {
       window.TF_UI = undefined
     }

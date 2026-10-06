@@ -23,7 +23,7 @@ function Go({ k, children }: { k: string; children: React.ReactNode }) {
 function More({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <Collapsible>
-      <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
+      <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
         {label} <ChevronDown aria-hidden className="size-3.5 transition-transform group-data-[panel-open]:rotate-180" />
       </CollapsibleTrigger>
       <CollapsibleContent><div className="mt-2">{children}</div></CollapsibleContent>

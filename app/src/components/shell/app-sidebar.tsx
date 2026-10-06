@@ -147,7 +147,7 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
             {!s.signedIn && s.canAcct && (
               <>
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel className="text-xs">Keep your progress on every device</DropdownMenuLabel>
+                  <DropdownMenuLabel className="text-xs">Save Tennoform progress to an account</DropdownMenuLabel>
                   <DropdownMenuItem onClick={() => tf().google()}>
                     <LogIn /> Continue with Google
                   </DropdownMenuItem>

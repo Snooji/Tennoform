@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { Thumb } from "@/components/tf/thumb"
 import { fmt, hrefOf, runAct, tf, type HomeData, type HomeTile } from "@/lib/tf"
 
-const cardLink = "text-xs font-medium text-muted-foreground underline decoration-primary/50 underline-offset-4 hover:text-foreground"
+const cardLink = "text-xs font-medium text-muted-foreground underline decoration-primary/50 underline-offset-4 hover:text-foreground relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
 
 function Tile({ t }: { t: HomeTile }) {
   const href = "#" + t.route
@@ -206,9 +206,9 @@ export function SignInCard() {
   return (
     <Card size="sm" className="flex-row flex-wrap items-center gap-3 border-primary/30 px-4 ring-primary/25">
       <div className="flex min-w-0 flex-1 basis-64 flex-col gap-0.5">
-        <b className="font-heading text-base font-semibold">Save your progress to an account</b>
+        <b className="font-heading text-base font-semibold">Save your Tennoform progress to an account</b>
         <span className="text-sm text-muted-foreground">
-          Free. Sign in on any phone or computer and your ranks, goals, tasks and friends are there.
+          Free. Your ranks, goals, tasks and friends are there on any phone or computer. Linking your Warframe profile only reads the game; signing in is what saves Tennoform.
         </span>
       </div>
       <div className="flex flex-wrap gap-2">

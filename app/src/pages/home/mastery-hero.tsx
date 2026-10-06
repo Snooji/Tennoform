@@ -1,12 +1,12 @@
 import { useId, useRef } from "react"
 import { motion, useReducedMotion } from "motion/react"
-import { RefreshCw, Share2, Sparkles } from "lucide-react"
+import { CircleCheck, RefreshCw, Share2, Sparkles } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { RollingNumber } from "@/components/ui/rolling-number"
 import { cn } from "@/lib/utils"
-import { fmt, tf, type HomeData } from "@/lib/tf"
+import { fmt, tf, useTFData, type HomeData } from "@/lib/tf"
 
 /** Progress to the next rank as a ring; fills once on load, then follows the numbers. */
 export function MasteryRing({ pct, label, size = 132 }: { pct: number; label: string; size?: number }) {
@@ -69,24 +69,35 @@ function Breakdown({ parts }: { parts: HomeData["parts"] }) {
   )
 }
 
+/** Fast sync from Home: a button until the profile is synced, then a green "Synced" status (tap to sync again). */
+function SyncControl() {
+  const st = useTFData(() => tf().syncStatus())
+  if (st.state === "off") return null
+  const run = () => (st.linked ? tf().sync() : tf().account())
+  if (st.state === "ok")
+    return (
+      <Button variant="ghost" size="sm" className="h-8 gap-1.5 self-start rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 text-emerald-700 hover:bg-emerald-500/15 dark:text-emerald-400"
+        onClick={run} aria-label={`Synced ${st.at}. Sync again`} title="Sync again">
+        <CircleCheck /> Synced <span className="font-normal opacity-80">· {st.at}</span>
+      </Button>
+    )
+  return (
+    <Button size="sm" className="h-8 gap-1.5 self-start rounded-full px-3" disabled={st.state === "busy"} onClick={run}>
+      <RefreshCw className={cn(st.state === "busy" && "animate-spin")} />
+      {st.state === "busy" ? "Syncing…" : st.state === "stale" ? <>Sync now <span className="font-normal opacity-80">· last {st.at}</span></> : "Sync profile"}
+    </Button>
+  )
+}
+
 export function MasteryHero({ d }: { d: HomeData }) {
   const card = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion()
   const title = d.name || d.mrLabel
-  const primary =
-    d.action === "link" ? (
-      <Button size="lg" className="h-10 px-4" onClick={() => tf().account()}>
-        <RefreshCw /> Sync your profile
-      </Button>
-    ) : d.action === "sync" ? (
-      <Button size="lg" className="h-10 px-4" onClick={() => tf().sync()}>
-        <RefreshCw /> Sync now
-      </Button>
-    ) : (
-      <a href="#mastery" className={cn(buttonVariants({ size: "lg" }), "h-10 px-4")}>
-        <Sparkles /> See rank-up plan
-      </a>
-    )
+  const primary = (
+    <a href="#mastery" className={cn(buttonVariants({ size: "lg" }), "h-10 px-4")}>
+      <Sparkles /> See rank-up plan
+    </a>
+  )
   return (
     <Card
       ref={card}
@@ -111,6 +122,7 @@ export function MasteryHero({ d }: { d: HomeData }) {
       <div className="relative flex items-center gap-5 md:gap-7">
         <MasteryRing pct={d.pct} label={d.mrShort} size={window.innerWidth < 500 ? 104 : 132} />
         <div className="flex min-w-0 flex-col gap-1">
+          <SyncControl />
           <h1 className="truncate font-heading text-2xl leading-tight font-semibold md:text-3xl">{title}</h1>
           <p className="text-sm text-muted-foreground">
             {d.name ? d.mrLabel.replace("Mastery rank", "MR") + " · " : ""}

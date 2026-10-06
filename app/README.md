@@ -1,11 +1,15 @@
-# Tennoform shell (React + shadcn/ui + Cult UI)
+# Tennoform app shell
 
-The interface around the existing app: sidebar, header, search, account menu, toasts and the
-shared design tokens. Pages are being moved into React one at a time; until a page is moved it
-is still drawn by `src/js` and shown inside the shell.
+React 19 + Vite + Tailwind v4, with shadcn/ui (Base UI) components and Cult UI's halo progress.
 
-- `npm install` once, then `npm run build` (or `npx vite build`) writes `../assets/`.
-- `python ../build/make_site.py` then rebuilds `index.html`, linking the built files.
-- Components: `src/components/ui` (shadcn/ui, Base UI flavour, plus Cult UI `halo-progress`).
-- Tokens: `src/index.css` (`.dark` is the default theme). Legacy page styles read the same tokens.
-- `window.TF` (defined in `../src/js/465-bridge.js`) is how the shell reads app state and calls app actions.
+```
+npm install
+npm run build              # writes ../assets/
+python ../build/make_site.py
+```
+
+- `src/pages/` has one folder per page. Pages load on first visit and the rest preload in the background.
+- `src/components/ui/` are the shadcn/ui components; `src/components/tf/` are Tennoform's own.
+- `src/index.css` holds the design tokens (dark is the default). The older `src/css` styles read the same tokens.
+- Pages read data and call actions through `window.TF`, defined by the `46*-bridge-*.js` files in `../src/js/`.
+  `useTF()` and `useTFData()` in `src/lib/tf.ts` re-render when the app sends `tf:update`.
