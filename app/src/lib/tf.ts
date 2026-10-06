@@ -127,6 +127,9 @@ export type TFApi = {
   lichSet(n: string, o: { e?: string; b?: string }): void
   tenno(): TennoData
   tennoSet(o: { tab?: string; q?: string }): void
+  inventoryInfo(): { at: string; canUndo: boolean; last: Record<string, number> | null }
+  importInventory(text: string): Promise<{ ok: boolean; msg: string }>
+  undoSync(): void
   support(): SupportData
   copy(text: string, msg?: string): void
   feedback(): FeedbackData
@@ -488,6 +491,7 @@ export type GuideDetail = GuideCard & {
   aka: string[]; was: string[]; fast: string[]; rw: string[]; w: string; questKey: string; hasTask: boolean
   unlock: { mr: number | null; mrHave: number; mrOk: boolean; quests: { n: string; done: boolean; guide: string }[]; other: string[]; ready: boolean }
   stepList: { t: string; tip: string; done: boolean }[]
+  act: { label: string; route: string; tab?: string } | null
   go: { n: string; key: string }[]
   opens: { id: string; n: string; kind: GuideKind }[]
 }

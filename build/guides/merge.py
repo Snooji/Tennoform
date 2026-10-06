@@ -4,7 +4,7 @@ H = os.path.dirname(os.path.abspath(__file__))
 base = json.load(open(os.path.join(H, '..', 'base.json')))
 quests = {q['n'] for q in base['quests']}
 out, ids, probs = [], set(), []
-for f in ['quests1.json', 'quests2.json', 'quests3.json', 'systems.json', 'modes.json']:
+for f in ['howto.json', 'quests1.json', 'quests2.json', 'quests3.json', 'systems.json', 'modes.json']:
     p = os.path.join(H, f)
     if not os.path.exists(p):
         print('missing', f); continue

@@ -18,6 +18,22 @@ const KIND: Record<GuideKind, { label: string; icon: typeof BookOpen }> = {
 const TABS = [{ value: "all", label: "All" }, { value: "quest", label: "Quests" }, { value: "system", label: "Unlocks" }, { value: "mode", label: "Missions" }] as const
 const linkCls = "underline decoration-primary/50 underline-offset-4 hover:decoration-primary"
 
+/** Turns bare web addresses in guide text (e.g. github.com/owner/repo/releases) into links. */
+function Linkify({ text }: { text: string }) {
+  const re = /\b((?:https?:\/\/)?(?:[a-z0-9-]+\.)+(?:com|io|us|net|org)\/[^\s,;)]*[^\s,;.)])/gi
+  const out: React.ReactNode[] = []
+  let last = 0
+  for (const m of text.matchAll(re)) {
+    const i = m.index ?? 0
+    out.push(text.slice(last, i))
+    const href = m[1].startsWith("http") ? m[1] : "https://" + m[1]
+    out.push(<a key={i} href={href} target="_blank" rel="noopener" className={cn(linkCls, "break-all")}>{m[1]}<span className="sr-only"> (opens in a new tab)</span></a>)
+    last = i + m[1].length
+  }
+  out.push(text.slice(last))
+  return <>{out}</>
+}
+
 function Status({ g }: { g: GuideCard }) {
   if (g.done) return <Badge variant="outline" className="border-emerald-600/40 text-emerald-700 dark:text-emerald-400"><Check /> Done</Badge>
   if (g.doneSteps) return <Badge variant="outline" className="border-primary/40 text-primary">{g.doneSteps}/{g.steps} steps</Badge>
@@ -77,6 +93,7 @@ function Detail({ g }: { g: GuideDetail }) {
         {g.sum ? <p className="max-w-3xl text-sm text-muted-foreground">{g.sum}</p> : null}
         <div className="flex flex-wrap gap-2 pt-1">
           <Button variant="outline" className="h-9" disabled={g.hasTask} onClick={() => tf().guideTask(g.id)}>{g.hasTask ? <Check /> : <Plus />} {g.hasTask ? "In tasks" : "Add to tasks"}</Button>
+          {g.act ? <Button className="h-9" onClick={() => tf().act("a", { href: "#" + g.act!.route, ...(g.act!.tab ? { "data-ttab": g.act!.tab } : {}) })}>{g.act.label}</Button> : null}
           {g.questKey ? <Button variant="outline" className="h-9" onClick={() => tf().open(g.questKey)}><BookOpen /> Open in Quests</Button> : null}
           {g.w ? <a href={g.w} target="_blank" rel="noopener" className="inline-flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm font-medium hover:bg-muted">Wiki <ExternalLink className="size-3.5" aria-hidden /><span className="sr-only">(opens in a new tab)</span></a> : null}
         </div>
@@ -113,7 +130,7 @@ function Detail({ g }: { g: GuideDetail }) {
                     <Checkbox className="mt-0.5 size-5 rounded-md" checked={s.done} onCheckedChange={(v) => tf().guideStep(g.id, i, !!v)} aria-label={`Step ${i + 1} done`} />
                     <div className="flex min-w-0 flex-col gap-1">
                       <span className={cn("text-sm", s.done && "text-muted-foreground line-through decoration-primary/60")}>
-                        <b className="mr-1.5 font-heading font-semibold text-primary">{i + 1}.</b>{s.t}
+                        <b className="mr-1.5 font-heading font-semibold text-primary">{i + 1}.</b><Linkify text={s.t} />
                       </span>
                       {s.tip ? <span className="rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs text-muted-foreground">Tip: {s.tip}</span> : null}
                     </div>

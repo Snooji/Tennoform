@@ -10,7 +10,7 @@ function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().tri
   const g=GIDX[state.gSel];let sel=null;
   if(g){const st=guideSteps(g.id);const u=guideUnlock(g);
     const needs=GUIDES.filter(x=>x.id!==g.id&&((x.unlock||{}).quests||[]).includes(g.n)).map(x=>({id:x.id,n:x.n,kind:x.kind}));
-    sel={...guideCard(g),aka:g.aka||[],was:g.was||[],unlock:u,fast:g.fast||[],rw:g.rw||[],w:g.w||'',
+    sel={...guideCard(g),aka:g.aka||[],was:g.was||[],act:g.act||null,unlock:u,fast:g.fast||[],rw:g.rw||[],w:g.w||'',
       stepList:(g.steps||[]).map((s,i)=>({t:s.t,tip:s.tip||'',done:st.includes(i)})),
       go:(g.go||[]).map(n=>({n,key:guideKey(n)})).filter(x=>x.key),
       opens:needs,questKey:g.kind==='quest'&&Q.some(x=>x.n===g.n)?'quest|'+g.n:'',

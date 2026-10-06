@@ -1,0 +1,38 @@
+[
+ {
+  "id": "import-inventory",
+  "n": "Import your full inventory",
+  "kind": "system",
+  "aka": ["inventory sync", "full sync", "import inventory", "inventory.json", "sync account", "sync inventory", "alecaframe", "warframe-api-helper", "upload inventory"],
+  "sum": "Warframe's public profile only shares ranks, missions and syndicates. To also fill in the gear you own, blueprints and parts, mods, arcanes, relics, resources and your Foundry, download your inventory file with a free community tool and upload it to Tennoform. Takes about two minutes on PC.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": ["Warframe on PC (the tool reads the running game on Windows or Linux)", "A free community tool such as warframe-api-helper"]
+  },
+  "steps": [
+   {"t": "Download warframe-api-helper from its releases page on GitHub: github.com/Sainan/warframe-api-helper/releases. Pick the newest release and the file for your system.", "tip": "It's an open-source community tool. It isn't made by Tennoform or Digital Extremes."},
+   {"t": "Put the tool in a folder of its own, for example Documents\\warframe-api-helper, so the file it saves is easy to find."},
+   {"t": "Start Warframe and log in until you're standing in your Orbiter."},
+   {"t": "Run warframe-api-helper while the game is still open. It reads your login session from the running game and downloads your inventory from Warframe's own servers, then saves it as inventory.json.", "tip": "If Windows warns that the app is unrecognised, check you downloaded it from the GitHub releases page before choosing Run anyway."},
+   {"t": "Find inventory.json. It's usually in the same folder as the tool; if you can't see it, search your PC for inventory.json.", "tip": "On Linux, the warframe-helper tool saves it to ~/.warframe-helper/inventory.json instead."},
+   {"t": "In Tennoform, open Profile, then Account & sync, and choose the file under Import your full inventory (or drag it onto the box).", "tip": "The file is read on your device and never uploaded. Only the results (what you own and how many) are saved to your progress."},
+   {"t": "Check the summary. If something looks wrong, tap Undo last import to put everything back."},
+   {"t": "Repeat after a play session whenever you want fresh numbers. Each import replaces your relic, resource and Foundry counts with the new file."}
+  ],
+  "fast": [
+   "Keep the tool and its inventory.json in one folder, then importing again takes seconds.",
+   "Sign in to Tennoform first: the imported progress then syncs to your phone and other devices.",
+   "Run the profile sync too if you haven't: the inventory file and the profile overlap, but the profile sync is what keeps your Mastery Rank and star chart up to date automatically."
+  ],
+  "rw": ["Owned gear filled in", "Blueprints and parts", "Mods and arcane copies", "Relics by refinement", "Resource counts", "Foundry timers"],
+  "go": [],
+  "act": {"label": "Open the importer", "route": "tenno", "tab": "account"},
+  "was": [
+   "AlecaFrame keeps its own copy of your inventory, but it's encrypted, so that file can't be uploaded here. Use a tool that saves a plain inventory.json instead.",
+   "Tools that read the game's login session, like warframe-api-helper, aren't officially approved by Digital Extremes. They've confirmed Overwolf apps such as AlecaFrame are allowed. Using any third-party tool is at your own risk; Tennoform itself never touches the game.",
+   "Tennoform will never ask for your Warframe password. Don't give it to any site or tool."
+  ],
+  "w": ""
+ }
+]
