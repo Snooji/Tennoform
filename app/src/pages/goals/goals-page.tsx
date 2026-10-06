@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { PairTabs } from "@/components/tf/pair-tabs"
 import { Check, Hexagon, Plus, ShoppingBasket, Target, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -78,11 +79,12 @@ export function GoalsPage() {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
-        <h1 className="font-heading text-3xl font-semibold">Goals</h1>
+        <h1 className="font-heading text-3xl font-semibold">Gear goals</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
           Tap <b className="text-foreground">Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.
         </p>
       </header>
+      <PairTabs pair="goals" current="goals" />
       <BuildGoals list={d.bgoals} />
       {!d.goals.length && d.bgoals.length ? null : !d.goals.length ? (
         <Card className="items-start gap-3 p-6 text-sm">

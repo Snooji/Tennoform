@@ -14,7 +14,7 @@ function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=q
     list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));
     RKC.key=key;RKC.order=list.map(i=>i.n)}
   state._rkList=RKC.order;const total=RKC.order.length,shown=Math.min(state.rkLim||60,total);
-  base.items=RKC.order.slice(0,shown).map(rkItem);base.total=total;base.shown=shown;base.notMax=RKC.order.filter(n=>rankOf(n)<maxRank(I[n])).length;
+  base.items=RKC.order.slice(0,shown).map(rkItem);base.total=total;base.shown=shown;base.notMax=RKC.order.filter(n=>rankOf(n)<maxRank(I[n])).length;base.owned=RKC.order.filter(n=>ownedItem(n)).length;base.signedIn=signedIn();
   if(q)base.head.label='Search results';else{const a=autoCat(cat);Object.assign(base.head,{label:CATL[cat],m:a.m,t:a.t,p:a.p,x:a.x})}
   return base}
 Object.assign(window.TF,{

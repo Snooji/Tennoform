@@ -35,7 +35,7 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
   </div>`}</div>
   <div class="panel stack cut"><h2>Sync</h2>
   ${platPickHTML()}
-  <div class="row"><button class="btn primary" id="autosync" ${ok&&wfPlat().auto?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
+  <div class="row"><button class="btn primary" id="autosync" ${ok&&wfPlat().auto?'':'disabled'}>Sync automatically</button><button type="button" class="btn" id="rsreset" title="Make Tennoform match your Warframe profile, choosing what stays">Reset sync…</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
   ${state.syncFail?`<div class="callout small" role="status">Automatic sync couldn't reach Warframe just now. The steps below always work and take about 20 seconds.</div>`:''}
   <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail&&wfPlat().auto?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
    <ol class="ssl">

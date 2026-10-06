@@ -4,8 +4,9 @@ H = os.path.dirname(os.path.abspath(__file__))
 base = json.load(open(os.path.join(H, 'base.json')))
 old = json.load(open(os.path.join(H, 'market.json')))
 slugs = base['mslug']
-names = [n for n in slugs if n in old['prices'] or n.endswith(' Set') or n in base['mods'] or n in base['arcanes']]
-names = [n for n in names if n in old['prices']]  # keep the tracked set stable
+# every Prime set already tracked, plus every tradeable mod and arcane
+names = [n for n in slugs if n in old['prices'] or n in base['mods'] or n in base['arcanes']]
+if os.environ.get('ONLY_NEW'): names = [n for n in names if n not in old['prices']]
 names = names[:int(os.environ.get('LIMIT', len(names)))]
 
 def get(url):

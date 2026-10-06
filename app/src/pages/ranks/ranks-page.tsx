@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState, type KeyboardEvent } from "react"
-import { Check, ChevronsUp, CircleSlash, ExternalLink, Hexagon, Info, Minus, PackageCheck, Plus, Search, X } from "lucide-react"
+import { Check, ChevronsUp, CircleSlash, ExternalLink, Hexagon, Info, Minus, PackageCheck, Plus, RotateCcw, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
-import { fmt, tf, useTF, useTFData, type RankItem } from "@/lib/tf"
+import { fmt, tf, useTF, useTFData, type RankItem, type RanksExtra } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Thumb } from "@/components/tf/thumb"
@@ -135,6 +135,12 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
               <Info /> How to get it
             </Button>
           ) : null}
+          {it.r > 0 ? (
+            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs text-muted-foreground" onClick={() => tf().clearRank(it.n)}
+              aria-label={done ? `Mark ${it.n} as not mastered` : `Clear the rank of ${it.n}`}>
+              <RotateCcw /> {done ? "Not mastered" : "Clear rank"}
+            </Button>
+          ) : null}
           <Button variant="ghost" size="sm" className="h-8 px-2 text-xs text-muted-foreground" onClick={() => tf().setOwned(it.n, !it.has)}
             aria-label={it.has ? `I don't own ${it.n}` : `I own ${it.n}`}>
             {it.has ? <><CircleSlash /> Don't own it</> : <><PackageCheck /> I own it</>}
@@ -172,8 +178,16 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
 })
 
 /** Quick check: a grid of names to tap, like the in-game inventory. Tapping only changes ownership, never mastery. */
-function OwnGrid({ items }: { items: RankItem[] }) {
+function OwnGrid({ items, owned, total, signedIn }: { items: RankItem[]; owned: number; total: number; signedIn: boolean }) {
+  const [last, setLast] = useState("")
+  const where = signedIn ? "on this device and to your account" : "on this device"
   return (
+    <>
+    <p role="status" aria-live="polite" className="flex flex-wrap items-center gap-x-2 border-b px-4 py-2.5 text-sm">
+      <Check aria-hidden className="size-4 text-emerald-600 dark:text-emerald-400" />
+      <b className="font-medium">{last ? `Saved: ${last}.` : "Every tap saves straight away."}</b>
+      <span className="text-muted-foreground">You own {owned} of {total} here · saved {where}</span>
+    </p>
     <ul className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 lg:grid-cols-4" aria-label="Tap what you own">
       {items.map((it) => {
         const done = it.r >= it.mx
@@ -182,7 +196,7 @@ function OwnGrid({ items }: { items: RankItem[] }) {
             <button
               type="button"
               aria-pressed={it.has}
-              onClick={() => tf().setOwned(it.n, !it.has, true)}
+              onClick={() => { tf().setOwned(it.n, !it.has, true); setLast(`${it.n} ${it.has ? "not owned" : "owned"}`) }}
               className={cn(
                 "flex h-full w-full items-center gap-2.5 rounded-xl border p-2 text-left transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                 it.has ? "border-primary/50 bg-primary/10" : "border-border opacity-70 hover:opacity-100",
@@ -199,6 +213,7 @@ function OwnGrid({ items }: { items: RankItem[] }) {
         )
       })}
     </ul>
+    </>
   )
 }
 
@@ -351,7 +366,7 @@ export function RanksPage() {
         ) : d.items.length && view === "own" ? (
           <>
             <p className="border-b px-4 py-2.5 text-sm text-muted-foreground">Tap everything you have in your inventory right now. It doesn't change mastery; use the Owned and Not owned filters afterwards.</p>
-            <OwnGrid items={d.items} />
+            <OwnGrid items={d.items} owned={(d as typeof d & RanksExtra).owned ?? 0} total={d.total} signedIn={!!(d as typeof d & RanksExtra).signedIn} />
           </>
         ) : d.items.length ? (
           <ul className="flex flex-col divide-y">

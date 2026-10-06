@@ -20,10 +20,10 @@ function splitChange(t: string) {
 
 const PRIVACY: [typeof Cloud, string, string][] = [
   [HardDrive, "Without an account", "Your progress stays in this browser only."],
-  [Cloud, "With an account", "Progress, tasks and settings are stored in Google Firebase so they follow you between devices. Only you can read them."],
+  [Cloud, "With an account", "Progress, tasks and settings are stored in Google Firebase so they follow you between devices. Only you can read them. Tennoform also notes when you were last active and which days you visited, only to count live and daily players; deleting your account removes it."],
   [Users, "Friends", "See your display name, friend code, MR, total Mastery XP and node counts. Messages are kept until you or they delete them."],
   [MessageSquare, "Feedback", "Readable only by the developer."],
-  [EyeOff, "No ads, no analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase when you're signed in."],
+  [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase when you're signed in."],
   [Trash2, "Your data, your call", "Export it any time (Profile → Backup & export), or delete your account and everything stored with it (Profile → Account & sync)."],
 ]
 

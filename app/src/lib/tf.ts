@@ -55,7 +55,15 @@ export type TFApi = {
   ranksMore(all?: boolean): void
   ranksRefresh(): void
   setRank(n: string, r: number): void
+  playerStats(): PlayerStats
+  playerStatsReload(): void
+  collection(): CollectionData
+  collectionSet(o: { f?: string; q?: string }): void
+  showInRanks(n: string): void
+  marketMods(): MarketMods
+  marketModsSet(o: { q?: string; kind?: string; sort?: string; more?: boolean }): void
   setOwned(n: string, own: boolean, quiet?: boolean): void
+  clearRank(n: string): void
   howToGet(n: string): { text: string; craft: boolean; wiki: string }
   maxAll(): number
   farm(): FarmData
@@ -203,6 +211,11 @@ export type HomeData = {
   tasks: { id: string; title: string; kind: string; due: string; over: boolean; rep: string; open: TFAction | null }[]; taskCount: number
   showSign: boolean; demo: boolean; stage: string
 }
+export type CollectionItem = { n: string; img: string; r: number; mx: number; has: boolean; done: boolean }
+export type CollectionData = { f: string; q: string; owned: number; mastered: number; level: number; total: number; inv: number
+  cats: { id: string; label: string; owned: number; mastered: number; level: number; total: number; items: CollectionItem[] }[] }
+export type PlayerStats = { loading: boolean; err: string; data: { live: number; hour: number; dau: number; wau: number; mau: number; total: number; tracked: number; hist: { d: string; n: number }[]; ago: string } | null }
+export type RanksExtra = { owned?: number; signedIn?: boolean }
 export type RankItem = { n: string; img: string; mr: number; r: number; mx: number; xp: number; max: number; per: number; prime: boolean; vaulted: boolean; resurgence: boolean; owned: boolean; notOwned: boolean; has: boolean; relics: boolean }
 export type RanksData = {
   cat: string; q: string; f: string; s: string; t: string
@@ -339,8 +352,10 @@ export type WorldData = {
   cutters?: { n: string; key: string; done: boolean; where: string; desc: string }[]; tips?: string[]
 }
 export type VaultCard = { n: string; c: string; img: string; text: string }
+export type MarketModRow = { n: string; kind: "Mod" | "Arcane"; type: string; rar: string; a7: number | null; v7: number; seller: { name: string; price: number; rank: number | null; wh: string } | null; url: string }
+export type MarketMods = { q: string; kind: string; sort: string; total: number; count: number; more: number; rows: MarketModRow[] }
 export type MarketData = {
-  tab: "sets" | "vault"; snapshot: string
+  tab: "sets" | "vault" | "mods"; snapshot: string
   q?: string; filter?: string; sort?: string; total?: number; count?: number; more?: number
   sets?: { n: string; base: string; img: string; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null; left: number; xp: number; price: number | null; meta: string; seller: { name: string; price: number; wh: string } | null; url: string }[]
   gapMonths?: number; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]

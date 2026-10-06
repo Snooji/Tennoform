@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react"
+import { PairTabs } from "@/components/tf/pair-tabs"
 import { CalendarClock, MoreHorizontal, NotebookPen, Plus, Repeat, Trash2, UserPlus, Users } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -138,12 +139,13 @@ export function TasksPage() {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
-        <h1 className="font-heading text-3xl font-semibold">Tasks</h1>
+        <h1 className="font-heading text-3xl font-semibold">To-do list</h1>
         <p className="text-sm text-muted-foreground">
           Your own to-do list. Add anything, or tap <b className="text-foreground">+ Task</b> on a resource, item, relic, quest, mod, syndicate, fish or ore
           anywhere in the app. Invite friends to join you.
         </p>
       </header>
+      <PairTabs pair="goals" current="tasks" />
       <form onSubmit={add} className="flex gap-2">
         <Input value={text} onChange={(e) => setText(e.target.value)} maxLength={120} placeholder="Add something you want to do" aria-label="New task" className="h-10" />
         <Button type="submit" className="h-10 px-4" disabled={!text.trim()}><Plus /> Add</Button>

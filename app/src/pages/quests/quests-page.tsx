@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from "react"
+import { PairTabs } from "@/components/tf/pair-tabs"
 import { BookOpen, Check, ChevronDown, ChevronsDown, ExternalLink, Gift, Lock, Plus, Sparkles } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -122,6 +123,7 @@ export function QuestsPage() {
         <h1 className="font-heading text-3xl font-semibold">Quests</h1>
         <p className="text-sm text-muted-foreground">Story order from the in-game Codex, with requirements and rewards from the wiki. {d.done}/{d.total} done.</p>
       </header>
+      <PairTabs pair="chart" current="quests" />
       {d.next ? (
         <Card size="sm" className="flex-row items-center gap-3 border-primary/30 bg-primary/5 px-4 ring-primary/25">
           <Sparkles aria-hidden className="size-5 shrink-0 text-primary" />

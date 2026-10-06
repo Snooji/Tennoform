@@ -31,9 +31,10 @@ service cloud.firestore {
         && shortStr(data().name, 40);
     }
 
-    // Public card friends see. Readable one at a time (no listing everyone).
+    // Public card friends see. Readable one at a time; only admins can list them (to count players).
     match /public/{uid} {
       allow get: if signedIn();
+      allow list: if isAdmin();
       allow delete: if signedIn() && me() == uid;
       allow write: if signedIn() && me() == uid
         && data().keys().hasOnly(['name', 'code', 'mr', 'xp', 'nodes', 'sp', 'maxed', 'cats', 'at'])
@@ -177,6 +178,17 @@ service cloud.firestore {
           && data().keys().hasOnly(['v']) && data().v in [1, -1] && countsMoved();
         allow delete: if signedIn() && me() == uid && countsMoved();
       }
+    }
+
+    // Presence: when a signed-in player was last active and which days they visited (UTC dates).
+    // Only admins can read it, to count live and daily players. Nothing else is stored.
+    match /presence/{uid} {
+      allow read: if isAdmin();
+      allow delete: if signedIn() && me() == uid;
+      allow create, update: if signedIn() && me() == uid
+        && data().keys().hasOnly(['at', 'day', 'days'])
+        && data().at is number && data().day is string && data().day.size() == 10
+        && data().days is list && data().days.size() <= 400;
     }
 
     // Feedback: signed-in users can send; only admins can read.

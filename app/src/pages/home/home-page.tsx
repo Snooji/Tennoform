@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "motion/react"
 import { tf, useTFData } from "@/lib/tf"
 import { MasteryHero } from "./mastery-hero"
 import { NextUp } from "./next-up"
-import { GoalsCard, SignInCard, TasksCard, TodayCard } from "./side-cards"
+import { GoalsCard, SignInCard, TasksCard, TodayCard, CollectionCard } from "./side-cards"
 import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
@@ -54,6 +54,9 @@ export function HomePage() {
         <div className="flex min-w-0 flex-col gap-4">
           <motion.div {...rise(3)}>
             <TodayCard d={d} />
+          </motion.div>
+          <motion.div {...rise(4)}>
+            <CollectionCard />
           </motion.div>
           <motion.div {...rise(4)}>
             <GoalsCard d={d} />

@@ -22,3 +22,6 @@ function howToGet(n){const it=I[n]||{};const wiki=it.w||('https://wiki.warframe.
 Object.assign(window.TF,{
   setOwned:(n,own,quiet)=>{setK('nown|'+n,!own);if(own&&!ownedItem(n))setK('build|'+n,true);tfNotify();if(!quiet)toast(own?`${n} marked as owned`:`${n} marked as not owned. Its mastery stays.`)},
   howToGet:n=>howToGet(n)});
+/* "Not mastered" / "Clear rank": back to rank 0, with its own Undo (rank decreases don't go through the activity log) */
+Object.assign(window.TF,{clearRank:n=>{const was=rankOf(n);if(!was)return;LOGMUTE++;try{setRank(n,0)}finally{LOGMUTE--}clearTimeout(RKT);tfNotify();
+  toastAction(was>=maxRank(I[n])?`${n} marked not mastered`:`${n} rank cleared (was ${was})`,'Undo',()=>{LOGMUTE++;try{setRank(n,was)}finally{LOGMUTE--}tfNotify();toast(`${n} back to rank ${was}`)})}});

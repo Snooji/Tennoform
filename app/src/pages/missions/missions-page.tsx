@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { PairTabs } from "@/components/tf/pair-tabs"
 import { ArrowLeft, Check, CheckCheck, Plus, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -190,6 +191,7 @@ export function MissionsPage() {
             : "Pick a planet to tick off its nodes, and clear every junction. Each node and junction gives Mastery XP the first time you complete it."}
         </p>
       </header>
+      <PairTabs pair="chart" current="missions" />
       {d.sel ? <Planet key={d.sel} d={d} /> : <Overview d={d} />}
     </div>
   )
