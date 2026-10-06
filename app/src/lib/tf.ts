@@ -143,6 +143,20 @@ export type TFApi = {
   donDel(id: string): Promise<void>
   donReload(): void
   donCSV(): void
+  squad(): SquadData
+  squadSet(o: { chat?: string | null; newGroup?: boolean }): void
+  friendAdd(code: string): void
+  friendAccept(id: string): void
+  friendDecline(id: string): void
+  friendRemove(uid: string): void
+  friendBlock(uid: string): void
+  friendReport(uid: string): void
+  msgSend(text: string): Promise<boolean>
+  inviteTask(id: string): void
+  inviteAnswer(id: string, ok: boolean): void
+  groupCreate(name: string, uids: string[]): Promise<boolean>
+  groupAdd(uid: string): void
+  groupLeave(): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -425,4 +439,23 @@ export type AdminData = {
   tab?: string; filter?: string; open?: number; fbTotal?: number
   totals?: { usdM: string; usd: string; platM: string; plat: string; n: number; who: number }
   feedback?: AdminFeedback[]; donErr?: boolean; donLoading?: boolean; donations?: AdminDonation[]
+}
+
+export type SquadMsg = {
+  id: string; mine: boolean; time: string; who: string; text: string; task: string; ans: string
+  kind: "text" | "invite" | "sentInvite" | "joined" | "declined" | "done" | "sys"
+}
+export type SquadData = {
+  status: "ok" | "offline" | "loading" | "unavailable" | "signin"
+  code: string; newGroup: boolean
+  requests: { id: string; name: string; code: string }[]
+  groups: { id: string; name: string; members: number; unread: number }[]
+  friends: { uid: string; name: string; pending: boolean; mr: string; xp: string; unread: number }[]
+  pickable: { uid: string; name: string }[]
+  tasks: { id: string; t: string }[]
+  chat: null | {
+    type: "friend" | "group"; id: string; name: string; code: string; pending: boolean; members: string
+    addable: { uid: string; name: string }[]; log: SquadMsg[]
+  }
+  compare: null | { names: string[]; rows: { label: string; vals: { v: string; top: boolean }[] }[] }
 }

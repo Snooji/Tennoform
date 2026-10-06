@@ -32,6 +32,7 @@ import { SupportPage } from "@/pages/info/support-page"
 import { FeedbackPage } from "@/pages/info/feedback-page"
 import { AboutPage } from "@/pages/info/about-page"
 import { AdminPage } from "@/pages/info/admin-page"
+import { SquadPage } from "@/pages/squad/squad-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
 
@@ -58,6 +59,7 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   feedback: FeedbackPage,
   about: AboutPage,
   admin: AdminPage,
+  friends: SquadPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
