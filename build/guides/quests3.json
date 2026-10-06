@@ -838,7 +838,8 @@
    "proof fragments",
    "limbo theorem",
    "archwing interception",
-   "limbo parts"
+   "limbo parts",
+   "proof fragment"
   ],
   "sum": "A side quest where Ordis pieces together a mysterious theorem. It rewards the Limbo component blueprints; buy the main blueprint from the Market.",
   "unlock": {
@@ -855,7 +856,7 @@
    },
    {
     "t": "Run the Archwing Interception on Syrtis, Mars and collect Proof Fragments from killed enemies.",
-    "tip": "The game won't tell you when you have enough; check the Foundry."
+    "tip": "Each Theorem needs 1 Proof Fragment, 3 for the whole quest. The game won't tell you when you have enough; check the Foundry."
    },
    {
     "t": "Craft the Limbo Neuroptics Theorem."
@@ -871,7 +872,7 @@
    }
   ],
   "fast": [
-   "Farm all the Proof Fragments you need in one Syrtis run and stay until you have several.",
+   "Collect all 3 Proof Fragments in one Syrtis run so you never have to go back.",
    "Theorem crafting takes 10 seconds, so craft immediately after each run.",
    "You only need to earn the blueprints to progress, not build them.",
    "Bring a frame that defends extractors well for the three Excavations."
@@ -887,7 +888,10 @@
    "Archwing",
    "Proof Fragment"
   ],
-  "w": "https://wiki.warframe.com/w/The_Limbo_Theorem"
+  "w": "https://wiki.warframe.com/w/The_Limbo_Theorem",
+  "was": [
+   "Older guides say each Theorem needs 3 Proof Fragments (9 in total). Update 34 cut it to 1 per Theorem, so the whole quest needs 3."
+  ]
  },
  {
   "id": "the-jordas-precept",

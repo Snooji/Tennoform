@@ -19,7 +19,8 @@ Each entry:
   "rw": ["Main rewards, short names"],   // [] if none
   "time": "~30 min",                     // rough time to complete or unlock, or "" if not meaningful
   "go": ["Xaku", "Helminth Charger"],    // optional: names of related Warframes/weapons/items/quests (exact names), [] if none
-  "w": "https://wiki.warframe.com/w/Helminth"
+  "w": "https://wiki.warframe.com/w/Helminth",
+  "was": ["Optional. When sources disagree, keep the current fact in the guide and put the outdated or mistaken version here, e.g. 'Older guides say each Theorem needs 3 Proof Fragments. Update 34 cut it to 1.' Shown as \"Changed or often confused\" and included in search, so people searching the old wording still find the guide."]
 }
 
 Rules:

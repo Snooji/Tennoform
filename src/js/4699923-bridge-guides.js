@@ -4,13 +4,13 @@ function guideCard(g){const st=guideSteps(g.id),n=(g.steps||[]).length;const u=g
   return {id:g.id,n:g.n,kind:g.kind,sum:g.sum||'',time:g.time||'',steps:n,doneSteps:Math.min(st.length,n),ready:u.ready,done:g.kind==='quest'&&qDone(g.n)}}
 function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().trim();
   const words=q.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w));
-  const match=g=>!words.length||words.every(w=>[g.n,...(g.aka||[]),g.sum||''].join(' ').toLowerCase().includes(w));
+  const match=g=>!words.length||words.every(w=>[g.n,...(g.aka||[]),g.sum||'',...(g.was||[])].join(' ').toLowerCase().includes(w));
   const all=GUIDES.filter(match);const list=all.filter(g=>f==='all'||g.kind===f).map(guideCard);
   const counts={all:all.length,quest:all.filter(g=>g.kind==='quest').length,system:all.filter(g=>g.kind==='system').length,mode:all.filter(g=>g.kind==='mode').length};
   const g=GIDX[state.gSel];let sel=null;
   if(g){const st=guideSteps(g.id);const u=guideUnlock(g);
     const needs=GUIDES.filter(x=>x.id!==g.id&&((x.unlock||{}).quests||[]).includes(g.n)).map(x=>({id:x.id,n:x.n,kind:x.kind}));
-    sel={...guideCard(g),aka:g.aka||[],unlock:u,fast:g.fast||[],rw:g.rw||[],w:g.w||'',
+    sel={...guideCard(g),aka:g.aka||[],was:g.was||[],unlock:u,fast:g.fast||[],rw:g.rw||[],w:g.w||'',
       stepList:(g.steps||[]).map((s,i)=>({t:s.t,tip:s.tip||'',done:st.includes(i)})),
       go:(g.go||[]).map(n=>({n,key:guideKey(n)})).filter(x=>x.key),
       opens:needs,questKey:g.kind==='quest'&&Q.some(x=>x.n===g.n)?'quest|'+g.n:'',

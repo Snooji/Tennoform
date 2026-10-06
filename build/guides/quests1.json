@@ -495,7 +495,8 @@
    "oculyst",
    "sentient quest",
    "exilus adapter",
-   "hunhow"
+   "hunhow",
+   "uranus junction"
   ],
   "sum": "A five-mission quest investigating strange drones that reveals the Lotus's secret and rewards an Exilus Warframe Adapter.",
   "unlock": {
@@ -503,9 +504,7 @@
    "quests": [
     "The Archwing"
    ],
-   "other": [
-    "Complete the Uranus Junction"
-   ]
+   "other": []
   },
   "steps": [
    {
@@ -545,7 +544,10 @@
    "Teshin",
    "The Second Dream"
   ],
-  "w": "https://wiki.warframe.com/w/Natah_(Quest)"
+  "w": "https://wiki.warframe.com/w/Natah_(Quest)",
+  "was": [
+   "Older guides, and the info box on the wiki, say Natah needs the Uranus Junction or scanning Oculyst drones on Uranus. That was removed: Natah now starts automatically once you finish The Archwing."
+  ]
  },
  {
   "id": "the-second-dream",

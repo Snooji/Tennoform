@@ -109,6 +109,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
 export function BuildLibrary() {
   const d = useTFData(() => tf().buildLib())
   const [q, setQ] = useState(d.q)
+  useEffect(() => setQ(d.q), [d.q])
   useEffect(() => {
     const t = window.setTimeout(() => q !== d.q && tf().buildLibSet({ q }), 160)
     return () => window.clearTimeout(t)

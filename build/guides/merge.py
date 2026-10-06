@@ -20,7 +20,7 @@ for f in ['quests1.json', 'quests2.json', 'quests3.json', 'systems.json', 'modes
             u['quests'] = [q for q in u['quests'] if q in quests]; u['other'] = ['Finish ' + q for q in bad] + u['other']
         txt = json.dumps(g)
         if '[[' in txt or '{{' in txt or '<' in txt: probs.append('markup in ' + g['id'])
-        for k in ['aka', 'steps', 'fast', 'rw', 'go']: g.setdefault(k, [])
+        for k in ['aka', 'steps', 'fast', 'rw', 'go', 'was']: g.setdefault(k, [])
         g['aka'] = [a.lower() for a in g['aka']]
         out.append(g)
 json.dump(out, open(os.path.join(H, '..', 'guides.json'), 'w'), ensure_ascii=False, separators=(',', ':'))

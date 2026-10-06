@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ArrowLeft, BookOpen, Check, CircleCheck, Clock, ExternalLink, Gift, Lock, Plus, RotateCcw, Search, Swords, Unlock, X, Zap } from "lucide-react"
+import { ArrowLeft, BookOpen, Check, History, CircleCheck, Clock, ExternalLink, Gift, Lock, Plus, RotateCcw, Search, Swords, Unlock, X, Zap } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -133,6 +133,11 @@ function Detail({ g }: { g: GuideDetail }) {
               </ul>
             </Section>
           ) : null}
+          {g.was.length ? (
+            <Section icon={History} title="Changed or often confused">
+              <ul className="flex flex-col gap-2 text-sm text-muted-foreground">{g.was.map((w) => <li key={w}>{w}</li>)}</ul>
+            </Section>
+          ) : null}
           {g.rw.length ? (
             <Section icon={Gift} title="Rewards">
               <ul className="flex flex-wrap gap-1.5">{g.rw.map((r) => <li key={r} className="rounded-full border px-2.5 py-0.5 text-xs">{r}</li>)}</ul>
@@ -164,6 +169,7 @@ function Detail({ g }: { g: GuideDetail }) {
 export function GuidesPage() {
   const d = useTFData(() => tf().guides())
   const [q, setQ] = useState(d.q)
+  useEffect(() => setQ(d.q), [d.q])
   useEffect(() => {
     const t = window.setTimeout(() => q !== d.q && tf().guidesSet({ q }), 140)
     return () => window.clearTimeout(t)

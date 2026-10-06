@@ -837,7 +837,7 @@
   ],
   "sum": "A Defense variant where you guard two objectives in turn on a timer, crossing a Void tunnel between them; farmed for Citrine (Tyana Pass) or Tome mods (Munio).",
   "unlock": {
-   "mr": 3,
+   "mr": null,
    "quests": [
     "Heart of Deimos"
    ],
@@ -886,7 +886,10 @@
    "Titania",
    "Jade"
   ],
-  "w": "https://wiki.warframe.com/w/Mirror_Defense"
+  "w": "https://wiki.warframe.com/w/Mirror_Defense",
+  "was": [
+   "You may read that Mirror Defense needs Mastery Rank 3. That only applies to Tyana Pass on Mars (added in Update 35.5, together with Heart of Deimos). Munio on Deimos has no MR requirement, only Whispers in the Walls."
+  ]
  },
  {
   "id": "alchemy",

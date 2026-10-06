@@ -485,7 +485,7 @@ export type SquadData = {
 export type GuideKind = "quest" | "system" | "mode"
 export type GuideCard = { id: string; n: string; kind: GuideKind; sum: string; time: string; steps: number; doneSteps: number; ready: boolean; done: boolean }
 export type GuideDetail = GuideCard & {
-  aka: string[]; fast: string[]; rw: string[]; w: string; questKey: string; hasTask: boolean
+  aka: string[]; was: string[]; fast: string[]; rw: string[]; w: string; questKey: string; hasTask: boolean
   unlock: { mr: number | null; mrHave: number; mrOk: boolean; quests: { n: string; done: boolean; guide: string }[]; other: string[]; ready: boolean }
   stepList: { t: string; tip: string; done: boolean }[]
   go: { n: string; key: string }[]

@@ -9,7 +9,7 @@ function guideUnlock(g){const m=mrInfo(totalXP().total).mr;const u=g.unlock||{};
   const mrOk=u.mr==null||m>=u.mr;return {mr:u.mr==null?null:u.mr,mrHave:m,mrOk,quests:qs,other:u.other||[],ready:mrOk&&qs.every(q=>q.done)}}
 /* search: guides first, matched by name and everyday words ("helminth chair") */
 const _cmdIndex=cmdIndex;cmdIndex=function(){if(CMDX)return CMDX;const x=_cmdIndex();
-  for(const g of GUIDES)x.push({n:g.n+(g.kind==='quest'?' guide':''),g:'Guides',act:'guide|'+g.id,l:(g.n+(g.kind==='quest'?' guide':'')).toLowerCase(),a:[...(g.aka||[]),GKIND[g.kind]||''].join(' ').toLowerCase()});
+  for(const g of GUIDES)x.push({n:g.n+(g.kind==='quest'?' guide':''),g:'Guides',act:'guide|'+g.id,l:(g.n+(g.kind==='quest'?' guide':'')).toLowerCase(),a:[...(g.aka||[]),GKIND[g.kind]||'',...(g.was||[])].join(' ').toLowerCase().replace(/[^a-z0-9 ]+/g,' ')});
   return CMDX=x};
 CMDG.unshift('Guides');
 const CMD_STOP=new Set(['how','to','do','i','get','the','a','an','unlock','unlocking','unlocked','where','is','what','find','for','can','you','my','in','of','guide','quest','open','start','make','build','farm','obtain']);
