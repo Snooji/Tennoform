@@ -18,25 +18,20 @@ function setWfid(id,how,name){if(id!==P.wfid||name)P.wfName=name||'';P.wfid=id;l
 function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=window.TENNO_PROXY;
   return accountPanel()+`<div class="panel stack cut"><h2>Link your Warframe profile</h2><p class="small muted" style="margin:0">Read-only: fills in ranks, mastered gear, star chart, syndicates and quests from Warframe, and updates them by itself. It doesn't save your Tennoform goals or tasks; signing in above does that.</p>
   ${ok?`<div class="row"><span class="chip good">Linked</span>${P.wfName?`<b class="small">${esc(P.wfName)}</b>`:''}<span class="mono small">${esc(P.wfid)}</span><button class="btn sm" id="unlink">Change</button></div>`:`
-  <div class="steps-v idhelp">
-   <div class="sv"><span class="svn">1</span><div><b>Get your ID from warframe.com</b><div class="small muted">Works on any phone or PC, whatever platform you play on. It opens a page on warframe.com with your ID on it (log in there if it asks).</div>
-    <a class="btn primary" id="idopen" href="https://www.warframe.com/api/user-data" target="_blank" rel="noopener">Open my ID page</a></div></div>
-   <div class="sv"><span class="svn">2</span><div><b>Copy that whole page</b><div class="small muted">Phone: press and hold the text, tap <b>Select all</b>, then <b>Copy</b>. PC: press <span class="mono">Ctrl+A</span> then <span class="mono">Ctrl+C</span>. You don't need to find the ID yourself.</div></div></div>
-   <div class="sv"><span class="svn">3</span><div><b>Come back and paste</b><div class="small muted">Tennoform picks out the 24-character ID and links it. Only the ID is kept.</div>
-    <div class="row"><button type="button" class="btn ${state.idOpened?'primary':''}" id="idpaste">Paste and link</button></div>
-    <input id="wfid" type="text" placeholder="…or paste it here yourself" value="${esc(P.wfid||'')}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Paste your account ID or the copied page"></div></div>
-  </div>
-  <details class="small eelog"${/Windows/.test(navigator.userAgent)?' open':''}><summary><b>On PC with Warframe installed? Use the game's log file instead</b></summary>
-   <ol class="stack" style="margin:8px 0 0;padding-left:20px">
-    <li>Start Warframe and log in until you reach your Orbiter. That writes your login into the log. You can close the game afterwards.</li>
-    <li>Tap <b>Choose EE.log</b> below. In the window that opens, click the address bar at the top (or the File name box), paste <span class="mono sel">%localappdata%\\Warframe</span> and press Enter.</li>
-    <li>Pick <b>EE.log</b>. Windows may show it as just <b>EE</b> (type: Text Document). Tennoform finds the line <span class="mono">Logged in YourName (ID)</span>, shows you the name it found, and links that ID. Nothing is uploaded.</li>
-   </ol>
-   <div class="row" style="margin-top:8px"><label class="btn primary filebtn" for="eelog">Choose EE.log</label><input id="eelog" type="file" accept=".log,.txt,text/plain" hidden></div>
-   <div class="drop" id="drop">or drag EE.log here</div>
-   <div class="muted">Rather copy it yourself? Open EE.log in Notepad, press <span class="mono">Ctrl+F</span> and search <span class="mono">Logged in</span>. Your ID is the 24 letters and numbers in brackets right after your name, for example <span class="mono">Logged in YourName (<b>0123456789abcdef01234567</b>)</span>. Copy only what's inside the brackets and paste it into the box in step 3. Ignore any other long codes in the log; they belong to other players or sessions.</div>
+  ${idHelpHTML()}
+  <details class="small wfhfiles"${/Windows/.test(navigator.userAgent)?' open':''}><summary><b>Use WFHelper on PC? Pick its files instead</b></summary>
+   <div class="stack" style="margin-top:8px">
+    <div class="muted">WFHelper (wfhelper.com) saves your account ID and inventory as files once it has loaded your inventory. Tennoform reads them on this device; nothing is uploaded.</div>
+    <ol class="stack" style="margin:0;padding-left:20px;list-style:decimal">
+     <li>Tap <b>Choose WFHelper file</b>. In the window that opens, click the address bar at the top, paste <span class="mono sel">%appdata%\\WFHelper</span> and press Enter.</li>
+     <li>Pick <b>codex-profile.json</b>. That links your account ID.</li>
+     <li>Want your full inventory too? Choose again, open the <b>api-helper</b> folder and pick <b>inventory.json</b>. It fills in owned gear, parts, mods, arcanes, relics and resources, and links your ID if it isn't linked yet.</li>
+    </ol>
+    <div class="row"><label class="btn primary filebtn" for="wfhfile">Choose WFHelper file</label><input id="wfhfile" type="file" accept=".json,.log,.txt,application/json,text/plain" multiple hidden></div>
+    <div class="drop" id="drop">or drag codex-profile.json or inventory.json here</div>
+    <div class="muted">No codex-profile.json yet? Open WFHelper with Warframe running and wait until it shows your inventory, then look again. Warframe's own EE.log file no longer contains your account ID, so it can't be used for this.</div>
+   </div>
   </details>
-  <div class="small muted">Page says <span class="mono">{}</span> or asks you to log in? Log in at warframe.com first, then open it again. <a class="ln" href="#" data-go="guide|find-account-id">Step-by-step guide</a></div>
   </div>`}</div>
   <div class="panel stack cut"><h2>Sync</h2>
   <div class="row"><button class="btn primary" id="autosync" ${ok?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>

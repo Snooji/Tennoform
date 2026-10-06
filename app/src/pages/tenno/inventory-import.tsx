@@ -35,6 +35,10 @@ export function InventoryImport() {
           Tennoform to also know the gear you own, blueprints and parts, mods, arcanes, relics, resources and your Foundry, upload an <b className="font-medium text-foreground">inventory.json</b> here.
           It's read on this device; only the results are saved.
         </p>
+        <p className="text-sm text-muted-foreground">
+          Easiest way to get it: install <b className="font-medium text-foreground">WFHelper</b> (free, wfhelper.com), let it load your inventory, then choose{" "}
+          <span className="rounded bg-muted px-1 py-0.5 font-mono text-xs break-all text-foreground">%appdata%\WFHelper\api-helper\inventory.json</span> here.
+        </p>
       </div>
       <div
         onDragOver={(e) => { e.preventDefault(); setDrag(true) }}
