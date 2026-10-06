@@ -166,6 +166,56 @@ function Players() {
   )
 }
 
+/** Community chat review: flagged messages wait here; publish, remove, or remove and ban. Bans can be lifted. */
+function ChatReview() {
+  const m = useTFData(() => tf().modData())
+  const [armed, setArmed] = useState("")
+  return (
+    <div className="flex flex-col gap-4">
+      <Card className="gap-3 px-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="font-heading text-lg leading-tight font-semibold">Held for review ({m.list.length})</h2>
+          <Button variant="outline" size="sm" className="ml-auto h-8" onClick={() => tf().modReload()}><RefreshCw /> Refresh</Button>
+        </div>
+        <p className="text-xs text-muted-foreground">Messages the filter caught (illegal or extremely explicit). Nobody else has seen them. Publish puts one in its room as sent; Remove deletes it.</p>
+        {m.err ? <p className="text-sm text-amber-800 dark:text-amber-300">{/permission/.test(m.err) ? "Firebase blocked this. Publish the latest firestore.rules from GitHub, then tap Refresh." : `Couldn't load (${m.err}).`}</p>
+          : m.loading ? <p className="text-sm text-muted-foreground" role="status">Loading…</p>
+          : m.list.length ? (
+            <ul className="flex flex-col divide-y">
+              {m.list.map((x) => (
+                <li key={x.id} className="flex flex-col gap-2 py-3">
+                  <span className="flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"><b className="text-sm font-medium text-foreground">{x.name || "Player"}</b> in {x.room} · {x.at} · <span className="rounded-full border border-amber-500/40 px-2 text-amber-800 dark:text-amber-300">{x.flag}</span></span>
+                  <p className="rounded-xl bg-muted/40 px-3 py-2 text-sm break-words whitespace-pre-wrap">{x.text}</p>
+                  <span className="flex flex-wrap gap-2">
+                    <Button variant="outline" size="sm" className="h-8" onClick={() => tf().modPublish(x.id)}><Check /> Publish</Button>
+                    <Button variant="outline" size="sm" className="h-8" onClick={() => tf().modRemove(x.id, false)}><Trash2 /> Remove</Button>
+                    <Button variant="destructive" size="sm" className="h-8" onClick={() => { if (armed === x.id) { tf().modRemove(x.id, true); setArmed("") } else setArmed(x.id) }}>
+                      <X /> {armed === x.id ? "Tap again: remove and ban" : "Remove and ban"}
+                    </Button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : <p className="text-sm text-muted-foreground">Nothing waiting for review.</p>}
+      </Card>
+      <Card className="gap-3 px-5">
+        <h2 className="font-heading text-lg leading-tight font-semibold">Banned from community chat ({m.bans.length})</h2>
+        {m.bans.length ? (
+          <ul className="flex flex-col divide-y">
+            {m.bans.map((b) => (
+              <li key={b.uid} className="flex flex-wrap items-center gap-2 py-2.5 text-sm">
+                <span className="flex min-w-0 flex-1 flex-col"><b className="font-medium">{b.name || "Player"}</b><span className="truncate text-xs text-muted-foreground">{b.reason}{b.at ? ` · ${b.at}` : ""}</span></span>
+                <Button variant="outline" size="sm" className="h-8" onClick={() => tf().modUnban(b.uid)}><RotateCcw /> Unban</Button>
+              </li>
+            ))}
+          </ul>
+        ) : <p className="text-sm text-muted-foreground">No one is banned.</p>}
+        <p className="text-xs text-muted-foreground">Banned players can still read but can't post or send anything to review. You can also delete messages and ban from inside any chat room.</p>
+      </Card>
+    </div>
+  )
+}
+
 export function AdminPage() {
   const d = useTFData(() => tf().admin())
   return (
@@ -203,9 +253,10 @@ export function AdminPage() {
               <TabsList>
                 <TabsTrigger value="feedback" className="px-3">Feedback ({d.open})</TabsTrigger>
                 <TabsTrigger value="donations" className="px-3">Donations</TabsTrigger>
+                <TabsTrigger value="chat" className="px-3">Chat review{d.state === "ok" && tf().modData().list.length ? ` (${tf().modData().list.length})` : ""}</TabsTrigger>
               </TabsList>
             </Tabs>
-            {d.tab === "donations" ? <Donations d={d} /> : <Inbox d={d} />}
+            {d.tab === "donations" ? <Donations d={d} /> : d.tab === "chat" ? <ChatReview /> : <Inbox d={d} />}
           </>
         )}
     </div>

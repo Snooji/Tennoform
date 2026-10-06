@@ -191,6 +191,54 @@ service cloud.firestore {
         && data().days is list && data().days.size() <= 400;
     }
 
+    // Community chat. Public rooms (general, trade, lfg) can be read by anyone; clan and alliance rooms
+    // (c_<clan id>, a_<alliance id>) by players whose synced profile says they belong. Posting needs an
+    // account and no ban. Messages that match the filter can't be posted; the app sends them to the
+    // review queue instead, which only admins can read.
+    function chatFlag(t) {
+      return t.lower().matches("[\\s\\S]*((child|kid|kids|minor|minors|underage|preteen|toddler|loli|shota)[^a-z]{0,3}(porn|nude|nudes|sex|xxx|naked)|(porn|nude|nudes|sex|xxx|naked)[^a-z]{0,3}(child|kid|kids|minor|minors|underage|preteen|toddler)|(selling|sell|buy|vendor|plug)[^a-z]+([a-z]+[^a-z]+){0,3}(cocaine|heroin|fentanyl|meth|mdma|ketamine|xanax|oxy|oxys|lsd)([^a-z]|$)|ghost gun|untraceable gun|glock switch|auto sear|(stolen|hacked)[^a-z]+(credit cards?|cards|cc|paypal accounts?|bank accounts?)|fullz|carding|cvv dumps?|kill (your ?self|urself)|(^|[^a-z])kys([^a-z]|$)|(send|selling|sell)[^a-z]+nudes|(onlyfans|porn)[^a-z]*(leaks?|links?))[\\s\\S]*");
+    }
+    function chatMe() { return get(/databases/$(database)/documents/chatme/$(request.auth.uid)).data; }
+    function inRoom(room) {
+      return room in ['general', 'trade', 'lfg']
+        || (signedIn() && exists(/databases/$(database)/documents/chatme/$(request.auth.uid))
+            && ((chatMe().g != '' && room == 'c_' + chatMe().g) || (chatMe().a != '' && room == 'a_' + chatMe().a)));
+    }
+    function notBanned() { return !exists(/databases/$(database)/documents/bans/$(request.auth.uid)); }
+    match /rooms/{room}/msgs/{id} {
+      allow read: if inRoom(room) || isAdmin();
+      allow delete: if isAdmin() || (signedIn() && resource.data.uid == me());
+      allow create: if isAdmin() || (signedIn() && notBanned() && inRoom(room)
+        && data().keys().hasOnly(['uid', 'name', 'text', 'at'])
+        && data().uid == me() && shortStr(data().name, 40)
+        && data().text is string && data().text.size() > 0 && data().text.size() <= 500
+        && data().at is number && data().at > request.time.toMillis() - 120000 && data().at < request.time.toMillis() + 120000
+        && !chatFlag(data().text));
+    }
+    // Which clan and alliance rooms you're in, from your synced profile.
+    match /chatme/{uid} {
+      allow read: if (signedIn() && me() == uid) || isAdmin();
+      allow delete: if signedIn() && me() == uid;
+      allow create, update: if signedIn() && me() == uid
+        && data().keys().hasOnly(['g', 'a', 'gn', 'name', 'at'])
+        && data().g is string && (data().g == '' || data().g.matches('[0-9a-f]{24}'))
+        && data().a is string && (data().a == '' || data().a.matches('[0-9a-f]{24}'))
+        && shortStr(data().gn, 60) && shortStr(data().name, 40) && data().at is number;
+    }
+    // Flagged messages wait here for an admin: publish, remove, or remove and ban.
+    match /review/{id} {
+      allow read, delete: if isAdmin();
+      allow create: if signedIn() && notBanned()
+        && data().keys().hasOnly(['room', 'uid', 'name', 'text', 'flag', 'at'])
+        && data().uid == me() && shortStr(data().room, 40) && shortStr(data().name, 40) && shortStr(data().flag, 40)
+        && data().text is string && data().text.size() > 0 && data().text.size() <= 500 && data().at is number;
+    }
+    // Banned players can't post or send to review. Only admins manage bans; you can see if you're banned.
+    match /bans/{uid} {
+      allow read: if isAdmin() || (signedIn() && me() == uid);
+      allow write: if isAdmin();
+    }
+
     // Feedback: signed-in users can send; only admins can read.
     match /feedback/{id} {
       allow create: if signedIn() && data().uid == me()
