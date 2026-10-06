@@ -73,7 +73,7 @@ function Builds({ d, kind }: { d: ArsenalData; kind: "w" | "c" }) {
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
               </ul>
-              <p className="text-xs text-muted-foreground">Community consensus build. Pick elements to match the faction you're fighting.</p>
+              <p className="text-xs text-muted-foreground">A proven setup that players run today. Swap the elements to match the faction you're fighting.</p>
             </CardContent>
           </Card>
         ) : null}

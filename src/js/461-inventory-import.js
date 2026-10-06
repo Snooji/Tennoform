@@ -47,4 +47,4 @@ async function importInventory(txt){const inv=invParse(txt);
     lsSet('tenno-codex',C);saveProfile();pushAll();
     out={ok:true,n,base,msg:`Imported your inventory: ${n.items} items, ${n.parts+n.bps} parts and blueprints, ${n.mods} new mods, ${n.arcanes} arcanes, ${n.relics} relic kinds, ${n.res} resources${n.foundry?`, ${n.foundry} in the Foundry`:''}.`}}
   finally{LOGMUTE--}
-  logSummary('sync','Imported your full inventory',a,false);updateMR();return out}
+  updateMR();return out}

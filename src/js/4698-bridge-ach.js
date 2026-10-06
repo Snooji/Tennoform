@@ -1,5 +1,5 @@
 /* ---------- bridge: Achievements for the React page ---------- */
-function achData(){const p=state.lgP||'today';const L=logList();const since=logSince(p);const list=L.filter(e=>e.t>=since);const s=logSum(list);
+function achData(){const p=state.lgP||'today';const L=logList().filter(e=>e.k!=='sync');const since=logSince(p);const list=L.filter(e=>e.t>=since);const s=logSum(list);
   const t=totalXP(),m=mrInfo(t.total);const vis=c=>gateOK(c[4])&&!(P.ckHide||[]).includes(c[1]);const dd=allChecks().filter(c=>c[0]==='d'&&vis(c)),wd=allChecks().filter(c=>c[0]==='w'&&vis(c));
   let tiles;
   if(p==='all')tiles=[{k:'Mastery XP',v:fmt(t.total),x:'MR '+mrLabel(m.mr)+(L.length?' · +'+fmt(logSum(L).xp)+' logged here':'')},{k:'Items mastered',v:fmt(MI.filter(i=>itemXP(i.n)>=mxp(i)).length),x:fmt(MI.length)+' in the game'},

@@ -11,6 +11,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "
 import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useNarrow, useTFData, type ResRow } from "@/lib/tf"
+import { useNavReset } from "@/lib/nav-reset"
 
 const FILTERS = [
   { value: "all", label: "All materials" }, { value: "planet", label: "Planet resources" }, { value: "goal", label: "Needed for my goals" },
@@ -47,6 +48,7 @@ export function ResourcesPage() {
   const narrow = useNarrow()
   const [q, setQ] = useState(d.q)
   const [sheet, setSheet] = useState(false)
+  useNavReset(() => setSheet(false))
   const [lastSel, setLastSel] = useState(d.sel)
   if (d.sel !== lastSel) {
     setLastSel(d.sel)
@@ -109,7 +111,7 @@ export function ResourcesPage() {
       </div>
       {narrow ? (
         <Sheet open={sheet && !!d.detail} onOpenChange={setSheet}>
-          <SheetContent side="bottom" className="max-h-[88dvh] gap-0 rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="max-h-[calc(88dvh-4rem)] gap-0 rounded-t-2xl p-0">
             <SheetHeader className="shrink-0 border-b px-4 py-3">
               <SheetTitle className="pr-8 font-heading text-lg">{d.sel}</SheetTitle>
               <SheetDescription className="sr-only">Where to farm {d.sel}</SheetDescription>

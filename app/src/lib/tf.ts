@@ -160,6 +160,8 @@ export type TFApi = {
   groupCreate(name: string, uids: string[]): Promise<boolean>
   groupAdd(uid: string): void
   groupLeave(): void
+  resetView(): void
+  wayTask(n: string): void
   guides(): GuidesData
   guidesSet(o: { filter?: string; q?: string; sel?: string | null }): void
   guideStep(id: string, i: number, v: boolean): void
@@ -209,6 +211,7 @@ export type FarmData = {
   types: { value: string; label: string }[]; cats: { value: string; label: string; n: number }[]
   total: number; count: number; items: FarmItem[]; more: number; filtered: boolean
   sel: string; selName: string; detail: string
+  way: WayDetail | null
 }
 export type LiveList = { head: string; list: { t: string; s: string; n: string }[] }
 export type CheckRow = {
@@ -520,4 +523,9 @@ export type MyBuildsData = {
   list: (BuildCard & { pub: string; updated: number })[]
   items: string[]; signedIn: boolean; online: boolean
   edit: (BuildDraft & { cat: string; opts: { mods: string[]; arcanes: string[]; slots: { aura: string; exilus: string; arcanes: number; helminth: boolean } } | null }) | null
+}
+
+export type WayDetail = {
+  n: string; cat: string; sum: string; w: string; tips: string[]; hasTask: boolean
+  ways: { t: string; how: string; why: string; req: string; tags: string[]; node: string; planet: string }[]
 }

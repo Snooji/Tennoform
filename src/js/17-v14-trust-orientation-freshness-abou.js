@@ -31,7 +31,7 @@ function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
   <dl class="faq">
    <dt>What does it read?</dt><dd>The public profile Warframe publishes for an account ID, the same information other players see when they view your profile in game. Tennoform only reads it. It never signs in to Warframe and never asks for your password.</dd>
-   <dt>What gets filled in?</dt><dd>Item ranks and mastered gear, star chart and Steel Path completions, junctions, intrinsics, syndicate ranks and standing, Nightwave, today's standing caps, and quests it can work out from your progress (an estimate, so check the Quests page).</dd>
+   <dt>What gets filled in?</dt><dd>Item ranks and mastered gear, star chart and Steel Path completions, junctions, intrinsics, syndicate ranks and standing, Nightwave, today's standing caps, and the quests your progress shows you've finished (tick any it missed on the Quests page).</dd>
    <dt>What stays manual?</dt><dd>Warframe keeps these private: inventory and resource counts, the Foundry, relics, mods and arcanes you own, platinum, and Lich or Sister weapon bonuses. Track them in their own tabs.</dd>
    <dt>What if a sync fails?</dt><dd>Nothing changes. Your saved progress stays exactly as it was. Try again later or use the copy-and-paste method.</dd>
    <dt>What if my profile changed?</dt><dd>Syncing again updates ranks for gear Warframe reports and adds newly finished missions and quests. Anything you set by hand for gear Warframe doesn't report is kept.</dd>
@@ -55,7 +55,7 @@ function about(){const sec=state.aboutSec;
    <li><b>Friends</b> can see your display name, friend code, MR, total Mastery XP and node counts. Messages are stored until you or the recipient deletes them.</li>
    <li><b>Feedback</b> is readable only by the developer.</li>
    <li><b>No ads, no analytics, no tracking.</b> Your browser contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase (when signed in).</li>
-   <li>You can export your data any time (Tenno → Backup &amp; export) and delete your account and everything stored with it (Tenno → Account &amp; sync).</li></ul></section>
+   <li>You can export your data any time (Profile → Backup &amp; export) and delete your account and everything stored with it (Profile → Account &amp; sync).</li></ul></section>
   <details class="obj grp" ${sec==='changes'?'open':''} id="changes"><summary><h3>What's new</h3></summary><div class="stack" style="padding:10px 14px;gap:8px">${CHANGES.map(([d,t])=>`<div class="small"><b class="mono">${esc(fdate(d))}</b> · ${esc(t)}</div>`).join('')}</div></details>
   <section class="panel cut stack"><h2>Contact</h2><span class="small">Bugs, ideas or wrong data: <a class="ln" href="#feedback">Feedback page</a>. Like the app? <a class="ln" href="#donate">Support Tennoform</a>.</span></section></div>`}
 async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;const fs=FB.fs;const uid=u.uid;

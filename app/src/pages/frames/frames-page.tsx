@@ -70,7 +70,7 @@ export function FramesPage() {
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
               </ul>
-              <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden /> Tick what you own. Based on current community consensus; Forma the slots to match each mod's polarity.</p>
+              <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden /> Tick what you own. Forma each slot to match its mod's polarity.</p>
             </CardContent>
           </Card>
         ) : null}

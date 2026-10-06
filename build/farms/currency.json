@@ -1,0 +1,946 @@
+[
+  {
+    "id": "credits",
+    "n": "Credits",
+    "cat": "Currency",
+    "aka": ["money", "cash", "creds", "hollars", "credit farm"],
+    "sum": "Credits pay for crafting, blueprints and mod fusion; The Index on Neptune is the go-to farm, with Profit-Taker and Techrot Safes paying even more for veterans.",
+    "ways": [
+      {
+        "t": "The Index (Neptune)",
+        "how": "Pick the High Risk investment (50,000 credits), collect Index Points from killed enemies and bank them faster than the Corpus team. Keep going for more rounds before extracting.",
+        "why": "Each High Risk round you win pays 250,000 credits, and the game is built around wagering, so it is the best credit farm for newer players. A Credit Booster increases the payout.",
+        "req": "Access to Neptune",
+        "tags": ["fastest", "beginner", "squad"],
+        "node": "Index (Neptune)"
+      },
+      {
+        "t": "Profit-Taker Orb (Orb Vallis)",
+        "how": "Run the Vox Solaris heist and defeat the Profit-Taker Orb atop the Enrichment Labs in the Orb Vallis.",
+        "why": "The kill drops 125,000 credits as a pickup, so Chroma's Effigy, Credit Boosters, a Credit Blessing and Prosperous/Loyal Retriever all multiply it.",
+        "req": "Old Mate rank with Solaris United, an Archgun with Gravimag, and a strong loadout",
+        "tags": ["endgame", "solo", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Techrot Safes (Höllvania)",
+        "how": "Find and open the Techrot Safe in a Höllvania mission. Shell Cracker bounties mark the safe on your map, and the Orokin Eye Air Support highlights its key.",
+        "why": "A safe gives 100,000 Höllars (credits) as a pickup, so every multiplier stacks on it: with Effigy, a Credit Blessing and a Retriever proc it shows 450,000, and a Credit Booster doubles that to 900,000.",
+        "req": "Access to Höllvania",
+        "tags": ["fastest", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Laomedeia (Neptune) Disruption",
+        "how": "Play the Disruption mission on Laomedeia and clear rounds quickly.",
+        "why": "It awards 30,000 credits per B rotation and 50,000 per C rotation, and fast teams can out-earn The Index. These are Credit Caches, so boosters apply but the Daily First Win Bonus does not.",
+        "req": "",
+        "tags": ["squad"],
+        "node": "Laomedeia (Neptune)"
+      },
+      {
+        "t": "Daily Arbitration and Sortie",
+        "how": "Make an Arbitration your first mission after the Daily Tribute, and finish all three Sortie missions each day.",
+        "why": "Arbitrations always pay 50,000 credits per completion, which the Daily First Win Bonus doubles to 100,000. Sorties pay 100,000 credits in total once per day.",
+        "req": "Arbitrations: Pluto access and the Eris junction lens task. Sorties: MR5 and The War Within",
+        "tags": ["daily", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Dark Sector missions (Hieracon, Pluto)",
+        "how": "Run Hieracon Excavation and extract after the first excavator finishes, or do Sechura (Pluto), Seimeni or Gabii (Ceres) for 5 minutes or 3 waves.",
+        "why": "Hieracon pays 20,000 credits in under 5 minutes, and the other Dark Sectors also pay 20,000 for a short run. Each extra squad member adds about 1,000.",
+        "req": "",
+        "tags": ["beginner", "solo"],
+        "node": "Hieracon (Pluto)"
+      },
+      {
+        "t": "Railjack missions",
+        "how": "Clear Railjack missions solo, such as all of Earth Proxima, or Neptune and Pluto Proxima for a bit more pay.",
+        "why": "Missions usually pay 30,000-40,000 credits each, Neptune and Pluto Proxima at least 50,000, and Veil Proxima at least 100,000 at much higher enemy levels.",
+        "req": "A Railjack",
+        "tags": ["solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "A Credit Booster doubles credit gains, and Login Tribute boosters extend an active one.",
+      "Ask an MR30 player in a Relay for a Credit Blessing: 25% more credits for 3 hours.",
+      "Chroma's Effigy doubles big pickups like the Profit-Taker and Techrot Safe drops.",
+      "Sell spare blueprints, mods and Captura scenes from your inventory; use the 'sellable only' filter."
+    ],
+    "w": "https://wiki.warframe.com/w/Credits"
+  },
+  {
+    "id": "endo",
+    "n": "Endo",
+    "cat": "Currency",
+    "aka": ["mod fusion", "fusion energy", "ayatan", "endo farm", "upgrade mods"],
+    "sum": "Endo ranks up your mods; the fastest farm is Steel Path Rathuum on Sedna with a loot squad, and Arbitrations are a strong steady source.",
+    "ways": [
+      {
+        "t": "Steel Path Rathuum (Sedna)",
+        "how": "Run the Rathuum arena at Yam or Vodyanoi on Sedna in The Steel Path, ideally with a full squad. Bring loot frames such as Nekros with Despoil, Nidus, or Khora with Pilfering Strangledome.",
+        "why": "The Steel Path doubles Mod and Endo drop chance, and a squad with loot frames can reach upwards of 75,000 Endo per hour.",
+        "req": "The Steel Path unlocked",
+        "tags": ["fastest", "squad", "endgame"],
+        "node": "Yam (Sedna)"
+      },
+      {
+        "t": "Arbitrations",
+        "how": "Stay in an Arbitration for an hour or more, collecting rotation rewards that include Endo and Ayatan Sculptures.",
+        "why": "With one reward every 5 minutes, an hour averages about 11,796 Endo (counting filled Ayatan Sculptures). Staying longer earns more.",
+        "req": "Pluto access and the Eris junction lens task",
+        "tags": ["endgame", "solo", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Daily Sortie",
+        "how": "Complete all three Sortie missions each day.",
+        "why": "The reward can be 4,000 Endo, an Anasa Ayatan Sculpture worth 3,450 Endo when filled, a Legendary Core (saves up to 40,920 Endo) or a 3-day Mod Drop Chance Booster.",
+        "req": "MR5, The War Within, and Oro (Earth) completed",
+        "tags": ["daily", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Teshin's Steel Path Honors",
+        "how": "Buy the rotating 30,000 Endo offering from Teshin in any Relay when it appears.",
+        "why": "30,000 Endo for 150 Steel Essence, available once every 8 weeks.",
+        "req": "The Steel Path unlocked",
+        "tags": ["endgame"],
+        "node": ""
+      },
+      {
+        "t": "Maroo's weekly Ayatan mission",
+        "how": "Do Maroo's weekly treasure hunt from her Bazaar on Mars (it resets every Monday), then fill and cash in the sculpture.",
+        "why": "A guaranteed sculpture worth 1,425-2,700 Endo once filled with Ayatan Stars, and it can be traded instead.",
+        "req": "",
+        "tags": ["weekly", "beginner", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Bounties and dissolving mods",
+        "how": "Run high-level bounties such as the Cambion Drift 40-60 bounty, scrap unwanted Railjack salvage, and dissolve duplicate mods in your Orbiter.",
+        "why": "The Cambion Drift 40-60 bounty has a 45.45% chance of 1,000 Endo on stage 1. Railjack components scrap for 75-300 Endo by Mk tier, and the Daily Synthesis task gives 250-800.",
+        "req": "",
+        "tags": ["beginner", "solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Only the Mod Drop Chance Booster affects Endo; Resource Boosters and Relay blessings do nothing for it.",
+      "Fill Ayatan Sculptures with stars before giving them to Maroo to get the full value.",
+      "Use Legendary Cores on Primed or Umbra mods, where they save the most Endo.",
+      "Enemy Endo orbs come in 15, 50 and 80 sizes."
+    ],
+    "w": "https://wiki.warframe.com/w/Endo"
+  },
+  {
+    "id": "kuva",
+    "n": "Kuva",
+    "cat": "Currency",
+    "aka": ["riven rolls", "kuva flood", "kuva siphon", "red stuff", "riven cycling"],
+    "sum": "Kuva cycles Riven mods and builds rare blueprints; Kuva Floods are the main farm, topped up by weekly vendor buys from Steel Essence, Riven Slivers and Voidplumes.",
+    "ways": [
+      {
+        "t": "Kuva Flood missions",
+        "how": "Do the Kuva Flood mission on the planet the Kuva Fortress is orbiting, catching Kuva clouds with Operator Void Beam or Void Sling.",
+        "why": "Each Flood awards 1,100-1,400 Kuva, double a regular Siphon, and Resource Boosters apply.",
+        "req": "The War Within, MR5",
+        "tags": ["fastest", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Kuva Siphon missions",
+        "how": "Run the regular Kuva Siphon missions marked with the Kuva icon near the Kuva Fortress.",
+        "why": "Each destroyed Siphon gives around 550-700 Kuva at an easier level 25-35.",
+        "req": "The War Within, MR5",
+        "tags": ["beginner", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Teshin's Steel Essence store",
+        "how": "Trade Steel Essence to Teshin in any Relay for Kuva packs.",
+        "why": "10,000 Kuva for 15 Steel Essence, up to 25 times per week (250,000 total). The rotating 50,000-for-55 offer every 8 weeks gives more per Essence.",
+        "req": "The Steel Path unlocked",
+        "tags": ["weekly", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Weekly vendor buys",
+        "how": "Grab the weekly Kuva offers: Palladino in Iron Wake, Archimedean Yonta in the Chrysalith, plus Flare, Acrithis, Nightcap, Aspirant Zorba and Cephalon Melica.",
+        "why": "Palladino and Yonta each sell 35,000 Kuva weekly (10 Riven Slivers or 5 Voidplume Pinions). Several others sell 6,000 a pack up to 7 times a week (42,000 each).",
+        "req": "Varies by vendor (e.g. Chains of Harrow for Palladino)",
+        "tags": ["weekly"],
+        "node": ""
+      },
+      {
+        "t": "Steel Path Circuit, Archon Hunts and Sorties",
+        "how": "Pick Kuva as a Steel Path Circuit tier reward, and complete weekly Archon Hunts and daily Sorties.",
+        "why": "The Circuit offers 20,000 Kuva at tier 5 or 10 once per week. Archon Hunts have a 12% chance of 12,000, Sorties 12% for 6,000.",
+        "req": "The Steel Path; Veilbreaker for Archon Hunts",
+        "tags": ["weekly", "daily", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Bounties and Kuva Fortress missions",
+        "how": "Run Cetus, Fortuna or Necralisk bounties, or Kuva Survival on Taveuni and Disruption on Tamu.",
+        "why": "Bounties pay 100-300 (Cetus), 500 (Fortuna) and 750 (Necralisk). Tamu Disruption gives 100/200/350 per A/B/C tier, plus 50 per Demolisher.",
+        "req": "",
+        "tags": ["beginner", "solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Resource Boosters double Siphon and Flood Kuva, but not Tamu Disruption rotation rewards.",
+      "Spend Nightwave Creds on the 10,000 Kuva offering (50 Creds) when spare.",
+      "Arbitration Honors sell 10,000 Kuva for 25 Vitus Essence.",
+      "Parazon-finishing a Kuva Lich drops 150-300 Kuva depending on its rank."
+    ],
+    "w": "https://wiki.warframe.com/w/Kuva_(Resource)"
+  },
+  {
+    "id": "orokin-ducats",
+    "n": "Orokin Ducats",
+    "cat": "Currency",
+    "aka": ["ducats", "baro currency", "void trader", "prime junk", "ducat farm"],
+    "sum": "Ducats buy Baro Ki'Teer's exclusive items; you get them by selling Prime parts at the Ducat kiosks in any Relay, and gold (rare) parts pay the most.",
+    "ways": [
+      {
+        "t": "Sell Prime parts at Relay kiosks",
+        "how": "Open Void Relics, then sell spare Prime blueprints, weapon parts and crafted Prime Warframe components at the Void Trader kiosks in any Relay's Concourse.",
+        "why": "Common (bronze) parts are worth 15 Ducats, uncommon (silver) 45 and rare (gold) 100. The kiosks are always open, even when Baro is away.",
+        "req": "",
+        "tags": ["fastest", "beginner"],
+        "node": ""
+      },
+      {
+        "t": "Crack Radiant relics for gold parts",
+        "how": "Refine relics with Void Traces and run Fissures in a squad, focusing on getting rare drops to sell.",
+        "why": "A single rare part is worth 100 Ducats, almost seven commons.",
+        "req": "Void Traces",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "Buy cheap Prime parts from players",
+        "how": "Buy unwanted Prime parts cheaply from other players in trade chat, then sell them at the kiosks.",
+        "why": "Ducats themselves cannot be traded, but the parts can, so this turns Platinum into Ducats.",
+        "req": "MR2 and Two-Factor Authentication to trade",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Varzia (Prime Resurgence)",
+        "how": "Exchange Aya with Varzia in Maroo's Bazaar for Ducats.",
+        "why": "A way to turn spare Aya into Ducats without opening relics.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      },
+      {
+        "t": "Baro's Void Surplus",
+        "how": "Buy the Void Surplus that Baro Ki'Teer sells once per visit for 50,000 credits.",
+        "why": "It has a 2% chance to contain 1,000 Ducats, so it is a small bonus, not a main source.",
+        "req": "",
+        "tags": ["weekly"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Parts that were rarer on vaulted relics but are common on newer ones are worth 25 or 65 Ducats.",
+      "Crafted Prime Warframe parts can still go to the kiosk, but they can no longer be traded to players, so decide before you build.",
+      "Stockpile Ducats before Baro arrives so you can buy his items right away."
+    ],
+    "w": "https://wiki.warframe.com/w/Orokin_Ducats"
+  },
+  {
+    "id": "platinum",
+    "n": "Platinum",
+    "cat": "Currency",
+    "aka": ["plat", "premium currency", "trading", "trade chat", "sell prime", "make plat"],
+    "sum": "Platinum is the premium currency; outside of buying it, the way to earn it is trading tradable items (Prime parts and sets, Mods, Arcanes, Rivens, Relics) with other players.",
+    "ways": [
+      {
+        "t": "Sell Prime parts and full sets",
+        "how": "Open Void Relics and sell Prime blueprints and weapon parts in trade chat or Maroo's Bazaar. Full sets include the main blueprint plus every part.",
+        "why": "Prime parts are the most common tradable reward, and players buy them to skip the relic farm. Vaulted relics stay tradable too.",
+        "req": "MR2 and Two-Factor Authentication enabled",
+        "tags": ["fastest", "beginner"],
+        "node": ""
+      },
+      {
+        "t": "Sell Riven Mods",
+        "how": "Unveil Riven Mods from Sorties and other sources and sell the ones you won't use.",
+        "why": "Rivens are tradable and unique to each roll, so a good one can sell for a lot.",
+        "req": "Both players MR8+",
+        "tags": ["endgame"],
+        "node": ""
+      },
+      {
+        "t": "Sell Arcanes and Mods",
+        "how": "Sell spare Arcane Enhancements (ranked or unranked) and tradable mods from your farms.",
+        "why": "Arcanes and many mods are tradable, so leftovers from Eidolons, bounties and Arbitrations turn into Platinum.",
+        "req": "MR11 to trade Legendary Arcanes",
+        "tags": ["endgame"],
+        "node": ""
+      },
+      {
+        "t": "Sell Syndicate gear, Ayatans and other tradables",
+        "how": "Sell Syndicate weapons, armor and emotes, Ayatan Sculptures, relics and other items in the tradable list.",
+        "why": "Spare Syndicate standing turns into Platinum this way. Tradable weapons sell as long as they have no affinity, Forma, Lens or Catalyst.",
+        "req": "",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Where to trade",
+        "how": "Post WTS offers in the in-game Trade chat, set up shop in Maroo's Bazaar on Mars, or meet in a Clan Dojo trading post.",
+        "why": "Maroo's Bazaar has a fixed 10% hub tax on top of the credit trade tax, while a Dojo can charge 0-100%.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "You get daily trades equal to your Mastery Rank; ranking up gives one more immediately.",
+      "Starting and giveaway Platinum can't be traded, only bought or traded Platinum.",
+      "Baro Ki'Teer's arrival can crash prices for his items, and vaulting changes relic prices.",
+      "Double-check item names, mod ranks and the Platinum amount before clicking OK; trades can't be undone."
+    ],
+    "w": "https://wiki.warframe.com/w/Platinum"
+  },
+  {
+    "id": "void-traces",
+    "n": "Void Traces",
+    "cat": "Currency",
+    "aka": ["traces", "relic refining", "radiant", "reactant", "fissure"],
+    "sum": "Void Traces refine relics to Radiant and craft Dragon Keys; you earn them from Reactant in Void Fissures, and an endless Fissure with boosters is the fastest farm.",
+    "ways": [
+      {
+        "t": "Endless Void Fissures (Defense)",
+        "how": "Run an endless Fissure, ideally Defense where Reactant is easy to collect, and pick up 10 Reactant each rotation.",
+        "why": "Each relic opening gives 6-30 Traces. Endless missions also hand out bonus Resource Boosters, and with every multiplier one relic can give up to 495.",
+        "req": "",
+        "tags": ["fastest", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Fissures without a relic",
+        "how": "Run Fissure missions with no relic equipped (solo or with a premade squad) and collect 10 Reactant.",
+        "why": "You still get the 6-30 Traces without spending your relics.",
+        "req": "",
+        "tags": ["solo", "beginner"],
+        "node": ""
+      },
+      {
+        "t": "Public squads where others pick your reward",
+        "how": "Open relics in squads; when teammates pick the reward from your relic you get bonus Traces.",
+        "why": "5 bonus Traces per teammate who picks yours, up to 15 extra.",
+        "req": "",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "Granum Void",
+        "how": "Spend a Granum Crown at a Golden Hand Tribute on a Corpus Ship and kill Errant Specters.",
+        "why": "The Rank 1 reward includes 5/10/15 Traces for Normal/Extended/Nightmare.",
+        "req": "The Deadlock Protocol",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Varzia (Aya exchange)",
+        "how": "Trade Aya to Varzia in Maroo's Bazaar for Void Traces.",
+        "why": "Turns spare Aya into Traces when you need them.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Your cap is MR x 50 + 100 (750 at MR13, 1,600 at MR30); extra is lost.",
+      "Resource Boosters, Resource Weekends and Loyal/Resourceful Retriever all double the Trace reward.",
+      "Radiant costs 100 Traces, Flawless 50, Exceptional 25."
+    ],
+    "w": "https://wiki.warframe.com/w/Void_Traces"
+  },
+  {
+    "id": "aya",
+    "n": "Aya",
+    "cat": "Currency",
+    "aka": ["varzia", "prime resurgence", "vaulted relics", "aya farm", "resurgence"],
+    "sum": "Aya buys vaulted relics from Varzia's Prime Resurgence; it drops from Void missions and bounties, taking the place of vaulted relics.",
+    "ways": [
+      {
+        "t": "Missions in the Void",
+        "how": "Run missions on Void nodes; each completion guarantees either a relic or Aya.",
+        "why": "Aya drops in place of vaulted relics, so Void missions are the steady source.",
+        "req": "Access to the Void",
+        "tags": ["fastest", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Bounties",
+        "how": "Run open-world bounties such as Cetus, Fortuna and Necralisk ones.",
+        "why": "Aya replaces vaulted relics in bounty reward tables too.",
+        "req": "",
+        "tags": ["solo", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Relic Packs",
+        "how": "Open Relic Packs from Syndicate offerings or the in-game Market.",
+        "why": "Packs occasionally contain Aya.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Varzia also trades Aya for Ducats and Void Traces.",
+      "Faction Syndicates need 2 Aya for Rank 4 and 3 for Rank 5, so keep a few.",
+      "Varzia's stock changes every 28 days at 18:00 UTC; check before spending."
+    ],
+    "w": "https://wiki.warframe.com/w/Aya"
+  },
+  {
+    "id": "regal-aya",
+    "n": "Regal Aya",
+    "cat": "Currency",
+    "aka": ["premium aya", "prime resurgence", "varzia", "unvaulted primes", "buy primes"],
+    "sum": "Regal Aya buys vaulted Prime Warframes, weapons and accessories directly from Varzia; it is only sold for real money and can't be traded.",
+    "ways": [
+      {
+        "t": "Buy on the official website",
+        "how": "Purchase Regal Aya packs at the Prime Resurgence page on the official Warframe website.",
+        "why": "Packs come with bonus Platinum (up to 1,200 in the largest pack).",
+        "req": "",
+        "tags": ["fastest"],
+        "node": ""
+      },
+      {
+        "t": "Buy in the in-game Market",
+        "how": "Buy Regal Aya through the in-game Market on any platform.",
+        "why": "Same product, available without leaving the game.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      },
+      {
+        "t": "Free route: regular Aya",
+        "how": "Farm regular Aya from Void missions and bounties and buy the vaulted relics, then open them yourself.",
+        "why": "Gets the same vaulted Primes without paying, at the cost of relic farming.",
+        "req": "",
+        "tags": ["solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Items bought with Regal Aya come with a slot and a Catalyst or Reactor installed.",
+      "Buying from Varzia bypasses Mastery Rank locks on Prime weapons.",
+      "Prime accessories like Syandanas and Sugatras are Regal Aya only."
+    ],
+    "w": "https://wiki.warframe.com/w/Regal_Aya"
+  },
+  {
+    "id": "riven-slivers",
+    "n": "Riven Slivers",
+    "cat": "Currency",
+    "aka": ["slivers", "palladino", "riven fragments", "eximus drops", "iron wake"],
+    "sum": "Riven Slivers buy Rivens, Kuva and Requiem items from Palladino; they drop from Eximus units, so Eximus-heavy Steel Path missions with resource boosts are the best farm.",
+    "ways": [
+      {
+        "t": "Endless Steel Path with Eximus",
+        "how": "Run endless Steel Path missions and kill every Eximus, stacking resource drop bonuses.",
+        "why": "Eximus above level 30 have a 2% chance to drop one, and the Steel Path's bonus drop chance raises that further.",
+        "req": "The Steel Path unlocked",
+        "tags": ["fastest", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Eximus Stronghold Sorties and Defixios",
+        "how": "Do Sorties or Abyssal Zone Orokin Defixios with the Eximus Stronghold condition.",
+        "why": "Eximus spawn much more often, so more chances at a Sliver.",
+        "req": "Sortie access (MR5, The War Within)",
+        "tags": ["daily", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Höllvania missions and Faceoff",
+        "how": "Play Höllvania missions, especially Faceoff where opponents can spawn 5 Eximus with Eximus Influx.",
+        "why": "Eximus spawn at an increased rate in Höllvania.",
+        "req": "Access to Höllvania",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "Requiem relics and Empyrean",
+        "how": "Open Requiem Relics in Void Fissures and run Empyrean missions.",
+        "why": "Both list Riven Slivers as rewards.",
+        "req": "",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "High-level Jackal",
+        "how": "Fight Jackal at level 41+ (Sortie or Steel Path).",
+        "why": "5% chance to drop 1 Sliver.",
+        "req": "The Steel Path or a Sortie",
+        "tags": ["solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Slivers count as resources: Resource Boosters, Drop Chance Boosters, Retriever mods, Atlas Ore Gaze, Khora Pilfering Strangledome and Wukong all help.",
+      "Pick them up fast; Sliver drops despawn after about 2 minutes.",
+      "Spend 10 on Palladino's 35,000 Kuva each week, or on a Riven Mod (10 Slivers, twice a week).",
+      "Operation: Belly of the Beast, when it runs, is full of Jade Light Eximus."
+    ],
+    "w": "https://wiki.warframe.com/w/Riven_Sliver"
+  },
+  {
+    "id": "steel-essence",
+    "n": "Steel Essence",
+    "cat": "Currency",
+    "aka": ["teshin", "steel path currency", "incursions", "acolytes", "essence"],
+    "sum": "Steel Essence buys Teshin's Steel Path Honors (Umbra Forma, Kuva, arcane adapters and more); daily Incursions plus Acolyte kills are the core farm.",
+    "ways": [
+      {
+        "t": "Steel Path Incursions",
+        "how": "Clear the six daily Steel Path Incursion alerts.",
+        "why": "Each gives 5 Steel Essence, 30 per day.",
+        "req": "The Steel Path unlocked",
+        "tags": ["fastest", "daily"],
+        "node": ""
+      },
+      {
+        "t": "Acolytes in endless Steel Path",
+        "how": "Stay in endless Steel Path missions and kill the Acolytes that spawn, grabbing the drops quickly.",
+        "why": "Each Acolyte guarantees 2 Steel Essence, doubled by Resource Boosters and Loyal/Resourceful Retriever.",
+        "req": "The Steel Path unlocked",
+        "tags": ["endgame", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Weekly Circuit and Descendia",
+        "how": "Reach Tier 9 of the Steel Path Circuit and floor 18 of Steel Path Descendia each week.",
+        "why": "25 Steel Essence each.",
+        "req": "The Steel Path unlocked",
+        "tags": ["weekly"],
+        "node": ""
+      },
+      {
+        "t": "Clearing the Steel Path Star Chart",
+        "how": "Complete every node on each planet in The Steel Path.",
+        "why": "25 per planet cleared, 475 for the whole Star Chart, a one-time haul.",
+        "req": "The Steel Path unlocked",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Steel Path Fissures, Orowyrm and Eidolons",
+        "how": "Open relics in Steel Path Fissures, beat the Orowyrm in Steel Path Duviri, and hunt Eidolons on the Steel Path Plains.",
+        "why": "1 per relic opened, 5 from the Orowyrm chest, 1 per Eidolon. Steel Path Undercroft portals give 2 each, up to 6 per run.",
+        "req": "The Steel Path unlocked",
+        "tags": ["squad"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Run endless Steel Path with a Resource Booster active to double Acolyte drops.",
+      "Grab Acolyte drops right away; they often vanish within 1-3 minutes.",
+      "Buying everything in Teshin's permanent stock once takes 408 Essence."
+    ],
+    "w": "https://wiki.warframe.com/w/Steel_Essence"
+  },
+  {
+    "id": "vitus-essence",
+    "n": "Vitus Essence",
+    "cat": "Currency",
+    "aka": ["vitus", "arbitration currency", "arbiters of hexis", "arbi", "galvanized mods"],
+    "sum": "Vitus Essence buys Arbitration Honors (Galvanized mods, arcanes, Kuva and more); it comes only from Arbitrations, so stay long and kill Shield Drones.",
+    "ways": [
+      {
+        "t": "Long Arbitration runs",
+        "how": "Stay in an endless Arbitration for many rotations; after the first four, every rotation is a C rotation.",
+        "why": "Each rotation gives 1 guaranteed Vitus, plus a 10% chance of 3 more from the reward table.",
+        "req": "Pluto access, the Eris junction lens task, and a Rank 30 Warframe",
+        "tags": ["fastest", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Kill Arbitration Shield Drones",
+        "how": "Kill every Arbitration Shield Drone and grab what it drops.",
+        "why": "Each drone has a 6% chance to drop 1 Vitus, which Resource Boosters and Retriever mods double.",
+        "req": "",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "Fast-rotation mission types",
+        "how": "Pick Arbitrations on Survival, Defense or Interception.",
+        "why": "Survival and Defense rotations are short, so Vitus comes faster. Excavation needs two digs per reward.",
+        "req": "",
+        "tags": ["solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Use a Resource Booster to double Vitus from Shield Drones.",
+      "Failing still keeps rotation rewards already earned; quitting does not.",
+      "Drone Vitus can disappear within 1-3 minutes, so pick it up fast.",
+      "Buying everything in the Honors shop once takes 1,125 Vitus."
+    ],
+    "w": "https://wiki.warframe.com/w/Vitus_Essence"
+  },
+  {
+    "id": "pathos-clamps",
+    "n": "Pathos Clamps",
+    "cat": "Currency",
+    "aka": ["clamps", "duviri", "orowyrm", "acrithis", "drifter melee"],
+    "sum": "Pathos Clamps buy Drifter melee weapons, Incarnon upgrades and Acrithis' wares; Steel Path Duviri Experience with Undercroft side portals is the best farm.",
+    "ways": [
+      {
+        "t": "Steel Path Duviri Experience + Undercroft portals",
+        "how": "Play The Duviri Experience on Steel Path, clear the Undercroft side portals, and beat the Orowyrm at the end.",
+        "why": "The Orowyrm chest gives 15 Clamps on Steel Path, and each Undercroft side portal adds 3.",
+        "req": "The Duviri Paradox; The Steel Path",
+        "tags": ["fastest", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Isleweaver",
+        "how": "Defeat the Duet boss fight against The Fragmented in Isleweaver and open the chest.",
+        "why": "10 Clamps (15 on Steel Path) per clear.",
+        "req": "The Duviri Paradox",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Normal Duviri Experience",
+        "how": "Run The Duviri Experience on normal difficulty and defeat the Orowyrm.",
+        "why": "10 Clamps per Orowyrm chest, plus 1 per Undercroft side portal.",
+        "req": "The Duviri Paradox",
+        "tags": ["beginner", "solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Resource Boosters do nothing for Clamps, so don't save boosters for this.",
+      "Getting everything takes about 1,210 Clamps.",
+      "Acrithis sells Catalysts, Reactors, Forma blueprints and Kuva for 10-25 Clamps."
+    ],
+    "w": "https://wiki.warframe.com/w/Pathos_Clamp"
+  },
+  {
+    "id": "vosfor",
+    "n": "Vosfor",
+    "cat": "Currency",
+    "aka": ["arcane vosfor", "arcane dissolution", "loid", "arcane packs", "dissolve arcanes"],
+    "sum": "Vosfor buys random Arcane collections from Loid (200 Vosfor each); dissolve unwanted Arcanes and claim the weekly and Syndicate packs.",
+    "ways": [
+      {
+        "t": "Dissolve unwanted Arcanes",
+        "how": "Have Loid in the Sanctum Anatomica dissolve your spare and duplicate Arcanes.",
+        "why": "The amount varies by Arcane, and leftovers from Eidolons, bounties and collections all become Vosfor.",
+        "req": "Whispers in the Walls",
+        "tags": ["fastest", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Elite Deep Archimedea",
+        "how": "Clear Elite Deep Archimedea with enough Research Points.",
+        "why": "20 Vosfor at 28 points and 50 at 37 points.",
+        "req": "Whispers in the Walls, Cavia Rank 5",
+        "tags": ["weekly", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Syndicate Vosfor Pack",
+        "how": "Buy the 200 Vosfor Pack from any of the six main Syndicates at Rank 5.",
+        "why": "200 Vosfor for 30,000 standing, a good use of maxed standing.",
+        "req": "Rank 5 with a faction Syndicate, Whispers in the Walls",
+        "tags": ["daily"],
+        "node": ""
+      },
+      {
+        "t": "Höllvania (Kaya and Faceoff)",
+        "how": "Buy 200 Vosfor Packs from Kaya for 6 Pix Chips, and play Faceoff missions.",
+        "why": "Faceoff awards varying amounts of Vosfor.",
+        "req": "Access to Höllvania",
+        "tags": ["squad"],
+        "node": ""
+      },
+      {
+        "t": "1999 Calendar",
+        "how": "Complete Calendar challenges and pick the 200 Vosfor Pack when offered.",
+        "why": "A free 200 Vosfor when it shows up.",
+        "req": "Access to Höllvania",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Each collection costs 200 Vosfor plus 50,000 credits and gives 3 Arcanes.",
+      "Pick the collection with the best odds for the Arcane you want (e.g. Steel Collection is 100% rare).",
+      "Spend spare faction standing on Vosfor Packs instead of letting it sit."
+    ],
+    "w": "https://wiki.warframe.com/w/Vosfor"
+  },
+  {
+    "id": "lua-thrax-plasm",
+    "n": "Lua Thrax Plasm",
+    "cat": "Currency",
+    "aka": ["thrax plasm", "conjunction survival", "voruna", "yonta", "circulus"],
+    "sum": "Lua Thrax Plasm buys Voruna, Perigale, Sarofang and Lua arcanes from Archimedean Yonta; farm it in Conjunction Survival, best on Steel Path Circulus.",
+    "ways": [
+      {
+        "t": "Steel Path Circulus (Lua)",
+        "how": "Play the Steel Path version of Circulus Conjunction Survival and stay for many rotations, killing the Thrax that spawn every 5 minutes.",
+        "why": "Guaranteed 6 Plasm per rotation, plus each Thrax has a 30% chance to drop more.",
+        "req": "The War Within; The Steel Path",
+        "tags": ["fastest", "endgame", "squad"],
+        "node": "Circulus (Lua)"
+      },
+      {
+        "t": "Circulus (Lua)",
+        "how": "Run normal Circulus Conjunction Survival and kill the Thrax Centurions and Legatus that spawn each rotation (finish Eclipse/Lua variants with Void Beam).",
+        "why": "Guaranteed 5 Plasm per rotation, plus 30% Thrax drops.",
+        "req": "The War Within",
+        "tags": ["squad"],
+        "node": "Circulus (Lua)"
+      },
+      {
+        "t": "Yuvarium (Lua)",
+        "how": "Run Yuvarium Conjunction Survival for an easier version.",
+        "why": "Guaranteed 3 Plasm per rotation (5 on Steel Path).",
+        "req": "The War Within",
+        "tags": ["beginner", "solo"],
+        "node": "Yuvarium (Lua)"
+      }
+    ],
+    "tips": [
+      "Play in a squad: Thrax spawns are 2 plus 1 per extra squad member.",
+      "Resource Boosters double Plasm from Thrax drops but not the rotation reward.",
+      "Plasm drops despawn after 60 seconds, so grab them fast.",
+      "Everything from Yonta once takes 1,110 Plasm."
+    ],
+    "w": "https://wiki.warframe.com/w/Lua_Thrax_Plasm"
+  },
+  {
+    "id": "archon-shards",
+    "n": "Archon Shards",
+    "cat": "Currency",
+    "aka": ["shards", "tauforged", "archon hunt", "helminth shards", "crimson amber azure"],
+    "sum": "Archon Shards give permanent Warframe stat boosts through the Helminth; the weekly Archon Hunt is guaranteed, and Netracells and Archimedea add several more each week.",
+    "ways": [
+      {
+        "t": "Weekly Archon Hunt",
+        "how": "Complete the weekly Archon Hunt; the Archon rotates between Boreal (Azure), Amar (Crimson) and Nira (Amber).",
+        "why": "Guaranteed shard of that Archon's color, with a 20% Tauforged chance that rises 20% after each normal one (about 39.83% effective).",
+        "req": "Veilbreaker",
+        "tags": ["fastest", "weekly", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Netracells",
+        "how": "Run Netracells from Tagfer in the Sanctum Anatomica, spending a Search Pulse each time.",
+        "why": "The main cache can be a Crimson, Amber or Azure shard (Tauforged as a rare result).",
+        "req": "Whispers in the Walls",
+        "tags": ["weekly", "squad"],
+        "node": ""
+      },
+      {
+        "t": "Deep Archimedea",
+        "how": "Unlock Deep Archimedea with 2 Search Pulses and clear its three missions with as many Research Points as possible.",
+        "why": "Its main rewards are Crimson, Amber and Azure shards, with Tauforged as rare loot.",
+        "req": "Whispers in the Walls, Cavia Rank 5",
+        "tags": ["weekly", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Temporal Archimedea",
+        "how": "Unlock Temporal Archimedea in Höllvania with 2 Search Pulses and clear it.",
+        "why": "It can award all six colors, including Emerald, Topaz, Violet and Tauforged.",
+        "req": "The Hex quest, Rank 5 with The Hex",
+        "tags": ["weekly", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Bird 3 (Cavia)",
+        "how": "Buy the weekly shard from Bird 3 in the Sanctum Anatomica; its color rotates.",
+        "why": "One normal shard for 30,000 Cavia standing each week.",
+        "req": "Cavia Rank 5",
+        "tags": ["weekly"],
+        "node": ""
+      },
+      {
+        "t": "1999 Calendar and Descendia",
+        "how": "Pick shards from the 1999 Calendar, and finish Infernum 21 of Steel Path Descendia.",
+        "why": "The Calendar can give any normal shard; Descendia gives normal Crimson, Amber or Azure.",
+        "req": "Access to Höllvania",
+        "tags": ["weekly"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "You get 5 Search Pulses a week, shared between Netracells, Deep and Temporal Archimedea.",
+      "Fuse two primary colors for Emerald, Topaz or Violet (50 Stela), or three of a color for a Tauforged (100 Stela).",
+      "Shards are lost if you sell or subsume a Warframe that has them, so unsocket first.",
+      "Search Pulses and Archon Hunts reset Monday 00:00 UTC."
+    ],
+    "w": "https://wiki.warframe.com/w/Archon_Shard"
+  },
+  {
+    "id": "granum-crowns",
+    "n": "Granum Crowns",
+    "cat": "Currency",
+    "aka": ["crowns", "zenith crown", "exemplar crown", "treasurer", "granum void"],
+    "sum": "Granum Crowns open the Granum Void and free Solaris captives; kill the Treasurer on a Corpus Ship, and the planet sets the tier (Venus/Mars/Phobos normal, Jupiter/Neptune Exemplar, Neptune/Pluto/Steel Path Zenith).",
+    "ways": [
+      {
+        "t": "Short Corpus Ship missions",
+        "how": "Run quick non-endless Corpus Ship missions and kill the Treasurer before he escapes; he shows up within 2-4 minutes with a waypoint.",
+        "why": "Only one Treasurer spawns per mission, so short missions get you a Crown fastest. Non-endless missions spawn him sooner than endless ones (5-8 minutes).",
+        "req": "The Deadlock Protocol",
+        "tags": ["fastest", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Zenith Crowns: Pluto, Neptune or Steel Path",
+        "how": "Farm Corpus Ship missions on Pluto or Neptune, any Steel Path Corpus Ship mission, or any Sisters of Parvos mission.",
+        "why": "These drop Zenith Crowns, which open the Nightmare Granum Void and free Solaris for 900 standing. Acheron, Cypress, Hydra and Psamathe are good nodes.",
+        "req": "The Deadlock Protocol",
+        "tags": ["endgame"],
+        "node": ""
+      },
+      {
+        "t": "Exemplar Crowns: Jupiter or Neptune",
+        "how": "Farm Corpus Ship missions on Jupiter, or Adrastea and Triton.",
+        "why": "Exemplar Crowns open the Extended Granum Void and free Solaris for 600 standing.",
+        "req": "The Deadlock Protocol",
+        "tags": ["solo"],
+        "node": ""
+      },
+      {
+        "t": "Normal Crowns: Venus, Mars, Phobos",
+        "how": "Farm Corpus Ship missions such as Skyresh, Ishtar, Roche or Fossa.",
+        "why": "Easy early Crowns for the base Granum Void and 300 Solaris standing per captive.",
+        "req": "The Deadlock Protocol",
+        "tags": ["beginner", "solo"],
+        "node": ""
+      },
+      {
+        "t": "Nightmare Mode to upgrade the tier",
+        "how": "Play Nightmare Mode Corpus Ship missions, which add +10 enemy levels.",
+        "why": "The higher level can bump the drop up a tier, e.g. Nightmare Jackal on Venus drops an Exemplar Crown.",
+        "req": "The Deadlock Protocol",
+        "tags": ["solo"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Vacuum and Fetch don't pull Crowns; pick them up by hand.",
+      "Resource Boosters and loot abilities don't affect Crowns.",
+      "You can spend a Crown in the same mission you got it.",
+      "The Treasurer doesn't spawn on Valac (Europa) or if you're within 35 m of extraction."
+    ],
+    "w": "https://wiki.warframe.com/w/Granum_Crown"
+  },
+  {
+    "id": "nightwave-cred",
+    "n": "Nightwave Cred",
+    "cat": "Currency",
+    "aka": ["cred", "nightwave creds", "nora", "battle pass", "nightwave standing"],
+    "sum": "Nightwave Cred buys items from the Nightwave Cred Offerings (Catalysts, Reactors, Kuva, Nitain and more); earn it by ranking up Nightwave through daily and weekly Acts.",
+    "ways": [
+      {
+        "t": "Weekly and Elite Weekly Acts",
+        "how": "Complete the Weekly and Elite Weekly Acts each week, including Recovered ones from missed weeks.",
+        "why": "Weeklies give 4,500 standing and Elite Weeklies 7,000, and every 10,000 standing is a rank.",
+        "req": "The Teacher quest",
+        "tags": ["fastest", "weekly"],
+        "node": ""
+      },
+      {
+        "t": "Daily Acts",
+        "how": "Clear the daily Acts; each lasts 3 days, so you can catch up.",
+        "why": "1,000 standing each, and they are the easiest tasks.",
+        "req": "The Teacher quest",
+        "tags": ["daily", "beginner"],
+        "node": ""
+      },
+      {
+        "t": "Cred ranks and prestige ranks",
+        "how": "Rank up through the season's 30 ranks, several of which award Creds, then keep earning standing for prestige ranks.",
+        "why": "In the current series, ranks 1 and 16 give 150 Cred and several others 50. Each prestige rank after 30 gives 15 Cred.",
+        "req": "",
+        "tags": ["weekly"],
+        "node": ""
+      },
+      {
+        "t": "Duplicate rewards",
+        "how": "Keep ranking even if you already own a Nightwave-exclusive reward.",
+        "why": "Duplicate Nightwave-exclusive rewards turn into 50 Cred.",
+        "req": "",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Each series has its own Cred that expires at the end; spend it before then.",
+      "Leftover Cred can be sold for 5,000 credits each after the series ends.",
+      "The shop rotates every 7 days, so check back for Catalysts and Reactors.",
+      "Weeklies refresh Sunday 00:00 UTC."
+    ],
+    "w": "https://wiki.warframe.com/w/Nightwave"
+  },
+  {
+    "id": "stela",
+    "n": "Stela",
+    "cat": "Currency",
+    "aka": ["murmur sarcophage", "archon fusion", "cavia", "albrecht", "shard fusion"],
+    "sum": "Stela fuses Archon Shards and ranks up Cavia; it comes from Murmur enemies and Sarcophage containers in Albrecht's Laboratories, with The Fragmented fight a strong farm.",
+    "ways": [
+      {
+        "t": "Murmur Sarcophages",
+        "how": "Break the Murmur Sarcophage containers in the Murmur tiles of Albrecht's Laboratories; look on ledges and outcrops.",
+        "why": "Each one is a guaranteed 2-3 Stela.",
+        "req": "Whispers in the Walls",
+        "tags": ["fastest", "solo"],
+        "node": ""
+      },
+      {
+        "t": "The Fragmented boss (Assassination)",
+        "how": "Fight The Fragmented and kill the enemies it spawns, stalling the fight to farm more. Bounty and Deep Archimedea versions spawn more enemies.",
+        "why": "Its spawned enemies have about a 5% chance each to drop Stela.",
+        "req": "Whispers in the Walls",
+        "tags": ["squad", "endgame"],
+        "node": ""
+      },
+      {
+        "t": "Mirror Defense on Munio",
+        "how": "Play Mirror Defense on Munio and collect Vosphene Glyphs.",
+        "why": "Every 50 Vosphene Glyphs collected gives Stela.",
+        "req": "Whispers in the Walls",
+        "tags": ["solo"],
+        "node": "Munio (Deimos)"
+      },
+      {
+        "t": "Laboratory missions",
+        "how": "Run Effervo, Nex or Persto in Albrecht's Laboratories and kill Murmur Fragments and Constructs.",
+        "why": "Murmur enemies occasionally drop Stela, and Sarcophage-opening bounties send you to them.",
+        "req": "Whispers in the Walls",
+        "tags": ["beginner"],
+        "node": ""
+      }
+    ],
+    "tips": [
+      "Run Fissure missions with relics in the Laboratories; bonus Resource Boosters greatly increase Stela drops.",
+      "Rogue Necramechs don't drop Stela.",
+      "Fusing two primary shards costs 50 Stela, a Tauforged Ascent Fusion 100."
+    ],
+    "w": "https://wiki.warframe.com/w/Stela"
+  }
+]
