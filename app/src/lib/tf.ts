@@ -127,6 +127,22 @@ export type TFApi = {
   lichSet(n: string, o: { e?: string; b?: string }): void
   tenno(): TennoData
   tennoSet(o: { tab?: string; q?: string }): void
+  support(): SupportData
+  copy(text: string, msg?: string): void
+  feedback(): FeedbackData
+  feedbackSet(o: { kind?: string }): void
+  feedbackSend(kind: string, text: string, contact: string): Promise<boolean>
+  about(): AboutData
+  admin(): AdminData
+  adminSet(o: { tab?: string; filter?: string }): void
+  adminRecheck(): void
+  fbReload(): void
+  fbDone(id: string): void
+  fbDel(id: string): void
+  donAdd(o: { kind: string; amount: string; who: string; date: string; note: string }): Promise<boolean>
+  donDel(id: string): Promise<void>
+  donReload(): void
+  donCSV(): void
 }
 /** An existing handler to run: the bridge builds an element with these attributes and clicks it. */
 export type TFAction = { tag: "a" | "button"; attrs: Record<string, string> }
@@ -394,3 +410,19 @@ export function useTFData<T>(read: () => T): T {
 /** Run an existing action from the app, e.g. open an item or a quest. */
 export const runAct = (a: TFAction) => tf().act(a.tag, a.attrs)
 export const hrefOf = (a: TFAction | null) => (a && a.attrs.href && a.attrs.href !== "#" ? a.attrs.href : "#")
+
+export type SupportData = { ign: string; paypal: string; whisper: string }
+export type FeedbackData = { hosted: boolean; ready: boolean; signed: boolean; kind: string; from: string; prefill: string; admin: boolean }
+export type AboutData = {
+  pitch: string; site: string; wfcd: string; built: string; prices: string; sec: string
+  changes: { d: string; t: string }[]
+  feeds: { k: "ok" | "warn" | "bad" | "off"; t: string }[]
+}
+export type AdminFeedback = { id: string; kind: string; at: string; page: string; text: string; name: string; contact: string; done: boolean }
+export type AdminDonation = { id: string; amount: string; who: string; date: string; kind: string; note: string }
+export type AdminData = {
+  state: "signin" | "checking" | "denied" | "ok"; email: string; uid: string; err: string
+  tab?: string; filter?: string; open?: number; fbTotal?: number
+  totals?: { usdM: string; usd: string; platM: string; plat: string; n: number; who: number }
+  feedback?: AdminFeedback[]; donErr?: boolean; donLoading?: boolean; donations?: AdminDonation[]
+}

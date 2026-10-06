@@ -28,6 +28,10 @@ import { MarketPage } from "@/pages/market/market-page"
 import { RelicsPage } from "@/pages/relics/relics-page"
 import { ArsenalPage } from "@/pages/arsenal/arsenal-page"
 import { TennoPage } from "@/pages/tenno/tenno-page"
+import { SupportPage } from "@/pages/info/support-page"
+import { FeedbackPage } from "@/pages/info/feedback-page"
+import { AboutPage } from "@/pages/info/about-page"
+import { AdminPage } from "@/pages/info/admin-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
 
@@ -50,6 +54,10 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   relics: RelicsPage,
   arsenal: ArsenalPage,
   tenno: TennoPage,
+  donate: SupportPage,
+  feedback: FeedbackPage,
+  about: AboutPage,
+  admin: AdminPage,
 }
 const OWNED = new Set(["home", ...Object.keys(PAGES)])
 
