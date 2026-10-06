@@ -50,3 +50,6 @@ function undoToast(text,fn){if(window.TF_UI&&TF_UI.toast)TF_UI.toast(text,{label
 document.addEventListener('click',e=>{const t=e.target.closest('[data-about]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('about')))return;
   e.preventDefault();e.stopPropagation();state.aboutSec=t.dataset.about;if(location.hash!=='#about')location.hash='about';else tfNotify();
   setTimeout(()=>{const c=document.getElementById('changes');if(c)c.scrollIntoView({block:'start'})},200)},true);
+/* the account menu shows Backend once the admin check finishes; tell the shell when it does */
+{const _lf=loadFeedback;loadFeedback=async function(){const r=await _lf.apply(this,arguments);tfNotify();return r}
+ const _ld=loadDonations;loadDonations=async function(){const r=await _ld.apply(this,arguments);tfNotify();return r}}
