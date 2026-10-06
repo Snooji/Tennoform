@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HkiXBtqOtNF27H9MoDaxDbv5l+6JJA1yjuIH4XHzrcY=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-CFb_6Ouf.css"><script type="module" src="/assets/main-D4YNKJUc.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+hKrhS9R1bVd04job8h9KlTOq5sB2ic32tQMnhON2yM=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-CRUQh2ZF.css"><script type="module" src="/assets/main-BF0K_AJE.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#100f0d">
 
@@ -2544,12 +2544,13 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
   </details>
   </div>`}</div>
   <div class="panel stack cut"><h2>Sync</h2>
-  <div class="row"><button class="btn primary" id="autosync" ${ok?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
+  ${platPickHTML()}
+  <div class="row"><button class="btn primary" id="autosync" ${ok&&wfPlat().auto?'':'disabled'}>Sync automatically</button><span class="small muted" id="asres">${P.auto?'Last automatic sync '+fdate(P.auto):''}</span></div>
   ${state.syncFail?`<div class="callout small" role="status">Automatic sync couldn't reach Warframe just now. The steps below always work and take about 20 seconds.</div>`:''}
-  <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
+  <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail&&wfPlat().auto?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
    <ol class="ssl">
     <li><b>Open your profile data.</b> <span class="small muted">It opens Warframe's own page with your ID filled in. You don't need to be signed in.</span>
-     <div><a class="btn" id="openprof" ${ok?`href="https://api.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div></li>
+     <div><a class="btn" id="openprof" ${ok?`href="https://${wfPlat().host}.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div></li>
     <li><b>Copy everything on that page.</b> <span class="small muted">On a phone: press and hold the text, tap <b>Select All</b>, then <b>Copy</b>. On a computer: Ctrl+A (⌘A), then Ctrl+C (⌘C).</span></li>
     <li><b>Come back and paste.</b> <div class="row" style="margin-top:6px"><button class="btn primary" id="pastesync" type="button">Paste &amp; sync</button><span class="small muted">You'll see what changes before anything is saved.</span></div></li>
    </ol>
@@ -3107,14 +3108,14 @@ const RKC={key:'',order:[]};
 function relicsDrop(n){const it=I[n];if(!it||!it.p||ownedItem(n))return false;const has=rel=>(rel||[]).some(([r])=>relCount(r)>0);
   if(!on('bp|'+n)&&has(it.bprel))return true;return it.parts.some(p=>p.k==='p'&&p.n!=='Blueprint'&&!on('part|'+n+'|'+p.n)&&has(p.rel))}
 function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);const v=VAULT[n]||{};
-  return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it),prime:!!it.p,vaulted:!!(it.p&&it.v&&!v.now),resurgence:!!v.now,owned:ownedItem(n)&&r<mx,relics:relicsDrop(n)}}
+  return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it),prime:!!it.p,vaulted:!!(it.p&&it.v&&!v.now),resurgence:!!v.now,owned:ownedItem(n)&&r<mx,notOwned:on('nown|'+n),has:ownedItem(n),relics:relicsDrop(n)}}
 function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s,state.rkT||'all'].join('|');
   if(state._rkKey!==key){state._rkKey=key;state.rkLim=60;fresh=true}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);return {id:c,label:CATL[c],m:a.m,t:a.t}}).concat([{id:'Intrinsics',label:'Intrinsics',m:0,t:0},{id:'Other',label:'Other gear',m:0,t:0}]);
   const base={cat,q:qr,f,s,t:state.rkT||'all',cats,island:'',items:[],total:0,shown:0,notMax:0,head:{label:'',m:0,t:0,p:0,x:0,search:!!q}};
   if(!q&&(cat==='Intrinsics'||cat==='Other')){base.island=cat==='Intrinsics'?intrHTML():othHTML();base.head.label=cat==='Intrinsics'?'Intrinsics':'Other gear';base.head.x=cat==='Intrinsics'?catXP('rail')+catXP('drift'):othXP();return base}
   if(fresh||RKC.key!==key){let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)||(I[i.n]&&I[i.n].parts.some(p=>(p.full||p.n).toLowerCase().includes(q)))):MI.filter(i=>i.c===cat);const ty=state.rkT||'all';if(ty==='prime')list=list.filter(i=>I[i.n]&&I[i.n].p);if(ty==='normal')list=list.filter(i=>!(I[i.n]&&I[i.n].p));if(ty==='relics')list=list.filter(i=>relicsDrop(i.n));
-    if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));
+    if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));if(f==='own')list=list.filter(i=>ownedItem(i.n));if(f==='nown')list=list.filter(i=>!ownedItem(i.n));
     list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));
     RKC.key=key;RKC.order=list.map(i=>i.n)}
   state._rkList=RKC.order;const total=RKC.order.length,shown=Math.min(state.rkLim||60,total);
@@ -3966,6 +3967,43 @@ async function readAccountFile(f){let txt;try{txt=await f.text()}catch(e){toast(
     :`${name} isn't codex-profile.json or inventory.json. In WFHelper's folder (%appdata%\\WFHelper) pick codex-profile.json, or inventory.json from api-helper.`)}
 readLog=readAccountFile;
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.id==='wfhfile'&&t.files&&t.files.length){[...t.files].reduce((p,f)=>p.then(()=>readAccountFile(f)),Promise.resolve()).then(()=>{t.value=''})}});
+/* Each platform keeps its own profile unless cross-save is on. warframestat (one-tap sync) only reads the PC server,
+   so other platforms use the copy-and-paste steps, pointed at that platform's own Warframe server. */
+const WF_PLATS=[['pc','PC or cross-save','api',true],['ps','PlayStation','api-ps4',false],['xb','Xbox','api-xb1',false],['sw','Switch','api-swi',false],['ios','iPhone / iPad','api-mob',false],['and','Android','api-and',false]];
+function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]}}
+function platPickHTML(){const cur=wfPlat();
+  return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there.</span></span>
+  <div class="row" role="radiogroup" aria-label="Where you play" style="gap:6px">${WF_PLATS.map(([id,l])=>`<button type="button" class="btn sm${cur.id===id?' primary':''}" role="radio" aria-checked="${cur.id===id}" data-wfplat="${id}">${esc(l)}</button>`).join('')}</div>
+  ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
+/* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
+{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+    toast(`${wfPlat().label} profiles sync with the two quick steps on this page.`);setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
+  return _as2.apply(this,arguments)}}
+/* ---------- ownership, separate from mastery ---------- */
+/* Warframe keeps mastery forever, even after you sell or release something, so "mastered" doesn't mean "owned".
+   Players can mark anything as not owned; that only changes ownership (filters, Owned labels), never mastery. */
+{const _oi=ownedItem;ownedItem=function(n){return on('nown|'+n)?false:_oi(n)}}
+const SYND_GEAR=[['Secura','Perrin Sequence'],['Sancti','New Loka'],['Rakta','Red Veil'],['Vaykor','Steel Meridian'],['Telos','Arbiters of Hexis'],['Synoid','Cephalon Suda']];
+function howToGet(n){const it=I[n]||{};const wiki=it.w||('https://wiki.warframe.com/w/'+encodeURIComponent(n.replace(/ /g,'_')));
+  const craft=(it.parts||[]).length>0;let t='';
+  if(/ Kubrow$/.test(n))t='Hatch a Kubrow Egg in your Orbiter\'s Incubator (the Howl of the Kubrow quest unlocks it). Eggs drop from Kubrow Dens on Earth. The breed is random; to get this one for sure, hatch it from a '+n.replace(' Kubrow','')+' Genetic Imprint.';
+  else if(/^(Adarza|Smeeta) Kavat$/.test(n))t='Collect Kavat Genetic Codes from Feral Kavats in Orokin Derelict missions, build the Kavat Incubator Upgrade Segment, then hatch a Kavat in the Incubator. The breed is random unless you use a Genetic Imprint.';
+  else if(/(Predasite|Vulpaphyla)$/.test(n))t='Comes from Son in the Necralisk on Deimos. The wiki has the full steps.';
+  else if(/^Prisma /.test(n))t='Sold by Baro Ki\'Teer for ducats and credits when he visits, or trade another player for it.';
+  else if(/^Mk1-/.test(n))t='Buy it from the Market in your Orbiter for credits.';
+  else if(/^Dex /.test(n))t='An anniversary login reward. If you missed it, it comes back in later anniversary reward picks.';
+  else if(/^(Excalibur Prime|Skana Prime|Lato Prime)$/.test(n))t='Founders pack exclusive. It can\'t be obtained any more.';
+  else if(it.c==='K-Drive')t='Build K-Drive parts bought from the Ventkids in Fortuna (Orb Vallis).';
+  else if(it.c==='Kitgun')t='A Kitgun chamber, bought from Rude Zuud in Fortuna or Father in the Necralisk.';
+  else{const s=SYND_GEAR.find(([p])=>n.startsWith(p+' '));if(s)t=`Bought from ${s[1]} with standing, once you reach their top rank.`;
+    else if(/ (Vandal|Wraith)$/.test(n))t='Usually an Invasion or event reward. Check Invasions on Today, or trade another player for it.';
+    else if(craft)t='Craft it in the Foundry. Open it to see where the blueprint and each part come from.';
+    else t='The wiki has how to get this one.'}
+  return {text:t,craft,wiki}}
+Object.assign(window.TF,{
+  setOwned:(n,own,quiet)=>{setK('nown|'+n,!own);if(own&&!ownedItem(n))setK('build|'+n,true);tfNotify();if(!quiet)toast(own?`${n} marked as owned`:`${n} marked as not owned. Its mastery stays.`)},
+  howToGet:n=>howToGet(n)});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
