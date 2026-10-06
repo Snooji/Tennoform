@@ -78,3 +78,16 @@ async function readAccountFile(f){let txt;try{txt=await f.text()}catch(e){toast(
     :`${name} isn't codex-profile.json or inventory.json. In WFHelper's folder (%appdata%\\WFHelper) pick codex-profile.json, or inventory.json from api-helper.`)}
 readLog=readAccountFile;
 document.addEventListener('change',e=>{const t=e.target;if(t&&t.id==='wfhfile'&&t.files&&t.files.length){[...t.files].reduce((p,f)=>p.then(()=>readAccountFile(f)),Promise.resolve()).then(()=>{t.value=''})}});
+/* Each platform keeps its own profile unless cross-save is on. warframestat (one-tap sync) only reads the PC server,
+   so other platforms use the copy-and-paste steps, pointed at that platform's own Warframe server. */
+const WF_PLATS=[['pc','PC or cross-save','api',true],['ps','PlayStation','api-ps4',false],['xb','Xbox','api-xb1',false],['sw','Switch','api-swi',false],['ios','iPhone / iPad','api-mob',false],['and','Android','api-and',false]];
+function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]}}
+function platPickHTML(){const cur=wfPlat();
+  return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there.</span></span>
+  <div class="row" role="radiogroup" aria-label="Where you play" style="gap:6px">${WF_PLATS.map(([id,l])=>`<button type="button" class="btn sm${cur.id===id?' primary':''}" role="radio" aria-checked="${cur.id===id}" data-wfplat="${id}">${esc(l)}</button>`).join('')}</div>
+  ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
+/* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
+{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+    toast(`${wfPlat().label} profiles sync with the two quick steps on this page.`);setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
+  return _as2.apply(this,arguments)}}

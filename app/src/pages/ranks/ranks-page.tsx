@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState, type KeyboardEvent } from "react"
-import { Check, ChevronsUp, Hexagon, Minus, Plus, Search, X } from "lucide-react"
+import { Check, ChevronsUp, CircleSlash, ExternalLink, Hexagon, Info, Minus, PackageCheck, Plus, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -21,6 +21,8 @@ const FILTERS = [
   { value: "todo", label: "Not started" },
   { value: "prog", label: "In progress" },
   { value: "max", label: "Mastered" },
+  { value: "own", label: "Owned" },
+  { value: "nown", label: "Not owned" },
 ]
 const TYPES = [
   { value: "all", label: "Prime and normal" },
@@ -50,9 +52,29 @@ function MasteryStrip() {
   )
 }
 
+function HowToGet({ n }: { n: string }) {
+  const h = tf().howToGet(n)
+  return (
+    <div className="flex flex-col gap-1.5 rounded-xl bg-muted/40 px-3 py-2.5 text-sm">
+      <p>{h.text}</p>
+      <div className="flex flex-wrap gap-x-4 gap-y-1">
+        {h.craft ? (
+          <a href="#" className="text-primary underline underline-offset-4" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "item|" + n }) }}>
+            Where the parts drop
+          </a>
+        ) : null}
+        <a href={h.wiki} target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-primary underline underline-offset-4">
+          Wiki <ExternalLink className="size-3.5" aria-hidden /><span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  )
+}
+
 /** Rank entry: type a number, or use − / + / Max. Enter saves and moves to the next item. */
 const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
   const [v, setV] = useState(String(it.r))
+  const [how, setHow] = useState(false)
   useEffect(() => setV(String(it.r)), [it.r])
   const done = it.r >= it.mx
   const commit = () => {
@@ -80,6 +102,7 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
             href="#"
             onClick={(e) => {
               e.preventDefault()
+              if (!tf().howToGet(it.n).craft) return setHow(true)
               tf().act("a", { href: "#", "data-go": "item|" + it.n })
             }}
             className="truncate font-medium underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
@@ -93,6 +116,7 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
             </Badge>
           ) : null}
           {!done && it.owned ? <Badge variant="outline" className="text-muted-foreground">Owned</Badge> : null}
+          {it.notOwned ? <Badge variant="outline" className="text-muted-foreground"><CircleSlash /> Not owned</Badge> : null}
           {it.vaulted ? <Badge variant="outline" className="border-red-500/40 text-red-700 dark:text-red-300">Vaulted</Badge> : null}
           {it.resurgence ? <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 dark:text-emerald-400">Resurgence</Badge> : null}
           {it.relics ? <Badge variant="outline" className="border-primary/40 text-primary"><Hexagon /> Your relics drop parts</Badge> : null}
@@ -105,6 +129,18 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
             {fmt(it.xp)} / {fmt(it.max)} XP
           </span>
         </div>
+        <div className="-ml-2 flex flex-wrap items-center gap-x-1">
+          {!it.has ? (
+            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs text-muted-foreground" aria-expanded={how} onClick={() => setHow(!how)}>
+              <Info /> How to get it
+            </Button>
+          ) : null}
+          <Button variant="ghost" size="sm" className="h-8 px-2 text-xs text-muted-foreground" onClick={() => tf().setOwned(it.n, !it.has)}
+            aria-label={it.has ? `I don't own ${it.n}` : `I own ${it.n}`}>
+            {it.has ? <><CircleSlash /> Don't own it</> : <><PackageCheck /> I own it</>}
+          </Button>
+        </div>
+        {how ? <HowToGet n={it.n} /> : null}
       </div>
       <div className="col-span-2 flex items-center gap-1 justify-self-end sm:col-span-1">
         <Button variant="outline" size="icon-lg" className="size-10 md:size-9" disabled={it.r <= 0} onClick={() => tf().setRank(it.n, it.r - 1)} aria-label={`Lower rank of ${it.n}`}>
@@ -135,6 +171,37 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
   )
 })
 
+/** Quick check: a grid of names to tap, like the in-game inventory. Tapping only changes ownership, never mastery. */
+function OwnGrid({ items }: { items: RankItem[] }) {
+  return (
+    <ul className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 lg:grid-cols-4" aria-label="Tap what you own">
+      {items.map((it) => {
+        const done = it.r >= it.mx
+        return (
+          <li key={it.n}>
+            <button
+              type="button"
+              aria-pressed={it.has}
+              onClick={() => tf().setOwned(it.n, !it.has, true)}
+              className={cn(
+                "flex h-full w-full items-center gap-2.5 rounded-xl border p-2 text-left transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                it.has ? "border-primary/50 bg-primary/10" : "border-border opacity-70 hover:opacity-100",
+              )}
+            >
+              <Thumb src={it.img} className="size-10 shrink-0" />
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="text-sm leading-tight font-medium break-words">{it.n}</span>
+                <span className="text-xs text-muted-foreground">{it.has ? "Owned" : "Not owned"}{done ? " · Mastered" : ""}</span>
+              </span>
+              {it.has ? <Check aria-hidden className="size-4 shrink-0 text-primary" /> : null}
+            </button>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 export function RanksPage() {
   const fresh = useRef(true)
   const d = useTFData(() => {
@@ -144,6 +211,8 @@ export function RanksPage() {
   })
   const [q, setQ] = useState(d.q)
   const [confirm, setConfirm] = useState(false)
+  const [view, setViewS] = useState<"list" | "own">(() => { try { return localStorage.getItem("tf-rkview") === "own" ? "own" : "list" } catch { return "list" } })
+  const setView = (v: "list" | "own") => { setViewS(v); try { localStorage.setItem("tf-rkview", v) } catch { /* private mode */ } }
   useNavReset(() => setConfirm(false))
   useEffect(() => {
     const t = window.setTimeout(() => {
@@ -265,7 +334,13 @@ export function RanksPage() {
                   : `${d.head.m}/${d.head.t} mastered · ${d.head.p} in progress · ${fmt(d.head.x)} XP`}
             </span>
           </div>
-          {!d.island && left ? (
+          {!d.island ? (
+            <div className="flex rounded-full border p-0.5" role="group" aria-label="View">
+              <Button variant="ghost" size="sm" aria-pressed={view === "list"} className={cn("h-8 rounded-full px-3", view === "list" && "bg-primary/15 text-foreground")} onClick={() => setView("list")}>Ranks</Button>
+              <Button variant="ghost" size="sm" aria-pressed={view === "own"} className={cn("h-8 rounded-full px-3", view === "own" && "bg-primary/15 text-foreground")} onClick={() => setView("own")}>Tap what you own</Button>
+            </div>
+          ) : null}
+          {!d.island && left && view === "list" ? (
             <Button variant="outline" className="h-9" onClick={() => setConfirm(true)}>
               <ChevronsUp /> Max all in this list
             </Button>
@@ -273,6 +348,11 @@ export function RanksPage() {
         </div>
         {d.island ? (
           <Island html={d.island} />
+        ) : d.items.length && view === "own" ? (
+          <>
+            <p className="border-b px-4 py-2.5 text-sm text-muted-foreground">Tap everything you have in your inventory right now. It doesn't change mastery; use the Owned and Not owned filters afterwards.</p>
+            <OwnGrid items={d.items} />
+          </>
         ) : d.items.length ? (
           <ul className="flex flex-col divide-y">
             {d.items.map((it) => (
