@@ -11,6 +11,7 @@ import { NumField } from "@/components/tf/num-field"
 import { fmt, tf, useTFData, type TennoData } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { SignInCard } from "@/pages/home/side-cards"
+import { InventoryImport } from "./inventory-import"
 
 function Inventory({ d }: { d: TennoData }) {
   const [q, setQ] = useState(d.q || "")
@@ -61,6 +62,7 @@ export function TennoPage() {
         </TabsList>
         </div>
       </Tabs>
+      {d.tab === "account" ? <InventoryImport /> : null}
       {d.tab === "inventory" ? <Inventory d={d} /> : <Island key={d.tab} html={d.html} />}
     </div>
   )

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, ChevronDown, Minus, Plus, Search, X } from "lucide-react"
+import { Check, ChevronDown, Copy, Minus, Plus, Search, Target, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -7,6 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
+import { BuildLibrary } from "./build-library"
+import { MyBuilds } from "./my-builds"
 import { HaloSegmented } from "@/components/ui/halo-segmented"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
@@ -20,7 +22,8 @@ import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type ArsenalData } from "@/lib/tf"
 
 const TABS = [
-  { value: "builds", label: "Weapons" }, { value: "comp", label: "Companions" }, { value: "lich", label: "Kuva · Tenet · Coda" },
+  { value: "top", label: "Top builds" }, { value: "mine", label: "My builds" },
+  { value: "builds", label: "Weapons" }, { value: "comp", label: "Companions" }, { value: "lich", label: "Lich weapons" },
   { value: "arc", label: "Arcanes" }, { value: "mods", label: "Key mods" },
 ]
 type Opt = { value: string; label: string }
@@ -62,6 +65,10 @@ function Builds({ d, kind }: { d: ArsenalData; kind: "w" | "c" }) {
               {d.builds!.length > 1 ? <HaloSegmented className="self-start" items={d.builds!} value={d.bi} onValueChange={(v) => tf().arsenalSet({ bi: v })} /> : null}
               <div className="flex flex-wrap items-center gap-2 text-sm"><Badge variant="outline" className="border-primary/40 text-primary">{b.role}</Badge><b className="font-medium">{b.name}</b></div>
               {b.notes ? <p className="text-sm text-muted-foreground">{b.notes}</p> : null}
+              <div className="flex flex-wrap gap-2">
+                <Button className="h-9" onClick={() => tf().buildGoal(`m:${d.cur}:${d.bi}`)}><Target /> Save as goal</Button>
+                <Button variant="outline" className="h-9" onClick={() => tf().buildCopy(`m:${d.cur}:${d.bi}`)}><Copy /> Copy to my builds</Button>
+              </div>
               <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
@@ -223,12 +230,12 @@ export function ArsenalPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Builds</h1>
-        <p className="max-w-2xl text-sm text-muted-foreground">Weapon and companion builds, your Kuva, Tenet and Coda weapons, arcanes and the mods every build leans on.</p>
+        <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, arcanes and key mods.</p>
       </header>
       <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
         <HaloSegmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />
       </div>
-      {d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <KeyMods d={d} />}
+      {d.tab === "top" ? <BuildLibrary /> : d.tab === "mine" ? <MyBuilds /> : d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <KeyMods d={d} />}
     </div>
   )
 }

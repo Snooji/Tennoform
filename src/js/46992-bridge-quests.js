@@ -6,7 +6,7 @@ function questsData(){const f=state.qF||'all';const nq=nextQuest();const groups=
     groups:groups.map(g=>{const all=Q.filter(q=>q.g===g);const qs=all.filter(q=>{const lk=qPrereqs(q).some(p=>!qDone(p.n));return f==='all'||(f==='done'&&qDone(q.n))||(f==='todo'&&!qDone(q.n))||(f==='locked'&&!qDone(q.n)&&lk)||(f==='avail'&&!qDone(q.n)&&!lk)});
       return {name:g,done:all.filter(q=>qDone(q.n)).length,total:all.length,quests:qs.map(q=>{const pre=qPrereqs(q);return {n:q.n,id:'q-'+q.n.replace(/\W/g,''),done:qDone(q.n),locked:pre.some(p=>!qDone(p.n)),desc:q.d||'',wiki:q.w||'',
         req:q.req.map(r=>{const p=pre.find(x=>qClean(r)===x.n);return p?{text:r,quest:p.n,done:qDone(p.n)}:{text:r,quest:'',done:false}}),rewards:q.rw.map(rewardOf),
-        hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='quest'&&x.r===q.n),upto:Q.indexOf(q)>0}})}}).filter(g=>g.quests.length)}}
+        guide:(guideOfQuest(q.n)||{}).id||'',hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='quest'&&x.r===q.n),upto:Q.indexOf(q)>0}})}}).filter(g=>g.quests.length)}}
 function questUndoToast(label,key){const e=logList().find(x=>x.key===key);toastAction(label,'Undo',()=>{if(e)logUndo(e.id)})}
 Object.assign(window.TF,{
   quests:()=>questsData(),

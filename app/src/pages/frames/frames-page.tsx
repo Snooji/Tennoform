@@ -1,4 +1,4 @@
-import { Check, Sparkles } from "lucide-react"
+import { Check, Copy, Sparkles, Target } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -62,6 +62,10 @@ export function FramesPage() {
                 <span>Helminth: <b className="font-medium">{b.helminth}</b></span>
               </div>
               {b.notes ? <p className="text-sm text-muted-foreground">{b.notes}</p> : null}
+              <div className="flex flex-wrap gap-2">
+                <Button className="h-9" onClick={() => tf().buildGoal(`m:${d.name}:${d.bi}`)}><Target /> Save as goal</Button>
+                <Button variant="outline" className="h-9" onClick={() => tf().buildCopy(`m:${d.name}:${d.bi}`)}><Copy /> Copy to my builds</Button>
+              </div>
               <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}

@@ -10,6 +10,9 @@ function tennoData(){const tab=state.tTab||'profile';const t=totalXP(),m=mrInfo(
   return out}
 Object.assign(window.TF,{
   tenno:()=>tennoData(),
+  inventoryInfo:()=>({at:P.invAt?fdate(P.invAt.slice(0,10))+' '+new Date(P.invAt).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'',last:(P.lastSync&&P.lastSync.inv)||null,canUndo:!!lsGet('tf-presync',null)}),
+  importInventory:async txt=>{if(String(txt).length>60e6)return {ok:false,msg:'That file is too large to be an inventory file.'};const r=await importInventory(txt);tfNotify();return r},
+  undoSync:()=>tfAct('button',{id:'undosync'}),
   tennoSet:o=>{if(o.tab!=null)state.tTab=o.tab;if(o.q!=null)state.invQ=o.q;saveUI();tfNotify()}
 });
 /* tab links from anywhere (e.g. "Full breakdown", "Foundry", "Sync your profile") */

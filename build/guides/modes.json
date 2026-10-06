@@ -1,0 +1,2535 @@
+[
+ {
+  "id": "exterminate",
+  "n": "Exterminate",
+  "kind": "mode",
+  "aka": [
+   "exterminate",
+   "kill all",
+   "extermination",
+   "kill mission",
+   "clear enemies"
+  ],
+  "sum": "Kill a set number of enemies, then reach extraction. A counter under the minimap shows how many are left.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Available from the very first nodes on Earth (E Prime and Mariana)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Load in and follow the map; the counter under the minimap shows enemies remaining."
+   },
+   {
+    "t": "Kill enemies until the counter hits zero.",
+    "tip": "Enemies you skip will run toward extraction, so you can rush and catch them there."
+   },
+   {
+    "t": "Kill at least one enemy every 15 minutes.",
+    "tip": "Going 15 minutes without a kill triggers a warning and then mission failure."
+   },
+   {
+    "t": "Head to extraction once the counter is cleared."
+   }
+  ],
+  "fast": [
+   "Bring a frame with large-area damage, such as Saryn (Miasma), Oberon (Reckoning) or Ember (Inferno).",
+   "Rush toward extraction; skipped enemies sprint after you and arrive in a clump.",
+   "On Carpo (Jupiter), Plato (Lua) and Dakata (Kuva Fortress), grab the Resource Caches for extra affinity and end-of-mission rewards."
+  ],
+  "rw": [
+   "Mod and resource drops",
+   "Resource Cache rewards on certain nodes"
+  ],
+  "time": "",
+  "go": [
+   "Saryn",
+   "Oberon",
+   "Ember"
+  ],
+  "w": "https://wiki.warframe.com/w/Exterminate"
+ },
+ {
+  "id": "capture",
+  "n": "Capture",
+  "kind": "mode",
+  "aka": [
+   "capture",
+   "capture target",
+   "vip",
+   "catch target",
+   "capture mission"
+  ],
+  "sum": "Find a fleeing VIP, knock them down before they escape, capture them, then extract.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Mantle on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Follow the marker to the Capture Target's room."
+   },
+   {
+    "t": "Chase the target as soon as it spots you.",
+    "tip": "It runs to an escape point; if it reaches it, the mission fails."
+   },
+   {
+    "t": "Shoot the target until it kneels."
+   },
+   {
+    "t": "Walk up and interact with the downed target to capture it.",
+    "tip": "You have about 30 seconds, then a 1-minute bleedout before it dies and the mission fails."
+   },
+   {
+    "t": "Head to extraction (the mission may switch to Exterminate after the capture)."
+   }
+  ],
+  "fast": [
+   "Hit the target hard and fast; it is immune to most abilities and has far more health than normal enemies of its level.",
+   "Gara's Mass Vitrify can trap the target so it cannot run away.",
+   "Capture affinity drops to a flat 250 if you repeat too many Capture missions of the same tier in a row; mix in other missions to reset it."
+  ],
+  "rw": [
+   "Shared Capture drop table",
+   "Up to 3000 affinity per capture"
+  ],
+  "time": "",
+  "go": [
+   "Gara"
+  ],
+  "w": "https://wiki.warframe.com/w/Capture"
+ },
+ {
+  "id": "mobile-defense",
+  "n": "Mobile Defense",
+  "kind": "mode",
+  "aka": [
+   "mobile defense",
+   "md",
+   "datamass",
+   "defend terminals",
+   "console defense"
+  ],
+  "sum": "Carry a datamass to 2-3 terminals in turn and defend each one while it is hacked.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Erpo on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick up the datamass."
+   },
+   {
+    "t": "Carry it to the first marked terminal and insert it."
+   },
+   {
+    "t": "Defend the terminal until the hack timer finishes.",
+    "tip": "Usually 60-80 seconds per terminal; a strong wave attacks halfway through."
+   },
+   {
+    "t": "Pick the datamass back up and move to the next terminal."
+   },
+   {
+    "t": "Repeat until every terminal is done, then go to extraction."
+   }
+  ],
+  "fast": [
+   "Bring crowd control to blunt the strong wave that spawns at the halfway point of each defense.",
+   "Terminals regenerate if left unharmed, and Rejuvenation auras help keep them healthy.",
+   "Only Void, Zariman and Archwing Mobile Defense give an end-of-mission reward, so farm other nodes only for affinity or drops."
+  ],
+  "rw": [
+   "Up to 3000 objective affinity per terminal",
+   "End rewards only in Void, Zariman and Archwing versions"
+  ],
+  "time": "~3-4 min of defending",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Mobile_Defense"
+ },
+ {
+  "id": "defense",
+  "n": "Defense",
+  "kind": "mode",
+  "aka": [
+   "defense",
+   "defence",
+   "waves",
+   "cryopod",
+   "endless defense",
+   "wave defense"
+  ],
+  "sum": "Endless mode where you protect an objective from waves of enemies, choosing every 3 waves whether to extract or keep going.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Lith on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Explore and loot the map before you start.",
+    "tip": "The first wave starts when someone steps into the ring around the objective, or after 3 minutes."
+   },
+   {
+    "t": "Step into the ring to start wave 1."
+   },
+   {
+    "t": "Kill every enemy in each wave while keeping the objective alive.",
+    "tip": "If the objective is destroyed, the mission fails."
+   },
+   {
+    "t": "Every 3 waves, pick Stay or Extract.",
+    "tip": "Rewards rotate AABC. If you stay and then fail, you lose all rewards."
+   },
+   {
+    "t": "Extract when you are done."
+   }
+  ],
+  "fast": [
+   "Bring map-wide killers such as Equinox (Maim), Mirage (Explosive Legerdemain), Saryn (Spores) or Volt (Discharge).",
+   "Avoid slowing enemies down (e.g. Nova's normal Molecular Prime) since waves only end when everyone is dead; Nova's speed-up version makes waves arrive faster.",
+   "Agree on a leaving wave before starting, since each player extracts individually.",
+   "Good for mod farming thanks to endless enemies and frequent exits."
+  ],
+  "rw": [
+   "Rotation rewards (AABC)",
+   "Mods",
+   "Void Relics"
+  ],
+  "time": "~1 min per wave",
+  "go": [
+   "Equinox",
+   "Mirage",
+   "Saryn",
+   "Volt",
+   "Nova"
+  ],
+  "w": "https://wiki.warframe.com/w/Defense"
+ },
+ {
+  "id": "survival",
+  "n": "Survival",
+  "kind": "mode",
+  "aka": [
+   "survival",
+   "life support",
+   "endless survival",
+   "oxygen",
+   "survive"
+  ],
+  "sum": "Endless mode where you hold out against nonstop enemies while keeping life support above zero; a reward is given every 5 minutes.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at V Prime on Venus"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Hack the starting terminal to trigger the alarm and begin."
+   },
+   {
+    "t": "Keep life support up with drops from kills and with capsules.",
+    "tip": "Life support drains 1% every 1.5 seconds; capsules restore 30%, kill drops restore 5%."
+   },
+   {
+    "t": "Activate life support capsules as they arrive every 90 seconds.",
+    "tip": "Wait until life support is around 40% or lower so you don't waste them."
+   },
+   {
+    "t": "Collect a reward every 5 minutes (rotation A, A, B, C)."
+   },
+   {
+    "t": "Head to extraction when you want to leave (available after 5 minutes)."
+   }
+  ],
+  "fast": [
+   "Find and insert Security Bypasses to double the mission timer for a minute each (and double Reactant in fissures).",
+   "Stick together near the capsules so enemies spawn in one place.",
+   "A companion with Vacuum or Fetch grabs life support drops for you.",
+   "Follie's Shadowgraph can spawn a life support capsule every 3 minutes."
+  ],
+  "rw": [
+   "Rotation rewards every 5 minutes (AABC)",
+   "Void Relics",
+   "Mods",
+   "Resources"
+  ],
+  "time": "5 min per reward",
+  "go": [
+   "Follie"
+  ],
+  "w": "https://wiki.warframe.com/w/Survival"
+ },
+ {
+  "id": "interception",
+  "n": "Interception",
+  "kind": "mode",
+  "aka": [
+   "interception",
+   "towers",
+   "capture points",
+   "intercept",
+   "endless interception"
+  ],
+  "sum": "Capture and hold four towers (A-D) to reach 100 points before the enemy does; every round you can extract or continue.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Gaia on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Scout the map and the four towers.",
+    "tip": "The first round starts when you take a tower or after 3 minutes."
+   },
+   {
+    "t": "Stand in a tower's radius to capture it."
+   },
+   {
+    "t": "Capture and hold more towers than the enemy until you reach 100.",
+    "tip": "Enemies recapture by using consoles near towers; kill anyone using one."
+   },
+   {
+    "t": "Clear the remaining enemies after you win the round."
+   },
+   {
+    "t": "Choose to extract or stay for another round.",
+    "tip": "Rotations go AABC."
+   }
+  ],
+  "fast": [
+   "Solo, just keep capturing new towers; you can usually take three before the enemy retakes the first.",
+   "Enemies retake towers in the order you captured them, so you can predict where to go.",
+   "Leave a Specter on a tower to stop recaptures.",
+   "Each round takes at least 3 minutes even holding all four towers."
+  ],
+  "rw": [
+   "Rotation rewards (AABC)",
+   "300 affinity per tower captured"
+  ],
+  "time": "3+ min per round",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Interception"
+ },
+ {
+  "id": "spy",
+  "n": "Spy",
+  "kind": "mode",
+  "aka": [
+   "spy",
+   "data vault",
+   "stealth",
+   "hack vaults",
+   "ivara"
+  ],
+  "sum": "Sneak into three Data Vaults and hack their consoles; each successful hack gives a reward, and Spy is the source of Ivara.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Cambria on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Find the three Data Vaults on the map."
+   },
+   {
+    "t": "Slip past each vault's lasers, cameras and sensors.",
+    "tip": "Tripping an alarm starts a 20-50 second timer before the data is wiped."
+   },
+   {
+    "t": "Hack the console in each vault."
+   },
+   {
+    "t": "Attempt all three vaults to unlock extraction.",
+    "tip": "At least one hack must succeed for mission success."
+   },
+   {
+    "t": "Go to extraction."
+   }
+  ],
+  "fast": [
+   "Ivara (Prowl, Sleep Arrows, and Infiltrate to pass lasers), Loki, Ash, Limbo or Nova Wormholes make vaults much easier.",
+   "Never enter a vault someone else is already doing; wait outside to help if they trip the alarm.",
+   "Ciphers instantly finish a hack.",
+   "A no-alarm hack triples that vault's affinity."
+  ],
+  "rw": [
+   "Ivara blueprints and parts",
+   "One reward per vault hacked"
+  ],
+  "time": "",
+  "go": [
+   "Ivara",
+   "Loki",
+   "Limbo",
+   "Nova",
+   "Ash"
+  ],
+  "w": "https://wiki.warframe.com/w/Spy"
+ },
+ {
+  "id": "rescue",
+  "n": "Rescue",
+  "kind": "mode",
+  "aka": [
+   "rescue",
+   "hostage",
+   "prison",
+   "specter blueprints",
+   "free the prisoner"
+  ],
+  "sum": "Find a hostage in a guarded prison complex, free them before the execution timer runs out, and escort them to extraction.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Pacific on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Head for the prison complex."
+   },
+   {
+    "t": "Avoid the Wardens or kill them silently.",
+    "tip": "If a Warden raises the alarm, an execution timer starts."
+   },
+   {
+    "t": "Hack open the right cell to free the hostage."
+   },
+   {
+    "t": "Escort the hostage to extraction.",
+    "tip": "You can hand them your secondary weapon. If they go down, revive them within 20 seconds."
+   },
+   {
+    "t": "Reach extraction with the hostage alive."
+   }
+  ],
+  "fast": [
+   "Use hidden paths and catwalks to skip the front gate.",
+   "Stealth frames (Loki, Ivara) make stealth rescues easy, which triples the freeing affinity and earns better Specter rewards.",
+   "If the hostage gets stuck, run ahead; they teleport back to you."
+  ],
+  "rw": [
+   "Specter blueprints",
+   "Rescue drop table"
+  ],
+  "time": "",
+  "go": [
+   "Loki",
+   "Ivara"
+  ],
+  "w": "https://wiki.warframe.com/w/Rescue"
+ },
+ {
+  "id": "sabotage",
+  "n": "Sabotage",
+  "kind": "mode",
+  "aka": [
+   "sabotage",
+   "reactor",
+   "caches",
+   "resource caches",
+   "destroy objective"
+  ],
+  "sum": "Reach and destroy the objective (reactor core, hive, drills, etc. depending on the tileset), then extract; many maps hide Resource Caches.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Cervantes on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Follow the map to the sabotage target for this tileset."
+   },
+   {
+    "t": "Complete the variant's steps (for example expose and shoot a reactor core, or clear Infested hives)."
+   },
+   {
+    "t": "Look for Resource Caches along the way.",
+    "tip": "Each cache gives up to 2000 affinity and an extra end reward."
+   },
+   {
+    "t": "Head to extraction.",
+    "tip": "Some core sabotages trigger a 5-minute timed extraction."
+   }
+  ],
+  "fast": [
+   "Grab all three caches in Reactor Sabotage for a small chance at Nitain Extract and a Xiphos part.",
+   "Treasure-finding tools like Loot Radar help locate caches quickly.",
+   "In the Grineer Forest toxin variant, adding Antitoxins gives a bonus reward and 12,000 affinity."
+  ],
+  "rw": [
+   "Resource Cache rewards",
+   "Void Relic (Void Sabotage)"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Sabotage"
+ },
+ {
+  "id": "excavation",
+  "n": "Excavation",
+  "kind": "mode",
+  "aka": [
+   "excavation",
+   "cryotic",
+   "excavators",
+   "power cells",
+   "dig sites"
+  ],
+  "sum": "Endless mode where you call down excavators and keep them powered and alive for 100 seconds each; the main source of Cryotic.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Everest on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Walk within 20 m of a marked dig site to call down an excavator."
+   },
+   {
+    "t": "Kill Power Carriers and bring their Power Cells to the excavator.",
+    "tip": "Each cell adds 20 seconds of power; 4 cells finish a dig."
+   },
+   {
+    "t": "Defend the excavator until it finishes digging (100 seconds).",
+    "tip": "Up to three can run at once."
+   },
+   {
+    "t": "Collect a reward for each completed dig.",
+    "tip": "Rotation A, A, B, C."
+   },
+   {
+    "t": "Extract any time after the first successful dig."
+   }
+  ],
+  "fast": [
+   "Run 2-3 excavators at once for faster rewards; excavation rewards faster than Survival.",
+   "Hydroid (Pilfering Swarm), Khora (Pilfering Strangledome) or Nekros (Desecrate) get extra Power Cells.",
+   "Gara's Splinter Storm, Oberon's Renewal or Khora's Venari heal posture help keep excavators alive.",
+   "Follie's Shadowgraph can spawn a Power Cell every minute."
+  ],
+  "rw": [
+   "Cryotic",
+   "Void Relics",
+   "Rotation rewards (AABC)"
+  ],
+  "time": "~100 s per dig",
+  "go": [
+   "Hydroid",
+   "Khora",
+   "Nekros",
+   "Gara",
+   "Oberon"
+  ],
+  "w": "https://wiki.warframe.com/w/Excavation"
+ },
+ {
+  "id": "disruption",
+  "n": "Disruption",
+  "kind": "mode",
+  "aka": [
+   "disruption",
+   "conduits",
+   "demolyst",
+   "demolisher",
+   "keys"
+  ],
+  "sum": "Endless mode where you take keys from heavy enemies to activate four conduits per round, then stop the Demo units trying to blow them up.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Olympus on Mars",
+    "Ganymede (Jupiter) needs the Natah quest; Apollo (Lua) needs The War Within"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Hack the starting terminal."
+   },
+   {
+    "t": "Kill heavy and Eximus enemies to get conduit keys."
+   },
+   {
+    "t": "Put a key in a conduit to start a 2-minute defense.",
+    "tip": "Each conduit gives a random buff or debuff."
+   },
+   {
+    "t": "Find and kill the Demolyst/Demolisher before it reaches the conduit.",
+    "tip": "It beeps; follow the red marker."
+   },
+   {
+    "t": "Finish all four conduits (at least one defended) to get the round's reward.",
+    "tip": "Better rewards come from defending more conduits and later rounds."
+   },
+   {
+    "t": "Extract or continue to the next round."
+   }
+  ],
+  "fast": [
+   "Cold status, Rhino Stomp, Khora's Ensnare, Harrow's Condemn or Magus Lockdown stop Demos in their tracks.",
+   "Armor strip (Nova, Ash with Seeking Shuriken, Caliban) makes Grineer Demos much easier.",
+   "Carrying keys blocks your primary, so bring good secondary/melee builds.",
+   "Go about 150 m down hallways toward the beeping to catch Demos early."
+  ],
+  "rw": [
+   "Void Relics",
+   "Rotation rewards by round and conduits defended"
+  ],
+  "time": "",
+  "go": [
+   "Nova",
+   "Rhino",
+   "Khora",
+   "Harrow"
+  ],
+  "w": "https://wiki.warframe.com/w/Disruption"
+ },
+ {
+  "id": "hijack",
+  "n": "Hijack",
+  "kind": "mode",
+  "aka": [
+   "hijack",
+   "escort",
+   "power core",
+   "rover",
+   "push the cart"
+  ],
+  "sum": "Escort a power core or cargo rover to extraction, powering it with your own shields.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Ludi on Ceres"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Find the room holding the objective."
+   },
+   {
+    "t": "Activate the console to release it."
+   },
+   {
+    "t": "Stay next to it so it can drain your shields to move.",
+    "tip": "It loses 10 health per second, so keep it moving."
+   },
+   {
+    "t": "Kill enemies attacking it along the route."
+   },
+   {
+    "t": "Get it to extraction to finish."
+   }
+  ],
+  "fast": [
+   "Hildryn or Harrow can power it almost by themselves thanks to big shields.",
+   "Limbo's Banish (with Rift Haven) makes it nearly untouchable; watch for Nullifiers.",
+   "Fast Deflection, Fortitude, and shield-restore abilities keep it moving.",
+   "You can ride on top of it, especially the Corpus rover."
+  ],
+  "rw": [],
+  "time": "~3 min of travel",
+  "go": [
+   "Hildryn",
+   "Harrow",
+   "Limbo"
+  ],
+  "w": "https://wiki.warframe.com/w/Hijack"
+ },
+ {
+  "id": "assassination",
+  "n": "Assassination",
+  "kind": "mode",
+  "aka": [
+   "assassination",
+   "boss",
+   "boss fight",
+   "kill boss",
+   "warframe parts"
+  ],
+  "sum": "Hunt down and kill a unique boss, then extract; most bosses drop Warframe blueprint parts.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First available at Fossa on Venus (the Jackal)",
+    "Some bosses need extra requirements, e.g. Oro on Earth needs Mastery Rank 5"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick the boss node for the Warframe you want."
+   },
+   {
+    "t": "Go straight to the boss area.",
+    "tip": "You can ignore enemies along the way on most nodes."
+   },
+   {
+    "t": "Defeat the boss."
+   },
+   {
+    "t": "Pick up any drops and extract."
+   }
+  ],
+  "fast": [
+   "Farm one boss repeatedly for its Warframe parts.",
+   "Effervo and Victory Plaza have an extra objective before you can reach the boss."
+  ],
+  "rw": [
+   "Warframe blueprint parts",
+   "Rare resources",
+   "Weapon parts"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Assassination"
+ },
+ {
+  "id": "defection",
+  "n": "Defection",
+  "kind": "mode",
+  "aka": [
+   "defection",
+   "kavor",
+   "defectors",
+   "escort squads",
+   "harrow systems"
+  ],
+  "sum": "Endless Infested mode where you escort squads of Kavor defectors to a shuttle while keeping Med Boosters powered; the source of Harrow's Systems.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "All three nodes are Dark Sectors: Memphis (Phobos), Caracol (Saturn), Yursa (Neptune)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Hack the shuttle bay door to begin."
+   },
+   {
+    "t": "Wait for a defector squad to reach the Med Booster.",
+    "tip": "Squads spawn 30 seconds after start and every 40 seconds after a rescue; the rush panel skips the wait."
+   },
+   {
+    "t": "Keep the Med Booster powered with Power Cells from Mutalist Osprey Carriers.",
+    "tip": "Each cell adds 20% (40% solo)."
+   },
+   {
+    "t": "Give the Move Out command and escort them to the shuttle bay."
+   },
+   {
+    "t": "Extract after at least two squads are rescued.",
+    "tip": "If 10 defectors die, evacuation stops and you have 5 minutes to leave."
+   }
+  ],
+  "fast": [
+   "Trinity's Blessing heals defectors; Well of Life makes a mobile healing beacon.",
+   "Loki's Switch Teleport moves defectors fast and can free stuck ones.",
+   "Mirage with Total Eclipse helps defectors survive longer runs.",
+   "Containers and lockers can drop extra and Large Power Cells."
+  ],
+  "rw": [
+   "Harrow Systems Blueprint",
+   "Void Relics",
+   "Orokin faction mods"
+  ],
+  "time": "",
+  "go": [
+   "Harrow",
+   "Trinity",
+   "Loki",
+   "Mirage"
+  ],
+  "w": "https://wiki.warframe.com/w/Defection"
+ },
+ {
+  "id": "infested-salvage",
+  "n": "Infested Salvage",
+  "kind": "mode",
+  "aka": [
+   "infested salvage",
+   "nidus",
+   "oestrus",
+   "antiserum",
+   "vaporizer"
+  ],
+  "sum": "Endless mode on Oestrus (Eris) where you clear Infested growth off three consoles so the Lotus can decrypt a manifest; the source of Nidus.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Found at Oestrus on Eris"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Head to the central room with the three data consoles."
+   },
+   {
+    "t": "Collect Antiserum Charges dropped by Infested.",
+    "tip": "You can carry up to 3 at a time."
+   },
+   {
+    "t": "Deposit charges into Vaporizers so the bubble covers a console.",
+    "tip": "Bubbles shrink after about 20 seconds, so keep feeding them."
+   },
+   {
+    "t": "Keep as many consoles uncovered as possible until decryption hits 100%."
+   },
+   {
+    "t": "Extract or start another round.",
+    "tip": "Rotations go AABC."
+   }
+  ],
+  "fast": [
+   "Solo is faster because decryption slows with more players.",
+   "Nekros, Hydroid (Pilfering Swarm), Khora (Pilfering Strangledome) or Atlas (Ore Gaze) get more Antiserum.",
+   "Use the Power Overload console to kill every enemy on the map.",
+   "Nova's Molecular Prime speeds enemies into the main room."
+  ],
+  "rw": [
+   "Nidus blueprints",
+   "Neo and Axi Relics",
+   "Mods"
+  ],
+  "time": "",
+  "go": [
+   "Nidus",
+   "Nekros",
+   "Hydroid",
+   "Nova"
+  ],
+  "w": "https://wiki.warframe.com/w/Infested_Salvage"
+ },
+ {
+  "id": "mirror-defense",
+  "n": "Mirror Defense",
+  "kind": "mode",
+  "aka": [
+   "mirror defense",
+   "tyana pass",
+   "munio",
+   "citrine",
+   "tome mods"
+  ],
+  "sum": "A Defense variant where you guard two objectives in turn on a timer, crossing a Void tunnel between them; farmed for Citrine (Tyana Pass) or Tome mods (Munio).",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Heart of Deimos"
+   ],
+   "other": [
+    "Tyana Pass (Mars) needs Heart of Deimos and Mastery Rank 3",
+    "Munio (Deimos) needs Whispers in the Walls"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Defend the first objective for 2.5 minutes."
+   },
+   {
+    "t": "Run through the Void tunnel during the 30-second break.",
+    "tip": "Lots of Remnants/Glyphs spawn here."
+   },
+   {
+    "t": "Defend the second objective for 2.5 minutes."
+   },
+   {
+    "t": "Collect 50 Remnants (or Glyphs) to heal and shield the active objective.",
+    "tip": "This also spawns a helper turret or pillars and gives crystal fragments or Stela."
+   },
+   {
+    "t": "Take your reward after both sides are done.",
+    "tip": "Rotations go AABC."
+   }
+  ],
+  "fast": [
+   "Fly with Titania (Razorwing) or Jade, or use Chroma's extra jumps to grab pickups.",
+   "Slowing enemies is fine here since waves are timed, not kill-based.",
+   "Grab Remnants in the tunnel so the buff applies as soon as the next wave starts.",
+   "Healing abilities don't work on the objectives, but damage reduction does."
+  ],
+  "rw": [
+   "Citrine",
+   "Steflos",
+   "Corufell",
+   "Rania and Belric Crystal Fragments",
+   "Tome Mods",
+   "Stela"
+  ],
+  "time": "~6 min per rotation",
+  "go": [
+   "Citrine",
+   "Titania",
+   "Jade"
+  ],
+  "w": "https://wiki.warframe.com/w/Mirror_Defense",
+  "was": [
+   "You may read that Mirror Defense needs Mastery Rank 3. That only applies to Tyana Pass on Mars (added in Update 35.5, together with Heart of Deimos). Munio on Deimos has no MR requirement, only Whispers in the Walls."
+  ]
+ },
+ {
+  "id": "alchemy",
+  "n": "Alchemy",
+  "kind": "mode",
+  "aka": [
+   "alchemy",
+   "crucible",
+   "amphors",
+   "cambire",
+   "mandonel"
+  ],
+  "sum": "Endless Deimos mode where you mix secondary elements in a Crucible using element Amphors dropped by enemies, then manage its pressure.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Whispers in the Walls"
+   ],
+   "other": [
+    "Found at Cambire on Deimos"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick up Amphors dropped by enemies."
+   },
+   {
+    "t": "Throw them into the Crucible to fill both required elements.",
+    "tip": "Amphor blasts also hurt enemies nearby."
+   },
+   {
+    "t": "When conversion starts, shoot marked Distressed Pipes to keep pressure inside the brackets.",
+    "tip": "The target range moves at 50%."
+   },
+   {
+    "t": "Finish the Crucible for one rotation reward.",
+    "tip": "Rotations go AABC."
+   },
+   {
+    "t": "Extract or start the next Crucible."
+   }
+  ],
+  "fast": [
+   "Pull enemies next to the Crucible before killing them so Amphors drop right there.",
+   "Amphor blasts don't need line of sight to fill the Crucible.",
+   "Follie's Shadowgraph spawns 3 Amphors every 30 seconds.",
+   "Only vent pressure when needed, or conversion slows."
+  ],
+  "rw": [
+   "Mandonel parts",
+   "Endo",
+   "Entrati Obols",
+   "Melee Arcanes"
+  ],
+  "time": "",
+  "go": [
+   "Follie"
+  ],
+  "w": "https://wiki.warframe.com/w/Alchemy"
+ },
+ {
+  "id": "void-cascade",
+  "n": "Void Cascade",
+  "kind": "mode",
+  "aka": [
+   "void cascade",
+   "exolizers",
+   "cascade",
+   "zariman",
+   "thrax"
+  ],
+  "sum": "Endless Zariman mode where you cleanse possessed Exolizers with your Operator and stop Thrax from re-possessing them.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Angels of the Zariman"
+   ],
+   "other": [
+    "Found at Tuvul Commons, Zariman Ten Zero"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Find a Void-possessed Exolizer."
+   },
+   {
+    "t": "Close its Void tears with your Operator's Amp or Void Sling.",
+    "tip": "Its 20 m field forces you into Operator form."
+   },
+   {
+    "t": "Deal Void damage to the Void Manifestation to purge the Exolizer."
+   },
+   {
+    "t": "Kill the Thrax Centurion that appears, finishing its spectral form with Operator damage.",
+    "tip": "Stand by purged Exolizers and kill enemies there to lower the Cascade gauge."
+   },
+   {
+    "t": "Retire 4 purged Exolizers to complete a rotation.",
+    "tip": "If the gauge fills before extraction opens, you fail."
+   },
+   {
+    "t": "Extract or keep going."
+   }
+  ],
+  "fast": [
+   "Ash, Revenant and Octavia are common picks; rely on shield gating or invisibility.",
+   "Lega Prism and Klamora Prism Amps close tears fast; Magus Cloud helps Void Sling.",
+   "In a squad, leave someone behind to guard purged Exolizers.",
+   "Keep more purged Exolizers than possessed ones so the gauge falls."
+  ],
+  "rw": [
+   "Narin parts",
+   "Aeolak parts",
+   "Hespar parts",
+   "Focus Lenses",
+   "Endo"
+  ],
+  "time": "",
+  "go": [
+   "Ash",
+   "Revenant",
+   "Octavia"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Cascade"
+ },
+ {
+  "id": "void-flood",
+  "n": "Void Flood",
+  "kind": "mode",
+  "aka": [
+   "void flood",
+   "vitoplast",
+   "ruptures",
+   "skittergirl",
+   "zariman"
+  ],
+  "sum": "Endless Zariman mode where your drone collects Vitoplast to seal Void Ruptures before the Corruption gauge fills.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Angels of the Zariman"
+   ],
+   "other": [
+    "Found at Everview Arc, Zariman Ten Zero"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Collect Vitoplast droplets and moving globules with your drone."
+   },
+   {
+    "t": "Deposit them into a Void Rupture to seal it."
+   },
+   {
+    "t": "After three Ruptures, kill the Thrax that appear.",
+    "tip": "Finish their spectral forms with Operator Void damage."
+   },
+   {
+    "t": "Collect the reward (rotations AABC).",
+    "tip": "Sealing a Rupture and killing the Thrax lowers the gauge by 35%."
+   },
+   {
+    "t": "Extract or continue."
+   }
+  ],
+  "fast": [
+   "Titania (Razorwing) or Zephyr reach floating Vitoplast quickly.",
+   "Close each Rupture early; several open at once fill the gauge much faster.",
+   "Kill Skittergirl when she shows up; she drops a lot of Vitoplast.",
+   "Eximus drop larger Vitoplast orbs."
+  ],
+  "rw": [
+   "Narin parts",
+   "Aeolak parts",
+   "Focus Lenses",
+   "Endo"
+  ],
+  "time": "",
+  "go": [
+   "Titania",
+   "Zephyr"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Flood"
+ },
+ {
+  "id": "void-armageddon",
+  "n": "Void Armageddon",
+  "kind": "mode",
+  "aka": [
+   "void armageddon",
+   "exodampers",
+   "eternal relic",
+   "void angel",
+   "argozene"
+  ],
+  "sum": "Endless Zariman mode where you defend two Exodampers and the Eternal Relic, then kill a Ravenous Void Angel each round.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Angels of the Zariman"
+   ],
+   "other": [
+    "Found at Oro Works, Zariman Ten Zero"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Collect Argozene from drop zones and build turrets (Armaments)."
+   },
+   {
+    "t": "Defend the targeted Exodamper for three waves.",
+    "tip": "A wave lasts 1:05 or about 30 kills (+10 per extra player)."
+   },
+   {
+    "t": "Stop the Void Angel from feeding on the Eternal Relic.",
+    "tip": "If it feeds for 30 seconds before extraction is open, you fail."
+   },
+   {
+    "t": "Drop its first health bar, enter the bubble as Operator, beat its Ethereal form, then finish it."
+   },
+   {
+    "t": "Claim the reward (AABC) and repeat or extract."
+   }
+  ],
+  "fast": [
+   "Frost (Snow Globe), Limbo (Cataclysm) or Gara (Mass Vitrify) shield the objectives.",
+   "A hitscan Amp like Rahn Prism and Madurai or Unairu focus help with the Angel.",
+   "Clear leftover enemies when the target switches, or they will attack the Relic.",
+   "Interact with the Exodamper (Provoke Assault) to skip downtime."
+  ],
+  "rw": [
+   "Narin parts",
+   "Hespar parts",
+   "Galeforce Dawn",
+   "Focus Lenses",
+   "Endo"
+  ],
+  "time": "",
+  "go": [
+   "Frost",
+   "Limbo",
+   "Gara"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Armageddon"
+ },
+ {
+  "id": "conjunction-survival",
+  "n": "Conjunction Survival",
+  "kind": "mode",
+  "aka": [
+   "conjunction survival",
+   "lua survival",
+   "yuvarium",
+   "circulus",
+   "thrax plasm"
+  ],
+  "sum": "A Survival variant on Lua with a Lone Guardian that buffs abilities and Thrax that spawn each rotation; the source of Lua Thrax Plasm.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Found at Yuvarium and Circulus on Lua"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start the Survival as usual and keep life support up."
+   },
+   {
+    "t": "Stay in the Lone Guardian's 20 m field for +100% Ability Strength and +50% Casting Speed.",
+    "tip": "The buff lingers 5 seconds after leaving."
+   },
+   {
+    "t": "Kill the Thrax that spawn every 5 minutes.",
+    "tip": "They make life support drain 50% faster; on Circulus finish them with your Operator's Void Beam."
+   },
+   {
+    "t": "Collect the guaranteed Lua Thrax Plasm each rotation."
+   },
+   {
+    "t": "Extract when finished."
+   }
+  ],
+  "fast": [
+   "Bring a full squad: more players spawn more Thrax, and each has a 30% chance to drop Plasm.",
+   "Circulus gives 5 Plasm per rotation versus 3 on Yuvarium (more on Steel Path).",
+   "A Necramech can be summoned here (2-minute duration)."
+  ],
+  "rw": [
+   "Lua Thrax Plasm",
+   "Survival rewards"
+  ],
+  "time": "5 min per rotation",
+  "go": [
+   "Voruna"
+  ],
+  "w": "https://wiki.warframe.com/w/Conjunction_Survival"
+ },
+ {
+  "id": "ascension",
+  "n": "Ascension",
+  "kind": "mode",
+  "aka": [
+   "ascension",
+   "jade",
+   "vestigial motes",
+   "elevator",
+   "brutus"
+  ],
+  "sum": "Defend a Mote Collector, power an elevator by throwing Ionic Charges at a capsule, then escort it to extraction; trade the motes for Jade.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Jade Shadows"
+   ],
+   "other": [
+    "Found at Brutus on Uranus"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Defend the Mote Collector for 1 minute.",
+    "tip": "The timer pauses if it loses all health."
+   },
+   {
+    "t": "Ride the elevator and throw Ionic Charges at the Extraction Capsule to power it.",
+    "tip": "Boosted Charges near the elevator speed it up 3x for 10 seconds."
+   },
+   {
+    "t": "Optionally grab 3 Sister Beacons in the shaft to summon a Sister of Parvos at the top.",
+    "tip": "She drops extra motes and can drop Arcanes."
+   },
+   {
+    "t": "Escort the capsule to extraction, like Hijack."
+   }
+  ],
+  "fast": [
+   "Ignore enemies on the elevator and just chain Boosted Ionic Charges; the capsule is invulnerable during the ride.",
+   "Stealth frames (Ivara, Ash, Loki) make the elevator trivial.",
+   "Banshee's Silence (or subsumed) stops the many Jade Light Eximus.",
+   "High Eximus density makes it great for Riven Slivers and affinity."
+  ],
+  "rw": [
+   "Vestigial Motes",
+   "Jade",
+   "Harmony",
+   "Cantare",
+   "Evensong",
+   "Arcanes"
+  ],
+  "time": "",
+  "go": [
+   "Jade",
+   "Ivara",
+   "Revenant",
+   "Kullervo"
+  ],
+  "w": "https://wiki.warframe.com/w/Ascension"
+ },
+ {
+  "id": "void-fissure",
+  "n": "Void Fissure",
+  "kind": "mode",
+  "aka": [
+   "void fissure",
+   "fissures",
+   "relics",
+   "open relics",
+   "reactant",
+   "prime parts"
+  ],
+  "sum": "Special version of a normal node where you collect 10 Reactant to open a Void Relic and pick a Prime part at the end.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "The fissure's node must be unlocked on your Star Chart (not needed on Steel Path)",
+    "Bring a Void Relic of the matching tier (Lith, Meso, Neo, Axi, Requiem; Omnia takes any but Requiem)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick a fissure of the right tier from the mission list."
+   },
+   {
+    "t": "Equip a Void Relic of that tier."
+   },
+   {
+    "t": "Kill Corrupted enemies near fissures to collect 10 Reactant.",
+    "tip": "Reactant is personal, so everyone needs their own 10."
+   },
+   {
+    "t": "Finish the mission objective."
+   },
+   {
+    "t": "Pick a reward from your relic or a squadmate's.",
+    "tip": "Players whose reward you pick get 5 Void Traces each."
+   }
+  ],
+  "fast": [
+   "Fast mission types (Capture, Exterminate) are popular for quick relic cracking.",
+   "In endless fissures, slow the round so everyone gets Reactant before it ends.",
+   "Bring rapid-fire weapons for the many Corrupted Nullifiers.",
+   "Opening your own relic in a Steel Path fissure guarantees 1 Steel Essence."
+  ],
+  "rw": [
+   "Prime parts",
+   "Void Traces",
+   "Boosters and bonus relics in endless fissures"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Void_Fissure"
+ },
+ {
+  "id": "void-storm",
+  "n": "Void Storm",
+  "kind": "mode",
+  "aka": [
+   "void storm",
+   "railjack fissure",
+   "empyrean fissure",
+   "corrupted holokey",
+   "void sinks"
+  ],
+  "sum": "The Railjack (Empyrean) version of Void Fissures, with Void Sink hazards and an extra end-of-mission reward table.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Archwing"
+   ],
+   "other": [
+    "Complete Rising Tide to pilot your own Railjack (The Archwing is enough to join a squad)",
+    "Have the relevant Proxima region unlocked"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick a Void Storm node in a Proxima."
+   },
+   {
+    "t": "Equip a matching Void Relic if you want relic rewards."
+   },
+   {
+    "t": "Kill on-foot enemies (crewship crews and boarders) for Reactant.",
+    "tip": "Reactant in Void Storms is shared across the squad."
+   },
+   {
+    "t": "Shoot Void Sinks before they explode.",
+    "tip": "They deal heavy Impact damage."
+   },
+   {
+    "t": "Finish the mission to get the relic pick plus the Void Storm reward."
+   }
+  ],
+  "fast": [
+   "You don't need to open a relic to get the Void Storm table rewards.",
+   "Listen for Cephalon Cy's warnings; Void Sinks get stronger over time.",
+   "Frost's Snow Globe, Limbo's Cataclysm or Gara's Mass Vitrify block Void Sink blasts."
+  ],
+  "rw": [
+   "Corrupted Holokeys",
+   "Sevagoth parts",
+   "Epitaph parts",
+   "Radiant Void Relics"
+  ],
+  "time": "",
+  "go": [
+   "Sevagoth",
+   "Epitaph"
+  ],
+  "w": "https://wiki.warframe.com/w/Void_Storm"
+ },
+ {
+  "id": "kuva-siphon",
+  "n": "Kuva Siphon",
+  "kind": "mode",
+  "aka": [
+   "kuva siphon",
+   "kuva flood",
+   "kuva",
+   "riven rolling",
+   "requiem relic"
+  ],
+  "sum": "Non-endless missions near the Kuva Fortress where you destroy a Kuva Siphon's four braids with your Operator for Kuva; one is a harder Kuva Flood with double Kuva.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Missions appear on the two planets nearest the Kuva Fortress"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Find the Siphon, marked with a Kuva icon."
+   },
+   {
+    "t": "Wait for a Kuva cloud to drift toward it (a raised braid points at it)."
+   },
+   {
+    "t": "Switch to Operator and Void Dash through or shoot the cloud."
+   },
+   {
+    "t": "Repeat for all four braids.",
+    "tip": "If the Siphon absorbs 8 clouds first, it escapes and you get much less."
+   },
+   {
+    "t": "Finish the mission's normal objective and extract."
+   }
+  ],
+  "fast": [
+   "Use a Resource Booster to double the Kuva.",
+   "Crowd control (Nyx's Chaos, Atlas's Rumblers, Ivara's Sleep Arrows) keeps your Operator alive.",
+   "Kill the Kuva Guardians quickly in a squad.",
+   "Kuva Floods (level 80-100) give about 1,100-1,400 Kuva and a guaranteed Requiem Relic."
+  ],
+  "rw": [
+   "Kuva (550-700 per Siphon)",
+   "Requiem Relics"
+  ],
+  "time": "",
+  "go": [
+   "Nyx",
+   "Atlas",
+   "Ivara",
+   "Frost"
+  ],
+  "w": "https://wiki.warframe.com/w/Kuva_Siphon"
+ },
+ {
+  "id": "arbitrations",
+  "n": "Arbitrations",
+  "kind": "mode",
+  "aka": [
+   "arbitrations",
+   "arbi",
+   "vitus essence",
+   "hexis",
+   "elite alert"
+  ],
+  "sum": "Hourly elite endless missions run by the Arbiters of Hexis, with no normal revives; rewards Vitus Essence every rotation.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Reach Pluto and complete the Eris Junction task 'Equip a Focus Lens'",
+    "Bring a rank 30 Warframe (or be MR 30 with a polarized Warframe)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Check the current Arbitration (it changes every hour)."
+   },
+   {
+    "t": "Load in with a rank 30 Warframe.",
+    "tip": "You get +300% bonuses if you use the listed Warframe and weapons."
+   },
+   {
+    "t": "Kill Arbitration Shield Drones first.",
+    "tip": "They make nearby enemies immune."
+   },
+   {
+    "t": "Don't die: you can only be revived with 5 Resurgence Tokens taken to your Revive Tower.",
+    "tip": "Tokens drop from drones."
+   },
+   {
+    "t": "Complete rotations for Vitus Essence (AABB, then C forever).",
+    "tip": "Failing still keeps rewards from completed rotations."
+   }
+  ],
+  "fast": [
+   "Pick tanky frames like Rhino, Nezha, Inaros, Chroma, Revenant or Yareli.",
+   "Use Adaptation, Quick Thinking or Rolling Guard.",
+   "In Defense, bring a healer (Trinity, Oberon, Wisp, Khora) for the Hexis Operative.",
+   "Watch out for enemy grenades; they are the most common killer."
+  ],
+  "rw": [
+   "Vitus Essence",
+   "50,000 Credits",
+   "Arbitration drop table"
+  ],
+  "time": "",
+  "go": [
+   "Rhino",
+   "Nezha",
+   "Inaros",
+   "Trinity",
+   "Wisp"
+  ],
+  "w": "https://wiki.warframe.com/w/Arbitrations"
+ },
+ {
+  "id": "sortie",
+  "n": "Sortie",
+  "kind": "mode",
+  "aka": [
+   "sortie",
+   "sorties",
+   "daily sortie",
+   "riven",
+   "daily missions"
+  ],
+  "sum": "Three hard daily missions with special conditions; finish all three for one reward from a pool that includes Riven mods.",
+  "unlock": {
+   "mr": 5,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Complete Oro on Earth",
+    "Bring a rank 30 Warframe (or be MR 30 with a polarized Warframe)",
+    "Resets daily at 12:00 ET"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Read the day's three missions and their conditions."
+   },
+   {
+    "t": "Clear the first mission (level 50-60).",
+    "tip": "No Ciphers allowed; Auto Breach and Perspicacity still work."
+   },
+   {
+    "t": "Clear the second mission (level 65-80)."
+   },
+   {
+    "t": "Clear the third mission (level 80-100).",
+    "tip": "Assassination is always last when it appears."
+   },
+   {
+    "t": "Collect the reward after the third mission."
+   }
+  ],
+  "fast": [
+   "Coordinate loadouts with your squad, especially for weapon-restricted missions.",
+   "Use Exalted weapons (Excalibur, Valkyr) when weapons are restricted.",
+   "Limbo's Banish or Ash's Smoke Shadow keep the Defense Operative alive.",
+   "Stealth through Spy and Rescue; they're much harder after alarms."
+  ],
+  "rw": [
+   "Riven Mods",
+   "Kuva",
+   "Endo",
+   "Forma",
+   "Credits"
+  ],
+  "time": "",
+  "go": [
+   "Excalibur",
+   "Limbo",
+   "Ash"
+  ],
+  "w": "https://wiki.warframe.com/w/Sortie"
+ },
+ {
+  "id": "archon-hunt",
+  "n": "Archon Hunt",
+  "kind": "mode",
+  "aka": [
+   "archon hunt",
+   "archon shard",
+   "weekly",
+   "narmer",
+   "tauforged"
+  ],
+  "sum": "A weekly three-mission hunt ending in a fight with an Archon; guaranteed Archon Shard for the Helminth.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Veilbreaker"
+   ],
+   "other": [
+    "Bring a rank 30 Warframe (or be MR 30 with a polarized Warframe)",
+    "Resets weekly on Monday 00:00 UTC"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Check which Archon is up (Boreal, Amar and Nira rotate weekly)."
+   },
+   {
+    "t": "Clear the first mission (level 130-135).",
+    "tip": "Capture, Exterminate, Mobile Defense, Rescue, Sabotage or Spy."
+   },
+   {
+    "t": "Clear the second mission (level 135-140).",
+    "tip": "Defense, Disruption, Excavation, Interception or Survival."
+   },
+   {
+    "t": "Beat the Archon in the final Showdown (level 145-150).",
+    "tip": "There is no self-revive; dead players are out."
+   },
+   {
+    "t": "Collect your Archon Shard and reward."
+   }
+  ],
+  "fast": [
+   "Play in a full squad with a healer (Trinity, Oberon, Wisp) and tanky frames.",
+   "Narmer enemies are weak to Slash and Toxin; Sentients to Cold and Radiation.",
+   "Bring ammo-efficient weapons and aim for headshots; Archons are immune to armor strip.",
+   "Specters can't be used, so plan your own survival."
+  ],
+  "rw": [
+   "Archon Shard (Crimson, Amber or Azure)",
+   "Kuva",
+   "Endo",
+   "Forma"
+  ],
+  "time": "",
+  "go": [
+   "Trinity",
+   "Oberon",
+   "Rhino",
+   "Chroma"
+  ],
+  "w": "https://wiki.warframe.com/w/Archon_Hunt"
+ },
+ {
+  "id": "eidolon-teralyst",
+  "n": "Eidolon Teralyst",
+  "kind": "mode",
+  "aka": [
+   "eidolon",
+   "eidolon hunt",
+   "teralyst",
+   "tridolon",
+   "sentient cores",
+   "arcanes"
+  ],
+  "sum": "A giant Sentient that roams the Plains of Eidolon at night; break its shield with Void damage, destroy its joints, and capture it for Arcanes and Sentient Cores.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Go to the Plains of Eidolon at night",
+    "You need your Operator's Void damage (from The War Within)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Go out on the Plains when night falls and find the Teralyst's pillar of light."
+   },
+   {
+    "t": "Hack and charge two Eidolon Lures with Vomvalyst energy.",
+    "tip": "Charged lures stop it teleporting away."
+   },
+   {
+    "t": "Break its shield with Operator Void damage."
+   },
+   {
+    "t": "Destroy its four Synovia joints.",
+    "tip": "Each drops a Sentient Core; dodge the Magnetic energy spike after each."
+   },
+   {
+    "t": "Kill the Vomvalysts that try to heal it."
+   },
+   {
+    "t": "Finish it while tethered by two charged Lures to capture it.",
+    "tip": "Listen for 'Sentient energy contained'."
+   }
+  ],
+  "fast": [
+   "Use Radiation or Cold weapons; avoid Corrosive.",
+   "Chroma's Vex Armor and Volt's Electric Shield boost damage; Harrow, Nezha or Limbo block the Magnetic spikes.",
+   "Madurai's Void Strike or Unairu Wisp boost Operator damage on the shield.",
+   "Only a capture gives the Brilliant Eidolon Shard needed for the Gantulyst."
+  ],
+  "rw": [
+   "Arcane Enhancements",
+   "Sentient Cores",
+   "Eidolon Shards",
+   "Brilliant Eidolon Shard"
+  ],
+  "time": "",
+  "go": [
+   "Chroma",
+   "Volt",
+   "Harrow",
+   "Trinity"
+  ],
+  "w": "https://wiki.warframe.com/w/Eidolon_Teralyst"
+ },
+ {
+  "id": "profit-taker-orb",
+  "n": "Profit-Taker Orb",
+  "kind": "mode",
+  "aka": [
+   "profit taker",
+   "profit-taker",
+   "orb mother",
+   "heist",
+   "toroids"
+  ],
+  "sum": "A huge Corpus Orb on the Orb Vallis fought through a four-phase Heist; you strip its adaptive shield, then finish it with an Archgun.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Reach Rank 5 (Old Mate) with Solaris United",
+    "Start from the briefing table in Fortuna's backroom"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Do Heist Phase 1 (find the informant's manifests, take the base, shoot down the drone)."
+   },
+   {
+    "t": "Do Phase 2 (kill three Corpus Directors and two Terra Ambulas in the Enrichment Labs)."
+   },
+   {
+    "t": "Do Phase 3 (disable the satellite and gather shield data).",
+    "tip": "You get a Gravimag and Archgun Deployer the first time."
+   },
+   {
+    "t": "In Phase 4, break its shield with the damage type shown on its head."
+   },
+   {
+    "t": "Shoot its legs and body with your Gravimag Archgun, and destroy the Pylons when they appear.",
+    "tip": "The final stage has a 5-minute timer."
+   },
+   {
+    "t": "Grab the loot and get 300 m away before it self-destructs."
+   }
+  ],
+  "fast": [
+   "Bring weapons covering several damage types to match the shield weakness quickly.",
+   "Use knockdown immunity (Primed Sure Footed, Power Drift, or Helminth Spellbind/Fire Walker).",
+   "A Necramech Summon gives regenerating Archgun ammo.",
+   "Once unlocked, Phase 4 alone can be done in under 4 minutes for Toroids and Credits."
+  ],
+  "rw": [
+   "Crisma Toroid",
+   "Debt-Bonds"
+  ],
+  "time": "",
+  "go": [
+   "Necramech"
+  ],
+  "w": "https://wiki.warframe.com/w/Profit-Taker_Orb"
+ },
+ {
+  "id": "exploiter-orb",
+  "n": "Exploiter Orb",
+  "kind": "mode",
+  "aka": [
+   "exploiter",
+   "exploiter orb",
+   "hildryn",
+   "thermia",
+   "deck 12"
+  ],
+  "sum": "An Orb Mother you fight in Deck 12 and outside on the Orb Vallis by melting her vents and overheating her; she drops Hildryn parts.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Reach Rank 5 (Old Mate) with Solaris United",
+    "Bring 1 Diluted Thermia from the Thermia Fractures event"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Go to Deck 12 (cave northeast of Harindi Crater) and insert Diluted Thermia into the Condenser."
+   },
+   {
+    "t": "Shoot the rocks she stands on, then destroy one exposed vent."
+   },
+   {
+    "t": "Throw Condensed Thermia Canisters and shoot them to melt the ice on her other vents.",
+    "tip": "A direct hit melts the ice at once."
+   },
+   {
+    "t": "Kill the Coolant Raknoids, then melt and destroy her last vent."
+   },
+   {
+    "t": "Follow her outside and overheat her three times.",
+    "tip": "Kill Coolant Raknoids before they cool her; turn their canisters into Thermia canisters to heat her faster."
+   },
+   {
+    "t": "Shoot each exposed weak spot, then grab the loot and run 300 m before she explodes."
+   }
+  ],
+  "fast": [
+   "Shoot canisters mid-air near her for double the heating.",
+   "Melt a side vent first, then the two middle vents together.",
+   "Her drops are boosted by Resource Boosters, and the explosion doesn't destroy them."
+  ],
+  "rw": [
+   "Hildryn blueprint parts",
+   "Lazulite Toroid",
+   "Orb Vallis resources"
+  ],
+  "time": "",
+  "go": [
+   "Hildryn"
+  ],
+  "w": "https://wiki.warframe.com/w/Exploiter_Orb"
+ },
+ {
+  "id": "netracells",
+  "n": "Netracells",
+  "kind": "mode",
+  "aka": [
+   "netracells",
+   "netracell",
+   "search pulse",
+   "keyglyphs",
+   "archon shards weekly"
+  ],
+  "sum": "Weekly high-level vault runs in Albrecht's Laboratories where you carry debuffing Keyglyphs to unlock a Netracell full of loot.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Whispers in the Walls"
+   ],
+   "other": [
+    "Talk to Tagfer in the Sanctum Anatomica",
+    "Each completion uses 1 Search Pulse (5 per week, shared with Deep and Temporal Archimedea)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick up all four Keyglyphs in the Anchorhold."
+   },
+   {
+    "t": "Hack the Pom-2 terminals to narrow down the vault's location."
+   },
+   {
+    "t": "Insert the right Keyglyph at the vault."
+   },
+   {
+    "t": "Kill enemies while standing in the marked zone to lower Security Level.",
+    "tip": "Destroy the Necramite drones at about 67% and 33%."
+   },
+   {
+    "t": "Open the Netracell and extract."
+   }
+  ],
+  "fast": [
+   "The Netracell is always at the far end near the third terminal, so you can head straight there.",
+   "Bring healers and tanky frames; there is no self-revive.",
+   "Overguard (Dante, Styanax, Frost with Icy Avalanche) soaks Keyglyph debuffs.",
+   "Nova's Molecular Prime speeds enemies into the kill zone."
+  ],
+  "rw": [
+   "Archon Shards",
+   "Melee Crescendo or Melee Duplicate",
+   "Entrati Lanthorn",
+   "5,000 Cavia Standing"
+  ],
+  "time": "",
+  "go": [
+   "Nova",
+   "Dante",
+   "Styanax",
+   "Trinity"
+  ],
+  "w": "https://wiki.warframe.com/w/Netracells"
+ },
+ {
+  "id": "deep-archimedea",
+  "n": "Deep Archimedea",
+  "kind": "mode",
+  "aka": [
+   "deep archimedea",
+   "elite deep archimedea",
+   "eda",
+   "elite archimedea",
+   "research points"
+  ],
+  "sum": "A weekly three-mission gauntlet against the Murmur; earn Research Points by restricting your loadout and taking modifiers. Elite Archimedea is the harder version.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Whispers in the Walls"
+   ],
+   "other": [
+    "Complete one Netracell",
+    "Reach Rank 5 (Illuminate) with the Cavia",
+    "Unlock each week with 2 Search Pulses (resets Monday 00:00 UTC)",
+    "Elite: finish a Deep Archimedea with 25 Research Points"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to the Necraloid in the Sanctum Anatomica and spend 2 Search Pulses."
+   },
+   {
+    "t": "Equip the listed loadout items and pick Personal Modifiers for Research Points.",
+    "tip": "1 point per matching item per mission."
+   },
+   {
+    "t": "Run all three missions back to back with no loadout changes.",
+    "tip": "Normal enemies are level 250-275; Elite are 375-400 with two Risk Variables."
+   },
+   {
+    "t": "Avoid dying: a fallen player's Void Angel must be killed to revive them.",
+    "tip": "3 Mortis Strikes removes your rewards."
+   },
+   {
+    "t": "Collect reward tiers as your points pass each threshold."
+   }
+  ],
+  "fast": [
+   "Max out all Individual Parameters before starting; points don't stack across attempts.",
+   "Bring healers and tanky frames; Specters are allowed here.",
+   "The Murmur are weak to Electricity and Radiation and resist Viral."
+  ],
+  "rw": [
+   "Archon Shards",
+   "Melee Arcanes",
+   "Entrati Lanthorns",
+   "Vosfor",
+   "15,000 Cavia Standing"
+  ],
+  "time": "",
+  "go": [
+   "Trinity",
+   "Rhino",
+   "Dante"
+  ],
+  "w": "https://wiki.warframe.com/w/Deep_Archimedea"
+ },
+ {
+  "id": "temporal-archimedea",
+  "n": "Temporal Archimedea",
+  "kind": "mode",
+  "aka": [
+   "temporal archimedea",
+   "eta",
+   "elite temporal archimedea",
+   "peely pix",
+   "hollvania"
+  ],
+  "sum": "The Höllvania version of Archimedea: three hard missions against Scaldra and Techrot each week, rewarding Archon Shards and Peely Pix.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Hex"
+   ],
+   "other": [
+    "Reach Rank 5 (Pizza Party) with The Hex",
+    "Unlock each week with 2 Search Pulses (resets Monday 00:00 UTC)",
+    "Elite: finish one with 25 Research Points"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Kaya in Höllvania Central Mall and spend 2 Search Pulses."
+   },
+   {
+    "t": "Set your loadout items, Personal Modifiers and Peely Pix stickers.",
+    "tip": "Peely Pix give personal buffs and are not used up."
+   },
+   {
+    "t": "Run the three missions back to back.",
+    "tip": "Normal is level 350-375; Elite is 475-500."
+   },
+   {
+    "t": "Revive fallen allies by bringing 5 Resurgence Tokens to a console.",
+    "tip": "3 Mortis Strikes removes your rewards."
+   },
+   {
+    "t": "Collect reward tiers by Research Points."
+   }
+  ],
+  "fast": [
+   "Meet all Individual Parameters before starting for maximum points.",
+   "Bring healers and tanky frames; Specters are allowed.",
+   "Velimir helps in mission 1, Minerva in mission 2, and both in mission 3."
+  ],
+  "rw": [
+   "Archon Shards",
+   "Arcane Enhancements",
+   "Peely Pix",
+   "Omni Forma",
+   "15,000 The Hex Standing"
+  ],
+  "time": "",
+  "go": [
+   "Trinity",
+   "Rhino"
+  ],
+  "w": "https://wiki.warframe.com/w/Temporal_Archimedea"
+ },
+ {
+  "id": "the-circuit",
+  "n": "The Circuit",
+  "kind": "mode",
+  "aka": [
+   "circuit",
+   "the circuit",
+   "steel path circuit",
+   "incarnon genesis",
+   "undercroft"
+  ],
+  "sum": "An endless chain of Warframe missions in Duviri's Undercroft with random gear; weekly tiers give a chosen Warframe or Incarnon Genesis adapters.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Duviri Paradox"
+   ],
+   "other": [
+    "Steel Path Circuit needs The Steel Path unlocked and each Duviri mode done once on normal"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick a Warframe and weapons from the random selection in Teshin's Cave."
+   },
+   {
+    "t": "Select your weekly reward choice (a Warframe, or Incarnon Genesis adapters on Steel Path)."
+   },
+   {
+    "t": "Clear each stage's mission.",
+    "tip": "Defense, Survival, Excavation, Exterminate, Void Flood, Alchemy or a Corrupted Jackal fight."
+   },
+   {
+    "t": "Find the 3 Decree Fragments each stage for an extra Decree.",
+    "tip": "They make a chime when near."
+   },
+   {
+    "t": "Keep going to earn Circuit Progress toward weekly tiers.",
+    "tip": "Stage 5 and beyond give 170 progress each."
+   },
+   {
+    "t": "Extract when you want to stop."
+   }
+  ],
+  "fast": [
+   "The random gear favours what you own, so a small, well-built arsenal helps.",
+   "Your Amp isn't randomized, so a good Amp covers bad weapon rolls.",
+   "Raise Drifter Intrinsics (Opportunity) for more Decree and gear choices.",
+   "Gear and companions can't be used."
+  ],
+  "rw": [
+   "Weekly Warframe blueprints",
+   "Incarnon Genesis adapters",
+   "Arcanes",
+   "Steel Essence"
+  ],
+  "time": "",
+  "go": [
+   "Excalibur",
+   "Braton Incarnon Genesis"
+  ],
+  "w": "https://wiki.warframe.com/w/The_Circuit"
+ },
+ {
+  "id": "duviri",
+  "n": "Duviri",
+  "kind": "mode",
+  "aka": [
+   "duviri",
+   "spiral",
+   "drifter",
+   "kullervo",
+   "lone story",
+   "duviri experience"
+  ],
+  "sum": "An open-world realm ruled by Dominus Thrax where you play mood Spirals as the Drifter, with random Warframe gear, Decrees and an Orowyrm boss.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The Duviri Paradox"
+   ],
+   "other": [
+    "Enter via the Dominus Thrax icon on the Star Chart or the Duviri door in the Dormizone"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start in Teshin's Cave and pick from the random Warframes and weapons."
+   },
+   {
+    "t": "Choose a mode: The Duviri Experience, The Lone Story, The Circuit or Isleweaver."
+   },
+   {
+    "t": "Complete the Spiral's objectives on the surface and in the Undercroft.",
+    "tip": "Each grants Intrinsics and a Decree."
+   },
+   {
+    "t": "Stack Decrees as temporary buffs."
+   },
+   {
+    "t": "Defeat the Orowyrm at the end.",
+    "tip": "It gives Pathos Clamps, Intrinsics and a Rare Decree."
+   },
+   {
+    "t": "Fight Kullervo at his Hold if he's in the current Spiral."
+   }
+  ],
+  "fast": [
+   "Take gun-based Decrees for the Orowyrm; rapid-fire hitscan weapons work best on it.",
+   "Side Undercroft portals (7 Decrees needed) are a reliable source of Arcanes and extra Pathos Clamps.",
+   "Leaving early keeps everything up to your last Decree.",
+   "Raise Drifter Intrinsics for more gear choices and Decrees."
+  ],
+  "rw": [
+   "Pathos Clamps",
+   "Arcane Enhancements",
+   "Kullervo's Bane",
+   "Drifter Intrinsics"
+  ],
+  "time": "",
+  "go": [
+   "Kullervo",
+   "Stalker"
+  ],
+  "w": "https://wiki.warframe.com/w/Duviri"
+ },
+ {
+  "id": "lua-thrax-plasm",
+  "n": "Lua Thrax Plasm",
+  "kind": "mode",
+  "aka": [
+   "lua thrax plasm",
+   "thrax plasm",
+   "voruna",
+   "yonta",
+   "lua plasm"
+  ],
+  "sum": "A rare resource from Conjunction Survival on Lua, traded to Archimedean Yonta for Voruna, Perigale, Sarofang and Arcanes.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "The War Within"
+   ],
+   "other": [
+    "Play Conjunction Survival (Yuvarium or Circulus on Lua)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Start a Conjunction Survival on Yuvarium or Circulus."
+   },
+   {
+    "t": "Survive each 5-minute rotation for guaranteed Plasm.",
+    "tip": "3 on Yuvarium, 5 on Circulus (5 and 6 on Steel Path)."
+   },
+   {
+    "t": "Kill the Thrax that spawn after each rotation.",
+    "tip": "Each has a 30% chance to drop Plasm."
+   },
+   {
+    "t": "Pick up dropped Plasm quickly.",
+    "tip": "It disappears after 60 seconds."
+   },
+   {
+    "t": "Trade Plasm to Archimedean Yonta on the Zariman."
+   }
+  ],
+  "fast": [
+   "Play in a squad: more players means more Thrax spawns.",
+   "Resource Boosters double Plasm dropped by Thrax (not the rotation reward).",
+   "Circulus gives more per rotation than Yuvarium."
+  ],
+  "rw": [
+   "Voruna",
+   "Perigale",
+   "Sarofang",
+   "Arcane Blessing",
+   "Arcane Rise",
+   "Primary Frostbite",
+   "Conjunction Voltage"
+  ],
+  "time": "5 min per rotation",
+  "go": [
+   "Voruna",
+   "Perigale",
+   "Sarofang"
+  ],
+  "w": "https://wiki.warframe.com/w/Lua_Thrax_Plasm"
+ },
+ {
+  "id": "chrysalith-bounties",
+  "n": "Chrysalith Bounties",
+  "kind": "mode",
+  "aka": [
+   "zariman bounties",
+   "quinn",
+   "voidplume",
+   "holdfasts",
+   "chrysalith"
+  ],
+  "sum": "Bounties from Quinn on the Zariman Ten Zero: a normal Zariman mission plus an extra mandatory objective, rewarding Voidplumes for the Holdfasts.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Angels of the Zariman"
+   ],
+   "other": [
+    "Talk to Quinn in the Chrysalith",
+    "Refresh every 2.5 hours"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Quinn and pick one of five tiers (levels 50-55 up to 110-115)."
+   },
+   {
+    "t": "Take the portal behind him or fast travel via Zariman Navigation."
+   },
+   {
+    "t": "Do the Zariman mission and its bounty objective.",
+    "tip": "Failing either fails the whole bounty and loses everything."
+   },
+   {
+    "t": "Extract once both objectives are done to get the reward."
+   }
+  ],
+  "fast": [
+   "Finish the objectives before hunting Voidplumes or Void Angels.",
+   "Steel Path versions give 150% Voidplume rewards and 1 Steel Essence."
+  ],
+  "rw": [
+   "Voidplume Quills",
+   "Tier rewards"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Zariman_Ten_Zero"
+ },
+ {
+  "id": "sanctum-anatomica-bounties",
+  "n": "Sanctum Anatomica Bounties",
+  "kind": "mode",
+  "aka": [
+   "sanctum bounties",
+   "fibonacci",
+   "cavia",
+   "cavia standing",
+   "albrecht's laboratories"
+  ],
+  "sum": "Bounties from Fibonacci in the Sanctum Anatomica: a normal Albrecht's Laboratories mission plus a mandatory objective, rewarding Cavia standing.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Whispers in the Walls"
+   ],
+   "other": [
+    "Talk to Fibonacci in the Sanctum Anatomica",
+    "Refresh every 2.5 hours"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to Fibonacci and pick one of five tiers (levels 55-60 up to 115-120)."
+   },
+   {
+    "t": "Go through the door behind Tagfer or the portal near Fibonacci."
+   },
+   {
+    "t": "Do the mission and its bounty objective.",
+    "tip": "Failing either fails the whole bounty, including collected Voca."
+   },
+   {
+    "t": "Extract once both are done."
+   }
+  ],
+  "fast": [
+   "Complete the objectives before collecting Voca.",
+   "Steel Path versions give 150% standing and 1 Steel Essence.",
+   "Higher tiers give more standing (1,000 up to 5,000)."
+  ],
+  "rw": [
+   "Cavia Standing",
+   "Tier rewards"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Sanctum_Anatomica"
+ },
+ {
+  "id": "bounty",
+  "n": "Bounty",
+  "kind": "mode",
+  "aka": [
+   "bounty",
+   "bounties",
+   "konzu",
+   "eudico",
+   "standing",
+   "open world"
+  ],
+  "sum": "Multi-stage missions from hub NPCs (Konzu, Eudico, Mother, Quinn, Fibonacci, the Höllvania board) that pay standing and a reward each stage.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Cetus: finish Konzu's intro bounty first",
+    "Fortuna: finish the Vox Solaris quest",
+    "Higher tiers need Mastery Ranks (e.g. Cetus level 40-60 needs MR 5)",
+    "Board refreshes every 2.5 hours"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Talk to the bounty NPC and pick a tier."
+   },
+   {
+    "t": "Follow the marker to the first stage."
+   },
+   {
+    "t": "Complete each stage's objective.",
+    "tip": "Each stage gives a reward and standing."
+   },
+   {
+    "t": "Do the bonus objective on every stage.",
+    "tip": "Doing all bonuses gives an extra reward at the end."
+   },
+   {
+    "t": "Finish the last stage for the best reward."
+   }
+  ],
+  "fast": [
+   "Higher tiers give rarer rewards.",
+   "You keep rewards from finished stages even if a later stage fails.",
+   "Reward pools rotate A, B, C every 2.5-hour cycle; check the list before picking."
+  ],
+  "rw": [
+   "Syndicate Standing",
+   "Arcanes",
+   "Blueprints",
+   "Resources"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Bounty"
+ },
+ {
+  "id": "nightmare-mode",
+  "n": "Nightmare Mode",
+  "kind": "mode",
+  "aka": [
+   "nightmare mode",
+   "nightmare mods",
+   "nightmare",
+   "modifiers",
+   "hard mode"
+  ],
+  "sum": "A harder version of one node per planet with up to two nasty modifiers; completing it gives a Nightmare Mod.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "Complete every node on that planet"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Find the planet's Nightmare node (red background, white swirl)."
+   },
+   {
+    "t": "Check its one or two modifiers."
+   },
+   {
+    "t": "Complete the mission.",
+    "tip": "Endless types have fixed goals, e.g. Defense needs 3 waves."
+   },
+   {
+    "t": "Collect your Nightmare Mod."
+   }
+  ],
+  "fast": [
+   "Ciphers are disabled and failed hacks shock you, so hack carefully.",
+   "Don't deploy Specters; they turn hostile.",
+   "Each node gives its mod once and rotates every 8 hours."
+  ],
+  "rw": [
+   "Nightmare Mods"
+  ],
+  "time": "",
+  "go": [],
+  "w": "https://wiki.warframe.com/w/Nightmare_Mode"
+ },
+ {
+  "id": "dark-sectors",
+  "n": "Dark Sectors",
+  "kind": "mode",
+  "aka": [
+   "dark sector",
+   "dark sectors",
+   "infested nodes",
+   "bonus credits",
+   "weapon affinity"
+  ],
+  "sum": "Infested-held endless nodes with higher credit payouts, more resource drops and bonus affinity for a weapon class.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First ones are Coba and Tikal on Earth (Tikal needs Saya's Vigil)"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Pick a Dark Sector node."
+   },
+   {
+    "t": "Check its bonus (resources, affinity and weapon class)."
+   },
+   {
+    "t": "Play the endless mission (Defense, Survival, Excavation, Defection or Disruption)."
+   },
+   {
+    "t": "Extract for the large credit reward plus rotation rewards."
+   }
+  ],
+  "fast": [
+   "Use the boosted weapon class to level those weapons faster.",
+   "Defection Dark Sectors are where Harrow's Systems drop."
+  ],
+  "rw": [
+   "Credits",
+   "Rotation rewards",
+   "Melee mods (Dark Sector Defense)"
+  ],
+  "time": "",
+  "go": [
+   "Harrow"
+  ],
+  "w": "https://wiki.warframe.com/w/Dark_Sector"
+ },
+ {
+  "id": "junction",
+  "n": "Junction",
+  "kind": "mode",
+  "aka": [
+   "junction",
+   "junctions",
+   "specter",
+   "solar rail",
+   "unlock planet"
+  ],
+  "sum": "Solo missions on Solar Rail nodes: finish the listed tasks, then defeat a Warframe Specter to unlock the next planet.",
+  "unlock": {
+   "mr": null,
+   "quests": [],
+   "other": [
+    "First one is the Venus Junction on Earth"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Open the Junction on the Star Chart to see its tasks."
+   },
+   {
+    "t": "Complete every task listed."
+   },
+   {
+    "t": "Enter the Junction and defeat the kneeling Warframe Specter."
+   },
+   {
+    "t": "Collect the rewards and travel to the newly unlocked planet."
+   }
+  ],
+  "fast": [
+   "Frost's Snow Globe or Mag's Magnetize make Specters harmless.",
+   "Ash's Blade Storm or Fatal Teleport can kill a Specter quickly.",
+   "Crowd control like Volt's Discharge or Harrow's Condemn leaves them open."
+  ],
+  "rw": [
+   "1,000 Mastery",
+   "Credits",
+   "Weapon blueprints",
+   "Quests"
+  ],
+  "time": "",
+  "go": [
+   "Frost",
+   "Mag",
+   "Ash"
+  ],
+  "w": "https://wiki.warframe.com/w/Junction"
+ },
+ {
+  "id": "railjack-missions",
+  "n": "Empyrean",
+  "kind": "mode",
+  "aka": [
+   "railjack",
+   "empyrean",
+   "proxima",
+   "space combat",
+   "skirmish"
+  ],
+  "sum": "Railjack missions in the Proxima regions, mixing ship combat, Archwing boarding and on-foot objectives.",
+  "unlock": {
+   "mr": null,
+   "quests": [
+    "Rising Tide"
+   ],
+   "other": [
+    "Rising Tide to pilot your own Railjack; The Archwing is enough to join someone else's",
+    "Earth and Venus Proxima open by default; Saturn and Neptune need an Intrinsic at Rank 3, Pluto Rank 5, Veil Rank 7",
+    "Uranus Proxima needs Jade Shadows: Constellations"
+   ]
+  },
+  "steps": [
+   {
+    "t": "Board your Railjack and pick a node from its Navigation console."
+   },
+   {
+    "t": "Destroy enemy fighters and crewships.",
+    "tip": "Board crewships by Archwing to destroy their reactor or take them over."
+   },
+   {
+    "t": "Clear Points of Interest or priority targets.",
+    "tip": "On Corpus nodes, then board the capital ship for an on-foot mission."
+   },
+   {
+    "t": "Repair hazards with the Omni and stop Ramsled boarders."
+   },
+   {
+    "t": "When the bonus rewards show, pick a new mission or return to the Dry Dock."
+   }
+  ],
+  "fast": [
+   "Practise flying at the Free Flight node in Earth Proxima.",
+   "Raise Intrinsics to unlock fast travel, the Slingshot and the Omni recall.",
+   "Grab abandoned derelict caches for extra exclusive rewards."
+  ],
+  "rw": [
+   "Railjack component wreckage",
+   "Void Relics",
+   "Endo",
+   "Railjack resources"
+  ],
+  "time": "",
+  "go": [
+   "Sevagoth",
+   "Oberon"
+  ],
+  "w": "https://wiki.warframe.com/w/Empyrean"
+ }
+]

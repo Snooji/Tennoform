@@ -8,9 +8,10 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
+import { ModCard } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
-import { fmt, tf, useTFData, type GoalsData } from "@/lib/tf"
+import { fmt, tf, useTFData, type BuildGoal, type GoalsData } from "@/lib/tf"
 
 const SORTS = [{ value: "added", label: "Order added" }, { value: "progress", label: "Most complete" }, { value: "name", label: "Name" }]
 const go = (key: string) => (e: React.MouseEvent) => {
@@ -49,6 +50,29 @@ function Have({ n, have }: { n: string; have: number | null }) {
   )
 }
 
+function BuildGoals({ list }: { list: BuildGoal[] }) {
+  if (!list.length) return null
+  return (
+    <section className="flex flex-col gap-3" aria-labelledby="bg-h">
+      <h2 id="bg-h" className="font-heading text-xl font-semibold">Build goals</h2>
+      {list.map((g) => (
+        <Card key={g.id} size="sm" className="gap-3 px-4">
+          <div className="flex items-start gap-3">
+            <Thumb src={g.img} className="size-12" />
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
+              <a href="#" onClick={(e) => { e.preventDefault(); tf().buildLibSet({ sel: g.from }); tf().arsenalSet({ tab: "top" }); location.hash = "arsenal" }} className={cn("truncate font-heading text-base font-semibold", linkCls)}>{g.name}</a>
+              <span className="text-xs text-muted-foreground tabular-nums">{g.have}/{g.total} mods and arcanes owned{g.missing.length ? ` · ${g.missing.length} to get` : " · complete"}</span>
+            </div>
+            <Button variant="ghost" size="icon-sm" onClick={() => tf().buildGoalRemove(g.id)} aria-label={`Remove the ${g.name} goal`}><X /></Button>
+          </div>
+          <Progress value={(100 * g.have) / (g.total || 1)} className="h-1.5" aria-label={`${g.name}: ${g.have} of ${g.total} parts`} />
+          {g.missing.length ? <ul className="grid gap-2 sm:grid-cols-2">{g.missing.map((m, i) => <ModCard key={m.key + i} m={m} />)}</ul> : <p className="text-sm text-primary">You own every part. Time to Forma it up.</p>}
+        </Card>
+      ))}
+    </section>
+  )
+}
+
 export function GoalsPage() {
   const d = useTFData(() => tf().goals())
   return (
@@ -59,11 +83,12 @@ export function GoalsPage() {
           Tap <b className="text-foreground">Track</b> on any item to add it here. You get one combined shopping list, the relics you still need, and progress for each goal.
         </p>
       </header>
-      {!d.goals.length ? (
+      <BuildGoals list={d.bgoals} />
+      {!d.goals.length && d.bgoals.length ? null : !d.goals.length ? (
         <Card className="items-start gap-3 p-6 text-sm">
           <Target aria-hidden className="size-6 text-primary" />
           <b className="font-heading text-base font-semibold">No goals yet</b>
-          <p className="text-muted-foreground">Open any Warframe, weapon or Prime set and tap Track.</p>
+          <p className="text-muted-foreground">Open any Warframe, weapon or Prime set and tap Track, or save a build from Builds as a goal.</p>
           <a href="#frames" className={cn(buttonVariants(), "h-9")}>Browse Warframes</a>
         </Card>
       ) : (

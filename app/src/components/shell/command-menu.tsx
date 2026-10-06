@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Keyboard, Moon, Sun } from "lucide-react"
+import { BookOpen, Keyboard, Moon, Sun } from "lucide-react"
 
 import {
   CommandDialog, CommandEmpty, CommandGroup, Command, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut,
@@ -26,9 +26,9 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (o: boo
   }
   const pages = tf().nav().flatMap((p) => p.pages)
   return (
-    <CommandDialog open={open} onOpenChange={setOpen} title="Search Tennoform" description="Find gear, relics, mods, quests, planets and pages">
+    <CommandDialog open={open} onOpenChange={setOpen} title="Search Tennoform" description="Find guides, gear, relics, mods, quests, planets and pages">
       <Command shouldFilter={false} loop>
-        <CommandInput value={q} onValueChange={setQ} placeholder="Search gear, relics, mods, quests, planets…" />
+        <CommandInput value={q} onValueChange={setQ} placeholder="Search guides, gear, relics, mods, quests…" />
         <CommandList className="max-h-[min(60vh,480px)]">
           {q.trim() ? (
             <>
@@ -39,6 +39,8 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (o: boo
                     <CommandItem key={h.act} value={h.act} onSelect={() => run(() => tf().open(h.act))}>
                       {h.img ? (
                         <img src={h.img} alt="" className="size-7 shrink-0 object-contain" loading="lazy" />
+                      ) : h.group === "Guides" ? (
+                        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/12 text-primary"><BookOpen className="size-3.5" /></span>
                       ) : (
                         <span className="size-7 shrink-0" />
                       )}
