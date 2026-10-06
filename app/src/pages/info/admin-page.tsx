@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, Copy, Download, RefreshCw, RotateCcw, Trash2, X } from "lucide-react"
+import { Check, Copy, Download, Eye, Hammer, RefreshCw, RotateCcw, Trash2, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,8 @@ import { PageHead } from "./page-head"
 
 const FILTERS = [{ value: "open", label: "Open" }, { value: "done", label: "Done" }, { value: "all", label: "All" }, { value: "bug", label: "Bugs" }, { value: "idea", label: "Ideas" }, { value: "other", label: "Other" }]
 const DKINDS = [{ value: "paypal", label: "PayPal ($)" }, { value: "plat", label: "Platinum (in game)" }, { value: "other", label: "Other ($)" }]
+const STATUS_LABEL: Record<string, string> = { seen: "Seen", working: "Working on it", done: "Done" }
+const STATUS_CLS: Record<string, string> = { seen: "text-muted-foreground", working: "border-primary/40 text-primary", done: "border-emerald-500/40 text-emerald-700 dark:text-emerald-300" }
 const KIND_CLS: Record<string, string> = { bug: "border-red-500/40 text-red-700 dark:text-red-300", idea: "border-primary/40 text-primary", other: "text-muted-foreground" }
 
 function Tile({ k, v, x }: { k: string; v: string; x: string }) {
@@ -45,13 +47,25 @@ function Inbox({ d }: { d: AdminData }) {
                 <Badge variant="outline" className={KIND_CLS[x.kind] || KIND_CLS.other}>{x.kind}</Badge>
                 <span className="text-muted-foreground tabular-nums">{x.at}</span>
                 {x.page ? <span className="text-muted-foreground">· {x.page}</span> : null}
+                {x.status ? <Badge variant="outline" className={STATUS_CLS[x.status]}>{STATUS_LABEL[x.status]}</Badge> : null}
                 <span className="ml-auto flex gap-1.5">
-                  <Button variant="outline" size="sm" className="h-8" onClick={() => tf().fbDone(x.id)}>{x.done ? <><RotateCcw /> Reopen</> : <><Check /> Done</>}</Button>
+                  <Button variant="outline" size="sm" className="h-8" onClick={() => tf().fbCopy(x.id)} aria-label={`Copy feedback from ${x.name || "Anonymous"}`}><Copy /> Copy</Button>
                   <Button variant="outline" size="sm" className="h-8" onClick={() => tf().fbDel(x.id)} aria-label={`Delete feedback from ${x.name || "Anonymous"}`}><Trash2 /></Button>
                 </span>
               </div>
-              <p className="text-sm whitespace-pre-wrap">{x.text}</p>
+              <p className="text-sm whitespace-pre-wrap select-text">{x.text}</p>
               <span className="text-xs text-muted-foreground">{x.name || "Anonymous"}{x.contact ? ` · ${x.contact}` : ""}</span>
+              <div role="group" aria-label="Status the sender sees" className="flex flex-wrap items-center gap-1.5 pt-1">
+                {(["seen", "working", "done"] as const).map((st) => {
+                  const on = x.status === st
+                  return (
+                    <Button key={st} variant={on ? "default" : "outline"} size="sm" className="h-8" aria-pressed={on} onClick={() => tf().fbStatus(x.id, st)}>
+                      {st === "seen" ? <Eye /> : st === "working" ? <Hammer /> : <Check />} {STATUS_LABEL[st]}
+                    </Button>
+                  )
+                })}
+                <span className="text-xs text-muted-foreground">{x.signed ? (x.status ? "They can see this. Tap again to clear." : "They'll see what you pick.") : "Sent before statuses existed; they won't see it."}</span>
+              </div>
             </li>
           ))}
         </ul>

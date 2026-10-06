@@ -179,6 +179,8 @@ export type TFApi = {
   adminRecheck(): void
   fbReload(): void
   fbDone(id: string): void
+  fbStatus(id: string, status: "seen" | "working" | "done"): void
+  fbCopy(id: string): void
   fbDel(id: string): void
   donAdd(o: { kind: string; amount: string; who: string; date: string; note: string }): Promise<boolean>
   donDel(id: string): Promise<void>
@@ -511,13 +513,14 @@ export const runAct = (a: TFAction) => tf().act(a.tag, a.attrs)
 export const hrefOf = (a: TFAction | null) => (a && a.attrs.href && a.attrs.href !== "#" ? a.attrs.href : "#")
 
 export type SupportData = { ign: string; paypal: string; whisper: string }
-export type FeedbackData = { hosted: boolean; ready: boolean; signed: boolean; kind: string; from: string; prefill: string; admin: boolean }
+export type FeedbackData = { hosted: boolean; ready: boolean; signed: boolean; kind: string; from: string; prefill: string; admin: boolean
+  mine: { id: string; kind: string; text: string; at: string; status: string; label: string }[]; mineLoading: boolean }
 export type AboutData = {
   pitch: string; site: string; wfcd: string; built: string; prices: string; sec: string
   changes: { d: string; t: string }[]
   feeds: { k: "ok" | "warn" | "bad" | "off"; t: string }[]
 }
-export type AdminFeedback = { id: string; kind: string; at: string; page: string; text: string; name: string; contact: string; done: boolean }
+export type AdminFeedback = { id: string; kind: string; at: string; page: string; text: string; name: string; contact: string; done: boolean; status: string; signed: boolean }
 export type AdminDonation = { id: string; amount: string; who: string; date: string; kind: string; note: string }
 export type AdminData = {
   state: "signin" | "checking" | "denied" | "ok"; email: string; uid: string; err: string

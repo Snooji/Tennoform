@@ -279,7 +279,11 @@ service cloud.firestore {
         && (!('contact' in data()) || shortStr(data().contact, 120))
         && (!('name' in data()) || shortStr(data().name, 40));
       allow read, delete: if isAdmin();
-      allow update: if isAdmin() && data().diff(resource.data).affectedKeys().hasOnly(['done']);
+      // senders can see their own feedback and its status
+      allow read: if signedIn() && resource.data.uid == me();
+      allow update: if isAdmin() && data().diff(resource.data).affectedKeys().hasOnly(['done', 'status', 'statusAt'])
+        && (!('status' in data()) || data().status in ['', 'seen', 'working', 'done'])
+        && (!('statusAt' in data()) || data().statusAt is number);
     }
   }
 }
