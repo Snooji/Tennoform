@@ -347,6 +347,12 @@ export type MasteryData = {
   craft?: { title: string; recipes: { recipe: string; xp: number; note: string; items: GearRow[] }[] }[]
   xpHtml?: string
   helper?: HelperData
+  route?: RouteStep[]; routeTotal?: number
+}
+export type RouteStep = {
+  id: string; title: string; how: string; xp: number; count: number; unit: string; link: string; kind: "gear" | "nodes" | "intr" | "info"
+  locked?: boolean; reach: boolean; beyond: boolean; before: number; after: number; mrAfter: string
+  items: GearRow[]; more: number; pick: number; planets?: { p: string; n: number; xp: number }[]
 }
 export type JunctionRow = { id: string; label: string; from: string; done: boolean; sp: boolean }
 export type ChartData = {

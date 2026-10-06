@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronDown, Info, Map } from "lucide-react"
+import { Check, ChevronDown, Info } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,7 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GearRow } from "@/components/tf/gear-row"
 import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
-import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData } from "@/lib/tf"
+import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData, type RouteStep } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Helper } from "./helper"
 
@@ -68,23 +68,80 @@ function Path({ d }: { d: MasteryData }) {
           {d.overflow ? (
             <p className="flex gap-2 rounded-lg border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
               <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />
-              That's more XP than is left in gear and nodes you can use right now. The rest comes from intrinsics, gear that unlocks at a higher MR, and new releases.
+              That's more XP than everything below can give right now. The rest comes from gear that unlocks at a higher rank, modular companions and new releases.
             </p>
           ) : null}
-          <p className="text-xs text-muted-foreground">The plan picks the easiest gear first (market blueprints, then boss drops, then farmable Primes) until the gap is covered. Star chart and Steel Path nodes count too.</p>
+          <p className="text-xs text-muted-foreground">Every source of mastery counts: gear, star chart and Steel Path nodes, Junctions, Railjack and Drifter intrinsics, and modular companions. The steps below go quickest first and stop where you reach {d.targetLabel}.</p>
         </CardContent>
       </Card>
-      {d.groups!.map((g) => <Section key={g.title} title={g.title} items={g.items} xp={g.xp} />)}
-      {d.nodesLeft ? (
-        <a href="#missions" className="group flex items-center gap-3 rounded-xl border bg-card p-4 transition-colors hover:border-primary/40 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
-          <Map aria-hidden className="size-5 text-primary" />
-          <span className="flex flex-col">
-            <b className="font-heading text-base font-semibold">{d.nodesLeft} star chart nodes left · {fmt(d.nx!)} XP</b>
-            <span className="text-sm text-muted-foreground">Plus {d.spLeft} Steel Path nodes ({fmt(d.sx!)} XP). Open the Star chart.</span>
-          </span>
-        </a>
+      <Route d={d} />
+    </>
+  )
+}
+
+function Route({ d }: { d: MasteryData }) {
+  const steps = d.route || []
+  const now = steps.filter((x) => !x.beyond)
+  const later = steps.filter((x) => x.beyond)
+  const [more, setMore] = useState(false)
+  return (
+    <>
+      <ol className="flex flex-col gap-3" aria-label={`Steps to rank ${d.targetLabel}`}>
+        {now.map((x, i) => <Step key={x.id} x={x} n={i + 1} />)}
+      </ol>
+      {later.length ? (
+        <Collapsible open={more} onOpenChange={setMore}>
+          <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
+            After {d.targetLabel}: {later.length} more {later.length === 1 ? "step" : "steps"} for the ranks beyond
+            <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <ol className="mt-3 flex flex-col gap-3" start={now.length + 1}>{later.map((x, i) => <Step key={x.id} x={x} n={now.length + i + 1} />)}</ol>
+          </CollapsibleContent>
+        </Collapsible>
       ) : null}
     </>
+  )
+}
+
+function Step({ x, n }: { x: RouteStep; n: number }) {
+  const [open, setOpen] = useState(x.kind === "gear" && n <= 2 && !x.beyond)
+  return (
+    <li>
+      <Card size="sm" className={cn("gap-2 px-4", x.reach && "ring-2 ring-primary/60", x.locked && "opacity-80")}>
+        <div className="flex flex-wrap items-start gap-x-3 gap-y-1">
+          <span aria-hidden className="grid size-7 shrink-0 place-items-center rounded-full border border-primary/40 font-heading text-sm font-semibold text-primary">{n}</span>
+          <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+            <h3 className="font-heading text-base leading-tight font-semibold">{x.title}</h3>
+            <span className="text-xs text-muted-foreground tabular-nums">
+              {x.xp ? `${fmt(x.xp)} XP` : "XP varies"}{x.count ? ` · ${fmt(x.count)} ${x.unit}` : ""}
+              {x.locked ? " · locked for now" : x.reach ? "" : x.xp ? ` · rank ${x.mrAfter} after all of it` : ""}
+            </span>
+          </div>
+          {x.reach ? <Badge className="border-primary/40 bg-primary/15 text-primary"><Check /> Reaches your target</Badge> : null}
+        </div>
+        <p className="text-sm text-muted-foreground">{x.how}</p>
+        {x.pick ? <p className="text-sm font-medium">Ranking {x.pick === x.count ? "all of these" : `about ${x.pick} of these`} gets you to your target. The biggest XP is listed first.</p> : null}
+        {x.planets?.length ? (
+          <ul className="flex flex-wrap gap-1.5" aria-label="Where the most node XP is left">
+            {x.planets.map((p) => <li key={p.p}><Badge variant="outline" className="text-muted-foreground">{p.p}: {p.n} · {fmt(p.xp)} XP</Badge></li>)}
+          </ul>
+        ) : null}
+        {x.link ? <a href={`#${x.link}`} className={cn(linkCls, "self-start text-sm")}>{x.link === "missions" ? "Open the Star chart" : "Open Ranks"}</a> : null}
+        {x.items.length ? (
+          <Collapsible open={open} onOpenChange={setOpen}>
+            <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50">
+              {open ? "Hide" : "Show"} the {x.count} {x.unit}
+              <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <ul className="mt-2 flex flex-col divide-y rounded-lg border">{x.items.map((g) => <GearRow key={g.n} g={g} />)}</ul>
+              {x.more ? <p className="mt-2 text-xs text-muted-foreground">And {x.more} more. Ranks lists them all.</p> : null}
+            </CollapsibleContent>
+          </Collapsible>
+        ) : null}
+      </Card>
+    </li>
   )
 }
 
