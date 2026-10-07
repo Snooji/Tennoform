@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
 import { cn } from "@/lib/utils"
+import { AlertsCard } from "@/components/tf/alerts-card"
 
 /** Home dashboard: rank progress first, then what to do next, then today, goals and tasks. */
 export function HomePage() {
@@ -52,6 +53,9 @@ export function HomePage() {
           <NextUp d={d} stage={d.stage} />
         </motion.div>
         <div className="flex min-w-0 flex-col gap-4">
+          <motion.div {...rise(3)}>
+            <AlertsCard hideEmpty />
+          </motion.div>
           <motion.div {...rise(3)}>
             <TodayCard d={d} />
           </motion.div>
