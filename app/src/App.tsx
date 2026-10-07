@@ -12,6 +12,7 @@ import { LegacyOutlet } from "@/components/shell/legacy-outlet"
 import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
+import { SellDialog } from "@/components/tf/sell-dialog"
 import { HomePage } from "@/pages/home/home-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
@@ -160,6 +161,7 @@ export default function App() {
         </SidebarInset>
         <MobileTabs />
         <CommandMenu open={searchOpen} setOpen={setSearchOpen} />
+        <SellDialog />
         <Toaster theme={isDark(s.theme) ? "dark" : "light"} position="bottom-center" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />
       </SidebarProvider>
     </TooltipProvider>

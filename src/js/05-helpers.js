@@ -3,6 +3,8 @@ function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
 /* sellers: [name, platinum, quantity, reputation, status, rank]; rank is set for mods and arcanes (0 = unranked) */
 const rankTxt=r=>r==null?'':r===0?'Unranked':'Rank '+r;
+/* a Sell button next to a price: opens the Sell dialog (4699941-wfm-sell.js) */
+function sellChip(n){return MS[n]?`<button type="button" class="chip" data-sell="${esc(n)}" aria-label="Sell ${esc(n)}">Sell</button>`:''}
 function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}${s[5]!=null?` (rank ${s[5]})`:''}" for ${s[1]} platinum. (warframe.market)`}
 function sellerRow(item){const s=(SEL[item]||[]).filter(x=>x[0]!=='__buy');if(!s.length)return'';const b=s[0];
   return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[5]!=null?`<span class="chip" title="Rank of the mod or arcane being sold">${rankTxt(b[5])}</span>`:''}${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, ChevronDown, ExternalLink, MessageSquare, Search, X } from "lucide-react"
+import { Check, ChevronDown, ExternalLink, MessageSquare, Search, X, Tag } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -58,6 +58,7 @@ function Mods() {
                     <MessageSquare /> {x.seller.price}p{x.seller.rank != null ? <span className="text-xs text-muted-foreground">· {rankTxt(x.seller.rank)}</span> : null}
                   </Button>
                 ) : null}
+                <Button variant="outline" size="sm" className="h-8" onClick={() => tf().sellOpen(x.n)} aria-label={`Sell ${x.n}`}><Tag /> Sell</Button>
                 <a href={x.url} target="_blank" rel="noopener" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-8")} aria-label={`${x.n} listings on warframe.market (opens in a new tab)`}>
                   <ExternalLink /> Listings
                 </a>
@@ -133,6 +134,7 @@ function Sets({ d }: { d: MarketData }) {
                     <MessageSquare /> {x.seller.price}p
                   </Button>
                 ) : null}
+                <Button variant="outline" size="sm" className="h-8" onClick={() => tf().sellOpen(x.n)} aria-label={`Sell ${x.n}`}><Tag /> Sell</Button>
                 <a href={x.url} target="_blank" rel="noopener" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-8")} aria-label={`${x.base} listings on warframe.market (opens in a new tab)`}>
                   <ExternalLink /> Listings
                 </a>

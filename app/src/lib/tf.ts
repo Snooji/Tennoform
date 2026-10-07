@@ -60,6 +60,10 @@ export type TFApi = {
   communitySend(text: string): Promise<boolean>
   chatDelete(id: string): void
   chat(): ChatPageData
+  sell(): SellData | null
+  sellOpen(n: string): void
+  sellClose(): void
+  sellable(n: string): boolean
   avatarSet(): void
   avatarRemove(uid?: string): void
   myAvatar(): string
@@ -242,6 +246,10 @@ export type CollectionItem = { n: string; img: string; r: number; mx: number; ha
 export type CollectionData = { f: string; q: string; owned: number; mastered: number; level: number; total: number; inv: number
   cats: { id: string; label: string; owned: number; mastered: number; level: number; total: number; items: CollectionItem[] }[] }
 export type PlayerStats = { loading: boolean; err: string; data: { live: number; hour: number; dau: number; wau: number; mau: number; total: number; tracked: number; hist: { d: string; n: number }[]; ago: string } | null }
+export type SellData = {
+  n: string; url: string; low: number | null; avg: number | null; a30: number | null; v7: number; quick: number | null; fair: number | null
+  du: number | null; rank: boolean; date: string; sellers: { name: string; price: number; rank: number | null; status: string }[]; chatQuick: string; chatFair: string
+}
 export type ChatTab = { id: string; label: string; title: string; hint: string; kind: "public" | "clan" | "alliance" | "friend" | "group"; unread: number; closable: boolean }
 export type ChatPageData = { tabs: ChatTab[]; cur: string; conv: boolean; signed: boolean; synced: boolean; openable: { id: string; label: string; kind: "friend" | "group" }[] }
 export type CommunityMsg = { id: string; who: string; text: string; time: string; mine: boolean; uid: string; held: boolean; av: string }
