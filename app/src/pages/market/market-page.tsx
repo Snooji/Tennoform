@@ -12,6 +12,7 @@ import { GoLink } from "@/components/tf/go-link"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type MarketData, type VaultCard } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const MOD_SORTS = [{ value: "v7", label: "Most traded" }, { value: "a7", label: "7-day price" }, { value: "low", label: "Cheapest seller" }, { value: "n", label: "Name" }]
 const MOD_KINDS = [{ value: "all", label: "Mods and arcanes" }, { value: "Mod", label: "Mods" }, { value: "Arcane", label: "Arcanes" }]
@@ -41,6 +42,7 @@ function Mods() {
           <SelectTrigger className="h-10 min-w-44" aria-label="Sort by"><span className="text-muted-foreground">Sort:</span><SelectValue /></SelectTrigger>
           <SelectContent>{MOD_SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
+        <SortDir k="mmS" className="size-10" />
       </div>
       <p role="status" className="text-xs text-muted-foreground">{d.count === d.total ? `${fmt(d.total)} mods and arcanes` : `Showing ${fmt(d.count)} of ${fmt(d.total)}`}</p>
       <Card className="gap-0 py-0">
@@ -105,6 +107,7 @@ function Sets({ d }: { d: MarketData }) {
           <SelectTrigger className="h-10 min-w-44" aria-label="Sort by"><span className="text-muted-foreground">Sort:</span><SelectValue /></SelectTrigger>
           <SelectContent>{SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
+        <SortDir k="mkSort" className="size-10" />
         <Select items={FILTERS} value={d.filter} onValueChange={(v) => tf().marketSet({ f: String(v) })}>
           <SelectTrigger className="h-10 min-w-44" aria-label="Show sets"><SelectValue /></SelectTrigger>
           <SelectContent>{FILTERS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>

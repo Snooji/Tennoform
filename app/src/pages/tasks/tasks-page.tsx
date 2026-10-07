@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { hrefOf, runAct, tf, useTFData, type TaskRow, type TasksData } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const FILTERS = [
   { value: "open", label: "To do" }, { value: "done", label: "Done" }, { value: "shared", label: "Shared with friends" }, { value: "all", label: "All" },
@@ -159,6 +160,7 @@ export function TasksPage() {
           <SelectTrigger className="h-9 min-w-40" aria-label="Sort tasks"><SelectValue /></SelectTrigger>
           <SelectContent>{SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
+        <SortDir k="tkS" className="size-9" />
         <span className="text-sm text-muted-foreground tabular-nums">{d.todo} to do · {d.done} done</span>
         {d.done ? <Button variant="ghost" size="sm" className="ml-auto h-8" onClick={() => tf().taskClearDone()}>Clear done</Button> : null}
       </div>

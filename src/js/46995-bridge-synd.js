@@ -3,7 +3,7 @@ function linkKey(n){n=String(n);if(RES[n])return 'res|'+n;if(I[n])return 'item|'
 function syndData(){const f=state.syF||'all',srt=state.syS||'next',hide=!!state.syH;
   let list=D.synd.slice();if(f!=='all')list=list.filter(e=>e.kind===f);if(hide)list=list.filter(e=>gateOK(e.gate));
   const prog=e=>{const st=synState(e),rr=rankRow(e,st.r);if(rr.max==null)return 0;return (st.s-(rr.min||0))/((rr.max||1)-(rr.min||0))};
-  list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));
+  list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));rv('syS',list);
   const fl=dailyLeft(D.synd[0]);
   return {filter:f,sort:srt,hide,cap:dailyCap(),factionLeft:fl,synced:!!(P.daily&&P.daily.ts>=lastDaily()),reset:left(lastDaily()+DAY-Date.now()),
     nightwave:(P.nw||[]).map(([t,s,r])=>({t,s,r})),

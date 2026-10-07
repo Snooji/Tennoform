@@ -20,6 +20,7 @@ import { NumField } from "@/components/tf/num-field"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type ArsenalData } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const TABS = [
   { value: "top", label: "Top builds" }, { value: "mine", label: "My builds" },
@@ -168,6 +169,7 @@ function Arcanes({ d }: { d: ArsenalData }) {
         <Pick items={opts("All types", d.types!)} value={d.type} onChange={(v) => tf().arsenalSet({ art: v })} label="Arcane type" />
         <Pick items={[{ value: "all", label: "All" }, { value: "used", label: "Used in builds" }, { value: "own", label: "Owned" }, { value: "part", label: "Not maxed" }, { value: "max", label: "Maxed" }, { value: "none", label: "Missing" }]} value={d.status} onChange={(v) => tf().arsenalSet({ ars: v })} label="Status" />
         <Pick items={[{ value: "use", label: "Most used" }, { value: "need", label: "Copies needed" }, { value: "price", label: "Price" }, { value: "name", label: "Name" }]} value={d.sort} onChange={(v) => tf().arsenalSet({ aro: v })} label="Sort" prefix="Sort:" />
+        <SortDir k="arO" className="size-9" />
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {d.arcs!.map((a) => (

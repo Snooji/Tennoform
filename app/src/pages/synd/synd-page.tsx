@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Toggle } from "@/components/ui/toggle"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type SyndCard } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const FILTERS = [{ value: "all", label: "All syndicates" }, { value: "faction", label: "Factions" }, { value: "open", label: "Open world" }, { value: "other", label: "Other" }]
 const SORTS = [{ value: "next", label: "Closest to rank-up" }, { value: "rank", label: "Highest rank" }, { value: "name", label: "Name" }]
@@ -162,6 +163,7 @@ export function SyndPage() {
           <SelectTrigger className="h-9 min-w-48" aria-label="Sort"><span className="text-muted-foreground">Sort:</span><SelectValue /></SelectTrigger>
           <SelectContent>{SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
+        <SortDir k="syS" className="size-9" />
         <Toggle variant="outline" pressed={d.hide} onPressedChange={(v) => tf().syndSet({ hide: v })} className="h-9 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Unlocked only</Toggle>
       </div>
       <div className="grid gap-3 md:grid-cols-2">{d.list.map((e) => <Synd key={e.n} e={e} />)}</div>

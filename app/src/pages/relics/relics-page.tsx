@@ -12,6 +12,7 @@ import { NumField } from "@/components/tf/num-field"
 import { Planner } from "./planner"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type RelicCard, type RelicsData } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const RAR: Record<string, string> = { C: "text-[#b07a4a] dark:text-[#d8a274]", U: "text-slate-600 dark:text-slate-300", R: "text-primary font-medium" }
 const DOT: Record<string, string> = { C: "bg-[#b07a4a]", U: "bg-slate-400", R: "bg-primary" }
@@ -75,6 +76,7 @@ function Mine({ d }: { d: RelicsData }) {
           <div className="flex flex-wrap gap-2">
             <Pick items={eras} value={d.era} onChange={(v) => tf().relicsSet({ era: v })} label="Era" />
             <Pick items={sorts} value={d.sort} onChange={(v) => tf().relicsSet({ sort: v })} label="Sort" prefix="Sort:" />
+            <SortDir k="rlO" className="size-9" />
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {d.cards!.map((c) => (
@@ -167,6 +169,7 @@ function Ducats({ d }: { d: RelicsData }) {
         <SearchBox value={d.q!} onChange={(v) => tf().relicsSet({ duq: v })} placeholder="Find a prime part" label="Find a prime part" />
         <Pick items={f} value={d.filter} onChange={(v) => tf().relicsSet({ duf: v })} label="Filter" />
         <Pick items={s} value={d.sort} onChange={(v) => tf().relicsSet({ duo: v })} label="Sort" prefix="Sort:" />
+        <SortDir k="duO" className="size-9" />
       </div>
       <Card className="gap-0 py-0">
         <div className="grid grid-cols-[minmax(0,1fr)_3.5rem_3.5rem_4.5rem] gap-2 border-b px-4 py-2 text-xs text-muted-foreground"><span>Part</span><span className="text-right">Plat</span><span className="text-right">Ducats</span><span className="text-center">Spares</span></div>

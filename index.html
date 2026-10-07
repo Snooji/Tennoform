@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-80wZT2OpyWzQb92VN2FaAFv3lVuBaBMrU4Czonhlivg=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DT-3_Wi0.css"><script type="module" src="/assets/main-DpJwov3s.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AUy0s5VPTYSa9UHI5YYDt0XPM8GeHeLfuC4uNrLWbLo=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DT-3_Wi0.css"><script type="module" src="/assets/main-pOlyjEeu.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#100f0d">
 
@@ -1065,6 +1065,9 @@ function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
 /* sellers: [name, platinum, quantity, reputation, status, rank]; rank is set for mods and arcanes (0 = unranked) */
 const rankTxt=r=>r==null?'':r===0?'Unranked':'Rank '+r;
+/* ascending/descending for every sort menu: rv(key) reverses the sorted list before it's paged; the key is the sort's state name */
+const SREV=lsGet('tf-sortrev',{})||{};
+function rv(k,a){if(SREV[k])a.reverse();return a}
 /* a Sell button next to a price: opens the Sell dialog (4699941-wfm-sell.js) */
 function sellChip(n){return MS[n]?`<button type="button" class="chip" data-sell="${esc(n)}" aria-label="Sell ${esc(n)}">Sell</button>`:''}
 function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}${s[5]!=null?` (rank ${s[5]})`:''}" for ${s[1]} platinum. (warframe.market)`}
@@ -3151,14 +3154,14 @@ function relicsDrop(n){const it=I[n];if(!it||!it.p||ownedItem(n))return false;co
   if(!on('bp|'+n)&&has(it.bprel))return true;return it.parts.some(p=>p.k==='p'&&p.n!=='Blueprint'&&!on('part|'+n+'|'+p.n)&&has(p.rel))}
 function rkItem(n){const it=I[n];const r=rankOf(n),mx=maxRank(it);const v=VAULT[n]||{};
   return {n,img:IMG(n),mr:it.mr||0,r,mx,xp:itemXP(n),max:mxp(it),per:perRank(it),prime:!!it.p,vaulted:!!(it.p&&it.v&&!v.now),resurgence:!!v.now,owned:ownedItem(n)&&r<mx,notOwned:on('nown|'+n),has:ownedItem(n),relics:relicsDrop(n)}}
-function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s,state.rkT||'all'].join('|');
+function ranksData(fresh){const cat=state.rkCat||'Warframe',qr=state.rkQ||'',q=qr.toLowerCase().trim(),f=state.rkF||'all',s=state.rkS||'name';const key=[cat,q,f,s,state.rkT||'all',SREV.rkS?1:0].join('|');
   if(state._rkKey!==key){state._rkKey=key;state.rkLim=60;fresh=true}
   const cats=CATS.filter(c=>MI.some(i=>i.c===c)).map(c=>{const a=autoCat(c);return {id:c,label:CATL[c],m:a.m,t:a.t}}).concat([{id:'Intrinsics',label:'Intrinsics',m:0,t:0},{id:'Other',label:'Other gear',m:0,t:0}]);
   const base={cat,q:qr,f,s,t:state.rkT||'all',cats,island:'',items:[],total:0,shown:0,notMax:0,head:{label:'',m:0,t:0,p:0,x:0,search:!!q}};
   if(!q&&(cat==='Intrinsics'||cat==='Other')){base.island=cat==='Intrinsics'?intrHTML():othHTML();base.head.label=cat==='Intrinsics'?'Intrinsics':'Other gear';base.head.x=cat==='Intrinsics'?catXP('rail')+catXP('drift'):othXP();return base}
   if(fresh||RKC.key!==key){let list=q?MI.filter(i=>i.n.toLowerCase().includes(q)||(I[i.n]&&I[i.n].parts.some(p=>(p.full||p.n).toLowerCase().includes(q)))):MI.filter(i=>i.c===cat);const ty=state.rkT||'all';if(ty==='prime')list=list.filter(i=>I[i.n]&&I[i.n].p);if(ty==='normal')list=list.filter(i=>!(I[i.n]&&I[i.n].p));if(ty==='relics')list=list.filter(i=>relicsDrop(i.n));
     if(f==='notmax')list=list.filter(i=>rankOf(i.n)<maxRank(i));if(f==='todo')list=list.filter(i=>rankOf(i.n)===0);if(f==='prog')list=list.filter(i=>{const r=rankOf(i.n);return r>0&&r<maxRank(i)});if(f==='max')list=list.filter(i=>rankOf(i.n)>=maxRank(i));if(f==='own')list=list.filter(i=>ownedItem(i.n));if(f==='nown')list=list.filter(i=>!ownedItem(i.n));
-    list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));
+    list.sort((a,b)=>s==='mr'?(a.mr||0)-(b.mr||0)||a.n.localeCompare(b.n):s==='close'?((mxp(a)-itemXP(a.n))||1e9)-((mxp(b)-itemXP(b.n))||1e9):s==='left'?(mxp(b)-itemXP(b.n))-(mxp(a)-itemXP(a.n)):a.n.localeCompare(b.n));rv('rkS',list);
     RKC.key=key;RKC.order=list.map(i=>i.n)}
   state._rkList=RKC.order;const total=RKC.order.length,shown=Math.min(state.rkLim||60,total);
   base.items=RKC.order.slice(0,shown).map(rkItem);base.total=total;base.shown=shown;base.notMax=RKC.order.filter(n=>rankOf(n)<maxRank(I[n])).length;base.owned=RKC.order.filter(n=>ownedItem(n)).length;base.signedIn=signedIn();
@@ -3279,7 +3282,7 @@ routes.achievements=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('achi
 function actOf(x){const g=taskGo(x);if(!g)return null;const a={};g.replace(/([\w-]+)="([^"]*)"/g,(_,k,v)=>{a[k]=v.replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')});return {tag:'a',attrs:a}}
 function tasksData(){taskResets();const f=state.tkF||'open',so=state.tkS||'new';const all=P.tasks||[];let L2=all.slice();
   L2=L2.filter(x=>f==='all'||(f==='open'&&!x.d)||(f==='done'&&x.d)||(f==='shared'&&((x.with||[]).length||x.from))||(f===x.k));
-  L2.sort((a,b)=>so==='due'?((a.due||'9999')<(b.due||'9999')?-1:(a.due||'9999')>(b.due||'9999')?1:b.at-a.at):so==='old'?a.at-b.at:so==='kind'?(a.k||'').localeCompare(b.k||'')||b.at-a.at:b.at-a.at);
+  L2.sort((a,b)=>so==='due'?((a.due||'9999')<(b.due||'9999')?-1:(a.due||'9999')>(b.due||'9999')?1:b.at-a.at):so==='old'?a.at-b.at:so==='kind'?(a.k||'').localeCompare(b.k||'')||b.at-a.at:b.at-a.at);rv('tkS',L2);
   const dn=all.filter(x=>x.d).length;
   return {filter:f,sort:so,todo:all.length-dn,done:dn,signedIn:!!SO.uid,friends:(SO.friends||[]).filter(x=>!x.pending).map(x=>({uid:x.uid,name:x.name||'Friend'})),
     list:L2.map(x=>({id:x.id,title:x.t,kind:x.k&&x.k!=='note'?(TKL[x.k]||x.k):'',done:!!x.d,due:x.due||'',over:!!(x.due&&!x.d&&new Date(x.due+'T23:59:59')<new Date()),rep:x.rep||'',note:x.note||'',
@@ -3302,7 +3305,7 @@ routes.tasks=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('tasks')?'':
 const strip=h=>String(h||'').replace(/<br\s*\/?>/g,' · ').replace(/<a\b[^>]*>(farms by stage|\d+ options)<\/a>/g,'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"').replace(/\s*·\s*$/,'').trim();
 function vaultOf(it){if(!it||!it.p)return null;const v=VAULT[it.n]||{};if(v.now)return {kind:'now',text:'Resurgence until '+fdate(v.now)};if(it.v)return {kind:'vaulted',text:'Vaulted'+(v.est?' · back ~'+fdate(v.est):'')};return {kind:'farmable',text:'Farmable'+(it.evd?' · vaults ~'+fdate(it.evd):'')}}
 function goalsData(){const g=(P.goals||[]).filter(n=>I[n]);const srt=state.gS||'added';let list=g.slice();
-  if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}
+  if(srt==='name')list.sort();if(srt==='progress'){const pr=n=>{const k=stepKeys(n);return k.filter(on).length/k.length};list.sort((a,b)=>pr(b)-pr(a))}rv('gS',list);
   const acc={cr:0,r:{},pt:0};g.filter(n=>!on('build|'+n)).forEach(n=>totals(n,1,acc,[]));const short=!!state.gShort;
   const shop=Object.entries(acc.r).sort((a,b)=>b[1]-a[1]).filter(([n,q])=>!short||!(P.inv&&+P.inv[n]>=q)).map(([n,q])=>{const known=P.inv&&P.inv[n]!=null;const h=+((P.inv||{})[n]||0);const rem=Math.max(0,q-h);
     return {n,need:q,have:known?h:null,left:rem,where:strip(farmFor(n)),task:{has:(P.tasks||[]).some(x=>!x.d&&x.k==='res'&&x.r===n),key:'res|'+n,label:'Farm '+fmt(rem)+' '+n}}});
@@ -3410,7 +3413,7 @@ function chartData(){const planets=[...new Set(ALLN.filter(n=>!isJ(n)).map(n=>n.
     planets:planets.map(p=>{const s=planetStats(p);return {name:p,colors:orbC(p),done:s.d,sp:s.s,total:s.ns.length}}),junctions:J.map(jrow),juncHtml:juncTasks()};
   const s=planetStats(sel);const tf=state.misType||'all',hide=!!state.misHide,q=(state.scQ||'').toLowerCase().trim();const srt=state.scS||'lv';
   let ns=s.ns.filter(n=>(tf==='all'||n.t===tf)&&(!hide||!on('n|'+n.id)||!on('sp|'+n.id))&&(!q||n.n.toLowerCase().includes(q)));
-  ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);
+  ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);rv('scS',ns);
   const rr=(D.regres[sel]||D.regres[sel==='Zariman'?'Zariman Ten Zero':sel]||[]);
   return {sel,colors:orbC(sel),total:s.ns.length,nd:s.d,sd:s.s,xd:s.xd,type:tf,types:[...new Set(s.ns.map(n=>n.t))].sort(),sort:srt,hide,q:state.scQ||'',
     resources:rr,hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='node'&&x.r===sel),
@@ -3433,7 +3436,7 @@ function linkKey(n){n=String(n);if(RES[n])return 'res|'+n;if(I[n])return 'item|'
 function syndData(){const f=state.syF||'all',srt=state.syS||'next',hide=!!state.syH;
   let list=D.synd.slice();if(f!=='all')list=list.filter(e=>e.kind===f);if(hide)list=list.filter(e=>gateOK(e.gate));
   const prog=e=>{const st=synState(e),rr=rankRow(e,st.r);if(rr.max==null)return 0;return (st.s-(rr.min||0))/((rr.max||1)-(rr.min||0))};
-  list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));
+  list.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='rank'?synState(b).r-synState(a).r||synState(b).s-synState(a).s:prog(b)-prog(a));rv('syS',list);
   const fl=dailyLeft(D.synd[0]);
   return {filter:f,sort:srt,hide,cap:dailyCap(),factionLeft:fl,synced:!!(P.daily&&P.daily.ts>=lastDaily()),reset:left(lastDaily()+DAY-Date.now()),
     nightwave:(P.nw||[]).map(([t,s,r])=>({t,s,r})),
@@ -3509,7 +3512,7 @@ function marketData(){const tab=state.mkTab||'sets';const out={tab,snapshot:D.me
       if(it){const parts=it.parts.filter(p=>p.k==='p');const names=[base+' Blueprint',...parts.filter(p=>p.n!=='Blueprint').map(p=>p.full)];names.forEach(x=>{const p=PR[x];if(p&&(p.a7??p.a30)!=null)ps+=(p.a7??p.a30);else okp=false});parts.forEach(p=>du+=p.du||0)}
       const sl=(SEL[n]||[]).filter(x=>x[0]!=='__buy');return {n,base,it,a7:s.a7,a30:s.a30,v7:s.v7,ps:okp&&ps?Math.round(ps):null,du:du||null,low:sl[0]?sl[0][1]:null,b:sl[0]||null}});
     const q=(state.mkQ||'').toLowerCase().trim();const mf=state.mkF||'all';let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q)).filter(x=>{const v=VAULT[x.base]||{};return mf==='all'||(mf==='farm'&&x.it&&!x.it.v&&!v.now)||(mf==='vault'&&x.it&&x.it.v&&!v.now)||(mf==='now'&&v.now)||(mf==='goals'&&(P.goals||[]).includes(x.base))});
-    const k=state.mkSort||'a7';r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));const lim=state.mkLim||60;
+    const k=state.mkSort||'a7';r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));rv('mkSort',r);const lim=state.mkLim||60;
     Object.assign(out,{q:state.mkQ||'',filter:mf,sort:k,total:rows.length,count:r.length,more:Math.max(0,r.length-lim),
       sets:r.slice(0,lim).map(x=>{const it=MIX[x.base];return {n:x.n,base:x.base,img:IMG(x.base),vault:vaultOf(x.it),left:it?mxp(it)-itemXP(x.base):0,xp:it?mxp(it):0,
         price:x.a7!=null?Math.round(x.a7):null,meta:[x.ps!=null?'Parts '+x.ps+'p':'',x.du?x.du+' ducats':'',x.v7?fmt(x.v7)+' sold a week':''].filter(Boolean).join(' · '),
@@ -3537,7 +3540,7 @@ routes.market=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('market')?'
 function relicsData(){const tab=state.rlTab||'mine';const out={tab};
   if(tab==='mine'){const mine=Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0);const ef=state.rlE||'all',so=state.rlO||'need';
     let list=mine.filter(r=>ef==='all'||REL[r].era===ef||(ef==='need'&&relicAdvice(r).need.length));const val=r=>relicEV(r,'i').pl;
-    list.sort((a,b)=>so==='name'?a.localeCompare(b):so==='plat'?val(b)-val(a):so==='count'?relCount(b)-relCount(a):(relicAdvice(b).need.length-relicAdvice(a).need.length)||val(b)-val(a));
+    list.sort((a,b)=>so==='name'?a.localeCompare(b):so==='plat'?val(b)-val(a):so==='count'?relCount(b)-relCount(a):(relicAdvice(b).need.length-relicAdvice(a).need.length)||val(b)-val(a));rv('rlO',list);
     Object.assign(out,{era:ef,sort:so,kinds:mine.length,tot:mine.reduce((a,r)=>a+relCount(r),0),totPl:Math.round(mine.reduce((a,r)=>a+val(r)*relCount(r),0)),withNeed:mine.filter(r=>relicAdvice(r).need.length).length,traces:+P.traces||0,
       cards:list.map(r=>{const R=REL[r];const a=relicAdvice(r);const x=P.rel[r]||{};return {r,vaulted:!!R.v,advice:{t:a.t,why:a.why,k:a.k},counts:{i:+x.i||0,e:+x.e||0,f:+x.f||0,r:+x.r||0},
         rewards:R.rw.map(([n,rr])=>({n,rar:rr,go:linkKey(n),need:!/Forma/.test(n)&&partNeeded(n),goal:!!partGoal(n),plat:pv(n)!=null?Math.round(pv(n)):null,du:partDu(n)||0})),evI:Math.round(relicEV(r,'i').pl),evR:Math.round(relicEV(r,'r').pl)}})})}
@@ -3548,7 +3551,7 @@ function relicsData(){const tab=state.rlTab||'mine';const out={tab};
   else{const so=state.duO||'ratio',f=state.duF||'all',q=(state.duQ||'').toLowerCase().trim();const dup=P.dup||{};
     let list=allParts().filter(x=>x.du&&(!q||x.n.toLowerCase().includes(q))).map(x=>({...x,r:x.p?x.du/x.p:null,c:+dup[x.n]||0}));
     list=list.filter(x=>f==='all'||(f==='mine'&&x.c>0)||(f==='baro'&&x.r!=null&&x.r>=10)||(f==='plat'&&x.p!=null&&x.p>=8)||(f==='junk'&&x.p!=null&&x.p<=4));
-    list.sort((a,b)=>so==='plat'?((b.p??-1)-(a.p??-1)):so==='du'?b.du-a.du:so==='name'?a.n.localeCompare(b.n):so==='mine'?b.c-a.c:((b.r??-1)-(a.r??-1)));
+    list.sort((a,b)=>so==='plat'?((b.p??-1)-(a.p??-1)):so==='du'?b.du-a.du:so==='name'?a.n.localeCompare(b.n):so==='mine'?b.c-a.c:((b.r??-1)-(a.r??-1)));rv('duO',list);
     const mine=allParts().filter(x=>(+dup[x.n]||0)>0);const vt=WS&&WS.voidTrader;const now=new Date();const act=!!(vt&&new Date(vt.activation)<=now&&now<new Date(vt.expiry));if(HOSTED&&!WS&&!WSerr)loadWS();
     Object.assign(out,{q:state.duQ||'',filter:f,sort:so,snapshot:D.meta.prices,spares:mine.reduce((a,x)=>a+(+dup[x.n]),0),plat:Math.round(mine.reduce((a,x)=>a+(x.p||0)*(+dup[x.n]),0)),ducats:mine.reduce((a,x)=>a+(x.du||0)*(+dup[x.n]),0),
       baro:{state:vt?(act?'Here now':'Away'):'—',text:vt?(act?(untilIso(vt.expiry)?'leaves in '+untilIso(vt.expiry):'leaving now')+' · '+(vt.location||''):(untilIso(vt.activation)?'arrives in '+untilIso(vt.activation):'arriving now')):!HOSTED?'live on the hosted site':WSerr?'live data unavailable':'checking…'},
@@ -3579,7 +3582,7 @@ function plannerData(){const ref=state.rpR||'r',n=+(state.rpN||4),own=state.rpO!
     return {r,era:R.era,vaulted:!!R.v,count:relCount(r),plat:runEV(r,ref,n,pv),du:runEV(r,ref,n,partDu),
       rare:rare?{n:rare[0],go:linkKey(rare[0]),p:1-Math.pow(1-RCH[ref].R/100,n),plat:pv(rare[0])!=null?Math.round(pv(rare[0])):null}:null,
       need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:''}});
-  rows.sort((a,b)=>so==='du'?b.du-a.du:so==='need'?(b.needP-a.needP)||b.plat-a.plat:so==='name'?a.r.localeCompare(b.r,undefined,{numeric:true}):b.plat-a.plat);
+  rows.sort((a,b)=>so==='du'?b.du-a.du:so==='need'?(b.needP-a.needP)||b.plat-a.plat:so==='name'?a.r.localeCompare(b.r,undefined,{numeric:true}):b.plat-a.plat);rv('rpS',rows);
   return {ref,squad:String(n),own,era:ef,sort:so,q:state.rpQ||'',total:rows.length,owned:Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0).length,rows:rows.slice(0,150).map(x=>({...x,plat:Math.round(x.plat*10)/10,du:Math.round(x.du)}))}}
 Object.assign(window.TF,{planSet:o=>{const m={ref:'rpR',squad:'rpN',era:'rpE',sort:'rpS',q:'rpQ'};for(const k in o)if(m[k])state[m[k]]=o[k];if(o.own!=null)state.rpO=o.own;tfNotify()}});
 /* ---------- bridge: Builds (arsenal) for the React page ---------- */
@@ -3606,7 +3609,7 @@ function arsenalData(){const tab=state.aTab||'top';const out={tab};
   else if(tab==='arc'){const q=(state.arQ||'').toLowerCase().trim(),tf=state.arT||'all',sf=state.arS||'all',so=state.arO||'use';const A=P.arc||{};const U2=arcUses();
     const types=[...new Set(Object.values(ARC).map(a=>a.ty).filter(Boolean))].sort();
     let list=Object.values(ARC).filter(a=>(!q||a.n.toLowerCase().includes(q))&&(tf==='all'||a.ty===tf)).filter(a=>{const c=+A[a.n]||0,mx=arcCopies(a.mx||5);return sf==='all'||(sf==='used'&&U2[a.n])||(sf==='own'&&c>0)||(sf==='max'&&c>=mx)||(sf==='part'&&c>0&&c<mx)||(sf==='none'&&!c)});
-    list.sort((a,b)=>so==='name'?a.n.localeCompare(b.n):so==='price'?((pv(b.n)??-1)-(pv(a.n)??-1)):so==='need'?((arcCopies(b.mx||5)-(+A[b.n]||0))-(arcCopies(a.mx||5)-(+A[a.n]||0))):(((U2[b.n]?U2[b.n].size:0)-(U2[a.n]?U2[a.n].size:0))||a.n.localeCompare(b.n)));
+    list.sort((a,b)=>so==='name'?a.n.localeCompare(b.n):so==='price'?((pv(b.n)??-1)-(pv(a.n)??-1)):so==='need'?((arcCopies(b.mx||5)-(+A[b.n]||0))-(arcCopies(a.mx||5)-(+A[a.n]||0))):(((U2[b.n]?U2[b.n].size:0)-(U2[a.n]?U2[a.n].size:0))||a.n.localeCompare(b.n)));rv('arO',list);
     Object.assign(out,{q:state.arQ||'',type:tf,status:sf,sort:so,types,count:Object.keys(ARC).length,owned:Object.values(ARC).filter(a=>(+A[a.n]||0)>0).length,maxed:Object.values(ARC).filter(a=>(+A[a.n]||0)>=arcCopies(a.mx||5)).length,
       arcs:list.slice(0,200).map(a=>{const c=+A[a.n]||0,mx=a.mx||5,need=arcCopies(mx);const u=U2[a.n];return {n:a.n,go:linkKey(a.n),copies:c,need,maxRank:mx,rank:arcRank(c),price:strip(priceChip(a.n)),type:a.ty||'',uses:u?[...u]:[],drops:a.dr&&a.dr.length?strip(dropsList(a.dr,2)):''}})})}
   else{const sf=state.kmS||'all',tf=state.kmT||'all';const all=keyMods();const types=[...new Set(all.map(x=>x.md.ty).filter(Boolean))].sort();
@@ -3814,8 +3817,10 @@ function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK
   L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
+  else if(so==='own')L.sort((a,b)=>(+ownedItem(b.item)-+ownedItem(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
+  rv('blO',L);
   const sel=state.blSel?buildById(state.blSel):null;
   return {q:state.blQ||'',kind:k,src:s,sort:so,total:L.length,list:L.slice(0,state.blN||60),more:L.length>(state.blN||60),
     shared:{loading:SB.loading,err:SB.err,count:(SB.list||[]).length,online:!!FB&&HOSTED},signedIn:!!SO.uid,sel:sel?bDetail(sel):null}}
@@ -4056,7 +4061,7 @@ function marketModsData(){const q=(state.mmQ||'').toLowerCase().trim(),kind=stat
     const md=k==='Mod'?MODS[n]:ARC[n];const rar={C:'Common',U:'Uncommon',R:'Rare',L:'Legendary'}[md&&md.r]||'';
     return {n,kind:k,type:k==='Mod'?(md.ty||'Mod'):'Arcane',rar,a7:p.a7??p.a30??null,v7:p.v7||0,low:b?b[1]:null,
       seller:b?{name:b[0],price:b[1],rank:b[5]??null,wh:whisper(n,b)}:null,url:'https://warframe.market/items/'+MS[n]}});
-  rows.sort((a,b)=>sort==='n'?a.n.localeCompare(b.n):sort==='low'?((a.low??1e9)-(b.low??1e9)):sort==='a7'?((b.a7??-1)-(a.a7??-1)):(b.v7-a.v7)||a.n.localeCompare(b.n));
+  rows.sort((a,b)=>sort==='n'?a.n.localeCompare(b.n):sort==='low'?((a.low??1e9)-(b.low??1e9)):sort==='a7'?((b.a7??-1)-(a.a7??-1)):(b.v7-a.v7)||a.n.localeCompare(b.n));rv('mmS',rows);
   return {q:state.mmQ||'',kind,sort,total:all.length,count:rows.length,more:Math.max(0,rows.length-lim),rows:rows.slice(0,lim).map(r=>({...r,a7:r.a7!=null?Math.round(r.a7):null}))}}
 Object.assign(window.TF,{marketMods:()=>marketModsData(),
   marketModsSet:o=>{if(o.q!=null){state.mmQ=o.q;state.mmLim=60}if(o.kind!=null){state.mmK=o.kind;state.mmLim=60}if(o.sort!=null)state.mmS=o.sort;if(o.more)state.mmLim=(state.mmLim||60)+60;saveUI();tfNotify()}});
@@ -4416,6 +4421,11 @@ function sellData(){const n=state.sell;if(!n||!MS[n])return null;const p=PR[n]||
 Object.assign(window.TF,{sell:()=>{const d=sellData();if(!d)return null;const {chat,...rest}=d;return {...rest,chatQuick:d.quick!=null?chat(d.quick):'',chatFair:d.fair!=null?chat(d.fair):''}},
   sellOpen:n=>{if(!MS[n]){toast("That item isn't traded on warframe.market.");return}state.sell=n;tfNotify()},sellClose:()=>{state.sell=null;tfNotify()},sellable:n=>!!MS[n]});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-sell]');if(!t)return;e.preventDefault();e.stopPropagation();window.TF.sellOpen(t.dataset.sell)},true);
+/* ---------- sort direction: every sort menu has an ascending/descending toggle, remembered on this device (SREV in 05-helpers.js) ---------- */
+Object.assign(window.TF,{isRev:k=>!!SREV[k],
+  sortRev:k=>{if(SREV[k])delete SREV[k];else SREV[k]=1;lsSet('tf-sortrev',SREV);
+    /* paged lists start again from the top */
+    ['rkLim','mkLim','mmLim','blN'].forEach(x=>{delete state[x]});tfNotify()}});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}

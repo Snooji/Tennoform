@@ -13,6 +13,7 @@ import { ModCard } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type BuildGoal, type GoalsData } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const SORTS = [{ value: "added", label: "Order added" }, { value: "progress", label: "Most complete" }, { value: "name", label: "Name" }]
 const go = (key: string) => (e: React.MouseEvent) => {
@@ -100,6 +101,7 @@ export function GoalsPage() {
               <SelectTrigger className="h-9 min-w-44" aria-label="Sort goals"><span className="text-muted-foreground">Sort:</span><SelectValue /></SelectTrigger>
               <SelectContent>{SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
             </Select>
+            <SortDir k="gS" className="size-9" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {d.goals.map((g) => (

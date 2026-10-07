@@ -11,6 +11,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { GoLink } from "@/components/tf/go-link"
 import { cn } from "@/lib/utils"
 import { tf, type PlanData } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const pct = (p: number) => (p >= 0.995 ? "99%+" : p < 0.01 ? "<1%" : Math.round(p * 100) + "%")
 type Opt = { value: string; label: string }
@@ -49,6 +50,7 @@ export function Planner({ d }: { d: PlanData }) {
         </div>
         <Pick items={[{ value: "all", label: "All eras" }, { value: "open", label: "Farmable now" }, ...["Lith", "Meso", "Neo", "Axi", "Requiem"].map((x) => ({ value: x, label: x }))]} value={d.era} onChange={(v) => tf().planSet({ era: v })} label="Era" />
         <Pick items={[{ value: "plat", label: "Platinum per run" }, { value: "du", label: "Ducats per run" }, { value: "need", label: "Chance at goal parts" }, { value: "name", label: "Name" }]} value={d.sort} onChange={(v) => tf().planSet({ sort: v })} label="Sort" prefix="Sort:" />
+        <SortDir k="rpS" className="size-9" />
         <Toggle variant="outline" pressed={d.own} onPressedChange={(v) => tf().planSet({ own: v })} className="h-10 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Only relics I own</Toggle>
       </div>
       {d.own && !d.owned ? (

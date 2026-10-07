@@ -14,6 +14,7 @@ import { useNavReset } from "@/lib/nav-reset"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Thumb } from "@/components/tf/thumb"
 import { Island } from "@/components/tf/island"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const FILTERS = [
   { value: "all", label: "All" },
@@ -334,6 +335,7 @@ export function RanksPage() {
             ))}
           </SelectContent>
         </Select>
+        <SortDir k="rkS" className="size-10" />
         </div>
       </div>
 

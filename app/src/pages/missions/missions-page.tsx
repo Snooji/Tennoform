@@ -12,6 +12,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type ChartData, type JunctionRow } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 /** A planet drawn as a lit sphere from its two colours, with a progress ring around it. */
 function Orb({ colors, size = 44, pct }: { colors: string[]; size?: number; pct?: number }) {
@@ -140,6 +141,7 @@ function Planet({ d }: { d: ChartData }) {
           <SelectTrigger className="h-9 min-w-32" aria-label="Sort"><span className="text-muted-foreground">Sort:</span><SelectValue /></SelectTrigger>
           <SelectContent>{sorts.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
+        <SortDir k="scS" className="size-9" />
         <Toggle variant="outline" pressed={d.hide} onPressedChange={(v) => tf().chartSet({ hide: v })} className="h-9 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Unfinished only</Toggle>
       </div>
       <Card className="gap-0 py-0">
