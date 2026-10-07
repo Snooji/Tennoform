@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: site-data          # never at the same time as the game-data update
+  cancel-in-progress: false
 jobs:
   refresh:
     runs-on: ubuntu-latest
