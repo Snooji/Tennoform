@@ -6,7 +6,7 @@ function totals(name,mult,acc,seen){const it=I[name];if(!it)return acc;
     else if(p.k==='i'&&I[p.n]&&!seen.includes(p.n))totals(p.n,p.q*mult,acc,[...seen,name])}
   return acc}
 function bpSource(it,note){const n=it.n;
-  if(it.bprel)return `Drops from Void Relics ${priceChip(n+' Blueprint','BP ')}${sellerRow(n+' Blueprint')}`+relicChips(it.bprel);
+  if(it.bprel)return `Drops from Void Relics ${priceChip(n+' Blueprint','BP ')}${sellChip(n+' Blueprint')}${sellerRow(n+' Blueprint')}`+relicChips(it.bprel);
   let h='';if(it.bpd&&it.bpd.length)h+=dropsList(it.bpd,2);
   if(it.bc)h+=(h?'<br>':'')+`Buy the blueprint in the in-game <b>Market for ${fmt(it.bc)} credits</b>`;
   if(it.dr&&it.dr.length&&!it.bpd)h+=(h?'<br>':'')+dropsList(it.dr,2);
@@ -20,13 +20,13 @@ function resRows(list,prefix){return `<ul class="reslist">`+list.map(([n,q])=>`<
 function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div class="panel">No data for ${esc(name)}</div>`;
   const depth=opts.depth||0;const rk=P.rk[name];
   let h=`<section class="obj" data-scope><div class="obj-h">${depth===0?art(name,'hero-art'):''}<div class="title"><h3>${esc(name)}</h3>
-    <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set '):''}
+    <span class="chip">${esc(it.c)}</span>${it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${vaultChip(it)}${rk&&!on('m|'+name)?`<span class="chip teal">Rank ${rk}</span>`:''}${it.p?priceChip(name+' Set','Set ')+sellChip(name+' Set'):''}
     ${mxChip(name)}${it.w?`<a class="small" href="${it.w}" target="_blank" rel="noopener">wiki</a>`:''}<span class="row" style="margin-left:auto;gap:4px">${it.t?`<button class="btn sm" data-fstart="${esc(name)}" title="Start a Foundry timer">${ic('timer')}Foundry</button>`:''}${taskBtn('item',name,'Build '+name)}<button class="btn sm ${(P.goals||[]).includes(name)?'on':''}" data-goal="${esc(name)}">${(P.goals||[]).includes(name)?ic('star','fill')+'Tracking':ic('star')+'Track'}</button></span></div>${it.p?sellerRow(name+' Set'):''}${progHTML()}</div><ol class="steps">`;
   h+=step('bp|'+name,'Get the blueprint',bpSource(it,opts.note));
   let pi=0;for(const p of it.parts){pi++;
     if(p.k==='p'&&p.n==='Blueprint')continue;
     if(p.k==='p'){const full=p.full||(name+' '+p.n);
-      let src='';if(p.rel)src=`${priceChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
+      let src='';if(p.rel)src=`${priceChip(full)}${sellChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
       h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
       if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">${ic('timer')}Start Foundry timer</button>`);

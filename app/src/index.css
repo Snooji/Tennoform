@@ -207,3 +207,6 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     radial-gradient(90% 80% at 0% 100%, color-mix(in oklab, var(--glow2, var(--primary)) 12%, transparent), transparent 60%),
     var(--card);
 }
+
+/* the phone tab bar sits above the page; tuck it away while a dialog is open so the dialog's bottom isn't covered */
+body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
