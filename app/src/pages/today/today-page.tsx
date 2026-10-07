@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { tf, useTFData } from "@/lib/tf"
 import { Checklist } from "./checklist"
+import { AlertsCard } from "@/components/tf/alerts-card"
 import { Cycles, Fissures, Invasions, LiveStatus, Missions, Nightwave } from "./live"
 
 export function TodayPage() {
@@ -31,6 +32,7 @@ export function TodayPage() {
         <section aria-labelledby="live-h" className="flex min-w-0 flex-col gap-4">
           <h2 id="live-h" className="font-heading text-lg leading-tight font-semibold">Live in the game</h2>
           <LiveStatus />
+          <AlertsCard />
           {L ? (
             <>
               <Cycles L={L} />

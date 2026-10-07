@@ -60,6 +60,12 @@ export type TFApi = {
   communitySend(text: string): Promise<boolean>
   chatDelete(id: string): void
   chat(): ChatPageData
+  alerts(): AlertsData
+  alertPrefsSet(o: Partial<AlertPrefs>): void
+  alertDismiss(id: string): void
+  alertShowHidden(): void
+  alertNotify(on: boolean): Promise<void>
+  history(): HistoryData
   isRev(k: string): boolean
   sortRev(k: string): void
   sell(): SellData | null
@@ -252,6 +258,12 @@ export type SellData = {
   n: string; url: string; low: number | null; avg: number | null; a30: number | null; v7: number; quick: number | null; fair: number | null
   du: number | null; rank: boolean; date: string; sellers: { name: string; price: number; rank: number | null; status: string }[]; chatQuick: string; chatFair: string
 }
+export type AlertPrefs = { baro: boolean; resurgence: boolean; fissure: boolean; notify: boolean }
+export type AlertItem = { id: string; kind: "baro" | "resurgence" | "fissure"; title: string; text: string; items: string[]; href: string }
+export type AlertsData = { prefs: AlertPrefs; live: boolean; list: AlertItem[]; hidden: number; canNotify: boolean; perm: string }
+type HistPoint = { xp: number; mr: number; mastered: number; owned: number; nodes: number }
+type HistDelta = { xp: number; mastered: number; owned: number; nodes: number; since: string } | null
+export type HistoryData = { points: (HistPoint & { d: string })[]; now: HistPoint; week: HistDelta; month: HistDelta; first: string }
 export type ChatTab = { id: string; label: string; title: string; hint: string; kind: "public" | "clan" | "alliance" | "friend" | "group"; unread: number; closable: boolean }
 export type ChatPageData = { tabs: ChatTab[]; cur: string; conv: boolean; signed: boolean; synced: boolean; openable: { id: string; label: string; kind: "friend" | "group" }[] }
 export type CommunityMsg = { id: string; who: string; text: string; time: string; mine: boolean; uid: string; held: boolean; av: string }

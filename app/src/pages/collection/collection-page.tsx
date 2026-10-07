@@ -7,6 +7,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { HaloSegmented } from "@/components/ui/halo-segmented"
 import { Input } from "@/components/ui/input"
 import { Thumb } from "@/components/tf/thumb"
+import { HistoryCard } from "@/components/tf/history-chart"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData } from "@/lib/tf"
 
@@ -35,6 +36,7 @@ export function CollectionPage() {
           Change either on <a href="#ranks" className="underline decoration-primary/50 underline-offset-4">Ranks</a>.
         </p>
       </header>
+      <HistoryCard />
       <div className="grid grid-cols-3 gap-2">
         {tiles.map((t) => (
           <button key={t.k} type="button" onClick={() => tf().collectionSet({ f: t.f })} aria-pressed={d.f === t.f}
