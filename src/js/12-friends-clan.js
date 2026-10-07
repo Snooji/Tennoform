@@ -17,8 +17,8 @@ function friendsTab(){const F=P.friends||[];const t=totalXP();const me={name:'Yo
 async function addFriend(txt){txt=String(txt||'').trim();const msg=m=>{const el=$('#frmsg');if(el)el.textContent=m;toast(m)};if(!txt)return;
   let raw=null;try{raw=JSON.parse(txt)}catch(e){}
   if(!raw){const id=findId(txt);if(!id)return msg('Paste a profile page or a 24-character ID.');
-    try{let j=null;if(window.TENNO_PROXY){const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}
-      if(!j){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(r.ok){j=await r.json();j=fromParsed(j)}}
-      if(!j)throw 0;raw=j}catch(e){return msg('Couldn\'t load that ID from here. Open https://api.warframe.com/cdn/getProfileViewingData.php?playerId='+id+' and paste the page instead.')}}
+    try{let j=null;if(window.TENNO_PROXY){j=await netJSON('relay',window.TENNO_PROXY+'?playerId='+id);if(!(j&&j.Results))j=null}
+      if(!j){j=fromParsed(await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en'))}
+      if(!j)throw 0;raw=j}catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http')return msg(e.message);return msg('Couldn\'t load that ID from here. Open https://api.warframe.com/cdn/getProfileViewingData.php?playerId='+id+' and paste the page instead.')}}
   const s=summarize(raw);if(!s.total)return msg('No ranks found in that data.');P.friends=(P.friends||[]).filter(f=>f.name!==s.name);P.friends.push(s);saveProfile();render();toast('Added '+s.name)}
 

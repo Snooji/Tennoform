@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronDown, Cloud, EyeOff, HardDrive, MessageSquare, Trash2, Users } from "lucide-react"
+import { ChevronDown, Cloud, EyeOff, HardDrive, MessageSquare, Trash2, Users, ShieldCheck, KeyRound, Gauge, Coins, Handshake } from "lucide-react"
 
 import { Card } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -25,8 +25,16 @@ const PRIVACY: [typeof Cloud, string, string][] = [
   [MessageSquare, "Feedback", "Readable only by the developer."],
   [Cloud, "Chat", "Messages in General, Trading and LFG can be read by anyone; clan and alliance rooms only by their members. Messages the filter flags are held, and only the site owner reviews them. Delete your own messages any time."],
   [Cloud, "Profile pictures", "If you add one, anyone who sees your name in Chat can see it. Remove it any time from your Profile. Clan and alliance backgrounds are only shown to that room's members."],
-  [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase when you're signed in."],
+  [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data and item images), Tennoform's profile relay on Google Apps Script (when you sync) and Firebase when you're signed in."],
   [Trash2, "Your data, your call", "Export it any time (Profile → Backup & export), or delete your account and everything stored with it (Profile → Account & sync)."],
+]
+
+const FAIRPLAY: [typeof Cloud, string, string][] = [
+  [ShieldCheck, "Never touches the game", "Tennoform is a website. It doesn't install anything, read or change game files or memory, sit between the game and its servers, automate play, or add macros, overlays or mods. Warframe's End User License Agreement forbids those, and Tennoform does none of them."],
+  [KeyRound, "Never asks for your Warframe password", "Your account ID is read from warframe.com in your own browser. The console line and bookmark only read the ID warframe.com already stores for you; they send nothing to Warframe."],
+  [Gauge, "Gentle with Warframe's servers", "Profile sync only reads the public profile page Warframe itself serves. Answers are reused for 10 minutes, there's a firm limit on how often anyone can sync, and if Warframe ever refuses a request, Tennoform stops asking for hours instead of retrying. It never disguises itself or hides where requests come from."],
+  [Coins, "Free and unofficial", "Nothing is sold or behind a paywall, and donations buy nothing. Tennoform uses no Warframe or Digital Extremes logos and follows Digital Extremes' fan content policy. It isn't affiliated with or endorsed by Digital Extremes."],
+  [Handshake, "Trades happen in the game", "Market prices come from warframe.market. Tennoform never signs in there or posts for you, and it doesn't sell platinum or items."],
 ]
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -122,6 +130,22 @@ export function AboutPage() {
             </li>
           ))}
         </ul>
+      </Section>
+
+      <Section title="Playing by Warframe's rules">
+        <ul className="flex flex-col divide-y text-sm">
+          {FAIRPLAY.map(([Icon, t, x]) => (
+            <li key={t} className="flex gap-3 py-2.5 first:pt-0 last:pb-0">
+              <span aria-hidden className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary"><Icon className="size-4" /></span>
+              <span className="flex min-w-0 flex-col gap-0.5"><b className="font-medium">{t}</b><span className="text-muted-foreground">{x}</span></span>
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs text-muted-foreground">
+          Read them yourself: Warframe's <a href="https://www.warframe.com/en/EULA" target="_blank" rel="noopener" className={linkCls}>EULA</a>,{" "}
+          <a href="https://www.warframe.com/en/terms" target="_blank" rel="noopener" className={linkCls}>Terms of Use</a> and{" "}
+          <a href="https://www.warframe.com/contentpolicy" target="_blank" rel="noopener" className={linkCls}>fan content policy</a>.
+        </p>
       </Section>
 
       <Section title="Contact">
