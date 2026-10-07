@@ -1,13 +1,15 @@
 name: Game data update
-# Weekly (and on demand): when WFCD's warframe-items has a new release, rebuild the game data and open a pull
-# request for review. Nothing goes live until the pull request is merged.
+# Daily (and on demand): when WFCD's warframe-items has a new release, rebuild the game data and publish it.
+# Safety checks run first; if any fails, nothing is published and the run fails (GitHub emails the owner).
 on:
   schedule:
-    - cron: '41 9 * * 1'   # Mondays
+    - cron: '41 9 * * *'   # every day; the price refresh runs at 10:23
   workflow_dispatch:
 permissions:
   contents: write
-  pull-requests: write
+concurrency:
+  group: site-data          # never at the same time as the price refresh
+  cancel-in-progress: false
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -34,31 +36,43 @@ jobs:
         if: steps.ver.outputs.cur != steps.ver.outputs.new
         run: |
           J="$RUNNER_TEMP/wfcd/package/data/json"
+          cp build/base.json "$RUNNER_TEMP/base.before.json"
           python3 -I build/update_gamedata.py "$J" "${{ steps.ver.outputs.new }}" | tee "$RUNNER_TEMP/summary.txt"
           python3 -I build/make_stats.py "$J"
           python3 -I build/make_umap.py "$J"
           python3 build/make_site.py
-      - name: Open a pull request
+      - name: Safety checks
+        if: steps.ver.outputs.cur != steps.ver.outputs.new
+        run: |
+          python3 - "$RUNNER_TEMP/base.before.json" <<'PY'
+          import json, sys
+          a = json.load(open(sys.argv[1])); b = json.load(open('build/base.json'))
+          problems = []
+          for k in ('items', 'relics', 'mods', 'arcanes', 'res', 'nodes', 'quests'):
+              if len(b[k]) < len(a[k]):
+                  problems.append(f'{k}: {len(a[k])} before, {len(b[k])} after')
+          gone = [n for n in a['items'] if n not in b['items']]
+          if gone: problems.append('items removed: ' + ', '.join(gone[:20]))
+          for n, it in b['items'].items():
+              if not it.get('c') or not isinstance(it.get('parts'), list):
+                  problems.append(f'item {n} is missing its category or parts'); break
+          s = json.load(open('data/stats.json'))
+          if len(s) < 0.9 * len(b['items']): problems.append(f'stats cover only {len(s)} items')
+          html = open('index.html', encoding='utf-8').read()
+          if len(html) < 1_000_000 or 'Frost Prime' not in html: problems.append('index.html looks wrong')
+          if problems:
+              print('Not publishing:'); print('\n'.join(' - ' + p for p in problems)); sys.exit(1)
+          print('All checks passed')
+          PY
+      - name: Publish
         if: steps.ver.outputs.cur != steps.ver.outputs.new
         env:
-          GH_TOKEN: ${{ github.token }}
           NEW: ${{ steps.ver.outputs.new }}
         run: |
-          BR="game-data-$NEW"
           git config user.name "tennoform-bot"
           git config user.email "tennoform-bot@users.noreply.github.com"
-          git checkout -b "$BR"
           git add -A
           if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
-          git commit -q -m "Game data update: WFCD $NEW"
-          git push -f origin "$BR"
-          if gh pr list --head "$BR" --state open --json number --jq '.[0].number' | grep -q .; then echo "Pull request already open"; exit 0; fi
-          {
-            echo "WFCD warframe-items $NEW is out (the site used ${{ steps.ver.outputs.cur }}). This rebuilds the game data from it."
-            echo
-            echo '```'; cat "$RUNNER_TEMP/summary.txt"; echo '```'
-            echo
-            echo "Only additions and patch facts change (new items, relics, mods and arcanes; relic rewards; vault status; item stats). Hand-written recipes, farm routes, guides and builds are untouched."
-            echo "If the summary lists Prime parts without ducat values, add them in build/base.json before merging. Patch notes: https://www.warframe.com/en/patch-notes/pc"
-          } > "$RUNNER_TEMP/body.md"
-          gh pr create --title "Game data update: WFCD $NEW" --body-file "$RUNNER_TEMP/body.md" --base main --head "$BR"
+          { echo "Game data update: WFCD $NEW"; echo; cat "$RUNNER_TEMP/summary.txt"; } > "$RUNNER_TEMP/msg.txt"
+          git commit -q -F "$RUNNER_TEMP/msg.txt"
+          git push
