@@ -11,7 +11,7 @@ function masteryData(){const tab=state.mTab||'path';const t=totalXP(),cur=mrInfo
     Object.assign(out,{target:String(target),targetLabel:mrLabel(target),targets,need,gearLeft,nx,sx,nodesLeft:nodesLeft.length,spLeft:spLeft.length,overflow:need>gearLeft+nx+sx,
       groups:Object.keys(by).sort().map(e=>({title:EASE[e],xp:by[e].reduce((a,x)=>a+x.gain,0),items:by[e].map(x=>gearRow(x.it.n,''))}))})}
   if(tab==='ladder'){out.ladder=[];for(let m=1;m<=40;m++){const gear=m<=30?MI.filter(i=>(i.mr||0)===m):[];const qs=Q.filter(q=>q.req.some(r=>r==='Mastery Rank '+m));
-    out.ladder.push({m,label:m>30?'Legendary '+(m-30):'MR '+m,xp:mrNeed(m),reached:m<=cur,next:m===cur+1,trades:m<=30?m:0,cap:m<=30?16000+500*m:0,quests:qs.map(q=>q.n),gear:gear.map(g=>({n:g.n,done:on('m|'+g.n)}))})}}
+    out.ladder.push({m,label:m>30?'Legendary '+(m-30):'MR '+m,xp:mrNeed(m),reached:m<=cur,next:m===cur+1,trades:m<=30?m:0,cap:m<=30?16000+500*m:0,quests:qs.map(q=>q.n),gear:gear.map(g=>gearRow(g.n,'')).filter(Boolean).sort((a,b)=>a.done-b.done||b.xp-a.xp||a.n.localeCompare(b.n))})}}
   if(tab==='sheet'){const by={};M.weapons.forEach(w=>(by[w.mr]=by[w.mr]||[]).push(w));out.sheetXp=D.meta.sheetXp;out.groups=Object.keys(by).sort((a,b)=>a-b).map(mr=>({title:'Mastery '+mr,open:mr<=2,items:by[mr].map(w=>gearRow(w.id,w.slot)).filter(Boolean)}))}
   if(tab==='sframes')out.groups=[{title:'Easy Warframes',open:true,items:M.frames.map(f=>gearRow(f.id,f.src)).filter(Boolean)},{title:'Market companions',open:true,items:M.companions.map(f=>gearRow(f.id,'Market blueprint')).filter(Boolean)}];
   if(tab==='craft'){const by={};M.craft.forEach(x=>(by[x.mr]=by[x.mr]||[]).push(x));

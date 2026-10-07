@@ -261,7 +261,7 @@ export function RanksPage() {
           }
         }}
         spacing={1}
-        className="-mx-4 w-auto flex-nowrap overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
+        className="scroll-fade -mx-4 w-auto flex-nowrap overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
       >
         {d.cats.map((c) => (
           <ToggleGroupItem

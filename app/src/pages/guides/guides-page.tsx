@@ -208,7 +208,7 @@ export function GuidesPage() {
             {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-2 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
           </div>
           <Tabs value={d.filter} onValueChange={(v) => tf().guidesSet({ filter: String(v) })}>
-            <div className="-mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
+            <div className="scroll-fade -mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
               <TabsList className="min-w-max justify-start">
                 {TABS.map((t) => <TabsTrigger key={t.value} value={t.value} className="flex-none px-3">{t.label} <span className="ml-1 text-xs tabular-nums">{d.counts[t.value]}</span></TabsTrigger>)}
               </TabsList>

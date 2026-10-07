@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
 
 import {
@@ -30,6 +31,19 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
   const { setOpenMobile } = useSidebar()
   const close = () => setOpenMobile(false)
   useNavReset(close)
+  /* fade the bottom edge while there's more of the list below, so a cut-off row reads as "scroll for more" */
+  const [list, setList] = useState<HTMLDivElement | null>(null)
+  const [more, setMore] = useState(false)
+  useEffect(() => {
+    const el = list
+    if (!el) return
+    const check = () => setMore(el.scrollTop + el.clientHeight < el.scrollHeight - 4)
+    check()
+    el.addEventListener("scroll", check, { passive: true })
+    const ro = new ResizeObserver(check)
+    ro.observe(el)
+    return () => { el.removeEventListener("scroll", check); ro.disconnect() }
+  }, [list])
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
@@ -44,7 +58,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent ref={setList} data-more={more || undefined} className="data-[more]:[mask-image:linear-gradient(to_bottom,#000_calc(100%-2.5rem),transparent)]">
         {nav.map((place) => (
           <SidebarGroup key={place.id}>
             {place.pages.length > 1 && <SidebarGroupLabel>{place.label}</SidebarGroupLabel>}
@@ -69,28 +83,28 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
             </SidebarMenu>
           </SidebarGroup>
         ))}
+        <SidebarGroup>
+          <SidebarGroupLabel>Tennoform</SidebarGroupLabel>
+          <SidebarMenu>
+            {TF_LINKS.map((l) => {
+              const active = s.route === l.route && !("whatsNew" in l)
+              return (
+                <SidebarMenuItem key={l.label}>
+                  <SidebarMenuButton
+                    isActive={active}
+                    tooltip={l.label}
+                    render={<a href={`#${l.route}`} aria-current={active ? "page" : undefined} onClick={(e) => { openLink(l, e); close() }} />}
+                  >
+                    <l.icon className={l.accent ? "text-primary" : undefined} />
+                    <span>{l.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )
+            })}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-          <SidebarGroup className="p-0">
-            <SidebarGroupLabel className="sr-only">Tennoform</SidebarGroupLabel>
-            <SidebarMenu>
-              {TF_LINKS.map((l) => {
-                const active = s.route === l.route && !("whatsNew" in l)
-                return (
-                  <SidebarMenuItem key={l.label}>
-                    <SidebarMenuButton
-                      isActive={active}
-                      tooltip={l.label}
-                      render={<a href={`#${l.route}`} aria-current={active ? "page" : undefined} onClick={(e) => { openLink(l, e); close() }} />}
-                    >
-                      <l.icon className={l.accent ? "text-primary" : undefined} />
-                      <span>{l.label}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
-            </SidebarMenu>
-          </SidebarGroup>
         <MasteryMeter s={s} />
         <AccountMenu s={s} open={menuOpen} setOpen={setMenuOpen} onNavigate={close} />
       </SidebarFooter>
