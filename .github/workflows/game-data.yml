@@ -39,6 +39,7 @@ jobs:
           cp build/base.json "$RUNNER_TEMP/base.before.json"
           python3 -I build/update_gamedata.py "$J" "${{ steps.ver.outputs.new }}" | tee "$RUNNER_TEMP/summary.txt"
           python3 -I build/make_stats.py "$J"
+          python3 -I build/make_modinfo.py "$J"
           python3 -I build/make_umap.py "$J"
           python3 build/make_site.py
       - name: Safety checks
@@ -58,6 +59,8 @@ jobs:
                   problems.append(f'item {n} is missing its category or parts'); break
           s = json.load(open('data/stats.json'))
           if len(s) < 0.9 * len(b['items']): problems.append(f'stats cover only {len(s)} items')
+          mi = json.load(open('data/mods.json'))
+          if len(mi) < 0.9 * (len(b['mods']) + len(b['arcanes'])): problems.append(f'mod details cover only {len(mi)} mods and arcanes')
           html = open('index.html', encoding='utf-8').read()
           if len(html) < 1_000_000 or 'Frost Prime' not in html: problems.append('index.html looks wrong')
           if problems:
