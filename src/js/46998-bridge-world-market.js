@@ -15,7 +15,7 @@ function marketData(){const tab=state.mkTab||'sets';const out={tab,snapshot:D.me
       if(it){const parts=it.parts.filter(p=>p.k==='p');const names=[base+' Blueprint',...parts.filter(p=>p.n!=='Blueprint').map(p=>p.full)];names.forEach(x=>{const p=PR[x];if(p&&(p.a7??p.a30)!=null)ps+=(p.a7??p.a30);else okp=false});parts.forEach(p=>du+=p.du||0)}
       const sl=(SEL[n]||[]).filter(x=>x[0]!=='__buy');return {n,base,it,a7:s.a7,a30:s.a30,v7:s.v7,ps:okp&&ps?Math.round(ps):null,du:du||null,low:sl[0]?sl[0][1]:null,b:sl[0]||null}});
     const q=(state.mkQ||'').toLowerCase().trim();const mf=state.mkF||'all';let r=rows.filter(x=>!q||x.n.toLowerCase().includes(q)).filter(x=>{const v=VAULT[x.base]||{};return mf==='all'||(mf==='farm'&&x.it&&!x.it.v&&!v.now)||(mf==='vault'&&x.it&&x.it.v&&!v.now)||(mf==='now'&&v.now)||(mf==='goals'&&(P.goals||[]).includes(x.base))});
-    const k=state.mkSort||'a7';r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));const lim=state.mkLim||60;
+    const k=state.mkSort||'a7';r.sort((a,b)=>k==='n'?a.n.localeCompare(b.n):k==='low'?((a.low??1e9)-(b.low??1e9)):((b[k]??-1)-(a[k]??-1)));rv('mkSort',r);const lim=state.mkLim||60;
     Object.assign(out,{q:state.mkQ||'',filter:mf,sort:k,total:rows.length,count:r.length,more:Math.max(0,r.length-lim),
       sets:r.slice(0,lim).map(x=>{const it=MIX[x.base];return {n:x.n,base:x.base,img:IMG(x.base),vault:vaultOf(x.it),left:it?mxp(it)-itemXP(x.base):0,xp:it?mxp(it):0,
         price:x.a7!=null?Math.round(x.a7):null,meta:[x.ps!=null?'Parts '+x.ps+'p':'',x.du?x.du+' ducats':'',x.v7?fmt(x.v7)+' sold a week':''].filter(Boolean).join(' · '),

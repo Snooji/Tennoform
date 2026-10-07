@@ -11,10 +11,11 @@ import { Thumb } from "@/components/tf/thumb"
 import { PersonMenu } from "@/components/tf/person"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type BuildCard, type BuildDetail } from "@/lib/tf"
+import { SortDir } from "@/components/tf/sort-dir"
 
 const KINDS = [{ value: "all", label: "Everything" }, { value: "Warframe", label: "Warframes" }, { value: "Weapon", label: "Weapons" }, { value: "Companion", label: "Companions" }]
 const SRCS = [{ value: "all", label: "Community + players" }, { value: "meta", label: "Community picks" }, { value: "players", label: "Player builds" }]
-const SORTS = [{ value: "top", label: "Top voted" }, { value: "new", label: "Newest" }, { value: "ready", label: "Closest to done" }, { value: "name", label: "Name" }]
+const SORTS = [{ value: "top", label: "Top voted" }, { value: "new", label: "Newest" }, { value: "own", label: "Items I own" }, { value: "ready", label: "Mods I own" }, { value: "name", label: "Name" }]
 
 export function Votes({ b, size = "sm" }: { b: BuildCard; size?: "sm" | "lg" }) {
   const lg = size === "lg"
@@ -135,6 +136,7 @@ export function BuildLibrary() {
             <SelectContent>{(items as typeof KINDS).map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
           </Select>
         ))}
+        <SortDir k="blO" className="size-9" />
         {d.shared.online ? <Button variant="ghost" className="h-9" onClick={() => tf().buildLibReload()} disabled={d.shared.loading}><RefreshCw className={cn(d.shared.loading && "animate-spin")} /> Refresh</Button> : null}
       </div>
       {d.shared.err ? <p className="text-sm text-muted-foreground">Player builds are offline for a moment. Top community builds below still work.</p> : null}

@@ -8,7 +8,7 @@ function chartData(){const planets=[...new Set(ALLN.filter(n=>!isJ(n)).map(n=>n.
     planets:planets.map(p=>{const s=planetStats(p);return {name:p,colors:orbC(p),done:s.d,sp:s.s,total:s.ns.length}}),junctions:J.map(jrow),juncHtml:juncTasks()};
   const s=planetStats(sel);const tf=state.misType||'all',hide=!!state.misHide,q=(state.scQ||'').toLowerCase().trim();const srt=state.scS||'lv';
   let ns=s.ns.filter(n=>(tf==='all'||n.t===tf)&&(!hide||!on('n|'+n.id)||!on('sp|'+n.id))&&(!q||n.n.toLowerCase().includes(q)));
-  ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);
+  ns.sort((a,b)=>srt==='name'?a.n.localeCompare(b.n):srt==='xp'?b.x-a.x:a.lv[0]-b.lv[0]);rv('scS',ns);
   const rr=(D.regres[sel]||D.regres[sel==='Zariman'?'Zariman Ten Zero':sel]||[]);
   return {sel,colors:orbC(sel),total:s.ns.length,nd:s.d,sd:s.s,xd:s.xd,type:tf,types:[...new Set(s.ns.map(n=>n.t))].sort(),sort:srt,hide,q:state.scQ||'',
     resources:rr,hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='node'&&x.r===sel),

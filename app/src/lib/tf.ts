@@ -60,6 +60,8 @@ export type TFApi = {
   communitySend(text: string): Promise<boolean>
   chatDelete(id: string): void
   chat(): ChatPageData
+  isRev(k: string): boolean
+  sortRev(k: string): void
   sell(): SellData | null
   sellOpen(n: string): void
   sellClose(): void

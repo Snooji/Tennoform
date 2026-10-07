@@ -3,6 +3,9 @@ function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
 /* sellers: [name, platinum, quantity, reputation, status, rank]; rank is set for mods and arcanes (0 = unranked) */
 const rankTxt=r=>r==null?'':r===0?'Unranked':'Rank '+r;
+/* ascending/descending for every sort menu: rv(key) reverses the sorted list before it's paged; the key is the sort's state name */
+const SREV=lsGet('tf-sortrev',{})||{};
+function rv(k,a){if(SREV[k])a.reverse();return a}
 /* a Sell button next to a price: opens the Sell dialog (4699941-wfm-sell.js) */
 function sellChip(n){return MS[n]?`<button type="button" class="chip" data-sell="${esc(n)}" aria-label="Sell ${esc(n)}">Sell</button>`:''}
 function whisper(item,s){return `/w ${s[0]} Hi! I want to buy: "${item}${s[5]!=null?` (rank ${s[5]})`:''}" for ${s[1]} platinum. (warframe.market)`}

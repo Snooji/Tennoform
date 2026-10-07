@@ -30,8 +30,10 @@ function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK
   L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
+  else if(so==='own')L.sort((a,b)=>(+ownedItem(b.item)-+ownedItem(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
+  rv('blO',L);
   const sel=state.blSel?buildById(state.blSel):null;
   return {q:state.blQ||'',kind:k,src:s,sort:so,total:L.length,list:L.slice(0,state.blN||60),more:L.length>(state.blN||60),
     shared:{loading:SB.loading,err:SB.err,count:(SB.list||[]).length,online:!!FB&&HOSTED},signedIn:!!SO.uid,sel:sel?bDetail(sel):null}}
