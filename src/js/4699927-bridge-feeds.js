@@ -10,7 +10,7 @@ function liveInfo(){
   if(!HOSTED)return {state:'offline',conn:'Works on tennoform.com',fresh:'',at:'',ended:[],busy:false,retry:false};
   const age=WS?Date.now()-WSat:null,ended=wsEnded();
   const state=!WS?(WSerr?'error':'loading'):WSerr?'error':ended.length?'delayed':age>15*60e3?'stale':'ok';
-  const conn=WSload?'Checking…':WSerr?"Can't reach warframestat.us":WS?'Connected to warframestat.us':'Connecting…';
+  const conn=WSload?'Checking…':WSerr?(netStatus('ws')||"Can't reach warframestat.us"):WS?'Connected to warframestat.us':'Connecting…';
   const fresh=!WS?'':ended.length?`${ended.join(', ')} ended. The feed hasn't sent the new ${ended.length>1?'ones':'one'} yet; it's checked again every minute.`
     :WSerr?`Showing what it last sent, ${agoTxt(age)}.`:age>15*60e3?`Last update was ${agoTxt(age)}.`:'Timers are up to date.';
   return {state,conn,fresh,at:WS?agoTxt(age):'',ended,busy:WSload,retry:true}}

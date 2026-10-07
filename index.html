@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t+9j3r2gTTWnAxXjKMY+uOgGYp8RCa4EhM9x0DC7fJU=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DT-3_Wi0.css"><script type="module" src="/assets/main-D5Sy_OzT.js"></script></head><body>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-80wZT2OpyWzQb92VN2FaAFv3lVuBaBMrU4Czonhlivg=' https://apis.google.com; connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="description" content="Warframe mastery tracker, farming guide, quest log and market prices."><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:title" content="Tennoform"><meta property="og:image" content="https://tennoform.com/icon-512.png"><style>@layer properties, theme, base, legacy, components, utilities;</style><link rel="stylesheet" href="/assets/main-DT-3_Wi0.css"><script type="module" src="/assets/main-DpJwov3s.js"></script></head><body>
 <title>Tennoform</title>
 <meta name="theme-color" content="#100f0d">
 
@@ -1023,6 +1023,43 @@ function go(t){const i=t.indexOf('|');const ty=t.slice(0,i),n=t.slice(i+1);
   if(ty==='node'){state.scP=n||null;state.planet=null;if(location.hash!=='#missions')location.hash='missions';else render();return}
   state.farmSel=t;if(location.hash!=='#farm')location.hash='farm';else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
 
+/* ---------- request guard: every request to Warframe-related services (profile relay, warframestat) goes through here ---------- */
+/* Warframe publishes no API or rate limits for these endpoints, so the limits below are deliberately conservative:
+   - each endpoint has a cache (same answer for a while), a request budget per time window, and a minimum gap;
+   - network errors and 5xx back off exponentially (state is kept in localStorage, so reloading doesn't reset it);
+   - 403 or 429 stops that endpoint completely for a long while and the app says so; nothing retries it automatically.
+   No proxies are rotated and no access restrictions are worked around. */
+const NET_RULES={
+  relay:{ttl:10*60e3,gap:20e3,max:4,per:15*60e3,base:5*60e3,cap:12*3600e3,stop:6*3600e3,label:'Profile sync'},
+  ws:{ttl:3*60e3,gap:60e3,max:6,per:30*60e3,base:2*60e3,cap:60*60e3,stop:2*3600e3,label:'The live game feed'},
+  vault:{ttl:60*60e3,gap:60e3,max:2,per:60*60e3,base:15*60e3,cap:12*3600e3,stop:6*3600e3,label:'Prime Resurgence'}};
+const NETG=(()=>{const g=lsGet('tf-netguard',{});return g&&typeof g==='object'?g:{}})();
+const NETC={};
+const netSave=()=>lsSet('tf-netguard',NETG);
+class NetErr extends Error{constructor(kind,msg,status){super(msg);this.kind=kind;this.status=status||0}}
+const netMins=ms=>ms<60e3?'under a minute':ms<3600e3?Math.ceil(ms/60e3)+' minutes':Math.round(ms/3600e3*10)/10+' hours';
+/* what the app tells you when an endpoint is paused; '' when it's fine */
+function netStatus(ep){const g=NETG[ep];const now=Date.now();if(!g)return '';const R=NET_RULES[ep];
+  if(g.stopUntil>now)return `${R.label} is paused for ${netMins(g.stopUntil-now)}: the server refused requests (${g.status}). Tennoform won't ask again until then.`;
+  if(g.next>now&&g.fails)return `${R.label} hit an error, so it waits ${netMins(g.next-now)} before trying again.`;return ''}
+async function netJSON(ep,url){const R=NET_RULES[ep];const g=NETG[ep]=NETG[ep]||{};const now=Date.now();
+  const c=NETC[url];if(c&&now-c.at<R.ttl)return c.data;
+  if(g.stopUntil>now)throw new NetErr('stopped',netStatus(ep),g.status);
+  if(g.next>now)throw new NetErr('backoff',netStatus(ep)||`${R.label}: try again in ${netMins(g.next-now)}.`);
+  g.log=(g.log||[]).filter(t=>now-t<R.per);
+  if(g.log.length>=R.max)throw new NetErr('budget',`${R.label} has asked enough for now. Try again in ${netMins(R.per-(now-g.log[0]))}.`);
+  if(g.last&&now-g.last<R.gap)throw new NetErr('budget',`${R.label}: wait ${netMins(R.gap-(now-g.last))} between requests.`);
+  g.last=now;g.log.push(now);netSave();
+  let r;try{r=await fetch(url,{cache:'no-store'})}catch(e){netFail(ep,0);throw new NetErr('network',`${R.label} couldn't connect.`)}
+  if(r.status===403||r.status===429){netStop(ep,r.status);throw new NetErr('stopped',netStatus(ep),r.status)}
+  if(!r.ok){netFail(ep,r.status);throw new NetErr('http',`${R.label} answered ${r.status}.`,r.status)}
+  let j;try{j=await r.json()}catch(e){netFail(ep,r.status);throw new NetErr('http',`${R.label} sent something unreadable.`)}
+  /* the profile relay reports Warframe's own answer in its JSON */
+  if(j&&(j.status===403||j.status===429)){netStop(ep,j.status);throw new NetErr('stopped',netStatus(ep),j.status)}
+  if(j&&j.status>=500){netFail(ep,j.status);throw new NetErr('http',`${R.label}: Warframe answered ${j.status}.`,j.status)}
+  g.fails=0;g.next=0;netSave();NETC[url]={at:Date.now(),data:j};return j}
+function netFail(ep,status){const R=NET_RULES[ep],g=NETG[ep];g.fails=(g.fails||0)+1;g.status=status;g.next=Date.now()+Math.min(R.cap,R.base*Math.pow(2,g.fails-1));netSave()}
+function netStop(ep,status){const R=NET_RULES[ep],g=NETG[ep];g.status=status;g.stopUntil=Date.now()+R.stop;g.fails=(g.fails||0)+1;netSave()}
 /* ---------- helpers ---------- */
 function priceChip(n,label){const p=PR[n];if(!p)return'';const v=p.a7??p.a30;if(v==null)return'';
   return `<a class="chip gold" href="https://warframe.market/items/${MS[n]}" target="_blank" rel="noopener" title="warframe.market 7-day average">${label||''}${Math.round(v)}p</a>`}
@@ -1288,9 +1325,9 @@ function friendsTab(){const F=P.friends||[];const t=totalXP();const me={name:'Yo
 async function addFriend(txt){txt=String(txt||'').trim();const msg=m=>{const el=$('#frmsg');if(el)el.textContent=m;toast(m)};if(!txt)return;
   let raw=null;try{raw=JSON.parse(txt)}catch(e){}
   if(!raw){const id=findId(txt);if(!id)return msg('Paste a profile page or a 24-character ID.');
-    try{let j=null;if(window.TENNO_PROXY){const r=await fetch(window.TENNO_PROXY+'?playerId='+id);if(r.ok)j=await r.json()}
-      if(!j){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(r.ok){j=await r.json();j=fromParsed(j)}}
-      if(!j)throw 0;raw=j}catch(e){return msg('Couldn\'t load that ID from here. Open https://api.warframe.com/cdn/getProfileViewingData.php?playerId='+id+' and paste the page instead.')}}
+    try{let j=null;if(window.TENNO_PROXY){j=await netJSON('relay',window.TENNO_PROXY+'?playerId='+id);if(!(j&&j.Results))j=null}
+      if(!j){j=fromParsed(await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en'))}
+      if(!j)throw 0;raw=j}catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http')return msg(e.message);return msg('Couldn\'t load that ID from here. Open https://api.warframe.com/cdn/getProfileViewingData.php?playerId='+id+' and paste the page instead.')}}
   const s=summarize(raw);if(!s.total)return msg('No ranks found in that data.');P.friends=(P.friends||[]).filter(f=>f.name!==s.name);P.friends.push(s);saveProfile();render();toast('Added '+s.name)}
 
 /* ---------- v9 events ---------- */
@@ -2346,7 +2383,7 @@ function ckReset(c){return c[0]==='d'?(c[1]==='sortie'?lastSortie():lastDaily())
 function ckDone(c){const ts=(P.dw||{})[c[1]];return !!ts&&ts>=ckReset(c)}
 function gateOK(g){return !g||qDone(g)}
 let WS=null,WSat=0,WSerr=false,WSload=false;
-async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{const r=await fetch('https://api.warframestat.us/pc/?language=en');if(!r.ok)throw 0;WS=await r.json();WSat=Date.now();WSerr=false}catch(e){WSerr=true}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
+async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{WS=await netJSON('ws','https://api.warframestat.us/pc/?language=en');WSat=Date.now();WSerr=false}catch(e){WSerr=true;WSat=Date.now()}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
 function neededEras(){const s={};const names=new Set([...(P.goals||[]),...Object.keys(I).filter(n=>I[n].p&&(on('bp|'+n)||I[n].parts.some(p=>on('part|'+n+'|'+p.n)))&&!on('build|'+n))]);
   names.forEach(n=>{const it=I[n];if(!it||!it.p)return;const lists=[];if(!on('bp|'+n)&&it.bprel)lists.push(it.bprel);it.parts.forEach(p=>{if(p.rel&&!on('part|'+n+'|'+p.n))lists.push(p.rel)});lists.flat().forEach(([r])=>{if(REL[r]&&!REL[r].v){const e=REL[r].era;(s[e]=s[e]||new Set()).add(r)}})});return s}
 function today(){const f=state.ckF||'todo';const now=Date.now();
@@ -2829,15 +2866,16 @@ function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
 async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
-  try{let j=null;if(window.TENNO_PROXY){const relay=async plat=>{try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id+(plat&&plat!=='pc'?'&platform='+plat:''));return r.ok?await r.json():null}catch(e){return null}};
+  try{let j=null;if(window.TENNO_PROXY){const relay=async plat=>{try{return await netJSON('relay',window.TENNO_PROXY+'?playerId='+id+(plat&&plat!=='pc'?'&platform='+plat:''))}catch(e){if(e.kind==='stopped'||e.kind==='budget'||e.kind==='backoff')throw e;return null}};
       const plat=typeof wfPlat==='function'?wfPlat().id:'pc';j=await relay(plat);
       /* cross-save accounts keep their profile on the PC server, so a console or phone server with no profile falls back to it */
       if(plat!=='pc'&&!(j&&(j.Results||j.profile))){const pc=await relay('pc');if(pc&&(pc.Results||pc.profile))j=pc}}
-    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
+    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){j=await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en');if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
-  catch(e){if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+  catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http'){if(!quiet)toast(e.message);return false}
+    if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
       toast(e&&e.msg?e.msg+' Or use the two quick steps on this page.':"Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
-async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
+async function liveResurgence(){try{const v=await netJSON('vault','https://api.warframestat.us/pc/vaultTrader/?language=en');if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;
   for(const n in VAULT){if(frames.includes(n)||pairs.has(VAULT[n].pair))VAULT[n].now=until}D.vtnow={until,items:v.inventory.map(x=>x.item),loc:v.location};if(['#market','#frames','#farm'].includes(location.hash))render()}catch(e){}}
@@ -3865,7 +3903,7 @@ function liveInfo(){
   if(!HOSTED)return {state:'offline',conn:'Works on tennoform.com',fresh:'',at:'',ended:[],busy:false,retry:false};
   const age=WS?Date.now()-WSat:null,ended=wsEnded();
   const state=!WS?(WSerr?'error':'loading'):WSerr?'error':ended.length?'delayed':age>15*60e3?'stale':'ok';
-  const conn=WSload?'Checking…':WSerr?"Can't reach warframestat.us":WS?'Connected to warframestat.us':'Connecting…';
+  const conn=WSload?'Checking…':WSerr?(netStatus('ws')||"Can't reach warframestat.us"):WS?'Connected to warframestat.us':'Connecting…';
   const fresh=!WS?'':ended.length?`${ended.join(', ')} ended. The feed hasn't sent the new ${ended.length>1?'ones':'one'} yet; it's checked again every minute.`
     :WSerr?`Showing what it last sent, ${agoTxt(age)}.`:age>15*60e3?`Last update was ${agoTxt(age)}.`:'Timers are up to date.';
   return {state,conn,fresh,at:WS?agoTxt(age):'',ended,busy:WSload,retry:true}}
