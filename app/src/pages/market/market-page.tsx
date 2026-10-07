@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { GoLink } from "@/components/tf/go-link"
@@ -188,7 +188,7 @@ export function MarketPage() {
         <span className="text-xs text-muted-foreground">warframe.market · snapshot {d.snapshot}</span>
         <h1 className="font-heading text-3xl font-semibold">Market</h1>
       </header>
-      <HaloSegmented className="self-start" value={d.tab} onValueChange={(v) => tf().marketSet({ tab: v })} items={[{ value: "sets", label: "Prime sets" }, { value: "mods", label: "Mods & arcanes" }, { value: "vault", label: "Vault tracker" }]} />
+      <Segmented className="self-start" value={d.tab} onValueChange={(v) => tf().marketSet({ tab: v })} items={[{ value: "sets", label: "Prime sets" }, { value: "mods", label: "Mods & arcanes" }, { value: "vault", label: "Vault tracker" }]} />
       {d.tab === "vault" ? (
         <>
           <p className="text-xs text-muted-foreground">Prime Resurgence brings back two vaulted Warframes with their weapons every 4 weeks. Return dates are rough estimates from each pair's past appearances (typical gap about {d.gapMonths} months). Digital Extremes doesn't publish a schedule.</p>

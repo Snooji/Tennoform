@@ -4,7 +4,7 @@ import { Search, Users, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
@@ -39,7 +39,7 @@ export function Planner({ d }: { d: PlanData }) {
       </p>
       <div className="flex flex-wrap items-center gap-2">
         <span className="flex items-center gap-1.5 text-sm text-muted-foreground"><Users className="size-4" aria-hidden /> Squad</span>
-        <HaloSegmented value={d.squad} onValueChange={(v) => tf().planSet({ squad: v })} items={["1", "2", "3", "4"].map((v) => ({ value: v, label: v }))} />
+        <Segmented value={d.squad} onValueChange={(v) => tf().planSet({ squad: v })} items={["1", "2", "3", "4"].map((v) => ({ value: v, label: v }))} />
         <Pick items={[{ value: "i", label: "Intact" }, { value: "e", label: "Exceptional" }, { value: "f", label: "Flawless" }, { value: "r", label: "Radiant" }]} value={d.ref} onChange={(v) => tf().planSet({ ref: v })} label="Refinement" />
       </div>
       <div className="flex flex-wrap gap-2">

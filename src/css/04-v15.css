@@ -8,7 +8,7 @@
 .hctl{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;padding:2px 2px 6px;font-size:13px}
 .cktools{margin-left:auto;display:inline-flex;gap:4px}.ckaddrow input{flex:1 1 200px}
 .tmeta{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}.tedit{grid-column:1/-1;display:flex;flex-direction:column;gap:6px;padding:8px;border:1px dashed var(--line2);margin:0 0 6px}.tedit textarea{min-height:64px;font:14px var(--f-body)}
-.syneff{border-left:2px solid var(--line2);padding-left:8px}
-.tier.mine{border-color:var(--gold-dim);box-shadow:inset 3px 0 0 var(--gold)}
+.syneff{padding-left:10px}
+.tier.mine{border-color:var(--gold-dim);background:var(--sunk)}
 .ezr{grid-template-columns:auto minmax(0,1fr) max-content}.ezr .chip{white-space:nowrap}
 .hub3>div{min-width:0}.hub3 .panel{overflow:hidden}

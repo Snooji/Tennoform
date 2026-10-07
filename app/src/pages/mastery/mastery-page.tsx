@@ -10,6 +10,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GearRow } from "@/components/tf/gear-row"
 import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
+import { StatList } from "@/components/tf/stat-list"
 import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData, type RouteStep } from "@/lib/tf"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Helper } from "./helper"
@@ -42,12 +43,6 @@ function Section({ title, items, xp, open = true, children }: { title: string; i
 }
 
 function Path({ d }: { d: MasteryData }) {
-  const stat = (k: string, v: number, strong = false) => (
-    <div className="flex flex-col gap-0.5 rounded-lg border bg-background/40 p-3">
-      <span className="text-xs text-muted-foreground">{k}</span>
-      <b className={cn("font-heading text-xl leading-tight tabular-nums", strong ? "font-semibold text-primary" : "font-semibold")}>{fmt(v)}</b>
-    </div>
-  )
   return (
     <>
       <Card size="sm">
@@ -59,14 +54,14 @@ function Path({ d }: { d: MasteryData }) {
             <SelectTrigger className="h-9 min-w-56 self-start" aria-label="Target rank"><span className="text-muted-foreground">Target:</span><SelectValue /></SelectTrigger>
             <SelectContent>{d.targets!.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
           </Select>
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-            {stat("XP still needed", d.need!, true)}
-            {stat("XP left in gear you can use", d.gearLeft!)}
-            {stat("XP left on the star chart", d.nx!)}
-            {stat("XP left on Steel Path", d.sx!)}
-          </div>
+          <StatList items={[
+            { k: "XP still needed", v: fmt(d.need!), strong: true },
+            { k: "XP left in gear you can use", v: fmt(d.gearLeft!) },
+            { k: "XP left on the star chart", v: fmt(d.nx!) },
+            { k: "XP left on Steel Path", v: fmt(d.sx!) },
+          ]} />
           {d.overflow ? (
-            <p className="flex gap-2 rounded-lg border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
+            <p className="flex gap-2 rounded-md bg-amber-500/10 p-3 text-sm">
               <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />
               That's more XP than everything below can give right now. The rest comes from gear that unlocks at a higher rank, modular companions and new releases.
             </p>
@@ -86,9 +81,11 @@ function Route({ d }: { d: MasteryData }) {
   const [more, setMore] = useState(false)
   return (
     <>
-      <ol className="flex flex-col gap-3" aria-label={`Steps to rank ${d.targetLabel}`}>
-        {now.map((x, i) => <Step key={x.id} x={x} n={i + 1} />)}
-      </ol>
+      <Card size="sm" className="gap-0 px-4 py-1">
+        <ol className="flex flex-col divide-y" aria-label={`Steps to rank ${d.targetLabel}`}>
+          {now.map((x, i) => <Step key={x.id} x={x} n={i + 1} />)}
+        </ol>
+      </Card>
       {later.length ? (
         <Collapsible open={more} onOpenChange={setMore}>
           <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
@@ -96,7 +93,9 @@ function Route({ d }: { d: MasteryData }) {
             <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <ol className="mt-3 flex flex-col gap-3" start={now.length + 1}>{later.map((x, i) => <Step key={x.id} x={x} n={now.length + i + 1} />)}</ol>
+            <Card size="sm" className="mt-3 gap-0 px-4 py-1">
+              <ol className="flex flex-col divide-y" start={now.length + 1}>{later.map((x, i) => <Step key={x.id} x={x} n={now.length + i + 1} />)}</ol>
+            </Card>
           </CollapsibleContent>
         </Collapsible>
       ) : null}
@@ -107,10 +106,10 @@ function Route({ d }: { d: MasteryData }) {
 function Step({ x, n }: { x: RouteStep; n: number }) {
   const [open, setOpen] = useState(x.kind === "gear" && n <= 2 && !x.beyond)
   return (
-    <li>
-      <Card size="sm" className={cn("gap-2 px-4", x.reach && "ring-2 ring-primary/60", x.locked && "opacity-80")}>
+    <li className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-2 py-4">
+      <span aria-hidden className="pt-px font-heading text-base leading-tight font-semibold text-muted-foreground tabular-nums">{n}.</span>
+      <div className="flex min-w-0 flex-col gap-2">
         <div className="flex flex-wrap items-start gap-x-3 gap-y-1">
-          <span aria-hidden className="grid size-7 shrink-0 place-items-center rounded-full border border-primary/40 font-heading text-sm font-semibold text-primary">{n}</span>
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <h3 className="font-heading text-base leading-tight font-semibold">{x.title}</h3>
             <span className="text-xs text-muted-foreground tabular-nums">
@@ -118,7 +117,7 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
               {x.locked ? " · locked for now" : x.reach ? "" : x.xp ? ` · rank ${x.mrAfter} after all of it` : ""}
             </span>
           </div>
-          {x.reach ? <Badge className="border-primary/40 bg-primary/15 text-primary"><Check /> Reaches your target</Badge> : null}
+          {x.reach ? <Badge variant="outline" className="border-primary/50 text-foreground"><Check className="text-primary" /> Reaches your target</Badge> : null}
         </div>
         <p className="text-sm text-muted-foreground">{x.how}</p>
         {x.pick ? <p className="text-sm font-medium">Ranking {x.pick === x.count ? "all of these" : `about ${x.pick} of these`} gets you to your target. The biggest XP is listed first.</p> : null}
@@ -135,26 +134,27 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
               <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <ul className="mt-2 flex flex-col divide-y rounded-lg border">{x.items.map((g) => <GearRow key={g.n} g={g} />)}</ul>
+              <ul className="mt-2 flex flex-col divide-y border-y">{x.items.map((g) => <GearRow key={g.n} g={g} />)}</ul>
               {x.more ? <p className="mt-2 text-xs text-muted-foreground">And {x.more} more. Ranks lists them all.</p> : null}
             </CollapsibleContent>
           </Collapsible>
         ) : null}
-      </Card>
+      </div>
     </li>
   )
 }
 
 function Ladder({ d }: { d: MasteryData }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <Card size="sm" className="gap-0 py-0">
+    <ol className="flex flex-col divide-y">
       {d.ladder!.map((r) => {
         const gd = r.gear.filter((g) => g.done).length
         return (
-          <Card key={r.m} size="sm" className={cn("gap-2 px-4", r.next && "ring-2 ring-primary/60", r.reached && "opacity-90")}>
+          <li key={r.m} className={cn("flex flex-col gap-2 px-4 py-3", r.next && "bg-muted/60")} aria-current={r.next ? "step" : undefined}>
             <div className="flex items-center gap-2">
               <b className="font-heading text-lg font-semibold">{r.label}</b>
-              {r.reached ? <Badge className="border-primary/40 bg-primary/15 text-primary"><Check /> Reached</Badge> : r.next ? <Badge variant="outline" className="border-primary/50 text-primary">Next</Badge> : null}
+              {r.reached ? <span className="flex items-center gap-1 text-xs text-muted-foreground"><Check aria-hidden className="size-3.5 text-primary" /> Reached</span> : r.next ? <Badge variant="outline" className="border-primary/50">Next</Badge> : null}
               <span className="ml-auto text-xs text-muted-foreground tabular-nums">{fmt(r.xp)} XP</span>
             </div>
             <p className="text-xs text-muted-foreground">{r.trades ? `Trades per day: ${r.trades} · Daily standing cap: ${fmt(r.cap)}` : "Each Legendary rank needs 147,500 more XP."}</p>
@@ -176,7 +176,7 @@ function Ladder({ d }: { d: MasteryData }) {
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {r.gear.map((g) => (
                       <button key={g.n} type="button" onClick={() => tf().act("a", { href: "#", "data-go": "item|" + g.n })}
-                        className={cn("rounded-md border px-2 py-1 text-xs transition-colors hover:border-primary/50", g.done && "border-primary/30 bg-primary/10")}>
+                        className={cn("rounded-md border px-2 py-1 text-xs transition-colors hover:border-primary/50", g.done && "border-transparent bg-muted text-muted-foreground")}>
                         {g.n}{g.done ? " ✓" : ""}
                       </button>
                     ))}
@@ -184,10 +184,11 @@ function Ladder({ d }: { d: MasteryData }) {
                 </CollapsibleContent>
               </Collapsible>
             ) : null}
-          </Card>
+          </li>
         )
       })}
-    </div>
+    </ol>
+    </Card>
   )
 }
 
@@ -231,7 +232,7 @@ export function MasteryPage() {
       {d.tab === "sframes" ? d.groups!.map((g) => <Section key={g.title} title={g.title} items={g.items} />) : null}
       {d.tab === "craft" ? (
         <>
-          <p className="flex gap-2 rounded-lg border bg-muted/40 p-3 text-sm"><Info aria-hidden className="mt-0.5 size-4 shrink-0 text-primary" />Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</p>
+          <p className="flex gap-2 text-sm text-muted-foreground"><Info aria-hidden className="mt-0.5 size-4 shrink-0" />Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</p>
           {d.craft!.map((c) => (
             <Section key={c.title} title={c.title} items={c.recipes.flatMap((r) => r.items)}>
               <ul className="flex flex-col gap-1 border-t px-4 py-2 text-xs text-muted-foreground">

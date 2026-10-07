@@ -14,16 +14,17 @@ export function TodayPage() {
         <h1 className="font-heading text-3xl font-semibold">Today</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Resets, your daily and weekly checklist, and what's live in the game right now.</p>
       </header>
-      <div className="grid gap-2 sm:grid-cols-3">
+      {/* one panel split into columns: the three resets read as one timetable, not three cards */}
+      <Card size="sm" className="gap-0 divide-y py-0 sm:grid sm:grid-cols-3 sm:divide-x sm:divide-y-0">
         {d.tiles.map((t) => (
-          <Card key={t.k} size="sm" className="gap-0.5 px-4">
-            <span className="text-xs text-muted-foreground">{t.k}</span>
-            <b className="font-heading text-2xl leading-tight font-semibold tabular-nums">{t.v}</b>
+          <div key={t.k} className="flex flex-col gap-0.5 px-4 py-3">
+            <span className="text-sm text-muted-foreground">{t.k}</span>
+            <b className="font-heading text-xl leading-tight font-semibold tabular-nums">{t.v}</b>
             <span className="text-xs text-muted-foreground">{t.total != null ? `${t.done}/${t.total} done · ` : ""}{t.x}</span>
             {t.total ? <Progress value={(100 * (t.done || 0)) / t.total} className="mt-2 h-1" aria-label={`${t.k}: ${t.done} of ${t.total} done`} /> : null}
-          </Card>
+          </div>
         ))}
-      </div>
+      </Card>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <div className="flex min-w-0 flex-col gap-4">
           <Checklist d={d} />

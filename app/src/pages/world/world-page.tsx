@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -149,7 +149,7 @@ export function WorldPage() {
         <h1 className="font-heading text-3xl font-semibold">Open worlds</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p>
       </header>
-      <HaloSegmented
+      <Segmented
         className="self-start"
         value={d.tab}
         onValueChange={(v) => tf().worldSet({ tab: v })}

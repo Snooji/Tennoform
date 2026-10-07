@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type ChartData, type JunctionRow } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
 
-/** A planet drawn as a lit sphere from its two colours, with a progress ring around it. */
+/** A planet as a flat disc in its own colour, with a progress ring around it. */
 function Orb({ colors, size = 44, pct }: { colors: string[]; size?: number; pct?: number }) {
   const ring = pct != null
   return (
@@ -24,7 +24,7 @@ function Orb({ colors, size = 44, pct }: { colors: string[]; size?: number; pct?
           <span className="absolute inset-[3px] rounded-full bg-card" />
         </span>
       ) : null}
-      <span className="relative rounded-full shadow-inner" style={{ width: size, height: size, background: `radial-gradient(circle at 32% 30%, ${colors[0]}, ${colors[1]} 72%)` }} />
+      <span className="relative rounded-full border border-foreground/10" style={{ width: size, height: size, background: colors[0] }} />
     </span>
   )
 }

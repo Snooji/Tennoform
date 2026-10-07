@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Toggle } from "@/components/ui/toggle"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type SyndCard } from "@/lib/tf"
+import { StatList } from "@/components/tf/stat-list"
 import { SortDir } from "@/components/tf/sort-dir"
 
 const FILTERS = [{ value: "all", label: "All syndicates" }, { value: "faction", label: "Factions" }, { value: "open", label: "Open world" }, { value: "other", label: "Other" }]
@@ -136,24 +137,17 @@ const Synd = memo(function Synd({ e }: { e: SyndCard }) {
 
 export function SyndPage() {
   const d = useTFData(() => tf().synd())
-  const tile = (k: string, v: string, x: string) => (
-    <Card size="sm" className="gap-0.5 px-4">
-      <span className="text-xs text-muted-foreground">{k}</span>
-      <b className="font-heading text-2xl leading-tight font-semibold tabular-nums">{v}</b>
-      <span className="text-xs text-muted-foreground">{x}</span>
-    </Card>
-  )
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Syndicates</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Your rank with every syndicate, what the next rank costs, and the easiest way to earn standing at your stage. Sync your account to fill this in, or set ranks by hand.</p>
       </header>
-      <div className="grid gap-2 sm:grid-cols-3">
-        {tile("Daily cap (each)", fmt(d.cap), "16,000 + 500 × MR")}
-        {tile("Faction standing left today", d.factionLeft == null ? "—" : fmt(d.factionLeft), d.synced ? "From today's sync" : "Sync to see today's caps")}
-        {tile("Daily reset", d.reset, "00:00 UTC")}
-      </div>
+      <StatList cols={3} items={[
+        { k: "Daily cap (each)", v: fmt(d.cap), x: "16,000 + 500 × MR" },
+        { k: "Faction standing left today", v: d.factionLeft == null ? "—" : fmt(d.factionLeft), x: d.synced ? "From today's sync" : "Sync to see today's caps" },
+        { k: "Daily reset", v: d.reset, x: "00:00 UTC" },
+      ]} />
       <div className="flex flex-wrap gap-2">
         <Select items={FILTERS} value={d.filter} onValueChange={(v) => tf().syndSet({ f: String(v) })}>
           <SelectTrigger className="h-9 min-w-40" aria-label="Filter"><SelectValue /></SelectTrigger>

@@ -8,11 +8,10 @@ import { PageHead } from "./page-head"
 
 function Way({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
-    <Card className="gap-3 px-5">
-      <span aria-hidden className="grid size-12 place-items-center rounded-full bg-primary/12 text-primary ring-1 ring-primary/25">{icon}</span>
-      <h2 className="font-heading text-xl leading-tight font-semibold">{title}</h2>
+    <section className="flex flex-col gap-3 px-5 py-5">
+      <h2 className="flex items-center gap-2 font-heading text-xl leading-tight font-semibold"><span aria-hidden className="text-muted-foreground">{icon}</span>{title}</h2>
       {children}
-    </Card>
+    </section>
   )
 }
 
@@ -21,7 +20,7 @@ export function SupportPage() {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <PageHead eyebrow="Support" title="Support Tennoform" lede="Free, no ads. Made by Snooji. If it saved you time, platinum or PayPal both help." />
-      <div className="grid gap-4 md:grid-cols-2">
+      <Card className="gap-0 divide-y py-0 md:grid md:grid-cols-2 md:divide-x md:divide-y-0">
         <Way icon={<Heart className="size-5" />} title="Donate with PayPal">
           {d.paypal ? (
             <>
@@ -35,7 +34,7 @@ export function SupportPage() {
         <Way icon={<Gem className="size-5" />} title="Donate platinum">
           {d.ign ? (
             <>
-              <p className="text-sm">Send any amount of platinum in game to <b className="font-mono text-primary">{d.ign}</b>.</p>
+              <p className="text-sm">Send any amount of platinum in game to <b className="font-mono">{d.ign}</b>.</p>
               <ol className="flex list-decimal flex-col gap-1 pl-5 text-sm marker:text-muted-foreground">
                 <li>Copy the whisper below and paste it into in-game chat.</li>
                 <li>Meet in Maroo's Bazaar (Mars) or a Clan Dojo Trading Post.</li>
@@ -48,8 +47,8 @@ export function SupportPage() {
             </>
           ) : <p className="text-sm text-muted-foreground">Platinum donations open soon.</p>}
         </Way>
-      </div>
-      <p className="rounded-2xl border border-dashed px-4 py-3 text-sm text-muted-foreground">Donations don't unlock anything. Every feature stays free for everyone.</p>
+      </Card>
+      <p className="text-sm text-muted-foreground">Donations don't unlock anything. Every feature stays free for everyone.</p>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Heart, MessageSquare, Sparkles } from "lucide-react"
+import { Heart, MessageSquare, ScrollText } from "lucide-react"
 
 import { tf } from "@/lib/tf"
 
@@ -6,7 +6,7 @@ import { tf } from "@/lib/tf"
 export const TF_LINKS = [
   { route: "donate", label: "Support Tennoform", icon: Heart, accent: true },
   { route: "feedback", label: "Send feedback", icon: MessageSquare, accent: false },
-  { route: "about", label: "What's new", icon: Sparkles, accent: false, whatsNew: true },
+  { route: "about", label: "What's new", icon: ScrollText, accent: false, whatsNew: true },
 ] as const
 
 /** Opens a link from TF_LINKS; "What's new" opens the About page at the changelog. */

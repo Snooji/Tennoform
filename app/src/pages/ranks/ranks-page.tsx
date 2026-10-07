@@ -112,7 +112,7 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
           </a>
           {it.mr ? <Badge variant="outline">MR {it.mr}</Badge> : null}
           {done ? (
-            <Badge className="border-primary/40 bg-primary/15 text-primary">
+            <Badge variant="outline" className="border-primary/40 text-primary">
               <Check /> Mastered
             </Badge>
           ) : null}

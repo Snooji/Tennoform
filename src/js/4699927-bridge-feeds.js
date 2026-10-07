@@ -29,7 +29,8 @@ function feedsData(){const day=d=>{const t=Date.parse(d);return isNaN(t)?null:(D
 Object.assign(window.TF,{liveInfo:()=>liveInfo(),feeds:()=>feedsData(),
   retryLive:()=>{WSerr=false;WSat=0;loadWS();tfNotify()}});
 /* the footer shown under every page */
-feedStatus=function(){const dot=k=>`<span class="fdot ${k}" aria-hidden="true"></span>`;
+/* state shown as an icon beside the words (never a coloured dot alone) */
+feedStatus=function(){const dot=k=>ic({ok:'check',warn:'timer',bad:'warn'}[k]||'minus','fstate '+k);
   return feedsData().filter(f=>f.id!=='profile').map(f=>`<span>${dot(f.k)}${esc(f.name)}: ${esc(f.t)}${f.retry&&f.k!=='ok'&&f.k!=='off'?' <button type="button" class="linkbtn" id="wsretry">Try again</button>':''}</span>`).join('')};
 /* profile sync status for the Home hero: a Sync button until you're synced, then a green "Synced" status */
 let SYNCING=false;{const _as=autoSync;autoSync=async function(){SYNCING=true;tfNotify();try{return await _as.apply(this,arguments)}finally{SYNCING=false;tfNotify()}}}

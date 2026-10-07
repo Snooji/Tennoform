@@ -52,7 +52,7 @@ function CodeCards({ d }: { d: SquadData }) {
 function Requests({ d }: { d: SquadData }) {
   if (!d.requests.length) return null
   return (
-    <Card size="sm" className="gap-2 border-primary/30 px-4 ring-primary/25">
+    <Card size="sm" className="gap-2 border-primary/40 px-4">
       <h2 className="font-heading text-lg leading-tight font-semibold">Friend requests</h2>
       <ul className="flex flex-col divide-y">
         {d.requests.map((r) => (

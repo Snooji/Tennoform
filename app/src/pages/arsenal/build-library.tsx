@@ -46,9 +46,9 @@ function Progress({ have, total }: { have: number; total: number }) {
 
 function Row({ b }: { b: BuildCard }) {
   return (
-    <li className="tf-glass flex h-full items-center gap-2 rounded-2xl pr-3 ring-1 ring-foreground/8 hover:bg-muted/40">
+    <li className="flex h-full items-center gap-2 rounded-xl border bg-card pr-3 hover:bg-muted/40">
       <button type="button" onClick={() => tf().buildLibSet({ sel: b.id })} aria-label={`${b.item}: ${b.name}${b.src === "player" ? ", by " + (b.author || "a player") : ""}. You own ${b.have} of ${b.total}`}
-        className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl p-3 text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+        className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-3 text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
         <Thumb src={b.img} className="size-12 shrink-0 rounded-xl" />
         <span className="flex min-w-0 flex-1 flex-col gap-1">
           <span className="text-xs text-muted-foreground">{b.item}</span>
@@ -72,7 +72,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
       {back ? <Button variant="ghost" className="h-9 self-start px-2" onClick={back}><ArrowLeft /> All builds</Button> : null}
       <Card className="gap-4 px-5">
         <div className="flex flex-wrap items-start gap-4">
-          <Thumb src={b.img} className="size-16 shrink-0 rounded-2xl" />
+          <Thumb src={b.img} className="size-16 shrink-0 rounded-xl" />
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <a href="#" className="text-xs text-muted-foreground underline-offset-4 hover:underline" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "item|" + b.item }) }}>{b.item}</a>
             <h2 className="font-heading text-2xl leading-tight font-semibold">{b.name}</h2>
@@ -141,7 +141,7 @@ export function BuildLibrary() {
       </div>
       {d.shared.err ? <p className="text-sm text-muted-foreground">Player builds are offline for a moment. Top community builds below still work.</p> : null}
       {d.src === "players" && !d.shared.loading && !d.shared.count ? (
-        <p className="rounded-2xl border border-dashed px-4 py-3 text-sm text-muted-foreground">No player builds yet. Make one under <b className="font-medium text-foreground">My builds</b> and share it to be the first.</p>
+        <p className="rounded-xl border border-dashed px-4 py-3 text-sm text-muted-foreground">No player builds yet. Make one under <b className="font-medium text-foreground">My builds</b> and share it to be the first.</p>
       ) : null}
       {d.list.length ? <ul className="grid gap-3 md:grid-cols-2">{d.list.map((b) => <Row key={b.id} b={b} />)}</ul> : d.src !== "players" ? <p className="py-6 text-center text-sm text-muted-foreground">No builds match.</p> : null}
       {d.more ? <Button variant="outline" className="h-10 self-center" onClick={() => tf().buildLibSet({ more: true })}>Show more ({d.total - d.list.length} left)</Button> : null}

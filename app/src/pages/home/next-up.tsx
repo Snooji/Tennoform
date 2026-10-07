@@ -20,7 +20,7 @@ function NextRow({ x, n }: { x: HomeNext; n: number }) {
             aria-label={`${x.doneLabel}: ${x.title}`}
           />
         ) : (
-          <span aria-hidden className="grid size-5 place-items-center rounded-md border border-primary/50 text-[11px] font-semibold text-primary">
+          <span aria-hidden className="text-sm font-semibold text-muted-foreground tabular-nums">
             {n}
           </span>
         )}
@@ -37,7 +37,7 @@ function NextRow({ x, n }: { x: HomeNext; n: number }) {
           <ChevronDown aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform group-data-[panel-open]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent className="overflow-hidden">
-          <div className="mt-3 flex flex-col gap-3 rounded-lg border bg-muted/40 p-3">
+          <div className="mt-3 flex flex-col gap-3">
             {x.steps.length ? (
               <ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-muted-foreground marker:text-primary/70">
                 {x.steps.map((s) => (
@@ -102,11 +102,11 @@ export function NextUp({ d, stage }: { d: HomeData; stage?: string }) {
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         {d.upNext.length ? (
-          <ul className="flex flex-col divide-y" aria-labelledby="nu-h">
+          <ol className="flex flex-col divide-y" aria-labelledby="nu-h">
             {d.upNext.map((x, n) => (
               <NextRow key={x.id} x={x} n={n + 1} />
             ))}
-          </ul>
+          </ol>
         ) : (
           <p className="text-sm text-muted-foreground">
             You're all caught up. Pick something from <a className="underline decoration-primary/60 underline-offset-4" href="#goals">Goals</a> or

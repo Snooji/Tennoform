@@ -40,7 +40,7 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (o: boo
                       {h.img ? (
                         <img src={h.img} alt="" className="size-7 shrink-0 object-contain" loading="lazy" />
                       ) : h.group === "Guides" ? (
-                        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary/12 text-primary"><BookOpen className="size-3.5" /></span>
+                        <span className="grid size-7 shrink-0 place-items-center text-muted-foreground"><BookOpen className="size-4" /></span>
                       ) : (
                         <span className="size-7 shrink-0" />
                       )}

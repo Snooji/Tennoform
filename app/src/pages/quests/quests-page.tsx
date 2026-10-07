@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react"
 import { PairTabs } from "@/components/tf/pair-tabs"
-import { BookOpen, Check, ChevronDown, ChevronsDown, ExternalLink, Gift, Lock, Plus, Sparkles } from "lucide-react"
+import { ArrowRight, BookOpen, Check, ChevronDown, ChevronsDown, ExternalLink, Gift, Lock, Plus } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -75,7 +75,7 @@ const Quest = memo(function Quest({ q }: { q: QuestRow }) {
                   <ChevronDown aria-hidden className="size-3.5 transition-transform group-data-[panel-open]:rotate-180" />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <ul className="mt-2 flex flex-col gap-1 border-l-2 border-primary/30 pl-3 text-sm">
+                  <ul className="mt-1 flex flex-col gap-1 pl-6 text-sm">
                     {q.rewards.map((r, i) => (
                       <li key={i} className="flex flex-wrap items-center gap-2">
                         {r.go ? (
@@ -125,12 +125,10 @@ export function QuestsPage() {
       </header>
       <PairTabs pair="chart" current="quests" />
       {d.next ? (
-        <Card size="sm" className="flex-row items-center gap-3 border-primary/30 bg-primary/5 px-4 ring-primary/25">
-          <Sparkles aria-hidden className="size-5 shrink-0 text-primary" />
-          <span className="flex-1 text-sm">
-            Next: <a href="#quests" onClick={goQuest(d.next)} className={cn("font-semibold", linkCls)}>{d.next}</a>
-          </span>
-        </Card>
+        <p className="flex items-center gap-2 text-sm">
+          <ArrowRight aria-hidden className="size-4 shrink-0 text-muted-foreground" />
+          <span className="text-muted-foreground">Next quest:</span> <a href="#quests" onClick={goQuest(d.next)} className={cn("font-semibold", linkCls)}>{d.next}</a>
+        </p>
       ) : null}
       <Select items={FILTERS} value={d.filter} onValueChange={(v) => tf().questsSet({ f: String(v) })}>
         <SelectTrigger className="h-9 min-w-44 self-start" aria-label="Filter quests"><SelectValue /></SelectTrigger>

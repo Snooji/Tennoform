@@ -22,10 +22,10 @@ export function WayView({ w, inSheet }: { w: WayDetail; inSheet?: boolean }) {
         </header>
       ) : null}
       {w.sum ? <p className="text-sm">{w.sum}</p> : null}
-      <ol className="flex flex-col gap-3">
+      <ol className="flex flex-col divide-y border-y" aria-label="Ways to get it, best first">
         {w.ways.map((x, i) => (
-          <li key={x.t} className={cn("flex gap-3 rounded-2xl border p-3.5", i === 0 && "border-primary/40 bg-primary/5")}>
-            <span aria-hidden className={cn("grid size-7 shrink-0 place-items-center rounded-full font-heading text-sm font-semibold", i === 0 ? "bg-primary text-primary-foreground" : "bg-muted")}>{i + 1}</span>
+          <li key={x.t} className="flex gap-3 py-3">
+            <span aria-hidden className={cn("w-5 shrink-0 pt-px font-heading text-base leading-tight font-semibold tabular-nums", i === 0 ? "text-foreground" : "text-muted-foreground")}>{i + 1}.</span>
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <b className="font-heading text-base leading-tight font-semibold">{x.t}</b>
@@ -47,9 +47,9 @@ export function WayView({ w, inSheet }: { w: WayDetail; inSheet?: boolean }) {
         ))}
       </ol>
       {w.tips.length ? (
-        <div className="flex flex-col gap-2 rounded-2xl bg-muted/40 p-3.5">
-          <span className="flex items-center gap-1.5 text-sm font-medium"><Lightbulb className="size-4 text-primary" aria-hidden /> Make it faster</span>
-          <ul className="flex flex-col gap-1.5 text-sm text-muted-foreground">{w.tips.map((t) => <li key={t}>{t}</li>)}</ul>
+        <div className="flex flex-col gap-2">
+          <span className="flex items-center gap-1.5 text-sm font-medium"><Lightbulb className="size-4 text-muted-foreground" aria-hidden /> Make it faster</span>
+          <ul className="flex list-disc flex-col gap-1.5 pl-5 text-sm text-muted-foreground">{w.tips.map((t) => <li key={t}>{t}</li>)}</ul>
         </div>
       ) : null}
       <div className="flex flex-wrap gap-2">

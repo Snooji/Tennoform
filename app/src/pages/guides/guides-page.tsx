@@ -44,24 +44,24 @@ function Status({ g }: { g: GuideCard }) {
 function GuideList({ list }: { list: GuideCard[] }) {
   if (!list.length) return <p className="py-8 text-center text-sm text-muted-foreground">No guides match. Try a shorter word, like "helminth" or "railjack".</p>
   return (
-    <ul className="grid gap-3 md:grid-cols-2">
+    <ul className="flex flex-col divide-y rounded-xl border bg-card">
       {list.map((g) => {
         const K = KIND[g.kind]
         return (
           <li key={g.id}>
             <button type="button" onClick={() => tf().guidesSet({ sel: g.id })}
-              className="tf-glass flex h-full w-full flex-col gap-2 rounded-2xl p-4 text-left ring-1 ring-foreground/8 transition-colors outline-none hover:bg-muted/40 focus-visible:ring-3 focus-visible:ring-ring/50">
+              className="flex w-full flex-col gap-1.5 px-4 py-3 text-left transition-colors outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset">
               <span className="flex items-start gap-3">
-                <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-full bg-primary/12 text-primary"><K.icon className="size-4" /></span>
+                <K.icon aria-hidden className="mt-1 size-4 shrink-0 text-muted-foreground" />
                 <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                  <b className="font-heading text-lg leading-tight font-semibold">{g.n}</b>
+                  <b className="font-heading text-base leading-tight font-semibold">{g.n}</b>
                   <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                     {K.label}{g.steps ? ` · ${g.steps} steps` : ""}
                   </span>
                 </span>
                 <Status g={g} />
               </span>
-              {g.sum ? <span className="line-clamp-2 text-sm text-muted-foreground">{g.sum}</span> : null}
+              {g.sum ? <span className="line-clamp-2 pl-7 text-sm text-muted-foreground">{g.sum}</span> : null}
             </button>
           </li>
         )
