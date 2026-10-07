@@ -1,0 +1,64 @@
+name: Game data update
+# Weekly (and on demand): when WFCD's warframe-items has a new release, rebuild the game data and open a pull
+# request for review. Nothing goes live until the pull request is merged.
+on:
+  schedule:
+    - cron: '41 9 * * 1'   # Mondays
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare game data version with WFCD
+        id: ver
+        run: |
+          CUR=$(python3 -c "import json;print(json.load(open('build/base.json'))['meta'].get('wfcd',''))")
+          NEW=$(npm view @wfcd/items version)
+          echo "Site uses $CUR, latest is $NEW"
+          echo "cur=$CUR" >> "$GITHUB_OUTPUT"; echo "new=$NEW" >> "$GITHUB_OUTPUT"
+      - name: Download WFCD data
+        if: steps.ver.outputs.cur != steps.ver.outputs.new
+        run: |
+          mkdir -p "$RUNNER_TEMP/wfcd" && cd "$RUNNER_TEMP/wfcd"
+          npm pack "@wfcd/items@${{ steps.ver.outputs.new }}" --silent
+          tar -xzf wfcd-items-*.tgz
+      - name: Rebuild game data
+        if: steps.ver.outputs.cur != steps.ver.outputs.new
+        run: |
+          J="$RUNNER_TEMP/wfcd/package/data/json"
+          python3 -I build/update_gamedata.py "$J" "${{ steps.ver.outputs.new }}" | tee "$RUNNER_TEMP/summary.txt"
+          python3 -I build/make_stats.py "$J"
+          python3 -I build/make_umap.py "$J"
+          python3 build/make_site.py
+      - name: Open a pull request
+        if: steps.ver.outputs.cur != steps.ver.outputs.new
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW: ${{ steps.ver.outputs.new }}
+        run: |
+          BR="game-data-$NEW"
+          git config user.name "tennoform-bot"
+          git config user.email "tennoform-bot@users.noreply.github.com"
+          git checkout -b "$BR"
+          git add -A
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          git commit -q -m "Game data update: WFCD $NEW"
+          git push -f origin "$BR"
+          if gh pr list --head "$BR" --state open --json number --jq '.[0].number' | grep -q .; then echo "Pull request already open"; exit 0; fi
+          {
+            echo "WFCD warframe-items $NEW is out (the site used ${{ steps.ver.outputs.cur }}). This rebuilds the game data from it."
+            echo
+            echo '```'; cat "$RUNNER_TEMP/summary.txt"; echo '```'
+            echo
+            echo "Only additions and patch facts change (new items, relics, mods and arcanes; relic rewards; vault status; item stats). Hand-written recipes, farm routes, guides and builds are untouched."
+            echo "If the summary lists Prime parts without ducat values, add them in build/base.json before merging. Patch notes: https://www.warframe.com/en/patch-notes/pc"
+          } > "$RUNNER_TEMP/body.md"
+          gh pr create --title "Game data update: WFCD $NEW" --body-file "$RUNNER_TEMP/body.md" --base main --head "$BR"

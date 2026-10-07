@@ -4,7 +4,8 @@ A free Warframe companion for keeping track of where you are and what to do next
 
 **https://tennoform.com**
 
-- Mastery rank: what you've ranked, what's left, and a plan for the next rank
+- Mastery rank: what you've ranked, what's left, and a step-by-step plan through every source of mastery
+- Item stats: health, shields, armour and abilities for frames; damage, crit, status and more for weapons
 - My collection: everything you own and everything you've mastered in one place; mark what you own or don't, and undo an accidental rank
 - Star chart, quests and syndicates
 - Farm finder for resources, credits, standing and affinity
@@ -37,6 +38,7 @@ python build/make_site.py                # src/ + data -> index.html
 - `app/` is the React shell (Vite, Tailwind, shadcn/ui). See `app/README.md`.
 - `build/guides/` and `build/farms/` hold the guide and farm-route data (each has a `SCHEMA.md` and `merge.py`).
 - `python build/refresh_market.py` updates prices; the `refresh` workflow runs it daily.
+- Game data: the `game-data` workflow checks WFCD warframe-items every Monday. When there's a new release it runs `build/update_gamedata.py` (additive: new items, relics, mods and arcanes, relic rewards, vault status; hand-written data untouched), `build/make_stats.py` (item stats in `data/stats.json`, loaded only on item pages) and `build/make_umap.py`, and opens a pull request to review and merge.
 
 Commit `src/`, `app/`, `assets/` and `index.html` together. Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
 
