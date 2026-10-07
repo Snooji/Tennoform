@@ -23,12 +23,14 @@ function Tile({ t }: { t: HomeTile }) {
         e.preventDefault()
         tf().act("a", { href, "data-ttab": t.ttab })
       }}
-      className="group flex min-w-0 flex-col gap-0.5 rounded-lg border bg-background/40 p-3 transition-colors hover:border-primary/40 hover:bg-muted/40 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+      className="-mx-2 flex min-w-0 flex-col rounded-md px-2 py-2 transition-colors hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
     >
-      <span className="text-xs text-muted-foreground">{t.k}</span>
-      <b className="truncate font-heading text-lg leading-tight font-semibold tabular-nums">{t.v}</b>
+      <span className="flex items-baseline justify-between gap-3">
+        <span className="truncate text-sm text-muted-foreground">{t.k}</span>
+        <b className="shrink-0 font-heading text-base leading-tight font-semibold tabular-nums">{t.v}</b>
+      </span>
       <span className="truncate text-xs text-muted-foreground">{t.x}</span>
-      {t.total ? <Progress value={(100 * (t.done || 0)) / t.total} className="mt-1.5 h-1" aria-label={`${t.done} of ${t.total} daily items done`} /> : null}
+      {t.total ? <Progress value={(100 * (t.done || 0)) / t.total} className="mt-1.5" aria-label={`${t.done} of ${t.total} daily items done`} /> : null}
     </a>
   )
 }
@@ -46,17 +48,19 @@ export function TodayCard({ d }: { d: HomeData }) {
           </a>
         </CardAction>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <div className="grid grid-cols-2 gap-2">
+      <CardContent>
+        <ul className="flex flex-col divide-y">
           {d.today.map((t) => (
-            <Tile key={t.k} t={t} />
+            <li key={t.k} className="py-0.5">
+              <Tile t={t} />
+            </li>
           ))}
-        </div>
+        </ul>
         <a
           href="#achievements"
-          className="flex items-center gap-3 rounded-lg border border-primary/25 bg-primary/5 px-3 py-2.5 transition-colors hover:bg-primary/10 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          className="-mx-2 mt-1 flex items-center gap-3 rounded-md border-t px-2 py-2.5 transition-colors hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
-          <Award aria-hidden className="size-5 text-primary" />
+          <Award aria-hidden className="size-4 text-muted-foreground" />
           <span className="flex min-w-0 flex-1 flex-col">
             <span className="text-sm font-medium">
               Done today: {d.doneToday.n} thing{d.doneToday.n === 1 ? "" : "s"}
@@ -86,14 +90,13 @@ export function CollectionCard() {
         </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        <div className="grid grid-cols-3 gap-2 text-center">
-          {[["Owned", c.owned], ["Mastered", c.mastered], ["To level", c.level]].map(([k, v]) => (
-            <a key={k as string} href="#collection" onClick={() => tf().collectionSet({ f: k === "Owned" ? "owned" : k === "Mastered" ? "mastered" : "level" })} className="rounded-xl bg-muted/40 px-2 py-2 hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
-              <b className="block font-heading text-xl font-semibold tabular-nums">{v as number}</b>
-              <span className="text-xs text-muted-foreground">{k as string}</span>
+        <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {[["owned", c.owned], ["mastered", c.mastered], ["to level", c.level]].map(([k, v]) => (
+            <a key={k as string} href="#collection" onClick={() => tf().collectionSet({ f: k === "owned" ? "owned" : k === "mastered" ? "mastered" : "level" })} className="rounded-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-primary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
+              <b className="font-semibold text-foreground tabular-nums">{v as number}</b> {k as string}
             </a>
           ))}
-        </div>
+        </p>
         <ul className="flex flex-col gap-1.5 text-sm">
           {c.cats.filter((x) => x.owned).sort((a, b) => b.owned - a.owned).slice(0, 4).map((x) => (
             <li key={x.id} className="flex items-center gap-2">
@@ -240,7 +243,7 @@ const G_LOGO = (
 
 export function SignInCard() {
   return (
-    <Card size="sm" className="flex-row flex-wrap items-center gap-3 border-primary/30 px-4 ring-primary/25">
+    <Card size="sm" className="flex-row flex-wrap items-center gap-3 border-primary/40 px-4">
       <div className="flex min-w-0 flex-1 basis-64 flex-col gap-0.5">
         <b className="font-heading text-base font-semibold">Save your Tennoform progress to an account</b>
         <span className="text-sm text-muted-foreground">

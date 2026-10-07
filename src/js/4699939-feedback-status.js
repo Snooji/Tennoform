@@ -27,5 +27,5 @@ async function fbSetStatus(id,st){const x=(FBK.list||[]).find(y=>y.id===id);if(!
   try{await FB.fs.collection('feedback').doc(id).update({status:st,done:st==='done',statusAt:x.statusAt});toast(st?`Marked ${FB_ST[st]}. They'll see it next time they open Tennoform.`:'Status cleared')}
   catch(e){Object.assign(x,prev);tfNotify();toast("Couldn't update. Publish the latest firestore.rules.")}}
 function fbCopy(id){const x=(FBK.list||[]).find(y=>y.id===id);if(!x)return;
-  copy(`[${x.kind||'other'}] ${x.text||''}\n— ${x.name||'Anonymous'}${x.contact?' ('+x.contact+')':''}, ${new Date(x.at).toLocaleString()}${x.page?', from '+x.page:''}`,'Feedback copied')}
+  copy(`[${x.kind||'other'}] ${x.text||''}\nFrom: ${x.name||'Anonymous'}${x.contact?' ('+x.contact+')':''}, ${new Date(x.at).toLocaleString()}${x.page?', from '+x.page:''}`,'Feedback copied')}
 Object.assign(window.TF,{fbStatus:(id,st)=>fbSetStatus(id,st),fbCopy:id=>fbCopy(id),fbDone:id=>{const x=(FBK.list||[]).find(y=>y.id===id);if(x)fbSetStatus(id,'done')}});

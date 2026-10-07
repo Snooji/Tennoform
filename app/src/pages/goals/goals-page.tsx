@@ -105,14 +105,14 @@ export function GoalsPage() {
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {d.goals.map((g) => (
-              <Card key={g.name} size="sm" className={cn("gap-3 px-4", g.built && "ring-primary/30")}>
+              <Card key={g.name} size="sm" className={cn("gap-3 px-4", g.built && "border-primary/40")}>
                 <div className="flex items-start gap-3">
                   <Thumb src={g.img} className="size-12" />
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <a href="#" onClick={go("item|" + g.name)} className={cn("truncate font-heading text-base font-semibold", linkCls)}>{g.name}</a>
                     <span className="flex flex-wrap gap-1">
                       <VaultBadge v={g.vault} />
-                      {g.built ? <Badge className="border-primary/40 bg-primary/15 text-primary"><Check /> Built</Badge> : null}
+                      {g.built ? <Badge variant="outline" className="border-primary/40 text-primary"><Check /> Built</Badge> : null}
                     </span>
                   </div>
                   <Button variant="ghost" size="icon-sm" onClick={() => tf().goalRemove(g.name)} aria-label={`Remove ${g.name} from Goals`}><X /></Button>

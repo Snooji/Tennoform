@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type AdminData, type AdminDonation } from "@/lib/tf"
+import { StatList } from "@/components/tf/stat-list"
 import { PageHead } from "./page-head"
 
 const FILTERS = [{ value: "open", label: "Open" }, { value: "done", label: "Done" }, { value: "all", label: "All" }, { value: "bug", label: "Bugs" }, { value: "idea", label: "Ideas" }, { value: "other", label: "Other" }]
@@ -17,15 +18,6 @@ const STATUS_LABEL: Record<string, string> = { seen: "Seen", working: "Working o
 const STATUS_CLS: Record<string, string> = { seen: "text-muted-foreground", working: "border-primary/40 text-primary", done: "border-emerald-500/40 text-emerald-700 dark:text-emerald-300" }
 const KIND_CLS: Record<string, string> = { bug: "border-red-500/40 text-red-700 dark:text-red-300", idea: "border-primary/40 text-primary", other: "text-muted-foreground" }
 
-function Tile({ k, v, x }: { k: string; v: string; x: string }) {
-  return (
-    <Card size="sm" className="gap-0.5 px-4">
-      <span className="text-xs text-muted-foreground">{k}</span>
-      <b className="font-heading text-2xl leading-tight font-semibold tabular-nums">{v}</b>
-      <span className="text-xs text-muted-foreground">{x}</span>
-    </Card>
-  )
-}
 
 function Inbox({ d }: { d: AdminData }) {
   const list = d.feedback || []
@@ -153,14 +145,14 @@ function Players() {
         <p className="text-sm text-amber-800 dark:text-amber-300">{s.err === "permission" ? "Firebase blocked the player counts. Publish the latest firestore.rules from GitHub (Firestore Database → Rules → Publish), then tap Refresh." : `Couldn't load player counts (${s.err}).`}</p>
       ) : d ? (
         <>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-            <Tile k="Live now" v={String(d.live)} x="active in the last 5 min" />
-            <Tile k="Last hour" v={String(d.hour)} x="active in the last hour" />
-            <Tile k="Today (DAU)" v={String(d.dau)} x="since 00:00 UTC" />
-            <Tile k="7 days" v={String(d.wau)} x="weekly active" />
-            <Tile k="30 days" v={String(d.mau)} x="monthly active" />
-            <Tile k="Total users" v={String(d.total)} x="have signed in" />
-          </div>
+          <StatList cols={3} items={[
+            { k: "Live now", v: d.live, x: "active in the last 5 min" },
+            { k: "Last hour", v: d.hour, x: "active in the last hour" },
+            { k: "Today (DAU)", v: d.dau, x: "since 00:00 UTC" },
+            { k: "7 days", v: d.wau, x: "weekly active" },
+            { k: "30 days", v: d.mau, x: "monthly active" },
+            { k: "Total users", v: d.total, x: "have signed in" },
+          ]} />
           <div className="flex flex-col gap-1.5">
             <span className="text-xs text-muted-foreground">Daily players, last 14 days (UTC)</span>
             <ol className="flex h-24 items-end gap-1" aria-label="Daily players, last 14 days">
@@ -293,12 +285,14 @@ export function AdminPage() {
         ) : (
           <>
             <Players />
-            <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-              <Tile k="Open feedback" v={String(d.open)} x={`${d.fbTotal} total`} />
-              <Tile k="PayPal this month" v={d.totals!.usdM} x={`${d.totals!.usd} all time`} />
-              <Tile k="Platinum this month" v={d.totals!.platM} x={`${d.totals!.plat} all time`} />
-              <Tile k="Donations logged" v={String(d.totals!.n)} x={`${d.totals!.who} ${d.totals!.who === 1 ? "supporter" : "supporters"}`} />
-            </div>
+            <Card size="sm" className="px-4 py-1">
+              <StatList cols={4} items={[
+                { k: "Open feedback", v: d.open, x: `${d.fbTotal} total` },
+                { k: "PayPal this month", v: d.totals!.usdM, x: `${d.totals!.usd} all time` },
+                { k: "Platinum this month", v: d.totals!.platM, x: `${d.totals!.plat} all time` },
+                { k: "Donations logged", v: d.totals!.n, x: `${d.totals!.who} ${d.totals!.who === 1 ? "supporter" : "supporters"}` },
+              ]} />
+            </Card>
             <Tabs value={d.tab} onValueChange={(v) => tf().adminSet({ tab: String(v) })}>
               <TabsList>
                 <TabsTrigger value="feedback" className="px-3">Feedback ({d.open})</TabsTrigger>

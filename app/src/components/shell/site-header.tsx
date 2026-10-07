@@ -14,7 +14,7 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
   const showPlace = s.place && s.place.id !== "home" && s.place.label !== s.title
   const mac = /Mac|iPhone|iPad/.test(navigator.platform)
   return (
-    <header className="sticky top-0 z-20 flex h-[calc(3.5rem+env(safe-area-inset-top))] shrink-0 items-center pt-[env(safe-area-inset-top)] gap-2 border-b bg-background/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 md:px-4">
+    <header className="sticky top-0 z-20 flex h-[calc(3.5rem+env(safe-area-inset-top))] shrink-0 items-center pt-[env(safe-area-inset-top)] gap-2 border-b bg-background px-3 md:px-4">
       <SidebarTrigger className="-ml-1 size-9" aria-label="Show or hide navigation" />
       <Separator orientation="vertical" className="mx-1 h-5" />
       <Breadcrumb className="min-w-0">

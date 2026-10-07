@@ -2,7 +2,7 @@ import { Coins, Hexagon, Zap } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Progress } from "@/components/ui/progress"
 import { GoLink } from "@/components/tf/go-link"
 import { Thumb } from "@/components/tf/thumb"
@@ -28,7 +28,7 @@ function Row({ img, n, right, children }: { img: string; n: string; right: React
 export function Helper({ h }: { h: HelperData }) {
   return (
     <>
-      <HaloSegmented
+      <Segmented
         className="self-start"
         value={h.mode}
         onValueChange={(v) => tf().helperSet(v)}

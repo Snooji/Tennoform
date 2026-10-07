@@ -13,7 +13,7 @@ function sellerRow(item){const s=(SEL[item]||[]).filter(x=>x[0]!=='__buy');if(!s
   return `<div class="seller"><span class="muted">Cheapest:</span><b>${esc(b[0])}</b><span class="chip gold">${b[1]}p</span>${b[5]!=null?`<span class="chip" title="Rank of the mod or arcane being sold">${rankTxt(b[5])}</span>`:''}${b[2]>1?`<span class="muted small">×${b[2]}</span>`:''}<button class="btn sm" data-wh="${esc(whisper(item,b))}">Copy whisper</button></div>`}
 function farmFor(rn){const r=RES[rn];
   if(RT[rn]){const t=RT[rn].tiers;const best=r&&r.best;const pick=(t['Mid game']||[])[0]||(t['Early game']||[])[0];return (best?`<b>${esc(best)}</b>`:pick?`<b>${esc(pick[0])}</b> (${esc(pick[1])})`:'')+` · <a class="ln" href="#" data-go="res|${esc(rn)}">farms by stage</a>`}
-  const s=RSRC[rn];if(s&&s.length)return `<b>${esc(s[0][0])}</b>${s[0][1]?' — '+esc(s[0][1]):''}${s.length>1?` · <a class="ln" href="#" data-go="res|${esc(rn)}">${s.length} options</a>`:''}`;
+  const s=RSRC[rn];if(s&&s.length)return `<b>${esc(s[0][0])}</b>${s[0][1]?': '+esc(s[0][1]):''}${s.length>1?` · <a class="ln" href="#" data-go="res|${esc(rn)}">${s.length} options</a>`:''}`;
   if(r&&r.loc)return 'Found on: '+esc(r.loc);return '<span class="muted">See wiki</span>'}
 function haveTag(rn,q){const h=P.inv&&P.inv[rn];if(h==null||h==='')return'';return `<span class="have ${+h>=q?'ok':'no'}">have ${fmt(h)}</span>`}
 function relSort(a,b){return 'CUR'.indexOf(a[1])-'CUR'.indexOf(b[1])}

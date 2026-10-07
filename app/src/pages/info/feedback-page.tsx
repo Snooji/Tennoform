@@ -93,7 +93,7 @@ export function FeedbackPage() {
         </Card>
       ) : null}
       {d.admin ? (
-        <p className="rounded-2xl border border-dashed px-4 py-3 text-sm">You're an admin. <a href="#admin" className={linkCls}>Open the Backend</a> to read feedback and log donations.</p>
+        <p className="rounded-xl border border-dashed px-4 py-3 text-sm">You're an admin. <a href="#admin" className={linkCls}>Open the Backend</a> to read feedback and log donations.</p>
       ) : null}
     </div>
   )

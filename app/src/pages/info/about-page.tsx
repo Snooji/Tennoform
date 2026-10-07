@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronDown, Cloud, EyeOff, HardDrive, MessageSquare, Trash2, Users, ShieldCheck, KeyRound, Gauge, Coins, Handshake } from "lucide-react"
+import { ChevronDown, CircleAlert, CircleCheck, CircleMinus, Clock, Cloud, EyeOff, HardDrive, MessageSquare, Trash2, Users, ShieldCheck, KeyRound, Gauge, Coins, Handshake } from "lucide-react"
 
 import { Card } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -8,7 +8,13 @@ import { tf, useTFData } from "@/lib/tf"
 import { PageHead, linkCls } from "./page-head"
 
 const Ext = ({ href, children }: { href: string; children: React.ReactNode }) => <a href={href} target="_blank" rel="noopener" className={linkCls}>{children}</a>
-const DOT: Record<string, string> = { ok: "bg-emerald-500", warn: "bg-amber-500", bad: "bg-red-500", off: "bg-muted-foreground/50" }
+/** Feed freshness as an icon beside the words, so it never depends on colour alone. */
+const FEED = {
+  ok: { Icon: CircleCheck, cls: "text-emerald-700 dark:text-emerald-400" },
+  warn: { Icon: Clock, cls: "text-amber-700 dark:text-amber-300" },
+  bad: { Icon: CircleAlert, cls: "text-destructive" },
+  off: { Icon: CircleMinus, cls: "text-muted-foreground" },
+}
 
 /** "Title: a, b, c" → heading plus a list, so long entries scan on a phone. */
 function splitChange(t: string) {
@@ -25,7 +31,7 @@ const PRIVACY: [typeof Cloud, string, string][] = [
   [MessageSquare, "Feedback", "Readable only by the developer."],
   [Cloud, "Chat", "Messages in General, Trading and LFG can be read by anyone; clan and alliance rooms only by their members. Messages the filter flags are held, and only the site owner reviews them. Delete your own messages any time."],
   [Cloud, "Profile pictures", "If you add one, anyone who sees your name in Chat can see it. Remove it any time from your Profile. Clan and alliance backgrounds are only shown to that room's members."],
-  [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts Google Fonts, warframestat.us (live data and item images), Tennoform's profile relay on Google Apps Script (when you sync) and Firebase when you're signed in."],
+  [EyeOff, "No ads, no third-party analytics, no tracking", "Your browser only contacts warframestat.us (live data and item images), Tennoform's profile relay on Google Apps Script (when you sync) and Firebase when you're signed in."],
   [Trash2, "Your data, your call", "Export it any time (Profile → Backup & export), or delete your account and everything stored with it (Profile → Account & sync)."],
 ]
 
@@ -64,7 +70,7 @@ export function AboutPage() {
         Tennoform is made and maintained by <b>Snooji</b>, a Warframe player, on their own time. Ideas and bug reports go straight to them through{" "}
         <a href="#feedback" className={linkCls}>Feedback</a>, and every change is listed under What's new below.
       </p>
-      <p className="rounded-2xl border border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm">
+      <p className="rounded-xl border border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm">
         <b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes,
         and it is not an official Warframe service. For Foundry orders and in-game actions, use Warframe or the official Warframe Companion app.
       </p>
@@ -79,22 +85,21 @@ export function AboutPage() {
             <ChevronDown aria-hidden className="size-5 text-muted-foreground transition-transform group-data-[panel-open]:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <ol className="mt-4 flex flex-col gap-4 border-l border-primary/30 pl-5">
+            <ol className="mt-4 flex flex-col divide-y">
               {d.changes.map((c, i) => {
                 const { head, items } = splitChange(c.t)
                 const short = items.every((x) => x.length < 28)
                 return (
-                  <li key={i} className="relative flex flex-col gap-1.5 text-sm">
-                    <span aria-hidden className={cn("absolute top-1.5 -left-[26px] size-2.5 rounded-full ring-4 ring-card", i ? "bg-muted-foreground/60" : "bg-primary")} />
-                    <span className="flex flex-wrap items-baseline gap-x-2">
-                      <b className="font-heading text-base font-semibold">{head || c.d}</b>
-                      {head ? <span className="text-xs text-muted-foreground">{c.d}</span> : null}
+                  <li key={i} className="grid gap-x-6 gap-y-1 py-3 text-sm first:pt-0 sm:grid-cols-[7rem_minmax(0,1fr)]">
+                    <span className="text-xs text-muted-foreground tabular-nums sm:pt-0.5">{c.d}{i === 0 ? " · latest" : ""}</span>
+                    <span className="flex min-w-0 flex-col gap-1">
+                      {head ? <b className="font-heading text-base font-semibold">{head}</b> : null}
+                      {short ? (
+                        <p className="text-muted-foreground">{items.join(", ")}</p>
+                      ) : (
+                        <ul className="flex list-disc flex-col gap-1 pl-4 text-muted-foreground marker:text-muted-foreground/60">{items.map((x) => <li key={x}>{x}</li>)}</ul>
+                      )}
                     </span>
-                    {short ? (
-                      <ul className="flex flex-wrap gap-1.5">{items.map((x) => <li key={x} className="rounded-full border px-2.5 py-0.5 text-xs text-muted-foreground">{x}</li>)}</ul>
-                    ) : (
-                      <ul className="flex list-disc flex-col gap-1 pl-4 text-muted-foreground marker:text-primary/50">{items.map((x) => <li key={x}>{x}</li>)}</ul>
-                    )}
                   </li>
                 )
               })}
@@ -112,11 +117,14 @@ export function AboutPage() {
             </div>
           ))}
         </dl>
-        <ul className="flex flex-col gap-1.5 rounded-xl bg-muted/40 px-3 py-2.5 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5" aria-label="Data freshness">
-          {d.feeds.map((f) => <li key={f.t} className="flex items-center gap-2"><span aria-hidden className={cn("size-2 rounded-full", DOT[f.k])} />{f.t}</li>)}
+        <ul className="flex flex-col gap-1.5 border-t pt-3 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5" aria-label="Data freshness">
+          {d.feeds.map((f) => {
+            const { Icon, cls } = FEED[f.k] ?? FEED.off
+            return <li key={f.t} className="flex items-center gap-2"><Icon aria-hidden className={cn("size-4 shrink-0", cls)} />{f.t}</li>
+          })}
         </ul>
         <p className="text-xs text-muted-foreground">
-          New game content is checked weekly against the WFCD data set. Recommendations such as farms and builds are community guidance, not guarantees.
+          New game content is checked daily against the WFCD data set and goes live automatically. Recommendations such as farms and builds are community guidance, not guarantees.
           If something looks wrong, <a href="#feedback" className={linkCls}>send feedback</a>.
         </p>
       </Section>
@@ -125,7 +133,7 @@ export function AboutPage() {
         <ul className="flex flex-col divide-y text-sm">
           {PRIVACY.map(([Icon, t, x]) => (
             <li key={t} className="flex gap-3 py-2.5 first:pt-0 last:pb-0">
-              <span aria-hidden className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary"><Icon className="size-4" /></span>
+              <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
               <span className="flex min-w-0 flex-col gap-0.5"><b className="font-medium">{t}</b><span className="text-muted-foreground">{x}</span></span>
             </li>
           ))}
@@ -136,7 +144,7 @@ export function AboutPage() {
         <ul className="flex flex-col divide-y text-sm">
           {FAIRPLAY.map(([Icon, t, x]) => (
             <li key={t} className="flex gap-3 py-2.5 first:pt-0 last:pb-0">
-              <span aria-hidden className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary"><Icon className="size-4" /></span>
+              <Icon aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
               <span className="flex min-w-0 flex-col gap-0.5"><b className="font-medium">{t}</b><span className="text-muted-foreground">{x}</span></span>
             </li>
           ))}

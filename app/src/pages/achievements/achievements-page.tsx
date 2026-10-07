@@ -4,7 +4,7 @@ import { BarChart3, BookOpen, CalendarCheck, Check, ListTodo, Map, RefreshCw, St
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type AchData } from "@/lib/tf"
 
@@ -45,7 +45,7 @@ export function AchievementsPage() {
         <h1 className="font-heading text-3xl font-semibold">Achievements</h1>
         <p className="text-sm text-muted-foreground">Everything you've ticked off, ranked up or mastered. Tapped something by mistake? Undo it here.</p>
       </header>
-      <HaloSegmented
+      <Segmented
         className="self-start"
         value={d.period}
         onValueChange={(v) => tf().achSet(v)}

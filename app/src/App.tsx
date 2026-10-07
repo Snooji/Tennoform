@@ -102,11 +102,11 @@ function PageLoading() {
           <Skeleton className="h-4 w-full max-w-md" />
         </div>
         <div className="grid gap-2 sm:grid-cols-3">
-          {[0, 1, 2].map((i) => <Skeleton key={i} className="h-20 rounded-2xl" />)}
+          {[0, 1, 2].map((i) => <Skeleton key={i} className="h-20 rounded-xl" />)}
         </div>
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-          <Skeleton className="h-72 rounded-2xl" />
-          <Skeleton className="h-48 rounded-2xl" />
+          <Skeleton className="h-72 rounded-xl" />
+          <Skeleton className="h-48 rounded-xl" />
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@ export default function App() {
   const s = useTF()
   const [searchOpen, setSearchOpen] = useState(false)
   const Page = PAGES[s.route]
-  useAccent(s.mr, s.pct)
+  useAccent(s.mr)
   const [menuOpen, setMenuOpen] = useState(false)
   useNavReset(() => { setSearchOpen(false); setMenuOpen(false) })
 

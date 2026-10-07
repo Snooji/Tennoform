@@ -54,8 +54,7 @@
    Dark is the primary experience: graphite surfaces in three steps, cool white text,
    one restrained Orokin-gold accent for selection, progress and achievement. */
 :root {
-    --radius: 0.875rem;
-    --glow2: #b8954e;
+    --radius: 0.625rem;
     /* light: soft off-white page, white surfaces, graphite text */
     --background: #f5f5f3;
     --foreground: #1b1d22;
@@ -91,7 +90,8 @@
     --sidebar-accent-foreground: #1b1d22;
     --sidebar-border: #e6e6e1;
     --sidebar-ring: #a7832f;
-    --shadow-elev: 0 1px 2px rgb(16 18 22 / 6%), 0 8px 24px rgb(16 18 22 / 6%);
+    /* one shadow, only for things that float over the page: menus, popovers, dialogs */
+    --shadow-elev: 0 1px 2px rgb(16 18 22 / 8%), 0 8px 24px rgb(16 18 22 / 8%);
 }
 
 .dark {
@@ -131,7 +131,6 @@
     --sidebar-border: #26231f;
     --sidebar-ring: #b8954e;
     --shadow-elev: 0 1px 2px rgb(0 0 0 / 40%), 0 10px 30px rgb(0 0 0 / 35%);
-    --glow2: #e3c27a;
 }
 
 @layer base {
@@ -154,40 +153,23 @@
 #tf-root input[type="search"]::-webkit-search-cancel-button,[data-slot="dialog-content"] input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
 
 /* ---- accent that follows your rank: bronze MR 0-9, silver 10-19, gold 20-29, gold and jade at Legendary (or one you pick) ---- */
-:root[data-accent="bronze"]{--primary:#8c4a1f;--ring:#b06a3a;--chart-1:#8c4a1f;--sidebar-primary:#8c4a1f;--sidebar-ring:#b06a3a;--glow2:#c98a5c}
-:root.dark[data-accent="bronze"]{--primary:#dba373;--primary-foreground:#1a1009;--ring:#b97a4b;--chart-1:#dba373;--sidebar-primary:#dba373;--sidebar-primary-foreground:#1a1009;--sidebar-ring:#b97a4b;--glow2:#c4683a}
-:root[data-accent="silver"]{--primary:#4d545e;--ring:#7c8590;--chart-1:#4d545e;--sidebar-primary:#4d545e;--sidebar-ring:#7c8590;--glow2:#9aa39d}
-:root.dark[data-accent="silver"]{--primary:#cfd3d8;--primary-foreground:#141414;--ring:#9ea4ab;--chart-1:#cfd3d8;--sidebar-primary:#cfd3d8;--sidebar-primary-foreground:#141414;--sidebar-ring:#9ea4ab;--glow2:#a3aaa4}
-:root[data-accent="radiant"]{--primary:#6f5a12;--ring:#a7832f;--chart-1:#6f5a12;--sidebar-primary:#6f5a12;--glow2:#3f9c86}
-:root.dark[data-accent="radiant"]{--primary:#e8c470;--primary-foreground:#17130a;--chart-1:#e8c470;--sidebar-primary:#e8c470;--glow2:#6fc3ae}
-:root[data-accent="jade"]{--primary:#1f6b4f;--ring:#3f8f72;--chart-1:#1f6b4f;--sidebar-primary:#1f6b4f;--sidebar-ring:#3f8f72;--glow2:#5aa58a}
-:root.dark[data-accent="jade"]{--primary:#86cfb1;--primary-foreground:#0b1712;--ring:#5aa58a;--chart-1:#86cfb1;--sidebar-primary:#86cfb1;--sidebar-primary-foreground:#0b1712;--sidebar-ring:#5aa58a;--glow2:#4f9d82}
+:root[data-accent="bronze"]{--primary:#8c4a1f;--ring:#b06a3a;--chart-1:#8c4a1f;--sidebar-primary:#8c4a1f;--sidebar-ring:#b06a3a}
+:root.dark[data-accent="bronze"]{--primary:#dba373;--primary-foreground:#1a1009;--ring:#b97a4b;--chart-1:#dba373;--sidebar-primary:#dba373;--sidebar-primary-foreground:#1a1009;--sidebar-ring:#b97a4b}
+:root[data-accent="silver"]{--primary:#4d545e;--ring:#7c8590;--chart-1:#4d545e;--sidebar-primary:#4d545e;--sidebar-ring:#7c8590}
+:root.dark[data-accent="silver"]{--primary:#cfd3d8;--primary-foreground:#141414;--ring:#9ea4ab;--chart-1:#cfd3d8;--sidebar-primary:#cfd3d8;--sidebar-primary-foreground:#141414;--sidebar-ring:#9ea4ab}
+:root[data-accent="radiant"]{--primary:#6f5a12;--ring:#a7832f;--chart-1:#6f5a12;--sidebar-primary:#6f5a12}
+:root.dark[data-accent="radiant"]{--primary:#e8c470;--primary-foreground:#17130a;--chart-1:#e8c470;--sidebar-primary:#e8c470}
+:root[data-accent="jade"]{--primary:#1f6b4f;--ring:#3f8f72;--chart-1:#1f6b4f;--sidebar-primary:#1f6b4f;--sidebar-ring:#3f8f72}
+:root.dark[data-accent="jade"]{--primary:#86cfb1;--primary-foreground:#0b1712;--ring:#5aa58a;--chart-1:#86cfb1;--sidebar-primary:#86cfb1;--sidebar-primary-foreground:#0b1712;--sidebar-ring:#5aa58a}
 
-/* ---- ambient glow behind everything; it brightens as you close in on your next rank ---- */
+/* ---- surfaces ----
+   Three levels and nothing else: the page, a panel (solid card colour, one hairline border, no shadow),
+   and things that float over the page (popover colour, border, --shadow-elev). No glass, no gradients, no glows.
+   Inside a panel, group with spacing and dividers rather than another bordered box. */
 html{background:var(--background)}
-body{background:transparent!important}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(62rem 38rem at 8% -14%, color-mix(in oklch, var(--primary) var(--glow-a, 10%), transparent), transparent 70%),
-    radial-gradient(50rem 32rem at 108% 6%, color-mix(in oklch, var(--glow2) var(--glow-b, 7%), transparent), transparent 70%),
-    radial-gradient(44rem 30rem at 50% 118%, color-mix(in oklch, var(--primary) 5%, transparent), transparent 70%)}
-
-@layer components {
-  /* soft glass surfaces */
-  .tf-glass{
-    background:
-      linear-gradient(160deg, color-mix(in oklch, var(--primary) 7%, transparent), transparent 42%),
-      color-mix(in oklch, var(--card) 80%, transparent);
-    -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15);
-    box-shadow: inset 0 1px 0 color-mix(in oklch, var(--foreground) 7%, transparent), var(--shadow-elev);
-  }
-}
-/* existing panels shown inside the new pages get the same surface */
-#app :where(.panel,.obj,.card,.tile,.welcome,.hero,.bdp),.tf-island :where(.panel,.obj,.card,.tile){
-  background: linear-gradient(160deg, color-mix(in oklch, var(--primary) 6%, transparent), transparent 42%), color-mix(in oklch, var(--card) 80%, transparent);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-radius: 1.1rem}
-[data-slot="sidebar-inner"]{background: color-mix(in oklch, var(--sidebar) 72%, transparent)!important; -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px)}
-@media (prefers-reduced-transparency: reduce){ .tf-glass,[data-slot="sidebar-inner"]{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--card)!important} }
+/* older page markup shown inside the new pages gets the same flat panel */
+#app :where(.panel,.obj,.card,.welcome,.hero,.bdp),.tf-island :where(.panel,.obj,.card){
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: none}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -200,13 +182,8 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent);
 }
 
-/* the chat window's default surface: a soft wash of your accent colour (a clan picture replaces it only when a leader sets one) */
-.chat-surface {
-  background:
-    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--primary) 16%, transparent), transparent 60%),
-    radial-gradient(90% 80% at 0% 100%, color-mix(in oklab, var(--glow2, var(--primary)) 12%, transparent), transparent 60%),
-    var(--card);
-}
+/* the chat window's default surface: one step down from the card so bubbles read clearly (a clan picture replaces it when a leader sets one) */
+.chat-surface { background: color-mix(in oklab, var(--muted) 70%, var(--card)); }
 
 /* the phone tab bar sits above the page; tuck it away while a dialog is open so the dialog's bottom isn't covered */
 body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }

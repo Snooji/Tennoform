@@ -1,6 +1,5 @@
-import { useId, useRef } from "react"
 import { motion, useReducedMotion } from "motion/react"
-import { CircleCheck, RefreshCw, Share2, Sparkles } from "lucide-react"
+import { CircleCheck, RefreshCw, Route, Share2 } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -11,29 +10,22 @@ import { fmt, tf, useTFData, type HomeData } from "@/lib/tf"
 /** Progress to the next rank as a ring; fills once on load, then follows the numbers. */
 export function MasteryRing({ pct, label, size = 132 }: { pct: number; label: string; size?: number }) {
   const reduce = useReducedMotion()
-  const gid = "ring" + useId().replace(/:/g, "")
   const r = 44
   const c = 2 * Math.PI * r
   const p = Math.max(0.005, Math.min(1, pct / 100))
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
-      <svg viewBox="0 0 100 100" className="size-full -rotate-90 drop-shadow-[0_0_10px_color-mix(in_oklch,var(--primary)_35%,transparent)]" aria-hidden>
-        <defs>
-          <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="var(--glow2)" />
-            <stop offset="100%" stopColor="var(--primary)" />
-          </linearGradient>
-        </defs>
-        <circle cx="50" cy="50" r={r} fill="none" strokeWidth="7" className="stroke-muted" />
+      <svg viewBox="0 0 100 100" className="size-full -rotate-90" aria-hidden>
+        <circle cx="50" cy="50" r={r} fill="none" strokeWidth="6" className="stroke-muted" />
         <motion.circle
-          cx="50" cy="50" r={r} fill="none" strokeWidth="7" strokeLinecap="round" stroke={`url(#${gid})`}
+          cx="50" cy="50" r={r} fill="none" strokeWidth="6" strokeLinecap="butt" className="stroke-primary"
           strokeDasharray={c}
           initial={{ strokeDashoffset: reduce ? c * (1 - p) : c }}
           animate={{ strokeDashoffset: c * (1 - p) }}
           transition={{ duration: reduce ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
         />
       </svg>
-      <span className="absolute inset-0 grid place-items-center font-heading text-4xl font-semibold text-primary tabular-nums">
+      <span className="absolute inset-0 grid place-items-center font-heading text-4xl font-semibold tabular-nums">
         {label}
       </span>
     </div>
@@ -90,36 +82,15 @@ function SyncControl() {
 }
 
 export function MasteryHero({ d }: { d: HomeData }) {
-  const card = useRef<HTMLDivElement>(null)
-  const reduce = useReducedMotion()
   const title = d.name || d.mrLabel
   const primary = (
     <a href="#mastery" className={cn(buttonVariants({ size: "lg" }), "h-10 px-4")}>
-      <Sparkles /> See rank-up plan
+      <Route /> See rank-up plan
     </a>
   )
   return (
-    <Card
-      ref={card}
-      onPointerMove={(e) => {
-        const el = card.current
-        if (!el || reduce) return
-        const b = el.getBoundingClientRect()
-        el.style.setProperty("--mx", `${e.clientX - b.left}px`)
-        el.style.setProperty("--my", `${e.clientY - b.top}px`)
-      }}
-      className="relative gap-5 p-5 md:p-6"
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 -left-16 size-72 rounded-full bg-primary/15 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 [@media(hover:hover)]:group-hover/card:opacity-100"
-        style={{ background: "radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklch, var(--primary) 12%, transparent), transparent 70%)" }}
-      />
-      <div className="relative flex items-center gap-5 md:gap-7">
+    <Card className="gap-5 p-5 md:p-6">
+      <div className="flex items-center gap-5 md:gap-7">
         <MasteryRing pct={d.pct} label={d.mrShort} size={window.innerWidth < 500 ? 104 : 132} />
         <div className="flex min-w-0 flex-col gap-1">
           <SyncControl />
@@ -139,10 +110,8 @@ export function MasteryHero({ d }: { d: HomeData }) {
           </p>
         </div>
       </div>
-      <div className="relative">
-        <Breakdown parts={d.parts} />
-      </div>
-      <div className="relative flex flex-wrap items-center gap-2">
+      <Breakdown parts={d.parts} />
+      <div className="flex flex-wrap items-center gap-2">
         {primary}
         <a href="#ranks" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-4")}>
           Update ranks

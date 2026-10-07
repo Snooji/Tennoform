@@ -9,7 +9,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
 import { BuildLibrary } from "./build-library"
 import { MyBuilds } from "./my-builds"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -63,7 +63,7 @@ function Builds({ d, kind }: { d: ArsenalData; kind: "w" | "c" }) {
           <Card className="self-start">
             <CardHeader><CardTitle><h2 className="font-heading text-lg leading-tight font-semibold">Build</h2></CardTitle></CardHeader>
             <CardContent className="flex flex-col gap-3">
-              {d.builds!.length > 1 ? <HaloSegmented className="self-start" items={d.builds!} value={d.bi} onValueChange={(v) => tf().arsenalSet({ bi: v })} /> : null}
+              {d.builds!.length > 1 ? <Segmented className="self-start" items={d.builds!} value={d.bi} onValueChange={(v) => tf().arsenalSet({ bi: v })} /> : null}
               <div className="flex flex-wrap items-center gap-2 text-sm"><Badge variant="outline" className="border-primary/40 text-primary">{b.role}</Badge><b className="font-medium">{b.name}</b></div>
               {b.notes ? <p className="text-sm text-muted-foreground">{b.notes}</p> : null}
               <div className="flex flex-wrap gap-2">
@@ -235,7 +235,7 @@ export function ArsenalPage() {
         <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, arcanes and key mods.</p>
       </header>
       <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
-        <HaloSegmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />
+        <Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />
       </div>
       {d.tab === "top" ? <BuildLibrary /> : d.tab === "mine" ? <MyBuilds /> : d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <KeyMods d={d} />}
     </div>

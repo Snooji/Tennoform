@@ -113,7 +113,7 @@ export function MyBuilds() {
           })}
         </ul>
       ) : (
-        <p className="rounded-2xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
+        <p className="rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
           No builds yet. Start one with <b className="font-medium text-foreground">New build</b>, or open any build in <b className="font-medium text-foreground">Top builds</b> and copy it.
         </p>
       )}

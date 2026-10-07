@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { Card } from "@/components/ui/card"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
+import { StatList } from "@/components/tf/stat-list"
 import { fmt, tf, useTFData } from "@/lib/tf"
 
 type Key = "xp" | "mastered" | "owned" | "nodes"
@@ -57,17 +58,13 @@ export function HistoryCard() {
     <Card className="gap-3 px-5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <h2 className="mr-auto font-heading text-lg leading-tight font-semibold">Progress over time</h2>
-        <HaloSegmented value={k} onValueChange={(v) => { setK(v as Key); setHi(null) }} items={METRICS.map(({ value, label }) => ({ value, label }))} />
+        <Segmented value={k} onValueChange={(v) => { setK(v as Key); setHi(null) }} items={METRICS.map(({ value, label }) => ({ value, label }))} />
       </div>
-      <div className="grid grid-cols-3 gap-2">
-        {[["Now", d.now[k], ""], ["Last 7 days", delta(d.week), d.week ? `since ${short(d.week.since)}` : "no history yet"], ["Last 30 days", delta(d.month), d.month ? `since ${short(d.month.since)}` : "no history yet"]].map(([lab, v, note]) => (
-          <div key={lab as string} className="flex flex-col gap-0.5 rounded-xl border bg-background/40 p-3">
-            <span className="text-xs text-muted-foreground">{lab as string}</span>
-            <b className="font-heading text-xl leading-tight font-semibold tabular-nums">{v == null ? "—" : lab === "Now" ? fmt(v as number) : signed(v as number)}</b>
-            {note ? <span className="text-xs text-muted-foreground">{note as string}</span> : null}
-          </div>
-        ))}
-      </div>
+      <StatList cols={3} items={[
+        { k: "Now", v: fmt(d.now[k]) },
+        { k: "Last 7 days", v: delta(d.week) == null ? "—" : signed(delta(d.week) as number), x: d.week ? `since ${short(d.week.since)}` : "no history yet" },
+        { k: "Last 30 days", v: delta(d.month) == null ? "—" : signed(delta(d.month) as number), x: d.month ? `since ${short(d.month.since)}` : "no history yet" },
+      ]} />
       <div ref={box} className="relative">
         {geo ? (
           <>
@@ -106,7 +103,7 @@ export function HistoryCard() {
             ) : null}
           </>
         ) : (
-          <p className="rounded-xl border border-dashed px-4 py-6 text-center text-sm text-muted-foreground">
+          <p className="py-4 text-sm text-muted-foreground">
             Your history starts {d.first ? short(d.first) : "today"}. Tennoform saves a snapshot each day you make progress, so the chart fills in as you play and sync.
           </p>
         )}

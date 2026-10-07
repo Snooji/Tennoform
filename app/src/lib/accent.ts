@@ -24,10 +24,7 @@ const read = (): AccentChoice => {
 /** The tier for a Mastery rank: bronze below 10, silver below 20, gold below 30, then Legendary. */
 export const tierFor = (mr: number) => (mr >= 30 ? "radiant" : mr >= 20 ? "gold" : mr >= 10 ? "silver" : "bronze")
 
-/**
- * Applies the accent and the progress glow to the page.
- * The glow behind the page gets stronger the closer you are to your next rank.
- */
+/** Applies the accent colour for your rank tier (or the one you picked). */
 export function useAccentChoice() {
   const [choice, setChoice] = useState<AccentChoice>(read)
   useEffect(() => {
@@ -45,16 +42,12 @@ export function setAccent(c: AccentChoice) {
   }
   window.dispatchEvent(new Event("tf:accent"))
 }
-export function useAccent(mr: number, pct: number) {
+export function useAccent(mr: number) {
   const choice = useAccentChoice()
   useEffect(() => {
     const root = document.documentElement
     const tier = choice === "rank" ? tierFor(mr) : choice
     root.dataset.accent = tier
-    const p = Math.max(0, Math.min(100, pct)) / 100
-    root.style.setProperty("--glow-a", `${(7 + p * 13).toFixed(1)}%`)
-    root.style.setProperty("--glow-b", `${(4 + p * 9).toFixed(1)}%`)
-    root.style.setProperty("--progress", p.toFixed(3))
-  }, [choice, mr, pct])
+  }, [choice, mr])
   return { choice, tier: choice === "rank" ? tierFor(mr) : choice }
 }

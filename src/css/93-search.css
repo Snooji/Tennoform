@@ -16,7 +16,7 @@
 .cmdo:not(:has(.mini)){grid-template-columns:minmax(0,1fr) auto}
 .cmdo .mini{width:32px;height:32px}
 .cmdo.on,.cmdo:hover{background:var(--sunk)}
-.cmdo.on{box-shadow:inset 3px 0 0 var(--gold)}
+.cmdo.on{background:var(--sunk)}
 .cmdn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cmdhint{padding:14px 10px}
 .cmdfoot{padding:8px 14px;border-top:1px solid var(--line)}
@@ -25,8 +25,8 @@ body.typing .bnav{display:none}
 @media (max-width:899px){body.typing #app{padding-bottom:24px!important}}
 .feeds{display:flex;flex-wrap:wrap;gap:4px 16px}
 .feeds>span{display:inline-flex;align-items:center;gap:6px}
-.fdot{width:8px;height:8px;border-radius:50%;background:var(--ink2)}
-.fdot.ok{background:var(--ok)}.fdot.warn{background:var(--warn)}.fdot.bad{background:var(--bad)}
+.fstate{width:14px;height:14px;color:var(--ink2);stroke-width:2.25}
+.fstate.ok{color:var(--ok)}.fstate.warn{color:var(--warn)}.fstate.bad{color:var(--bad)}
 /* ---- backend ---- */
 .donform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:10px}
 .donform label{display:flex;flex-direction:column;gap:4px;color:var(--ink2)}

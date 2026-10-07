@@ -1,10 +1,10 @@
-import { Check, Copy, Sparkles, Target } from "lucide-react"
+import { Check, Copy, Crown, Target } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
-import { HaloSegmented } from "@/components/ui/halo-segmented"
+import { Segmented } from "@/components/ui/segmented"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
@@ -41,7 +41,7 @@ export function FramesPage() {
             <ComboboxList>{(n: string) => <ComboboxItem key={n} value={n}>{n}</ComboboxItem>}</ComboboxList>
           </ComboboxContent>
         </Combobox>
-        {d.prime ? <Button variant="outline" className="h-10" onClick={() => tf().framesSet({ frame: d.prime })}><Sparkles /> Prime version</Button> : null}
+        {d.prime ? <Button variant="outline" className="h-10" onClick={() => tf().framesSet({ frame: d.prime })}><Crown /> Prime version</Button> : null}
         {d.baseVer ? <Button variant="outline" className="h-10" onClick={() => tf().framesSet({ frame: d.baseVer })}>Base version</Button> : null}
       </div>
       {d.filteredEmpty ? <p className="text-sm text-muted-foreground">No Warframes match that filter, so all of them are listed.</p> : null}
@@ -54,7 +54,7 @@ export function FramesPage() {
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-2">
-                {d.builds.length > 1 ? <HaloSegmented items={d.builds} value={d.bi} onValueChange={(v) => tf().framesSet({ build: v })} /> : null}
+                {d.builds.length > 1 ? <Segmented items={d.builds} value={d.bi} onValueChange={(v) => tf().framesSet({ build: v })} /> : null}
                 <Toggle variant="outline" pressed={d.budget} onPressedChange={(v) => tf().framesSet({ budget: v })} className="h-9 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Budget mods</Toggle>
               </div>
               <div className="flex flex-wrap items-center gap-2 text-sm">

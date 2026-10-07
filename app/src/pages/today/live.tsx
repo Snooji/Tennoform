@@ -1,4 +1,4 @@
-import { ChevronDown, RefreshCw, Star } from "lucide-react"
+import { ChevronDown, CircleAlert, CircleCheck, Clock, LoaderCircle, RefreshCw, Star, WifiOff } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -18,16 +18,25 @@ function Left({ t }: { t: string }) {
   return <Badge variant="outline" className={cn("tabular-nums", ended(t) ? "border-amber-500/40 text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{t}</Badge>
 }
 
-const DOT = { ok: "bg-emerald-500", loading: "bg-muted-foreground/50", delayed: "bg-amber-500", stale: "bg-amber-500", error: "bg-destructive", offline: "bg-muted-foreground/50" }
+/** Feed state as an icon next to the words (never colour alone). */
+const STATE = {
+  ok: { Icon: CircleCheck, cls: "text-emerald-700 dark:text-emerald-400" },
+  loading: { Icon: LoaderCircle, cls: "animate-spin text-muted-foreground" },
+  delayed: { Icon: Clock, cls: "text-amber-700 dark:text-amber-300" },
+  stale: { Icon: Clock, cls: "text-amber-700 dark:text-amber-300" },
+  error: { Icon: CircleAlert, cls: "text-destructive" },
+  offline: { Icon: WifiOff, cls: "text-muted-foreground" },
+}
 
 /** Connection and freshness of the live feed, shown above the live sections at all times. */
 export function LiveStatus() {
   const L = useTFData(() => tf().liveInfo())
+  const st = STATE[L.state] ?? STATE.offline
   return (
-    <Card size="sm" className="gap-1 px-4" role="status" aria-live="polite">
+    <div className="flex flex-col gap-1 border-b pb-3" role="status" aria-live="polite">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="flex min-w-0 flex-1 items-center gap-2 text-sm">
-          <span aria-hidden className={cn("size-2 shrink-0 rounded-full", DOT[L.state], L.busy && "animate-pulse")} />
+          <st.Icon aria-hidden className={cn("size-4 shrink-0", st.cls)} />
           <span className="min-w-0"><b className="font-medium">{L.conn}</b>{L.at ? <span className="text-muted-foreground"> · updated {L.at}</span> : null}</span>
         </span>
         {L.retry ? (
@@ -40,7 +49,7 @@ export function LiveStatus() {
       {L.state === "loading" ? <p className="text-sm text-muted-foreground">Getting cycles, fissures, Baro and the Sortie…</p> : null}
       {L.state === "error" && !L.at ? <p className="text-sm text-muted-foreground">Couldn't get live game info. Check your connection, then try again.</p> : null}
       {L.fresh && L.state !== "ok" ? <p className={cn("text-sm", L.state === "delayed" || L.state === "stale" ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{L.fresh}</p> : null}
-    </Card>
+    </div>
   )
 }
 
@@ -72,7 +81,7 @@ export function Missions({ L }: { L: TodayLive }) {
             <ol className="flex flex-col gap-2 text-sm">
               {L.sortie.variants.map((v, i) => (
                 <li key={i} className="flex gap-3">
-                  <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-md border border-primary/40 text-xs font-semibold text-primary">{i + 1}</span>
+                  <span aria-hidden className="w-4 shrink-0 font-semibold text-muted-foreground tabular-nums">{i + 1}</span>
                   <span>
                     <b className="font-medium">{v.t}</b> · {v.s}
                     <span className="block text-muted-foreground">{v.n}</span>

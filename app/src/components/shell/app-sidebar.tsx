@@ -10,7 +10,7 @@ import {
   DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { HaloProgress } from "@/components/ui/halo-progress"
+import { ProgressBar } from "@/components/ui/progress-bar"
 import { PAGE_ICON } from "./nav-icons"
 import { ACCENTS, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { TF_LINKS, openLink } from "./tennoform-links"
@@ -106,9 +106,8 @@ function MasteryMeter({ s }: { s: TFState }) {
       className="block rounded-md px-2 py-2 hover:bg-sidebar-accent group-data-[collapsible=icon]:hidden"
       aria-label={`${s.mrLabel}, ${fmt(s.toNext)} XP to ${s.nextLabel}`}
     >
-      <HaloProgress
+      <ProgressBar
         value={Math.round(s.pct)}
-        translucent={false}
         className="min-w-0"
         label={
           <span className="flex w-full items-baseline justify-between gap-2">
