@@ -11,7 +11,7 @@ function ckReset(c){return c[0]==='d'?(c[1]==='sortie'?lastSortie():lastDaily())
 function ckDone(c){const ts=(P.dw||{})[c[1]];return !!ts&&ts>=ckReset(c)}
 function gateOK(g){return !g||qDone(g)}
 let WS=null,WSat=0,WSerr=false,WSload=false;
-async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{const r=await fetch('https://api.warframestat.us/pc/?language=en');if(!r.ok)throw 0;WS=await r.json();WSat=Date.now();WSerr=false}catch(e){WSerr=true}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
+async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{WS=await netJSON('ws','https://api.warframestat.us/pc/?language=en');WSat=Date.now();WSerr=false}catch(e){WSerr=true;WSat=Date.now()}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
 function neededEras(){const s={};const names=new Set([...(P.goals||[]),...Object.keys(I).filter(n=>I[n].p&&(on('bp|'+n)||I[n].parts.some(p=>on('part|'+n+'|'+p.n)))&&!on('build|'+n))]);
   names.forEach(n=>{const it=I[n];if(!it||!it.p)return;const lists=[];if(!on('bp|'+n)&&it.bprel)lists.push(it.bprel);it.parts.forEach(p=>{if(p.rel&&!on('part|'+n+'|'+p.n))lists.push(p.rel)});lists.flat().forEach(([r])=>{if(REL[r]&&!REL[r].v){const e=REL[r].era;(s[e]=s[e]||new Set()).add(r)}})});return s}
 function today(){const f=state.ckF||'todo';const now=Date.now();

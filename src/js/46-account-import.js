@@ -52,15 +52,16 @@ function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
 async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
-  try{let j=null;if(window.TENNO_PROXY){const relay=async plat=>{try{const r=await fetch(window.TENNO_PROXY+'?playerId='+id+(plat&&plat!=='pc'?'&platform='+plat:''));return r.ok?await r.json():null}catch(e){return null}};
+  try{let j=null;if(window.TENNO_PROXY){const relay=async plat=>{try{return await netJSON('relay',window.TENNO_PROXY+'?playerId='+id+(plat&&plat!=='pc'?'&platform='+plat:''))}catch(e){if(e.kind==='stopped'||e.kind==='budget'||e.kind==='backoff')throw e;return null}};
       const plat=typeof wfPlat==='function'?wfPlat().id:'pc';j=await relay(plat);
       /* cross-save accounts keep their profile on the PC server, so a console or phone server with no profile falls back to it */
       if(plat!=='pc'&&!(j&&(j.Results||j.profile))){const pc=await relay('pc');if(pc&&(pc.Results||pc.profile))j=pc}}
-    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){const r=await fetch('https://api.warframestat.us/profile/'+id+'/?language=en');if(!r.ok)throw new Error(r.status);j=await r.json();if(j.error)throw new Error(j.error)}
+    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){j=await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en');if(j.error)throw new Error(j.error)}
     const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
-  catch(e){if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+  catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http'){if(!quiet)toast(e.message);return false}
+    if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
       toast(e&&e.msg?e.msg+' Or use the two quick steps on this page.':"Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
-async function liveResurgence(){try{const r=await fetch('https://api.warframestat.us/pc/vaultTrader/?language=en');if(!r.ok)return;const v=await r.json();if(!v.inventory||!v.expiry)return;
+async function liveResurgence(){try{const v=await netJSON('vault','https://api.warframestat.us/pc/vaultTrader/?language=en');if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;
   for(const n in VAULT){if(frames.includes(n)||pairs.has(VAULT[n].pair))VAULT[n].now=until}D.vtnow={until,items:v.inventory.map(x=>x.item),loc:v.location};if(['#market','#frames','#farm'].includes(location.hash))render()}catch(e){}}
