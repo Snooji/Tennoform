@@ -26,7 +26,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
 function siteFoot(){return `<footer class="sitefoot"><div class="footcta" role="navigation" aria-label="Tennoform"><a class="btn sm primary" href="#donate">Support Tennoform</a><a class="btn sm" href="#feedback">Send feedback</a><a class="btn sm" href="#about" data-about="changes">What's new</a></div><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
- <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
+ <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe, its content and its item pictures are trademarks and property of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
   <dl class="faq">
@@ -54,7 +54,7 @@ function about(){const sec=state.aboutSec;
    <li><b>With an account</b> your progress, tasks and settings are stored in Google Firebase so they follow you between devices. Only you can read them.</li>
    <li><b>Friends</b> can see your display name, friend code, MR, total Mastery XP and node counts. Messages are stored until you or the recipient deletes them.</li>
    <li><b>Feedback</b> is readable only by the developer.</li>
-   <li><b>No ads, no analytics, no tracking.</b> Your browser contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase (when signed in).</li>
+   <li><b>No ads, no analytics, no tracking.</b> Your browser contacts warframestat.us (live data and item pictures), Tennoform's profile relay (when you sync) and Firebase (when signed in).</li>
    <li>You can export your data any time (Profile → Backup &amp; export) and delete your account and everything stored with it (Profile → Account &amp; sync).</li></ul></section>
   <details class="obj grp" ${sec==='changes'?'open':''} id="changes"><summary><h3>What's new</h3></summary><div class="stack" style="padding:10px 14px;gap:8px">${CHANGES.map(([d,t])=>`<div class="small"><b class="mono">${esc(fdate(d))}</b> · ${esc(t)}</div>`).join('')}</div></details>
   <section class="panel cut stack"><h2>Contact</h2><span class="small">Bugs, ideas or wrong data: <a class="ln" href="#feedback">Feedback page</a>. Like the app? <a class="ln" href="#donate">Support Tennoform</a>.</span></section></div>`}
