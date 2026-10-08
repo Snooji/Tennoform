@@ -3,7 +3,8 @@
    outside the site is blocked. Exits non-zero if any check fails.
    1. pages: every page in dark and light, phone and desktop, loads without script errors and passes axe (WCAG 2.1 AA)
    2. grey screens: tapping every tab and switch on every page never leaves an empty overlay or a locked page
-   3. styles: Foundry and Prime, light and dark, with a few colour palettes, pass axe */
+   3. styles: Foundry and Prime, light and dark, with a few colour palettes, pass axe
+   4. chat window: the pop-up chat opens from its button, moves, resizes, minimises, closes and passes axe */
 const { chromium } = require('playwright')
 const fs = require('fs')
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8')
@@ -99,10 +100,39 @@ async function styles(b) {
   }
 }
 
+async function chatWindow(b) {
+  for (const w of [1280, 390]) {
+    const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
+    p.on('pageerror', (e) => errs.push(e.message))
+    await open(p, {})
+    const B = 'button[aria-label^="Open chat"]', W = '[aria-label="Chat window"]'
+    const box = async (s) => { const r = await p.locator(s).first().boundingBox(); return r && [r.x, r.y, r.width, r.height].map(Math.round) }
+    if (!(await p.locator(B).count())) { fail(`chat ${w}: no chat button`); await ctx.close(); continue }
+    await p.locator(B).click(); await p.waitForTimeout(700)
+    const a = await box(W)
+    if (!a) { fail(`chat ${w}: button didn't open the window`); await ctx.close(); continue }
+    const v = await axe(p)
+    if (v.length) fail(`chat ${w} axe: ${v.join('; ')}`)
+    await p.mouse.move(a[0] + 120, a[1] + 20); await p.mouse.down(); await p.mouse.move(a[0] + 100, a[1] - 100, { steps: 4 }); await p.mouse.up()
+    const m = await box(W)
+    if (m[1] >= a[1]) fail(`chat ${w}: window didn't move (${a} -> ${m})`)
+    const r = await box('button[aria-label^="Resize chat"]')
+    await p.mouse.move(r[0] + 10, r[1] + 10); await p.mouse.down(); await p.mouse.move(r[0] - 40, r[1] - 60, { steps: 4 }); await p.mouse.up()
+    const z = await box(W)
+    if (z[3] >= m[3]) fail(`chat ${w}: window didn't resize (${m} -> ${z})`)
+    await p.locator('button[aria-label="Minimise chat window"]').click(); await p.waitForTimeout(200)
+    if ((await box(W))[3] > 60) fail(`chat ${w}: window didn't minimise`)
+    await p.locator('button[aria-label="Close chat window"]').click(); await p.waitForTimeout(200)
+    if (await p.locator(W).count() || !(await p.locator(B).count())) fail(`chat ${w}: close didn't bring the button back`)
+    if (errs.length) fail(`chat ${w} script errors: ${errs.slice(0, 3).join(' | ')}`)
+    console.log('chat window', w, 'checked'); await ctx.close()
+  }
+}
+
 ;(async () => {
     // full Chromium (what visitors run), not Playwright's stripped-down headless shell
   const b = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : { channel: 'chromium' })
-  await pages(b); await grey(b); await styles(b)
+  await pages(b); await grey(b); await styles(b); await chatWindow(b)
   await b.close()
   console.log(fails.length ? `\n${fails.length} problem(s) found` : '\nAll checks passed')
   process.exit(fails.length ? 1 : 0)

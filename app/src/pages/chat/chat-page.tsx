@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { Hash, MessageSquarePlus, Plus, Shield, Users, UserRound, X } from "lucide-react"
+import { Hash, MessageSquarePlus, PictureInPicture2, Plus, Shield, Users, UserRound, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type ChatTab } from "@/lib/tf"
+import { setChatWin } from "@/lib/chat-win"
 import { SignInCard } from "@/pages/home/side-cards"
 import { RoomView } from "./room"
 import { Conversation } from "./conversation"
@@ -22,7 +23,11 @@ export function ChatPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <span className="text-xs text-muted-foreground max-md:hidden">Squad</span>
-        <h1 className="font-heading text-3xl font-semibold max-md:text-2xl">Chat</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="font-heading text-3xl font-semibold max-md:text-2xl">Chat</h1>
+          <Button variant="outline" size="sm" className="ml-auto h-9" onClick={() => { setChatWin({ open: true, min: false, bubble: true }); if (history.length > 1) history.back(); else tf().go("home") }}
+            title="Keep chat in a window you can move around while you use the rest of the site"><PictureInPicture2 /> Pop out</Button>
+        </div>
         <p className="max-w-3xl text-sm text-muted-foreground max-md:hidden">
           Tennoform's own chat: messages here don't reach in-game chat. Swearing's fine; anything illegal or extremely explicit is held for review and can get you banned.
         </p>
@@ -36,13 +41,13 @@ export function ChatPage() {
   )
 }
 
-function ConvTab() {
+export function ConvTab() {
   const s = useTFData(() => tf().squad())
   if (s.status !== "ok" || !s.chat) return <p className="m-auto text-sm text-muted-foreground" role="status">{s.status === "loading" ? "Loading…" : s.status === "signin" ? "Sign in to see your conversations." : "Loading this conversation…"}</p>
   return <Conversation d={s} />
 }
 
-function TabStrip({ d }: { d: ReturnType<ReturnType<typeof tf>["chat"]> }) {
+export function TabStrip({ d }: { d: ReturnType<ReturnType<typeof tf>["chat"]> }) {
   const list = useRef<HTMLElement>(null)
   const keys = (e: React.KeyboardEvent) => {
     if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) return
