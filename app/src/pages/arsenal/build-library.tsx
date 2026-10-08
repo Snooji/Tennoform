@@ -57,6 +57,7 @@ function Row({ b }: { b: BuildCard }) {
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> {b.author || "Player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
             {b.role ? <span className="truncate text-xs text-muted-foreground">{b.role}</span> : null}
+            {b.dated ? <span className={cn("text-xs", b.stale ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{b.dated}{b.stale ? " · may be out of date" : ""}</span> : null}
             {b.goal ? <Badge variant="outline" className="border-primary/40 text-primary"><Target /> Goal</Badge> : null}
           </span>
           <Progress have={b.have} total={b.total} />
@@ -83,6 +84,11 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
                 : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
               {b.helminth ? <span>Helminth: <b className="font-medium">{b.helminth}</b></span> : null}
             </span>
+            {b.dated ? (
+              <span className={cn("text-xs", b.stale ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>
+                {b.dated}{b.stale ? ". Over 6 months old: game updates may have changed the mods or numbers since." : ""}
+              </span>
+            ) : null}
           </div>
           {b.src === "player" ? <Votes b={b} size="lg" /> : null}
         </div>

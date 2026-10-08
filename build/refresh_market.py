@@ -19,6 +19,20 @@ def get(url):
     return None
 
 prices, sellers = dict(old['prices']), dict(old['sellers'])
+# 90 days of daily average prices per item, for the price charts; the statistics call below already returns them
+HP = os.path.join(H, 'pricehist.json')
+hist = json.load(open(HP)) if os.path.exists(HP) else {}
+def series(rows):
+    """[first day, [price or None for each day]] from warframe.market's daily rows."""
+    by = {e['datetime'][:10]: e['avg_price'] for e in rows if e.get('avg_price') is not None}
+    if not by: return None
+    days = sorted(by)
+    d0 = datetime.date.fromisoformat(days[0]); n = (datetime.date.fromisoformat(days[-1]) - d0).days + 1
+    out = []
+    for i in range(n):
+        v = by.get((d0 + datetime.timedelta(days=i)).isoformat())
+        out.append(None if v is None else (round(v, 1) if v < 10 else round(v)))
+    return [days[0], out]
 for i, n in enumerate(names):
     s = slugs[n]
     st = get(f'https://api.warframe.market/v1/items/{s}/statistics')
@@ -31,6 +45,8 @@ for i, n in enumerate(names):
         if v30: e['a30'] = round(sum(x['avg_price'] * x['volume'] for x in l30) / v30, 1)
         e['v7'] = v7
         prices[n] = e
+        h = series(d)
+        if h: hist[n] = h
     time.sleep(0.35)
     top = get(f'https://api.warframe.market/v2/orders/item/{s}/top')
     if top:
@@ -40,4 +56,5 @@ for i, n in enumerate(names):
     if i % 100 == 0: print(i, '/', len(names), flush=True)
 date = datetime.datetime.utcnow().strftime('%b %-d, %Y')
 json.dump({'prices': prices, 'sellers': sellers, 'date': date}, open(os.path.join(H, 'market.json'), 'w'), separators=(',', ':'), ensure_ascii=False)
+json.dump(hist, open(HP, 'w'), separators=(',', ':'), ensure_ascii=False)
 print('done', len(prices))

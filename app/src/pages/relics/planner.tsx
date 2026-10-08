@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Search, Users, X } from "lucide-react"
+import { Search, Users, X, Zap } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -48,7 +48,7 @@ export function Planner({ d }: { d: PlanData }) {
           <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Relic or reward, e.g. Neo S1 or Saryn" aria-label="Find a relic or reward" className="h-10 pr-9 pl-9" />
           {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-1.5 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
         </div>
-        <Pick items={[{ value: "all", label: "All eras" }, { value: "open", label: "Farmable now" }, ...["Lith", "Meso", "Neo", "Axi", "Requiem"].map((x) => ({ value: x, label: x }))]} value={d.era} onChange={(v) => tf().planSet({ era: v })} label="Era" />
+        <Pick items={[{ value: "all", label: "All eras" }, { value: "open", label: "Farmable now" }, { value: "fis", label: "Fissure open now" }, ...["Lith", "Meso", "Neo", "Axi", "Requiem"].map((x) => ({ value: x, label: x }))]} value={d.era} onChange={(v) => tf().planSet({ era: v })} label="Era" />
         <Pick items={[{ value: "plat", label: "Platinum per run" }, { value: "du", label: "Ducats per run" }, { value: "need", label: "Chance at goal parts" }, { value: "name", label: "Name" }]} value={d.sort} onChange={(v) => tf().planSet({ sort: v })} label="Sort" prefix="Sort:" />
         <SortDir k="rpS" className="size-9" />
         <Toggle variant="outline" pressed={d.own} onPressedChange={(v) => tf().planSet({ own: v })} className="h-10 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Only relics I own</Toggle>
@@ -79,6 +79,12 @@ export function Planner({ d }: { d: PlanData }) {
                 <span className="col-span-2 flex flex-col gap-0.5 text-xs md:col-span-1">
                   {x.rare ? (
                     <span className="text-muted-foreground">Rare: <GoLink k={x.rare.go} className="text-primary">{x.rare.n}</GoLink>{x.rare.plat != null ? ` (${x.rare.plat}p)` : ""} · <b className="font-medium text-foreground">{pct(x.rare.p)}</b></span>
+                  ) : null}
+                  {x.fis ? (
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                      <Zap aria-hidden className="size-3.5 text-primary" />
+                      {x.era} fissure now: <b className="font-medium text-foreground">{x.fis.mission}</b> · {x.fis.node}{x.fis.hard ? " · Steel Path" : ""}{x.fis.storm ? " · Void Storm" : ""} · {x.fis.left} left{x.fis.more ? ` (+${x.fis.more} more)` : ""}
+                    </span>
                   ) : null}
                   {x.need.length ? (
                     <span className={cn("text-muted-foreground")}>

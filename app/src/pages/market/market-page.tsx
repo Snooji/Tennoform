@@ -13,6 +13,8 @@ import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type MarketData, type VaultCard } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
+import { PriceChart } from "@/components/tf/price-chart"
+import { PriceAlertField } from "@/components/tf/price-alert"
 
 const MOD_SORTS = [{ value: "v7", label: "Most traded" }, { value: "a7", label: "7-day price" }, { value: "low", label: "Cheapest seller" }, { value: "n", label: "Name" }]
 const MOD_KINDS = [{ value: "all", label: "Mods and arcanes" }, { value: "Mod", label: "Mods" }, { value: "Arcane", label: "Arcanes" }]
@@ -183,6 +185,52 @@ function Group({ title, cards, open, tone, empty }: { title: string; cards: Vaul
   )
 }
 
+/** Price alerts: items you want at or below a price, checked against each day's warframe.market snapshot. */
+function PriceAlerts() {
+  const d = useTFData(() => tf().priceAlerts())
+  const [q, setQ] = useState("")
+  const [pick, setPick] = useState("")
+  const sug = q.trim().length >= 2 && !pick ? tf().priceSuggest(q) : []
+  return (
+    <>
+      <p className="text-sm text-muted-foreground">
+        Pick an item and the price you'd pay. Each day's warframe.market snapshot ({d.date}) is checked against it, and an alert shows on Home and Today when the cheapest
+        seller (or the 7-day average, if nobody is selling) is at or below your price.
+      </p>
+      <Card className="gap-3 px-4">
+        <label htmlFor="pa-find" className="text-sm font-medium">Add an alert</label>
+        <div className="relative">
+          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input id="pa-find" type="search" value={pick || q} onChange={(e) => { setPick(""); setQ(e.target.value) }} placeholder="Item, e.g. Primed Flow or Saryn Prime Set" className="h-10 pl-9" />
+        </div>
+        {sug.length ? (
+          <ul className="flex flex-wrap gap-1.5" aria-label="Matching items">
+            {sug.map((n) => <li key={n}><Button variant="outline" size="sm" className="h-8" onClick={() => setPick(n)}>{n}</Button></li>)}
+          </ul>
+        ) : null}
+        {pick ? <PriceAlertField n={pick} /> : null}
+      </Card>
+      {d.list.length ? (
+        <ul className="flex flex-col gap-3">
+          {d.list.map((a) => (
+            <li key={a.n}>
+              <Card className="gap-3 px-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <GoLink k={"item|" + a.n} className="font-medium">{a.n}</GoLink>
+                  {a.hit ? <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 dark:text-emerald-400"><Check /> At your price</Badge> : null}
+                  {a.url ? <a href={a.url} target="_blank" rel="noopener" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "ml-auto h-8")}>warframe.market <ExternalLink /><span className="sr-only">(opens in a new tab)</span></a> : null}
+                </div>
+                <PriceAlertField n={a.n} />
+                <PriceChart n={a.n} />
+              </Card>
+            </li>
+          ))}
+        </ul>
+      ) : <p className="text-sm text-muted-foreground">No price alerts yet.</p>}
+    </>
+  )
+}
+
 export function MarketPage() {
   const d = useTFData(() => tf().market())
   return (
@@ -191,7 +239,7 @@ export function MarketPage() {
         <span className="text-xs text-muted-foreground">warframe.market · snapshot {d.snapshot}</span>
         <h1 className="font-heading text-3xl font-semibold">Market</h1>
       </header>
-      <Segmented className="self-start" value={d.tab} onValueChange={(v) => tf().marketSet({ tab: v })} items={[{ value: "sets", label: "Prime sets" }, { value: "mods", label: "Mods & arcanes" }, { value: "vault", label: "Vault tracker" }]} />
+      <Segmented className="self-start" value={d.tab} onValueChange={(v) => tf().marketSet({ tab: v })} items={[{ value: "sets", label: "Prime sets" }, { value: "mods", label: "Mods & arcanes" }, { value: "vault", label: "Vault tracker" }, { value: "alerts", label: "Price alerts" }]} />
       {d.tab === "vault" ? (
         <>
           <p className="text-xs text-muted-foreground">Prime Resurgence brings back two vaulted Warframes with their weapons every 4 weeks. Return dates are rough estimates from each pair's past appearances (typical gap about {d.gapMonths} months). Digital Extremes doesn't publish a schedule.</p>
@@ -200,7 +248,7 @@ export function MarketPage() {
           <Group title="Farmable from relics" cards={d.farm!} open tone="text-muted-foreground" />
           <Group title="Vaulted · soonest return first" cards={d.vault!} open={false} tone="border-red-500/40 text-red-700 dark:text-red-300" />
         </>
-      ) : d.tab === "mods" ? <Mods /> : <Sets d={d} />}
+      ) : d.tab === "alerts" ? <PriceAlerts /> : d.tab === "mods" ? <Mods /> : <Sets d={d} />}
     </div>
   )
 }
