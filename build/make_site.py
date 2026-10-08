@@ -16,6 +16,15 @@ D['prices'] = mk['prices']
 D['sellers'] = mk['sellers']
 D['sets'] = {k: v for k, v in mk['prices'].items() if k.endswith(' Set')}
 D['meta'] = dict(base['meta'], prices=mk.get('date') or base['meta'].get('prices'), site=datetime.date.today().strftime('%b %-d, %Y'))
+import subprocess
+def live_file(path):
+    """A file as the live site has it: origin/main when git knows it (the deployed branch), else the last commit."""
+    for ref in ('origin/main', 'HEAD'):
+        try:
+            return subprocess.run(['git', 'show', '%s:%s' % (ref, path)], cwd=os.path.join(H, '..'), capture_output=True, check=True, text=True).stdout
+        except Exception:
+            continue
+    return ''
 BUNDLE = os.path.join(H, '..', 'bundle')
 os.makedirs(BUNDLE, exist_ok=True)
 def emit(kind, ext, text):
@@ -42,16 +51,15 @@ files = {
     'market': emit('market', 'js', as_js('TF_MARKET', market)),
     'code': emit('code', 'js', part('js')),
 }
-# Keep the files the previous index.html used, so a browser still holding that page (cached for up to 10 minutes) can finish loading it.
-old = os.path.join(H, '..', 'index.html')
+# Keep the files the live site uses, so a browser still holding that page (cached for up to 10 minutes) can finish loading it.
 keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()))
-if os.path.exists(old):
-    old_html = open(old, encoding='utf-8').read()
-    keep |= set(re.findall(r'/bundle/([\w.-]+)', old_html))
-    # the lazy files are named inside the previous game file, not in the page itself
-    for g in re.findall(r'/bundle/(game-[\w]+\.js)', old_html):
-        if os.path.exists(os.path.join(BUNDLE, g)):
-            keep |= set(re.findall(r'/bundle/([\w.-]+\.json)', open(os.path.join(BUNDLE, g), encoding='utf-8').read().replace('\\/', '/')))
+for src in (live_file('index.html'), open(os.path.join(H, '..', 'index.html'), encoding='utf-8').read() if os.path.exists(os.path.join(H, '..', 'index.html')) else ''):
+    keep |= set(re.findall(r'/bundle/([\w.-]+)', src))
+    # the lazy files are named inside the game file, not in the page itself
+    for g in re.findall(r'/bundle/(game-[\w]+\.js)', src):
+        gp = os.path.join(BUNDLE, g)
+        txt = open(gp, encoding='utf-8').read() if os.path.exists(gp) else live_file('bundle/' + g)
+        keep |= set(re.findall(r'/bundle/([\w.-]+\.json)', txt.replace('\\/', '/')))
 for f in os.listdir(BUNDLE):
     if f not in keep:
         os.remove(os.path.join(BUNDLE, f))
@@ -70,8 +78,8 @@ csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "
        "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'" % hashes)
 def prune_assets():
-    """The React build no longer empties assets/, so a tab that was open during an update can still load the
-    previous build's pages. Keep this build's files and the previous build's; delete anything older."""
+    """The React build no longer empties assets/, so a tab that was open during an update can still load its pages.
+    Keep this build's files and the ones the live site uses; delete anything older."""
     A = os.path.join(H, '..', 'assets')
     mf = os.path.join(A, '.vite', 'manifest.json')
     if not os.path.exists(mf):
@@ -81,16 +89,16 @@ def prune_assets():
         cur.add(e['file'])
         cur.update(e.get('css', []))
         cur.update(e.get('assets', []))
-    kp = os.path.join(A, '.vite', 'keep.json')
-    keep = json.load(open(kp)) if os.path.exists(kp) else {'current': sorted(cur), 'previous': []}
-    if set(keep['current']) != cur:
-        keep = {'current': sorted(cur), 'previous': keep['current']}
-    allowed = cur | set(keep['previous'])
+    live = set()
+    try:
+        for e in json.loads(live_file('assets/.vite/manifest.json') or '{}').values():
+            live.add(e['file']); live.update(e.get('css', [])); live.update(e.get('assets', []))
+    except ValueError:
+        pass
+    allowed = cur | live
     for f in os.listdir(A):
         if os.path.isfile(os.path.join(A, f)) and f not in allowed:
             os.remove(os.path.join(A, f))
-    with open(kp, 'w') as f:
-        json.dump(keep, f, indent=0)
 prune_assets()
 def shell_tags():
     # The React shell (app/, built with Vite into assets/) loads after the main script, which exposes window.TF.
