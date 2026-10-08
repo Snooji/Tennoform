@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Bell, ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
+import { Bell, ChevronsUpDown, MessagesSquare, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -17,6 +17,7 @@ import { NotificationsDialog } from "./notifications"
 import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
+import { setChatWin, useChatWin } from "@/lib/chat-win"
 
 export function Logo({ className }: { className?: string }) {
   return <span aria-hidden className={className} dangerouslySetInnerHTML={{ __html: tf().logo() }} />
@@ -139,6 +140,7 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
   const initial = (s.acctName || s.name || "T").trim()[0]?.toUpperCase() ?? "T"
   const [look, setLook] = useState(false)
   const [ntf, setNtf] = useState(false)
+  const cw = useChatWin()
   return (
     <SidebarMenu>
       <AppearanceDialog open={look} onOpenChange={setLook} />
@@ -200,6 +202,9 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => { setOpen(false); setNtf(true) }}>
               <Bell /> Notifications
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => { setOpen(false); setChatWin(cw.bubble || cw.open ? { bubble: false, open: false } : { bubble: true }) }}>
+              <MessagesSquare /> {cw.bubble || cw.open ? "Hide chat button" : "Show chat button"}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => { setOpen(false); setLook(true) }}>
               <Palette /> Appearance
