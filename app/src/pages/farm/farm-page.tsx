@@ -111,7 +111,8 @@ export function FarmPage() {
   const d = useTFData(() => tf().farm())
   const narrow = useNarrow()
   const [q, setQ] = useState(d.q)
-  const [sheet, setSheet] = useState(false)
+  // arriving from a link on another page opens the picked guide on a phone as well
+  const [sheet, setSheet] = useState(() => tf().farmJumped() && !!d.sel && window.innerWidth < 900)
   useNavReset(() => setSheet(false))
   useEffect(() => {
     const t = window.setTimeout(() => {

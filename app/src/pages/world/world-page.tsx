@@ -1,16 +1,18 @@
-import { Check, Clock, Fish, Pickaxe, Plus } from "lucide-react"
+import { useState } from "react"
+import { Check, ChevronRight, Clock, Fish, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
 import { Segmented } from "@/components/ui/segmented"
 import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { GoLink } from "@/components/tf/go-link"
 import { cn } from "@/lib/utils"
-import { tf, useTFData, type WorldData } from "@/lib/tf"
+import { tf, useTFData, type ConservationData, type WorldData } from "@/lib/tf"
 
 const RARE = (r: string) => (r === "Rare" || r === "Legendary" || r === "Special" ? "border-primary/40 text-primary" : "text-muted-foreground")
 
@@ -141,14 +143,91 @@ function Mining({ d }: { d: WorldData }) {
   )
 }
 
+function WorldSearch() {
+  const [q, setQ] = useState("")
+  const hits = useTFData(() => tf().worldSearch(q))
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="relative">
+        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a fish, ore, gem or animal" aria-label="Find a fish, ore, gem or animal" className="h-10 pl-9" />
+      </div>
+      {q.trim().length >= 2 ? (
+        <Card className="gap-0 py-0" aria-live="polite">
+          {hits.length ? (
+            <ul className="flex flex-col divide-y">
+              {hits.map((h) => (
+                <li key={h.key} className="flex flex-wrap items-center gap-x-2 gap-y-0.5 px-4 py-2.5 text-sm">
+                  <GoLink k={h.key} className={cn("font-medium", h.done && "text-muted-foreground line-through")}>{h.n}</GoLink>
+                  <Badge variant="outline" className="text-muted-foreground">{h.kind}</Badge>
+                  <span className="text-xs text-muted-foreground">{h.reg}{h.line ? " · " + h.line : ""}</span>
+                </li>
+              ))}
+            </ul>
+          ) : <p className="px-4 py-3 text-sm text-muted-foreground">Nothing in the open worlds matches “{q.trim()}”.</p>}
+        </Card>
+      ) : null}
+    </div>
+  )
+}
+
+function Conservation({ c }: { c: ConservationData }) {
+  const done = c.species.filter((a) => a.done).length
+  return (
+    <>
+      <ToggleGroup aria-label="Region" value={[c.region]} onValueChange={(v: string[]) => v[0] && tf().conservationSet(v[0])} spacing={1}
+        className="scroll-fade -mx-4 w-auto flex-nowrap overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
+        {c.regions.map((r) => (
+          <ToggleGroupItem key={r} value={r} variant="outline" className="h-9 rounded-full px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">{r}</ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+      <Card size="sm" className="py-0">
+        <details className="group px-4 py-3">
+          <summary className="flex cursor-pointer list-none items-center gap-2 font-heading text-base font-semibold [&::-webkit-details-marker]:hidden">
+            <ChevronRight className="size-4 text-muted-foreground transition-transform group-open:rotate-90" aria-hidden /> How Conservation works
+          </summary>
+          <ol className="mt-2 flex list-decimal flex-col gap-1 pl-5 text-sm text-muted-foreground marker:text-primary/70">{c.steps.map((t) => <li key={t}>{t}</li>)}</ol>
+        </details>
+      </Card>
+      <Card className="gap-0 py-0">
+        <div className="flex flex-wrap items-center gap-3 border-b px-4 py-3">
+          <b className="font-heading text-base font-semibold">{c.region}</b>
+          <span className="text-xs text-muted-foreground">{c.vendor}</span>
+          <span className="text-xs text-muted-foreground tabular-nums">{done}/{c.species.length} captured</span>
+          <Progress value={(100 * done) / (c.species.length || 1)} className="h-1 min-w-20 flex-1" aria-label={`${done} of ${c.species.length} captured`} />
+        </div>
+        <ul className="flex flex-col divide-y">
+          {c.species.map((a) => (
+            <li key={a.n} className={cn("flex gap-3 px-4 py-3", a.done && "bg-muted/30")}>
+              <Checkbox className="mt-0.5 size-5 rounded-md" checked={a.done} onCheckedChange={(v) => tf().nodeTick(a.key, !!v)} aria-label={(a.done ? "Not captured: " : "Captured: ") + a.n} />
+              <div className="flex min-w-0 flex-1 flex-col gap-1 text-sm">
+                <span className="flex flex-wrap items-center gap-1.5">
+                  <GoLink k={"ow|" + a.n} className={cn("font-medium", a.done && "text-muted-foreground line-through decoration-primary/70")}>{a.n}</GoLink>
+                  {a.variants.map((v) => <Badge key={v} variant="outline" className={a.rare.includes(v) ? "border-primary/40 text-primary" : "text-muted-foreground"}>{v}</Badge>)}
+                </span>
+                <span className="text-muted-foreground"><b className="font-medium text-foreground">Where:</b> {a.where}{a.time ? <> · <b className="font-medium text-foreground">When:</b> {a.time}</> : null}</span>
+                <span className="text-muted-foreground"><b className="font-medium text-foreground">Call it:</b> {a.lure}</span>
+                <span className="text-muted-foreground"><b className="font-medium text-foreground">Perfect capture:</b> {a.reward}</span>
+                <span className="text-xs text-muted-foreground">Tip: {a.tip}</span>
+              </div>
+              <TaskBtn has={a.hasTask} k={"animal|" + a.n} label={"Capture " + a.n} />
+            </li>
+          ))}
+        </ul>
+      </Card>
+    </>
+  )
+}
+
 export function WorldPage() {
   const d = useTFData(() => tf().world())
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Open worlds</h1>
-        <p className="max-w-2xl text-sm text-muted-foreground">Where and when each fish bites, which spear and bait to bring, and the best mining spots in every open world.</p>
+        <p className="max-w-2xl text-sm text-muted-foreground">Where and when each fish bites, which spear and bait to bring, the best mining spots, and how to find and capture every animal. Search everything at once below.</p>
       </header>
+      <WorldSearch />
       <Segmented
         className="self-start"
         value={d.tab}
@@ -156,9 +235,10 @@ export function WorldPage() {
         items={[
           { value: "fish", label: <span className="flex items-center gap-1.5"><Fish className="size-4" aria-hidden /> Fishing</span> },
           { value: "mine", label: <span className="flex items-center gap-1.5"><Pickaxe className="size-4" aria-hidden /> Mining</span> },
+          { value: "cons", label: <span className="flex items-center gap-1.5"><PawPrint className="size-4" aria-hidden /> Conservation</span> },
         ]}
       />
-      {d.tab === "mine" ? <Mining d={d} /> : <Fishing d={d} />}
+      {d.tab === "cons" ? (d.cons ? <Conservation c={d.cons} /> : null) : d.tab === "mine" ? <Mining d={d} /> : <Fishing d={d} />}
     </div>
   )
 }
