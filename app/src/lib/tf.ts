@@ -77,6 +77,11 @@ export type TFApi = {
   baroSuggest(q: string): string[]
   circuitWatch(n: string, on: boolean): void
   priceHist(n: string): PriceHist
+  notif(): NotifData
+  notifSet(o: Partial<NotifData>): void
+  notifEnable(): Promise<boolean>
+  notifMute(conv: string, on: boolean): void
+  notifTest(): void
   priceAlerts(): PriceAlerts
   priceAlert(n: string, below: number | null): void
   priceSuggest(q: string): string[]
@@ -273,6 +278,10 @@ export type PlayerStats = { loading: boolean; err: string; data: { live: number;
 export type ReturningData = {
   from: string; options: { value: string; label: string }[]; updates: { date: string; n: string; t: string }[]
   quests: { n: string; why: string; done: boolean; isNew: boolean }[]; moreQuests: number; questsDone: number; questsTotal: number; synced: boolean; assumed: boolean
+}
+export type NotifData = {
+  on: boolean; sound: boolean; dm: boolean; group: boolean; friend: boolean; room: boolean; mute: Record<string, number>
+  perm: "granted" | "denied" | "default" | "unsupported"; worker: boolean; ios: boolean; current: string; currentMuted: boolean
 }
 export type PriceHist = { state: "none" | "loading" | "error" | "empty" | "ok"; points: { d: string; p: number | null }[]; min?: number; max?: number; first?: number; last?: number }
 export type PriceAlerts = { date: string; list: { n: string; below: number; now: number | null; how: string; hit: boolean; url: string }[] }

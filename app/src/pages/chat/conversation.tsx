@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import { MuteButton } from "@/components/shell/notifications"
 import { tf, type SquadData, type SquadMsg } from "@/lib/tf"
 
 /** A friend or group conversation: the same messages, task invites and menu the Friends page used to show. */
@@ -96,6 +97,7 @@ export function Conversation({ d }: { d: SquadData }) {
                 <span className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-xs text-muted-foreground">{c.members || (c.pending ? "Friend request sent" : "Friend")}</span>
         </span>
+        <MuteButton conv={c.type === "group" ? "g:" + c.id : "dm:" + c.id} name={c.name} />
         <ChatMenu d={d} />
       </div>
       {c.pending ? <p className="mx-4 mt-3 rounded-xl bg-muted/50 px-3 py-2 text-sm text-muted-foreground">Waiting for them to accept. You can message once they do.</p> : null}

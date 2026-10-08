@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
+import { Bell, ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ProgressBar } from "@/components/ui/progress-bar"
 import { PAGE_ICON } from "./nav-icons"
 import { AppearanceDialog } from "./appearance"
+import { NotificationsDialog } from "./notifications"
 import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
@@ -137,9 +138,11 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
   const go = (r: string) => { onNavigate(); tf().go(r) }
   const initial = (s.acctName || s.name || "T").trim()[0]?.toUpperCase() ?? "T"
   const [look, setLook] = useState(false)
+  const [ntf, setNtf] = useState(false)
   return (
     <SidebarMenu>
       <AppearanceDialog open={look} onOpenChange={setLook} />
+      <NotificationsDialog open={ntf} onOpenChange={setNtf} />
       <SidebarMenuItem>
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger
@@ -195,6 +198,9 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => { setOpen(false); setNtf(true) }}>
+              <Bell /> Notifications
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => { setOpen(false); setLook(true) }}>
               <Palette /> Appearance
               <span className="ml-auto text-xs text-muted-foreground">{s.style === "prime" ? "Prime" : s.style === "foundry" ? "Foundry" : "Default"}</span>
