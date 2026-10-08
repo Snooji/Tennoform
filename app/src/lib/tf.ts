@@ -220,6 +220,8 @@ export type TFApi = {
   guideReset(id: string): void
   guideTask(id: string): void
   buildLib(): BuildLibData
+  modInfo(n: string): ModInfo | null
+  buildInsight(id: string, ov?: { mods: string[]; arcanes: string[] }): BuildInsight | null
   buildLibSet(o: { q?: string; kind?: string; src?: string; sort?: string; sel?: string | null; more?: boolean }): void
   buildLibReload(): void
   buildGoal(id: string): void
@@ -400,7 +402,20 @@ export type SyndData = {
 }
 export type ResRow = { n: string; have: number | null; label: string; need: number }
 export type ResData = { q: string; filter: string; sel: string; total: number; list: ResRow[] | null; main: ResRow[]; rest: ResRow[]; detail: string }
-export type ModSlot = { slot: string; m: string; key: string; pol: string; done: boolean; price: string; src: string; seller: string }
+export type ModSlot = { slot: string; m: string; key: string; pol: string; done: boolean; price: string; src: string; seller: string; fx?: string }
+export type ModInfo = {
+  n: string; arc: boolean; key: string; owned: boolean; loading: boolean; type: string; fits: string; rarity: string; polarity: string
+  rank: number | null; drain: number | null; fx: string[]; fx0: string[]; augment: boolean
+  drops: { where: string; chance: number }[]; moreDrops: number; src: string
+  tradable: boolean; wfm: string; a7: number | null; a30: number | null; v7: number | null; date: string
+  sellers: { name: string; price: number; qty: number; rank: number | null; status: string; whisper: string }[]
+}
+export type BuildInsight = {
+  ready: boolean; failed: boolean; kind: "frame" | "weapon" | "other"
+  rows: { k: string; from: string; to: string; note: string; gain: number }[]
+  elements: { t: string; v: number; from: string[] | null }[]
+  cond: { m: string; t: string }[]; highlights: string[]; missing: string[]
+}
 export type FramesData = {
   filter: string; filteredEmpty: boolean; list: string[]; name: string; img: string; base: string; prime: string; baseVer: string; tree: string
   builds: { value: string; label: string }[]; bi: string; budget: boolean

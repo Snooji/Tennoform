@@ -15,7 +15,8 @@ import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { GoLink } from "@/components/tf/go-link"
 import { Island } from "@/components/tf/island"
-import { ModCard } from "@/components/tf/mod-card"
+import { ModCard, ModList } from "@/components/tf/mod-card"
+import { BuildInsight } from "@/components/tf/build-insight"
 import { NumField } from "@/components/tf/num-field"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
@@ -65,15 +66,15 @@ function Builds({ d, kind }: { d: ArsenalData; kind: "w" | "c" }) {
             <CardContent className="flex flex-col gap-3">
               {d.builds!.length > 1 ? <Segmented className="self-start" items={d.builds!} value={d.bi} onValueChange={(v) => tf().arsenalSet({ bi: v })} /> : null}
               <div className="flex flex-wrap items-center gap-2 text-sm"><Badge variant="outline" className="border-primary/40 text-primary">{b.role}</Badge><b className="font-medium">{b.name}</b></div>
-              {b.notes ? <p className="text-sm text-muted-foreground">{b.notes}</p> : null}
               <div className="flex flex-wrap gap-2">
                 <Button className="h-9" onClick={() => tf().buildGoal(`m:${d.cur}:${d.bi}`)}><Target /> Save as goal</Button>
                 <Button variant="outline" className="h-9" onClick={() => tf().buildCopy(`m:${d.cur}:${d.bi}`)}><Copy /> Copy to my builds</Button>
               </div>
-              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <ModList>
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
-              </ul>
+              </ModList>
+              <BuildInsight id={`m:${d.cur}:${d.bi}`} notes={b.notes} item={d.cur!} mods={b.mods} arcanes={b.arcanes} />
               <p className="text-xs text-muted-foreground">A proven setup that players run today. Swap the elements to match the faction you're fighting.</p>
             </CardContent>
           </Card>
