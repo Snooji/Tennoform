@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { Bell, BellOff, Hexagon, History, Settings2, Store, X } from "lucide-react"
+import { Bell, BellOff, Hexagon, Swords, History, Settings2, Store, Tag, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { tf, useTFData, type AlertItem } from "@/lib/tf"
 
-const ICON = { baro: Store, resurgence: History, fissure: Hexagon }
+const ICON = { baro: Store, resurgence: History, fissure: Hexagon, circuit: Swords, price: Tag }
 const KINDS = [["baro", "Baro Ki'Teer arriving or here"], ["resurgence", "Prime Resurgence for gear you need"], ["fissure", "Fissures for relics you own"]] as const
 
 /** Alerts from the live feed and your own progress: Baro, a Prime Resurgence you need, fissures for relics you own. */

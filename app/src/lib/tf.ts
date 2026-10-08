@@ -73,6 +73,13 @@ export type TFApi = {
   sell(): SellData | null
   circuit(): CircuitData
   watchToggle(n: string): void
+  baroWish(n: string, on: boolean): void
+  baroSuggest(q: string): string[]
+  circuitWatch(n: string, on: boolean): void
+  priceHist(n: string): PriceHist
+  priceAlerts(): PriceAlerts
+  priceAlert(n: string, below: number | null): void
+  priceSuggest(q: string): string[]
   returning(): ReturningData
   returningSet(v: string): void
   sellCheck(n: string): { level: string; checks: [string, string][] } | null
@@ -267,19 +274,21 @@ export type ReturningData = {
   from: string; options: { value: string; label: string }[]; updates: { date: string; n: string; t: string }[]
   quests: { n: string; why: string; done: boolean; isNew: boolean }[]; moreQuests: number; questsDone: number; questsTotal: number; synced: boolean; assumed: boolean
 }
+export type PriceHist = { state: "none" | "loading" | "error" | "empty" | "ok"; points: { d: string; p: number | null }[]; min?: number; max?: number; first?: number; last?: number }
+export type PriceAlerts = { date: string; list: { n: string; below: number; now: number | null; how: string; hit: boolean; url: string }[] }
 export type CircuitWeek = {
   start: string; label: string; endsIn: string; startsIn: string; need: number
-  frames: { n: string; img: string; owned: boolean; prime: boolean; mastered: boolean }[]
-  adapters: { n: string; full: string; key: string; have: boolean; weapon: boolean; img: string }[]
+  frames: { n: string; img: string; owned: boolean; prime: boolean; mastered: boolean; watch?: boolean }[]
+  adapters: { n: string; full: string; key: string; have: boolean; weapon: boolean; img: string; watch?: boolean }[]
 }
-export type CircuitData = { weeks: CircuitWeek[]; changed: boolean; live: boolean; adaptersHave: number; adaptersTotal: number }
+export type CircuitData = { weeks: CircuitWeek[]; changed: boolean; live: boolean; adaptersHave: number; adaptersTotal: number; watching?: { n: string; week: number; label: string }[] }
 export type SafeSell = { level: "stop" | "warn" | "ok"; checks: { level: "stop" | "warn" | "ok"; text: string }[] }
 export type SellData = {
   n: string; url: string; low: number | null; avg: number | null; a30: number | null; v7: number; quick: number | null; fair: number | null
   du: number | null; rank: boolean; date: string; safe: SafeSell | null; sellers: { name: string; price: number; rank: number | null; status: string }[]; chatQuick: string; chatFair: string
 }
 export type AlertPrefs = { baro: boolean; resurgence: boolean; fissure: boolean; notify: boolean }
-export type AlertItem = { id: string; kind: "baro" | "resurgence" | "fissure"; title: string; text: string; items: string[]; href: string }
+export type AlertItem = { id: string; kind: "baro" | "resurgence" | "fissure" | "circuit" | "price"; title: string; text: string; items: string[]; href: string }
 export type AlertsData = { prefs: AlertPrefs; live: boolean; list: AlertItem[]; hidden: number; canNotify: boolean; perm: string }
 type HistPoint = { xp: number; mr: number; mastered: number; owned: number; nodes: number }
 type HistDelta = { xp: number; mastered: number; owned: number; nodes: number; since: string } | null
@@ -321,7 +330,8 @@ export type TodayLive = {
   cycles: { name: string; state: string; left: string }[]
   sortie?: Tasky & { boss: string; faction: string; variants: { t: string; s: string; n: string }[] }
   archon?: Tasky & { boss: string; missions: { t: string; s: string }[] }
-  baro?: { here: boolean; gone: boolean; left: string; location: string; inv: { item: string; ducats: number; credits: number }[] }
+  baro?: { here: boolean; gone: boolean; left: string; location: string; inv: { item: string; ducats: number; credits: number; wish?: boolean; own?: boolean }[]; wish?: { n: string; here: boolean }[] }
+  baroWish?: string[]
   steel?: { name: string; cost: number }
   arbitration?: Tasky & { type: string; node: string; enemy: string }
   nightwave?: (Tasky & { id: string; title: string; desc: string; rep: number; kind: string; done: boolean })[]
@@ -453,7 +463,7 @@ export type VaultCard = { n: string; c: string; img: string; text: string; watch
 export type MarketModRow = { n: string; kind: "Mod" | "Arcane"; type: string; rar: string; a7: number | null; v7: number; seller: { name: string; price: number; rank: number | null; wh: string } | null; url: string }
 export type MarketMods = { q: string; kind: string; sort: string; total: number; count: number; more: number; rows: MarketModRow[] }
 export type MarketData = {
-  tab: "sets" | "vault" | "mods"; snapshot: string
+  tab: "sets" | "vault" | "mods" | "alerts"; snapshot: string
   q?: string; filter?: string; sort?: string; total?: number; count?: number; more?: number
   sets?: { n: string; base: string; img: string; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null; left: number; xp: number; price: number | null; meta: string; seller: { name: string; price: number; wh: string } | null; url: string }[]
   gapMonths?: number; watch?: VaultCard[]; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]
@@ -465,6 +475,7 @@ export type RelicCard = {
 export type PlanRow = {
   r: string; era: string; vaulted: boolean; count: number; plat: number; du: number
   rare: { n: string; go: string; p: number; plat: number | null } | null; need: { n: string; go: string; p: number }[]; needP: number; hardest: string
+  fis: { mission: string; node: string; hard: boolean; storm: boolean; left: string; more: number } | null
 }
 export type PlanData = { ref: string; squad: string; own: boolean; era: string; sort: string; q: string; total: number; owned: number; rows: PlanRow[] }
 export type RelicsData = {
@@ -629,7 +640,7 @@ export type GuidesData = {
 
 export type BuildCard = {
   id: string; src: "meta" | "player" | "mine"; item: string; img: string; kind: string; cat: string; name: string; role: string
-  author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number
+  author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number; dated?: string; stale?: boolean
 }
 export type BuildDetail = BuildCard & {
   notes: string; helminth: string; mine: boolean; doc: string; mods: ModSlot[]; arcanes: ModSlot[]

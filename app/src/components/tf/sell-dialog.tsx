@@ -3,6 +3,7 @@ import { CircleAlert, Copy, ExternalLink, Info, OctagonAlert } from "lucide-reac
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import { PriceChart } from "@/components/tf/price-chart"
 import { fmt, tf, useTFData, type SafeSell } from "@/lib/tf"
 
 /** Sell on warframe.market: suggested prices from the daily snapshot, a trade-chat line, and the item's page. Tennoform never signs in for you. */
@@ -28,6 +29,7 @@ export function SellDialog() {
                 onCopy={() => copy(String(d.fair), `${d.fair}p copied`)} />
             ) : null}
           </ul>
+          <PriceChart n={d.n} />
           {d.quick == null && d.fair == null ? <p className="text-sm text-muted-foreground">No recent prices for this one. Check the listings on warframe.market before you set a price.</p> : null}
           {d.du ? (
             <p className="flex gap-2 text-sm">

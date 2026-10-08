@@ -1,10 +1,12 @@
-import { ChevronDown, CircleAlert, CircleCheck, Clock, LoaderCircle, RefreshCw, Star, WifiOff } from "lucide-react"
+import { useState } from "react"
+import { Check, ChevronDown, CircleAlert, CircleCheck, Clock, LoaderCircle, Plus, RefreshCw, Star, WifiOff, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type TodayLive } from "@/lib/tf"
@@ -145,17 +147,56 @@ export function Missions({ L }: { L: TodayLive }) {
             {L.baro.inv.length ? (
               <ul className="flex flex-col divide-y rounded-lg border">
                 {L.baro.inv.map((x) => (
-                  <li key={x.item} className="flex items-center justify-between gap-3 px-3 py-1.5">
-                    <span className="min-w-0 truncate">{x.item}</span>
+                  <li key={x.item} className={cn("flex items-center gap-2 py-1 pr-3 pl-1", x.wish && "bg-primary/10")}>
+                    <Button variant="ghost" size="icon" className="size-8 shrink-0" aria-pressed={!!x.wish} aria-label={(x.wish ? "Remove from" : "Add to") + " your Baro wishlist: " + x.item} onClick={() => tf().baroWish(x.item, !x.wish)}>
+                      <Star className={cn("size-4", x.wish && "fill-primary text-primary")} />
+                    </Button>
+                    <span className="min-w-0 flex-1 truncate">{x.item}</span>
+                    {x.own ? <Badge variant="outline" className="shrink-0 text-muted-foreground">Owned</Badge> : null}
                     <span className="shrink-0 text-xs text-muted-foreground tabular-nums">{x.ducats} ducats · {fmt(x.credits)} cr</span>
                   </li>
                 ))}
               </ul>
             ) : null}
+            <BaroWishlist wish={L.baro.wish || []} here={L.baro.here} />
           </CardContent>
         </Card>
       ) : null}
     </>
+  )
+}
+
+/** What you want Baro to bring. His stock is only known once he arrives, so the alert fires then. */
+function BaroWishlist({ wish, here }: { wish: { n: string; here: boolean }[]; here: boolean }) {
+  const [q, setQ] = useState("")
+  const sug = q.trim().length >= 2 ? tf().baroSuggest(q) : []
+  const add = (n: string) => { if (n.trim()) { tf().baroWish(n.trim(), true); setQ("") } }
+  return (
+    <div className="flex flex-col gap-2 border-t pt-3">
+      <span className="flex items-center gap-1.5 font-medium"><Star aria-hidden className="size-4 text-primary" /> Your Baro wishlist</span>
+      {wish.length ? (
+        <ul className="flex flex-wrap gap-1.5">
+          {wish.map((w) => (
+            <li key={w.n}>
+              <Badge variant="outline" className={cn("h-8 gap-1 pr-1", w.here && "border-emerald-500/50 text-emerald-700 dark:text-emerald-400")}>
+                {w.here ? <Check aria-hidden /> : null}{w.n}{w.here ? <span className="sr-only"> (he has it now)</span> : null}
+                <Button variant="ghost" size="icon" className="size-7" aria-label={"Remove " + w.n + " from your Baro wishlist"} onClick={() => tf().baroWish(w.n, false)}><X /></Button>
+              </Badge>
+            </li>
+          ))}
+        </ul>
+      ) : <p className="text-xs text-muted-foreground">Add what you're waiting for, like Primed Flow or a Prisma weapon. When Baro brings any of it, you'll get an alert on Home and Today.</p>}
+      <form className="relative flex gap-2" onSubmit={(e) => { e.preventDefault(); add(q) }}>
+        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Add an item, e.g. Primed Flow" aria-label="Add an item to your Baro wishlist" className="h-9 flex-1" maxLength={60} />
+        <Button type="submit" variant="outline" className="h-9" disabled={!q.trim()}><Plus /> Add</Button>
+      </form>
+      {sug.length ? (
+        <ul className="flex flex-wrap gap-1.5" aria-label="Suggestions">
+          {sug.map((n) => <li key={n}><Button variant="outline" size="sm" className="h-8" onClick={() => add(n)}><Plus /> {n}</Button></li>)}
+        </ul>
+      ) : null}
+      {!here ? <p className="text-xs text-muted-foreground">Baro's stock shows here when he arrives.</p> : null}
+    </div>
   )
 }
 

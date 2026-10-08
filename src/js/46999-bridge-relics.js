@@ -33,17 +33,22 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');i
   e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
 const _relicsRoute=routes.relics;
 routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
+/* live fissures by relic era (normal first, then Steel Path; Void Storms need a Railjack so they come last) */
+function fisByEra(){const out={},now=Date.now();const fs=(WS&&WS.fissures||[]).filter(f=>!f.expired&&new Date(f.expiry).getTime()>now).sort((a,b)=>(!!a.isStorm-!!b.isStorm)||(!!a.isHard-!!b.isHard));
+  for(const f of fs)if(!out[f.tier])out[f.tier]={mission:f.missionType,node:f.node,hard:!!f.isHard,storm:!!f.isStorm,left:left(new Date(f.expiry)-now),more:fs.filter(x=>x.tier===f.tier).length-1};
+  return out}
 /* relic planner: what a run is worth with your squad size and refinement, and the chance of what you need */
 function runEV(r,ref,n,valOf){const R=REL[r];const rows=R.rw.map(([nm,rar])=>({v:valOf(nm)||0,p:RCH[ref][rar]/100})).sort((a,b)=>a.v-b.v);let F=0,prev=0,ev=0;for(const x of rows){F+=x.p;const cur=Math.pow(Math.min(1,F),n);ev+=x.v*(cur-prev);prev=cur}return ev}
 function plannerData(){const ref=state.rpR||'r',n=+(state.rpN||4),own=state.rpO!==false&&state.rpO!=='0',ef=state.rpE||'all',so=state.rpS||'plat',q=(state.rpQ||'').toLowerCase().trim();
-  let list=Object.keys(REL).filter(r=>(!own||relCount(r)>0)&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v))&&(!q||r.toLowerCase().includes(q)||REL[r].rw.some(([x])=>x.toLowerCase().includes(q))));
+  const FIS=fisByEra();
+  let list=Object.keys(REL).filter(r=>(!own||relCount(r)>0)&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v)||(ef==='fis'&&FIS[REL[r].era]))&&(!q||r.toLowerCase().includes(q)||REL[r].rw.some(([x])=>x.toLowerCase().includes(q))));
   const rows=list.map(r=>{const R=REL[r];const need=R.rw.filter(([x])=>!/Forma/.test(x)&&partNeeded(x)&&partGoal(x));
     const best=need.length?need.reduce((a,[x,rar])=>RCH[ref][rar]<RCH[ref][a[1]]?[x,rar]:a,need[0]):null;
     const needP=need.length?1-need.reduce((m,[,rar])=>m*Math.pow(1-RCH[ref][rar]/100,n),1):0;
     const rare=R.rw.find(x=>x[1]==='R');
     return {r,era:R.era,vaulted:!!R.v,count:relCount(r),plat:runEV(r,ref,n,pv),du:runEV(r,ref,n,partDu),
       rare:rare?{n:rare[0],go:linkKey(rare[0]),p:1-Math.pow(1-RCH[ref].R/100,n),plat:pv(rare[0])!=null?Math.round(pv(rare[0])):null}:null,
-      need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:''}});
+      need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:'',fis:FIS[R.era]||null}});
   rows.sort((a,b)=>so==='du'?b.du-a.du:so==='need'?(b.needP-a.needP)||b.plat-a.plat:so==='name'?a.r.localeCompare(b.r,undefined,{numeric:true}):b.plat-a.plat);rv('rpS',rows);
   return {ref,squad:String(n),own,era:ef,sort:so,q:state.rpQ||'',total:rows.length,owned:Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0).length,rows:rows.slice(0,150).map(x=>({...x,plat:Math.round(x.plat*10)/10,du:Math.round(x.du)}))}}
 Object.assign(window.TF,{planSet:o=>{const m={ref:'rpR',squad:'rpN',era:'rpE',sort:'rpS',q:'rpQ'};for(const k in o)if(m[k])state[m[k]]=o[k];if(o.own!=null)state.rpO=o.own;tfNotify()}});

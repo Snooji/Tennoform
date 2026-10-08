@@ -74,6 +74,11 @@ def part(d):
     return ''.join(open(os.path.join(d, f)).read() for f in sorted(os.listdir(d)))
 lazy = {k: emit(k, 'json', json.dumps(D[k], separators=(',', ':'), ensure_ascii=False)) for k in LAZY}
 game['lazy'] = lazy
+# price history (90 days per item) is its own file, fetched only when a price chart opens; its address rides in the
+# market file, which changes daily anyway, so the big game file stays cached
+HIST = os.path.join(H, 'pricehist.json')
+if os.path.exists(HIST):
+    market['hist'] = emit('prices', 'json', open(HIST, encoding='utf-8').read())
 files = {
     'css': emit('legacy', 'css', '@layer legacy{\n' + part('css') + '\n}\n'),
     'game': emit('game', 'js', as_js('TF_GAME', game)),
@@ -81,7 +86,7 @@ files = {
     'code': emit('code', 'js', part('js')),
 }
 # Keep this build's files and every file a recent version of the page used (see KEEP_DAYS above).
-keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()))
+keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()) + ([market['hist']] if market.get('hist') else []))
 page_versions = recent_versions('index.html')
 old = set()
 for h, src in page_versions:

@@ -6,6 +6,8 @@ import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { StatList } from "@/components/tf/stat-list"
+import { PriceChart } from "@/components/tf/price-chart"
+import { PriceAlertField } from "@/components/tf/price-alert"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type ModSlot } from "@/lib/tf"
 
@@ -107,6 +109,8 @@ export function ModDialog({ name, onClose }: { name: string; onClose: () => void
                 ))}
               </ul>
             ) : null}
+            <PriceChart n={d.n} />
+            <PriceAlertField n={d.n} />
             <p className="text-xs text-muted-foreground">Prices from warframe.market's snapshot of {d.date}.</p>
             <div className="flex flex-wrap gap-2">
               <a href={d.wfm} target="_blank" rel="noopener" className={cn(buttonVariants({ variant: "outline" }), "h-9")}>

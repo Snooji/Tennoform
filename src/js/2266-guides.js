@@ -3,11 +3,12 @@ const GUIDES=D.guides||[];const GIDX=Object.fromEntries(GUIDES.map(g=>[g.id,g]))
 /* guides and farm "ways" come as their own files (bundle/guides-*.json, bundle/ways-*.json), fetched just after the page is up,
    or straight away when a page or search needs them; the search index is rebuilt when they arrive */
 const LAZY={guides:{done:GUIDES.length>0,busy:false,err:false,add:j=>{GUIDES.push(...j);Object.assign(GIDX,Object.fromEntries(j.map(g=>[g.id,g])))}}};
-function lazyLoad(k){const L=LAZY[k];const url=D.lazy&&D.lazy[k];if(!L||L.done||L.busy||!url)return;L.busy=true;L.err=false;
+function lazyLoad(k){const L=LAZY[k];const url=L&&L.url?L.url():D.lazy&&D.lazy[k];if(!L||L.done||L.busy||!url)return;L.busy=true;L.err=false;
   fetch(url).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{L.add(j);L.done=true;CMDX=null;IDX=null})
     .catch(()=>{L.err=true}).finally(()=>{L.busy=false;if(typeof render==='function')try{render()}catch(e){}tfNotify()})}
 const lazyLoading=k=>!!(LAZY[k]&&!LAZY[k].done&&!LAZY[k].err);
-setTimeout(()=>Object.keys(LAZY).forEach(lazyLoad),1200);
+/* files marked demand load only when something asks for them (e.g. price history when a chart opens) */
+setTimeout(()=>Object.keys(LAZY).filter(k=>!LAZY[k].demand).forEach(lazyLoad),1200);
 const GKIND={quest:'Quests',system:'Unlocks',mode:'Missions'};
 const guideOfQuest=n=>GUIDES.find(g=>g.kind==='quest'&&g.n===n);
 function guideKey(n){if(I[n])return 'item|'+n;if(Q.some(q=>q.n===n))return 'quest|'+n;if(RES[n])return 'res|'+n;if(MODS[n])return 'mod|'+n;if(ARC[n])return 'arc|'+n;const g=GUIDES.find(x=>x.n===n);return g?'guide|'+g.id:''}
