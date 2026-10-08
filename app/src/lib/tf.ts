@@ -43,6 +43,7 @@ export type TFApi = {
   share(): void
   keys(): void
   refresh(): void
+  detailChanged?(): void
   home(): HomeData
   act(tag: string, attrs: Record<string, string>): void
   nuDone(i: number): void
