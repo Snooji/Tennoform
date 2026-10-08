@@ -10,6 +10,7 @@ import { AppSidebar } from "@/components/shell/app-sidebar"
 import { CommandMenu } from "@/components/shell/command-menu"
 import { LegacyOutlet } from "@/components/shell/legacy-outlet"
 import { MobileTabs } from "@/components/shell/mobile-tabs"
+import { ChatFloat } from "@/components/shell/chat-float"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
 import { SellDialog } from "@/components/tf/sell-dialog"
@@ -171,6 +172,7 @@ export default function App() {
           </div>
         </SidebarInset>
         <MobileTabs />
+        <ChatFloat />
         <CommandMenu open={searchOpen} setOpen={setSearchOpen} />
         <SellDialog />
         <Toaster theme={isDark(s.theme) ? "dark" : "light"} position="bottom-center" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />

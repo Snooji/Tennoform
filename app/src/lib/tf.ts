@@ -104,6 +104,7 @@ export type TFApi = {
   blockPerson(uid: string, name: string): void
   unblockPerson(uid: string): void
   chatGo(id: string, nav?: boolean): void
+  chatWin(open: boolean): void
   chatCloseTab(id: string): void
   modData(): ModData
   modReload(): void
