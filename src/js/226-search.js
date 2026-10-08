@@ -1,7 +1,7 @@
 /* ---------- search: Ctrl+K, "/" or the header button; any page, item, relic, quest or planet ---------- */
 const PAGE_ALIAS={today:'dailies daily reset fissures sortie nightwave baro arbitration',synd:'standing reputation rep sigil',market:'prices plat platinum trade sell',missions:'nodes planets junctions star chart',ranks:'mastery mr level',mastery:'rank up plan mr test',farm:'drop drops where farm',relics:'void relic refine radiant ducats',friends:'squad clan chat message group',tasks:'todo to-do checklist',goals:'wishlist track tracked',world:'fishing mining fish ore open worlds cetus fortuna deimos',arsenal:'arsenal builds mods loadout arcane lich sister',frames:'warframe frames helminth',tenno:'tenno profile account sync backup foundry inventory import',home:'hub dashboard',quests:'story quest',resources:'materials resources',donate:'support donate paypal',feedback:'bug idea',about:'privacy changelog new'};
 let CMDX=null;
-function cmdIndex(){if(CMDX)return CMDX;const x=[];const add=(n,g,act,extra)=>x.push({n,g,act,l:n.toLowerCase(),a:(extra||'').toLowerCase()});
+function cmdIndex(){if(typeof lazyLoad==='function'){lazyLoad('guides');lazyLoad('ways')}if(CMDX)return CMDX;const x=[];const add=(n,g,act,extra)=>x.push({n,g,act,l:n.toLowerCase(),a:(extra||'').toLowerCase()});
   for(const [r,l] of PAGES)add(SUBL[r]||l,'Pages','#'+r,PAGE_ALIAS[r]);
   for(const n in I)add(n,'Gear','item|'+n,I[n].c);
   for(const n in RES)add(n,'Resources','res|'+n);

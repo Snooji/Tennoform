@@ -1,5 +1,6 @@
 /* ---------- farm finder: "ways to farm" things that aren't one item drop (credits, standing, Endo, affinity, Focus, Forma...) ---------- */
 const WAYS=D.ways||[];const WBN=Object.fromEntries(WAYS.map(w=>[w.n,w]));
+LAZY.ways={done:WAYS.length>0,busy:false,err:false,add:j=>{WAYS.push(...j);Object.assign(WBN,Object.fromEntries(j.map(w=>[w.n,w])))}};
 FFT.splice(1,0,['way','Credits, standing & more']);
 const _buildIdx=buildIdx;buildIdx=function(){_buildIdx();for(const w of WAYS)IDX.push([w.n,'way',w.cat,w.cat])};
 const wayText=w=>[w.n,...(w.aka||[])].join(' ').toLowerCase();
@@ -11,7 +12,7 @@ const _detail=detail;detail=function(sel){return sel.startsWith('way|')?'':_deta
 function wayData(n){const w=WBN[n];if(!w)return null;
   return {n:w.n,cat:w.cat,sum:w.sum||'',w:w.w||'',tips:w.tips||[],hasTask:(P.tasks||[]).some(t=>!t.d&&t.k==='way'&&t.r===w.n),
     ways:(w.ways||[]).map(x=>({t:x.t,how:x.how||'',why:x.why||'',req:x.req||'',tags:x.tags||[],node:x.node||'',planet:x.planet||''}))}}
-const _farmData=farmData;farmData=function(){const d=_farmData();const s=d.sel||'';
+const _farmData=farmData;farmData=function(){lazyLoad('ways');const d=_farmData();d.waysLoading=lazyLoading('ways');const s=d.sel||'';
   if(s.startsWith('way|')){d.way=wayData(s.slice(4));d.detail=d.way?'way':''}else d.way=null;
   d.items.forEach(it=>{if(it.t==='way')it.img=''});return d};
 TF.farm=()=>farmData();

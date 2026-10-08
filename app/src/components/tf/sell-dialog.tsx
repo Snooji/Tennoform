@@ -17,7 +17,7 @@ export function SellDialog() {
             <DialogTitle>Sell {d.n}</DialogTitle>
             <DialogDescription>Prices from warframe.market's snapshot of {d.date}{d.v7 ? `, ${fmt(d.v7)} sold last week` : ""}.</DialogDescription>
           </DialogHeader>
-          <div className="grid gap-2 sm:grid-cols-2">
+          <ul className="flex flex-col divide-y border-y" aria-label="Suggested prices">
             {d.quick != null ? (
               <PriceCard label="Sell fast" price={d.quick} note={d.low != null ? `Just under the cheapest seller (${d.low}p)` : "A little under the usual price"}
                 onCopy={() => copy(String(d.quick), `${d.quick}p copied`)} />
@@ -26,18 +26,18 @@ export function SellDialog() {
               <PriceCard label="Usual price" price={d.fair} note={d.avg != null ? `7-day average${d.a30 != null ? ` (30-day: ${d.a30}p)` : ""}` : "Cheapest seller right now"}
                 onCopy={() => copy(String(d.fair), `${d.fair}p copied`)} />
             ) : null}
-          </div>
+          </ul>
           {d.quick == null && d.fair == null ? <p className="text-sm text-muted-foreground">No recent prices for this one. Check the listings on warframe.market before you set a price.</p> : null}
           {d.du ? (
-            <p className="flex gap-2 rounded-lg border bg-muted/40 p-3 text-sm">
-              <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-primary" />
+            <p className="flex gap-2 text-sm">
+              <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
               <span>{d.n.endsWith(" Set") ? "Or trade the parts at a Ducat Kiosk for " : "Or trade it at a Ducat Kiosk for "}<b className="font-medium">{d.du} ducats</b>{d.n.endsWith(" Set") ? " in total" : ""} to spend with Baro Ki'Teer.{d.fair != null && d.du / Math.max(1, d.fair) >= 10 ? " That's a good rate for this one." : ""}</span>
             </p>
           ) : null}
-          <ol className="flex flex-col gap-2 text-sm">
-            <li><b className="font-medium">1.</b> Open the item on warframe.market and sign in there with your own account.</li>
-            <li><b className="font-medium">2.</b> Tap <b className="font-medium">Place order</b>, choose <b className="font-medium">Sell</b>, enter the price{d.rank ? " and the rank you have" : ""}, and post it.</li>
-            <li><b className="font-medium">3.</b> Set your status to In game while you play, so buyers know they can whisper you.</li>
+          <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm marker:text-muted-foreground">
+            <li>Open the item on warframe.market and sign in there with your own account.</li>
+            <li>Tap <b className="font-medium">Place order</b>, choose <b className="font-medium">Sell</b>, enter the price{d.rank ? " and the rank you have" : ""}, and post it.</li>
+            <li>Set your status to In game while you play, so buyers know they can whisper you.</li>
           </ol>
           <div className="flex flex-wrap gap-2">
             <a href={d.url} target="_blank" rel="noopener" className={cn(buttonVariants(), "h-10 px-4")}><ExternalLink /> Open on warframe.market</a>
@@ -46,9 +46,9 @@ export function SellDialog() {
           {d.sellers.length ? (
             <div className="flex flex-col gap-1">
               <span className="text-xs font-medium text-muted-foreground">Cheapest sellers in the snapshot</span>
-              <ul className="flex flex-col divide-y rounded-lg border text-sm">
+              <ul className="flex flex-col divide-y border-y text-sm">
                 {d.sellers.map((s) => (
-                  <li key={s.name} className="flex items-center gap-2 px-3 py-1.5">
+                  <li key={s.name} className="flex items-center gap-2 py-1.5">
                     <span className="min-w-0 flex-1 truncate">{s.name}</span>
                     {s.rank != null ? <span className="text-xs text-muted-foreground">Rank {s.rank}</span> : null}
                     {s.status ? <span className="text-xs text-muted-foreground">{s.status}</span> : null}
@@ -67,13 +67,15 @@ export function SellDialog() {
 
 function PriceCard({ label, price, note, onCopy }: { label: string; price: number; note: string; onCopy: () => void }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border bg-background/40 p-3">
+    <li className="flex items-center gap-3 py-2.5">
       <span className="flex min-w-0 flex-1 flex-col">
-        <span className="text-xs text-muted-foreground">{label}</span>
-        <b className="font-heading text-2xl leading-tight font-semibold text-primary tabular-nums">{price}p</b>
+        <span className="flex items-baseline justify-between gap-3">
+          <span className="text-sm">{label}</span>
+          <b className="font-heading text-lg leading-tight font-semibold tabular-nums">{price}p</b>
+        </span>
         <span className="text-xs text-muted-foreground">{note}</span>
       </span>
       <Button variant="outline" size="sm" className="h-9" onClick={onCopy} aria-label={`Copy ${price} platinum`}><Copy /> Copy</Button>
-    </div>
+    </li>
   )
 }

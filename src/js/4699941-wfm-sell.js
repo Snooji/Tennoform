@@ -15,3 +15,5 @@ function sellData(){const n=state.sell;if(!n||!MS[n])return null;const p=PR[n]||
 Object.assign(window.TF,{sell:()=>{const d=sellData();if(!d)return null;const {chat,...rest}=d;return {...rest,chatQuick:d.quick!=null?chat(d.quick):'',chatFair:d.fair!=null?chat(d.fair):''}},
   sellOpen:n=>{if(!MS[n]){toast("That item isn't traded on warframe.market.");return}state.sell=n;tfNotify()},sellClose:()=>{state.sell=null;tfNotify()},sellable:n=>!!MS[n]});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-sell]');if(!t)return;e.preventDefault();e.stopPropagation();window.TF.sellOpen(t.dataset.sell)},true);
+/* moving to another page closes it, so it never sits over a page it doesn't belong to */
+window.addEventListener('hashchange',()=>{if(state.sell){state.sell=null;tfNotify()}});

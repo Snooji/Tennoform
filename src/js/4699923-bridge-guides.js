@@ -2,7 +2,7 @@
 routes.guides=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('guides')?'':guides()};
 function guideCard(g){const st=guideSteps(g.id),n=(g.steps||[]).length;const u=guideUnlock(g);
   return {id:g.id,n:g.n,kind:g.kind,sum:g.sum||'',time:g.time||'',steps:n,doneSteps:Math.min(st.length,n),ready:u.ready,done:g.kind==='quest'&&qDone(g.n)}}
-function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().trim();
+function guidesData(){lazyLoad('guides');const f=state.gF||'all',q=(state.gQ||'').toLowerCase().trim();
   const words=q.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w));
   const match=g=>!words.length||words.every(w=>[g.n,...(g.aka||[]),g.sum||'',...(g.was||[])].join(' ').toLowerCase().includes(w));
   const all=GUIDES.filter(match);const list=all.filter(g=>f==='all'||g.kind===f).map(guideCard);
@@ -15,7 +15,7 @@ function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().tri
       go:(g.go||[]).map(n=>({n,key:guideKey(n)})).filter(x=>x.key),
       opens:needs,questKey:g.kind==='quest'&&Q.some(x=>x.n===g.n)?'quest|'+g.n:'',
       hasTask:(P.tasks||[]).some(t=>!t.d&&t.k==='guide'&&t.r===g.id)}}
-  return {filter:f,q:state.gQ||'',counts,list,sel,total:GUIDES.length}}
+  return {filter:f,q:state.gQ||'',counts,list,sel,total:GUIDES.length,loading:lazyLoading('guides')}}
 Object.assign(window.TF,{
   guides:()=>guidesData(),
   guidesSet:o=>{if(o.filter!=null)state.gF=o.filter;if(o.q!=null)state.gQ=o.q;if('sel' in o){state.gSel=o.sel;window.scrollTo(0,0)}tfNotify()},

@@ -1,9 +1,0 @@
-// Cloudflare Worker settings. Cloudflare reads this on every push and deploys
-// cloudflare-worker.js as the profile-sync relay (the site itself stays on GitHub Pages).
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "tennoform",
-  "main": "cloudflare-worker.js",
-  "compatibility_date": "2026-10-01",
-  "observability": { "enabled": true }
-}

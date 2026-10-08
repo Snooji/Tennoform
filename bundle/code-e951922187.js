@@ -1181,7 +1181,7 @@ document.addEventListener('change',e=>{if(e.target.id==='fft'){state.ffC='';stat
 /* ---------- search: Ctrl+K, "/" or the header button; any page, item, relic, quest or planet ---------- */
 const PAGE_ALIAS={today:'dailies daily reset fissures sortie nightwave baro arbitration',synd:'standing reputation rep sigil',market:'prices plat platinum trade sell',missions:'nodes planets junctions star chart',ranks:'mastery mr level',mastery:'rank up plan mr test',farm:'drop drops where farm',relics:'void relic refine radiant ducats',friends:'squad clan chat message group',tasks:'todo to-do checklist',goals:'wishlist track tracked',world:'fishing mining fish ore open worlds cetus fortuna deimos',arsenal:'arsenal builds mods loadout arcane lich sister',frames:'warframe frames helminth',tenno:'tenno profile account sync backup foundry inventory import',home:'hub dashboard',quests:'story quest',resources:'materials resources',donate:'support donate paypal',feedback:'bug idea',about:'privacy changelog new'};
 let CMDX=null;
-function cmdIndex(){if(CMDX)return CMDX;const x=[];const add=(n,g,act,extra)=>x.push({n,g,act,l:n.toLowerCase(),a:(extra||'').toLowerCase()});
+function cmdIndex(){if(typeof lazyLoad==='function'){lazyLoad('guides');lazyLoad('ways')}if(CMDX)return CMDX;const x=[];const add=(n,g,act,extra)=>x.push({n,g,act,l:n.toLowerCase(),a:(extra||'').toLowerCase()});
   for(const [r,l] of PAGES)add(SUBL[r]||l,'Pages','#'+r,PAGE_ALIAS[r]);
   for(const n in I)add(n,'Gear','item|'+n,I[n].c);
   for(const n in RES)add(n,'Resources','res|'+n);
@@ -1237,6 +1237,14 @@ document.addEventListener('focusin',e=>{if(window.innerWidth<900&&e.target.match
 document.addEventListener('focusout',()=>setTimeout(()=>{if(!(document.activeElement&&document.activeElement.matches('input:not([type=checkbox]),textarea,select')))document.body.classList.remove('typing')},50));
 /* ---------- guides: quests, unlockable systems and mission types, step by step ---------- */
 const GUIDES=D.guides||[];const GIDX=Object.fromEntries(GUIDES.map(g=>[g.id,g]));
+/* guides and farm "ways" come as their own files (bundle/guides-*.json, bundle/ways-*.json), fetched just after the page is up,
+   or straight away when a page or search needs them; the search index is rebuilt when they arrive */
+const LAZY={guides:{done:GUIDES.length>0,busy:false,err:false,add:j=>{GUIDES.push(...j);Object.assign(GIDX,Object.fromEntries(j.map(g=>[g.id,g])))}}};
+function lazyLoad(k){const L=LAZY[k];const url=D.lazy&&D.lazy[k];if(!L||L.done||L.busy||!url)return;L.busy=true;L.err=false;
+  fetch(url).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{L.add(j);L.done=true;CMDX=null;IDX=null})
+    .catch(()=>{L.err=true}).finally(()=>{L.busy=false;if(typeof render==='function')try{render()}catch(e){}tfNotify()})}
+const lazyLoading=k=>!!(LAZY[k]&&!LAZY[k].done&&!LAZY[k].err);
+setTimeout(()=>Object.keys(LAZY).forEach(lazyLoad),1200);
 const GKIND={quest:'Quests',system:'Unlocks',mode:'Missions'};
 const guideOfQuest=n=>GUIDES.find(g=>g.kind==='quest'&&g.n===n);
 function guideKey(n){if(I[n])return 'item|'+n;if(Q.some(q=>q.n===n))return 'quest|'+n;if(RES[n])return 'res|'+n;if(MODS[n])return 'mod|'+n;if(ARC[n])return 'arc|'+n;const g=GUIDES.find(x=>x.n===n);return g?'guide|'+g.id:''}
@@ -1800,9 +1808,6 @@ function resDetail(n){const r=RES[n]||{};const t=RT[n];const s=RSRC[n]||[];
 function mastery(){const tab=state.mTab;
   const tabs=[['path','Path to max'],['ladder','Rank ladder'],['sheet','Starter weapons (MR 0–12)'],['sframes','Easy Warframes'],['craft','Crafting chains'],['xp','XP farms']];
   let h=`<div class="stack"><div class="head"><div class="eyebrow">MR plan</div><h1>MR plan</h1><p class="lede">What to do next to reach your target rank, the full rank ladder, and the easiest gear to rank first. Enter what you've already ranked on the <a class="ln" href="#ranks">Ranks</a> page.</p></div>${bigMR()}<div class="seg" role="tablist">${tabs.map(([k,l])=>`<button class="btn ${tab===k?'on':''}" data-mtab="${k}" role="tab" aria-selected="${tab===k}">${l}</button>`).join('')}</div>`;
-  if(tab==='path')h+=pathTab();
-  if(tab==='ladder')h+=ladderTab();
-  if(tab==='all')h+=allTab();
   if(tab==='sheet'){const by={};M.weapons.forEach(w=>(by[w.mr]=by[w.mr]||[]).push(w));
     h+=`<p class="small muted" style="margin:0">The cheapest weapons to rank, grouped by the Mastery Rank you need to build them. Together they give ${fmt(D.meta.sheetXp)} XP, enough to reach MR 12. "Path to max" carries on from there.</p>`+Object.keys(by).sort((a,b)=>a-b).map(mr=>`<details class="obj grp" data-scope="input.ck.mk" ${mr<=2?'open':''}><summary><h3>Mastery ${mr}</h3>${progHTML()}</summary>${by[mr].map(w=>mrow(w.id,w.slot)).join('')}</details>`).join('')}
   if(tab==='sframes')h+=`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>Easy Warframes</h3>${progHTML()}</summary>${M.frames.map(f=>mrow(f.id,f.src)).join('')}</details>
@@ -1816,39 +1821,8 @@ function mastery(){const tab=state.mTab;
   return h+'</div>'}
 function ease(it){if(it.p)return it.v?(VAULT[it.n]&&VAULT[it.n].now?2:4):2;if(it.bc)return 0;if(it.bpd||it.dr)return 1;return 3}
 const EASE=['Market blueprints','Boss and node drops','Farm relics','Quest, syndicate or vendor','Vaulted: buy on warframe.market'];
-function pathTab(){const t=totalXP(),cur=mrInfo(t.total).mr;let target=+state.target||cur+1;if(target<=cur)target=cur+1;
-  const need=Math.max(0,mrNeed(target)-t.total);const cap=Math.min(Math.max(cur,0),30);
-  const cand=MI.filter(it=>!on('m|'+it.n)&&(it.mr||0)<=Math.max(cap,Math.min(target,30))).map(it=>({it,gain:mxp(it)-itemXP(it.n),e:ease(it)})).filter(x=>x.gain>0).sort((a,b)=>a.e-b.e||b.gain-a.gain||(a.it.mr||0)-(b.it.mr||0));
-  let acc=0;const plan=[];for(const x of cand){if(acc>=need)break;plan.push(x);acc+=x.gain}
-  const nodesLeft=NODES.filter(n=>!on('n|'+n.id)),spLeft=NODES.filter(n=>!on('sp|'+n.id));const nx=nodesLeft.reduce((a,n)=>a+n.x,0),sx=spLeft.reduce((a,n)=>a+n.x,0);
-  const gearLeft=cand.reduce((a,x)=>a+x.gain,0);
-  const opts=[];for(let m=cur+1;m<=Math.max(cur+6,40);m++)opts.push(m);
-  const by={};plan.forEach(x=>(by[x.e]=by[x.e]||[]).push(x));
-  return `<div class="panel stack cut"><h2>Plan to rank ${mrLabel(target)}</h2>
-  <div class="row"><label class="small" for="tgt">Target</label><select id="tgt" style="width:auto;flex:0 1 240px">${opts.map(m=>`<option value="${m}" ${m===target?'selected':''}>${m>30?'Legendary '+(m-30):'MR '+m} · ${fmt(mrNeed(m))} XP</option>`).join('')}</select></div>
-  <div class="kv"><span>XP still needed</span><span class="num"><b>${fmt(need)}</b></span><span>XP left in gear you can use</span><span class="num">${fmt(gearLeft)}</span><span>XP left on the star chart</span><span class="num">${fmt(nx)}</span><span>XP left on Steel Path</span><span class="num">${fmt(sx)}</span></div>
-  ${need>gearLeft+nx+sx?`<div class="callout small">That's more XP than is left in gear and nodes you can use right now. The rest comes from intrinsics, gear that unlocks at a higher MR, and new releases.</div>`:''}
-  <div class="small muted">The plan picks the easiest gear first (market blueprints, then boss drops, then farmable Primes) until the gap is covered. Clearing star chart and Steel Path nodes counts too.</div></div>
-  ${Object.keys(by).sort().map(e=>`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>${EASE[e]}</h3>${progHTML()}<span class="mono small muted">${fmt(by[e].reduce((a,x)=>a+x.gain,0))} XP</span></summary>${by[e].map(x=>mrow(x.it.n,'')).join('')}</details>`).join('')}
-  ${nodesLeft.length?`<a class="panel navcard cut" href="#missions"><span class="eyebrow">Also counts</span><h3>${nodesLeft.length} star chart nodes left · ${fmt(nx)} XP</h3><span class="small muted">Plus ${spLeft.length} Steel Path nodes (${fmt(sx)} XP). Open Missions.</span></a>`:''}`}
-function ladderTab(){const t=totalXP(),cur=mrInfo(t.total).mr;const rows=[];
-  for(let m=1;m<=40;m++){const gear=m<=30?MI.filter(i=>(i.mr||0)===m):[];const qs=Q.filter(q=>q.req.some(r=>r==='Mastery Rank '+m));
-    rows.push(`<div class="card cut" ${m===cur+1?'style="border-color:var(--gold)"':''}><div class="top"><span class="nm">${m>30?'Legendary '+(m-30):'MR '+m}</span><span class="row">${m<=cur?'<span class="chip good">Reached</span>':m===cur+1?'<span class="chip teal">Next</span>':''}<span class="mono small">${fmt(mrNeed(m))} XP</span></span></div>
-    ${m<=30?`<div class="small muted">Trades per day: ${m} · Daily standing cap: ${fmt(16000+500*m)}</div>`:`<div class="small muted">Each Legendary rank needs 147,500 more XP.</div>`}
-    ${qs.length?`<div class="small">Quests unlocked: ${qs.map(q=>`<a class="ln" href="#quests" data-q="${esc(q.n)}">${esc(q.n)}</a>`).join(', ')}</div>`:''}
-    ${gear.length?`<details class="more"><summary>Gear that needs MR ${m} (${gear.filter(g=>on('m|'+g.n)).length}/${gear.length} mastered)</summary><div class="row">${gear.map(g=>`<button class="btn sm" data-go="item|${esc(g.n)}">${esc(g.n)}${on('m|'+g.n)?' ✓':''}</button>`).join('')}</div></details>`:''}</div>`)}
-  return `<div class="cards">${rows.join('')}</div>`}
 function mrow(id,note){if(!id)return'';const it=I[id];const k='m|'+id;const rk=P.rk[id];
-  return `<div class="mitem${on(k)?' done':''}"><div class="top">${ck(k,'mk')}<details class="lazy" data-tree="${esc(id)}" data-note="${esc(note||'')}"><summary><span class="nm">${esc(id)}</span>${it&&it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${rk&&!on(k)?`<span class="chip teal">R${rk}</span>`:''}<span class="chip">${fmt(mxp(it))} XP</span>${it&&it.p?priceChip(id+' Set'):''}<span class="open">Steps ▾</span>${note?`<span class="small muted" style="flex-basis:100%">${esc(note)}</span>`:''}</summary><div class="lazybody"></div></details></div></div>`}
-function allTab(){const cats=['Warframe','Primary','Secondary','Melee','Companion','Archwing','Arch-Gun','Arch-Melee','Robotic Weapon'];
-  const cat=state.allCat;const q=state.allQ.toLowerCase();
-  let list=q?Object.values(I).filter(i=>i.n.toLowerCase().includes(q)):Object.values(I).filter(i=>i.c===cat);
-  list.sort((a,b)=>a.n.localeCompare(b.n));if(state.allHide)list=list.filter(i=>!on('m|'+i.n));
-  return `<div class="seg">${cats.map(c=>{const all=Object.values(I).filter(i=>i.c===c);const d=all.filter(i=>on('m|'+i.n)).length;return `<button class="btn ${c===cat&&!q?'on':''}" data-cat="${c}">${c} <span class="mono small">${d}/${all.length}</span></button>`}).join('')}</div>
-  <div class="row"><input id="allq" type="search" placeholder="Search all gear" value="${esc(state.allQ)}" style="flex:1 1 200px" aria-label="Search all gear"><button class="btn ${state.allHide?'on':''}" id="allhide">Hide mastered</button></div>
-  <div class="obj" data-scope="input.ck.mk"><div class="obj-h"><b>${q?'Search results':esc(cat)}</b>${progHTML()}</div>${list.slice(0,400).map(i=>mrow(i.n,'')).join('')||'<div class="empty">Nothing left here. Everything is mastered.</div>'}</div>`}
-
-/* ---------- warframes ---------- */
+  return `<div class="mitem${on(k)?' done':''}"><div class="top">${ck(k,'mk')}<details class="lazy" data-tree="${esc(id)}" data-note="${esc(note||'')}"><summary><span class="nm">${esc(id)}</span>${it&&it.mr?`<span class="chip">MR ${it.mr}</span>`:''}${rk&&!on(k)?`<span class="chip teal">R${rk}</span>`:''}<span class="chip">${fmt(mxp(it))} XP</span>${it&&it.p?priceChip(id+' Set'):''}<span class="open">Steps ▾</span>${note?`<span class="small muted" style="flex-basis:100%">${esc(note)}</span>`:''}</summary><div class="lazybody"></div></details></div></div>`}/* ---------- warframes ---------- */
 function baseOf(n){return n.replace(/ Prime$/,'').replace(/ Umbra$/,'')}
 function frames(){const ff=state.frF||'all';const fr=Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth').filter(i=>{const r=rankOf(i.n);return ff==='all'||(ff==='owned'&&r>0)||(ff==='not'&&r===0)||(ff==='mastered'&&r>=maxRank(i))||(ff==='prime'&&i.p)||(ff==='farm'&&i.p&&!i.v)||(ff==='goals'&&(P.goals||[]).includes(i.n))}).map(i=>i.n).sort();
   if(!fr.length)fr.push(...Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth').map(i=>i.n).sort());
@@ -2901,7 +2875,7 @@ const _friendsRoute=routes.friends;routes.friends=function(){return window.TF_UI
 routes.guides=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('guides')?'':guides()};
 function guideCard(g){const st=guideSteps(g.id),n=(g.steps||[]).length;const u=guideUnlock(g);
   return {id:g.id,n:g.n,kind:g.kind,sum:g.sum||'',time:g.time||'',steps:n,doneSteps:Math.min(st.length,n),ready:u.ready,done:g.kind==='quest'&&qDone(g.n)}}
-function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().trim();
+function guidesData(){lazyLoad('guides');const f=state.gF||'all',q=(state.gQ||'').toLowerCase().trim();
   const words=q.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w));
   const match=g=>!words.length||words.every(w=>[g.n,...(g.aka||[]),g.sum||'',...(g.was||[])].join(' ').toLowerCase().includes(w));
   const all=GUIDES.filter(match);const list=all.filter(g=>f==='all'||g.kind===f).map(guideCard);
@@ -2914,7 +2888,7 @@ function guidesData(){const f=state.gF||'all',q=(state.gQ||'').toLowerCase().tri
       go:(g.go||[]).map(n=>({n,key:guideKey(n)})).filter(x=>x.key),
       opens:needs,questKey:g.kind==='quest'&&Q.some(x=>x.n===g.n)?'quest|'+g.n:'',
       hasTask:(P.tasks||[]).some(t=>!t.d&&t.k==='guide'&&t.r===g.id)}}
-  return {filter:f,q:state.gQ||'',counts,list,sel,total:GUIDES.length}}
+  return {filter:f,q:state.gQ||'',counts,list,sel,total:GUIDES.length,loading:lazyLoading('guides')}}
 Object.assign(window.TF,{
   guides:()=>guidesData(),
   guidesSet:o=>{if(o.filter!=null)state.gF=o.filter;if(o.q!=null)state.gQ=o.q;if('sel' in o){state.gSel=o.sel;window.scrollTo(0,0)}tfNotify()},
@@ -3015,6 +2989,7 @@ Object.assign(window.TF,{
 });
 /* ---------- farm finder: "ways to farm" things that aren't one item drop (credits, standing, Endo, affinity, Focus, Forma...) ---------- */
 const WAYS=D.ways||[];const WBN=Object.fromEntries(WAYS.map(w=>[w.n,w]));
+LAZY.ways={done:WAYS.length>0,busy:false,err:false,add:j=>{WAYS.push(...j);Object.assign(WBN,Object.fromEntries(j.map(w=>[w.n,w])))}};
 FFT.splice(1,0,['way','Credits, standing & more']);
 const _buildIdx=buildIdx;buildIdx=function(){_buildIdx();for(const w of WAYS)IDX.push([w.n,'way',w.cat,w.cat])};
 const wayText=w=>[w.n,...(w.aka||[])].join(' ').toLowerCase();
@@ -3026,7 +3001,7 @@ const _detail=detail;detail=function(sel){return sel.startsWith('way|')?'':_deta
 function wayData(n){const w=WBN[n];if(!w)return null;
   return {n:w.n,cat:w.cat,sum:w.sum||'',w:w.w||'',tips:w.tips||[],hasTask:(P.tasks||[]).some(t=>!t.d&&t.k==='way'&&t.r===w.n),
     ways:(w.ways||[]).map(x=>({t:x.t,how:x.how||'',why:x.why||'',req:x.req||'',tags:x.tags||[],node:x.node||'',planet:x.planet||''}))}}
-const _farmData=farmData;farmData=function(){const d=_farmData();const s=d.sel||'';
+const _farmData=farmData;farmData=function(){lazyLoad('ways');const d=_farmData();d.waysLoading=lazyLoading('ways');const s=d.sel||'';
   if(s.startsWith('way|')){d.way=wayData(s.slice(4));d.detail=d.way?'way':''}else d.way=null;
   d.items.forEach(it=>{if(it.t==='way')it.img=''});return d};
 TF.farm=()=>farmData();
@@ -3560,6 +3535,8 @@ function sellData(){const n=state.sell;if(!n||!MS[n])return null;const p=PR[n]||
 Object.assign(window.TF,{sell:()=>{const d=sellData();if(!d)return null;const {chat,...rest}=d;return {...rest,chatQuick:d.quick!=null?chat(d.quick):'',chatFair:d.fair!=null?chat(d.fair):''}},
   sellOpen:n=>{if(!MS[n]){toast("That item isn't traded on warframe.market.");return}state.sell=n;tfNotify()},sellClose:()=>{state.sell=null;tfNotify()},sellable:n=>!!MS[n]});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-sell]');if(!t)return;e.preventDefault();e.stopPropagation();window.TF.sellOpen(t.dataset.sell)},true);
+/* moving to another page closes it, so it never sits over a page it doesn't belong to */
+window.addEventListener('hashchange',()=>{if(state.sell){state.sell=null;tfNotify()}});
 /* ---------- sort direction: every sort menu has an ascending/descending toggle, remembered on this device (SREV in 05-helpers.js) ---------- */
 Object.assign(window.TF,{isRev:k=>!!SREV[k],
   sortRev:k=>{if(SREV[k])delete SREV[k];else SREV[k]=1;lsSet('tf-sortrev',SREV);
@@ -3650,6 +3627,95 @@ function statsHTML(name){if(!ST.data){loadStats();return ST.err?'':`<div class="
   return `<details class="istats" open style="padding:10px 14px;border-top:1px solid var(--line)"><summary style="cursor:pointer;font-weight:600">Stats</summary><div style="margin-top:10px">${h}</div><div class="small muted" style="margin-top:8px">Base stats without mods, from WFCD game data.</div></details>`}
 {const _it=itemTree;itemTree=function(name,opts){const h=_it.apply(this,arguments);if((opts&&opts.depth)||!I[name])return h;
   const st=statsHTML(name);if(!st)return h;const i=h.lastIndexOf('</section>');return i<0?h+st:h.slice(0,i)+st+h.slice(i)}}
+/* ---------- what each mod does, a page for every mod, and a build's overall stats ---------- */
+/* data/mods.json is built from WFCD by build/make_modinfo.py and only loaded when a build or a mod is opened. */
+const MDI={data:null,busy:false,err:false};
+function loadModInfo(){if(MDI.data||MDI.busy||MDI.err)return;MDI.busy=true;
+  fetch('data/mods.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{MDI.data=j}).catch(()=>{MDI.err=true}).finally(()=>{MDI.busy=false;tfNotify()})}
+/* one line saying what a mod does at max rank, for lists */
+function modFx(n){if(!MDI.data){loadModInfo();return ''}const x=MDI.data[n];if(!x||!x.fx.length)return '';
+  return x.fx.map(l=>l.replace(/\n/g,' ')).join(' · ').slice(0,140)}
+{const _ms=modSlot;modSlot=function(slot,m,arc){const r=_ms(slot,m,arc);return {...r,pol:POL_L[r.pol]||r.pol,fx:modFx(m)}}}
+
+const RAR_L={C:'Common',U:'Uncommon',R:'Rare',L:'Legendary',P:'Peculiar'};
+const POL_L={madurai:'Madurai',vazarin:'Vazarin',naramon:'Naramon',zenurik:'Zenurik',unairu:'Unairu',penjaga:'Penjaga',umbra:'Umbra',aura:'Aura',universal:'Any'};
+function modInfo(n){const arc=!!ARC[n]&&!MODS[n];const md=(arc?ARC[n]:MODS[n]);if(!md)return null;if(!MDI.data)loadModInfo();const x=(MDI.data||{})[n]||{};
+  const p=PR[n]||{};const sl=(SEL[n]||[]).filter(s=>s[0]!=='__buy');const key=(arc?'arc|':'mod|')+n;
+  return {n,arc,key,owned:on(key),loading:!MDI.data&&!MDI.err,type:md.ty||'',fits:x.fits||md.for||'',rarity:RAR_L[md.r]||'',polarity:arc?'':(POL_L[md.pol]||md.pol||''),
+    rank:x.rk??(arc?md.mx:null),drain:x.dr??null,fx:x.fx||[],fx0:x.fx0||[],augment:!!md.aug,
+    drops:(md.dr||[]).slice(0,8).map(d=>({where:d[0],chance:d[1]})),moreDrops:Math.max(0,(md.dr||[]).length-8),src:md.src||'',
+    tradable:!!MS[n],wfm:MS[n]?'https://warframe.market/items/'+MS[n]:'',a7:p.a7??null,a30:p.a30??null,v7:p.v7??null,date:D.meta.prices||'',
+    sellers:sl.slice(0,3).map(s=>({name:s[0],price:s[1],qty:s[2],rank:s[5]??null,status:s[4]==='ingame'?'In game':s[4]==='online'?'Online':'',whisper:whisper(n,s)}))}}
+
+/* ---- overall stats: max-rank mods added up the way the game does, without conditional bonuses ---- */
+const FRAME_ST=[['Ability Strength','str'],['Ability Duration','dur'],['Ability Efficiency','eff'],['Ability Range','rng']];
+const FRAME_PCT=[['Health','Health'],['Shield Capacity','Shields'],['Armor','Armor'],['Energy Max','Energy'],['Sprint Speed','Sprint speed'],['Casting Speed','Casting speed']];
+const PRIM_EL=['Heat','Cold','Electricity','Toxin'],PHYS_T=['Impact','Puncture','Slash'];
+const COMBO={'Cold+Heat':'Blast','Electricity+Toxin':'Corrosive','Heat+Toxin':'Gas','Cold+Electricity':'Magnetic','Electricity+Heat':'Radiation','Cold+Toxin':'Viral'};
+const WSTAT_K={'Damage':'dmg','Melee Damage':'dmg','Multishot':'ms','Critical Chance':'cc','Critical Damage':'cm','Status Chance':'sc','Fire Rate':'fr','Attack Speed':'fr',
+  'Reload Speed':'rl','Magazine Capacity':'mag','Status Duration':'sd'};
+/* split a mod's effect lines into always-on stat bonuses and everything else */
+function fxParts(n){const x=(MDI.data||{})[n];const out={stats:[],cond:[]};if(!x)return out;
+  for(const l of x.fx){const m=!l.includes('\n')&&l.match(/^([+-]?\d+(?:\.\d+)?)%\s+(.+?)(?:\s+\(x2 for [^)]+\))?$/);
+    if(m)out.stats.push([m[2],+m[1]]);else out.cond.push(l.replace(/\n/g,' '))}
+  return out}
+function addElem(list,t,v){if(!v)return;const same=list.find(e=>e.t===t||(e.parts&&e.parts.includes(t)));if(same){same.v+=v;return}
+  const single=PRIM_EL.includes(t)&&list.find(e=>PRIM_EL.includes(e.t)&&!e.parts);
+  if(single){const c=COMBO[[single.t,t].sort().join('+')];single.parts=[single.t,t];single.t=c;single.v+=v;return}
+  list.push({t,v})}
+/* ov: the mods actually shown, when they differ from the saved build (the Warframes page's budget swap) */
+function buildInsight(id,ov){const b=buildById(id);if(!b)return null;if(!MDI.data)loadModInfo();if(typeof ST!=='undefined'&&!ST.data)loadStats();
+  const it=I[b.item]||{};const c=it.c||'';const kind=c==='Warframe'?'frame':['Primary','Secondary','Melee','Arch-Gun','Arch-Melee'].includes(c)?'weapon':'other';
+  const ready=!!MDI.data&&(kind!=='weapon'&&kind!=='frame'||(typeof ST!=='undefined'&&!!ST.data));
+  const mods=(ov?ov.mods:[b.aura,b.exilus,...(b.mods||[])]).filter(Boolean),arcs=(ov?ov.arcanes:(b.arcanes||[])).filter(Boolean);
+  const res={ready,failed:MDI.err,kind,rows:[],elements:[],cond:[],highlights:[],missing:[]};if(!ready)return res;
+  const sum={},physAdd={},elemSeq=[];
+  for(const n of mods){if(!MDI.data[n]){res.missing.push(n);continue}const f=fxParts(n);
+    for(const [k,v] of f.stats){if(PRIM_EL.includes(k))elemSeq.push([k,v]);else if(PHYS_T.includes(k))physAdd[k]=(physAdd[k]||0)+v;else sum[k]=(sum[k]||0)+v}
+    f.cond.forEach(t=>res.cond.push({m:n,t}))}
+  for(const n of arcs){const f=fxParts(n);[...f.stats.map(([k,v])=>`+${v}% ${k}`),...f.cond].forEach(t=>res.cond.push({m:n,t}))}
+  const s=(typeof ST!=='undefined'&&ST.data&&ST.data[b.item])||null;const pc=v=>Math.round(v*10)/10+'%';
+  if(kind==='frame'){
+    for(const [k,key] of FRAME_ST){const v=sum[k]||0;if(!v)continue;let to=100+v;const capped=key==='eff'&&to>175;if(capped)to=175;
+      res.rows.push({k,from:'100%',to:pc(to),note:capped?'capped at 175%':'',gain:to/100})}
+    for(const [k,label] of FRAME_PCT){const v=sum[k];if(v)res.rows.push({k:label,from:'',to:(v>0?'+':'')+pc(v),note:'bonus',gain:1+v/100})}}
+  if(kind==='weapon'&&s){const melee=c==='Melee'||c==='Arch-Melee';const D=(sum['Damage']||0)+(sum['Melee Damage']||0);
+    const base=s.dmg||{};const tot=s.tot||Object.values(base).reduce((a,v)=>a+v,0);const types={};
+    for(const [t,v] of Object.entries(base)){const T=DMG_L[t]||t;if(PHYS_T.includes(T))types[T]=v*(1+D/100)*(1+(physAdd[T]||0)/100)}
+    const el=[];for(const [t,v] of elemSeq)addElem(el,t,tot*(1+D/100)*v/100);
+    for(const [t,v] of Object.entries(base)){const T=DMG_L[t]||t;if(!PHYS_T.includes(T))addElem(el,T,v*(1+D/100))}
+    res.elements=el.map(e=>({t:e.t,v:Math.round(e.v*10)/10,from:e.parts||null}));
+    const hit=Object.values(types).reduce((a,v)=>a+v,0)+el.reduce((a,e)=>a+e.v,0);
+    const f=k=>1+(sum[k]||0)/100;
+    const ms0=s.ms||1,cc0=s.cc||0,cm0=s.cm||1,sc0=s.sc||0,fr0=s.fr||0;
+    const ms=ms0*f('Multishot'),cc=cc0*f('Critical Chance'),cm=cm0*f('Critical Damage'),sc=sc0*f('Status Chance');
+    const frM=melee?fr0*f('Attack Speed'):fr0*f('Fire Rate');
+    const mag0=s.mag||0,mag=Math.round(mag0*f('Magazine Capacity')),rl0=s.rl||0,rl=rl0/f('Reload Speed');
+    const avg=(h,m,c,x)=>h*m*(1+c*(x-1));const dps=(a,r,mg,re)=>melee||!mg?a*r:a*r*mg/(mg+r*re);
+    const a0=avg(tot,ms0,cc0,cm0),a1=avg(hit,ms,cc,cm);
+    const row=(k,from,to,gain,note)=>res.rows.push({k,from,to,gain,note:note||''});
+    row('Damage per hit',fmt(Math.round(tot)),fmt(Math.round(hit)),hit/(tot||1));
+    if(!melee||ms!==ms0)row('Multishot',ms0.toFixed(1)+'×',ms.toFixed(1)+'×',ms/ms0);
+    row('Critical chance',pc(cc0*100),pc(cc*100),cc/(cc0||1),cc>1?'orange crits':'');
+    row('Critical multiplier',cm0.toFixed(1)+'×',cm.toFixed(1)+'×',cm/cm0);
+    row('Status chance',pc(sc0*100),pc(sc*100),sc/(sc0||1));
+    if(frM!==fr0)row(melee?'Attack speed':'Fire rate',fr0.toFixed(2),frM.toFixed(2),frM/fr0);
+    if(mag0&&mag!==mag0)row('Magazine',fmt(mag0),fmt(mag),mag/mag0);
+    if(rl0&&Math.abs(rl-rl0)>.005)row('Reload',rl0.toFixed(2)+'s',rl.toFixed(2)+'s',rl0/rl);
+    row('Average damage per '+(melee?'swing':'shot'),fmt(Math.round(a0)),fmt(Math.round(a1)),a1/(a0||1),'with crits');
+    const d0=dps(a0,fr0,mag0,rl0),d1=dps(a1,frM,mag,rl);
+    if(d0)row(melee?'Damage per second':'Sustained damage per second',fmt(Math.round(d0)),fmt(Math.round(d1)),d1/d0,melee?'before combo':'with reloads');}
+  /* why it works: the biggest changes, the elements it ends up dealing, and what's left out of the numbers */
+  const sum1=res.rows.find(r=>/^(Sustained damage|Damage) per second$/.test(r.k))||res.rows.find(r=>r.k.startsWith('Average damage'));
+  if(sum1&&sum1.gain>1.05)res.highlights.push(`About ${Math.round(sum1.gain)<10?Math.round(sum1.gain*10)/10:fmt(Math.round(sum1.gain))}× the damage of an unmodded ${b.item} (${sum1.to} ${sum1.k.toLowerCase()})`);
+  const top=res.rows.filter(r=>r.gain>1.05&&r.from&&!/damage per (second|shot|swing)/i.test(r.k)).sort((a,b)=>b.gain-a.gain).slice(0,3);
+  for(const r of top)res.highlights.push(`${r.k} goes from ${r.from} to ${r.to}`);
+  if(res.elements.length)res.highlights.push('Deals '+res.elements.map(e=>e.t+(e.from?` (${e.from.join(' + ')})`:'')).join(' and ')+(kind==='weapon'?' on top of its physical damage':''));
+  if(b.helminth)res.highlights.push('Helminth: '+b.helminth);
+  if(res.cond.length)res.highlights.push(`${res.cond.length} more ${res.cond.length===1?'effect kicks':'effects kick'} in during a fight (on kill, on status and so on); they stack on top of the numbers here`);
+  return res}
+
+Object.assign(window.TF,{modInfo:n=>modInfo(n),buildInsight:(id,ov)=>buildInsight(id,ov)});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
