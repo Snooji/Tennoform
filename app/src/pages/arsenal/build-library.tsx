@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ModCard } from "@/components/tf/mod-card"
+import { ModCard, ModList } from "@/components/tf/mod-card"
+import { BuildInsight } from "@/components/tf/build-insight"
 import { Thumb } from "@/components/tf/thumb"
 import { PersonMenu } from "@/components/tf/person"
 import { cn } from "@/lib/utils"
@@ -80,13 +81,11 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
               {b.src === "player" ? (b.authorUid
                 ? <PersonMenu uid={b.authorUid} name={b.author || "Player"} className="rounded-4xl" label={`Shared by ${b.author || "a player"}: add friend or block`}><Badge variant="outline" className="text-muted-foreground hover:bg-muted"><Users /> Shared by {b.author || "a player"}</Badge></PersonMenu>
                 : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
-              {b.role ? <span className="text-muted-foreground">{b.role}</span> : null}
               {b.helminth ? <span>Helminth: <b className="font-medium">{b.helminth}</b></span> : null}
             </span>
           </div>
           {b.src === "player" ? <Votes b={b} size="lg" /> : null}
         </div>
-        {b.notes ? <p className="rounded-xl bg-muted/40 px-3.5 py-2.5 text-sm whitespace-pre-wrap">{b.notes}</p> : null}
         <div className="flex flex-wrap gap-2">
           <Button className="h-10 px-4" onClick={() => tf().buildGoal(b.id)} aria-pressed={b.goal}>{b.goal ? <><Check /> Saved as goal</> : <><Target /> Save as goal</>}</Button>
           <Button variant="outline" className="h-10" onClick={() => tf().buildCopy(b.id)}><Copy /> Copy to my builds</Button>
@@ -98,13 +97,16 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
         <Progress have={b.have} total={b.total} />
         {!b.itemOwned ? <p className="text-sm text-muted-foreground">You don't have {b.item} yet. {b.itemGoal ? "It's in your Goals." : "Saving this build as a goal adds it to your Goals too."}</p> : null}
       </Card>
+      <Card className="gap-4 px-5">
+        <BuildInsight id={b.id} role={b.role} notes={b.notes} item={b.item} mods={b.mods} arcanes={b.arcanes} />
+      </Card>
       <Card className="gap-3 px-5">
         <h3 className="font-heading text-lg leading-tight font-semibold">Mods and where to get them</h3>
-        <p className="-mt-1 text-xs text-muted-foreground">Tick what you own. Missing ones show where they drop and the cheapest seller.</p>
-        <ul className="grid gap-2 sm:grid-cols-2">
+        <p className="-mt-1 text-xs text-muted-foreground">What each one does at max rank. Tick what you own; tap a mod for how to get it and its warframe.market prices.</p>
+        <ModList>
           {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
           {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
-        </ul>
+        </ModList>
       </Card>
     </div>
   )

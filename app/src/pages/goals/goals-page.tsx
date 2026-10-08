@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
-import { ModCard } from "@/components/tf/mod-card"
+import { ModCard, ModList } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type BuildGoal, type GoalsData } from "@/lib/tf"
@@ -68,7 +68,7 @@ function BuildGoals({ list }: { list: BuildGoal[] }) {
             <Button variant="ghost" size="icon-sm" onClick={() => tf().buildGoalRemove(g.id)} aria-label={`Remove the ${g.name} goal`}><X /></Button>
           </div>
           <Progress value={(100 * g.have) / (g.total || 1)} className="h-1.5" aria-label={`${g.name}: ${g.have} of ${g.total} parts`} />
-          {g.missing.length ? <ul className="grid gap-2 sm:grid-cols-2">{g.missing.map((m, i) => <ModCard key={m.key + i} m={m} />)}</ul> : <p className="text-sm text-primary">You own every part. Time to Forma it up.</p>}
+          {g.missing.length ? <ModList>{g.missing.map((m, i) => <ModCard key={m.key + i} m={m} />)}</ModList> : <p className="text-sm text-primary">You own every part. Time to Forma it up.</p>}
         </Card>
       ))}
     </section>

@@ -8,7 +8,8 @@ import { Segmented } from "@/components/ui/segmented"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
-import { ModCard } from "@/components/tf/mod-card"
+import { ModCard, ModList } from "@/components/tf/mod-card"
+import { BuildInsight } from "@/components/tf/build-insight"
 import { Thumb } from "@/components/tf/thumb"
 import { tf, useTFData } from "@/lib/tf"
 
@@ -61,15 +62,15 @@ export function FramesPage() {
                 <Badge variant="outline" className="border-primary/40 text-primary">{b.role}</Badge>
                 <span>Helminth: <b className="font-medium">{b.helminth}</b></span>
               </div>
-              {b.notes ? <p className="text-sm text-muted-foreground">{b.notes}</p> : null}
               <div className="flex flex-wrap gap-2">
                 <Button className="h-9" onClick={() => tf().buildGoal(`m:${d.name}:${d.bi}`)}><Target /> Save as goal</Button>
                 <Button variant="outline" className="h-9" onClick={() => tf().buildCopy(`m:${d.name}:${d.bi}`)}><Copy /> Copy to my builds</Button>
               </div>
-              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <ModList>
                 {b.mods.map((m, i) => <ModCard key={m.key + i} m={m} />)}
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
-              </ul>
+              </ModList>
+              <BuildInsight id={`m:${d.name}:${d.bi}`} notes={b.notes} item={d.name} mods={b.mods} arcanes={b.arcanes} />
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden /> Tick what you own. Forma each slot to match its mod's polarity.</p>
             </CardContent>
           </Card>
