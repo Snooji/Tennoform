@@ -40,7 +40,7 @@ export const GearRow = memo(function GearRow({ g }: { g: Gear }) {
             Steps <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
           </span>
         </CollapsibleTrigger>
-        <CollapsibleContent>{tree ? <Island html={tree} className="mt-2" /> : null}</CollapsibleContent>
+        <CollapsibleContent>{tree ? <Island html={tree} className="tf-flat mt-2" /> : null}</CollapsibleContent>
       </Collapsible>
     </li>
   )

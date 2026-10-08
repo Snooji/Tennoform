@@ -170,6 +170,8 @@ html{background:var(--background)}
 /* older page markup shown inside the new pages gets the same flat panel */
 #app :where(.panel,.obj,.card,.welcome,.hero,.bdp),.tf-island :where(.panel,.obj,.card){
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: none}
+/* the same markup opened inside a list row is part of that row, not a box of its own */
+#app .tf-flat :where(.panel,.obj,.card),.tf-island.tf-flat :where(.panel,.obj,.card){background:none;border:0;border-radius:0;padding-inline:0}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -184,6 +186,18 @@ html{background:var(--background)}
 
 /* the chat window's default surface: one step down from the card so bubbles read clearly (a clan picture replaces it when a leader sets one) */
 .chat-surface { background: color-mix(in oklab, var(--muted) 70%, var(--card)); }
+
+/* rows that scroll sideways on a phone fade at the right edge only while more is hidden there
+   (driven by the row's own scroll position; browsers without scroll timelines just show no fade) */
+@property --scroll-fade { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@supports (animation-timeline: scroll()) {
+  .scroll-fade {
+    mask-image: linear-gradient(90deg, #000 calc(100% - var(--scroll-fade)), transparent);
+    animation: scroll-fade linear both;
+    animation-timeline: scroll(self inline);
+  }
+  @keyframes scroll-fade { from { --scroll-fade: 2.5rem; } 96% { --scroll-fade: 2.5rem; } to { --scroll-fade: 0px; } }
+}
 
 /* the phone tab bar sits above the page; tuck it away while a dialog is open so the dialog's bottom isn't covered */
 body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }

@@ -25,7 +25,7 @@ function TaskBtn({ has, k, label }: { has: boolean; k: string; label: string }) 
 function Regions({ d }: { d: WorldData }) {
   return (
     <ToggleGroup aria-label="Region" value={[d.region]} onValueChange={(v: string[]) => v[0] && tf().worldSet({ region: v[0] })} spacing={1}
-      className="-mx-4 w-auto flex-nowrap overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
+      className="scroll-fade -mx-4 w-auto flex-nowrap overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
       {d.regions.map((r) => (
         <ToggleGroupItem key={r} value={r} variant="outline" className="h-9 rounded-full px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">{r}</ToggleGroupItem>
       ))}

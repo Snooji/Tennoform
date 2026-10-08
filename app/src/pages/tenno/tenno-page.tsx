@@ -60,7 +60,7 @@ export function TennoPage() {
       </header>
       {d.showSign && d.tab !== "account" ? <SignInCard /> : null}
       <Tabs value={d.tab} onValueChange={(v) => tf().tennoSet({ tab: String(v) })}>
-        <div className="-mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
+        <div className="scroll-fade -mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
         <TabsList className="min-w-max justify-start">
           {d.tabs.map((t) => <TabsTrigger key={t.value} value={t.value} className="flex-none px-3">{t.label}</TabsTrigger>)}
         </TabsList>
