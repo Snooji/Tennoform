@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 /** Colour choices. "rank" follows your Mastery rank; the rest stay fixed. */
-export type AccentChoice = "rank" | "bronze" | "silver" | "gold" | "radiant" | "jade"
+export type AccentChoice = "rank" | "bronze" | "silver" | "gold" | "radiant" | "jade" | "teal" | "crimson" | "void"
 export const ACCENTS: { value: AccentChoice; label: string; hint: string }[] = [
   { value: "rank", label: "Follow my rank", hint: "Bronze, then silver at MR 10, gold at MR 20, gold and jade at Legendary" },
   { value: "bronze", label: "Bronze", hint: "" },
@@ -9,6 +9,9 @@ export const ACCENTS: { value: AccentChoice; label: string; hint: string }[] = [
   { value: "gold", label: "Gold", hint: "" },
   { value: "radiant", label: "Legendary", hint: "" },
   { value: "jade", label: "Jade", hint: "" },
+  { value: "teal", label: "Teal", hint: "" },
+  { value: "crimson", label: "Kuva crimson", hint: "" },
+  { value: "void", label: "Void violet", hint: "" },
 ]
 
 const KEY = "tf-accent"

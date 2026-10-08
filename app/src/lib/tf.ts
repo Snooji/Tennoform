@@ -19,7 +19,8 @@ export type TFState = {
   acctEmail: string
   admin: boolean
   unread: number
-  theme: "dark" | "light" | "auto" | "foundry"
+  theme: "dark" | "light" | "auto"
+  style: "default" | "foundry" | "prime"
   demo: boolean
   isNew: boolean
   qs: boolean
@@ -37,6 +38,7 @@ export type TFApi = {
   signOut(): void
   account(): void
   theme(t: TFState["theme"]): void
+  themeStyle(s: TFState["style"]): void
   logo(): string
   share(): void
   keys(): void
