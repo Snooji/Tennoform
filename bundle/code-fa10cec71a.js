@@ -47,15 +47,15 @@ $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classL
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
-/* ---------- theme: auto (follows the device), dark or light ---------- */
+/* ---------- theme: auto (follows the device), dark, light or Foundry (a light theme styled after the in-game Foundry) ---------- */
 /* dark is the default; "auto" follows the device. The .dark class drives every colour token. */
-function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
-function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);document.documentElement.style.colorScheme=dark?'dark':'light';
-  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':'#f5f5f3'}
+function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto','foundry'].includes(t)?t:'dark'}catch(e){return 'dark'}}
+function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);if(t==='foundry')document.documentElement.dataset.theme='foundry';else delete document.documentElement.dataset.theme;document.documentElement.style.colorScheme=dark?'dark':'light';
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':t==='foundry'?'#b4bfcb':'#f5f5f3'}
 function themeSet(t){try{localStorage.setItem('tf-theme',JSON.stringify(t))}catch(x){}themeApply(t);if(typeof tfNotify==='function')tfNotify()}
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(themeGet()==='auto')themeApply('auto')})}catch(e){}
 themeApply(themeGet());
-function themeSw(){const t=themeGet();return `<span class="themesw" role="group" aria-label="Theme">${[['auto','Auto'],['dark','Dark'],['light','Light']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>`}
+function themeSw(){const t=themeGet();return `<span class="themesw" role="group" aria-label="Theme">${[['auto','Auto'],['dark','Dark'],['light','Light'],['foundry','Foundry']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set]');if(!b)return;themeSet(b.dataset.themeSet);rerender()});
 /* ---------- icons: one drawn set, 24px grid, 1.5px stroke, sized to the text ---------- */
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',minus:'M6 12h12',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
@@ -1737,7 +1737,8 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
   <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail&&wfPlat().auto?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
    <ol class="ssl">
     <li><b>Open your profile data.</b> <span class="small muted">It opens Warframe's own page with your ID filled in. You don't need to be signed in.</span>
-     <div><a class="btn" id="openprof" ${ok?`href="https://${wfPlat().host}.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div></li>
+     <div><a class="btn" id="openprof" ${ok?`href="https://${wfPlat().host}.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div>
+     <span class="small muted">Blank page? That's Warframe sending nothing back. It does that when it doesn't recognise the ID for the platform picked above (check both), or when it's limiting requests from your network for a while; then wait a few hours and try again.</span></li>
     <li><b>Copy everything on that page.</b> <span class="small muted">On a phone: press and hold the text, tap <b>Select All</b>, then <b>Copy</b>. On a computer: Ctrl+A (⌘A), then Ctrl+C (⌘C).</span></li>
     <li><b>Come back and paste.</b> <div class="row" style="margin-top:6px"><button class="btn primary" id="pastesync" type="button">Paste &amp; sync</button><span class="small muted">You'll see what changes before anything is saved.</span></div></li>
    </ol>

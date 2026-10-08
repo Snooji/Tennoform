@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
+import { Anvil, ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -196,12 +196,13 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
             <DropdownMenuSeparator />
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                {s.theme === "light" ? <Sun /> : s.theme === "auto" ? <Monitor /> : <Moon />} Theme
+                {s.theme === "light" ? <Sun /> : s.theme === "auto" ? <Monitor /> : s.theme === "foundry" ? <Anvil /> : <Moon />} Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup value={s.theme} onValueChange={(v) => tf().theme(v as TFState["theme"])}>
                   <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="foundry">Foundry</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="auto">Match device</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubContent>

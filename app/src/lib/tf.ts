@@ -19,7 +19,7 @@ export type TFState = {
   acctEmail: string
   admin: boolean
   unread: number
-  theme: "dark" | "light" | "auto"
+  theme: "dark" | "light" | "auto" | "foundry"
   demo: boolean
   isNew: boolean
   qs: boolean
