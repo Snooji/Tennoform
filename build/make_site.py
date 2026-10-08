@@ -17,14 +17,43 @@ D['sellers'] = mk['sellers']
 D['sets'] = {k: v for k, v in mk['prices'].items() if k.endswith(' Set')}
 D['meta'] = dict(base['meta'], prices=mk.get('date') or base['meta'].get('prices'), site=datetime.date.today().strftime('%b %-d, %Y'))
 import subprocess
+def git(*a):
+    try:
+        return subprocess.run(['git', *a], cwd=os.path.join(H, '..'), capture_output=True, check=True, text=True).stdout
+    except Exception:
+        return ''
 def live_file(path):
     """A file as the live site has it: origin/main when git knows it (the deployed branch), else the last commit."""
     for ref in ('origin/main', 'HEAD'):
-        try:
-            return subprocess.run(['git', 'show', '%s:%s' % (ref, path)], cwd=os.path.join(H, '..'), capture_output=True, check=True, text=True).stdout
-        except Exception:
-            continue
+        out = git('show', '%s:%s' % (ref, path))
+        if out:
+            return out
     return ''
+# A tab left open keeps asking for the files of the version it loaded, for as long as it stays open. So keep the files of
+# every version deployed in the last KEEP_DAYS days (at least KEEP_MIN, at most KEEP_MAX), not just the current and live ones.
+# Older tabs still recover: a page that can't load its file reloads once into the current version.
+KEEP_DAYS, KEEP_MIN, KEEP_MAX = 3, 3, 10
+def recent_versions(path):
+    """[(commit, text)] of path as deployed: main's own commits only (merges and bot commits, not the PR commits inside them)."""
+    ref = 'origin/main' if git('rev-parse', '--verify', '-q', 'origin/main') else 'HEAD'
+    hs = git('log', ref, '--first-parent', '--since=%d.days' % KEEP_DAYS, '--format=%H', '--', path).split()[:KEEP_MAX]
+    hs += [h for h in git('log', ref, '--first-parent', '-%d' % KEEP_MIN, '--format=%H', '--', path).split() if h not in hs]
+    return [(h, git('show', '%s:%s' % (h, path))) for h in hs]
+def broken(data):
+    """A merge conflict left in a built file: the browser can't run it, so never keep or deploy one."""
+    return re.search(rb'(?:^|\n)(?:<{7}|>{7})', data) is not None
+def restore(folder, name, versions):
+    """Put back (or repair) a file a recent version still uses, from a commit that has a clean copy of it."""
+    dst = os.path.join(H, '..', folder, name)
+    if os.path.exists(dst) and not broken(open(dst, 'rb').read()):
+        return
+    for h, _ in versions:
+        data = subprocess.run(['git', 'show', '%s:%s/%s' % (h, folder, name)], cwd=os.path.join(H, '..'), capture_output=True).stdout
+        if data and not broken(data):
+            open(dst, 'wb').write(data)
+            return
+    if os.path.exists(dst):
+        os.remove(dst)
 BUNDLE = os.path.join(H, '..', 'bundle')
 os.makedirs(BUNDLE, exist_ok=True)
 def emit(kind, ext, text):
@@ -51,15 +80,20 @@ files = {
     'market': emit('market', 'js', as_js('TF_MARKET', market)),
     'code': emit('code', 'js', part('js')),
 }
-# Keep the files the live site uses, so a browser still holding that page (cached for up to 10 minutes) can finish loading it.
+# Keep this build's files and every file a recent version of the page used (see KEEP_DAYS above).
 keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()))
-for src in (live_file('index.html'), open(os.path.join(H, '..', 'index.html'), encoding='utf-8').read() if os.path.exists(os.path.join(H, '..', 'index.html')) else ''):
-    keep |= set(re.findall(r'/bundle/([\w.-]+)', src))
+page_versions = recent_versions('index.html')
+old = set()
+for h, src in page_versions:
+    old |= set(re.findall(r'/bundle/([\w.-]+)', src))
     # the lazy files are named inside the game file, not in the page itself
     for g in re.findall(r'/bundle/(game-[\w]+\.js)', src):
         gp = os.path.join(BUNDLE, g)
-        txt = open(gp, encoding='utf-8').read() if os.path.exists(gp) else live_file('bundle/' + g)
-        keep |= set(re.findall(r'/bundle/([\w.-]+\.json)', txt.replace('\\/', '/')))
+        txt = open(gp, encoding='utf-8').read() if os.path.exists(gp) else git('show', '%s:bundle/%s' % (h, g))
+        old |= set(re.findall(r'/bundle/([\w.-]+\.json)', txt.replace('\\/', '/')))
+for f in old - keep:
+    restore('bundle', f, page_versions)
+keep |= old
 for f in os.listdir(BUNDLE):
     if f not in keep:
         os.remove(os.path.join(BUNDLE, f))
@@ -79,7 +113,7 @@ csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
        "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'" % hashes)
 def prune_assets():
     """The React build no longer empties assets/, so a tab that was open during an update can still load its pages.
-    Keep this build's files and the ones the live site uses; delete anything older."""
+    Keep this build's files and every file a recent version used (KEEP_DAYS); delete anything older."""
     A = os.path.join(H, '..', 'assets')
     mf = os.path.join(A, '.vite', 'manifest.json')
     if not os.path.exists(mf):
@@ -89,16 +123,22 @@ def prune_assets():
         cur.add(e['file'])
         cur.update(e.get('css', []))
         cur.update(e.get('assets', []))
-    live = set()
-    try:
-        for e in json.loads(live_file('assets/.vite/manifest.json') or '{}').values():
-            live.add(e['file']); live.update(e.get('css', [])); live.update(e.get('assets', []))
-    except ValueError:
-        pass
-    allowed = cur | live
+    old = set()
+    versions = recent_versions('assets/.vite/manifest.json')
+    for _, txt in versions:
+        try:
+            for e in json.loads(txt or '{}').values():
+                old.add(e['file']); old.update(e.get('css', [])); old.update(e.get('assets', []))
+        except ValueError:
+            pass
+    for f in old - cur:
+        restore('assets', f, versions)
+    allowed = cur | old
     for f in os.listdir(A):
         if os.path.isfile(os.path.join(A, f)) and f not in allowed:
             os.remove(os.path.join(A, f))
+    bad = [f for f in cur if os.path.exists(os.path.join(A, f)) and broken(open(os.path.join(A, f), 'rb').read())]
+    assert not bad, 'merge conflict markers in this build: %s (run the app build again)' % bad
 prune_assets()
 def shell_tags():
     # The React shell (app/, built with Vite into assets/) loads after the main script, which exposes window.TF.

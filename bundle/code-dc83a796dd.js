@@ -47,15 +47,15 @@ $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classL
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
-/* ---------- theme: auto (follows the device), dark, light or Foundry (a light theme styled after the in-game Foundry) ---------- */
+/* ---------- theme: auto (follows the device), dark or light ---------- */
 /* dark is the default; "auto" follows the device. The .dark class drives every colour token. */
-function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto','foundry'].includes(t)?t:'dark'}catch(e){return 'dark'}}
-function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);if(t==='foundry')document.documentElement.dataset.theme='foundry';else delete document.documentElement.dataset.theme;document.documentElement.style.colorScheme=dark?'dark':'light';
-  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':t==='foundry'?'#b4bfcb':'#f5f5f3'}
+function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
+function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);document.documentElement.style.colorScheme=dark?'dark':'light';
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':'#f5f5f3'}
 function themeSet(t){try{localStorage.setItem('tf-theme',JSON.stringify(t))}catch(x){}themeApply(t);if(typeof tfNotify==='function')tfNotify()}
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(themeGet()==='auto')themeApply('auto')})}catch(e){}
 themeApply(themeGet());
-function themeSw(){const t=themeGet();return `<span class="themesw" role="group" aria-label="Theme">${[['auto','Auto'],['dark','Dark'],['light','Light'],['foundry','Foundry']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>`}
+function themeSw(){const t=themeGet();return `<span class="themesw" role="group" aria-label="Theme">${[['auto','Auto'],['dark','Dark'],['light','Light']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set]');if(!b)return;themeSet(b.dataset.themeSet);rerender()});
 /* ---------- icons: one drawn set, 24px grid, 1.5px stroke, sized to the text ---------- */
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',minus:'M6 12h12',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
@@ -1616,12 +1616,7 @@ function helminthTab(){const f=state.hF||'all';let fr=MI.filter(i=>i.c==='Warfra
   const owned=n=>rankOf(n)>0||rankOf(n+' Prime')>0;
   if(f==='done')fr=fr.filter(n=>on('hel|'+n));if(f==='ready')fr=fr.filter(n=>!on('hel|'+n)&&owned(n));if(f==='todo')fr=fr.filter(n=>!on('hel|'+n));
   const all=MI.filter(i=>i.c==='Warframe'&&!i.p&&!/Umbra$/.test(i.n));
-  return `<div class="panel stack cut"><h2>Helminth</h2><p class="small" style="margin:0">Feeding (subsuming) a Warframe to the Helminth unlocks one of its abilities, which you can then infuse onto any other Warframe in place of one of theirs. Each Warframe only needs feeding once, so this list is how you keep track of which ones you've done.</p>
-  <details class="small"><summary><b>Why you tick these yourself</b></summary><div class="stack" style="padding-top:6px">
-  <div>The public profile Tennoform syncs from doesn't say which Warframes you've fed, so there's nothing to read automatically. You only do this occasionally, so ticking the box right after you feed one in game keeps the list right.</div>
-  <div><b>How to use it:</b> choose "Owned, not fed yet" to see the Warframes you could feed next. After you subsume one in game, tick it here. Your ticks are saved on this device (and synced if you're signed in).</div>
-  <div><b>Good to know:</b> feeding uses up that copy of the Warframe, but you keep its Mastery. Many players build a spare copy to feed rather than giving up one they play. Prime Warframes share their base ability, so they aren't listed separately.</div>
-  <div><b>Getting the Helminth:</b> play Heart of Deimos, then buy the Helminth Segment from Son in the Necralisk and build it in your Orbiter.</div></div></details>
+  return `<div class="panel stack cut"><h2>Helminth</h2><p class="small" style="margin:0">Tick each Warframe you've fed to the Helminth to unlock its ability for infusing. Unlock the Helminth chamber by buying its segment from Son in the Necralisk (needs Heart of Deimos).</p>
   <div class="row"><span class="chip gold">${all.filter(i=>on('hel|'+i.n)).length}/${all.length} subsumed</span><select id="hf" aria-label="Filter" style="width:auto">${[['all','All Warframes'],['ready','Owned, not fed yet'],['todo','Not fed yet'],['done','Fed']].map(([k,l])=>`<option value="${k}" ${f===k?'selected':''}>${l}</option>`).join('')}</select></div>
   <div class="obj">${fr.map(n=>`<div class="qrow${on('hel|'+n)?' done':''}">${ck('hel|'+n)}<div><div class="row" style="gap:6px"><span class="nm lbl">${esc(n)}</span>${owned(n)?'<span class="chip teal">Owned</span>':''}</div></div></div>`).join('')||'<div class="empty">Nothing here.</div>'}</div></div>`}
 
@@ -3740,148 +3735,6 @@ function buildInsight(id,ov){const b=buildById(id);if(!b)return null;if(!MDI.dat
   return res}
 
 Object.assign(window.TF,{modInfo:n=>modInfo(n),buildInsight:(id,ov)=>buildInsight(id,ov)});
-/* ---------- "Safe to sell?": what you'd lose by selling an item, shown on its page and in the sell dialog ---------- */
-/* Built from the game data the site already has: crafting recipes (another weapon needs this one), vault status,
-   where the item comes from, and your own mastery. Nothing here is fetched. */
-let USEDIN=null;
-function usedIn(n){if(!USEDIN){USEDIN={};for(const k in I)for(const p of I[k].parts||[])if(I[p.n]&&p.n!==k){const a=USEDIN[p.n]=USEDIN[p.n]||[];if(!a.includes(k))a.push(k)}}
-  return USEDIN[n]||[]}
-const FOUNDER=['Excalibur Prime','Lato Prime','Skana Prime'];
-function limitedNote(n){const it=I[n];if(!it)return '';
-  if(FOUNDER.includes(n))return 'Founders item: it can never be obtained again.';
-  if(/\/VoidTrader\//.test(it.u)||/^Prisma /.test(n)||n==='Mara Detron')return "Only sold by Baro Ki'Teer, and he brings it back rarely.";
-  if(/^Dex /.test(n))return 'Anniversary login reward: offered again only at a later anniversary.';
-  if(/ (Wraith|Vandal)$/.test(n))return 'Limited: Wraith and Vandal weapons come from events and rare rewards, and can be gone for years.';
-  if(it.p&&it.v&&!(VAULT[n]&&VAULT[n].now))return 'Vaulted: its relics no longer drop. Getting it again means trading or waiting for Prime Resurgence.';
-  return ''}
-/* each check: [level, text]; level 'stop' = you'd lose something, 'warn' = think first, 'ok' = fine */
-function sellCheck(n){const base=n.replace(/ Set$/,'');const it=I[base];if(!it)return null;const out=[];
-  for(const x of usedIn(base)){const done=on('m|'+x)||on('build|'+x);
-    out.push([done?'ok':'stop',done?`Used to build ${x}, which you already have.`:`Needed to build ${x}. Keep it if you still want ${x}.`])}
-  if(!on('m|'+base))out.push(['warn',n.endsWith(' Set')?`You haven't mastered ${base} yet. Build and level it first, or you'll need another set later for its mastery.`:`Not mastered yet. Level it to max rank first: you keep the mastery after selling.`]);
-  const lim=limitedNote(base);if(lim)out.push(['warn',lim]);
-  const level=out.some(c=>c[0]==='stop')?'stop':out.some(c=>c[0]==='warn')?'warn':'ok';
-  return {level,checks:out}}
-function sellCheckHTML(n){const s=sellCheck(n);if(!s)return '';
-  const cls={stop:'bad',warn:'warn',ok:'ok'},lab={stop:'Keep it',warn:'Check first',ok:'Safe to sell'};
-  return `<section class="obj"><div class="obj-h"><div class="title"><h3>Before you sell</h3><span class="chip ${cls[s.level]}">${lab[s.level]}</span></div></div>
-  <div style="padding:10px 14px" class="small stack">${s.checks.length?s.checks.map(c=>`<div>${c[0]==='stop'?'<b>Keep it:</b> ':c[0]==='warn'?'<b>Note:</b> ':''}${esc(c[1])}</div>`).join(''):'<div>Nothing else needs it, it isn\'t limited, and you\'ve mastered it.</div>'}</div></section>`}
-{const _d=detail;detail=function(sel){const h=_d(sel);return sel.startsWith('item|')&&h?h+sellCheckHTML(sel.slice(5)):h}}
-{const _s=sellData;sellData=function(){const d=_s();if(!d)return d;const s=sellCheck(d.n);return {...d,safe:s?{level:s.level,checks:s.checks.map(c=>({level:c[0],text:c[1]}))}:null}}}
-Object.assign(window.TF,{sellCheck:n=>sellCheck(n)});
-/* ---------- Duviri Circuit forecast: which Warframes and Incarnon Genesis adapters are offered in the coming weeks ---------- */
-/* Both lists rotate on a fixed cycle every Monday 00:00 UTC (wiki: The Circuit). The live feed gives this week's picks;
-   when it disagrees with the cycle (DE added or reordered rewards), this week shows the live picks and the forecast says so. */
-const CIR_WF=[['Excalibur','Trinity','Ember'],['Loki','Mag','Rhino'],['Ash','Frost','Nyx'],['Saryn','Vauban','Nova'],['Nekros','Valkyr','Oberon'],['Hydroid','Mirage','Limbo'],
-  ['Mesa','Chroma','Atlas'],['Ivara','Inaros','Titania'],['Nidus','Octavia','Harrow'],['Gara','Khora','Revenant'],['Garuda','Baruuk','Hildryn']];
-const CIR_INC=[['Braton','Lato','Skana','Paris','Kunai'],['Boar','Gammacor','Angstrum','Gorgon','Anku'],['Bo','Latron','Furis','Furax','Strun'],['Lex','Magistar','Boltor','Bronco','Ceramic Dagger'],
-  ['Torid','Dual Toxocyst','Dual Ichor','Miter','Atomos'],['Ack & Brunt','Soma','Vasto','Nami Solo','Burston'],['Zylok','Sibear','Dread','Despair','Hate'],['Dera','Sybaris','Cestra','Sicarus','Okina'],
-  ['Vectis','Stug','Ballistica','Destreza','Obex']];
-const CIR_ANCHOR=Date.UTC(2026,9,5),CIR_WF0=3,CIR_INC0=5;  /* week of Mon 5 Oct 2026: Saryn/Vauban/Nova and Ack & Brunt…Burston */
-const cirKey=s=>String(s).replace(/&/g,'and').replace(/[^a-z]/gi,'').toLowerCase();
-const pmod=(a,m)=>((a%m)+m)%m;
-function circuitData(){const wk0=lastWeekly(),now=Date.now();const off=Math.round((wk0-CIR_ANCHOR)/(7*DAY));
-  const live=WS&&WS.duviriCycle&&WS.duviriCycle.choices;const pick=c=>(live&&(live.find(x=>x.category===c)||{}).choices)||null;
-  const lwf=pick('normal'),linc=pick('hard');const same=(a,b)=>!a||a.map(cirKey).sort().join()===b.map(cirKey).sort().join();
-  let changed=false;const weeks=[];
-  for(let i=0;i<10;i++){const start=wk0+i*7*DAY;let wf=CIR_WF[pmod(CIR_WF0+off+i,CIR_WF.length)],inc=CIR_INC[pmod(CIR_INC0+off+i,CIR_INC.length)];
-    if(i===0){if(lwf&&!same(lwf,wf)){changed=true;wf=lwf.map(k=>CIR_WF.flat().find(n=>cirKey(n)===cirKey(k))||k)}
-      if(linc&&!same(linc,inc)){changed=true;inc=linc.map(k=>CIR_INC.flat().find(n=>cirKey(n)===cirKey(k))||k)}}
-    const frames=wf.map(n=>({n,img:I[n]?IMG(n):'',owned:ownedItem(n),prime:ownedItem(n+' Prime'),mastered:on('m|'+n)}));
-    const adapters=inc.map(n=>({n,full:n+' Incarnon Genesis',key:'inc|'+n,have:on('inc|'+n),weapon:I[n]?ownedItem(n)||ownedItem(n+' Prime'):false,img:I[n]?IMG(n):''}));
-    const need=frames.filter(f=>!f.owned).length+adapters.filter(a=>!a.have).length;
-    weeks.push({start:new Date(start).toISOString(),label:i===0?'This week':i===1?'Next week':new Date(start).toLocaleDateString([],{month:'short',day:'numeric',timeZone:'UTC'}),
-      endsIn:i===0?left(start+7*DAY-now):'',startsIn:i>0?left(start-now):'',frames,adapters,need})}
-  const have=Object.keys(CIR_INC.flat().reduce((o,n)=>(on('inc|'+n)&&(o[n]=1),o),{})).length;
-  return {weeks,changed,live:!!live,adaptersHave:have,adaptersTotal:CIR_INC.flat().length}}
-Object.assign(window.TF,{circuit:()=>circuitData()});
-/* the checklist's Circuit row shows this week's picks */
-{const _cl=ckLiveData;ckLiveData=function(c){if(c[1]!=='circuit')return _cl(c);const w=circuitData().weeks[0];
-  return {head:'This week: '+w.frames.map(f=>f.n).join(', '),list:[{t:'Steel Path',s:w.adapters.map(a=>a.n).join(', '),n:'Incarnon Genesis adapters'}]}}}
-/* ---------- more daily/weekly checklist items, and Baro as a per-visit item ---------- */
-/* Each entry: [period, id, title, description, quest that unlocks it]. Period 'd' resets 00:00 UTC, 'w' Monday 00:00 UTC. */
-const CK_MORE=[
-  ['d','kim','1999 chatroom (KIM)','Chat with each Hex member once a day for Hex standing.','The Hex'],
-  ['w','yonta','Yonta: weekly Kuva','35,000 Kuva for 5 Voidplume Pinions in the Chrysalith.','Angels of the Zariman'],
-  ['w','bird3','Bird 3: weekly Archon Shard','One Archon Shard a week for Cavia standing in the Sanctum Anatomica.','Whispers in the Walls'],
-  ['w','helminth','Helminth Invigorations','New Invigoration offers each week: a 7-day boost for a Warframe. See the Helminth tab on your Tenno page for which frames you\'ve fed.','Heart of Deimos'],
-  ['w','tarch','Temporal Archimedea','Weekly run from Kaya Velasco in Höllvania. Uses 2 of your 5 weekly Search Pulses.','The Hex']];
-for(const c of CK_MORE)if(!D.checks.some(x=>x[1]===c[1]))D.checks.push(c);
-{const n=D.checks.find(x=>x[1]==='netra');if(n)n[3]='5 Search Pulses a week, shared with Deep and Temporal Archimedea (2 each). Rewards Archon Shards and Arcanes.';
- const e=D.checks.find(x=>x[1]==='eda');if(e)e[3]='Weekly high-difficulty run. Uses 2 of your 5 weekly Search Pulses.';
- const p=D.checks.find(x=>x[1]==='palladino');if(p)p[3]='35,000 Kuva for 10 Riven Slivers, plus her other weekly offers.'}
-/* Baro Ki'Teer: shows only while he's at a relay, and the tick lasts for that visit */
-function baroVisit(){const vt=WS&&WS.voidTrader;if(!vt)return null;const a=new Date(vt.activation).getTime(),e=new Date(vt.expiry).getTime(),now=Date.now();return a<=now&&now<e?{a,e,loc:vt.location||'a relay'}:null}
-{const _all=allChecks;allChecks=function(){const out=_all();const b=baroVisit();
-  if(b)out.push(['b','baro:'+b.a,"Visit Baro Ki'Teer",`He's at ${b.loc} until ${lt(b.e)} your time. Bring Ducats and credits.`,'']);return out}}
-{const _r=ckReset;ckReset=function(c){if(c[0]==='b'){const b=baroVisit();return b?b.a:0}return _r(c)}}
-{const _e=ckEnd;ckEnd=function(c){if(c[0]==='b'){const b=baroVisit();return b?b.e:Date.now()}return _e(c)}}
-/* ---------- Prime Resurgence watchlist: star any Prime and get an alert when Varzia brings it back ---------- */
-const watchList=()=>Array.isArray(P.watch)?P.watch:[];
-function watchToggle(n){const w=watchList().filter(x=>x!==n);if(w.length===watchList().length)w.push(n);P.watch=w;saveProfile();
-  if(typeof FFD!=='undefined')FFD.key='';tfNotify();toast(w.includes(n)?`Watching ${n}. You'll get an alert when it's in Prime Resurgence.`:`Stopped watching ${n}.`)}
-{const _m=marketData;marketData=function(){const out=_m();if(out.tab!=='vault')return out;const W=watchList();
-  const mark=c=>({...c,watched:W.includes(c.n)});['now','farm','vault'].forEach(k=>{out[k]=(out[k]||[]).map(mark)});
-  const all=[...out.now,...out.farm,...out.vault];out.watch=W.map(n=>all.find(c=>c.n===n)).filter(Boolean);return out}}
-{const _a=alertsAll;alertsAll=function(){const out=_a();if(!alertPrefs().resurgence)return out;
-  const back=watchList().filter(n=>VAULT[n]&&VAULT[n].now);
-  if(back.length){const until=VAULT[back[0]].now;out.unshift({id:'watch:'+until+':'+back.slice().sort().join(','),kind:'resurgence',title:`Back in Prime Resurgence: ${back.length===1?back[0]:back.length+' Primes you watch'}`,
-    text:`Varzia has their relics until ${fdate(until)}. Buy them with Aya or Regal Aya.`,items:back.slice(0,6),href:'market'})}
-  return out}}
-/* item pages: a Watch button and the item's Resurgence status, for Primes */
-function watchHTML(n){const it=I[n];if(!it||!it.p)return '';const v=VAULT[n]||{},w=watchList().includes(n);
-  const st=v.now?`In Prime Resurgence now, until ${fdate(v.now)}.`:!it.v?'Not vaulted: its relics drop now.':`Vaulted.${v.last?` Last in Resurgence ${fdate(v.last)}.`:''}${v.est?` Rough estimate for its return: ${fdate(v.est)}.`:''}`;
-  return `<section class="obj"><div class="obj-h"><div class="title"><h3>Prime Resurgence</h3><span style="margin-left:auto"><button type="button" class="btn sm" data-watch="${esc(n)}" aria-pressed="${w}">${w?'Watching':'Watch'}</button></span></div></div>
-  <div style="padding:10px 14px" class="small">${esc(st)} ${w?'You\'ll get an alert on Home and Today when it comes back.':'Watch it to get an alert when it comes back.'}</div></section>`}
-{const _d=detail;detail=function(sel){const h=_d(sel);return sel.startsWith('item|')&&h?h+watchHTML(sel.slice(5)):h}}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-watch]');if(b){e.preventDefault();watchToggle(b.getAttribute('data-watch'))}});
-Object.assign(window.TF,{watchToggle:n=>watchToggle(n)});
-/* ---------- Coming back after a break: what's new since you stopped, and the quests to play next, in order ---------- */
-/* Dates are PC release dates from the wiki's update list (Module:Version/data). Quests are ticked from your own progress. */
-const RET_UPD=[
-  ['2019-11-22','Rising Tide','Build your own Railjack in the Dry Dock.'],
-  ['2019-12-13','Empyrean','Railjack missions with your crew.'],
-  ['2020-03-05','Warframe Revised','Shield gating and no more self-damage.'],
-  ['2020-06-11','The Deadlock Protocol','Corpus ship remaster, Granum Void and Protea.'],
-  ['2020-07-08','The Steel Path','Hard mode for the whole star chart, with Steel Essence and Teshin.'],
-  ['2020-08-25','Heart of Deimos','Cambion Drift open world, Necramechs and the Helminth.'],
-  ['2021-03-19','Corpus Proxima & The New Railjack','Railjack overhaul: Plexus and Command intrinsics.'],
-  ['2021-04-13','Call of the Tempestarii','Void Storms (Railjack fissures) and Sevagoth.'],
-  ['2021-07-06','Sisters of Parvos','The Corpus version of Kuva Liches, with Tenet weapons.'],
-  ['2021-12-15','The New War','The big story quest. Unlocks the Drifter and most later content.'],
-  ['2022-04-27','Angels of the Zariman','Zariman Ten Zero, the first Incarnon weapons and a Focus rework.'],
-  ['2022-09-07','Veilbreaker','Weekly Archon Hunts, Archon Shards and Kahl\'s Garrison.'],
-  ['2023-04-26','The Duviri Paradox','Duviri, the Drifter and the Circuit, where Incarnon Genesis adapters come from.'],
-  ['2023-06-21','The Seven Crimes of Kullervo','Overguard on Warframe abilities.'],
-  ['2023-12-13','Whispers in the Walls','Sanctum Anatomica, Cavia, Netracells and Deep Archimedea. Cross-platform saves.'],
-  ['2024-03-27','Dante Unbound','Dante, Omnia fissures and Ascent Fusion for Archon Shards.'],
-  ['2024-06-18','Jade Shadows','Jade, Ascension missions and a rework of status effects and resistances.'],
-  ['2024-08-21','The Lotus Eaters','A short quest that leads to The Hex and The Old Peace.'],
-  ['2024-10-02','Koumei & the Five Fates','Koumei and a companion rework.'],
-  ['2024-12-13','Warframe: 1999','Höllvania, The Hex, Protoframes and the KIM chatroom.'],
-  ['2025-03-19','Techrot Encore','Technocyte Coda adversaries and Temporal Archimedea.'],
-  ['2025-06-25','Isleweaver','A new Duviri node and Oraxia.'],
-  ['2025-10-15','The Vallis Undermind','The Deepmines under Fortuna, Nokko and an Oberon rework.'],
-  ['2025-12-10','The Old Peace','The current story quest: La Cathédrale, The Descendia and Uriel.'],
-  ['2026-03-25','The Shadowgrapher','Follie, and several old grinds made shorter.'],
-  ['2026-06-17','Jade Shadows: Constellations','Uranus Proxima and Steel Path Railjack.'],
-  ['2026-09-23','Iceblade of Narin','Yuvan Peak hub, Narin, a Banshee rework and Riven trait locking.'],
-  ['2026-10-07','The Icebind','A 6-player mode and Riven splicing.']];
-/* the main quests in an order that respects their prerequisites: [quest, why it matters, release date if it came out after 2019] */
-const RET_Q=[
-  ['The War Within','Unlocks Kuva farming and Sorties.',''],['Rising Tide','Your own Railjack, needed for The New War.','2019-11-22'],['Chains of Harrow','',''],['Apostasy Prologue','',''],['The Sacrifice','',''],
-  ['Chimera Prologue','',''],['Erra','','2019-12-13'],['The Maker','Last step before The New War.','2020-03-24'],
-  ['Heart of Deimos','Unlocks the Cambion Drift and the Helminth.','2020-08-25'],['The Deadlock Protocol','','2020-06-11'],['Call of the Tempestarii','Unlocks Void Storms.','2021-04-13'],
-  ['The New War','Unlocks the Drifter, Archon Hunts and nearly everything after it.','2021-12-15'],['Angels of the Zariman','Incarnon weapons and the Zariman.','2022-04-27'],['Veilbreaker','Archon Hunts and Archon Shards.','2022-09-07'],
-  ['The Duviri Paradox','The Circuit and Incarnon Genesis adapters. Needed for The Hex.','2023-04-26'],['Whispers in the Walls','Netracells and Deep Archimedea.','2023-12-13'],['Jade Shadows','','2024-06-18'],['Jade Shadows: Constellations','Steel Path Railjack.','2026-06-17'],
-  ['The Lotus Eaters','Short, and unlocks The Hex and The Old Peace.','2024-08-21'],['The Hex','Höllvania and the 1999 chatroom.','2024-12-13'],['The Old Peace','The latest story quest.','2025-12-10']];
-const RET_FROM=[['2019-06-01','Before 2020'],['2020-01-01','2020'],['2021-01-01','2021'],['2022-01-01','2022'],['2023-01-01','2023'],['2024-01-01','2024'],['2025-01-01','Early 2025'],['2025-07-01','Mid 2025'],['2026-01-01','Early 2026'],['2026-06-01','Mid 2026']];
-function returningData(){const from=lsGet('tf-ret-from','')||'';const updates=from?RET_UPD.filter(u=>u[0]>=from).map(([d,n,t])=>({date:fdate(d),n,t})):[];
-  const quests=RET_Q.map(([n,why,d])=>{return {n,why,done:qDone(n),isNew:!!from&&!!d&&d>=from}});
-  /* with no quest progress at all (never synced, nothing ticked), assume the quests that were out before you stopped are done */
-  const known=!!P.at||quests.some(q=>q.done);const todo=quests.filter(q=>!q.done&&(known||!from||q.isNew));
-  return {from,options:RET_FROM.map(([value,label])=>({value,label})),updates,quests:todo.slice(0,8),moreQuests:Math.max(0,todo.length-8),questsDone:quests.filter(q=>q.done).length,questsTotal:quests.length,synced:!!P.at,assumed:!known&&!!from}}
-Object.assign(window.TF,{returning:()=>returningData(),returningSet:v=>{lsSet('tf-ret-from',String(v||''));tfNotify()}});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
