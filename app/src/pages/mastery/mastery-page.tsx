@@ -88,7 +88,7 @@ function Route({ d }: { d: MasteryData }) {
       </Card>
       {later.length ? (
         <Collapsible open={more} onOpenChange={setMore}>
-          <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
+          <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
             After {d.targetLabel}: {later.length} more {later.length === 1 ? "step" : "steps"} for the ranks beyond
             <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
           </CollapsibleTrigger>
@@ -129,7 +129,7 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
         {x.link ? <a href={`#${x.link}`} className={cn(linkCls, "self-start text-sm")}>{x.link === "missions" ? "Open the Star chart" : "Open Ranks"}</a> : null}
         {x.items.length ? (
           <Collapsible open={open} onOpenChange={setOpen}>
-            <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50">
+            <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50">
               {open ? "Hide" : "Show"} the {x.count} {x.unit}
               <ChevronDown aria-hidden className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
             </CollapsibleTrigger>
@@ -146,6 +146,8 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
 
 function Ladder({ d }: { d: MasteryData }) {
   return (
+    <>
+    <p className="text-sm text-muted-foreground">Every rank lets you build and use more weapons, Warframes and companions. Open a rank to see what it unlocks: tick what you've mastered, or open an item for how to get it.</p>
     <Card size="sm" className="gap-0 py-0">
     <ol className="flex flex-col divide-y">
       {d.ladder!.map((r) => {
@@ -168,19 +170,17 @@ function Ladder({ d }: { d: MasteryData }) {
             ) : null}
             {r.gear.length ? (
               <Collapsible>
-                <CollapsibleTrigger className="group inline-flex cursor-pointer items-center gap-1.5 rounded-md text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
-                  Gear that needs {r.label} ({gd}/{r.gear.length} mastered)
-                  <ChevronDown aria-hidden className="size-3.5 transition-transform group-data-[panel-open]:rotate-180" />
+                <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-left text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50">
+                  <span>
+                    <b className="font-medium text-foreground">Unlocks at {r.label}:</b> {r.gear.length} {r.gear.length === 1 ? "item" : "items"} you can build and use from this rank
+                    {gd ? ` · ${gd} mastered` : ""}
+                  </span>
+                  <ChevronDown aria-hidden className="size-3.5 shrink-0 transition-transform group-data-[panel-open]:rotate-180" />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {r.gear.map((g) => (
-                      <button key={g.n} type="button" onClick={() => tf().act("a", { href: "#", "data-go": "item|" + g.n })}
-                        className={cn("rounded-md border px-2 py-1 text-xs transition-colors hover:border-primary/50", g.done && "border-transparent bg-muted text-muted-foreground")}>
-                        {g.n}{g.done ? " ✓" : ""}
-                      </button>
-                    ))}
-                  </div>
+                  <ul className="-mx-4 mt-2 flex flex-col divide-y border-y" aria-label={`Gear that unlocks at ${r.label}`}>
+                    {r.gear.map((g) => <GearRow key={g.n} g={g} />)}
+                  </ul>
                 </CollapsibleContent>
               </Collapsible>
             ) : null}
@@ -189,6 +189,7 @@ function Ladder({ d }: { d: MasteryData }) {
       })}
     </ol>
     </Card>
+    </>
   )
 }
 
@@ -214,7 +215,7 @@ export function MasteryPage() {
         </Card>
       </header>
       <Tabs value={d.tab} onValueChange={(v) => tf().masterySet({ tab: String(v) })}>
-        <div className="-mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
+        <div className="scroll-fade -mx-4 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
         <TabsList className="min-w-max justify-start">
           {TABS.map((t) => <TabsTrigger key={t.value} value={t.value} className="flex-none px-3">{t.label}</TabsTrigger>)}
         </TabsList>

@@ -235,7 +235,7 @@ export function ArsenalPage() {
         <h1 className="font-heading text-3xl font-semibold">Builds</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, arcanes and key mods.</p>
       </header>
-      <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
+      <div className="scroll-fade -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
         <Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />
       </div>
       {d.tab === "top" ? <BuildLibrary /> : d.tab === "mine" ? <MyBuilds /> : d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <KeyMods d={d} />}

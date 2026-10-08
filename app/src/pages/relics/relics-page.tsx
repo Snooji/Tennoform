@@ -205,7 +205,7 @@ export function RelicsPage() {
         <h1 className="font-heading text-3xl font-semibold">Relics</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Track the relics you own, see which to refine, and decide what to sell for platinum or ducats.</p>
       </header>
-      <div className="-mx-4 overflow-x-auto px-4 md:mx-0 md:px-0"><Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().relicsSet({ tab: v })}
+      <div className="scroll-fade -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0"><Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().relicsSet({ tab: v })}
         items={[{ value: "mine", label: "My relics" }, { value: "plan", label: "Planner" }, { value: "add", label: "Add relics" }, { value: "ducats", label: "Ducats & trading" }]} /></div>
       {d.tab === "plan" && d.plan ? <Planner d={d.plan} /> : d.tab === "add" ? <Add d={d} /> : d.tab === "ducats" ? <Ducats d={d} /> : <Mine d={d} />}
     </div>

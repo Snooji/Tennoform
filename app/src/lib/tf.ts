@@ -366,7 +366,7 @@ export type MasteryData = {
   target?: string; targetLabel?: string; targets?: { value: string; label: string }[]
   need?: number; gearLeft?: number; nx?: number; sx?: number; nodesLeft?: number; spLeft?: number; overflow?: boolean
   groups?: { title: string; xp?: number; open?: boolean; items: GearRow[] }[]
-  ladder?: { m: number; label: string; xp: number; reached: boolean; next: boolean; trades: number; cap: number; quests: string[]; gear: { n: string; done: boolean }[] }[]
+  ladder?: { m: number; label: string; xp: number; reached: boolean; next: boolean; trades: number; cap: number; quests: string[]; gear: GearRow[] }[]
   sheetXp?: number
   craft?: { title: string; recipes: { recipe: string; xp: number; note: string; items: GearRow[] }[] }[]
   xpHtml?: string

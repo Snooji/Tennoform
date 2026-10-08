@@ -47,3 +47,5 @@ body:has(#tf-home-links) .footcta{display:none}
 .sitefoot .feeds .linkbtn{padding:8px 4px;margin:-8px 0}
 /* dialogs sit above the phone tab bar (z 70) */
 .dlgbk{z-index:80}
+/* small chips that are buttons or links still get a target of at least 28px (WCAG 2.2 target size) */
+button.chip,a.chip,a.small[target="_blank"]{min-height:28px;min-width:28px;display:inline-flex;align-items:center;justify-content:center}

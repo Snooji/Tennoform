@@ -35,7 +35,7 @@ export function CollectionPage() {
       </header>
       <HistoryCard />
       <div className="flex flex-wrap items-center gap-2">
-        <div className="-mx-4 max-w-[calc(100%+2rem)] overflow-x-auto px-4 sm:mx-0 sm:max-w-full sm:px-0"><Segmented className="min-w-max" value={d.f} onValueChange={(v) => tf().collectionSet({ f: v })} items={views} /></div>
+        <div className="scroll-fade -mx-4 max-w-[calc(100%+2rem)] overflow-x-auto px-4 sm:mx-0 sm:max-w-full sm:px-0"><Segmented className="min-w-max" value={d.f} onValueChange={(v) => tf().collectionSet({ f: v })} items={views} /></div>
         <div className="relative min-w-48 flex-1">
           <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find something you have" aria-label="Find in your collection" className="h-10 pr-9 pl-9" />
@@ -54,10 +54,10 @@ export function CollectionPage() {
             </CollapsibleTrigger>
             <CollapsibleContent>
               {c.items.length ? (
-                <ul className="grid grid-cols-2 gap-2 border-t p-3 sm:grid-cols-3 lg:grid-cols-4">
+                <ul className="grid grid-cols-2 gap-x-2 border-t px-2 py-2 sm:grid-cols-3 lg:grid-cols-4">
                   {c.items.map((x) => (
                     <li key={x.n}>
-                      <button type="button" onClick={() => tf().showInRanks(x.n)} className="flex h-full w-full items-center gap-2.5 rounded-xl border p-2 text-left outline-none hover:bg-muted/40 focus-visible:ring-3 focus-visible:ring-ring/50"
+                      <button type="button" onClick={() => tf().showInRanks(x.n)} className="flex h-full w-full items-center gap-2.5 rounded-md p-2 text-left outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50"
                         aria-label={`${x.n}: ${x.has ? "owned" : "not owned"}, ${x.done ? "mastered" : `rank ${x.r} of ${x.mx}`}. Open in Ranks`}>
                         <Thumb src={x.img} className="size-10 shrink-0" />
                         <span className="flex min-w-0 flex-1 flex-col">

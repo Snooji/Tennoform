@@ -166,7 +166,7 @@ function Compare({ d }: { d: SquadData }) {
   return (
     <Card className="gap-3 px-4">
       <h2 className="font-heading text-lg leading-tight font-semibold">Compare</h2>
-      <div className="-mx-4 overflow-x-auto px-4">
+      <div className="scroll-fade -mx-4 overflow-x-auto px-4">
         <table className="w-full min-w-max text-sm">
           <thead>
             <tr className="border-b">
