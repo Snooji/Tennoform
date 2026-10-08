@@ -1737,7 +1737,8 @@ function accountTab(){const ok=/^[0-9a-f]{24}$/i.test(P.wfid||'');const px=windo
   <section class="syncsteps" id="syncsteps" aria-labelledby="ss-h"><h3 id="ss-h">${HOSTED&&!state.syncFail&&wfPlat().auto?'If automatic sync doesn\'t work':'Sync in two quick steps'}</h3>
    <ol class="ssl">
     <li><b>Open your profile data.</b> <span class="small muted">It opens Warframe's own page with your ID filled in. You don't need to be signed in.</span>
-     <div><a class="btn" id="openprof" ${ok?`href="https://${wfPlat().host}.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div></li>
+     <div><a class="btn" id="openprof" ${ok?`href="https://${wfPlat().host}.warframe.com/cdn/getProfileViewingData.php?playerId=${esc(P.wfid)}" target="_blank" rel="noopener"`:'href="#" aria-disabled="true"'}>Open my profile data ↗</a></div>
+     <span class="small muted">Blank page? That's Warframe sending nothing back. It does that when it doesn't recognise the ID for the platform picked above (check both), or when it's limiting requests from your network for a while; then wait a few hours and try again.</span></li>
     <li><b>Copy everything on that page.</b> <span class="small muted">On a phone: press and hold the text, tap <b>Select All</b>, then <b>Copy</b>. On a computer: Ctrl+A (⌘A), then Ctrl+C (⌘C).</span></li>
     <li><b>Come back and paste.</b> <div class="row" style="margin-top:6px"><button class="btn primary" id="pastesync" type="button">Paste &amp; sync</button><span class="small muted">You'll see what changes before anything is saved.</span></div></li>
    </ol>
