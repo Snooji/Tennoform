@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Anvil, ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
+import { Anvil, Brush, Crown, ChevronsUpDown, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Monitor, Moon, ShieldCheck, Sun, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -196,14 +196,25 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
             <DropdownMenuSeparator />
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                {s.theme === "light" ? <Sun /> : s.theme === "auto" ? <Monitor /> : s.theme === "foundry" ? <Anvil /> : <Moon />} Theme
+                {s.theme === "light" ? <Sun /> : s.theme === "auto" ? <Monitor /> : <Moon />} Mode
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup value={s.theme} onValueChange={(v) => tf().theme(v as TFState["theme"])}>
                   <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="foundry">Foundry</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="auto">Match device</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                {s.style === "foundry" ? <Anvil /> : s.style === "prime" ? <Crown /> : <Brush />} Style
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className="min-w-56">
+                <DropdownMenuRadioGroup value={s.style} onValueChange={(v) => tf().themeStyle(v as TFState["style"])}>
+                  <DropdownMenuRadioItem value="default" className="flex-col items-start gap-0"><span>Default</span><span className="text-xs text-muted-foreground">Calm and plain</span></DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="foundry" className="flex-col items-start gap-0"><span>Foundry</span><span className="text-xs text-muted-foreground">Blueprint panels, like the in-game Foundry</span></DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="prime" className="flex-col items-start gap-0"><span>Prime</span><span className="text-xs text-muted-foreground">Orokin black and gold, with metal trim</span></DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuSubContent>
             </DropdownMenuSub>

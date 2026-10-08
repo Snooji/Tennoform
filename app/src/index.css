@@ -152,7 +152,7 @@
 /* our search boxes have their own clear button */
 #tf-root input[type="search"]::-webkit-search-cancel-button,[data-slot="dialog-content"] input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
 
-/* ---- accent that follows your rank: bronze MR 0-9, silver 10-19, gold 20-29, gold and jade at Legendary (or one you pick) ---- */
+/* ---- colour palette: follows your rank (bronze MR 0-9, silver 10-19, gold 20-29, gold and jade at Legendary) or one you pick ---- */
 :root[data-accent="bronze"]{--primary:#8c4a1f;--ring:#b06a3a;--chart-1:#8c4a1f;--sidebar-primary:#8c4a1f;--sidebar-ring:#b06a3a}
 :root.dark[data-accent="bronze"]{--primary:#dba373;--primary-foreground:#1a1009;--ring:#b97a4b;--chart-1:#dba373;--sidebar-primary:#dba373;--sidebar-primary-foreground:#1a1009;--sidebar-ring:#b97a4b}
 :root[data-accent="silver"]{--primary:#4d545e;--ring:#7c8590;--chart-1:#4d545e;--sidebar-primary:#4d545e;--sidebar-ring:#7c8590}
@@ -161,6 +161,12 @@
 :root.dark[data-accent="radiant"]{--primary:#e8c470;--primary-foreground:#17130a;--chart-1:#e8c470;--sidebar-primary:#e8c470}
 :root[data-accent="jade"]{--primary:#1f6b4f;--ring:#3f8f72;--chart-1:#1f6b4f;--sidebar-primary:#1f6b4f;--sidebar-ring:#3f8f72}
 :root.dark[data-accent="jade"]{--primary:#86cfb1;--primary-foreground:#0b1712;--ring:#5aa58a;--chart-1:#86cfb1;--sidebar-primary:#86cfb1;--sidebar-primary-foreground:#0b1712;--sidebar-ring:#5aa58a}
+:root[data-accent="teal"]{--primary:#14606b;--ring:#2a8c99;--chart-1:#14606b;--sidebar-primary:#14606b;--sidebar-ring:#2a8c99}
+:root.dark[data-accent="teal"]{--primary:#7fd3de;--primary-foreground:#071417;--ring:#4fb0bd;--chart-1:#7fd3de;--sidebar-primary:#7fd3de;--sidebar-primary-foreground:#071417;--sidebar-ring:#4fb0bd}
+:root[data-accent="crimson"]{--primary:#9b1f27;--ring:#c2413f;--chart-1:#9b1f27;--sidebar-primary:#9b1f27;--sidebar-ring:#c2413f}
+:root.dark[data-accent="crimson"]{--primary:#f08a80;--primary-foreground:#1a0708;--ring:#d4615a;--chart-1:#f08a80;--sidebar-primary:#f08a80;--sidebar-primary-foreground:#1a0708;--sidebar-ring:#d4615a}
+:root[data-accent="void"]{--primary:#4b3bb0;--ring:#6b5bd1;--chart-1:#4b3bb0;--sidebar-primary:#4b3bb0;--sidebar-ring:#6b5bd1}
+:root.dark[data-accent="void"]{--primary:#b6aaf6;--primary-foreground:#110d24;--ring:#8b7ae0;--chart-1:#b6aaf6;--sidebar-primary:#b6aaf6;--sidebar-primary-foreground:#110d24;--sidebar-ring:#8b7ae0}
 
 /* ---- surfaces ----
    Three levels and nothing else: the page, a panel (solid card colour, one hairline border, no shadow),
@@ -202,10 +208,11 @@ html{background:var(--background)}
 /* the phone tab bar sits above the page; tuck it away while a dialog is open so the dialog's bottom isn't covered */
 body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
 
-/* ---- Foundry theme: the in-game Foundry screen's look, recreated in CSS (no game art) ----
-   Cool steel-blue backdrop with a faint blueprint grid, near-white square panels with a white rule under them,
-   condensed uppercase headings, white buttons with black uppercase labels, teal for owned/done, pale yellow for the selected row. */
-:root[data-theme="foundry"], :root[data-theme="foundry"][data-accent] {
+/* ---- Foundry style: the in-game Foundry screen's look, recreated in CSS (no game art) ----
+   Light: cool steel-blue backdrop with a faint blueprint grid, near-white square panels with a white rule under them.
+   Dark: the same layout at night, deep navy steel with a dim grid. Both: condensed uppercase headings, boxed buttons with
+   uppercase labels, pale yellow for the selected row. The colour palette (data-accent) sets the primary colour. */
+:root[data-theme="foundry"] {
   --radius: 0.15rem;
   --background: #b4bfcb;
   --foreground: #12171c;
@@ -214,7 +221,6 @@ body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
   --elevated: #f8fafb;
   --popover: #f8fafb;
   --popover-foreground: #12171c;
-  --primary: #12636f;
   --primary-foreground: #ffffff;
   --secondary: #e2e8ed;
   --secondary-foreground: #12171c;
@@ -223,50 +229,269 @@ body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
   --accent: #efecc4;
   --accent-foreground: #12171c;
   --destructive: #a5261d;
-  --success: #12636f;
+  --success: #1f6b4f;
   --warning: #7f4a06;
   --border: #c3ccd5;
   --input: #aeb9c4;
-  --ring: #12636f;
-  --chart-1: #12636f;
   --chart-2: #4d6a85;
   --chart-3: #6b7783;
   --chart-4: #1f7a4c;
   --chart-5: #7f4a06;
   --sidebar: #dde3e9;
   --sidebar-foreground: #12171c;
-  --sidebar-primary: #12636f;
-  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #c9d2db;
   --sidebar-accent-foreground: #12171c;
   --sidebar-border: #bfc9d2;
-  --sidebar-ring: #12636f;
   --shadow-elev: 0 1px 2px rgb(20 30 40 / 18%), 0 10px 28px rgb(20 30 40 / 18%);
+  --fd-grid: rgb(255 255 255 / 0.16);
+  --fd-rule: #ffffff;
+  --fd-foot: #a9b6c3;
+  --fd-select: #efecc4;
+  --fd-select-fg: #12171c;
+  --fd-thumb: #eef2f5;
+  --fd-thumb-grid: rgb(70 100 130 / 0.18);
+  --fd-btn: #ffffff;
+  --fd-btn-fg: #12171c;
+}
+:root.dark[data-theme="foundry"] {
+  --background: #0f1a24;
+  --foreground: #e3ebf2;
+  --card: #16232f;
+  --card-foreground: #e3ebf2;
+  --elevated: #1b2a37;
+  --popover: #1b2a37;
+  --popover-foreground: #e3ebf2;
+  --secondary: #1f2f3d;
+  --secondary-foreground: #e3ebf2;
+  --muted: #1d2b38;
+  --muted-foreground: #a3b4c3;
+  --accent: #3a3a24;
+  --accent-foreground: #f3f0cf;
+  --destructive: #f08b80;
+  --success: #86cfb1;
+  --warning: #f0c072;
+  --border: #2b3c4c;
+  --input: #34485a;
+  --chart-2: #8fb3d4;
+  --chart-3: #9aa7b3;
+  --chart-4: #86cfb1;
+  --chart-5: #f0c072;
+  --sidebar: #121e29;
+  --sidebar-foreground: #e3ebf2;
+  --sidebar-accent: #1f2f3d;
+  --sidebar-accent-foreground: #e3ebf2;
+  --sidebar-border: #26384a;
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 40%), 0 10px 28px rgb(0 0 0 / 45%);
+  --fd-grid: rgb(140 180 220 / 0.07);
+  --fd-rule: rgb(200 220 240 / 0.35);
+  --fd-foot: #1f2f3d;
+  --fd-select: #3a3a24;
+  --fd-select-fg: #f3f0cf;
+  --fd-thumb: #0f1a24;
+  --fd-thumb-grid: rgb(140 180 220 / 0.12);
+  --fd-btn: transparent;
+  --fd-btn-fg: #e3ebf2;
 }
 :root[data-theme="foundry"] {
   background:
-    linear-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1px) 0 0 / 24px 24px,
-    linear-gradient(90deg, rgb(255 255 255 / 0.16) 1px, transparent 1px) 0 0 / 24px 24px,
-    #b4bfcb;
+    linear-gradient(var(--fd-grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, var(--fd-grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--background);
 }
 :root[data-theme="foundry"] body { background: transparent; }
-/* headings: condensed, bold, uppercase */
 :root[data-theme="foundry"] :is(h1, h2, h3, [data-slot="card-title"]) { text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
-/* panels: square, crisp, with the white rule the game draws under each card */
-:root[data-theme="foundry"] [data-slot="card"] { border-color: #ffffff; box-shadow: 0 6px 0 -4px rgb(255 255 255 / 0.9); }
-:root[data-theme="foundry"] [data-slot="card-footer"] { background: #a9b6c3; border-color: #a9b6c3; color: #12171c; text-transform: uppercase; }
-/* main buttons: white boxes, black uppercase labels */
-:root[data-theme="foundry"] :is(button, a).bg-primary {
-  background: #ffffff; color: #12171c; border: 1px solid #12171c; text-transform: uppercase; font-weight: 700; letter-spacing: 0.02em;
+:root[data-theme="foundry"] :is([data-slot="card"], .welcome, .panel) { border-color: var(--fd-rule); box-shadow: 0 6px 0 -4px var(--fd-rule); }
+:root[data-theme="foundry"] [data-slot="card-footer"] { background: var(--fd-foot); border-color: var(--fd-foot); color: var(--foreground); text-transform: uppercase; }
+:root[data-theme="foundry"] :is(:is(button, a).bg-primary, .btn.primary) {
+  background: var(--fd-btn); color: var(--fd-btn-fg); border: 1px solid currentColor; text-transform: uppercase; font-weight: 700; letter-spacing: 0.02em;
 }
-:root[data-theme="foundry"] :is(button, a).bg-primary:hover { background: #efecc4; }
-/* item art sits on a blueprint tile */
+:root[data-theme="foundry"] :is(:is(button, a).bg-primary, .btn.primary):hover { background: var(--fd-select); color: var(--fd-select-fg); }
 :root[data-theme="foundry"] [data-thumb] {
   background:
-    linear-gradient(rgb(70 100 130 / 0.18) 1px, transparent 1px) 0 0 / 8px 8px,
-    linear-gradient(90deg, rgb(70 100 130 / 0.18) 1px, transparent 1px) 0 0 / 8px 8px,
-    #eef2f5;
+    linear-gradient(var(--fd-thumb-grid) 1px, transparent 1px) 0 0 / 8px 8px,
+    linear-gradient(90deg, var(--fd-thumb-grid) 1px, transparent 1px) 0 0 / 8px 8px,
+    var(--fd-thumb);
 }
-/* the selected row: the game's pale yellow */
-:root[data-theme="foundry"] [aria-current="true"], :root[data-theme="foundry"] [aria-current="page"][data-sidebar="menu-button"] { background: #efecc4; }
-:root[data-theme="foundry"] [data-slot="sidebar-inner"] { border-right: 1px solid #ffffff; }
+:root[data-theme="foundry"] [aria-current="true"], :root[data-theme="foundry"] [aria-current="page"][data-sidebar="menu-button"] { background: var(--fd-select); color: var(--fd-select-fg); }
+:root[data-theme="foundry"] [data-slot="sidebar-inner"] { border-right: 1px solid var(--fd-rule); }
+
+/* ---- Prime style: Orokin black and gold (or the metal of your colour palette), recreated in CSS (no game art) ----
+   Panels are framed in polished metal: a gradient border that catches a slow sweep of light, with Orokin corner trims.
+   Headings are engraved capitals (Cinzel) in metal. Dark is black lacquer; light is ivory marble with the same metal.
+   --m1..--m5 are the metal's gradient stops (shadow, body, highlight, body, shadow); each palette sets its own metal. */
+@font-face{font-family:"Cinzel";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cinzel-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Cinzel";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cinzel-latin-700-normal.woff2) format("woff2")}
+@property --pr-sheen { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+:root[data-theme="prime"] {
+  --radius: 0.35rem;
+  --font-heading: "Cinzel", "Barlow Semi Condensed", Georgia, serif;
+  /* gold, the Prime default */
+  --m1: #5e3f0c; --m2: #b98a2a; --m3: #fbeeb0; --m4: #d6a83f; --m5: #6d4a12;
+  --m-ink: #6b4b10;     /* the metal as text on the light (ivory) style */
+  --m-glow: rgb(214 168 63 / 0.18);
+  --background: #f4efe3;
+  --foreground: #1d1609;
+  --card: #fffcf4;
+  --card-foreground: #1d1609;
+  --elevated: #fffdf8;
+  --popover: #fffdf8;
+  --popover-foreground: #1d1609;
+  --primary: var(--m-ink);
+  --primary-foreground: #fffaf0;
+  --secondary: #efe7d4;
+  --secondary-foreground: #1d1609;
+  --muted: #efe8d8;
+  --muted-foreground: #5a4f3a;
+  --accent: #f3e6bd;
+  --accent-foreground: #1d1609;
+  --destructive: #a3241b;
+  --success: #1f6b4f;
+  --warning: #7f4a06;
+  --border: color-mix(in srgb, var(--m2) 45%, #e6dcc4);
+  --input: color-mix(in srgb, var(--m2) 55%, #d8ccb0);
+  --ring: var(--m4);
+  --chart-1: var(--m-ink);
+  --sidebar: #fbf6ea;
+  --sidebar-foreground: #1d1609;
+  --sidebar-primary: var(--m-ink);
+  --sidebar-primary-foreground: #fffaf0;
+  --sidebar-accent: #f1e7cc;
+  --sidebar-accent-foreground: #1d1609;
+  --sidebar-border: color-mix(in srgb, var(--m2) 40%, #e6dcc4);
+  --sidebar-ring: var(--m4);
+  --shadow-elev: 0 1px 2px rgb(60 40 10 / 18%), 0 12px 32px rgb(60 40 10 / 18%);
+  --pr-bg: #f4efe3;
+  --pr-panel: #fffcf4;
+  --pr-lattice: color-mix(in srgb, var(--m2) 10%, transparent);
+  --pr-btn-fg: #1a1205;
+}
+:root.dark[data-theme="prime"] {
+  --background: #08070a;
+  --foreground: #f1e9d6;
+  --card: #110f0c;
+  --card-foreground: #f1e9d6;
+  --elevated: #16130f;
+  --popover: #16130f;
+  --popover-foreground: #f1e9d6;
+  --primary: var(--m4);
+  --primary-foreground: #140e03;
+  --secondary: #1b1712;
+  --secondary-foreground: #f1e9d6;
+  --muted: #1a1712;
+  --muted-foreground: #bcae8e;
+  --accent: #2a2213;
+  --accent-foreground: #f8ecc4;
+  --destructive: #f08b80;
+  --success: #86cfb1;
+  --warning: #f0c072;
+  --border: color-mix(in srgb, var(--m2) 35%, #1a1610);
+  --input: color-mix(in srgb, var(--m2) 45%, #1a1610);
+  --chart-1: var(--m4);
+  --sidebar: #0b0a08;
+  --sidebar-foreground: #f1e9d6;
+  --sidebar-primary: var(--m4);
+  --sidebar-primary-foreground: #140e03;
+  --sidebar-accent: #1d1810;
+  --sidebar-accent-foreground: #f8ecc4;
+  --sidebar-border: color-mix(in srgb, var(--m2) 30%, #14110c);
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 50%), 0 14px 36px rgb(0 0 0 / 60%), 0 0 0 1px color-mix(in srgb, var(--m2) 25%, transparent);
+  --pr-bg: #08070a;
+  --pr-panel: #110f0c;
+  --pr-lattice: color-mix(in srgb, var(--m2) 9%, transparent);
+}
+/* the metal for each colour palette (Follow my rank picks bronze, silver, gold or Legendary) */
+:root[data-theme="prime"][data-accent="bronze"] { --m1:#4a230d; --m2:#a2582a; --m3:#f6cfa8; --m4:#c97d47; --m5:#5a2b10; --m-ink:#7c3d16; }
+:root[data-theme="prime"][data-accent="silver"] { --m1:#3d434b; --m2:#9aa2ab; --m3:#ffffff; --m4:#c9d0d7; --m5:#4b5159; --m-ink:#46505c; }
+:root[data-theme="prime"][data-accent="radiant"] { --m1:#7a5a12; --m2:#e6bf55; --m3:#fffbe9; --m4:#f2d27a; --m5:#8a6a1a; --m-ink:#6b4f0c; }
+:root[data-theme="prime"][data-accent="jade"] { --m1:#0c3b2c; --m2:#2f8a69; --m3:#d6f5e6; --m4:#d1b45c; --m5:#11503c; --m-ink:#17604a; }
+:root[data-theme="prime"][data-accent="teal"] { --m1:#0a3a42; --m2:#24828f; --m3:#d4f6f9; --m4:#5cc5d2; --m5:#0e4b55; --m-ink:#14606b; }
+:root[data-theme="prime"][data-accent="crimson"] { --m1:#3f0b0e; --m2:#a1232b; --m3:#ffd2cb; --m4:#e0655c; --m5:#53111a; --m-ink:#8e1d24; }
+:root[data-theme="prime"][data-accent="void"] { --m1:#1f1747; --m2:#5f4fc8; --m3:#ece7ff; --m4:#a495f2; --m5:#2a2063; --m-ink:#4b3bb0; }
+:root[data-theme="prime"] {
+  --pr-metal: linear-gradient(135deg, var(--m1), var(--m2) 22%, var(--m3) 42%, var(--m4) 58%, var(--m5) 80%, var(--m2));
+  --pr-metal-v: linear-gradient(180deg, var(--m3), var(--m4) 40%, var(--m2) 70%, var(--m5));
+  --pr-sheen-band: linear-gradient(110deg, transparent calc(var(--pr-sheen) - 18%), color-mix(in srgb, var(--m3) 85%, transparent) var(--pr-sheen), transparent calc(var(--pr-sheen) + 18%));
+  /* black (or ivory) lacquer with a faint Orokin lattice and a soft metal light from above */
+  background:
+    radial-gradient(1200px 520px at 50% -180px, var(--m-glow), transparent 70%),
+    repeating-linear-gradient(60deg, var(--pr-lattice) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(-60deg, var(--pr-lattice) 0 1px, transparent 1px 34px),
+    var(--pr-bg);
+  background-attachment: fixed;
+}
+:root.dark[data-theme="prime"] { --m-glow: color-mix(in srgb, var(--m2) 20%, transparent); }
+:root[data-theme="prime"] body { background: transparent; }
+:root[data-theme="prime"] ::selection { background: color-mix(in srgb, var(--m4) 45%, transparent); }
+@keyframes pr-sheen { 0% { --pr-sheen: -30%; } 60%, 100% { --pr-sheen: 130%; } }
+
+/* engraved capitals in metal */
+:root[data-theme="prime"] :is(h1, h2, h3, [data-slot="card-title"], [data-slot="dialog-title"]) {
+  font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+}
+:root[data-theme="prime"] main h1 {
+  background: var(--pr-metal-v); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.35));
+}
+:root[data-theme="prime"]:not(.dark) main h1 { background: none; color: var(--m-ink); filter: none; }
+:root[data-theme="prime"] main h1::after {
+  content: ""; display: block; width: 7rem; height: 2px; margin-top: 0.45rem;
+  background: linear-gradient(90deg, var(--m4), var(--m3) 30%, transparent);
+}
+
+/* panels framed in polished metal, with a slow sweep of light along the frame */
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel) {
+  position: relative; border: 1px solid transparent;
+  background: linear-gradient(var(--pr-panel), var(--pr-panel)) padding-box, var(--pr-sheen-band) border-box, var(--pr-metal) border-box;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25), 0 18px 40px -24px var(--m-glow);
+  animation: pr-sheen 9s ease-in-out infinite;
+}
+:root[data-theme="prime"]:not(.dark) :is([data-slot="card"], .welcome, .panel) { box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset, 0 14px 30px -22px rgb(80 55 10 / 0.45); }
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel):nth-child(2n) { animation-delay: -3s; }
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel):nth-child(3n) { animation-delay: -6s; }
+/* Orokin corner trims: a metal bracket in the top-left and bottom-right of every panel */
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::before,
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; width: 22px; height: 22px; pointer-events: none; z-index: 1;
+  background:
+    linear-gradient(var(--m3), var(--m4)) 0 0 / 100% 2px no-repeat,
+    linear-gradient(var(--m3), var(--m4)) 0 0 / 2px 100% no-repeat,
+    linear-gradient(45deg, transparent 45%, var(--m4) 46% 54%, transparent 55%) 5px 5px / 7px 7px no-repeat;
+}
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::before { top: 4px; left: 4px; }
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::after { bottom: 4px; right: 4px; transform: rotate(180deg); }
+:root[data-theme="prime"] [data-slot="card-header"].border-b,
+:root[data-theme="prime"] [data-slot="card"] .border-b { border-image: linear-gradient(90deg, transparent, var(--m2) 15%, var(--m4) 50%, var(--m2) 85%, transparent) 1; }
+:root[data-theme="prime"] [data-slot="card-footer"] { background: color-mix(in srgb, var(--m2) 12%, var(--pr-panel)); }
+
+/* main buttons: cast metal with a bright top edge; the light sweeps across on hover */
+:root[data-theme="prime"] :is(:is(button, a).bg-primary, .btn.primary) {
+  background: var(--pr-sheen-band), var(--pr-metal-v); color: var(--pr-btn-fg, #140e03); border: 1px solid var(--m5);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--m3) 90%, transparent), inset 0 -1px 0 color-mix(in srgb, var(--m1) 60%, transparent), 0 2px 10px -4px var(--m-glow);
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; text-shadow: 0 1px 0 color-mix(in srgb, var(--m3) 60%, transparent);
+  transition: --pr-sheen 0.7s ease, filter 0.2s;
+}
+:root[data-theme="prime"] :is(:is(button, a).bg-primary, .btn.primary):hover { --pr-sheen: 120%; filter: brightness(1.06); }
+/* secondary buttons and badges: thin metal outline */
+:root[data-theme="prime"] [data-slot="button"][data-variant="outline"],
+:root[data-theme="prime"] [data-slot="badge"][data-variant="outline"] { border-color: color-mix(in srgb, var(--m4) 55%, transparent); }
+:root[data-theme="prime"] [data-slot="checkbox"][data-checked] { background: var(--pr-metal-v); border-color: var(--m5); color: #140e03; }
+
+/* progress and rings in metal */
+:root[data-theme="prime"] [data-slot="progress-indicator"],
+:root[data-theme="prime"] [data-slot="progress"] > div { background: var(--pr-sheen-band), linear-gradient(90deg, var(--m2), var(--m4) 60%, var(--m3)); animation: pr-sheen 6s ease-in-out infinite; }
+
+/* the sidebar: lacquer with a metal edge; the current page gets a metal bar and a warm tint */
+:root[data-theme="prime"] [data-slot="sidebar-inner"] { border-right: 1px solid transparent; border-image: linear-gradient(180deg, transparent, var(--m4) 20%, var(--m2) 60%, transparent) 1; }
+:root[data-theme="prime"] [aria-current="page"][data-sidebar="menu-button"] {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--m4) 22%, transparent), transparent 85%); color: var(--sidebar-accent-foreground);
+  box-shadow: inset 2px 0 0 var(--m4);
+}
+:root[data-theme="prime"] [aria-current="true"] { background: color-mix(in srgb, var(--m4) 16%, transparent); }
+:root[data-theme="prime"] header { border-bottom: 1px solid transparent; border-image: linear-gradient(90deg, transparent, var(--m2) 20%, var(--m4) 50%, var(--m2) 80%, transparent) 1; }
+:root[data-theme="prime"] [data-thumb] { background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--m3) 14%, var(--pr-panel)), var(--pr-panel)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--m4) 45%, transparent); }
+:root[data-theme="prime"] * { scrollbar-color: color-mix(in srgb, var(--m4) 60%, transparent) transparent; }
+:root[data-theme="prime"] :focus-visible { outline-color: var(--m4); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel), :root[data-theme="prime"] [data-slot="progress-indicator"], :root[data-theme="prime"] [data-slot="progress"] > div { animation: none; }
+}
