@@ -21,6 +21,7 @@ const FILTERS = [
 export function FramesPage() {
   const d = useTFData(() => tf().frames())
   const b = d.build
+  const filters = [...FILTERS, ...d.roles.map((r) => ({ value: "role:" + r, label: "Role: " + r }))]
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex items-center gap-4">
@@ -28,12 +29,24 @@ export function FramesPage() {
         <div className="flex min-w-0 flex-col gap-1">
           <span className="text-xs text-muted-foreground">Warframes</span>
           <h1 className="truncate font-heading text-3xl font-semibold">{d.name}</h1>
+          {d.playstyle.length || d.goodAt.length ? (
+            <ul className="flex flex-wrap items-center gap-1.5" aria-label="Roles">
+              {d.playstyle.map((r) => (
+                <li key={r}><button type="button" onClick={() => tf().framesSet({ f: "role:" + r })} title={`Playstyle (from Digital Extremes). Show every ${r} Warframe`}
+                  className="rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"><Badge variant="outline" className="border-primary/40 text-primary">{r}</Badge></button></li>
+              ))}
+              {d.goodAt.map((r) => (
+                <li key={r}><button type="button" onClick={() => tf().framesSet({ f: "role:" + r })} title={`Also good as: ${r} (community view). Show every ${r} Warframe`}
+                  className="rounded-full outline-none focus-visible:ring-3 focus-visible:ring-ring/50"><Badge variant="outline" className="text-muted-foreground">{r}</Badge></button></li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </header>
       <div className="flex flex-wrap items-center gap-2">
-        <Select items={FILTERS} value={d.filter} onValueChange={(v) => tf().framesSet({ f: String(v) })}>
+        <Select items={filters} value={d.filter} onValueChange={(v) => tf().framesSet({ f: String(v) })}>
           <SelectTrigger className="h-10 min-w-44" aria-label="Filter Warframes"><SelectValue /></SelectTrigger>
-          <SelectContent>{FILTERS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
+          <SelectContent>{filters.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
         </Select>
         <Combobox items={d.list} value={d.name} onValueChange={(v) => v && tf().framesSet({ frame: String(v) })}>
           <ComboboxInput placeholder="Find a Warframe" aria-label="Choose a Warframe" className="h-10 min-w-56 flex-1" />

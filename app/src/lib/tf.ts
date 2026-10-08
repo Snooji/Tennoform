@@ -460,6 +460,7 @@ export type FramesData = {
   filter: string; filteredEmpty: boolean; list: string[]; name: string; img: string; base: string; prime: string; baseVer: string; tree: string
   builds: { value: string; label: string }[]; bi: string; budget: boolean
   build: { role: string; helminth: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
+  playstyle: string[]; goodAt: string[]; roles: string[]
 }
 export type Linked = { n: string; go: string }
 export type WorldHit = { n: string; kind: "Fish" | "Ore" | "Gem" | "Animal"; reg: string; r: string; done: boolean; key: string; line: string }
