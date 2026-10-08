@@ -2,7 +2,9 @@
 (function(){
 if(/(^|\.)tennoform\.com$|github\.io$/.test(location.hostname)&&window.top!==window.self){try{window.top.location.replace(location.href)}catch(e){}document.documentElement.innerHTML='';return}
 document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&!t.closest('[data-thumb]')&&/cdn\.warframestat\.us|githubusercontent/.test(t.src||''))t.remove()},true);
-const D=JSON.parse(document.getElementById('data').textContent);
+/* game data and the daily prices load as their own cached files (bundle/game-*.js, bundle/market-*.js) just before this one */
+if(!self.TF_GAME||!self.TF_MARKET){document.body.insertAdjacentHTML('afterbegin','<p style="padding:24px;font:16px system-ui">Tennoform couldn\'t finish loading. Check your connection and refresh the page.</p>');throw new Error('Tennoform data files did not load')}
+const D=Object.assign({},self.TF_GAME,self.TF_MARKET);
 const I=D.items, REL=D.relics, MODS=D.mods, ARC=D.arcanes, RES=D.res, PR=D.prices, MS=D.mslug, M=D.mastery, Q=D.quests, NODES=D.nodes, ALLN=D.allnodes, RT=D.rtiers, RSRC=D.rsrc, VAULT=D.vault, SEL=D.sellers;
 const U={};for(const n in I)U[I[n].u]=n;
 const QU={};Q.forEach(q=>{if(q.u)QU[q.u]=q.n});

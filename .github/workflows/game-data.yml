@@ -58,8 +58,15 @@ jobs:
                   problems.append(f'item {n} is missing its category or parts'); break
           s = json.load(open('data/stats.json'))
           if len(s) < 0.9 * len(b['items']): problems.append(f'stats cover only {len(s)} items')
+          import re, os
           html = open('index.html', encoding='utf-8').read()
-          if len(html) < 1_000_000 or 'Frost Prime' not in html: problems.append('index.html looks wrong')
+          game = re.search(r'/bundle/(game-[\w]+\.js)', html)
+          gf = os.path.join('bundle', game.group(1)) if game else ''
+          if not game or not os.path.exists(gf) or os.path.getsize(gf) < 1_000_000 or 'Frost Prime' not in open(gf, encoding='utf-8').read():
+              problems.append('the page build looks wrong (game data file missing or too small)')
+          for k in ('market', 'code'):
+              m = re.search(r'/bundle/(%s-[\w]+\.js)' % k, html)
+              if not m or not os.path.exists(os.path.join('bundle', m.group(1))): problems.append(f'the page build is missing its {k} file')
           if problems:
               print('Not publishing:'); print('\n'.join(' - ' + p for p in problems)); sys.exit(1)
           print('All checks passed')

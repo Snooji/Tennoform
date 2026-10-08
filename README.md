@@ -31,7 +31,7 @@ The page is plain HTML/JS with a React shell on top.
 
 ```
 cd app && npm install && npm run build   # React shell -> assets/
-python build/make_site.py                # src/ + data -> index.html
+python build/make_site.py                # src/ + data -> index.html + bundle/ (cached files named by content)
 ```
 
 - `src/shell.html` is the page skeleton; `src/css/` and `src/js/` are joined in file-name order.
@@ -40,7 +40,7 @@ python build/make_site.py                # src/ + data -> index.html
 - `python build/refresh_market.py` updates prices; the `refresh` workflow runs it daily.
 - Game data: the `game-data` workflow checks WFCD warframe-items every day. When there's a new release it runs `build/update_gamedata.py` (additive: new items, relics, mods and arcanes, relic rewards, vault status; hand-written data untouched), `build/make_stats.py` (item stats in `data/stats.json`, loaded only on item pages) and `build/make_umap.py`, checks that nothing was lost (item, relic and mod counts never drop; stats and the page build look right) and publishes. If a check fails, nothing is published and the run fails.
 
-Commit `src/`, `app/`, `assets/` and `index.html` together. Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
+Commit `src/`, `app/`, `assets/`, `bundle/` and `index.html` together. `index.html` is a 3 KB shell; the old page styles, the old page code, the game data and the daily prices are separate files in `bundle/` whose names change when their contents do, so returning visitors only download what changed (usually just the prices). Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
 
 The Backend page (admins only) shows players online, daily and total users, feedback, donations, the chat review queue, bans, and who leads each clan and alliance chat.
 
