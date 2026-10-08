@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, ChevronDown, ExternalLink, MessageSquare, Search, X, Tag } from "lucide-react"
+import { Check, ChevronDown, ExternalLink, MessageSquare, Search, Star, X, Tag } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -151,7 +151,7 @@ function Sets({ d }: { d: MarketData }) {
   )
 }
 
-function Group({ title, cards, open, tone }: { title: string; cards: VaultCard[]; open: boolean; tone: string }) {
+function Group({ title, cards, open, tone, empty }: { title: string; cards: VaultCard[]; open: boolean; tone: string; empty?: string }) {
   return (
     <Card className="gap-0 py-0">
       <Collapsible defaultOpen={open}>
@@ -170,10 +170,13 @@ function Group({ title, cards, open, tone }: { title: string; cards: VaultCard[]
                     <span className="flex flex-wrap items-center gap-1.5"><GoLink k={"item|" + c.n} className="font-medium">{c.n}</GoLink><span className="text-xs text-muted-foreground">{c.c}</span></span>
                     <span className="text-xs text-muted-foreground">{c.text}</span>
                   </span>
+                  <Button variant="ghost" size="icon" className="ml-auto size-9 shrink-0" aria-pressed={!!c.watched} aria-label={(c.watched ? "Stop watching " : "Watch ") + c.n + " for Prime Resurgence"} onClick={() => tf().watchToggle(c.n)}>
+                    <Star className={cn(c.watched && "fill-primary text-primary")} />
+                  </Button>
                 </li>
               ))}
             </ul>
-          ) : <p className="border-t px-4 py-4 text-sm text-muted-foreground">Nothing right now.</p>}
+          ) : <p className="border-t px-4 py-4 text-sm text-muted-foreground">{empty || "Nothing right now."}</p>}
         </CollapsibleContent>
       </Collapsible>
     </Card>
@@ -192,6 +195,7 @@ export function MarketPage() {
       {d.tab === "vault" ? (
         <>
           <p className="text-xs text-muted-foreground">Prime Resurgence brings back two vaulted Warframes with their weapons every 4 weeks. Return dates are rough estimates from each pair's past appearances (typical gap about {d.gapMonths} months). Digital Extremes doesn't publish a schedule.</p>
+          <Group title="Your watchlist" cards={d.watch || []} open tone="text-muted-foreground" empty="Tap the star on any Prime below to watch it. When Varzia brings it back in Prime Resurgence, you'll get an alert on Home and Today." />
           <Group title="Unvaulted now: Prime Resurgence" cards={d.now!} open tone="border-emerald-500/40 text-emerald-700 dark:text-emerald-400" />
           <Group title="Farmable from relics" cards={d.farm!} open tone="text-muted-foreground" />
           <Group title="Vaulted · soonest return first" cards={d.vault!} open={false} tone="border-red-500/40 text-red-700 dark:text-red-300" />

@@ -1,0 +1,1 @@
+var e={clipPath:`inset(50%)`,overflow:`hidden`,whiteSpace:`nowrap`,border:0,padding:0,width:1,height:1,margin:-1},t={...e,position:`fixed`,top:0,left:0},n={...e,position:`absolute`};function r(e,t=-(2**53-1),n=2**53-1){return Math.max(t,Math.min(e,n))}export{t as n,n as r,r as t};

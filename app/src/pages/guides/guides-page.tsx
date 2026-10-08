@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
+import { Returning } from "./returning"
 import { tf, useTFData, type GuideCard, type GuideDetail, type GuideKind } from "@/lib/tf"
 
 const KIND: Record<GuideKind, { label: string; icon: typeof BookOpen }> = {
@@ -203,6 +204,7 @@ export function GuidesPage() {
               How to unlock and finish every quest, system and mission type, step by step, with the quickest way through. {d.total ? `${d.total} guides.` : ""}
             </p>
           </header>
+          {d.q ? null : <Returning />}
           <div className="relative">
             <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder='What do you want to unlock? e.g. "helminth", "railjack", "steel path"' aria-label="Search guides" className="h-11 rounded-full pr-10 pl-9" />
