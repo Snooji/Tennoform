@@ -182,7 +182,8 @@ function Planet({ d }: { d: ChartData }) {
 
 export function MissionsPage() {
   const d = useTFData(() => tf().chart())
-  useEffect(() => window.scrollTo(0, 0), [d.sel])
+  // braces matter: newer browsers return a Promise from scrollTo, and React would try to call it as the effect's cleanup
+  useEffect(() => { window.scrollTo(0, 0) }, [d.sel])
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
