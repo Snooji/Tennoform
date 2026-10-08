@@ -122,6 +122,7 @@ export type TFApi = {
   farmClear(): void
   farmMore(): void
   farmPick(key: string | null): void
+  farmJumped(): boolean
   island(el: HTMLElement | null): void
   today(): TodayData
   todaySet(o: { ckF?: string; fiF?: string; fiM?: string }): void
@@ -173,6 +174,8 @@ export type TFApi = {
   framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
   world(): WorldData
   worldSet(o: { tab?: string; region?: string; rarity?: string; time?: string }): void
+  worldSearch(q: string): WorldHit[]
+  conservationSet(region: string): void
   market(): MarketData
   marketSet(o: { tab?: string; q?: string; f?: string; sort?: string }): void
   marketMore(): void
@@ -450,8 +453,11 @@ export type FramesData = {
   build: { role: string; helminth: string; notes: string; mods: ModSlot[]; arcanes: ModSlot[] } | null
 }
 export type Linked = { n: string; go: string }
+export type WorldHit = { n: string; kind: "Fish" | "Ore" | "Gem" | "Animal"; reg: string; r: string; done: boolean; key: string; line: string }
+export type Animal = { n: string; variants: string[]; rare: string[]; where: string; time?: string; lure: string; reward: string; tip: string; key: string; done: boolean; hasTask: boolean }
+export type ConservationData = { steps: string[]; regions: string[]; region: string; vendor: string; species: Animal[] }
 export type WorldData = {
-  tab: "fish" | "mine"; region: string; regions: string[]
+  tab: "fish" | "mine" | "cons"; region: string; regions: string[]; cons?: ConservationData | null
   rarity?: string; time?: string; times?: string[]; cycle?: string; caught?: number; total?: number
   info?: { spears: string; vendor: string; use: string; tips: string[] }
   fish?: { n: string; key: string; done: boolean; rarity: string; bio: string; time: string; spear: string; bait: string; spots: string[]; gives: Linked[]; hasTask: boolean }[]
