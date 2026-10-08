@@ -603,6 +603,7 @@ export type GuideDetail = GuideCard & {
   opens: { id: string; n: string; kind: GuideKind }[]
 }
 export type GuidesData = {
+  loading?: boolean
   filter: string; q: string; total: number
   counts: Record<"all" | GuideKind, number>
   list: GuideCard[]; sel: GuideDetail | null

@@ -17,12 +17,23 @@ import { HomePage } from "@/pages/home/home-page"
 import { isDark, tf, useTF } from "@/lib/tf"
 import { useAccent } from "@/lib/accent"
 import { useNavReset } from "@/lib/nav-reset"
+import { reloadForUpdate } from "@/lib/update-reload"
+import { PageError } from "@/components/shell/page-error"
 
 /* Each page loads on first visit; Home ships with the shell. Once the first page is up, the rest load quietly in the background. */
 const IMPORTS: (() => Promise<unknown>)[] = []
 function page<M>(load: () => Promise<M>, pick: (m: M) => React.ComponentType) {
   IMPORTS.push(load)
-  return lazy(() => load().then((m) => ({ default: pick(m) })))
+  return lazy(() =>
+    load().then(
+      (m) => ({ default: pick(m) }),
+      (err) => {
+        // the site was updated while open and this page's file is gone: reload once into the new version
+        if (reloadForUpdate()) return new Promise<never>(() => {})
+        throw err
+      }
+    )
+  )
 }
 const RanksPage = page(() => import("@/pages/ranks/ranks-page"), (m) => m.RanksPage)
 const CollectionPage = page(() => import("@/pages/collection/collection-page"), (m) => m.CollectionPage)
@@ -155,7 +166,7 @@ export default function App() {
           {s.demo ? <DemoBanner /> : null}
           <div className="flex min-w-0 flex-1 flex-col pb-20 md:pb-0">
             {s.route === "home" && !s.isNew && !s.qs ? <HomePage /> : null}
-            {Page ? <Suspense fallback={<PageLoading />}><Page key={s.route} /></Suspense> : null}
+            {Page ? <PageError key={s.route}><Suspense fallback={<PageLoading />}><Page /></Suspense></PageError> : null}
             <LegacyOutlet />
           </div>
         </SidebarInset>

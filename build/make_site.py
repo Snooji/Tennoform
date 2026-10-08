@@ -27,11 +27,15 @@ def as_js(var, obj):
     # JSON.parse of a string literal is much faster for the browser to read than the same data as a JS object literal.
     return 'self.%s=JSON.parse(%s);\n' % (var, json.dumps(json.dumps(obj, separators=(',', ':'), ensure_ascii=False), ensure_ascii=False))
 MARKET_KEYS = ('prices', 'sellers', 'sets', 'meta')  # these change every day; the rest only on game patches
-game = {k: v for k, v in D.items() if k not in MARKET_KEYS}
+# Guides and farm "ways" aren't needed to draw the first page: they're their own files, fetched right after it's up.
+LAZY = ('guides', 'ways')
+game = {k: v for k, v in D.items() if k not in MARKET_KEYS and k not in LAZY}
 market = {k: D[k] for k in MARKET_KEYS}
 def part(d):
     d = os.path.join(H, '..', 'src', d)
     return ''.join(open(os.path.join(d, f)).read() for f in sorted(os.listdir(d)))
+lazy = {k: emit(k, 'json', json.dumps(D[k], separators=(',', ':'), ensure_ascii=False)) for k in LAZY}
+game['lazy'] = lazy
 files = {
     'css': emit('legacy', 'css', '@layer legacy{\n' + part('css') + '\n}\n'),
     'game': emit('game', 'js', as_js('TF_GAME', game)),
@@ -40,9 +44,14 @@ files = {
 }
 # Keep the files the previous index.html used, so a browser still holding that page (cached for up to 10 minutes) can finish loading it.
 old = os.path.join(H, '..', 'index.html')
-keep = set(os.path.basename(u) for u in files.values())
+keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()))
 if os.path.exists(old):
-    keep |= set(re.findall(r'/bundle/([\w.-]+)', open(old, encoding='utf-8').read()))
+    old_html = open(old, encoding='utf-8').read()
+    keep |= set(re.findall(r'/bundle/([\w.-]+)', old_html))
+    # the lazy files are named inside the previous game file, not in the page itself
+    for g in re.findall(r'/bundle/(game-[\w]+\.js)', old_html):
+        if os.path.exists(os.path.join(BUNDLE, g)):
+            keep |= set(re.findall(r'/bundle/([\w.-]+\.json)', open(os.path.join(BUNDLE, g), encoding='utf-8').read().replace('\\/', '/')))
 for f in os.listdir(BUNDLE):
     if f not in keep:
         os.remove(os.path.join(BUNDLE, f))
@@ -55,11 +64,34 @@ scripts = re.findall(r'<script>(.*?)</script>', body, re.S)
 hashes = ' '.join("'sha256-%s'" % base64.b64encode(hashlib.sha256(x.encode()).digest()).decode() for x in scripts)
 # Content Security Policy: only this site's own scripts (its files, plus any inline script pinned by hash) and Google sign-in may run.
 csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
-       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://*.workers.dev https://script.google.com https://script.googleusercontent.com; "
+       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://script.google.com https://script.googleusercontent.com; "
        "frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; "
        "img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "
        "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'" % hashes)
+def prune_assets():
+    """The React build no longer empties assets/, so a tab that was open during an update can still load the
+    previous build's pages. Keep this build's files and the previous build's; delete anything older."""
+    A = os.path.join(H, '..', 'assets')
+    mf = os.path.join(A, '.vite', 'manifest.json')
+    if not os.path.exists(mf):
+        return
+    cur = set()
+    for e in json.load(open(mf)).values():
+        cur.add(e['file'])
+        cur.update(e.get('css', []))
+        cur.update(e.get('assets', []))
+    kp = os.path.join(A, '.vite', 'keep.json')
+    keep = json.load(open(kp)) if os.path.exists(kp) else {'current': sorted(cur), 'previous': []}
+    if set(keep['current']) != cur:
+        keep = {'current': sorted(cur), 'previous': keep['current']}
+    allowed = cur | set(keep['previous'])
+    for f in os.listdir(A):
+        if os.path.isfile(os.path.join(A, f)) and f not in allowed:
+            os.remove(os.path.join(A, f))
+    with open(kp, 'w') as f:
+        json.dump(keep, f, indent=0)
+prune_assets()
 def shell_tags():
     # The React shell (app/, built with Vite into assets/) loads after the main script, which exposes window.TF.
     mf = os.path.join(H, '..', 'assets', '.vite', 'manifest.json')

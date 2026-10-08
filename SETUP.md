@@ -28,7 +28,7 @@ Once it's set, one-tap sync works on every platform; PC players also go through 
 
 **Request limits (built in).** Warframe publishes no API or rate limits for this endpoint, so the relay is conservative: each profile is reused for 10 minutes, at most 10 requests a minute and 120 an hour go to Warframe across all players, errors are remembered for 5–10 minutes, and if Warframe ever answers 403 or 429 the relay stops asking anyone for 6 hours. It identifies itself as Google Apps Script (no browser disguise). The site adds its own limits on top: at most 4 sync requests per 15 minutes per browser, exponential backoff on errors, and a full stop with a message on 403/429.
 
-`cloudflare-worker.js` is the old Cloudflare relay. Cloudflare still deploys it from `wrangler.jsonc` on every push, so it now answers 410 without contacting Warframe. You can also delete the `tennoform` Worker in the Cloudflare dashboard.
+The old Cloudflare Worker relay has been deleted (both the Worker and its files here), and the site's security policy no longer allows connections to it.
 
 # Reading feedback (owner only)
 

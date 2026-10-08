@@ -10,7 +10,8 @@ export default defineConfig({
   base: '/assets/',
   build: {
     outDir: '../assets',
-    emptyOutDir: true,
+    // keep the previous build's files: a tab that was open during an update still loads its pages (make_site.py prunes older ones)
+    emptyOutDir: false,
     manifest: true,
     assetsDir: '',
     rollupOptions: { input: path.resolve(__dirname, 'src/main.tsx') },

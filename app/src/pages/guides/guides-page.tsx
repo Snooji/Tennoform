@@ -41,7 +41,8 @@ function Status({ g }: { g: GuideCard }) {
   return null
 }
 
-function GuideList({ list }: { list: GuideCard[] }) {
+function GuideList({ list, loading }: { list: GuideCard[]; loading?: boolean }) {
+  if (!list.length && loading) return <p role="status" className="py-8 text-center text-sm text-muted-foreground">Loading guides…</p>
   if (!list.length) return <p className="py-8 text-center text-sm text-muted-foreground">No guides match. Try a shorter word, like "helminth" or "railjack".</p>
   return (
     <ul className="flex flex-col divide-y rounded-xl border bg-card">
@@ -214,7 +215,7 @@ export function GuidesPage() {
               </TabsList>
             </div>
           </Tabs>
-          <GuideList list={d.list} />
+          <GuideList list={d.list} loading={d.loading} />
         </>
       )}
     </div>
