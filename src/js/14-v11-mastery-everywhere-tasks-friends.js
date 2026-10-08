@@ -12,7 +12,7 @@ function newId(){return Date.now().toString(36)+Math.random().toString(36).slice
 function addTask(k,r,t,extra){P.tasks=P.tasks||[];if(k!=='note'&&P.tasks.some(x=>!x.d&&x.k===k&&x.r===r)){toast('Already in your tasks');return null}
   const task={id:newId(),t:t||((TK[k]?TK[k]+' ':'')+r),k,r,d:0,at:Date.now(),...(extra||{})};P.tasks.unshift(task);saveProfile();return task}
 function taskGo(x){if(x.k==='quest')return `href="#quests" data-q="${esc(x.r)}"`;if(x.k==='node')return `href="#missions" data-scp="${esc(x.r)}"`;if(x.k==='synd')return 'href="#synd"';
-  if(x.k==='fish'||x.k==='ore')return 'href="#world"';if(x.k==='lich')return `href="#" data-go="item|${esc(x.r)}"`;if(['res','item','relic','mod','arc','guide','way'].includes(x.k))return `href="#" data-go="${esc(x.k+'|'+x.r)}"`;return ''}
+  if(x.k==='fish'||x.k==='ore')return 'href="#world"';if(x.k==='animal')return `href="#" data-go="ow|${esc(x.r)}"`;if(x.k==='lich')return `href="#" data-go="item|${esc(x.r)}"`;if(['res','item','relic','mod','arc','guide','way'].includes(x.k))return `href="#" data-go="${esc(x.k+'|'+x.r)}"`;return ''}
 function taskRow(x,compact){const go=taskGo(x);
   return `<div class="trow${x.d?' done':''}"><input type="checkbox" class="ck sm" data-tdone="${esc(x.id)}" ${x.d?'checked':''} aria-label="Done"><div class="tmain">${go?`<a class="ln" ${go}>${esc(x.t)}</a>`:`<span>${esc(x.t)}</span>`}${taskMeta(x)}
    ${(x.with||[]).length?`<div class="small muted">with ${x.with.map(w=>esc(w.name)).join(', ')}</div>`:''}${x.from?`<div class="small muted">from ${esc(x.from.name)}</div>`:''}</div>
