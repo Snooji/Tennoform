@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { tf, type WayDetail } from "@/lib/tf"
+import { Thumb } from "@/components/tf/thumb"
+import { fmt, tf, type WayDetail } from "@/lib/tf"
 
 const TAG: Record<string, string> = {
   fastest: "Fastest", beginner: "Beginner friendly", afk: "Low effort", solo: "Solo", squad: "Best in a squad",
@@ -22,6 +23,38 @@ export function WayView({ w, inSheet }: { w: WayDetail; inSheet?: boolean }) {
         </header>
       ) : null}
       {w.sum ? <p className="text-sm">{w.sum}</p> : null}
+      {w.plat?.groups.length ? (
+        <section className="flex flex-col gap-3" aria-labelledby="pf-h">
+          <div className="flex flex-col gap-0.5">
+            <h3 id="pf-h" className="font-heading text-lg leading-tight font-semibold">Easy to farm, sells well on warframe.market</h3>
+            <p className="text-xs text-muted-foreground">Ranked by platinum you can expect per attempt: the 7-day average price times your chance of getting it. Only things that sold at least 10 last week, from the {w.plat.date} snapshot.</p>
+          </div>
+          {w.plat.groups.map((g) => (
+            <div key={g.t} className="flex flex-col gap-1">
+              <h4 className="text-sm font-semibold">{g.t}</h4>
+              <ul className="flex flex-col divide-y border-y">
+                {g.items.map((x) => (
+                  <li key={x.key}>
+                    <button type="button" onClick={() => tf().farmPick(x.key)} className="flex w-full items-start gap-3 py-2 text-left outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-ring/50">
+                      {x.img ? <Thumb src={x.img} className="mt-0.5 size-8" /> : null}
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <span className="flex items-baseline justify-between gap-3">
+                          <b className="truncate text-sm font-medium">{x.n}</b>
+                          <b className="shrink-0 font-heading text-base font-semibold tabular-nums">{x.price}p</b>
+                        </span>
+                        <span className="text-xs text-muted-foreground">{x.how}</span>
+                        <span className="text-xs text-muted-foreground tabular-nums">
+                          {x.chance < 100 ? `${x.chance}% chance · about ${x.per}p ${g.per}` : "Guaranteed"} · {fmt(x.sold)} sold last week
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </section>
+      ) : null}
       <ol className="flex flex-col divide-y border-y" aria-label="Ways to get it, best first">
         {w.ways.map((x, i) => (
           <li key={x.t} className="flex gap-3 py-3">

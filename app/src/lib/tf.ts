@@ -633,4 +633,5 @@ export type MyBuildsData = {
 export type WayDetail = {
   n: string; cat: string; sum: string; w: string; tips: string[]; hasTask: boolean
   ways: { t: string; how: string; why: string; req: string; tags: string[]; node: string; planet: string }[]
+  plat?: { date: string; groups: { t: string; per: string; items: { n: string; kind: string; how: string; chance: number; price: number; sold: number; per: number; img: string; key: string }[] }[] } | null
 }
