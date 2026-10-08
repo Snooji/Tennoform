@@ -1,0 +1,64 @@
+name: Checks
+# Runs on every pull request so a broken change shows a red X before it's merged.
+# Nothing here contacts Warframe: the browser tests stub the live feed and block every other outside request.
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  files:
+    name: No merge conflicts left in files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Look for conflict markers
+        run: |
+          # a line starting with 7+ '<' or '>' is what git leaves behind in a conflicted file; the browser can't run it
+          if git grep -nIE '^(<{7}|>{7})' -- . ':(exclude)*.md'; then
+            echo "::error::Merge conflict markers found in the files above. Rebuild them (cd app && npm run build; python3 build/make_site.py) and commit again."
+            exit 1
+          fi
+          echo "No conflict markers."
+  build:
+    name: Site builds and works in a browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 100   # make_site.py keeps the files of recent versions, so it needs their history
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            app/package-lock.json
+            tests/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build the app
+        run: cd app && npm ci && npm run build
+      - name: Build the page
+        run: python3 build/make_site.py
+      - name: Every file the page loads exists
+        run: |
+          python3 - <<'PY'
+          import re, os, sys
+          html = open('index.html').read()
+          missing = [u for u in re.findall(r'(?:src|href)="/((?:assets|bundle)/[^"]+)"', html) if not os.path.exists(u)]
+          if missing:
+              print('::error::index.html points at files that are not there:', missing); sys.exit(1)
+          print('All', len(re.findall(r'(?:src|href)="/(?:assets|bundle)/', html)), 'files present.')
+          PY
+      - name: Install the browser checks
+        run: cd tests && npm ci && npx playwright install --with-deps chromium
+      - name: Browser checks (every page, grey screens, styles)
+        run: |
+          python3 -m http.server 8765 >/dev/null 2>&1 &
+          sleep 2
+          cd tests && node smoke.js
