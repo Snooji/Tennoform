@@ -1,1 +1,5 @@
+<<<<<<<< HEAD:assets/pair-tabs-ki2jIgAa.js
+import{d as e,g as t}from"./card-TNJaIiPG.js";import{t as n}from"./segmented-z5XpdOZ5.js";var r=t(),i={goals:[{value:`goals`,label:`Gear goals`},{value:`tasks`,label:`To-do list`}],chart:[{value:`missions`,label:`Star chart`},{value:`quests`,label:`Quests`}]};function a({pair:t,current:a}){return(0,r.jsx)(n,{className:`self-start`,value:a,onValueChange:t=>t!==a&&e().go(t),items:i[t]})}export{a as t};
+========
 import{d as e,g as t}from"./card-TNJaIiPG.js";import{t as n}from"./segmented-CoWa6aaO.js";var r=t(),i={goals:[{value:`goals`,label:`Gear goals`},{value:`tasks`,label:`To-do list`}],chart:[{value:`missions`,label:`Star chart`},{value:`quests`,label:`Quests`}]};function a({pair:t,current:a}){return(0,r.jsx)(n,{className:`self-start`,value:a,onValueChange:t=>t!==a&&e().go(t),items:i[t]})}export{a as t};
+>>>>>>>> origin/main:assets/pair-tabs-Dbh2vqPq.js
