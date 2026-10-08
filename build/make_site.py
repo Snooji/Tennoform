@@ -115,7 +115,7 @@ csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
        "frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; "
        "img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "
-       "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'none'" % hashes)
+       "object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; worker-src 'self'" % hashes)
 def prune_assets():
     """The React build no longer empties assets/, so a tab that was open during an update can still load its pages.
     Keep this build's files and every file a recent version used (KEEP_DAYS); delete anything older."""
