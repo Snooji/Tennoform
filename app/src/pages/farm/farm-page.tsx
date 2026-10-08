@@ -69,28 +69,40 @@ const QUICK: { key: string; label: string; img?: string; icon?: LucideIcon }[] =
   { key: "way|Platinum", label: "Platinum", icon: Gem },
 ]
 
-function QuickPicks({ sel }: { sel: string }) {
+/** Not searching: a grid of icon tiles under the search box. While typing: a sliding row above it, out of the way of the results. */
+function QuickPicks({ sel, compact }: { sel: string; compact: boolean }) {
+  const icon = (q: (typeof QUICK)[number], size: string) =>
+    q.img ? <Thumb src={q.img} className={size} /> : q.icon ? <span aria-hidden className={cn("grid shrink-0 place-items-center text-muted-foreground", size)}><q.icon className="size-[60%]" /></span> : null
   return (
     <nav aria-label="Most farmed" className="flex flex-col gap-1.5">
       <span className="text-xs text-muted-foreground">Most farmed</span>
-      <ul className="scroll-fade -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0">
-        {QUICK.map((q) => (
-          <li key={q.key} className="shrink-0">
-            <button
-              type="button"
-              onClick={() => tf().farmPick(q.key)}
-              aria-current={sel === q.key ? "true" : undefined}
-              className={cn(
-                "flex h-10 items-center gap-2 rounded-lg border bg-card pr-3 pl-1.5 text-sm font-medium transition-colors outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50",
-                sel === q.key && "border-primary/50 bg-muted"
-              )}
-            >
-              {q.img ? <Thumb src={q.img} className="size-7" /> : q.icon ? <q.icon aria-hidden className="mx-1 size-5 text-muted-foreground" /> : null}
-              {q.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      {compact ? (
+        <ul className="scroll-fade -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:px-0">
+          {QUICK.map((q) => (
+            <li key={q.key} className="shrink-0">
+              <button type="button" onClick={() => tf().farmPick(q.key)} aria-current={sel === q.key ? "true" : undefined}
+                className={cn("flex h-9 items-center gap-1.5 rounded-lg border bg-card pr-3 pl-1 text-sm font-medium transition-colors outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50",
+                  sel === q.key && "border-primary/50 bg-muted")}>
+                {icon(q, "size-7")}
+                {q.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <ul className="grid grid-cols-4 gap-2 sm:grid-cols-7">
+          {QUICK.map((q) => (
+            <li key={q.key}>
+              <button type="button" onClick={() => tf().farmPick(q.key)} aria-current={sel === q.key ? "true" : undefined}
+                className={cn("flex h-full w-full flex-col items-center gap-1.5 rounded-lg border bg-card px-1 py-2.5 text-center text-xs leading-tight font-medium transition-colors outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50",
+                  sel === q.key && "border-primary/50 bg-muted")}>
+                {icon(q, "size-10")}
+                {q.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   )
 }
@@ -122,9 +134,9 @@ export function FarmPage() {
         <h1 className="font-heading text-3xl font-semibold">Farm finder</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Search any item, part, mod, relic, arcane or resource to see where it drops. Or pick a type to browse everything.</p>
       </header>
-      <QuickPicks sel={d.sel || ""} />
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <div className="flex min-w-0 flex-col gap-3">
+          {q.trim() ? <QuickPicks sel={d.sel || ""} compact /> : null}
           <div className="relative">
             <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -143,6 +155,7 @@ export function FarmPage() {
               </Button>
             ) : null}
           </div>
+          {q.trim() ? null : <QuickPicks sel={d.sel || ""} compact={false} />}
           <div className="flex flex-wrap gap-2">
             <Select items={d.types} value={d.ty} onValueChange={(v) => tf().farmSet({ ty: String(v) })}>
               <SelectTrigger className="h-10 min-w-36 flex-1 sm:flex-none" aria-label="Result type">
