@@ -12,6 +12,7 @@ const BASE = process.env.SITE || 'http://localhost:8765/'
 const PAGES = ['home', 'ranks', 'mastery', 'goals', 'tasks', 'missions', 'quests', 'farm', 'resources', 'relics', 'world', 'market', 'arsenal', 'frames',
   'today', 'synd', 'achievements', 'tenno', 'friends', 'donate', 'feedback', 'about', 'guides', 'collection']
 const fails = []
+const where = (p) => { try { return new URL(p.url()).hash || '#home' } catch { return '?' } }
 const fail = (m) => { fails.push(m); console.log('FAIL', m) }
 
 async function context(b, w, scheme) {
@@ -40,7 +41,7 @@ async function open(p, set) {
 async function pages(b) {
   for (const mode of ['dark', 'light']) for (const w of [1280, 390]) {
     const ctx = await context(b, w, mode), p = await ctx.newPage(), errs = []
-    p.on('pageerror', (e) => errs.push(e.message))
+    p.on('pageerror', (e) => errs.push(`${e.message} @ ${where(p)} ${String(e.stack || '').split('\n').slice(1, 3).map((l) => l.trim()).join(' < ')}`))
     await open(p, { 'tf-theme': mode })
     for (const r of PAGES) {
       await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(450)
@@ -57,7 +58,7 @@ async function pages(b) {
 async function grey(b) {
   for (const w of [390, 1280]) {
     const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
-    p.on('pageerror', (e) => errs.push(e.message))
+    p.on('pageerror', (e) => errs.push(`${e.message} @ ${where(p)} ${String(e.stack || '').split('\n').slice(1, 3).map((l) => l.trim()).join(' < ')}`))
     await open(p, {})
     const state = () => p.evaluate(() => {
       const ov = [...document.querySelectorAll('[data-slot$=overlay],.dlgbk')].filter((e) => getComputedStyle(e).display !== 'none').length
@@ -99,7 +100,8 @@ async function styles(b) {
 }
 
 ;(async () => {
-  const b = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {})
+    // full Chromium (what visitors run), not Playwright's stripped-down headless shell
+  const b = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : { channel: 'chromium' })
   await pages(b); await grey(b); await styles(b)
   await b.close()
   console.log(fails.length ? `\n${fails.length} problem(s) found` : '\nAll checks passed')
