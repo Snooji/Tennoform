@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, Crosshair, Search, X } from "lucide-react"
+import { Check, Coins, Crosshair, Gem, Hexagon, Search, X, type LucideIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -57,6 +57,44 @@ function EmptyDetail() {
   )
 }
 
+/* the things players farm most, one tap away; the game's own icon where there is one */
+const CDN = "https://cdn.warframestat.us/img/"
+const QUICK: { key: string; label: string; img?: string; icon?: LucideIcon }[] = [
+  { key: "res|Orokin Cell", label: "Orokin Cell", img: CDN + "ComponentCell.png" },
+  { key: "res|Argon Crystal", label: "Argon Crystal", img: CDN + "ArgonCrystal.png" },
+  { key: "res|Neural Sensors", label: "Neural Sensors", img: CDN + "NeuralSensor.png" },
+  { key: "way|Kuva", label: "Kuva", img: CDN + "Kuva.png" },
+  { key: "way|Endo", label: "Endo", icon: Hexagon },
+  { key: "way|Credits", label: "Credits", icon: Coins },
+  { key: "way|Platinum", label: "Platinum", icon: Gem },
+]
+
+function QuickPicks({ sel }: { sel: string }) {
+  return (
+    <nav aria-label="Most farmed" className="flex flex-col gap-1.5">
+      <span className="text-xs text-muted-foreground">Most farmed</span>
+      <ul className="scroll-fade -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0">
+        {QUICK.map((q) => (
+          <li key={q.key} className="shrink-0">
+            <button
+              type="button"
+              onClick={() => tf().farmPick(q.key)}
+              aria-current={sel === q.key ? "true" : undefined}
+              className={cn(
+                "flex h-10 items-center gap-2 rounded-lg border bg-card pr-3 pl-1.5 text-sm font-medium transition-colors outline-none hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50",
+                sel === q.key && "border-primary/50 bg-muted"
+              )}
+            >
+              {q.img ? <Thumb src={q.img} className="size-7" /> : q.icon ? <q.icon aria-hidden className="mx-1 size-5 text-muted-foreground" /> : null}
+              {q.label}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
 export function FarmPage() {
   const d = useTFData(() => tf().farm())
   const narrow = useNarrow()
@@ -84,6 +122,7 @@ export function FarmPage() {
         <h1 className="font-heading text-3xl font-semibold">Farm finder</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">Search any item, part, mod, relic, arcane or resource to see where it drops. Or pick a type to browse everything.</p>
       </header>
+      <QuickPicks sel={d.sel || ""} />
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <div className="flex min-w-0 flex-col gap-3">
           <div className="relative">
