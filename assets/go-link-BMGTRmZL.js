@@ -1,0 +1,1 @@
+import{U as e,d as t,g as n}from"./card-DLVEQMqG.js";var r=n(),i=`underline decoration-primary/50 underline-offset-4 hover:decoration-primary`;function a({k:n,className:a,children:o}){return n?(0,r.jsx)(`a`,{href:`#`,className:e(i,a),onClick:e=>{e.preventDefault(),t().act(`a`,{href:`#`,"data-go":n})},children:o}):(0,r.jsx)(`span`,{className:a,children:o})}export{a as t};

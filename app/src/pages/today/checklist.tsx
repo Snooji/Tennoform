@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react"
-import { Check, ChevronDown, EyeOff, Eye, Lock, Pin, PinOff, Plus, Trash2 } from "lucide-react"
+import { Check, ChevronDown, Clock, EyeOff, Eye, Lock, Pin, PinOff, Plus, Trash2 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -34,7 +34,11 @@ function Row({ c }: { c: CheckRow }) {
           <span className="flex min-w-0 flex-1 flex-col gap-0.5">
             <span className="flex flex-wrap items-center gap-1.5">
               <span className={cn("font-medium", c.done && "text-muted-foreground line-through decoration-primary/70")}>{c.title}</span>
-              <Badge variant="outline" className="text-muted-foreground">{c.per === "d" ? "Daily" : "Weekly"}</Badge>
+              <Badge variant="outline" className="text-muted-foreground">{c.per === "d" ? "Daily" : c.per === "b" ? "This visit" : "Weekly"}</Badge>
+              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground tabular-nums">
+                <Clock aria-hidden className="size-3" />
+                {c.done ? `resets in ${c.resetIn}` : c.per === "b" ? `leaves in ${c.resetIn}` : `${c.resetIn} left`}
+              </span>
               {c.locked ? (
                 <Badge variant="outline" className="border-amber-500/40 text-amber-700 dark:text-amber-400">
                   <Lock /> Locked
@@ -67,7 +71,7 @@ function Row({ c }: { c: CheckRow }) {
               {c.done && c.doneAt
                 ? "Done " + new Date(c.doneAt).toLocaleString([], { weekday: "short", hour: "numeric", minute: "2-digit" }) + " · "
                 : ""}
-              Resets in {c.resetIn} ({c.resetAt} your time)
+              {c.per === "b" ? "Leaves" : "Resets"} in {c.resetIn} ({c.resetAt} your time)
             </p>
             {c.locked ? (
               <p className="text-xs">

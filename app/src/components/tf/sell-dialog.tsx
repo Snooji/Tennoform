@@ -1,9 +1,9 @@
-import { Copy, ExternalLink, Info } from "lucide-react"
+import { CircleAlert, Copy, ExternalLink, Info, OctagonAlert } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
-import { fmt, tf, useTFData } from "@/lib/tf"
+import { fmt, tf, useTFData, type SafeSell } from "@/lib/tf"
 
 /** Sell on warframe.market: suggested prices from the daily snapshot, a trade-chat line, and the item's page. Tennoform never signs in for you. */
 export function SellDialog() {
@@ -17,6 +17,7 @@ export function SellDialog() {
             <DialogTitle>Sell {d.n}</DialogTitle>
             <DialogDescription>Prices from warframe.market's snapshot of {d.date}{d.v7 ? `, ${fmt(d.v7)} sold last week` : ""}.</DialogDescription>
           </DialogHeader>
+          {d.safe ? <SafeNotice s={d.safe} /> : null}
           <ul className="flex flex-col divide-y border-y" aria-label="Suggested prices">
             {d.quick != null ? (
               <PriceCard label="Sell fast" price={d.quick} note={d.low != null ? `Just under the cheapest seller (${d.low}p)` : "A little under the usual price"}
@@ -62,6 +63,22 @@ export function SellDialog() {
         </DialogContent>
       ) : null}
     </Dialog>
+  )
+}
+
+/** "Safe to sell?": recipes that need this item, mastery you'd miss, and items that are hard to get back. */
+function SafeNotice({ s }: { s: SafeSell }) {
+  const bad = s.checks.filter((c) => c.level !== "ok")
+  if (!bad.length) return null
+  const stop = s.level === "stop"
+  return (
+    <div role="note" className={cn("flex gap-2 rounded-md border p-3 text-sm", stop ? "border-destructive/50" : "border-amber-500/50")}>
+      {stop ? <OctagonAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-destructive" /> : <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />}
+      <div className="flex flex-col gap-1">
+        <b className="font-medium">{stop ? "You may want to keep this" : "Before you sell"}</b>
+        <ul className="flex flex-col gap-1">{bad.map((c) => <li key={c.text}>{c.text}</li>)}</ul>
+      </div>
+    </div>
   )
 }
 

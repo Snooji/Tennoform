@@ -69,6 +69,11 @@ export type TFApi = {
   isRev(k: string): boolean
   sortRev(k: string): void
   sell(): SellData | null
+  circuit(): CircuitData
+  watchToggle(n: string): void
+  returning(): ReturningData
+  returningSet(v: string): void
+  sellCheck(n: string): { level: string; checks: [string, string][] } | null
   sellOpen(n: string): void
   sellClose(): void
   sellable(n: string): boolean
@@ -256,9 +261,20 @@ export type CollectionItem = { n: string; img: string; r: number; mx: number; ha
 export type CollectionData = { f: string; q: string; owned: number; mastered: number; level: number; total: number; inv: number
   cats: { id: string; label: string; owned: number; mastered: number; level: number; total: number; items: CollectionItem[] }[] }
 export type PlayerStats = { loading: boolean; err: string; data: { live: number; hour: number; dau: number; wau: number; mau: number; total: number; tracked: number; hist: { d: string; n: number }[]; ago: string } | null }
+export type ReturningData = {
+  from: string; options: { value: string; label: string }[]; updates: { date: string; n: string; t: string }[]
+  quests: { n: string; why: string; done: boolean; isNew: boolean }[]; moreQuests: number; questsDone: number; questsTotal: number; synced: boolean; assumed: boolean
+}
+export type CircuitWeek = {
+  start: string; label: string; endsIn: string; startsIn: string; need: number
+  frames: { n: string; img: string; owned: boolean; prime: boolean; mastered: boolean }[]
+  adapters: { n: string; full: string; key: string; have: boolean; weapon: boolean; img: string }[]
+}
+export type CircuitData = { weeks: CircuitWeek[]; changed: boolean; live: boolean; adaptersHave: number; adaptersTotal: number }
+export type SafeSell = { level: "stop" | "warn" | "ok"; checks: { level: "stop" | "warn" | "ok"; text: string }[] }
 export type SellData = {
   n: string; url: string; low: number | null; avg: number | null; a30: number | null; v7: number; quick: number | null; fair: number | null
-  du: number | null; rank: boolean; date: string; sellers: { name: string; price: number; rank: number | null; status: string }[]; chatQuick: string; chatFair: string
+  du: number | null; rank: boolean; date: string; safe: SafeSell | null; sellers: { name: string; price: number; rank: number | null; status: string }[]; chatQuick: string; chatFair: string
 }
 export type AlertPrefs = { baro: boolean; resurgence: boolean; fissure: boolean; notify: boolean }
 export type AlertItem = { id: string; kind: "baro" | "resurgence" | "fissure"; title: string; text: string; items: string[]; href: string }
@@ -294,7 +310,7 @@ export type FarmData = {
 }
 export type LiveList = { head: string; list: { t: string; s: string; n: string }[] }
 export type CheckRow = {
-  id: string; per: "d" | "w"; title: string; desc: string; gate: string; locked: boolean; done: boolean; doneAt: number
+  id: string; per: "d" | "w" | "b"; title: string; desc: string; gate: string; locked: boolean; done: boolean; doneAt: number
   pinned: boolean; hidden: boolean; custom: boolean; resetIn: string; resetAt: string; endIso: string; hasTask: boolean
   link: { route: string; label: string } | null; live: LiveList | null
 }
@@ -431,14 +447,14 @@ export type WorldData = {
   ores?: { n: string; key: string; done: boolean; rarity: string; kind: string; go: string; hasTask: boolean }[]
   cutters?: { n: string; key: string; done: boolean; where: string; desc: string }[]; tips?: string[]
 }
-export type VaultCard = { n: string; c: string; img: string; text: string }
+export type VaultCard = { n: string; c: string; img: string; text: string; watched?: boolean }
 export type MarketModRow = { n: string; kind: "Mod" | "Arcane"; type: string; rar: string; a7: number | null; v7: number; seller: { name: string; price: number; rank: number | null; wh: string } | null; url: string }
 export type MarketMods = { q: string; kind: string; sort: string; total: number; count: number; more: number; rows: MarketModRow[] }
 export type MarketData = {
   tab: "sets" | "vault" | "mods"; snapshot: string
   q?: string; filter?: string; sort?: string; total?: number; count?: number; more?: number
   sets?: { n: string; base: string; img: string; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null; left: number; xp: number; price: number | null; meta: string; seller: { name: string; price: number; wh: string } | null; url: string }[]
-  gapMonths?: number; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]
+  gapMonths?: number; watch?: VaultCard[]; now?: VaultCard[]; farm?: VaultCard[]; vault?: VaultCard[]
 }
 export type RelicCard = {
   r: string; vaulted: boolean; advice: { t: string; why: string; k: string }; counts: Record<"i" | "e" | "f" | "r", number>
