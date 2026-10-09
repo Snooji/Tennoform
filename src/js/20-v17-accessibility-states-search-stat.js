@@ -19,12 +19,14 @@ function a11yPass(){document.querySelectorAll('.seg .btn:not([role=tab])').forEa
 /* skip link + keyboard shortcut */
 (function(){const a=document.createElement('button');a.type='button';a.className='skip';a.textContent='Skip to content';a.onclick=()=>{const m=$('#app');m.setAttribute('tabindex','-1');m.focus()};document.body.insertBefore(a,document.body.firstChild)})();
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!(e.target&&e.target.matches&&e.target.matches('input,textarea,select'))&&!e.ctrlKey&&!e.metaKey){e.preventDefault();if(location.hash!=='#farm')location.hash='farm';setTimeout(()=>$('#fq')&&$('#fq').focus(),60)}});
+/* the home title matches the one in the page head (build/make_site.py), which is what search results show */
+const HOME_TITLE='Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices';
 /* page status: where data lives / how fresh it is */
 const STATUS={today:'live',market:'snap',friends:'acct',feedback:'acct',tasks:'save',goals:'save',ranks:'save',missions:'save',quests:'save',synd:'save',relics:'save',arsenal:'save',world:'save',tenno:'save',mastery:'data',resources:'data',farm:'data',frames:'data'};
 function statusChip(k){const s=STATUS[k];if(!s)return'';const where=synced?'Saved to your account':'Saved in this browser';
   const map={live:['live','● Live game data'],snap:['','Prices: daily snapshot '+D.meta.prices],acct:['',SO.uid?'Signed in':'Needs sign-in'],save:[synced?'live':'',where],data:['','Game data '+D.meta.built]};const [c,t]=map[s];return `<span class="pstat ${c}">${esc(t)}</span>`}
 function afterRender(key,nav){a11yPass();const ey=document.querySelector('#app .head .eyebrow');if(ey&&!ey.querySelector('.pstat'))ey.insertAdjacentHTML('beforeend',statusChip(key));
-  document.title=(key==='home'?'':(PL[key]||key)+' · ')+'Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
+  document.title=key==='home'?HOME_TITLE:(PL[key]||key)+' · Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
 window.addEventListener('hashchange',()=>setTimeout(()=>afterRender((location.hash||'#home').slice(1),true),0));
 /* menu focus handling */
 $('#hamb')&&$('#hamb').addEventListener('click',()=>setTimeout(()=>{if($('#drawer').classList.contains('open')){const a=$('#sheet a');a&&a.focus()}},30));

@@ -47,15 +47,15 @@ $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classL
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
-/* ---------- theme: a mode (auto follows the device, dark, light) and a style (Default, Foundry, Prime) ---------- */
+/* ---------- theme: a mode (auto follows the device, dark, light) and a style (Default, Foundry, Prime, or a faction: Grineer, Corpus, Entrati, Lotus, Infested) ---------- */
 /* The .dark class drives every colour token; data-theme picks the style; data-accent (set by the React shell) picks the colour palette.
    Every style has a light and a dark version, and every palette works in every style. */
-const THEME_STYLES=['default','foundry','prime'];
+const THEME_STYLES=['default','foundry','prime','grineer','corpus','entrati','lotus','infested'];
 function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return t==='foundry'?'light':['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
 function themeStyle(){try{const s=JSON.parse(localStorage.getItem('tf-style')||'null');if(THEME_STYLES.includes(s))return s;
   /* before styles were separate, Foundry was a theme of its own (a light one) */
   return JSON.parse(localStorage.getItem('tf-theme')||'""')==='foundry'?'foundry':'default'}catch(e){return 'default'}}
-const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3']};
+const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3'],grineer:['#15130e','#d9d2bf'],corpus:['#06111c','#eef3f7'],entrati:['#1a0d10','#efe3d0'],lotus:['#071417','#eef6f4'],infested:['#0d0a0c','#ece4dc']};
 function themeApply(t,st){st=st||themeStyle();const r=document.documentElement;
   const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));
   r.classList.toggle('dark',dark);if(st==='default')delete r.dataset.theme;else r.dataset.theme=st;r.style.colorScheme=dark?'dark':'light';
@@ -67,7 +67,7 @@ try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{i
 themeApply(themeGet());
 function themeSw(){const t=themeGet(),st=themeStyle();
   return `<span class="themesw" role="group" aria-label="Mode">${[['auto','Auto'],['dark','Dark'],['light','Light']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>
-  <span class="themesw" role="group" aria-label="Style">${[['default','Default'],['foundry','Foundry'],['prime','Prime']].map(([k,l])=>`<button type="button" class="btn sm${st===k?' on':''}" data-style-set="${k}" aria-pressed="${st===k}">${l}</button>`).join('')}</span>`}
+  <span class="themesw" role="group" aria-label="Style">${[['default','Default'],['foundry','Foundry'],['prime','Prime'],['grineer','Grineer'],['corpus','Corpus'],['entrati','Entrati'],['lotus','Lotus'],['infested','Infested']].map(([k,l])=>`<button type="button" class="btn sm${st===k?' on':''}" data-style-set="${k}" aria-pressed="${st===k}">${l}</button>`).join('')}</span>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set],[data-style-set]');if(!b)return;if(b.dataset.themeSet)themeSet(b.dataset.themeSet);else themeStyleSet(b.dataset.styleSet);rerender()});
 /* ---------- icons: one drawn set, 24px grid, 1.5px stroke, sized to the text ---------- */
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',minus:'M6 12h12',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
@@ -285,7 +285,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
     if(p.k==='p'){const full=p.full||(name+' '+p.n);
       let src='';if(p.rel)src=`${priceChip(full)}${sellChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
-      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
+      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub&&!/Blueprint$/.test(full)?' blueprint':''}`,src);
       if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">${ic('timer')}Start Foundry timer</button>`);
     }else if(p.k==='i'){
       h+=step('have|'+name+'|'+p.n+'|'+pi,`Have a spare ${L(p.n)}${p.q>1?' ×'+p.q:''} (used up by the recipe)`,
@@ -846,7 +846,7 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
   try{for(const g of SO.groups){if(g.owner===uid)await fs.collection('groups').doc(g.id).delete().catch(()=>{});else await fs.collection('groups').doc(g.id).update({members:firebase.firestore.FieldValue.arrayRemove(uid),at:Date.now()}).catch(()=>{})}
     const del=async col=>{const s=await col.get();await Promise.all(s.docs.map(d=>d.ref.delete()))};
     await del(fs.collection('inbox').doc(uid).collection('msgs')).catch(()=>{});await del(fs.collection('users').doc(uid).collection('friends')).catch(()=>{});
-    await fs.collection('public').doc(uid).delete().catch(()=>{});await fs.collection('presence').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
+    await fs.collection('public').doc(uid).delete().catch(()=>{});await fs.collection('share').doc(uid).delete().catch(()=>{});await fs.collection('presence').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
     docRef=null;profRef=null;await fs.collection('users').doc(uid).collection('data').doc('progress').delete().catch(()=>{});await fs.collection('users').doc(uid).collection('data').doc('profile').delete().catch(()=>{});
     socialStop();await u.delete();toast('Your account and its data were deleted. Progress in this browser was kept.');render()}
   catch(e){toast(e&&e.code==='auth/requires-recent-login'?'Sign out and back in, then try again.':'Couldn\'t finish deleting. Try again.')}}
@@ -1009,12 +1009,14 @@ function a11yPass(){document.querySelectorAll('.seg .btn:not([role=tab])').forEa
 /* skip link + keyboard shortcut */
 (function(){const a=document.createElement('button');a.type='button';a.className='skip';a.textContent='Skip to content';a.onclick=()=>{const m=$('#app');m.setAttribute('tabindex','-1');m.focus()};document.body.insertBefore(a,document.body.firstChild)})();
 document.addEventListener('keydown',e=>{if(e.key==='/'&&!(e.target&&e.target.matches&&e.target.matches('input,textarea,select'))&&!e.ctrlKey&&!e.metaKey){e.preventDefault();if(location.hash!=='#farm')location.hash='farm';setTimeout(()=>$('#fq')&&$('#fq').focus(),60)}});
+/* the home title matches the one in the page head (build/make_site.py), which is what search results show */
+const HOME_TITLE='Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices';
 /* page status: where data lives / how fresh it is */
 const STATUS={today:'live',market:'snap',friends:'acct',feedback:'acct',tasks:'save',goals:'save',ranks:'save',missions:'save',quests:'save',synd:'save',relics:'save',arsenal:'save',world:'save',tenno:'save',mastery:'data',resources:'data',farm:'data',frames:'data'};
 function statusChip(k){const s=STATUS[k];if(!s)return'';const where=synced?'Saved to your account':'Saved in this browser';
   const map={live:['live','● Live game data'],snap:['','Prices: daily snapshot '+D.meta.prices],acct:['',SO.uid?'Signed in':'Needs sign-in'],save:[synced?'live':'',where],data:['','Game data '+D.meta.built]};const [c,t]=map[s];return `<span class="pstat ${c}">${esc(t)}</span>`}
 function afterRender(key,nav){a11yPass();const ey=document.querySelector('#app .head .eyebrow');if(ey&&!ey.querySelector('.pstat'))ey.insertAdjacentHTML('beforeend',statusChip(key));
-  document.title=(key==='home'?'':(PL[key]||key)+' · ')+'Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
+  document.title=key==='home'?HOME_TITLE:(PL[key]||key)+' · Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
 window.addEventListener('hashchange',()=>setTimeout(()=>afterRender((location.hash||'#home').slice(1),true),0));
 /* menu focus handling */
 $('#hamb')&&$('#hamb').addEventListener('click',()=>setTimeout(()=>{if($('#drawer').classList.contains('open')){const a=$('#sheet a');a&&a.focus()}},30));
@@ -1832,7 +1834,7 @@ function mastery(){const tab=state.mTab;
   if(tab==='sframes')h+=`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>Easy Warframes</h3>${progHTML()}</summary>${M.frames.map(f=>mrow(f.id,f.src)).join('')}</details>
     <details class="obj grp" data-scope="input.ck.mk" open><summary><h3>Market companions</h3>${progHTML()}</summary>${M.companions.map(f=>mrow(f.id,'Market blueprint')).join('')}</details>`;
   if(tab==='craft'){const by={};M.craft.forEach(x=>(by[x.mr]=by[x.mr]||[]).push(x));
-    h+=`<div class="callout small">Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</div>`+
+    h+=`<div class="callout small tf-more">Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</div>`+
     Object.keys(by).sort((a,b)=>a-b).map(mr=>`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>MR ${mr}</h3>${progHTML()}</summary>${by[mr].map(x=>`<div style="padding:10px 14px 0;border-top:1px solid var(--line)"><div class="mono small">${esc(x.recipe)} · ${fmt(x.xp)} XP</div>${x.note?`<div class="small" style="color:var(--warn)">${esc(x.note)}</div>`:''}</div>${x.targets.map(t=>mrow(t.id,'')).join('')}`).join('')}</details>`).join('')}
   if(tab==='xp')h+=`<div class="panel stack cut"><h2>Where to level gear fast</h2>
     <p class="small muted" style="margin:0">Best spots first. A frame that clears whole rooms ranks a fresh weapon to 30 in a few waves; stack an Affinity Booster on days you level several items.</p></div>
@@ -2941,20 +2943,20 @@ function buildById(id){if(id.startsWith('mine:'))return (P.myb||[]).find(b=>'min
 function bParts(b){return [...(b.aura?[['aura',b.aura]]:[]),...(b.exilus?[['exilus',b.exilus]]:[]),...b.mods.filter(Boolean).map(m=>['mod',m]),...(b.arcanes||[]).filter(Boolean).map(a=>['arc',a])]}
 const bHave=b=>{const p=bParts(b);return {have:p.filter(([k,n])=>on((k==='arc'?'arc|':'mod|')+n)||(k==='arc'&&(+((P.arc||{})[n])||0)>0)).length,total:p.length}};
 function bCard(b){const it=I[b.item];const h=bHave(b);const mv=(P.bv||{})[b.doc]||0;
-  return {id:b.id,src:b.src,item:b.item,img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
+  return {id:b.id,src:b.src,item:b.item,fits:bFits(b),img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
     goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0}}
 function bDetail(b){const it=I[b.item];const c=it?it.c:'';const sl=BSLOTS(c);
   return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
     mods:[...(b.aura?[modSlot(sl.aura||'Aura',b.aura)]:[]),...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.filter(Boolean).map(m=>modSlot('Mod',m))],
     arcanes:(b.arcanes||[]).filter(Boolean).map(a=>modSlot('Arcane',a,true)),
-    itemOwned:it?ownedItem(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
+    itemOwned:it?famOwned(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
 function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
   if(s!=='meta')loadShared();
-  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
+  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
   L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
-  else if(so==='own')L.sort((a,b)=>(+ownedItem(b.item)-+ownedItem(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
+  else if(so==='own')L.sort((a,b)=>(+famOwned(b.item)-+famOwned(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
   rv('blO',L);
@@ -3112,7 +3114,7 @@ ${phone?`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone: u
     <div class="row"><button type="button" class="btn" id="idmarkcopy">Copy the bookmark</button></div></div></div>
 `:''}   <div class="sv"><span class="svn">${pcN}</span><div><b>On a computer: run one line in the console</b><div class="small muted">Copy the line, then on warframe.com press <span class="mono">F12</span> (Mac: <span class="mono">Cmd+Option+J</span>), open the <b>Console</b> tab, paste it and press Enter. You land back here with your ID ready to link.</div>
     <div class="row"><button type="button" class="btn primary" id="idcode">Copy the console line</button></div>
-    <div class="small muted">Using a web inspector instead (for example an iPhone inspector app)? Open its Resources or Application tab, find the cookie <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Not <span class="mono">_gsid</span>: that one is a Google Analytics ID.</div>
+    <div class="small muted">Or copy it from the cookies yourself: <b>iPhone</b> with a Safari web inspector extension (Resources tab), <b>Android</b> with the Mimir app by MST Sage (Applications tab), or a <b>computer</b> with F12 (Application tab). Open Cookies for warframe.com, find <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Only copy that: other warframe.com cookies can keep you logged in, so never share them. <a class="ln" href="#" data-go="guide|find-account-id">Steps for each device</a></div>
     <details class="small"><summary>See the line</summary><pre class="mono" style="white-space:pre-wrap;word-break:break-all;margin:6px 0 0">${esc(ID_CODE)}</pre></details>
     <div class="small muted">Chrome or Edge may say pasting is blocked: type <span class="mono">allow pasting</span>, press Enter, then paste again. The line only reads your account ID from warframe.com and changes nothing.</div>
     <div class="small muted">Prefer one click? Drag this button to your bookmarks bar, then click it while on warframe.com: <a class="btn sm" id="idmark" href="${esc(ID_MARK)}" draggable="true">Tennoform ID</a></div></div></div>
@@ -4167,6 +4169,120 @@ const hasRole=(n,r)=>{const [a,b]=roleOf(n);return a.includes(r)||b.includes(r)}
 {const _x=xpTabHTML;xpTabHTML=function(){const rows=[['Archwings','Archwing'],['Arch-guns','Arch-Gun'],['Arch-melee','Arch-Melee'],['Necramechs (Voidrig, Bonewidow)','Necramech'],['K-Drives','K-Drive'],['Amps','Amp'],['Kitguns','Kitgun'],['Zaws','Zaw']];
   return _x()+`<div class="panel stack cut"><h2>Gear Hydron can't level (or needs extra steps)</h2><p class="small muted" style="margin:0">Most gear levels anywhere. These are the exceptions.</p>
   <ul class="small stack" style="margin:0;padding-left:18px">${[...rows.map(([l,c])=>[l,LEVEL_HOW[c].t]),['Plexus (Railjack)',LEVEL_NAME.Plexus.t],['MOAs, Hounds, Predasites, Vulpaphylas','Level them anywhere, then gild and level again for Mastery.'],['Kuva, Tenet and Coda weapons, Paracesis','Max rank 40: each Forma raises it by 2, and every extra rank gives Mastery.'],['Exalted weapons and pet weapons','They rank up but give no Mastery.']].map(([a,b])=>`<li><b>${esc(a)}:</b> ${esc(b)}</li>`).join('')}</ul></div>`}}
+/* ---------- Simple / Detailed view: Simple hides the long explanations (see html[data-detail=simple] in the CSS) ---------- */
+const SIMPLE=()=>document.documentElement.dataset.detail==='simple';
+document.documentElement.dataset.detail=lsGet('tf-detail','detailed')==='simple'?'simple':'detailed';
+/* item steps and other embedded pages are cached; rebuild them when the view changes */
+window.TF.detailChanged=()=>{ISLV++;FFD.key='';FRT.key='';try{render()}catch(e){}tfNotify()};
+/* ---------- builds fit every version of an item: Saryn's build is Saryn Prime's (and Umbra's) too, Soma Prime's fits Soma ---------- */
+function famOf(n){const b=String(n).replace(/ (Prime|Umbra)$/,'');return [b,b+' Prime',b+' Umbra'].filter(x=>I[x])}
+const famOwned=n=>famOf(n).some(ownedItem);
+function bFits(b){return b.fits||(b.fits=famOf(b.item).filter(x=>x!==b.item))}
+{const _mb=metaBuilds;metaBuilds=function(){const r=_mb();for(const b of r)if(!b.fits)b.fits=famOf(b.item).filter(x=>x!==b.item);return r}}
+/* the weapon and companion build tabs list every version, each showing the family's builds */
+const FAMSRC=new Map();
+{const _bd=buildsData;buildsData=function(src,kind){let ex=FAMSRC.get(src);
+  if(!ex){ex={...src};for(const k in src)for(const v of famOf(k))if(!ex[v])ex[v]=src[k];FAMSRC.set(src,ex)}
+  return _bd(ex,kind)}}
+/* ---------- Friends: where each friend is at, and how you can help them ---------- */
+/* Each player can share a small "what I'm working on" note with their friends only (Firestore share/{uid}, readable by
+   people on their friends list): the gear they're tracking, the parts they still need, what they'd like help with and a
+   short note. Your side matches that against what you own: spare parts, relics that drop their parts, gear you've built. */
+const LF_TAGS=['Relic runs','Steel Path','Eidolons','Archon hunts','Railjack','Levelling gear','Resource farming','Liches & Sisters','Open-world bounties','Duviri & Circuit','Netracells & Archimedea','New player help'];
+SO.share=SO.share||{};
+let SHP=0;
+
+/* what I share */
+function shareOut(){const goals=(P.goals||[]).filter(n=>I[n]&&!on('m|'+n)&&!on('build|'+n)).slice(0,20);const need=[];
+  /* only parts that come from relics or drops: a Market blueprint is just bought, nobody needs help with it */
+  for(const g of goals){const it=I[g];if(!on('bp|'+g)&&(it.bprel||it.bpd))need.push(g+' Blueprint');
+    for(const p of it.parts){if(p.k!=='p'||p.n==='Blueprint'||!(p.rel||(p.dr&&p.dr.length)))continue;if(on('part|'+g+'|'+p.n)||on('built|'+g+'|'+p.n))continue;need.push(p.full||(g+' '+p.n))}}
+  /* open to-do tasks as "kind|ref|title" so friends can open the same page */
+  const tasks=(P.tasks||[]).filter(x=>!x.d&&x.t).slice(0,20).map(x=>[x.k||'note',String(x.r||'').slice(0,80),String(x.t).slice(0,100)].join('|'));
+  return {at:Date.now(),goals,need:[...new Set(need)].slice(0,40),lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)).slice(0,12),note:String(P.lfNote||'').slice(0,120),tasks}}
+function publishShare(){if(!SO.uid||!FB)return Promise.resolve();const ref=FB.fs.collection('share').doc(SO.uid);
+  if(P.shareOff)return ref.delete().catch(()=>{});const d=shareOut();
+  /* until the updated rules (with tasks) are published, share everything else */
+  return ref.set(d).catch(()=>{const {tasks,...rest}=d;return ref.set(rest).catch(()=>{})})}
+{const _pp=publishPublic;publishPublic=function(){const r=_pp();publishShare();return r}}
+
+/* what my friends share with me */
+let SHT=0;
+async function loadShares(){if(!FB||!SO.uid)return;let changed=false;
+  for(const f of SO.friends){if(f.pending)continue;const c=SO.share[f.uid];if(c&&Date.now()-c._t<300000)continue;
+    try{const d=await FB.fs.collection('share').doc(f.uid).get();SO.share[f.uid]={...(d.exists?d.data():{}),_t:Date.now(),st:d.exists?'ok':'none'}}
+    catch(e){SO.share[f.uid]={_t:Date.now(),st:'none'}}changed=true}
+  if(changed)tfNotify()}
+{const _lf=loadFriendCards;loadFriendCards=async function(){const r=await _lf.apply(this,arguments);loadShares();return r}}
+
+/* part name -> the item it belongs to and the relics that drop it */
+let PARTIX=null;
+function partIx(){if(PARTIX)return PARTIX;PARTIX={};
+  for(const it of Object.values(I)){if(it.bprel)PARTIX[it.n+' Blueprint']={item:it.n,rel:it.bprel,dr:it.bpd||null};
+    for(const p of it.parts||[])if(p.k==='p'){const full=p.full||(it.n+' '+p.n);if(!PARTIX[full])PARTIX[full]={item:it.n,rel:p.rel||null,dr:p.dr||null}}}
+  return PARTIX}
+const relName=r=>String(Array.isArray(r)?r[0]:r);
+const TASK_GO={res:'res',item:'item',relic:'relic',mod:'mod',arc:'arc',part:'part',guide:'guide',way:'way',quest:'guide'};
+function shareTasks(sh){return (Array.isArray(sh.tasks)?sh.tasks:[]).filter(x=>typeof x==='string').map(x=>{const a=x.split('|');const k=a[0]||'note',r=a[1]||'',t=a.slice(2).join('|')||r;
+  return {k,r,t,go:TASK_GO[k]&&r?TASK_GO[k]+'|'+r:''}}).filter(x=>x.t)}
+function helpFor(sh,theirMr,myMr){const out=[];const ix=partIx();
+  for(const x of shareTasks(sh)){
+    if(x.k==='relic'&&REL[x.r]&&relCount(x.r)>0)out.push({k:'relic',t:`They're working on ${x.t}, and you have ${relCount(x.r)} ${x.r}. Run it together.`,go:'relic|'+x.r});
+    else if(x.k==='item'&&I[x.r]&&on('m|'+x.r))out.push({k:'build',t:`They're working on ${x.t}. You've mastered ${x.r}, so share your build or tips.`,go:'item|'+x.r})}const need=(sh.need||[]).filter(x=>typeof x==='string');
+  for(const part of need){const p=ix[part]||{};const spare=+((P.dup||{})[part])||0;
+    if(spare){out.push({k:'give',t:`You have ${spare} spare ${part}. Trade it to them.`,go:'part|'+part});continue}
+    const mine=(p.rel||[]).map(relName).filter(r=>REL[r]&&relCount(r)>0);
+    if(mine.length){out.push({k:'relic',t:`Your ${mine.slice(0,3).map(r=>`${r} (${relCount(r)})`).join(', ')} ${mine.length>1?'drop':'drops'} their ${part}. Open ${mine.length>1?'them':'it'} together.`,go:'relic|'+mine[0]});continue}
+    if(p.item&&on('m|'+p.item)&&!(sh.goals||[]).includes(p.item))out.push({k:'know',t:`You've built ${p.item}, so you know where ${part} comes from. Farm it with them.`,go:'item|'+p.item})}
+  for(const g of sh.goals||[])if(typeof g==='string'&&I[g]&&on('m|'+g))out.push({k:'build',t:`You've mastered ${g}. Share your build or tips for it.`,go:'item|'+g});
+  const lf=(sh.lf||[]).filter(t=>LF_TAGS.includes(t));
+  const relN=Object.keys(P.rel||{}).filter(r=>relCount(r)>0).length;const spOn=ALLN.some(n=>on('sp|'+n.id));
+  for(const t of lf){const why=t==='Relic runs'&&relN?`you have ${relN} kind${relN>1?'s':''} of relics`:t==='Steel Path'&&spOn?'you have Steel Path':t==='New player help'&&myMr>theirMr+4?`you're ${myMr-theirMr} ranks ahead`:'';
+    if(why)out.push({k:'lf',t:`They want help with ${t}, and ${why}.`})}
+  const seen=new Set();return out.filter(h=>{const key=h.k==='build'?'build|'+h.go:h.t;if(seen.has(key))return false;seen.add(key);return true}).slice(0,12)}
+
+function agoText(at){if(!at)return '';const s=(Date.now()-at)/1000;if(s<120)return 'Active just now';if(s<3600)return `Active ${Math.round(s/60)} min ago`;
+  if(s<86400)return `Active ${Math.round(s/3600)} h ago`;const d=Math.round(s/86400);return d<60?`Active ${d} day${d>1?'s':''} ago`:'Not active lately'}
+
+function friendsHubData(){const sq=squadData();if(sq.status!=='ok')return {status:sq.status};
+  if(Date.now()-SHT>60000){SHT=Date.now();loadShares()}
+  const myMr=mrInfo(totalXP().total).mr;const pins=P.fpin||[];const q=(state.fhQ||'').toLowerCase().trim();const so=state.fhS||'active';
+  const base=Object.fromEntries((sq.friends||[]).map(f=>[f.uid,f]));
+  let list=SO.friends.map(f=>{const p=SO.pub[f.uid]||{};const b=base[f.uid]||{};const sh=SO.share[f.uid]||{};
+    const xp=+p.xp||0;const m=p.mr!=null?mrInfo(xp):null;const mr=p.mr!=null?+p.mr:null;
+    return {uid:f.uid,name:sqName(f.uid),av:b.av||'',pending:!!f.pending,pinned:pins.includes(f.uid),unread:b.unread||0,code:f.code||p.code||'',
+      mr,mrLabel:mr!=null?'MR '+mrLabel(mr):'',pct:m?Math.round(m.pct):0,toNext:m?Math.max(0,m.next-xp):0,nextLabel:m?'MR '+mrLabel(m.mr+1):'',
+      diff:mr!=null?mr-myMr:0,at:+p.at||0,active:agoText(+p.at||0),
+      nodes:+p.nodes||0,sp:+p.sp||0,maxed:+p.maxed||0,
+      shared:f.pending?'pending':sh.st||'loading',goals:(sh.goals||[]).filter(x=>typeof x==='string'),need:(sh.need||[]).filter(x=>typeof x==='string'),
+      lf:(sh.lf||[]).filter(t=>LF_TAGS.includes(t)),note:typeof sh.note==='string'?sh.note:'',tasks:sh.st==='ok'?shareTasks(sh):[],help:mr!=null&&sh.st==='ok'?helpFor(sh,mr,myMr):[]}});
+  if(q)list=list.filter(f=>f.name.toLowerCase().includes(q)||f.code.toLowerCase().includes(q));
+  list.sort((a,b)=>(b.pinned-a.pinned)||(a.pending-b.pending)||(so==='mr'?((b.mr??-1)-(a.mr??-1)):so==='name'?a.name.localeCompare(b.name):(b.unread-a.unread)||(b.at-a.at))||a.name.localeCompare(b.name));
+  const mine=shareOut();
+  return {status:'ok',q:state.fhQ||'',sort:so,open:state.fhOpen||'',myMr,count:SO.friends.filter(f=>!f.pending).length,friends:list,lfTags:LF_TAGS,
+    me:{on:!P.shareOff,lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)),note:P.lfNote||'',goals:mine.goals.length,need:mine.need.length}}}
+
+Object.assign(window.TF,{
+  friendsHub:()=>friendsHubData(),
+  friendsHubSet:o=>{if(o.q!=null)state.fhQ=o.q;if(o.sort!=null)state.fhS=o.sort;if('open' in o)state.fhOpen=state.fhOpen===o.open?'':o.open;tfNotify()},
+  friendPin:uid=>{P.fpin=P.fpin||[];const i=P.fpin.indexOf(uid);if(i>=0)P.fpin.splice(i,1);else P.fpin.push(uid);saveProfile();tfNotify()},
+  shareSet:o=>{if(o.on!=null)P.shareOff=!o.on;if(o.lf!=null){P.lf=P.lf||[];const i=P.lf.indexOf(o.lf);if(i>=0)P.lf.splice(i,1);else if(LF_TAGS.includes(o.lf))P.lf.push(o.lf)}
+    if(o.note!=null)P.lfNote=String(o.note).slice(0,120);saveProfile();clearTimeout(SHP);SHP=setTimeout(publishShare,1500);tfNotify()},
+});
+/* ---------- your platform badge: picked by you, shown after your name everywhere ---------- */
+/* Warframe ends cross-play names with one private-use character (U+E000 + platform); fonts/tf-platforms.woff2 draws it as a
+   badge. Which number means which platform isn't documented, so players pick their own on the Home page. The pick replaces
+   that last character in the name Tennoform shows and publishes (public card, chat, friends' lists). */
+const BADGES=[['pc','PC'],['ps','PlayStation'],['xb','Xbox'],['sw','Switch'],['ios','iPhone / iPad'],['and','Android']];
+const baseName=n=>String(n||'').replace(/[-]+$/u,'');
+function withBadge(n){const b=P.badge;if(!b)return String(n||'');const base=baseName(n).slice(0,39);if(b==='none')return base;
+  const i=BADGES.findIndex(x=>x[0]===b);return i<0?String(n||''):base+String.fromCharCode(0xE000+i)}
+function badgeAuto(n){const c=String(n||'').charCodeAt(String(n||'').length-1);const i=c-0xE000;return i>=0&&i<BADGES.length?BADGES[i][0]:''}
+{const _mn=myName;myName=function(){return withBadge(_mn())}}
+{const _hd=homeData;homeData=function(){const d=_hd();const raw=d.name;if(raw)d.name=withBadge(raw);
+  d.badge={cur:P.badge||'',auto:badgeAuto(raw),options:BADGES.map(([value,label])=>({value,label}))};return d}}
+Object.assign(window.TF,{badgeSet:v=>{P.badge=v==='none'||BADGES.some(x=>x[0]===v)?v:'';saveProfile();
+  if(typeof publishPublic==='function')publishPublic();tfNotify();toast(v==='none'?'Platform badge hidden':v?'Platform badge updated':'Using the badge from your Warframe name')}});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
