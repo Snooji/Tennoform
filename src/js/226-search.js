@@ -31,8 +31,8 @@ function cmdPaint(){const q=$('#cmdq')?$('#cmdq').value:'';CMDR=cmdFind(q);CMDI=
     h+=`<div class="cmdo${i===CMDI?' on':''}" role="option" id="cmd-${i}" aria-selected="${i===CMDI}" data-cmdi="${i}">${e.g==='Gear'?art(e.n,'mini')||'<span class="mini"></span>':''}<span class="cmdn">${esc(e.n)}</span><span class="small muted">${e.g==='Gear'?esc(I[e.n].c):e.g==='Pages'?'Page':esc(e.g.replace(/s$/,''))}</span></div>`});
   box.innerHTML=h+'</div>';$('#cmdq').setAttribute('aria-activedescendant','cmd-'+CMDI);const on=$('#cmd-'+CMDI);on&&on.scrollIntoView({block:'nearest'})}
 function cmdGo(e){cmdClose();if(!e)return;const a=e.act;
-  if(a[0]==='#'){if(location.hash===a)render();else location.hash=a.slice(1);return}
-  if(a.startsWith('quest|')){state.qFocus=a.slice(6);state.qF='all';if(location.hash==='#quests')render();else location.hash='quests';return}
+  if(a[0]==='#'){if(HASH()===a)render();else GO(a.slice(1));return}
+  if(a.startsWith('quest|')){state.qFocus=a.slice(6);state.qF='all';if(HASH()==='#quests')render();else GO('quests');return}
   go(a)}
 document.addEventListener('input',e=>{if(e.target.id==='cmdq'){CMDI=0;cmdPaint()}});
 document.addEventListener('keydown',e=>{const typing=e.target&&e.target.matches&&e.target.matches('input,textarea,select,[contenteditable]');
@@ -41,7 +41,7 @@ document.addEventListener('keydown',e=>{const typing=e.target&&e.target.matches&
   if(typing||e.ctrlKey||e.metaKey||e.altKey)return;
   if(e.key==='/'){e.preventDefault();e.stopImmediatePropagation();cmdOpen();return}
   if(e.key==='?'){e.preventDefault();keysOpen();return}
-  if(/^[1-5]$/.test(e.key)&&!$('#keysbk')&&!$('#prevbk')){const p=PLACES[+e.key-1];location.hash=placeLast(p)}},true);
+  if(/^[1-5]$/.test(e.key)&&!$('#keysbk')&&!$('#prevbk')){const p=PLACES[+e.key-1];GO(placeLast(p))}},true);
 document.addEventListener('click',e=>{if(e.target.closest('#srchbtn')){cmdOpen();return}
   const o=e.target.closest('[data-cmdi]');if(o){cmdGo(CMDR[+o.dataset.cmdi]);return}
   if(e.target.closest('[data-cmdx]')||e.target.id==='cmdbk'){cmdClose();return}

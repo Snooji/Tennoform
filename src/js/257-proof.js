@@ -16,7 +16,7 @@ function demoStart(){if(DEMO)return;DEMO={c:JSON.stringify(C),p:JSON.stringify(P
     foundry:[{id:'d1',n:'Nikana Prime',t0:now-4*36e5,dur:3*3600},{id:'d2',n:'Rhino',t0:now,dur:3*86400}],goals:['Saryn Prime','Nikana Prime'],
     tasks:[{id:'t1',t:'Farm 10 Orokin Cells',k:'res',r:'Orokin Cell',d:0,at:now}],syn:{'Cephalon Suda':{r:2,s:46000},'Ostron':{r:1,s:4000}}};
   pool.slice(62,70).forEach((i,k)=>{P.rk[i.n]=10+k*2});
-  lastMR=null;updateMR();document.body.classList.add('demo');if(location.hash&&location.hash!=='#home')location.hash='home';else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
+  lastMR=null;updateMR();document.body.classList.add('demo');if(HASH()&&HASH()!=='#home')GO('home');else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
 function demoExit(){if(!DEMO)return;C=JSON.parse(DEMO.c);P=JSON.parse(DEMO.p);docRef=DEMO.dr;profRef=DEMO.pr;lsSet=DEMO.ls;DEMO=null;document.body.classList.remove('demo');lastMR=null;updateMR();render();window.scrollTo(0,0)}
 function demoBar(){return DEMO&&!window.TF_UI?`<div class="demobar" role="status"><span><b>Sample account.</b> These ranks, goals and tasks are examples, not yours, and nothing here is saved.</span><button type="button" class="btn sm primary" data-demox>Use my own</button></div>`:''}
 document.addEventListener('click',e=>{if(e.target.closest('[data-demo]')){demoStart();return}if(e.target.closest('[data-demox]')){demoExit()}});

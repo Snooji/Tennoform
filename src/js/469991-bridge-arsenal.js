@@ -39,6 +39,6 @@ Object.assign(window.TF,{
   lichSet:(n,o)=>{P.lich=P.lich||{};const v=P.lich[n]=P.lich[n]||{};if(o.e!=null)v.e=o.e;if(o.b!=null)v.b=Math.max(0,Math.min(60,+o.b||0));saveProfile();tfNotify()}
 });
 document.addEventListener('click',e=>{const t=e.target.closest('[data-atab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')))return;
-  e.preventDefault();e.stopPropagation();state.aTab=t.dataset.atab;saveUI();if(location.hash!=='#arsenal')location.hash='arsenal';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.aTab=t.dataset.atab;saveUI();if(HASH()!=='#arsenal')GO('arsenal');else tfNotify()},true);
 const _arsenalRoute=routes.arsenal;
 routes.arsenal=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')?'':_arsenalRoute()};

@@ -35,7 +35,7 @@ export function Returning() {
               <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm marker:text-muted-foreground">
                 {d.quests.map((q) => (
                   <li key={q.n}>
-                    <a href="#quests" className={linkCls} onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#quests", "data-q": q.n }) }}>{q.n}</a>
+                    <a href="/quests/" className={linkCls} onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#quests", "data-q": q.n }) }}>{q.n}</a>
                     {q.isNew && !d.assumed ? <Badge variant="outline" className="ml-2 text-muted-foreground">New since you left</Badge> : null}
                     {q.why ? <div className="text-muted-foreground">{q.why}</div> : null}
                   </li>

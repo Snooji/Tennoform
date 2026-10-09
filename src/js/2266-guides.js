@@ -24,7 +24,7 @@ CMDG.unshift('Guides');
 const CMD_STOP=new Set(['how','to','do','i','get','the','a','an','unlock','unlocking','unlocked','where','is','what','find','for','can','you','my','in','of','guide','quest','open','start','make','build','farm','obtain']);
 const _cmdFind=cmdFind;cmdFind=function(q){const raw=(q||'').toLowerCase().replace(/[.?!,:;_]+/g,' ').trim();const k=raw.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w)).join(' ');
   if(k&&k!==raw){const r=_cmdFind(k);if(r.length)return r}return _cmdFind(raw)};
-const _go=go;go=function(t){if(t.startsWith('guide|')){state.gSel=t.slice(6);state.gQ='';if(location.hash!=='#guides')location.hash='guides';else render();window.scrollTo(0,0);return}_go(t)};
+const _go=go;go=function(t){if(t.startsWith('guide|')){state.gSel=t.slice(6);state.gQ='';if(HASH()!=='#guides')GO('guides');else render();window.scrollTo(0,0);return}_go(t)};
 function guides(){const k=state.gF||'all';const L=GUIDES.filter(g=>k==='all'||g.kind===k);
   return `<div class="stack"><div class="head"><div class="eyebrow">Plan</div><h1>Guides</h1><p class="lede">Step-by-step guides for every quest, unlockable system and mission type.</p></div>
   <div class="panel cut stack">${L.map(g=>`<a class="ln" href="#" data-go="guide|${esc(g.id)}">${esc(g.n)}</a>`).join('<br>')||'No guides yet.'}</div></div>`}

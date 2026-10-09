@@ -15,7 +15,7 @@ function liveInfo(){
     :WSerr?`Showing what it last sent, ${agoTxt(age)}.`:age>15*60e3?`Last update was ${agoTxt(age)}.`:'Timers are up to date.';
   return {state,conn,fresh,at:WS?agoTxt(age):'',ended,busy:WSload,retry:true}}
 /* while a timer has run out, ask the feed again each minute (it usually catches up within a few) */
-setInterval(()=>{if(!HOSTED||document.hidden||!WS||WSload)return;const h=location.hash.slice(1)||'home';if(!['today','home','world','relics'].includes(h))return;
+setInterval(()=>{if(!HOSTED||document.hidden||!WS||WSload)return;const h=HASH().slice(1)||'home';if(!['today','home','world','relics'].includes(h))return;
   if(wsEnded().length&&Date.now()-WSat>60e3){WSat=0;loadWS()}},20e3);
 function feedsData(){const day=d=>{const t=Date.parse(d);return isNaN(t)?null:(Date.now()-t)/864e5};const g=day(D.meta.built),p=day(D.meta.prices);const L=liveInfo();
   const ls=P.at?Date.now()-Date.parse(P.at):null;

@@ -11,7 +11,7 @@ async function myFeedbackLoad(force){if(!FB||!SO.uid||(MYFB.tried&&!force))retur
     const seen=lsGet('tf-fbseen',{});let news=MYFB.list.filter(x=>fbStatusOf(x)&&seen[x.id]!==fbStatusOf(x));
     if(news.length){const x=news[0];const t=String(x.text||'').slice(0,50);
       const msg=news.length>1?`${news.length} of your feedback messages have updates`:`Your feedback "${t}${(x.text||'').length>50?'…':''}": ${FB_ST[fbStatusOf(x)]}`;
-      if(window.TF_UI&&TF_UI.toast)TF_UI.toast(msg,{label:'View',fn:()=>{location.hash='feedback'}});else toast(msg)}
+      if(window.TF_UI&&TF_UI.toast)TF_UI.toast(msg,{label:'View',fn:()=>{GO('feedback')}});else toast(msg)}
     MYFB.list.forEach(x=>{seen[x.id]=fbStatusOf(x)});lsSet('tf-fbseen',seen)}catch(e){MYFB.list=MYFB.list||[]}tfNotify()}
 {const _si=socialInit;socialInit=async function(uid){const r=await _si.apply(this,arguments);MYFB.list=null;MYFB.tried=false;setTimeout(()=>myFeedbackLoad(),2500);return r}}
 {const _fd=feedbackData;feedbackData=function(){const d=_fd.apply(this,arguments);if(SO.uid&&!MYFB.tried)myFeedbackLoad();
