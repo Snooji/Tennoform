@@ -1,7 +1,7 @@
 import { AlignJustify, Check, List, Monitor, Moon, Sun } from "lucide-react"
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { ACCENTS, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
+import { ACCENTS, isFaction, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { cn } from "@/lib/utils"
 import { tf, useTF, type TFState } from "@/lib/tf"
 import { setSimple, useSimple } from "@/lib/detail"
@@ -15,9 +15,22 @@ const STYLES: { value: TFState["style"]; label: string; hint: string }[] = [
   { value: "default", label: "Default", hint: "Calm and plain" },
   { value: "foundry", label: "Foundry", hint: "Blueprint panels, like the in-game Foundry" },
   { value: "prime", label: "Prime", hint: "Orokin lacquer with polished metal trim" },
+  { value: "grineer", label: "Grineer", hint: "Riveted hull plate, hazard stripes, embers" },
+  { value: "corpus", label: "Corpus", hint: "Frosted glass, hex grid, data pulses" },
+  { value: "entrati", label: "Entrati", hint: "Arched brass, obol coins, turning clockwork" },
+  { value: "lotus", label: "Lotus", hint: "Starlight, halos, breathing rings" },
+  { value: "infested", label: "Infested", hint: "Living flesh, pulsing cysts, creeping veins" },
 ]
+/* the faction colours, for the "Faction colours" swatch and each faction's preview */
+const FACTION: Record<string, { bg: string; panel: string; edge: string; btn: string; tile: string; size: string }> = {
+  grineer: { bg: "#1a1a16", panel: "#26251d", edge: "#4a4636", btn: "repeating-linear-gradient(-45deg,#f2b705 0 5px,#15140f 5px 10px)", tile: "/themes/grineer-plates.svg", size: "110px" },
+  corpus: { bg: "#0b1220", panel: "rgb(20 34 56/.8)", edge: "#3fd0ff", btn: "linear-gradient(90deg,#1f5fbf,#3fd0ff)", tile: "/themes/corpus-hex.svg", size: "108px 78px" },
+  entrati: { bg: "#1c0f12", panel: "#2a1519", edge: "#c9a04a", btn: "linear-gradient(180deg,#e2c27a,#c9a04a 50%,#8a6a2a)", tile: "/themes/entrati-obols.svg", size: "120px" },
+  lotus: { bg: "#060b14", panel: "#0c1822", edge: "#d8b45a", btn: "linear-gradient(90deg,#4fd1c5,#9b8cff)", tile: "/themes/lotus-stars.svg", size: "200px" },
+  infested: { bg: "#120a0e", panel: "#1f1218", edge: "#e86a8a", btn: "radial-gradient(circle at 30% 30%,#b6f23a,#e86a8a 70%)", tile: "/themes/infested-veins.svg", size: "180px" },
+}
 /* what each colour looks like, for the swatches (the metal stops for Prime-style swatches) */
-const SWATCH: Record<Exclude<AccentChoice, "rank">, [string, string, string]> = {
+const SWATCH: Record<Exclude<AccentChoice, "rank" | "faction">, [string, string, string]> = {
   bronze: ["#a2582a", "#f6cfa8", "#c97d47"],
   silver: ["#9aa2ab", "#ffffff", "#c9d0d7"],
   gold: ["#b98a2a", "#fbeeb0", "#d6a83f"],
@@ -43,6 +56,16 @@ function StylePreview({ style }: { style: TFState["style"] }) {
       <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden p-2" style={{ background: "repeating-linear-gradient(60deg,rgb(214 168 63/.12) 0 1px,transparent 1px 14px), repeating-linear-gradient(-60deg,rgb(214 168 63/.12) 0 1px,transparent 1px 14px), #08070a" }}>
         <span className="h-9 flex-1 rounded-sm border border-transparent" style={{ background: `linear-gradient(#110f0c,#110f0c) padding-box, ${metal(SWATCH.gold)} border-box` }} />
         <span className="h-4 w-8 rounded-sm" style={{ background: metal(SWATCH.gold) }} />
+      </span>
+    )
+  const fx = FACTION[style]
+  if (fx)
+    return (
+      <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden p-2" style={{ background: `url(${fx.tile}) 0 0 / ${fx.size}, ${fx.bg}` }}>
+        <span className="h-9 flex-1" style={{ background: fx.panel, border: `${style === "grineer" ? 2 : 1}px solid ${fx.edge}`,
+          borderRadius: style === "entrati" ? "12px 12px 3px 3px" : style === "infested" ? "10px 14px 8px 16px" : style === "corpus" ? "2px" : style === "lotus" ? "8px" : "8px 8px 8px 2px",
+          boxShadow: style === "corpus" || style === "lotus" || style === "infested" ? `0 0 10px -2px ${fx.edge}` : undefined }} />
+        <span className="h-4 w-8" style={{ background: fx.btn, borderRadius: style === "lotus" ? 999 : style === "infested" ? "6px 8px 5px 9px" : 3 }} />
       </span>
     )
   return (
@@ -105,7 +128,7 @@ export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpen
             {STYLES.map((st) => {
               const on = s.style === st.value
               return (
-                <button key={st.value} type="button" role="radio" aria-checked={on} onClick={() => tf().themeStyle(st.value)}
+                <button key={st.value} type="button" role="radio" aria-checked={on} onClick={() => { tf().themeStyle(st.value); if (isFaction(st.value) && accent === "rank") setAccent("faction"); else if (!isFaction(st.value) && accent === "faction") setAccent("rank") }}
                   className={cn(chip, "flex overflow-hidden rounded-lg border text-left sm:flex-col", on ? "border-primary ring-2 ring-primary/40" : "hover:border-foreground/30")}>
                   <span className="w-28 shrink-0 sm:w-full"><StylePreview style={st.value} /></span>
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5 px-3 py-2">
@@ -121,14 +144,14 @@ export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpen
         <section className="flex flex-col gap-2" aria-labelledby="ap-colour">
           <h3 id="ap-colour" className="text-sm font-medium">Colour</h3>
           <div role="radiogroup" aria-labelledby="ap-colour" className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {ACCENTS.map((a) => {
+            {ACCENTS.filter((a) => a.value !== "faction" || isFaction(s.style)).map((a) => {
               const on = accent === a.value
-              const sw = a.value === "rank" ? null : SWATCH[a.value]
+              const sw = a.value === "rank" || a.value === "faction" ? null : SWATCH[a.value as Exclude<AccentChoice, "rank" | "faction">]
               return (
                 <button key={a.value} type="button" role="radio" aria-checked={on} onClick={() => setAccent(a.value)}
-                  className={cn(chip, "flex min-h-11 items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm", a.value === "rank" && "col-span-2 sm:col-span-3", on ? "border-primary bg-primary/10 font-medium" : "hover:bg-muted")}>
+                  className={cn(chip, "flex min-h-11 items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-sm", (a.value === "rank" || a.value === "faction") && "col-span-2 sm:col-span-3", on ? "border-primary bg-primary/10 font-medium" : "hover:bg-muted")}>
                   <span aria-hidden className="size-5 shrink-0 rounded-full border border-black/20"
-                    style={{ background: sw ? metal(sw) : `conic-gradient(${SWATCH.bronze[2]} 0 25%, ${SWATCH.silver[2]} 0 50%, ${SWATCH.gold[2]} 0 75%, ${SWATCH.radiant[1]} 0)` }} />
+                    style={{ background: sw ? metal(sw) : a.value === "faction" ? (FACTION[s.style]?.btn || "") : `conic-gradient(${SWATCH.bronze[2]} 0 25%, ${SWATCH.silver[2]} 0 50%, ${SWATCH.gold[2]} 0 75%, ${SWATCH.radiant[1]} 0)` }} />
                   <span className="flex min-w-0 flex-col">
                     <span>{a.label}</span>
                     {a.hint ? <span className="text-xs font-normal text-muted-foreground">{a.hint}</span> : null}

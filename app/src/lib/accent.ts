@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 
 /** Colour choices. "rank" follows your Mastery rank; the rest stay fixed. */
-export type AccentChoice = "rank" | "bronze" | "silver" | "gold" | "radiant" | "jade" | "teal" | "crimson" | "void"
+export type AccentChoice = "rank" | "faction" | "bronze" | "silver" | "gold" | "radiant" | "jade" | "teal" | "crimson" | "void"
 export const ACCENTS: { value: AccentChoice; label: string; hint: string }[] = [
   { value: "rank", label: "Follow my rank", hint: "Bronze, then silver at MR 10, gold at MR 20, gold and jade at Legendary" },
+  { value: "faction", label: "Faction colours", hint: "The faction's own colours (faction styles only)" },
   { value: "bronze", label: "Bronze", hint: "" },
   { value: "silver", label: "Silver", hint: "" },
   { value: "gold", label: "Gold", hint: "" },
@@ -45,12 +46,14 @@ export function setAccent(c: AccentChoice) {
   }
   window.dispatchEvent(new Event("tf:accent"))
 }
-export function useAccent(mr: number) {
+/** The faction styles have colours of their own; "Faction colours" uses them (elsewhere it follows your rank). */
+export const FACTION_STYLES = ["grineer", "corpus", "entrati", "lotus", "infested"]
+export const isFaction = (style?: string) => !!style && FACTION_STYLES.includes(style)
+export function useAccent(mr: number, style?: string) {
   const choice = useAccentChoice()
+  const tier = choice === "rank" || (choice === "faction" && !isFaction(style)) ? tierFor(mr) : choice
   useEffect(() => {
-    const root = document.documentElement
-    const tier = choice === "rank" ? tierFor(mr) : choice
-    root.dataset.accent = tier
-  }, [choice, mr])
-  return { choice, tier: choice === "rank" ? tierFor(mr) : choice }
+    document.documentElement.dataset.accent = tier
+  }, [tier])
+  return { choice, tier }
 }
