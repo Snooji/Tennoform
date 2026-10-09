@@ -2,7 +2,7 @@
 /* data/mods.json is built from WFCD by build/make_modinfo.py and only loaded when a build or a mod is opened. */
 const MDI={data:null,busy:false,err:false};
 function loadModInfo(){if(MDI.data||MDI.busy||MDI.err)return;MDI.busy=true;
-  fetch('data/mods.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{MDI.data=j}).catch(()=>{MDI.err=true}).finally(()=>{MDI.busy=false;tfNotify()})}
+  fetch('/data/mods.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{MDI.data=j}).catch(()=>{MDI.err=true}).finally(()=>{MDI.busy=false;tfNotify()})}
 /* one line saying what a mod does at max rank, for lists */
 function modFx(n){if(!MDI.data){loadModInfo();return ''}const x=MDI.data[n];if(!x||!x.fx.length)return '';
   return x.fx.map(l=>l.replace(/\n/g,' ')).join(' · ').slice(0,140)}

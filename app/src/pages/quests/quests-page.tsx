@@ -41,7 +41,7 @@ const Quest = memo(function Quest({ q }: { q: QuestRow }) {
               <span key={i}>
                 {i ? " · " : ""}
                 {r.quest ? (
-                  <a href="#quests" onClick={goQuest(r.quest)} className={cn(linkCls, r.done ? "text-emerald-700 dark:text-emerald-400" : "text-amber-700 dark:text-amber-400")}>
+                  <a href="/quests/" onClick={goQuest(r.quest)} className={cn(linkCls, r.done ? "text-emerald-700 dark:text-emerald-400" : "text-amber-700 dark:text-amber-400")}>
                     {r.done ? <Check className="mr-0.5 inline size-3.5" aria-label="done" /> : null}{r.text}
                   </a>
                 ) : (
@@ -127,7 +127,7 @@ export function QuestsPage() {
       {d.next ? (
         <p className="flex items-center gap-2 text-sm">
           <ArrowRight aria-hidden className="size-4 shrink-0 text-muted-foreground" />
-          <span className="text-muted-foreground">Next quest:</span> <a href="#quests" onClick={goQuest(d.next)} className={cn("font-semibold", linkCls)}>{d.next}</a>
+          <span className="text-muted-foreground">Next quest:</span> <a href="/quests/" onClick={goQuest(d.next)} className={cn("font-semibold", linkCls)}>{d.next}</a>
         </p>
       ) : null}
       <Select items={FILTERS} value={d.filter} onValueChange={(v) => tf().questsSet({ f: String(v) })}>

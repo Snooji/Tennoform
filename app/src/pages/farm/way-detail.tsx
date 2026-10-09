@@ -69,7 +69,7 @@ export function WayView({ w, inSheet }: { w: WayDetail; inSheet?: boolean }) {
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                 {x.req ? <span className="inline-flex items-center gap-1 text-muted-foreground"><Lock className="size-3.5" aria-hidden /> Needs: {x.req}</span> : null}
                 {x.planet ? (
-                  <a href="#missions" className="inline-flex items-center gap-1 underline decoration-primary/50 underline-offset-4 hover:decoration-primary"
+                  <a href="/missions/" className="inline-flex items-center gap-1 underline decoration-primary/50 underline-offset-4 hover:decoration-primary"
                     onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "node|" + x.planet }) }}>
                     <MapPin className="size-3.5" aria-hidden /> {x.node} on the star chart
                   </a>

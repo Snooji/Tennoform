@@ -175,7 +175,7 @@ export function TasksPage() {
             <b className="font-heading text-base font-semibold">{d.filter === "open" ? "No tasks yet." : "Nothing matches this filter."}</b>
             <p className="text-muted-foreground">
               Type above and press Enter, or add tasks from anywhere in Tennoform. For example, open{" "}
-              <a href="#goals" className="text-foreground underline decoration-primary/60 underline-offset-4">Goals</a>, find a material you're short on and tap{" "}
+              <a href="/goals/" className="text-foreground underline decoration-primary/60 underline-offset-4">Goals</a>, find a material you're short on and tap{" "}
               <b className="text-foreground">+ Task</b>.
             </p>
             {d.filter !== "open" ? <Button variant="outline" size="sm" onClick={() => tf().tasksSet({ f: "open" })}>Show my to-do tasks</Button> : null}

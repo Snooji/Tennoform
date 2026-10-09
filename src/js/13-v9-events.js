@@ -2,7 +2,7 @@
 document.addEventListener('click',e=>{const t=e.target.closest('[data-atab],[data-wbi],[data-rltab],[data-wtab],[data-freg],[data-mreg],[data-reld],[data-arcd],[data-frdel],#fradd');if(!t)return;
   if(t.dataset.atab){state.aTab=t.dataset.atab;saveUI();render();return}
   if(t.dataset.wbi!==undefined){state.wbI=+t.dataset.wbi;rerender();return}
-  if(t.dataset.rltab){state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else render();return}
+  if(t.dataset.rltab){state.rlTab=t.dataset.rltab;saveUI();if(HASH()!=='#relics')GO('relics');else render();return}
   if(t.dataset.wtab){state.wTab=t.dataset.wtab;saveUI();render();return}
   if(t.dataset.freg){state.fR=t.dataset.freg;state.fT='all';saveUI();rerender();return}
   if(t.dataset.mreg){state.mR=t.dataset.mreg;saveUI();rerender();return}

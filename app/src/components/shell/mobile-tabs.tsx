@@ -2,6 +2,7 @@ import { PLACE_ICON } from "./nav-icons"
 import { cn } from "@/lib/utils"
 import { tf, useTF } from "@/lib/tf"
 import { navReset } from "@/lib/nav-reset"
+import { pagePath } from "@/lib/page-path"
 
 /** Phones: the five places stay one thumb away. */
 export function MobileTabs() {
@@ -21,13 +22,13 @@ export function MobileTabs() {
         return (
           <a
             key={p.id}
-            href={`#${route}`}
+            href={pagePath(route)}
             onClick={(e) => {
               e.preventDefault()
               navReset()
               tf().resetView()
-              if (location.hash === "#" + route) window.scrollTo({ top: 0, behavior: "smooth" })
-              else location.hash = route
+              if (tf().state().route === route) window.scrollTo({ top: 0, behavior: "smooth" })
+              else tf().go(route)
             }}
             aria-current={active ? "page" : undefined}
             className={cn(

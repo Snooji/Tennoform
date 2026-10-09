@@ -20,7 +20,7 @@ async function loadPlayerStats(force){if(!FB||!FBK.admin||PRES.loading||(PRES.da
     PRES.data={live:within(5*60e3),hour:within(36e5),dau:ps.filter(p=>p.day===today).length,wau:within(7*864e5),mau:within(30*864e5),total:ids.size,tracked:ps.length,hist,at:now}}
   catch(e){PRES.err=/permission/i.test((e&&e.code)||'')?'permission':((e&&e.code)||'error')}
   PRES.loading=false;tfNotify()}
-setInterval(()=>{if(location.hash==='#admin'&&!document.hidden&&FBK.admin)loadPlayerStats(true)},60e3);
+setInterval(()=>{if(HASH()==='#admin'&&!document.hidden&&FBK.admin)loadPlayerStats(true)},60e3);
 function playerStats(){if(FBK.admin&&!PRES.data&&!PRES.loading&&!PRES.err)loadPlayerStats();
   const d=PRES.data;return {loading:PRES.loading,err:PRES.err,data:d?{...d,ago:d.at?(Date.now()-d.at<60e3?'just now':Math.floor((Date.now()-d.at)/6e4)+'m ago'):''}:null}}
 Object.assign(window.TF,{playerStats:()=>playerStats(),playerStatsReload:()=>loadPlayerStats(true)});
