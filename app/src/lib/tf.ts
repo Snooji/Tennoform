@@ -479,6 +479,7 @@ export type WorldCycle = { region: string; hub: string; now: string; next: strin
 export type WorldData = {
   tab: "fish" | "mine" | "cons"; region: string; regions: string[]; cons?: ConservationData | null
   cycles?: { state: "ok" | "loading" | "error"; list: WorldCycle[] }
+  tools?: { first: string; list: { n: string; from?: string; cost?: string; note?: string }[] }
   rarity?: string; time?: string; times?: string[]; cycle?: string; caught?: number; total?: number
   info?: { spears: string; vendor: string; use: string; tips: string[] }
   fish?: { n: string; key: string; done: boolean; rarity: string; bio: string; time: string; spear: string; bait: string; spots: string[]; gives: Linked[]; hasTask: boolean }[]
