@@ -118,7 +118,7 @@ function NamePicker({ d, title }: { d: HomeData; title: string }) {
 export function MasteryHero({ d }: { d: HomeData }) {
   const title = d.name || d.mrLabel
   const primary = (
-    <a href="#mastery" className={cn(buttonVariants({ size: "lg" }), "h-10 px-4")}>
+    <a href="/mastery/" className={cn(buttonVariants({ size: "lg" }), "h-10 px-4")}>
       <Route /> See rank-up plan
     </a>
   )
@@ -147,11 +147,11 @@ export function MasteryHero({ d }: { d: HomeData }) {
       <Breakdown parts={d.parts} />
       <div className="flex flex-wrap items-center gap-2">
         {primary}
-        <a href="#ranks" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-4")}>
+        <a href="/ranks/" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-10 px-4")}>
           Update ranks
         </a>
         <a
-          href="#tenno"
+          href="/tenno/"
           className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-10 px-3")}
           onClick={(e) => {
             e.preventDefault()

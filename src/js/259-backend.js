@@ -2,7 +2,7 @@
 const DON={list:null,tried:false,err:false};
 async function loadDonations(force){if(!FB||!SO.uid||!FBK.admin||(DON.tried&&!force))return;DON.tried=true;
   try{const s=await FB.fs.collection('donations').orderBy('at','desc').limit(500).get();DON.list=s.docs.map(d=>({id:d.id,...d.data()}));DON.err=false}catch(e){DON.err=true}
-  if(location.hash==='#admin')liveRender()}
+  if(HASH()==='#admin')liveRender()}
 const _socialInit=socialInit;socialInit=async function(uid){const r=await _socialInit(uid);FBK.tried=false;DON.tried=false;loadFeedback().then(()=>{if(FBK.admin)loadDonations()});return r};
 const money=n=>'$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 function donTotals(list){const now=new Date(),m0=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),1);const t={plat:0,usd:0,platM:0,usdM:0,n:list.length,who:{}};

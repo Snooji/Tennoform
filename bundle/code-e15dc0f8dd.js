@@ -1,3 +1,4 @@
+self.TF_PAGES={"home": "Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices", "mastery": "Warframe MR Plan: the Fastest Way to Your Next Mastery Rank · Tennoform", "ranks": "Warframe Mastery Rank Tests and Requirements · Tennoform", "collection": "Warframe Mastery Checklist: Every Item to Level · Tennoform", "goals": "Goals and To-dos · Tennoform", "tasks": "To-do list · Tennoform", "missions": "Warframe Star Chart: Junctions, Nodes and Steel Path · Tennoform", "quests": "Warframe Quest Order and Walkthroughs · Tennoform", "guides": "Warframe Guides for New and Returning Players · Tennoform", "farm": "Warframe Farming Guide: Where to Farm Every Item · Tennoform", "resources": "Warframe Resources: Where to Farm Every Resource · Tennoform", "relics": "Warframe Relics: Drops, Values and What to Open · Tennoform", "world": "Warframe Open Worlds: Fishing, Mining, Conservation and Live Cycles · Tennoform", "market": "Warframe Market Prices for Prime Sets, Mods and Arcanes · Tennoform", "arsenal": "Warframe Builds: Community Builds for Every Frame and Weapon · Tennoform", "frames": "Warframe List: Every Warframe, Its Role and How to Get It · Tennoform", "today": "Warframe Today: Sortie, Archon Hunt, Fissures, Baro and Resets · Tennoform", "synd": "Warframe Syndicates: Standing, Ranks and Rewards · Tennoform", "achievements": "Achievements · Tennoform", "tenno": "Profile and Account · Tennoform", "friends": "Friends · Tennoform", "chat": "Chat · Tennoform", "donate": "Support Tennoform", "feedback": "Feedback · Tennoform", "about": "About and Privacy · Tennoform", "admin": "Backend · Tennoform"};
 
 (function(){
 if(/(^|\.)tennoform\.com$|github\.io$/.test(location.hostname)&&window.top!==window.self){try{window.top.location.replace(location.href)}catch(e){}document.documentElement.innerHTML='';return}
@@ -47,15 +48,47 @@ $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classL
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
-/* ---------- theme: a mode (auto follows the device, dark, light) and a style (Default, Foundry, Prime) ---------- */
+/* ---------- page addresses: every page has its own URL (tennoform.com/farm/) so search engines can list it ----------
+   The app grew up on #hash routes, so it still navigates by setting location.hash. A route hash is turned straight into
+   a path here, before any other hashchange listener runs, and HASH() gives back the old '#route' form for code that reads it.
+   Old #links, bookmarks and shared links keep working. build/make_site.py writes a page for each route below. */
+const PAGE_ROUTES=['home','today','ranks','synd','goals','tenno','missions','resources','mastery','frames','farm','quests','market','arsenal','relics',
+  'world','tasks','friends','donate','feedback','about','admin','achievements','guides','collection','chat'];
+const PAGE_SET=new Set(PAGE_ROUTES);
+const pathRoute=()=>{const p=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();return PAGE_SET.has(p)?p:''};
+const hashRoute=()=>{const h=location.hash.slice(1);return PAGE_SET.has(h)?h:''};
+const routePath=r=>!r||r==='home'?'/':'/'+r+'/';
+/** The current page as '#route' ('' on the home page), the way location.hash used to read. */
+function HASH(){const r=hashRoute()||pathRoute();return r&&r!=='home'?'#'+r:r==='home'?'#home':''}
+/** Go to a page without reloading. */
+function GO(r){r=String(r||'').replace(/^[#/]+|\/+$/g,'')||'home';if(r===(HASH().slice(1)||'home'))return;
+  history.pushState(null,'',routePath(r)+location.search);
+  // like a hash change, the page renders on the next task, so code after GO() still runs first
+  setTimeout(()=>dispatchEvent(new HashChangeEvent('hashchange')),0)}
+/* a route hash (a #link, a bookmark, or code setting location.hash) becomes the page's path */
+function hashToPath(){const r=hashRoute();if(!r)return false;history.replaceState(history.state,'',routePath(r)+location.search);return true}
+let ROUTE_AT=hashRoute()||pathRoute()||'home';
+hashToPath();
+addEventListener('hashchange',e=>{if(!hashToPath())return;const r=HASH().slice(1)||'home';
+  // same page as before (the old code set the hash it was already on): nothing changes, as before
+  if(r===ROUTE_AT)e.stopImmediatePropagation()});
+addEventListener('hashchange',()=>{ROUTE_AT=HASH().slice(1)||'home'});
+/* back and forward between pages */
+addEventListener('popstate',()=>{if(hashRoute())return;const r=HASH().slice(1)||'home';if(r!==ROUTE_AT)dispatchEvent(new HashChangeEvent('hashchange'))});
+/* same-site links to a page (/farm/) open in place; ctrl/cmd/middle click still opens a new tab */
+document.addEventListener('click',e=>{if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+  const a=e.target.closest&&e.target.closest('a[href]');if(!a||a.target&&a.target!=='_self'||a.hasAttribute('download'))return;
+  let u;try{u=new URL(a.href)}catch(x){return}if(u.origin!==location.origin||u.hash)return;
+  const p=u.pathname.replace(/^\/+|\/+$/g,'');if(p&&!PAGE_SET.has(p))return;e.preventDefault();GO(p||'home')});
+/* ---------- theme: a mode (auto follows the device, dark, light) and a style (Default, Foundry, Prime, or a faction: Grineer, Corpus, Entrati, Lotus, Infested) ---------- */
 /* The .dark class drives every colour token; data-theme picks the style; data-accent (set by the React shell) picks the colour palette.
    Every style has a light and a dark version, and every palette works in every style. */
-const THEME_STYLES=['default','foundry','prime'];
+const THEME_STYLES=['default','foundry','prime','grineer','corpus','entrati','lotus','infested'];
 function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return t==='foundry'?'light':['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
 function themeStyle(){try{const s=JSON.parse(localStorage.getItem('tf-style')||'null');if(THEME_STYLES.includes(s))return s;
   /* before styles were separate, Foundry was a theme of its own (a light one) */
   return JSON.parse(localStorage.getItem('tf-theme')||'""')==='foundry'?'foundry':'default'}catch(e){return 'default'}}
-const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3']};
+const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3'],grineer:['#15130e','#d9d2bf'],corpus:['#06111c','#eef3f7'],entrati:['#1a0d10','#efe3d0'],lotus:['#071417','#eef6f4'],infested:['#0d0a0c','#ece4dc']};
 function themeApply(t,st){st=st||themeStyle();const r=document.documentElement;
   const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));
   r.classList.toggle('dark',dark);if(st==='default')delete r.dataset.theme;else r.dataset.theme=st;r.style.colorScheme=dark?'dark':'light';
@@ -67,7 +100,7 @@ try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{i
 themeApply(themeGet());
 function themeSw(){const t=themeGet(),st=themeStyle();
   return `<span class="themesw" role="group" aria-label="Mode">${[['auto','Auto'],['dark','Dark'],['light','Light']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>
-  <span class="themesw" role="group" aria-label="Style">${[['default','Default'],['foundry','Foundry'],['prime','Prime']].map(([k,l])=>`<button type="button" class="btn sm${st===k?' on':''}" data-style-set="${k}" aria-pressed="${st===k}">${l}</button>`).join('')}</span>`}
+  <span class="themesw" role="group" aria-label="Style">${[['default','Default'],['foundry','Foundry'],['prime','Prime'],['grineer','Grineer'],['corpus','Corpus'],['entrati','Entrati'],['lotus','Lotus'],['infested','Infested']].map(([k,l])=>`<button type="button" class="btn sm${st===k?' on':''}" data-style-set="${k}" aria-pressed="${st===k}">${l}</button>`).join('')}</span>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set],[data-style-set]');if(!b)return;if(b.dataset.themeSet)themeSet(b.dataset.themeSet);else themeStyleSet(b.dataset.styleSet);rerender()});
 /* ---------- icons: one drawn set, 24px grid, 1.5px stroke, sized to the text ---------- */
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',minus:'M6 12h12',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
@@ -168,10 +201,10 @@ function L(name,label){label=label??name;const n=String(name);
   else{const m=n.match(/^(.+?) (Neuroptics|Chassis|Systems|Blueprint|Harness|Wings)$/);if(m&&I[m[1]])t='item|'+m[1]}
   return t?`<a class="ln" href="#" data-go="${esc(t)}">${esc(label)}</a>`:esc(label)}
 function go(t){const i=t.indexOf('|');const ty=t.slice(0,i),n=t.slice(i+1);
-  if(ty==='res'){state.resSel=n;state.resQ='';if(location.hash!=='#resources')location.hash='resources';else{render();window.scrollTo(0,0)}return}
-  if(ty==='item'&&I[n]&&I[n].c==='Warframe'){state.frame=n;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}return}
-  if(ty==='node'){state.scP=n||null;state.planet=null;if(location.hash!=='#missions')location.hash='missions';else render();return}
-  state.farmSel=t;if(location.hash!=='#farm')location.hash='farm';else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
+  if(ty==='res'){state.resSel=n;state.resQ='';if(HASH()!=='#resources')GO('resources');else{render();window.scrollTo(0,0)}return}
+  if(ty==='item'&&I[n]&&I[n].c==='Warframe'){state.frame=n;state.build=0;saveUI();if(HASH()!=='#frames')GO('frames');else{render();window.scrollTo(0,0)}return}
+  if(ty==='node'){state.scP=n||null;state.planet=null;if(HASH()!=='#missions')GO('missions');else render();return}
+  state.farmSel=t;if(HASH()!=='#farm')GO('farm');else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
 
 /* ---------- request guard: every request to Warframe-related services (profile relay, warframestat) goes through here ---------- */
 /* Warframe publishes no API or rate limits for these endpoints, so the limits below are deliberately conservative:
@@ -487,7 +520,7 @@ async function addFriend(txt){txt=String(txt||'').trim();const msg=m=>{const el=
 document.addEventListener('click',e=>{const t=e.target.closest('[data-atab],[data-wbi],[data-rltab],[data-wtab],[data-freg],[data-mreg],[data-reld],[data-arcd],[data-frdel],#fradd');if(!t)return;
   if(t.dataset.atab){state.aTab=t.dataset.atab;saveUI();render();return}
   if(t.dataset.wbi!==undefined){state.wbI=+t.dataset.wbi;rerender();return}
-  if(t.dataset.rltab){state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else render();return}
+  if(t.dataset.rltab){state.rlTab=t.dataset.rltab;saveUI();if(HASH()!=='#relics')GO('relics');else render();return}
   if(t.dataset.wtab){state.wTab=t.dataset.wtab;saveUI();render();return}
   if(t.dataset.freg){state.fR=t.dataset.freg;state.fT='all';saveUI();rerender();return}
   if(t.dataset.mreg){state.mR=t.dataset.mreg;saveUI();rerender();return}
@@ -571,7 +604,7 @@ function processInbox(){const fs=FB.fs;
 function unread(){const lr=lsGet('tf-read',{});let n=0;const per={};for(const g of SO.groups){const c=(SO.gm[g.id]||[]).filter(m=>m.from!==SO.uid&&m.at>(lr['g:'+g.id]||0)).length;if(c){n+=c;per['g:'+g.id]=c}}for(const m of SO.inbox){if(m.type==='sent'||m.type==='accept')continue;if(m.type==='friend'){n++;continue}if(m.at>(lr[m.from]||0)){n++;per[m.from]=(per[m.from]||0)+1}}return {n,per}}
 function badge(){const u=SO.uid?unread().n:0;document.querySelectorAll('.nbadge').forEach(e=>e.remove());if(!u)return;
   document.querySelectorAll('a[href="#friends"],#hamb,#menu').forEach(a=>{const b=document.createElement('span');b.className='nbadge';b.textContent=u>9?'9+':u;a.appendChild(b)})}
-function socialRender(){badge();if(location.hash==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(location.hash==='#friends'){const box=$('#chatlog');if(box){const g=state.chat&&state.chat.startsWith('g:')?SO.groups.find(x=>'g:'+x.id===state.chat):null;box.innerHTML=g?groupLog(g):chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
+function socialRender(){badge();if(HASH()==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(HASH()==='#friends'){const box=$('#chatlog');if(box){const g=state.chat&&state.chat.startsWith('g:')?SO.groups.find(x=>'g:'+x.id===state.chat):null;box.innerHTML=g?groupLog(g):chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
 function chatLog(fid){const ms=SO.inbox.filter(m=>!blocked(m.from)&&(m.from===fid&&m.type!=='friend'&&m.type!=='accept')||(m.type==='sent'&&m.to===fid)).sort((a,b)=>a.at-b.at);
   return ms.map(m=>{const mine=m.type==='sent';const t=new Date(m.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     let body=esc(m.text||'');
@@ -645,7 +678,7 @@ function hubRight(){const now=Date.now();const fl=(P.foundry||[]).slice().sort((
 /* ---- v11 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-addtask],#taddb,[data-tdel],[data-tshare],[data-tinvite],#tclear,#faddc,[data-facc],[data-fdec],[data-chat],#msgsend,[data-funf],[data-tjoin],[data-tdecline],[data-copy]');if(!t)return;
   if(t.dataset.addtask){e.preventDefault();const i=t.dataset.addtask.indexOf('|');const k=t.dataset.addtask.slice(0,i),r=t.dataset.addtask.slice(i+1);const lab=t.dataset.tlabel||'';
-    if((P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r)){location.hash='tasks';return}if(addTask(k,r,lab)){toast('Added to your tasks');t.classList.add('on');t.textContent='✓ In tasks'}return}
+    if((P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r)){GO('tasks');return}if(addTask(k,r,lab)){toast('Added to your tasks');t.classList.add('on');t.textContent='✓ In tasks'}return}
   if(t.id==='taddb'){const el=$('#tnew');const v=(el&&el.value||'').trim();if(!v)return;addTask('note',v,v);rerender();return}
   if(t.dataset.tdel){P.tasks=(P.tasks||[]).filter(x=>x.id!==t.dataset.tdel);saveProfile();rerender();return}
   if(t.dataset.tshare){state.tShare=state.tShare===t.dataset.tshare?null:t.dataset.tshare;rerender();return}
@@ -751,7 +784,7 @@ function liveSync(uid){const base=FB.fs.collection('users').doc(uid).collection(
 /* ---- feedback ---- */
 const FBK={list:null,admin:false,tried:false};
 async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
-  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;FBK.err='';if(location.hash==='#feedback'||location.hash==='#admin')liveRender()}catch(e){FBK.admin=false;FBK.err=(e&&e.code)||'error';if(location.hash==='#admin')liveRender()}}
+  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;FBK.err='';if(HASH()==='#feedback'||HASH()==='#admin')liveRender()}catch(e){FBK.admin=false;FBK.err=(e&&e.code)||'error';if(HASH()==='#admin')liveRender()}}
 function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Feedback</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
@@ -774,7 +807,7 @@ async function sendFeedback(){const text=($('#fbtext')&&$('#fbtext').value||'').
   if(!SO.uid)return toast('Sign in to send feedback');d.uid=SO.uid;d.name=myName();
   try{await FB.fs.collection('feedback').add(d);$('#fbtext').value='';if($('#fbcontact'))$('#fbcontact').value='';toast('Thanks! Your feedback was sent.')}catch(e){toast('Couldn\'t send. Try again in a moment.')}}
 document.addEventListener('click',async e=>{const t=e.target.closest('#fbsend,[data-fbdone],[data-fbdel],#fbreload,a[href="#feedback"]');if(!t)return;
-  if(t.matches('a[href="#feedback"]')){state.fbFrom=(location.hash||'#home').slice(1);return}
+  if(t.matches('a[href="#feedback"]')){state.fbFrom=(HASH()||'#home').slice(1);return}
   if(t.id==='fbsend'){t.disabled=true;await sendFeedback();t.disabled=false;return}
   if(t.id==='fbreload'){FBK.tried=false;loadFeedback();return}
   if(t.dataset.fbdone){const x=FBK.list.find(y=>y.id===t.dataset.fbdone);if(!x)return;x.done=!x.done;FB.fs.collection('feedback').doc(x.id).update({done:x.done}).catch(()=>toast('Couldn\'t update'));liveRender();return}
@@ -846,21 +879,21 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
   try{for(const g of SO.groups){if(g.owner===uid)await fs.collection('groups').doc(g.id).delete().catch(()=>{});else await fs.collection('groups').doc(g.id).update({members:firebase.firestore.FieldValue.arrayRemove(uid),at:Date.now()}).catch(()=>{})}
     const del=async col=>{const s=await col.get();await Promise.all(s.docs.map(d=>d.ref.delete()))};
     await del(fs.collection('inbox').doc(uid).collection('msgs')).catch(()=>{});await del(fs.collection('users').doc(uid).collection('friends')).catch(()=>{});
-    await fs.collection('public').doc(uid).delete().catch(()=>{});await fs.collection('presence').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
+    await fs.collection('public').doc(uid).delete().catch(()=>{});await fs.collection('share').doc(uid).delete().catch(()=>{});await fs.collection('presence').doc(uid).delete().catch(()=>{});if(SO.code)await fs.collection('codes').doc(SO.code).delete().catch(()=>{});
     docRef=null;profRef=null;await fs.collection('users').doc(uid).collection('data').doc('progress').delete().catch(()=>{});await fs.collection('users').doc(uid).collection('data').doc('profile').delete().catch(()=>{});
     socialStop();await u.delete();toast('Your account and its data were deleted. Progress in this browser was kept.');render()}
   catch(e){toast(e&&e.code==='auth/requires-recent-login'?'Sign out and back in, then try again.':'Couldn\'t finish deleting. Try again.')}}
 
 /* ---- v14 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-onb],#wsretry,#undosync,#clearimp,#delacct,[data-about]');if(!t)return;
-  if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';location.hash='ranks'}else if(t.dataset.onb==='import'){state.tTab='account';location.hash='tenno'}else rerender();return}
-  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
+  if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';GO('ranks')}else if(t.dataset.onb==='import'){state.tTab='account';GO('tenno')}else rerender();return}
+  if(t.dataset.about){state.aboutSec=t.dataset.about;if(HASH()==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
   if(t.id==='wsretry'){WSat=0;WSerr=false;const p=loadWS();rerender();await p;rerender();return}
   if(t.id==='undosync'){const s=lsGet('tf-presync',null);if(!s)return;C=s.C||{};for(const k in P)delete P[k];Object.assign(P,s.P||{});lsSet('tenno-codex',C);try{localStorage.removeItem('tf-presync')}catch(err){}pushAll();updateMR();rerender();toast('Sync undone. Everything is back the way it was.');return}
   if(t.id==='clearimp'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again to clear';return}
     ['prof','nw','daily','lastSync','mc','at','auto'].forEach(k=>delete P[k]);if(P.syn)for(const k in P.syn)if(P.syn[k].sync)delete P.syn[k];saveProfile();updateMR();rerender();toast('Imported snapshot cleared');return}
   if(t.id==='delacct'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again: delete everything';t.classList.add('danger');return}t.disabled=true;await deleteAccount();return}});
-setInterval(()=>{if(location.hash==='#today'&&HOSTED&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){loadWS();rerender()}},5*60e3);
+setInterval(()=>{if(HASH()==='#today'&&HOSTED&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){loadWS();rerender()}},5*60e3);
 
 /* ---------- v15: dashboard, reasons, undo, goal → farm → task ---------- */
 function toastAction(text,label,fn){if(window.TF_UI&&TF_UI.toast){TF_UI.toast(text,{label,fn});return}document.querySelectorAll('.toast').forEach(x=>x.remove());const d=document.createElement('div');d.className='toast act';d.setAttribute('role','status');
@@ -1008,14 +1041,15 @@ function a11yPass(){document.querySelectorAll('.seg .btn:not([role=tab])').forEa
   document.querySelectorAll('.nextbar,.tbar,.rkbar,.prog .track').forEach(b=>b.setAttribute('aria-hidden','true'))}
 /* skip link + keyboard shortcut */
 (function(){const a=document.createElement('button');a.type='button';a.className='skip';a.textContent='Skip to content';a.onclick=()=>{const m=$('#app');m.setAttribute('tabindex','-1');m.focus()};document.body.insertBefore(a,document.body.firstChild)})();
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!(e.target&&e.target.matches&&e.target.matches('input,textarea,select'))&&!e.ctrlKey&&!e.metaKey){e.preventDefault();if(location.hash!=='#farm')location.hash='farm';setTimeout(()=>$('#fq')&&$('#fq').focus(),60)}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!(e.target&&e.target.matches&&e.target.matches('input,textarea,select'))&&!e.ctrlKey&&!e.metaKey){e.preventDefault();if(HASH()!=='#farm')GO('farm');setTimeout(()=>$('#fq')&&$('#fq').focus(),60)}});
 /* page status: where data lives / how fresh it is */
 const STATUS={today:'live',market:'snap',friends:'acct',feedback:'acct',tasks:'save',goals:'save',ranks:'save',missions:'save',quests:'save',synd:'save',relics:'save',arsenal:'save',world:'save',tenno:'save',mastery:'data',resources:'data',farm:'data',frames:'data'};
 function statusChip(k){const s=STATUS[k];if(!s)return'';const where=synced?'Saved to your account':'Saved in this browser';
   const map={live:['live','● Live game data'],snap:['','Prices: daily snapshot '+D.meta.prices],acct:['',SO.uid?'Signed in':'Needs sign-in'],save:[synced?'live':'',where],data:['','Game data '+D.meta.built]};const [c,t]=map[s];return `<span class="pstat ${c}">${esc(t)}</span>`}
 function afterRender(key,nav){a11yPass();const ey=document.querySelector('#app .head .eyebrow');if(ey&&!ey.querySelector('.pstat'))ey.insertAdjacentHTML('beforeend',statusChip(key));
-  document.title=(key==='home'?'':(PL[key]||key)+' · ')+'Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
-window.addEventListener('hashchange',()=>setTimeout(()=>afterRender((location.hash||'#home').slice(1),true),0));
+  /* the same title as the page's own address (build/pages.json), which is what search results show */
+  document.title=(self.TF_PAGES&&TF_PAGES[key])||(PL[key]||key)+' · Tennoform';if(nav){const h=document.querySelector('#app h1');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}}}
+window.addEventListener('hashchange',()=>setTimeout(()=>afterRender((HASH()||'#home').slice(1),true),0));
 /* menu focus handling */
 $('#hamb')&&$('#hamb').addEventListener('click',()=>setTimeout(()=>{if($('#drawer').classList.contains('open')){const a=$('#sheet a');a&&a.focus()}},30));
 /* block & report */
@@ -1024,7 +1058,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fblock],[d
   if(t.dataset.fblock){const uid=t.dataset.fblock;if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap to confirm';return}
     P.block=P.block||[];if(!P.block.includes(uid))P.block.push(uid);saveProfile();FB&&FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).delete().catch(()=>{});
     SO.inbox.filter(m=>m.from===uid&&m.type==='friend').forEach(m=>FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete().catch(()=>{}));state.chat=null;rerender();toast('Blocked. They can\'t message you or send requests.');return}
-  if(t.dataset.freport){const [uid,name,code]=t.dataset.freport.split('|');state.fbPrefill=`Report: ${name} (friend code ${code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';location.hash='feedback'}});
+  if(t.dataset.freport){const [uid,name,code]=t.dataset.freport.split('|');state.fbPrefill=`Report: ${name} (friend code ${code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';GO('feedback')}});
 
 /* ---------- v18: friction fixes ---------- */
 const STARTERS=['Excalibur','Mag','Volt','Mk1-Braton','Mk1-Paris','Mk1-Strun','Braton','Lato','Mk1-Furis','Mk1-Kunai','Skana','Mk1-Bo','Mk1-Furax'].filter(n=>I[n]);
@@ -1048,7 +1082,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('#rkmore,#rkall,#
   if(t.id==='qsgo'){const mr=$('#qsmr').value.trim(),xp=$('#qsxp').value.trim();if(mr===''&&xp===''&&!document.querySelector('[data-qsitem]:checked')){toast('Enter your MR, or pick some starter gear');return}
     if(mr!==''){P.gmr=+mr;P.prof=P.prof||{};P.prof.mr=+mr}if(xp!=='')P.gxp=+xp;document.querySelectorAll('[data-qsitem]:checked').forEach(i=>setRank(i.dataset.qsitem,99));
     P.onb='quick';state.qs=false;saveProfile();updateMR();rerender();toast('Saved. Your dashboard now starts from your in-game rank.')}});
-setInterval(()=>{if(location.hash==='#today'&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){const y=scrollY;render();scrollTo(0,y)}},30000);
+setInterval(()=>{if(HASH()==='#today'&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){const y=scrollY;render();scrollTo(0,y)}},30000);
 
 /* ---- v19: pass B (main loops) ---- */
 /* next up: complete, context-aware actions */
@@ -1163,7 +1197,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-nudone],[d
   if(t.id==='hubhintx'){lsSet('tf-hubhint',1);rerender();return}
   if(t.dataset.livetask){const tx=t.dataset.livetask;if((P.tasks||[]).some(x=>!x.d&&x.t===tx)){toast('Already in your tasks');return}const ex=t.dataset.ltexp;addTask('note','',tx,ex?{due:ymd(ex)}:{});rerender();toast('Added to your tasks');return}
   if(t.dataset.fisrel){const era=t.dataset.fisrel;const n=Object.keys(P.rel||{}).some(r=>REL[r]&&REL[r].era===era&&relCount(r)>0);
-    if(n){state.rlTab='mine';state.rlE=era;saveUI();location.hash='#relics'}else{state.farmQ=era;state.ffT='relic';state.unvOnly=true;saveUI();location.hash='#farm'}return}
+    if(n){state.rlTab='mine';state.rlE=era;saveUI();GO('#relics')}else{state.farmQ=era;state.ffT='relic';state.unvOnly=true;saveUI();GO('#farm')}return}
   if(t.id==='rsclear'){state.resQ='';state.rsF='all';saveUI();rerender();return}
   if(t.id==='mkclear'){state.mkQ='';state.mkF='all';saveUI();rerender();return}
   if(t.id==='rlclear'){state.rlE='all';saveUI();rerender();return}
@@ -1223,8 +1257,8 @@ function cmdPaint(){const q=$('#cmdq')?$('#cmdq').value:'';CMDR=cmdFind(q);CMDI=
     h+=`<div class="cmdo${i===CMDI?' on':''}" role="option" id="cmd-${i}" aria-selected="${i===CMDI}" data-cmdi="${i}">${e.g==='Gear'?art(e.n,'mini')||'<span class="mini"></span>':''}<span class="cmdn">${esc(e.n)}</span><span class="small muted">${e.g==='Gear'?esc(I[e.n].c):e.g==='Pages'?'Page':esc(e.g.replace(/s$/,''))}</span></div>`});
   box.innerHTML=h+'</div>';$('#cmdq').setAttribute('aria-activedescendant','cmd-'+CMDI);const on=$('#cmd-'+CMDI);on&&on.scrollIntoView({block:'nearest'})}
 function cmdGo(e){cmdClose();if(!e)return;const a=e.act;
-  if(a[0]==='#'){if(location.hash===a)render();else location.hash=a.slice(1);return}
-  if(a.startsWith('quest|')){state.qFocus=a.slice(6);state.qF='all';if(location.hash==='#quests')render();else location.hash='quests';return}
+  if(a[0]==='#'){if(HASH()===a)render();else GO(a.slice(1));return}
+  if(a.startsWith('quest|')){state.qFocus=a.slice(6);state.qF='all';if(HASH()==='#quests')render();else GO('quests');return}
   go(a)}
 document.addEventListener('input',e=>{if(e.target.id==='cmdq'){CMDI=0;cmdPaint()}});
 document.addEventListener('keydown',e=>{const typing=e.target&&e.target.matches&&e.target.matches('input,textarea,select,[contenteditable]');
@@ -1233,7 +1267,7 @@ document.addEventListener('keydown',e=>{const typing=e.target&&e.target.matches&
   if(typing||e.ctrlKey||e.metaKey||e.altKey)return;
   if(e.key==='/'){e.preventDefault();e.stopImmediatePropagation();cmdOpen();return}
   if(e.key==='?'){e.preventDefault();keysOpen();return}
-  if(/^[1-5]$/.test(e.key)&&!$('#keysbk')&&!$('#prevbk')){const p=PLACES[+e.key-1];location.hash=placeLast(p)}},true);
+  if(/^[1-5]$/.test(e.key)&&!$('#keysbk')&&!$('#prevbk')){const p=PLACES[+e.key-1];GO(placeLast(p))}},true);
 document.addEventListener('click',e=>{if(e.target.closest('#srchbtn')){cmdOpen();return}
   const o=e.target.closest('[data-cmdi]');if(o){cmdGo(CMDR[+o.dataset.cmdi]);return}
   if(e.target.closest('[data-cmdx]')||e.target.id==='cmdbk'){cmdClose();return}
@@ -1273,7 +1307,7 @@ CMDG.unshift('Guides');
 const CMD_STOP=new Set(['how','to','do','i','get','the','a','an','unlock','unlocking','unlocked','where','is','what','find','for','can','you','my','in','of','guide','quest','open','start','make','build','farm','obtain']);
 const _cmdFind=cmdFind;cmdFind=function(q){const raw=(q||'').toLowerCase().replace(/[.?!,:;_]+/g,' ').trim();const k=raw.split(/\s+/).filter(w=>w&&!CMD_STOP.has(w)).join(' ');
   if(k&&k!==raw){const r=_cmdFind(k);if(r.length)return r}return _cmdFind(raw)};
-const _go=go;go=function(t){if(t.startsWith('guide|')){state.gSel=t.slice(6);state.gQ='';if(location.hash!=='#guides')location.hash='guides';else render();window.scrollTo(0,0);return}_go(t)};
+const _go=go;go=function(t){if(t.startsWith('guide|')){state.gSel=t.slice(6);state.gQ='';if(HASH()!=='#guides')GO('guides');else render();window.scrollTo(0,0);return}_go(t)};
 function guides(){const k=state.gF||'all';const L=GUIDES.filter(g=>k==='all'||g.kind===k);
   return `<div class="stack"><div class="head"><div class="eyebrow">Plan</div><h1>Guides</h1><p class="lede">Step-by-step guides for every quest, unlockable system and mission type.</p></div>
   <div class="panel cut stack">${L.map(g=>`<a class="ln" href="#" data-go="guide|${esc(g.id)}">${esc(g.n)}</a>`).join('<br>')||'No guides yet.'}</div></div>`}
@@ -1283,7 +1317,7 @@ let state={frame:null,farmQ:'',farmSel:null,mTab:'path',mkTab:'sets',mkSort:'a7'
 Object.assign(state,lsGet('tenno-ui',{}));Object.assign(state,(()=>{const q=lsGet('tenno-uiq',{})||{};return {resQ:q.resQ||state.resQ||'',farmQ:q.farmQ||state.farmQ||'',mkQ:q.mkQ||state.mkQ||'',mkSort:q.mkSort||state.mkSort||'a7'}})());
 if(!['path','ladder','sheet','sframes','craft','xp'].includes(state.mTab))state.mTab='path';
 function saveUI(){lsSet('tenno-ui',{ckF:state.ckF,fiF:state.fiF,fiM:state.fiM,syF:state.syF,syS:state.syS,syH:state.syH,gS:state.gS,hF:state.hF,qF:state.qF,misType:state.misType,rsF:state.rsF,ffT:state.ffT,ffC:state.ffC,frF:state.frF,mkF:state.mkF,rkS:state.rkS,rkCat:state.rkCat,rkF:state.rkF,frame:state.frame,mTab:state.mTab,budget:state.budget,allCat:state.allCat,allHide:state.allHide,mkTab:state.mkTab,tTab:state.tTab,misHide:state.misHide,aTab:state.aTab,wbC:state.wbC,wbO:state.wbO,wbSel:state.wbSel,cbSel:state.cbSel,lF:state.lF,lS:state.lS,arT:state.arT,arS:state.arS,arO:state.arO,kmT:state.kmT,kmS:state.kmS,rlTab:state.rlTab,rlE:state.rlE,rlO:state.rlO,raE:state.raE,duF:state.duF,duO:state.duO,wTab:state.wTab,fR:state.fR,fRr:state.fRr,fT:state.fT,mR:state.mR,tkF:state.tkF,tkS:state.tkS})}
-function render(){const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';
+function render(){const r=(HASH()||'#home').slice(1);const key=routes[r]?r:'home';
   navPaint(key);
   setMenu(false);
   $('#app').innerHTML=demoBar()+subnav(key)+routes[key]()+siteFoot();refresh();bindPage(key);updateMR();afterRender(key,false);segActive();sheetRestore()}
@@ -1371,7 +1405,7 @@ function demoStart(){if(DEMO)return;DEMO={c:JSON.stringify(C),p:JSON.stringify(P
     foundry:[{id:'d1',n:'Nikana Prime',t0:now-4*36e5,dur:3*3600},{id:'d2',n:'Rhino',t0:now,dur:3*86400}],goals:['Saryn Prime','Nikana Prime'],
     tasks:[{id:'t1',t:'Farm 10 Orokin Cells',k:'res',r:'Orokin Cell',d:0,at:now}],syn:{'Cephalon Suda':{r:2,s:46000},'Ostron':{r:1,s:4000}}};
   pool.slice(62,70).forEach((i,k)=>{P.rk[i.n]=10+k*2});
-  lastMR=null;updateMR();document.body.classList.add('demo');if(location.hash&&location.hash!=='#home')location.hash='home';else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
+  lastMR=null;updateMR();document.body.classList.add('demo');if(HASH()&&HASH()!=='#home')GO('home');else render();window.scrollTo(0,0);announce('Sample account open. Nothing is saved.')}
 function demoExit(){if(!DEMO)return;C=JSON.parse(DEMO.c);P=JSON.parse(DEMO.p);docRef=DEMO.dr;profRef=DEMO.pr;lsSet=DEMO.ls;DEMO=null;document.body.classList.remove('demo');lastMR=null;updateMR();render();window.scrollTo(0,0)}
 function demoBar(){return DEMO&&!window.TF_UI?`<div class="demobar" role="status"><span><b>Sample account.</b> These ranks, goals and tasks are examples, not yours, and nothing here is saved.</span><button type="button" class="btn sm primary" data-demox>Use my own</button></div>`:''}
 document.addEventListener('click',e=>{if(e.target.closest('[data-demo]')){demoStart();return}if(e.target.closest('[data-demox]')){demoExit()}});
@@ -1413,7 +1447,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#signbtn')){setMenu(t
 const DON={list:null,tried:false,err:false};
 async function loadDonations(force){if(!FB||!SO.uid||!FBK.admin||(DON.tried&&!force))return;DON.tried=true;
   try{const s=await FB.fs.collection('donations').orderBy('at','desc').limit(500).get();DON.list=s.docs.map(d=>({id:d.id,...d.data()}));DON.err=false}catch(e){DON.err=true}
-  if(location.hash==='#admin')liveRender()}
+  if(HASH()==='#admin')liveRender()}
 const _socialInit=socialInit;socialInit=async function(uid){const r=await _socialInit(uid);FBK.tried=false;DON.tried=false;loadFeedback().then(()=>{if(FBK.admin)loadDonations()});return r};
 const money=n=>'$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 function donTotals(list){const now=new Date(),m0=Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),1);const t={plat:0,usd:0,platM:0,usdM:0,n:list.length,who:{}};
@@ -1545,7 +1579,7 @@ function ckReset(c){return c[0]==='d'?(c[1]==='sortie'?lastSortie():lastDaily())
 function ckDone(c){const ts=(P.dw||{})[c[1]];return !!ts&&ts>=ckReset(c)}
 function gateOK(g){return !g||qDone(g)}
 let WS=null,WSat=0,WSerr=false,WSload=false;
-async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{WS=await netJSON('ws','https://api.warframestat.us/pc/?language=en');WSat=Date.now();WSerr=false}catch(e){WSerr=true;WSat=Date.now()}WSload=false;if(location.hash==='#today'){const y=scrollY;render();scrollTo(0,y)}}
+async function loadWS(){if(WSload||(WS&&Date.now()-WSat<120000))return;WSload=true;try{WS=await netJSON('ws','https://api.warframestat.us/pc/?language=en');WSat=Date.now();WSerr=false}catch(e){WSerr=true;WSat=Date.now()}WSload=false;if(HASH()==='#today'){const y=scrollY;render();scrollTo(0,y)}}
 function neededEras(){const s={};const names=new Set([...(P.goals||[]),...Object.keys(I).filter(n=>I[n].p&&(on('bp|'+n)||I[n].parts.some(p=>on('part|'+n+'|'+p.n)))&&!on('build|'+n))]);
   names.forEach(n=>{const it=I[n];if(!it||!it.p)return;const lists=[];if(!on('bp|'+n)&&it.bprel)lists.push(it.bprel);it.parts.forEach(p=>{if(p.rel&&!on('part|'+n+'|'+p.n))lists.push(p.rel)});lists.flat().forEach(([r])=>{if(REL[r]&&!REL[r].v){const e=REL[r].era;(s[e]=s[e]||new Set()).add(r)}})});return s}
 function today(){const f=state.ckF||'todo';const now=Date.now();
@@ -2005,14 +2039,14 @@ async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/
       /* cross-save accounts keep their profile on the PC server, so a console or phone server with no profile falls back to it */
       if(plat!=='pc'&&!(j&&(j.Results||j.profile))){const pc=await relay('pc');if(pc&&(pc.Results||pc.profile))j=pc}}
     if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){j=await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en');if(j.error)throw new Error(j.error)}
-    const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||location.hash==='#home'||location.hash==='')render();if(!quiet)toast(msg);return true}
+    const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||HASH()==='#home'||HASH()==='')render();if(!quiet)toast(msg);return true}
   catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http'){if(!quiet)toast(e.message);return false}
-    if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+    if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
       toast(e&&e.msg?e.msg+' Or use the two quick steps on this page.':"Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
 async function liveResurgence(){try{const v=await netJSON('vault','https://api.warframestat.us/pc/vaultTrader/?language=en');if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;
-  for(const n in VAULT){if(frames.includes(n)||pairs.has(VAULT[n].pair))VAULT[n].now=until}D.vtnow={until,items:v.inventory.map(x=>x.item),loc:v.location};if(['#market','#frames','#farm'].includes(location.hash))render()}catch(e){}}
+  for(const n in VAULT){if(frames.includes(n)||pairs.has(VAULT[n].pair))VAULT[n].now=until}D.vtnow={until,items:v.inventory.map(x=>x.item),loc:v.location};if(['#market','#frames','#farm'].includes(HASH()))render()}catch(e){}}
 function backupCode(){return btoa(unescape(encodeURIComponent(JSON.stringify(backupObj()))))}
 function restore(code){try{const o=JSON.parse(decodeURIComponent(escape(atob(code.trim()))));if(!o||!o.c)throw 0;C=o.c;Object.assign(P,o.p||{});lsSet('tenno-codex',C);pushAll();return true}catch(e){return false}}
 
@@ -2069,7 +2103,7 @@ async function importInventory(txt){const inv=invParse(txt);
 /* ---------- bridge: what the React shell reads and calls. Logic stays here; the shell only renders it. ---------- */
 function tfNotify(){try{window.dispatchEvent(new CustomEvent('tf:update'))}catch(e){}}
 window.TF={
-  state(){const t=totalXP(),m=mrInfo(t.total);const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';const pl=placeOf(key);const on=signedIn();
+  state(){const t=totalXP(),m=mrInfo(t.total);const r=(HASH()||'#home').slice(1);const key=routes[r]?r:'home';const pl=placeOf(key);const on=signedIn();
     return {route:key,title:SUBL[key]||PL[key]||'Home',place:pl?{id:pl[0],label:pl[1]}:null,
       mr:m.mr,mrLabel:(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr),nextLabel:m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1),xp:t.total,next:m.next,pct:m.pct,toNext:Math.max(0,m.next-t.total),
       name:P.tname||(P.prof&&P.prof.name)||'',signedIn:on,canAcct:canAcct(),acctName:on?(acct.name||acct.email||''):'',acctEmail:on?(acct.email||''):'',
@@ -2078,10 +2112,10 @@ window.TF={
   menu(){return MENU.map(([r,l])=>({route:r,label:l}))},
   search(q){return cmdFind(q).map(e=>({name:e.n,group:e.g,act:e.act,sub:e.g==='Gear'?I[e.n].c:e.g==='Pages'?'Page':e.g.replace(/s$/,''),img:e.g==='Gear'&&I[e.n].img?'https://cdn.warframestat.us/img/'+encodeURIComponent(I[e.n].img):''}))},
   open:act=>cmdGo({act}),
-  go:route=>{if(location.hash==='#'+route)render();else location.hash=route},
+  go:route=>{if(HASH()==='#'+route)render();else GO(route)},
   google:()=>{if(!FB){toast('Sign-in is still loading. Try again in a moment.');return}signGoogle()},
   signOut:()=>{flushNow();if(FB)FB.auth.signOut();toast('Signed out. Your progress stays on this device too.')},
-  account:()=>{state.tTab='account';saveUI();if(location.hash==='#tenno')render();else location.hash='tenno'},
+  account:()=>{state.tTab='account';saveUI();if(HASH()==='#tenno')render();else GO('tenno')},
   theme:t=>themeSet(t),
   themeStyle:st=>themeStyleSet(st),
   logo:()=>LOGO_HTML(),
@@ -2333,7 +2367,7 @@ Object.assign(window.TF,{
 });
 /* picks from anywhere (search, links inside details) land in the React page instead of the old #fdet panel */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-pick]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')))return;
-  e.preventDefault();e.stopPropagation();state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.farmSel=t.dataset.pick;if(HASH()!=='#farm')GO('farm');else tfNotify()},true);
 const _farmRoute=routes.farm;
 routes.farm=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')?'':_farmRoute()};
 /* ---------- bridge: Today for the React page ---------- */
@@ -2474,7 +2508,7 @@ Object.assign(window.TF,{
 });
 /* quest links from anywhere open the React list at that quest */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-q]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('quests')))return;
-  e.preventDefault();e.stopPropagation();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.qFocus=t.dataset.q;if(HASH()!=='#quests')GO('quests');else tfNotify()},true);
 const _questsRoute=routes.quests;
 routes.quests=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('quests')?'':_questsRoute()};
 /* ---------- bridge: MR plan for the React page ---------- */
@@ -2506,7 +2540,7 @@ Object.assign(window.TF,{
 });
 /* tab links from elsewhere */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-mtab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')))return;
-  e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(HASH()!=='#mastery')GO('mastery');else tfNotify()},true);
 const _masteryRoute=routes.mastery;
 routes.mastery=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')?'':_masteryRoute()};
 /* mastery helper: easy wins, items you can finish from relics you own, and the cheapest items to buy with platinum */
@@ -2560,7 +2594,7 @@ Object.assign(window.TF,{
 });
 /* planet links from anywhere */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-scp]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('missions'))||t.closest('.tf-island'))return;
-  e.preventDefault();e.stopPropagation();state.scP=t.dataset.scp||null;state.scQ='';saveUI();if(location.hash!=='#missions')location.hash='missions';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.scP=t.dataset.scp||null;state.scQ='';saveUI();if(HASH()!=='#missions')GO('missions');else tfNotify()},true);
 const _missionsRoute=routes.missions;
 routes.missions=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('missions')?'':_missionsRoute()};
 /* ---------- bridge: Syndicates for the React page ---------- */
@@ -2700,7 +2734,7 @@ Object.assign(window.TF,{
   setDup:(n,v)=>{P.dup=P.dup||{};const c=Math.max(0,+v||0);if(c)P.dup[n]=c;else delete P.dup[n];saveProfile();tfNotify()}
 });
 document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')))return;
-  e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(HASH()!=='#relics')GO('relics');else tfNotify()},true);
 const _relicsRoute=routes.relics;
 routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
 /* live fissures by relic era (normal first, then Steel Path; Void Storms need a Railjack so they come last) */
@@ -2763,7 +2797,7 @@ Object.assign(window.TF,{
   lichSet:(n,o)=>{P.lich=P.lich||{};const v=P.lich[n]=P.lich[n]||{};if(o.e!=null)v.e=o.e;if(o.b!=null)v.b=Math.max(0,Math.min(60,+o.b||0));saveProfile();tfNotify()}
 });
 document.addEventListener('click',e=>{const t=e.target.closest('[data-atab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')))return;
-  e.preventDefault();e.stopPropagation();state.aTab=t.dataset.atab;saveUI();if(location.hash!=='#arsenal')location.hash='arsenal';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.aTab=t.dataset.atab;saveUI();if(HASH()!=='#arsenal')GO('arsenal');else tfNotify()},true);
 const _arsenalRoute=routes.arsenal;
 routes.arsenal=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('arsenal')?'':_arsenalRoute()};
 /* ---------- bridge: Profile (tenno) for the React page. Most tabs keep their existing panels; Inventory is rebuilt. ---------- */
@@ -2785,7 +2819,7 @@ Object.assign(window.TF,{
 });
 /* tab links from anywhere (e.g. "Full breakdown", "Foundry", "Sync your profile") */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-ttab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')))return;
-  e.preventDefault();e.stopPropagation();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.tTab=t.dataset.ttab;saveUI();if(HASH()!=='#tenno')GO('tenno');else tfNotify()},true);
 const _tennoRoute=routes.tenno;
 routes.tenno=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')?'':_tennoRoute()};
 /* ---------- bridge: Support, Feedback, About and Backend for the React pages ---------- */
@@ -2835,7 +2869,7 @@ function undoToast(text,fn){if(window.TF_UI&&TF_UI.toast)TF_UI.toast(text,{label
 [['donate','donate'],['feedback','feedback'],['about','about'],['admin','admin']].forEach(([r,k])=>{const _r=routes[r];routes[r]=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns(k)?'':_r()}});
 /* "What's new" links open the changes list on the React About page */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-about]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('about')))return;
-  e.preventDefault();e.stopPropagation();state.aboutSec=t.dataset.about;if(location.hash!=='#about')location.hash='about';else tfNotify();
+  e.preventDefault();e.stopPropagation();state.aboutSec=t.dataset.about;if(HASH()!=='#about')GO('about');else tfNotify();
   setTimeout(()=>{const c=document.getElementById('changes');if(c)c.scrollIntoView({block:'start'})},200)},true);
 /* the account menu shows Backend once the admin check finishes; tell the shell when it does */
 {const _lf=loadFeedback;loadFeedback=async function(){const r=await _lf.apply(this,arguments);tfNotify();return r}
@@ -2880,7 +2914,7 @@ Object.assign(window.TF,{
   friendRemove:uid=>{FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).delete().catch(()=>{});state.chat=null;tfNotify();toast('Removed from your friends')},
   friendBlock:uid=>{P.block=P.block||[];if(!P.block.includes(uid))P.block.push(uid);saveProfile();FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).delete().catch(()=>{});
     SO.inbox.filter(m=>m.from===uid&&m.type==='friend').forEach(m=>FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete().catch(()=>{}));state.chat=null;tfNotify();toast("Blocked. They can't message you or send requests.")},
-  friendReport:uid=>{const f=SO.friends.find(x=>x.uid===uid)||{};state.fbPrefill=`Report: ${sqName(uid)} (friend code ${f.code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';location.hash='feedback'},
+  friendReport:uid=>{const f=SO.friends.find(x=>x.uid===uid)||{};state.fbPrefill=`Report: ${sqName(uid)} (friend code ${f.code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';GO('feedback')},
   msgSend:async text=>{text=(text||'').trim();if(!text||!state.chat)return false;
     try{const g=sqGid();if(g)await gpost(g,{type:'msg',text});else await sendMsg(state.chat,{type:'msg',text});return true}catch(e){toast("Couldn't send. They may not have accepted yet.");return false}},
   inviteTask:async id=>{const x=(P.tasks||[]).find(y=>y.id===id);if(!x||!state.chat)return;const task={id:x.id,t:x.t,k:x.k,r:x.r};const g=sqGid();
@@ -2894,7 +2928,7 @@ Object.assign(window.TF,{
   groupLeave:()=>{const g=sqGid();if(g)gLeave(g)}
 });
 /* chats and requests arrive live; let React redraw even while someone is typing (it keeps its own input state) */
-const _socialRender=socialRender;socialRender=function(){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')&&location.hash==='#friends'){badge();tfNotify();return}_socialRender()};
+const _socialRender=socialRender;socialRender=function(){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')&&HASH()==='#friends'){badge();tfNotify();return}_socialRender()};
 const _friendsRoute=routes.friends;routes.friends=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')?'':_friendsRoute()};
 /* ---------- bridge: Guides for the React page ---------- */
 routes.guides=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('guides')?'':guides()};
@@ -2941,20 +2975,20 @@ function buildById(id){if(id.startsWith('mine:'))return (P.myb||[]).find(b=>'min
 function bParts(b){return [...(b.aura?[['aura',b.aura]]:[]),...(b.exilus?[['exilus',b.exilus]]:[]),...b.mods.filter(Boolean).map(m=>['mod',m]),...(b.arcanes||[]).filter(Boolean).map(a=>['arc',a])]}
 const bHave=b=>{const p=bParts(b);return {have:p.filter(([k,n])=>on((k==='arc'?'arc|':'mod|')+n)||(k==='arc'&&(+((P.arc||{})[n])||0)>0)).length,total:p.length}};
 function bCard(b){const it=I[b.item];const h=bHave(b);const mv=(P.bv||{})[b.doc]||0;
-  return {id:b.id,src:b.src,item:b.item,img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
+  return {id:b.id,src:b.src,item:b.item,fits:bFits(b),img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
     goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0}}
 function bDetail(b){const it=I[b.item];const c=it?it.c:'';const sl=BSLOTS(c);
   return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
     mods:[...(b.aura?[modSlot(sl.aura||'Aura',b.aura)]:[]),...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.filter(Boolean).map(m=>modSlot('Mod',m))],
     arcanes:(b.arcanes||[]).filter(Boolean).map(a=>modSlot('Arcane',a,true)),
-    itemOwned:it?ownedItem(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
+    itemOwned:it?famOwned(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
 function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
   if(s!=='meta')loadShared();
-  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
+  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
   L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
-  else if(so==='own')L.sort((a,b)=>(+ownedItem(b.item)-+ownedItem(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
+  else if(so==='own')L.sort((a,b)=>(+famOwned(b.item)-+famOwned(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
   rv('blO',L);
@@ -2988,10 +3022,10 @@ Object.assign(window.TF,{
     if(i>=0){const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()});return}
     const g={id:'bg'+Date.now().toString(36),from:id,item:b.item,name:b.item+': '+b.name,aura:b.aura||'',exilus:b.exilus||'',mods:[...b.mods],arcanes:[...(b.arcanes||[])],at:Date.now()};P.bg.push(g);
     const addItem=I[b.item]&&!ownedItem(b.item)&&!(P.goals||[]).includes(b.item);if(addItem){P.goals=P.goals||[];P.goals.push(b.item)}
-    saveProfile();tfNotify();toastAction('Saved as a goal'+(addItem?' (and '+b.item+' added to Goals)':'')+'. Goals shows the mods you still need.','Open Goals',()=>{location.hash='goals'})},
+    saveProfile();tfNotify();toastAction('Saved as a goal'+(addItem?' (and '+b.item+' added to Goals)':'')+'. Goals shows the mods you still need.','Open Goals',()=>{GO('goals')})},
   buildGoalRemove:id=>{const i=(P.bg||[]).findIndex(g=>g.id===id);if(i<0)return;const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()})},
   buildCopy:id=>{const b=buildById(id);if(!b)return;const c=cleanB(b);state.mbEdit={...c,name:(b.src==='player'&&b.author?b.author+"'s ":'')+c.name,mods:[...c.mods,...Array(Math.max(0,8-c.mods.length)).fill('')]};state.aTab='mine';state.blSel=null;saveUI();
-    if(location.hash!=='#arsenal')location.hash='arsenal';tfNotify();window.scrollTo(0,0)},
+    if(HASH()!=='#arsenal')GO('arsenal');tfNotify();window.scrollTo(0,0)},
   buildVote:async(id,v)=>{const b=buildById(id);if(!b||b.src!=='player')return;if(!SO.uid){toast('Sign in to vote');return}P.bv=P.bv||{};const cur=P.bv[b.doc]||0;const nv=cur===v?0:v;
     try{const r=await voteTx(b.doc,nv);Object.assign(b,{up:r.up,down:r.down,score:r.score});if(nv)P.bv[b.doc]=nv;else delete P.bv[b.doc];saveProfile();tfNotify()}catch(e){toast("Couldn't save your vote. Try again.")}},
   myBuilds:()=>myBuildsData(),
@@ -3069,7 +3103,7 @@ function liveInfo(){
     :WSerr?`Showing what it last sent, ${agoTxt(age)}.`:age>15*60e3?`Last update was ${agoTxt(age)}.`:'Timers are up to date.';
   return {state,conn,fresh,at:WS?agoTxt(age):'',ended,busy:WSload,retry:true}}
 /* while a timer has run out, ask the feed again each minute (it usually catches up within a few) */
-setInterval(()=>{if(!HOSTED||document.hidden||!WS||WSload)return;const h=location.hash.slice(1)||'home';if(!['today','home','world','relics'].includes(h))return;
+setInterval(()=>{if(!HOSTED||document.hidden||!WS||WSload)return;const h=HASH().slice(1)||'home';if(!['today','home','world','relics'].includes(h))return;
   if(wsEnded().length&&Date.now()-WSat>60e3){WSat=0;loadWS()}},20e3);
 function feedsData(){const day=d=>{const t=Date.parse(d);return isNaN(t)?null:(Date.now()-t)/864e5};const g=day(D.meta.built),p=day(D.meta.prices);const L=liveInfo();
   const ls=P.at?Date.now()-Date.parse(P.at):null;
@@ -3112,7 +3146,7 @@ ${phone?`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone: u
     <div class="row"><button type="button" class="btn" id="idmarkcopy">Copy the bookmark</button></div></div></div>
 `:''}   <div class="sv"><span class="svn">${pcN}</span><div><b>On a computer: run one line in the console</b><div class="small muted">Copy the line, then on warframe.com press <span class="mono">F12</span> (Mac: <span class="mono">Cmd+Option+J</span>), open the <b>Console</b> tab, paste it and press Enter. You land back here with your ID ready to link.</div>
     <div class="row"><button type="button" class="btn primary" id="idcode">Copy the console line</button></div>
-    <div class="small muted">Using a web inspector instead (for example an iPhone inspector app)? Open its Resources or Application tab, find the cookie <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Not <span class="mono">_gsid</span>: that one is a Google Analytics ID.</div>
+    <div class="small muted">Or copy it from the cookies yourself: <b>iPhone</b> with a Safari web inspector extension (Resources tab), <b>Android</b> with the Mimir app by MST Sage (Applications tab), or a <b>computer</b> with F12 (Application tab). Open Cookies for warframe.com, find <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Only copy that: other warframe.com cookies can keep you logged in, so never share them. <a class="ln" href="#" data-go="guide|find-account-id">Steps for each device</a></div>
     <details class="small"><summary>See the line</summary><pre class="mono" style="white-space:pre-wrap;word-break:break-all;margin:6px 0 0">${esc(ID_CODE)}</pre></details>
     <div class="small muted">Chrome or Edge may say pasting is blocked: type <span class="mono">allow pasting</span>, press Enter, then paste again. The line only reads your account ID from warframe.com and changes nothing.</div>
     <div class="small muted">Prefer one click? Drag this button to your bookmarks bar, then click it while on warframe.com: <a class="btn sm" id="idmark" href="${esc(ID_MARK)}" draggable="true">Tennoform ID</a></div></div></div>
@@ -3129,7 +3163,7 @@ ${phone?'':`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone
   </div>`}
 /* coming back from warframe.com with #wfid=<id>: ask before linking, so a shared link can't change your account by itself */
 function idFromHash(){const m=/^#wfid=([0-9a-f]{24})$/i.exec(location.hash);if(!m)return false;
-  state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'',location.pathname+location.search+'#tenno');
+  state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'','/tenno/'+location.search);
   if(typeof render==='function')render();tfNotify();setTimeout(()=>{const c=$('#idpend');if(c)c.scrollIntoView({block:'center'})},300);return true}
 window.addEventListener('hashchange',idFromHash);setTimeout(idFromHash,0);
 /* why a pasted text has no ID: the usual mix-ups are other long codes that aren't the Warframe account ID */
@@ -3181,7 +3215,7 @@ function platPickHTML(){const cur=wfPlat();
   ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts until a profile relay is set up. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
 /* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
-{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
     toast(`${wfPlat().label} profiles sync with the two quick steps on this page.`);setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
   return _as2.apply(this,arguments)}}
 /* ---------- ownership, separate from mastery ---------- */
@@ -3267,7 +3301,7 @@ function applyReset(){const p=RESET_P;if(!p)return;const on1=new Set([...documen
 {const _ip=importProfile;importProfile=function(txt){if(RESET&&Date.now()-RESET_T<15*60e3){RESET=false;DRY=false;showReset(txt);return 'Choose what to keep, then tap Apply.'}return _ip.apply(this,arguments)}}
 function startReset(){RESET=true;RESET_T=Date.now();
   if(wfPlat().auto&&/^[0-9a-f]{24}$/i.test(P.wfid||'')){autoSync(false);return}
-  state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+  state.tTab='account';saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
   toast('Reset is ready: paste your profile data with the steps below, and you\'ll choose what to keep.');setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},80)}
 document.addEventListener('click',e=>{const t=e.target.closest('#rsreset,#rsok,#rsno,#rsbk,[data-rsall],[data-rsnone]');if(!t)return;
   if(t.id==='rsreset'){e.preventDefault();startReset();return}
@@ -3288,7 +3322,7 @@ function collectionData(){const f=state.colF||'owned',q=(state.colQ||'').toLower
   return {f,q:state.colQ||'',owned,mastered:mast,level,total,inv,cats:cats.filter(c=>c.items.length||!q)}}
 Object.assign(window.TF,{collection:()=>collectionData(),
   collectionSet:o=>{if(o.f!=null)state.colF=o.f;if(o.q!=null)state.colQ=o.q;saveUI();tfNotify()},
-  showInRanks:n=>{state.rkQ=n;state.rkF='all';saveUI();location.hash='ranks';tfNotify()}});
+  showInRanks:n=>{state.rkQ=n;state.rkF='all';saveUI();GO('ranks');tfNotify()}});
 routes.collection=function(){return ''};
 /* ---------- presence: lets the Backend count live and daily players ---------- */
 /* Signed-in players only. Stores when you were last active and which UTC days you visited; nothing else. */
@@ -3312,7 +3346,7 @@ async function loadPlayerStats(force){if(!FB||!FBK.admin||PRES.loading||(PRES.da
     PRES.data={live:within(5*60e3),hour:within(36e5),dau:ps.filter(p=>p.day===today).length,wau:within(7*864e5),mau:within(30*864e5),total:ids.size,tracked:ps.length,hist,at:now}}
   catch(e){PRES.err=/permission/i.test((e&&e.code)||'')?'permission':((e&&e.code)||'error')}
   PRES.loading=false;tfNotify()}
-setInterval(()=>{if(location.hash==='#admin'&&!document.hidden&&FBK.admin)loadPlayerStats(true)},60e3);
+setInterval(()=>{if(HASH()==='#admin'&&!document.hidden&&FBK.admin)loadPlayerStats(true)},60e3);
 function playerStats(){if(FBK.admin&&!PRES.data&&!PRES.loading&&!PRES.err)loadPlayerStats();
   const d=PRES.data;return {loading:PRES.loading,err:PRES.err,data:d?{...d,ago:d.at?(Date.now()-d.at<60e3?'just now':Math.floor((Date.now()-d.at)/6e4)+'m ago'):''}:null}}
 Object.assign(window.TF,{playerStats:()=>playerStats(),playerStatsReload:()=>loadPlayerStats(true)});
@@ -3400,20 +3434,20 @@ function chatTabs(){const ur=SO.uid?unread().per:{};
     SO.groups.forEach(g=>{const id='g:'+g.id;if(ur[id]&&!conv.some(t=>t.id===id))conv.push({id,label:g.name,title:g.name,hint:`${g.members.length} members`,kind:'group',unread:ur[id],closable:true})})}
   return [...rooms,...conv]}
 function chatPageData(){const tabs=chatTabs();if(!tabs.some(t=>t.id===CT.cur))CT.cur='general';const cur=CT.cur;
-  const onPage=location.hash==='#chat';
+  const onPage=HASH()==='#chat';
   if(ctConv(cur)){if(onPage){chatClose();state.chat=ctConvKey(cur)}}
   else{CM.room=cur;if(onPage&&FB)chatOpen(cur)}
   const openable=SO.uid?[...SO.groups.map(g=>({id:'g:'+g.id,label:g.name,kind:'group'})),...SO.friends.filter(f=>!f.pending).map(f=>({id:'f:'+f.uid,label:sqName(f.uid),kind:'friend'}))].filter(o=>!tabs.some(t=>t.id===o.id)):[];
   return {tabs,cur,conv:ctConv(cur),openable,signed:!!SO.uid,synced:!!(P.prof&&P.prof.gid)}}
-function chatGo(id,nav){if(ctConv(id)&&!CT.open.includes(id))CT.open.push(id);CT.cur=id;ctSave();if(ctConv(id))state.chat=ctConvKey(id);if(nav&&location.hash!=='#chat')location.hash='chat';tfNotify()}
+function chatGo(id,nav){if(ctConv(id)&&!CT.open.includes(id))CT.open.push(id);CT.cur=id;ctSave();if(ctConv(id))state.chat=ctConvKey(id);if(nav&&HASH()!=='#chat')GO('chat');tfNotify()}
 function chatCloseTab(id){const i=CT.open.indexOf(id);if(i>=0)CT.open.splice(i,1);
   if(id.startsWith('f:'))sqMarkRead(id.slice(2));else if(id.startsWith('g:'))sqMarkRead(id);
   if(CT.cur===id){CT.cur=CT.open[Math.max(0,i-1)]||'general';if(!ctConv(CT.cur))state.chat=null}ctSave();tfNotify()}
 Object.assign(window.TF,{chat:()=>chatPageData(),chatGo:(id,nav)=>chatGo(id,nav!==false),chatCloseTab:id=>chatCloseTab(id)});
 routes.chat=function(){return ''};
 /* the Friends page now opens conversations here; keep live redraws for both pages */
-{const _sr=socialRender;socialRender=function(){if(location.hash==='#chat'){badge();tfNotify();return}_sr()}}
-window.addEventListener('hashchange',()=>{if(location.hash!=='#chat'){chatClose();state.chat=null}});
+{const _sr=socialRender;socialRender=function(){if(HASH()==='#chat'){badge();tfNotify();return}_sr()}}
+window.addEventListener('hashchange',()=>{if(HASH()!=='#chat'){chatClose();state.chat=null}});
 /* a new group opens straight into its chat tab */
 {const _gc=window.TF.groupCreate;window.TF.groupCreate=async(name,uids)=>{const ok=await _gc(name,uids);if(ok&&state.chat)chatGo(state.chat,true);return ok}}
 /* ---------- Chat pictures: profile pictures for everyone, and backgrounds for clan and alliance rooms ---------- */
@@ -3500,7 +3534,7 @@ async function myFeedbackLoad(force){if(!FB||!SO.uid||(MYFB.tried&&!force))retur
     const seen=lsGet('tf-fbseen',{});let news=MYFB.list.filter(x=>fbStatusOf(x)&&seen[x.id]!==fbStatusOf(x));
     if(news.length){const x=news[0];const t=String(x.text||'').slice(0,50);
       const msg=news.length>1?`${news.length} of your feedback messages have updates`:`Your feedback "${t}${(x.text||'').length>50?'…':''}": ${FB_ST[fbStatusOf(x)]}`;
-      if(window.TF_UI&&TF_UI.toast)TF_UI.toast(msg,{label:'View',fn:()=>{location.hash='feedback'}});else toast(msg)}
+      if(window.TF_UI&&TF_UI.toast)TF_UI.toast(msg,{label:'View',fn:()=>{GO('feedback')}});else toast(msg)}
     MYFB.list.forEach(x=>{seen[x.id]=fbStatusOf(x)});lsSet('tf-fbseen',seen)}catch(e){MYFB.list=MYFB.list||[]}tfNotify()}
 {const _si=socialInit;socialInit=async function(uid){const r=await _si.apply(this,arguments);MYFB.list=null;MYFB.tried=false;setTimeout(()=>myFeedbackLoad(),2500);return r}}
 {const _fd=feedbackData;feedbackData=function(){const d=_fd.apply(this,arguments);if(SO.uid&&!MYFB.tried)myFeedbackLoad();
@@ -3610,7 +3644,7 @@ function alertsData(){const pr=alertPrefs();return {prefs:pr,live:!!WS,list:aler
 /* pop up new alerts while the site is open (no background service, nothing sent anywhere) */
 function alertsCheck(){const pr=alertPrefs();const seen=new Set(lsGet('tf-alert-seen',[])||[]);const fresh=alertsAll().filter(a=>!seen.has(a.id)&&!AL_HIDE.includes(a.id));
   if(!fresh.length)return;fresh.forEach(a=>seen.add(a.id));lsSet('tf-alert-seen',[...seen].slice(-100));
-  if(pr.notify&&typeof Notification!=='undefined'&&Notification.permission==='granted'&&document.hidden){fresh.forEach(a=>{try{const n=new Notification(a.title,{body:a.text,tag:a.id,icon:'icon-192.png'});n.onclick=()=>{window.focus();location.hash=a.href;n.close()}}catch(e){}})}
+  if(pr.notify&&typeof Notification!=='undefined'&&Notification.permission==='granted'&&document.hidden){fresh.forEach(a=>{try{const n=new Notification(a.title,{body:a.text,tag:a.id,icon:'/icon-192.png'});n.onclick=()=>{window.focus();GO(a.href);n.close()}}catch(e){}})}
   tfNotify()}
 setInterval(alertsCheck,60e3);setTimeout(alertsCheck,8e3);
 Object.assign(window.TF,{alerts:()=>alertsData(),
@@ -3648,7 +3682,7 @@ Object.assign(window.TF,{history:()=>histData()});
 /* data/stats.json is built from WFCD by build/make_stats.py and only loaded when an item page first opens. */
 const ST={data:null,busy:false,err:false};
 function loadStats(){if(ST.data||ST.busy||ST.err)return;ST.busy=true;
-  fetch('data/stats.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{ST.data=j}).catch(()=>{ST.err=true}).finally(()=>{ST.busy=false;
+  fetch('/data/stats.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{ST.data=j}).catch(()=>{ST.err=true}).finally(()=>{ST.busy=false;
     if(typeof FRT!=='undefined')FRT.key='';if(typeof render==='function')render();tfNotify()})}
 const DMG_L={impact:'Impact',puncture:'Puncture',slash:'Slash',heat:'Heat',cold:'Cold',electricity:'Electricity',toxin:'Toxin',blast:'Blast',radiation:'Radiation',gas:'Gas',magnetic:'Magnetic',viral:'Viral',corrosive:'Corrosive',void:'Void',tau:'Tau',true:'True'};
 const pct=v=>Math.round(v*1000)/10+'%';
@@ -3674,7 +3708,7 @@ function statsHTML(name){if(!ST.data){loadStats();return ST.err?'':`<div class="
 /* data/mods.json is built from WFCD by build/make_modinfo.py and only loaded when a build or a mod is opened. */
 const MDI={data:null,busy:false,err:false};
 function loadModInfo(){if(MDI.data||MDI.busy||MDI.err)return;MDI.busy=true;
-  fetch('data/mods.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{MDI.data=j}).catch(()=>{MDI.err=true}).finally(()=>{MDI.busy=false;tfNotify()})}
+  fetch('/data/mods.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{MDI.data=j}).catch(()=>{MDI.err=true}).finally(()=>{MDI.busy=false;tfNotify()})}
 /* one line saying what a mod does at max rank, for lists */
 function modFx(n){if(!MDI.data){loadModInfo();return ''}const x=MDI.data[n];if(!x||!x.fx.length)return '';
   return x.fx.map(l=>l.replace(/\n/g,' ')).join(' · ').slice(0,140)}
@@ -3982,13 +4016,13 @@ async function ntfEnable(){if(typeof Notification==='undefined'){toast("This bro
   if(p!=='granted'){toast('Notifications are blocked for this site. Allow them in your browser settings to turn this on.');ntfSet({on:false});return false}
   ntfSet({on:true});await ntfWorker();return true}
 /* the conversation on screen right now, if any: no notification for it */
-function ntfViewing(conv){if(document.visibilityState!=='visible')return false;const h=location.hash;
+function ntfViewing(conv){if(document.visibilityState!=='visible')return false;const h=HASH();
   if(conv.startsWith('room:'))return h==='#chat';return h==='#friends'&&state.chat===conv.replace(/^dm:/,'')}
 async function ntfShow(title,body,conv,url){const pr=ntfPrefs();
   if(document.visibilityState==='visible'&&document.hasFocus()){if(!ntfViewing(conv))toast(title+': '+body.slice(0,90));return}
   if(ntfPerm()!=='granted')return;const opt={body:body.slice(0,180),tag:conv,renotify:true,silent:!pr.sound,icon:'/icon-192.png',badge:'/icon-192.png',data:{url}};
   try{const reg=await ntfWorker();if(reg&&reg.showNotification){await reg.showNotification(title,opt);return}}catch(e){}
-  try{const n=new Notification(title,opt);n.onclick=()=>{window.focus();location.hash=url.replace(/^.*#/,'');n.close()}}catch(e){}}
+  try{const n=new Notification(title,opt);n.onclick=()=>{window.focus();GO(url.replace(/^.*#/,''));n.close()}}catch(e){}}
 /* only things newer than when this page started listening, and each one once */
 const NTF_START=Date.now();const NTF_SEEN=new Set();
 function ntfScan(){const pr=ntfPrefs();if(!pr.on||typeof SO==='undefined'||!SO.uid)return;
@@ -4083,23 +4117,23 @@ function conservationData(){const C=typeof CONSERVATION!=='undefined'?CONSERVATI
 {const _w=worldData;worldData=function(){if(state.wTab==='cons')return {tab:'cons',region:'',regions:[],cons:conservationData()};return _w()}}
 Object.assign(window.TF,{worldSearch:q=>owSearch(q),conservation:()=>conservationData(),conservationSet:r=>{state.cvR=r;tfNotify()}});
 /* a link from another page into the Farm finder opens its guide straight away on a phone too */
-let FARM_JUMP=false;{const _g=go;go=function(t){const was=location.hash;_g(t);FARM_JUMP=was!=='#farm'&&location.hash==='#farm'}}
-addEventListener('hashchange',()=>{if(location.hash!=='#farm')FARM_JUMP=false});
+let FARM_JUMP=false;{const _g=go;go=function(t){const was=HASH();_g(t);FARM_JUMP=was!=='#farm'&&HASH()==='#farm'}}
+addEventListener('hashchange',()=>{if(HASH()!=='#farm')FARM_JUMP=false});
 window.TF.farmJumped=()=>FARM_JUMP;
 /* ---------- floating chat window: chat stays live on every page while the pop-up window is open ---------- */
 /* The window itself (position, size, minimised, the reopen button) lives in the React shell; it tells us here when it opens and
    closes so rooms stay subscribed, conversations get marked read, and notifications skip the chat you're looking at. */
 const CHATWIN={open:false};
-const chatLive=()=>location.hash==='#chat'||CHATWIN.open;
-{const _cp=chatPageData;chatPageData=function(){const d=_cp();if(CHATWIN.open&&location.hash!=='#chat'){const cur=d.cur;
+const chatLive=()=>HASH()==='#chat'||CHATWIN.open;
+{const _cp=chatPageData;chatPageData=function(){const d=_cp();if(CHATWIN.open&&HASH()!=='#chat'){const cur=d.cur;
   if(ctConv(cur)){chatClose();state.chat=ctConvKey(cur)}else{state.chat=null;if(FB)chatOpen(cur)}}return d}}
-{const _sr=socialRender;socialRender=function(){if(CHATWIN.open&&location.hash!=='#chat')tfNotify();return _sr()}}
+{const _sr=socialRender;socialRender=function(){if(CHATWIN.open&&HASH()!=='#chat')tfNotify();return _sr()}}
 /* leaving the Chat page keeps the room open while the window is up (the page's own listener closes it; reopen straight after) */
-window.addEventListener('hashchange',()=>{if(location.hash!=='#chat'&&CHATWIN.open)setTimeout(()=>tfNotify(),0)});
+window.addEventListener('hashchange',()=>{if(HASH()!=='#chat'&&CHATWIN.open)setTimeout(()=>tfNotify(),0)});
 {const _v=ntfViewing;ntfViewing=function(conv){if(_v(conv))return true;if(!CHATWIN.open||document.visibilityState!=='visible')return false;
   const cur=CT.cur;if(conv.startsWith('room:'))return conv==='room:'+cur;if(conv.startsWith('dm:'))return cur==='f:'+conv.slice(3);return cur===conv}}
 Object.assign(window.TF,{chatWin:open=>{const was=CHATWIN.open;CHATWIN.open=!!open;
-  if(was&&!open&&location.hash!=='#chat'){chatClose();state.chat=null}tfNotify()}});
+  if(was&&!open&&HASH()!=='#chat'){chatClose();state.chat=null}tfNotify()}});
 /* ---------- how to level each kind of gear (not everything works on Hydron), and roles for every Warframe ---------- */
 /* From the Warframe wiki (Mastery Rank, Affinity, Archwing, Archgun Deployer, Necramech Summon, K-Drive, Amp, Kitgun, Zaw,
    Companion, Plexus and the Kuva/Tenet/Coda pages), checked October 2026. */
@@ -4172,16 +4206,125 @@ const SIMPLE=()=>document.documentElement.dataset.detail==='simple';
 document.documentElement.dataset.detail=lsGet('tf-detail','detailed')==='simple'?'simple':'detailed';
 /* item steps and other embedded pages are cached; rebuild them when the view changes */
 window.TF.detailChanged=()=>{ISLV++;FFD.key='';FRT.key='';try{render()}catch(e){}tfNotify()};
+/* ---------- builds fit every version of an item: Saryn's build is Saryn Prime's (and Umbra's) too, Soma Prime's fits Soma ---------- */
+function famOf(n){const b=String(n).replace(/ (Prime|Umbra)$/,'');return [b,b+' Prime',b+' Umbra'].filter(x=>I[x])}
+const famOwned=n=>famOf(n).some(ownedItem);
+function bFits(b){return b.fits||(b.fits=famOf(b.item).filter(x=>x!==b.item))}
+{const _mb=metaBuilds;metaBuilds=function(){const r=_mb();for(const b of r)if(!b.fits)b.fits=famOf(b.item).filter(x=>x!==b.item);return r}}
+/* the weapon and companion build tabs list every version, each showing the family's builds */
+const FAMSRC=new Map();
+{const _bd=buildsData;buildsData=function(src,kind){let ex=FAMSRC.get(src);
+  if(!ex){ex={...src};for(const k in src)for(const v of famOf(k))if(!ex[v])ex[v]=src[k];FAMSRC.set(src,ex)}
+  return _bd(ex,kind)}}
+/* ---------- Friends: where each friend is at, and how you can help them ---------- */
+/* Each player can share a small "what I'm working on" note with their friends only (Firestore share/{uid}, readable by
+   people on their friends list): the gear they're tracking, the parts they still need, what they'd like help with and a
+   short note. Your side matches that against what you own: spare parts, relics that drop their parts, gear you've built. */
+const LF_TAGS=['Relic runs','Steel Path','Eidolons','Archon hunts','Railjack','Levelling gear','Resource farming','Liches & Sisters','Open-world bounties','Duviri & Circuit','Netracells & Archimedea','New player help'];
+SO.share=SO.share||{};
+let SHP=0;
+
+/* what I share */
+function shareOut(){const goals=(P.goals||[]).filter(n=>I[n]&&!on('m|'+n)&&!on('build|'+n)).slice(0,20);const need=[];
+  /* only parts that come from relics or drops: a Market blueprint is just bought, nobody needs help with it */
+  for(const g of goals){const it=I[g];if(!on('bp|'+g)&&(it.bprel||it.bpd))need.push(g+' Blueprint');
+    for(const p of it.parts){if(p.k!=='p'||p.n==='Blueprint'||!(p.rel||(p.dr&&p.dr.length)))continue;if(on('part|'+g+'|'+p.n)||on('built|'+g+'|'+p.n))continue;need.push(p.full||(g+' '+p.n))}}
+  /* open to-do tasks as "kind|ref|title" so friends can open the same page */
+  const tasks=(P.tasks||[]).filter(x=>!x.d&&x.t).slice(0,20).map(x=>[x.k||'note',String(x.r||'').slice(0,80),String(x.t).slice(0,100)].join('|'));
+  return {at:Date.now(),goals,need:[...new Set(need)].slice(0,40),lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)).slice(0,12),note:String(P.lfNote||'').slice(0,120),tasks}}
+function publishShare(){if(!SO.uid||!FB)return Promise.resolve();const ref=FB.fs.collection('share').doc(SO.uid);
+  if(P.shareOff)return ref.delete().catch(()=>{});const d=shareOut();
+  /* until the updated rules (with tasks) are published, share everything else */
+  return ref.set(d).catch(()=>{const {tasks,...rest}=d;return ref.set(rest).catch(()=>{})})}
+{const _pp=publishPublic;publishPublic=function(){const r=_pp();publishShare();return r}}
+
+/* what my friends share with me */
+let SHT=0;
+async function loadShares(){if(!FB||!SO.uid)return;let changed=false;
+  for(const f of SO.friends){if(f.pending)continue;const c=SO.share[f.uid];if(c&&Date.now()-c._t<300000)continue;
+    try{const d=await FB.fs.collection('share').doc(f.uid).get();SO.share[f.uid]={...(d.exists?d.data():{}),_t:Date.now(),st:d.exists?'ok':'none'}}
+    catch(e){SO.share[f.uid]={_t:Date.now(),st:'none'}}changed=true}
+  if(changed)tfNotify()}
+{const _lf=loadFriendCards;loadFriendCards=async function(){const r=await _lf.apply(this,arguments);loadShares();return r}}
+
+/* part name -> the item it belongs to and the relics that drop it */
+let PARTIX=null;
+function partIx(){if(PARTIX)return PARTIX;PARTIX={};
+  for(const it of Object.values(I)){if(it.bprel)PARTIX[it.n+' Blueprint']={item:it.n,rel:it.bprel,dr:it.bpd||null};
+    for(const p of it.parts||[])if(p.k==='p'){const full=p.full||(it.n+' '+p.n);if(!PARTIX[full])PARTIX[full]={item:it.n,rel:p.rel||null,dr:p.dr||null}}}
+  return PARTIX}
+const relName=r=>String(Array.isArray(r)?r[0]:r);
+const TASK_GO={res:'res',item:'item',relic:'relic',mod:'mod',arc:'arc',part:'part',guide:'guide',way:'way',quest:'guide'};
+function shareTasks(sh){return (Array.isArray(sh.tasks)?sh.tasks:[]).filter(x=>typeof x==='string').map(x=>{const a=x.split('|');const k=a[0]||'note',r=a[1]||'',t=a.slice(2).join('|')||r;
+  return {k,r,t,go:TASK_GO[k]&&r?TASK_GO[k]+'|'+r:''}}).filter(x=>x.t)}
+function helpFor(sh,theirMr,myMr){const out=[];const ix=partIx();
+  for(const x of shareTasks(sh)){
+    if(x.k==='relic'&&REL[x.r]&&relCount(x.r)>0)out.push({k:'relic',t:`They're working on ${x.t}, and you have ${relCount(x.r)} ${x.r}. Run it together.`,go:'relic|'+x.r});
+    else if(x.k==='item'&&I[x.r]&&on('m|'+x.r))out.push({k:'build',t:`They're working on ${x.t}. You've mastered ${x.r}, so share your build or tips.`,go:'item|'+x.r})}const need=(sh.need||[]).filter(x=>typeof x==='string');
+  for(const part of need){const p=ix[part]||{};const spare=+((P.dup||{})[part])||0;
+    if(spare){out.push({k:'give',t:`You have ${spare} spare ${part}. Trade it to them.`,go:'part|'+part});continue}
+    const mine=(p.rel||[]).map(relName).filter(r=>REL[r]&&relCount(r)>0);
+    if(mine.length){out.push({k:'relic',t:`Your ${mine.slice(0,3).map(r=>`${r} (${relCount(r)})`).join(', ')} ${mine.length>1?'drop':'drops'} their ${part}. Open ${mine.length>1?'them':'it'} together.`,go:'relic|'+mine[0]});continue}
+    if(p.item&&on('m|'+p.item)&&!(sh.goals||[]).includes(p.item))out.push({k:'know',t:`You've built ${p.item}, so you know where ${part} comes from. Farm it with them.`,go:'item|'+p.item})}
+  for(const g of sh.goals||[])if(typeof g==='string'&&I[g]&&on('m|'+g))out.push({k:'build',t:`You've mastered ${g}. Share your build or tips for it.`,go:'item|'+g});
+  const lf=(sh.lf||[]).filter(t=>LF_TAGS.includes(t));
+  const relN=Object.keys(P.rel||{}).filter(r=>relCount(r)>0).length;const spOn=ALLN.some(n=>on('sp|'+n.id));
+  for(const t of lf){const why=t==='Relic runs'&&relN?`you have ${relN} kind${relN>1?'s':''} of relics`:t==='Steel Path'&&spOn?'you have Steel Path':t==='New player help'&&myMr>theirMr+4?`you're ${myMr-theirMr} ranks ahead`:'';
+    if(why)out.push({k:'lf',t:`They want help with ${t}, and ${why}.`})}
+  const seen=new Set();return out.filter(h=>{const key=h.k==='build'?'build|'+h.go:h.t;if(seen.has(key))return false;seen.add(key);return true}).slice(0,12)}
+
+function agoText(at){if(!at)return '';const s=(Date.now()-at)/1000;if(s<120)return 'Active just now';if(s<3600)return `Active ${Math.round(s/60)} min ago`;
+  if(s<86400)return `Active ${Math.round(s/3600)} h ago`;const d=Math.round(s/86400);return d<60?`Active ${d} day${d>1?'s':''} ago`:'Not active lately'}
+
+function friendsHubData(){const sq=squadData();if(sq.status!=='ok')return {status:sq.status};
+  if(Date.now()-SHT>60000){SHT=Date.now();loadShares()}
+  const myMr=mrInfo(totalXP().total).mr;const pins=P.fpin||[];const q=(state.fhQ||'').toLowerCase().trim();const so=state.fhS||'active';
+  const base=Object.fromEntries((sq.friends||[]).map(f=>[f.uid,f]));
+  let list=SO.friends.map(f=>{const p=SO.pub[f.uid]||{};const b=base[f.uid]||{};const sh=SO.share[f.uid]||{};
+    const xp=+p.xp||0;const m=p.mr!=null?mrInfo(xp):null;const mr=p.mr!=null?+p.mr:null;
+    return {uid:f.uid,name:sqName(f.uid),av:b.av||'',pending:!!f.pending,pinned:pins.includes(f.uid),unread:b.unread||0,code:f.code||p.code||'',
+      mr,mrLabel:mr!=null?'MR '+mrLabel(mr):'',pct:m?Math.round(m.pct):0,toNext:m?Math.max(0,m.next-xp):0,nextLabel:m?'MR '+mrLabel(m.mr+1):'',
+      diff:mr!=null?mr-myMr:0,at:+p.at||0,active:agoText(+p.at||0),
+      nodes:+p.nodes||0,sp:+p.sp||0,maxed:+p.maxed||0,
+      shared:f.pending?'pending':sh.st||'loading',goals:(sh.goals||[]).filter(x=>typeof x==='string'),need:(sh.need||[]).filter(x=>typeof x==='string'),
+      lf:(sh.lf||[]).filter(t=>LF_TAGS.includes(t)),note:typeof sh.note==='string'?sh.note:'',tasks:sh.st==='ok'?shareTasks(sh):[],help:mr!=null&&sh.st==='ok'?helpFor(sh,mr,myMr):[]}});
+  if(q)list=list.filter(f=>f.name.toLowerCase().includes(q)||f.code.toLowerCase().includes(q));
+  list.sort((a,b)=>(b.pinned-a.pinned)||(a.pending-b.pending)||(so==='mr'?((b.mr??-1)-(a.mr??-1)):so==='name'?a.name.localeCompare(b.name):(b.unread-a.unread)||(b.at-a.at))||a.name.localeCompare(b.name));
+  const mine=shareOut();
+  return {status:'ok',q:state.fhQ||'',sort:so,open:state.fhOpen||'',myMr,count:SO.friends.filter(f=>!f.pending).length,friends:list,lfTags:LF_TAGS,
+    me:{on:!P.shareOff,lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)),note:P.lfNote||'',goals:mine.goals.length,need:mine.need.length}}}
+
+Object.assign(window.TF,{
+  friendsHub:()=>friendsHubData(),
+  friendsHubSet:o=>{if(o.q!=null)state.fhQ=o.q;if(o.sort!=null)state.fhS=o.sort;if('open' in o)state.fhOpen=state.fhOpen===o.open?'':o.open;tfNotify()},
+  friendPin:uid=>{P.fpin=P.fpin||[];const i=P.fpin.indexOf(uid);if(i>=0)P.fpin.splice(i,1);else P.fpin.push(uid);saveProfile();tfNotify()},
+  shareSet:o=>{if(o.on!=null)P.shareOff=!o.on;if(o.lf!=null){P.lf=P.lf||[];const i=P.lf.indexOf(o.lf);if(i>=0)P.lf.splice(i,1);else if(LF_TAGS.includes(o.lf))P.lf.push(o.lf)}
+    if(o.note!=null)P.lfNote=String(o.note).slice(0,120);saveProfile();clearTimeout(SHP);SHP=setTimeout(publishShare,1500);tfNotify()},
+});
+/* ---------- your platform badge: picked by you, shown after your name everywhere ---------- */
+/* Warframe ends cross-play names with one private-use character (U+E000 + platform); fonts/tf-platforms.woff2 draws it as a
+   badge. Which number means which platform isn't documented, so players pick their own on the Home page. The pick replaces
+   that last character in the name Tennoform shows and publishes (public card, chat, friends' lists). */
+const BADGES=[['pc','PC'],['ps','PlayStation'],['xb','Xbox'],['sw','Switch'],['ios','iPhone / iPad'],['and','Android']];
+const baseName=n=>String(n||'').replace(/[-]+$/u,'');
+function withBadge(n){const b=P.badge;if(!b)return String(n||'');const base=baseName(n).slice(0,39);if(b==='none')return base;
+  const i=BADGES.findIndex(x=>x[0]===b);return i<0?String(n||''):base+String.fromCharCode(0xE000+i)}
+function badgeAuto(n){const c=String(n||'').charCodeAt(String(n||'').length-1);const i=c-0xE000;return i>=0&&i<BADGES.length?BADGES[i][0]:''}
+{const _mn=myName;myName=function(){return withBadge(_mn())}}
+{const _hd=homeData;homeData=function(){const d=_hd();const raw=d.name;if(raw)d.name=withBadge(raw);
+  d.badge={cur:P.badge||'',auto:badgeAuto(raw),options:BADGES.map(([value,label])=>({value,label}))};return d}}
+Object.assign(window.TF,{badgeSet:v=>{P.badge=v==='none'||BADGES.some(x=>x[0]===v)?v:'';saveProfile();
+  if(typeof publishPublic==='function')publishPublic();tfNotify();toast(v==='none'?'Platform badge hidden':v?'Platform badge updated':'Using the badge from your Warframe name')}});
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
 document.addEventListener('change',e=>{const t=e.target;
   if(t.matches('input.ck[data-k]')){const k=t.dataset.k;setK(k,t.checked);document.querySelectorAll(`input.ck[data-k="${CSS.escape(k)}"]`).forEach(o=>{o.checked=t.checked;syncRow(o)});refresh();
-    if(k.startsWith('q|')&&location.hash==='#quests'){const y=window.scrollY;render();window.scrollTo(0,y)}}
+    if(k.startsWith('q|')&&HASH()==='#quests'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='fsel'){state.frame=t.value;state.build=0;saveUI();render()}
   if(t.id==='msort'){state.mkSort=t.value;render()}
   if(t.id==='tgt'){state.target=+t.value;render()}
-  if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
+  if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(HASH()==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast(typeof idMiss==='function'?idMiss(t.value):'No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
@@ -4205,7 +4348,7 @@ document.addEventListener('click',async e=>{
   if(!t)return;
   if(t.id==='menu'){setMenu(!$('#drawer').classList.contains('open'));return}
   if(t.id==='unlink'){P.wfid='';lsSet('tenno-acct','');saveProfile();render();return}
-  if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(location.hash!=='#missions')location.hash='missions';else{render();scrollTo(0,0)}return}
+  if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(HASH()!=='#missions')GO('missions');else{render();scrollTo(0,0)}return}
   if(t.dataset.ipip){const [key,n,v]=t.dataset.ipip.split('|');setIntr(key+'|'+n,+v);const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.oth){P.oth=P.oth||{};const k=t.dataset.oth;P.oth[k]=Math.max(0,(+P.oth[k]||0)+(+t.dataset.d));saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.id==='exhtml'){const nm=(P.tname||(P.prof&&P.prof.name)||'tenno').replace(/\W+/g,'-');saveFile('tennoform-report-'+nm+'.html',reportHTML(),'text/html');return}
@@ -4220,21 +4363,21 @@ document.addEventListener('click',async e=>{
   if(t.id==='lgout'){flushNow();FB&&FB.auth.signOut();toast('Signed out. Progress stays in this browser too.');return}
   if(t.dataset.rk){const row=t.closest('.rk');const n=row.dataset.n;const r=rankOf(n);setRank(n,t.dataset.rk==='max'?99:r+(+t.dataset.rk));row.outerHTML=rkRow(I[n]);return}
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
-  if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
+  if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(HASH()!=='#ranks')GO('ranks');else render();return}
   if(t.id==='rkmaxall'){if(!t.dataset.armed){const k=(state._rkList||[]).filter(n=>!on('m|'+n)).length;t.dataset.armed=1;t.textContent=`Mark ${k} item${k===1?'':'s'} mastered? Tap again`;t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all in this list…'}},5000);return}
     logBulk('Maxed '+(state._rkList||[]).filter(n=>!on('m|'+n)).length+' items on Ranks',()=>(state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)}));render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
   if(t.id==='boreset'){P.bo={};saveProfile();render();toast('Using your Ranks page numbers again');return}
   if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);logBulk('Quests up to '+q.n,()=>Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)}));const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
   if(t.dataset.go){e.preventDefault();go(t.dataset.go)}
-  else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else render()}
-  else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render()}
+  else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(HASH()!=='#mastery')GO('mastery');else render()}
+  else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(HASH()!=='#tenno')GO('tenno');else render()}
   else if(t.dataset.mk){state.mkTab=t.dataset.mk;saveUI();render()}
   else if(t.dataset.build){state.build=+t.dataset.build;render()}
-  else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}}
-  else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
+  else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(HASH()!=='#frames')GO('frames');else{render();window.scrollTo(0,0)}}
+  else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(HASH()!=='#farm')GO('farm');else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
   else if(t.dataset.cat){state.allCat=t.dataset.cat;state.allQ='';saveUI();render()}
   else if(t.dataset.planet){const md=t.dataset.mode;logBulk('All of '+t.dataset.planet+(md==='sp'?' (Steel Path)':''),()=>ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1)));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
-  else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else focusQuest()}
+  else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(HASH()!=='#quests')GO('quests');else focusQuest()}
   else if(t.dataset.wh){copy(t.dataset.wh,'Whisper copied. Paste it into in-game chat.')}
   else if(t.dataset.fstart){const n=t.dataset.fstart;const d=foundryFind(n)||43200;P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d});saveProfile();toast(n+' started · ready in '+hrs(d))}
   else if(t.id==='faddb'){const n=$('#fadd').value.trim();if(!n)return;const d=foundryFind(n);P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d||43200});saveProfile();render();toast(d?n+' added':'Added with a 12 h default timer')}
@@ -4269,7 +4412,7 @@ function bindPage(r){
   if(r==='resources'&&state.resSel&&window.innerWidth<900&&!state.resQ)setTimeout(()=>$('#rdet')?.scrollIntoView({block:'start'}),30)}
 liveResurgence();
 function bootSync(){if(HOSTED&&P.wfid&&(!P.auto||Date.now()-new Date(P.auto)>6*3600e3))autoSync(true)}
-setInterval(()=>{if(location.hash==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
+setInterval(()=>{if(HASH()==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
 render();fbInit();
 document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();d.classList.add('over')}});
 document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d)d.classList.remove('over')});

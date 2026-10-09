@@ -53,7 +53,7 @@ const Synd = memo(function Synd({ e }: { e: SyndCard }) {
         <span className="ml-auto flex flex-wrap items-center gap-1.5">
           {e.synced ? <Badge variant="outline" className="text-muted-foreground"><RefreshCw /> From game sync</Badge> : e.set ? <Badge variant="outline" className="text-muted-foreground">Set by you</Badge> : null}
           {e.locked ? (
-            <a href="#quests" onClick={(x) => { x.preventDefault(); tf().act("a", { href: "#quests", "data-q": e.gate }) }}>
+            <a href="/quests/" onClick={(x) => { x.preventDefault(); tf().act("a", { href: "#quests", "data-q": e.gate }) }}>
               <Badge variant="outline" className="border-amber-500/40 text-amber-700 dark:text-amber-400"><Lock /> After {e.gate}</Badge>
             </a>
           ) : null}

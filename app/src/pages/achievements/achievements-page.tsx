@@ -73,8 +73,8 @@ export function AchievementsPage() {
           </b>
           <p className="text-muted-foreground">
             Tick a checklist item on{" "}
-            <a href="#today" className="text-foreground underline decoration-primary/60 underline-offset-4">Today</a>, update a rank on{" "}
-            <a href="#ranks" className="text-foreground underline decoration-primary/60 underline-offset-4">Ranks</a>, or finish a task, and it shows up here.
+            <a href="/today/" className="text-foreground underline decoration-primary/60 underline-offset-4">Today</a>, update a rank on{" "}
+            <a href="/ranks/" className="text-foreground underline decoration-primary/60 underline-offset-4">Ranks</a>, or finish a task, and it shows up here.
           </p>
         </Card>
       ) : (
