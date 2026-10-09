@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronRight, Fish, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
+import { Check, ChevronRight, Fish, MapPin, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -80,8 +80,13 @@ function Fishing({ d }: { d: WorldData }) {
                   <Badge variant="outline" className={RARE(f.rarity)}>{f.rarity}</Badge>
                 </span>
                 <span className="text-sm text-muted-foreground">
-                  <b className="font-medium text-foreground">{f.bio}</b> · {f.time} · spear: {f.spear}{f.bait ? <> · bait: <b className="font-medium text-foreground">{f.bait}</b></> : null}{f.spots.length ? ` · spot: ${f.spots.join(", ")}` : ""}
+                  <b className="font-medium text-foreground">{f.bio}</b> · {f.time} · spear: {f.spear}{f.bait ? <> · bait: <b className="font-medium text-foreground">{f.bait}</b></> : null}
                 </span>
+                {f.spots.length ? (
+                  <ul className="flex flex-col gap-0.5 text-sm" aria-label={`Where to catch ${f.n}`}>
+                    {f.spots.map((sp) => <li key={sp} className="flex gap-1.5"><MapPin className="mt-0.5 size-3.5 shrink-0 text-primary/70" aria-hidden />{sp}</li>)}
+                  </ul>
+                ) : null}
                 {f.gives.length ? (
                   <span className="text-xs text-muted-foreground">Gives {f.gives.map((g, i) => <span key={g.n}>{i ? ", " : ""}<GoLink k={g.go}>{g.n}</GoLink></span>)}</span>
                 ) : null}
