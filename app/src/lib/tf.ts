@@ -657,7 +657,7 @@ export type GuidesData = {
 }
 
 export type BuildCard = {
-  id: string; src: "meta" | "player" | "mine"; item: string; img: string; kind: string; cat: string; name: string; role: string
+  id: string; src: "meta" | "player" | "mine"; item: string; fits?: string[]; img: string; kind: string; cat: string; name: string; role: string
   author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number; dated?: string; stale?: boolean
 }
 export type BuildDetail = BuildCard & {
