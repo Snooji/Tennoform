@@ -3,7 +3,7 @@
    outside the site is blocked. Exits non-zero if any check fails.
    1. pages: every page in dark and light, phone and desktop, loads without script errors and passes axe (WCAG 2.1 AA)
    2. grey screens: tapping every tab and switch on every page never leaves an empty overlay or a locked page
-   3. styles: Foundry and Prime, light and dark, with a few colour palettes, pass axe
+   3. styles: Foundry, Prime and the five faction styles, light and dark, with a few colour palettes, pass axe
    4. simple view: every page in Simple view loads without script errors and passes axe
    5. chat window: the pop-up chat opens from its button, moves, resizes, minimises, closes and passes axe */
 const { chromium } = require('playwright')
@@ -33,6 +33,17 @@ async function axe(p) {
   return p.evaluate(async () => (await axe.run(document, { resultTypes: ['violations'], runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] } }))
     .violations.map((v) => `${v.id} x${v.nodes.length} (${v.nodes[0].target.join(' ').slice(0, 70)})`))
 }
+/* wait for one-off entrance animations to finish (faction panels fade or flicker in); looping backdrop motion is ignored */
+const settle = (p) => p.evaluate(async () => {
+  const until = Date.now() + 3000
+  for (;;) {
+    const running = document.getAnimations().filter((a) => a.playState === 'running' && Number.isFinite(a.effect?.getComputedTiming().endTime))
+    if (!running.length || Date.now() > until) return
+    await Promise.all(running.map((a) => a.finished.catch(() => {})))
+    await new Promise((r) => setTimeout(r, 120)) // panels that mount a moment later start their own entrance
+  }
+})
+
 async function open(p, set) {
   await p.goto(BASE + '#home')
   await p.evaluate((s) => { localStorage.clear(); for (const [k, v] of Object.entries(s)) localStorage.setItem(k, JSON.stringify(v)) }, set)
@@ -88,12 +99,14 @@ async function grey(b) {
 }
 
 async function styles(b) {
-  const combos = [['foundry', 'light', 'bronze'], ['foundry', 'dark', 'teal'], ['prime', 'dark', 'gold'], ['prime', 'light', 'crimson'], ['default', 'dark', 'void']]
+  const combos = [['foundry', 'light', 'bronze'], ['foundry', 'dark', 'teal'], ['prime', 'dark', 'gold'], ['prime', 'light', 'crimson'], ['default', 'dark', 'void'],
+    ['grineer', 'dark', 'faction'], ['grineer', 'light', 'crimson'], ['corpus', 'light', 'faction'], ['corpus', 'dark', 'teal'], ['entrati', 'dark', 'faction'],
+    ['entrati', 'light', 'jade'], ['lotus', 'dark', 'faction'], ['lotus', 'light', 'void'], ['infested', 'dark', 'faction'], ['infested', 'light', 'bronze']]
   for (const [style, mode, accent] of combos) for (const w of [1280, 390]) {
     const ctx = await context(b, w, mode), p = await ctx.newPage()
     await open(p, { 'tf-style': style, 'tf-theme': mode, 'tf-accent': accent })
     for (const r of ['home', 'today', 'farm', 'mastery']) {
-      await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(450)
+      await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(450); await settle(p)
       const v = await axe(p)
       if (v.length) fail(`${style} ${mode} ${accent} ${w} #${r} axe: ${v.join('; ')}`)
     }

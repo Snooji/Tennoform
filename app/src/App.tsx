@@ -11,6 +11,7 @@ import { CommandMenu } from "@/components/shell/command-menu"
 import { LegacyOutlet } from "@/components/shell/legacy-outlet"
 import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { ChatFloat } from "@/components/shell/chat-float"
+import { ThemeScene } from "@/components/shell/theme-scene"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
 import { SellDialog } from "@/components/tf/sell-dialog"
@@ -131,7 +132,7 @@ export default function App() {
   const s = useTF()
   const [searchOpen, setSearchOpen] = useState(false)
   const Page = PAGES[s.route]
-  useAccent(s.mr)
+  useAccent(s.mr, s.style)
   const [menuOpen, setMenuOpen] = useState(false)
   useNavReset(() => { setSearchOpen(false); setMenuOpen(false) })
 
@@ -173,6 +174,7 @@ export default function App() {
         </SidebarInset>
         <MobileTabs />
         <ChatFloat />
+        <ThemeScene />
         <CommandMenu open={searchOpen} setOpen={setSearchOpen} />
         <SellDialog />
         <Toaster theme={isDark(s.theme) ? "dark" : "light"} position="bottom-center" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />

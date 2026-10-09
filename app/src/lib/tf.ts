@@ -20,7 +20,7 @@ export type TFState = {
   admin: boolean
   unread: number
   theme: "dark" | "light" | "auto"
-  style: "default" | "foundry" | "prime"
+  style: "default" | "foundry" | "prime" | "grineer" | "corpus" | "entrati" | "lotus" | "infested"
   demo: boolean
   isNew: boolean
   qs: boolean

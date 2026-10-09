@@ -1,0 +1,514 @@
+/* ==========================================================================================================
+   Faction styles: Grineer, Corpus, Entrati, Lotus, Infested.
+   Each one has a light and a dark version, a living backdrop (components/shell/theme-scene.tsx), its own panel
+   shape, buttons, headings and motion. All artwork is original (themes/*.svg, build/make_theme_art.py); shapes
+   follow each faction's shape language: Grineer bulbous riveted plate, Corpus boxy bracketed glass, Entrati
+   arched brass with obol coins, Lotus flowing hairlines and halos, Infested asymmetric living flesh.
+   The palette (data-accent) sets the main colour; "Faction colours" (data-accent="faction") keeps the faction's own.
+   ========================================================================================================== */
+@font-face{font-family:"Black Ops One";font-display:swap;src:url(/fonts/black-ops-one-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Michroma";font-display:swap;src:url(/fonts/michroma-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Federant";font-display:swap;src:url(/fonts/federant-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Cormorant Garamond";font-weight:600;font-display:swap;src:url(/fonts/cormorant-garamond-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Grenze Gotisch";font-weight:700;font-display:swap;src:url(/fonts/grenze-gotisch-latin-700-normal.woff2) format("woff2")}
+
+/* ---------- shared: the backdrop layer, body, headings, entrance motion ---------- */
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) {
+  background-color: var(--fx-bg); background-attachment: fixed;
+}
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) body { background: transparent; }
+.tf-scene { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; contain: strict; }
+.tf-scene * { will-change: transform, opacity; }
+:root.tf-hidden .tf-scene *, :root.tf-hidden .fx-anim { animation-play-state: paused !important; }
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) :is(h1, h2, h3, [data-slot="card-title"], [data-slot="dialog-title"]) { font-family: var(--font-heading); }
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) :focus-visible { outline-color: var(--fx-1); }
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) ::selection { background: color-mix(in srgb, var(--fx-1) 40%, transparent); }
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) * { scrollbar-color: color-mix(in srgb, var(--fx-1) 55%, transparent) transparent; }
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) :is([data-slot="card"], .welcome, .panel) { position: relative; }
+/* controls that sit straight on the page get a solid surface, so the moving backdrop never shows through their text */
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) :is([data-slot="toggle"]:not([data-pressed]), [data-slot="button"][data-variant="outline"], [data-slot="select-trigger"], input[data-slot="input"]) { background-color: var(--card); }
+
+/* ==========================================================================================================
+   GRINEER: mass-produced pressed steel. Bulbous riveted plates, a hazard-striped edge, stencil headings,
+   drifting embers and a slow warning-beacon sweep. Dark is the native look; light is sun-faded primer.
+   ========================================================================================================== */
+:root[data-theme="grineer"] {
+  --radius: 0.85rem;
+  --font-heading: "TF Platforms", "Black Ops One", "Barlow Semi Condensed", Impact, sans-serif;
+  --fx-1: #b5531c; --fx-hz: #f2b705; --fx-bg: #e4dcc8; --fx-tile: url(/themes/grineer-plates.svg); --fx-plate: #efe9da;
+  --background: #e4dcc8; --foreground: #22201a; --card: #efe9da; --card-foreground: #22201a; --elevated: #f3eee2;
+  --popover: #f3eee2; --popover-foreground: #22201a; --secondary: #dad1bb; --secondary-foreground: #22201a;
+  --muted: #dcd3bd; --muted-foreground: #4f4836; --accent: #e8d9ad; --accent-foreground: #22201a;
+  --destructive: #a1172c; --success: #3f5a1c; --warning: #7a4a05;
+  --border: #b6aa8b; --input: #a99c7b; --ring: #b5531c;
+  --sidebar: #ddd4bf; --sidebar-foreground: #22201a; --sidebar-accent: #d1c6ab; --sidebar-accent-foreground: #22201a; --sidebar-border: #b6aa8b; --sidebar-ring: #b5531c;
+  --shadow-elev: 0 2px 0 rgb(0 0 0 / 20%), 0 14px 30px rgb(40 30 10 / 25%);
+}
+:root.dark[data-theme="grineer"] {
+  --fx-1: #f2b705; --fx-bg: #1a1a16; --fx-plate: #26251d;
+  --background: #1a1a16; --foreground: #e6dcc3; --card: #26251d; --card-foreground: #e6dcc3; --elevated: #2e2c23;
+  --popover: #2e2c23; --popover-foreground: #e6dcc3; --secondary: #2f2d24; --secondary-foreground: #e6dcc3;
+  --muted: #2b2a22; --muted-foreground: #b9ae93; --accent: #3a3524; --accent-foreground: #f6e7b0;
+  --destructive: #ff8a7a; --success: #a8c46a; --warning: #f2b705;
+  --border: #474332; --input: #555038; --ring: #f2b705;
+  --sidebar: #1f1e18; --sidebar-foreground: #e6dcc3; --sidebar-accent: #312e22; --sidebar-accent-foreground: #f6e7b0; --sidebar-border: #3b382a; --sidebar-ring: #f2b705;
+  --shadow-elev: 0 2px 0 rgb(0 0 0 / 60%), 0 18px 40px rgb(0 0 0 / 55%);
+}
+:root[data-theme="grineer"][data-accent="faction"] { --primary: #9a3b12; --primary-foreground: #fff7ec; --chart-1: #9a3b12; --sidebar-primary: #9a3b12; --sidebar-primary-foreground: #fff7ec; }
+:root.dark[data-theme="grineer"][data-accent="faction"] { --primary: #f2b705; --primary-foreground: #1a1a16; --chart-1: #f2b705; --sidebar-primary: #f2b705; --sidebar-primary-foreground: #1a1a16; }
+:root[data-theme="grineer"] {
+  background-image: radial-gradient(1400px 700px at 80% -10%, rgb(181 83 28 / 0.16), transparent 60%), var(--fx-tile);
+  background-size: auto, 220px 220px;
+}
+:root[data-theme="grineer"] :is(h1, h2, h3, [data-slot="card-title"]) { text-transform: uppercase; letter-spacing: 0.04em; font-weight: 400; }
+:root[data-theme="grineer"] main h1 { color: var(--foreground); text-shadow: 0 2px 0 rgb(0 0 0 / 0.35); }
+:root[data-theme="grineer"] main h1::after {
+  content: ""; display: block; width: 9rem; height: 8px; margin-top: 0.45rem; border-radius: 2px;
+  background: repeating-linear-gradient(-45deg, var(--fx-hz) 0 8px, #15140f 8px 16px);
+}
+/* pressed, riveted steel plates; one corner chamfered for that crude, cast look; a hazard strip along the top */
+:root[data-theme="grineer"] :is([data-slot="card"], .welcome, .panel) {
+  border: 3px solid color-mix(in srgb, var(--border) 70%, #000); border-radius: 14px 14px 14px 4px;
+  background:
+    radial-gradient(14px 26px at 14px 100%, rgb(181 83 28 / 0.22), transparent 70%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), transparent 40%, rgb(0 0 0 / 0.12)),
+    var(--fx-plate);
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.08), inset 0 -3px 0 rgb(0 0 0 / 0.22), 0 3px 0 rgb(0 0 0 / 0.25), 0 16px 30px -18px rgb(0 0 0 / 0.6);
+  animation: fx-g-in 0.42s cubic-bezier(.2,.9,.3,1.2) both;
+}
+:root[data-theme="grineer"] :is([data-slot="card"], .welcome, .panel)::before {
+  content: ""; position: absolute; left: 18px; right: 18px; top: -3px; height: 6px; border-radius: 0 0 3px 3px; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, var(--fx-hz) 0 7px, #15140f 7px 14px); opacity: 0.85;
+}
+/* bolt heads in the corners */
+:root[data-theme="grineer"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; inset: 6px; pointer-events: none; z-index: 1;
+  --bolt: radial-gradient(circle at 40% 35%, rgb(255 255 255 / 0.35) 0 1.2px, color-mix(in srgb, var(--border) 80%, #000) 1.6px 3.6px, transparent 4.2px);
+  background: var(--bolt) 0 0 / 9px 9px no-repeat, var(--bolt) 100% 0 / 9px 9px no-repeat, var(--bolt) 100% 100% / 9px 9px no-repeat, var(--bolt) 0 100% / 9px 9px no-repeat;
+}
+@keyframes fx-g-in { 0% { transform: translateY(10px) scale(.985); opacity: 0; } 70% { transform: translateY(-1px); opacity: 1; } 100% { transform: none; } }
+/* stamped-metal buttons: hazard stripes slide across on hover, the plate presses down when clicked */
+:root[data-theme="grineer"] :is(:is(button, a).bg-primary, .btn.primary) {
+  border: 2px solid rgb(0 0 0 / 0.55); border-radius: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700;
+  box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.28), 0 3px 0 rgb(0 0 0 / 0.55);
+  background-image: repeating-linear-gradient(-45deg, rgb(0 0 0 / 0) 0 10px, rgb(0 0 0 / 0) 10px 20px); background-size: 28px 28px;
+  transition: transform .08s, box-shadow .08s, background-image .2s;
+}
+:root[data-theme="grineer"] :is(:is(button, a).bg-primary, .btn.primary):hover {
+  background-image: repeating-linear-gradient(-45deg, rgb(0 0 0 / 0.16) 0 7px, transparent 7px 14px); animation: fx-g-stripes .6s linear infinite;
+}
+:root[data-theme="grineer"] :is(:is(button, a).bg-primary, .btn.primary):active { transform: translateY(2px); box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.2), 0 1px 0 rgb(0 0 0 / 0.55); }
+@keyframes fx-g-stripes { to { background-position: 28px 0; } }
+:root[data-theme="grineer"] [data-slot="button"][data-variant="outline"] { border-width: 2px; border-color: color-mix(in srgb, var(--border) 70%, #000); border-radius: 10px; }
+:root[data-theme="grineer"] [data-slot="badge"][data-variant="outline"] { border-width: 2px; border-radius: 6px; text-transform: uppercase; letter-spacing: .04em; }
+:root[data-theme="grineer"] [data-slot="progress-indicator"], :root[data-theme="grineer"] [data-slot="progress"] > div {
+  background: repeating-linear-gradient(-45deg, var(--fx-hz) 0 6px, color-mix(in srgb, var(--fx-hz) 75%, #000) 6px 12px);
+}
+:root[data-theme="grineer"] [data-slot="checkbox"][data-checked] { background: var(--fx-hz); border-color: #15140f; color: #15140f; }
+:root[data-theme="grineer"] [data-slot="sidebar-inner"] { border-right: 3px solid color-mix(in srgb, var(--border) 70%, #000); background-image: linear-gradient(180deg, rgb(0 0 0 / 0.04), transparent 30%); }
+:root[data-theme="grineer"] [aria-current="page"][data-sidebar="menu-button"] { box-shadow: inset 4px 0 0 var(--fx-hz); background: color-mix(in srgb, var(--fx-hz) 14%, transparent); }
+:root[data-theme="grineer"] [data-slot="sidebar-inset"] > header { border-bottom: 3px solid color-mix(in srgb, var(--border) 70%, #000); }
+/* the scene: embers rising through smoke, and a rotating warning beacon in the corner */
+.tf-scene-grineer .sc-g-beacon {
+  position: absolute; top: -45vmax; right: -45vmax; width: 90vmax; height: 90vmax; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 300deg, rgb(242 120 5 / 0.0) 300deg, rgb(242 140 5 / 0.13) 345deg, transparent 360deg);
+  animation: sc-spin 7s linear infinite;
+}
+.tf-scene-grineer .sc-g-smoke {
+  position: absolute; inset: auto -10% -20% -10%; height: 55%;
+  background: radial-gradient(60% 60% at 30% 100%, rgb(70 60 40 / 0.35), transparent 70%), radial-gradient(50% 60% at 80% 100%, rgb(90 50 20 / 0.25), transparent 70%);
+  animation: sc-drift 18s ease-in-out infinite alternate;
+}
+.tf-scene-grineer .sc-g-ember {
+  position: absolute; border-radius: 50%; background: #ffb347; box-shadow: 0 0 6px 2px rgb(255 120 30 / 0.7);
+  animation-name: sc-rise; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+:root:not(.dark)[data-theme="grineer"] .tf-scene-grineer { opacity: 0.55; }
+:root:not(.dark)[data-theme="grineer"] .sc-g-beacon { display: none; }
+
+/* ==========================================================================================================
+   CORPUS: sterile corporate glass. Boxy bevelled panels with glowing corner brackets, a hex grid, data
+   pulsing along circuit traces and a holographic scan line. Light is the native "white ship"; dark is vacuum navy.
+   ========================================================================================================== */
+:root[data-theme="corpus"] {
+  --radius: 0.3rem;
+  --font-heading: "TF Platforms", "Michroma", "Barlow Semi Condensed", system-ui, sans-serif;
+  --fx-1: #1f5fbf; --fx-glow: #3fd0ff; --fx-bg: #eef3f7; --fx-tile: url(/themes/corpus-hex.svg); --fx-glass: rgb(255 255 255 / 0.74);
+  --background: #eef3f7; --foreground: #0e1a2b; --card: #ffffff; --card-foreground: #0e1a2b; --elevated: #ffffff;
+  --popover: #ffffff; --popover-foreground: #0e1a2b; --secondary: #e3eaf1; --secondary-foreground: #0e1a2b;
+  --muted: #e5ecf3; --muted-foreground: #45566c; --accent: #dbeefb; --accent-foreground: #0e1a2b;
+  --destructive: #b42318; --success: #13795b; --warning: #b54708;
+  --border: #c3d2e1; --input: #b3c5d8; --ring: #1f5fbf;
+  --sidebar: rgb(248 251 253 / 0.86); --sidebar-foreground: #0e1a2b; --sidebar-accent: #e1ebf4; --sidebar-accent-foreground: #0e1a2b; --sidebar-border: #c3d2e1; --sidebar-ring: #1f5fbf;
+  --shadow-elev: 0 1px 2px rgb(14 26 43 / 12%), 0 16px 36px rgb(14 26 43 / 14%);
+}
+:root.dark[data-theme="corpus"] {
+  --fx-1: #3fd0ff; --fx-bg: #0b1220; --fx-glass: rgb(20 34 56 / 0.72);
+  --background: #0b1220; --foreground: #e8f1f8; --card: #142238; --card-foreground: #e8f1f8; --elevated: #182a44;
+  --popover: #182a44; --popover-foreground: #e8f1f8; --secondary: #172a42; --secondary-foreground: #e8f1f8;
+  --muted: #142238; --muted-foreground: #9fb4ca; --accent: #13314a; --accent-foreground: #c9f1ff;
+  --destructive: #ff8a80; --success: #2dd4bf; --warning: #ff8a3d;
+  --border: #244263; --input: #2b4d72; --ring: #3fd0ff;
+  --sidebar: rgb(9 17 30 / 0.86); --sidebar-foreground: #e8f1f8; --sidebar-accent: #15304b; --sidebar-accent-foreground: #c9f1ff; --sidebar-border: #1f3a58; --sidebar-ring: #3fd0ff;
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 50%), 0 18px 40px rgb(0 0 0 / 50%), 0 0 0 1px rgb(63 208 255 / 0.12);
+}
+:root[data-theme="corpus"][data-accent="faction"] { --primary: #1f5fbf; --primary-foreground: #ffffff; --chart-1: #1f5fbf; --sidebar-primary: #1f5fbf; --sidebar-primary-foreground: #ffffff; }
+:root.dark[data-theme="corpus"][data-accent="faction"] { --primary: #3fd0ff; --primary-foreground: #04121c; --chart-1: #3fd0ff; --sidebar-primary: #3fd0ff; --sidebar-primary-foreground: #04121c; }
+:root[data-theme="corpus"] {
+  background-image: linear-gradient(180deg, rgb(63 208 255 / 0.06), transparent 40%), var(--fx-tile);
+  background-size: auto, 216px 156px;
+}
+:root[data-theme="corpus"] :is(h1, h2, h3, [data-slot="card-title"]) { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 400; font-size: 0.92em; }
+:root[data-theme="corpus"] main h1 { font-size: 1.6rem; color: var(--foreground); }
+:root[data-theme="corpus"] main h1::after {
+  content: ""; display: block; width: 100%; max-width: 18rem; height: 2px; margin-top: 0.5rem;
+  background: linear-gradient(90deg, var(--fx-1) 0 30%, color-mix(in srgb, var(--fx-1) 25%, transparent) 30% 100%);
+}
+/* frosted glass with glowing corner brackets; a holographic flicker when a panel appears */
+:root[data-theme="corpus"] :is([data-slot="card"], .welcome, .panel) {
+  background: var(--fx-glass); -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid color-mix(in srgb, var(--fx-1) 35%, var(--border)); border-radius: 4px;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.04) inset, 0 12px 30px -20px color-mix(in srgb, var(--fx-1) 60%, transparent);
+  animation: fx-c-in 0.42s steps(1, end) both, fx-c-fade .42s ease-out both;
+}
+:root[data-theme="corpus"] :is([data-slot="card"], .welcome, .panel)::before,
+:root[data-theme="corpus"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; z-index: 1;
+  border: 2px solid var(--fx-1); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--fx-1) 70%, transparent));
+}
+:root[data-theme="corpus"] :is([data-slot="card"], .welcome, .panel)::before { top: 3px; left: 3px; border-right: 0; border-bottom: 0; }
+:root[data-theme="corpus"] :is([data-slot="card"], .welcome, .panel)::after { bottom: 3px; right: 3px; border-left: 0; border-top: 0; }
+@keyframes fx-c-in { 0% { opacity: 0; } 20% { opacity: .65; } 35% { opacity: .2; } 55% { opacity: .9; } 70% { opacity: .5; } 100% { opacity: 1; } }
+@keyframes fx-c-fade { from { transform: translateY(4px); } to { transform: none; } }
+:root[data-theme="corpus"] :is(:is(button, a).bg-primary, .btn.primary) {
+  border-radius: 3px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; font-size: 0.82em;
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  background-image: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.38) 50%, transparent 65%); background-size: 260% 100%; background-repeat: no-repeat; background-position: 160% 0;
+  transition: background-position .5s ease, box-shadow .2s;
+}
+:root[data-theme="corpus"] :is(:is(button, a).bg-primary, .btn.primary):hover { background-position: -60% 0; box-shadow: 0 0 16px color-mix(in srgb, var(--fx-glow) 50%, transparent); }
+:root[data-theme="corpus"] [data-slot="button"][data-variant="outline"] { border-color: color-mix(in srgb, var(--fx-1) 45%, var(--border)); border-radius: 3px; }
+:root[data-theme="corpus"] [data-slot="button"][data-variant="outline"]:hover { box-shadow: 0 0 10px color-mix(in srgb, var(--fx-glow) 35%, transparent); }
+:root[data-theme="corpus"] [data-slot="badge"] { border-radius: 2px; letter-spacing: .05em; }
+:root[data-theme="corpus"] [data-slot="progress-indicator"], :root[data-theme="corpus"] [data-slot="progress"] > div {
+  background: linear-gradient(90deg, var(--fx-1), var(--fx-glow)); box-shadow: 0 0 8px color-mix(in srgb, var(--fx-glow) 60%, transparent);
+}
+:root[data-theme="corpus"] [data-slot="checkbox"] { border-radius: 2px; }
+:root[data-theme="corpus"] [data-slot="checkbox"][data-checked] { box-shadow: 0 0 8px color-mix(in srgb, var(--fx-glow) 55%, transparent); }
+:root[data-theme="corpus"] [data-slot="sidebar-inner"] { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-right: 1px solid color-mix(in srgb, var(--fx-1) 30%, var(--border)); }
+:root[data-theme="corpus"] [aria-current="page"][data-sidebar="menu-button"] { box-shadow: inset 2px 0 0 var(--fx-1), 0 0 12px -4px var(--fx-glow); background: color-mix(in srgb, var(--fx-1) 12%, transparent); }
+:root[data-theme="corpus"] [data-slot="sidebar-inset"] > header { border-bottom: 1px solid color-mix(in srgb, var(--fx-1) 30%, var(--border)); }
+/* the scene: data pulses running along circuit traces, a holographic scan line, cold haze */
+.tf-scene-corpus .sc-c-traces { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tf-scene-corpus .sc-c-trace { fill: none; stroke: #2b8fd6; stroke-opacity: .16; stroke-width: 1.2; }
+.tf-scene-corpus .sc-c-pulse { fill: none; stroke: #3fd0ff; stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 14 1800; filter: drop-shadow(0 0 4px #3fd0ff); animation: sc-c-run 8s linear infinite; }
+@keyframes sc-c-run { from { stroke-dashoffset: 1814; } to { stroke-dashoffset: 0; } }
+.tf-scene-corpus .sc-c-scan { position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(180deg, transparent, rgb(63 208 255 / 0.07) 70%, rgb(63 208 255 / 0.25) 99%, transparent); animation: sc-c-scan 9s cubic-bezier(.4,0,.6,1) infinite; }
+@keyframes sc-c-scan { from { transform: translateY(-140px); } to { transform: translateY(110vh); } }
+.tf-scene-corpus .sc-c-haze { position: absolute; inset: -20%; background: radial-gradient(40% 30% at 20% 10%, rgb(63 208 255 / 0.10), transparent 70%), radial-gradient(35% 30% at 85% 90%, rgb(45 212 191 / 0.08), transparent 70%); animation: sc-drift 22s ease-in-out infinite alternate; }
+:root:not(.dark)[data-theme="corpus"] .sc-c-pulse { stroke: #1f5fbf; filter: none; }
+:root:not(.dark)[data-theme="corpus"] .sc-c-scan { opacity: .5; }
+
+/* ==========================================================================================================
+   ENTRATI: a decaying aristocratic house. Arched, boxy brass-framed panels crowned with obol coins, worn gold,
+   thick-line florals, clockwork turning slowly behind and an amber window glow. Dark is oxblood; light is parchment.
+   ========================================================================================================== */
+:root[data-theme="entrati"] {
+  --radius: 0.5rem;
+  --font-heading: "TF Platforms", "Federant", "Cinzel", Georgia, serif;
+  --fx-1: #9c7a2e; --fx-brass: #9c7a2e; --fx-bg: #f1e7d3; --fx-tile: url(/themes/entrati-obols.svg);
+  --background: #f1e7d3; --foreground: #2a1418; --card: #f8f0e0; --card-foreground: #2a1418; --elevated: #fbf5ea;
+  --popover: #fbf5ea; --popover-foreground: #2a1418; --secondary: #eadcc2; --secondary-foreground: #2a1418;
+  --muted: #ebdfc8; --muted-foreground: #5c463b; --accent: #efdcb7; --accent-foreground: #2a1418;
+  --destructive: #9e1c2c; --success: #1e6b66; --warning: #8a4b12;
+  --border: #c9b287; --input: #bea474; --ring: #6e1e2b;
+  --sidebar: #efe2c9; --sidebar-foreground: #2a1418; --sidebar-accent: #e6d4b1; --sidebar-accent-foreground: #2a1418; --sidebar-border: #c9b287; --sidebar-ring: #6e1e2b;
+  --shadow-elev: 0 1px 2px rgb(60 30 20 / 18%), 0 14px 32px rgb(60 30 20 / 20%);
+}
+:root.dark[data-theme="entrati"] {
+  --fx-1: #c9a04a; --fx-brass: #c9a04a; --fx-bg: #1c0f12;
+  --background: #1c0f12; --foreground: #eadfc8; --card: #2a1519; --card-foreground: #eadfc8; --elevated: #321a1f;
+  --popover: #321a1f; --popover-foreground: #eadfc8; --secondary: #301a1e; --secondary-foreground: #eadfc8;
+  --muted: #2d171b; --muted-foreground: #c7b597; --accent: #3e2320; --accent-foreground: #f3dca5;
+  --destructive: #ff8f8f; --success: #6fa8a1; --warning: #e07a3f;
+  --border: #5a3a2c; --input: #6a4632; --ring: #c9a04a;
+  --sidebar: #170b0e; --sidebar-foreground: #eadfc8; --sidebar-accent: #33191d; --sidebar-accent-foreground: #f3dca5; --sidebar-border: #4a2e24; --sidebar-ring: #c9a04a;
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 50%), 0 18px 40px rgb(0 0 0 / 55%);
+}
+:root[data-theme="entrati"][data-accent="faction"] { --primary: #6e1e2b; --primary-foreground: #fbf3e6; --chart-1: #6e1e2b; --sidebar-primary: #6e1e2b; --sidebar-primary-foreground: #fbf3e6; }
+:root.dark[data-theme="entrati"][data-accent="faction"] { --primary: #c9a04a; --primary-foreground: #1c0f12; --chart-1: #c9a04a; --sidebar-primary: #c9a04a; --sidebar-primary-foreground: #1c0f12; }
+:root[data-theme="entrati"] {
+  background-image: radial-gradient(1000px 600px at 15% 110%, rgb(224 122 63 / 0.14), transparent 65%), radial-gradient(900px 500px at 100% 0%, rgb(142 92 184 / 0.10), transparent 60%), var(--fx-tile);
+  background-size: auto, auto, 240px 240px;
+}
+:root[data-theme="entrati"] :is(h1, h2, h3, [data-slot="card-title"]) { font-weight: 400; letter-spacing: 0.01em; }
+:root[data-theme="entrati"] main h1 { font-size: 2.1rem; color: var(--foreground); }
+/* an obol rule under the page title: five identical coins between brass lines */
+:root[data-theme="entrati"] main h1::after {
+  content: ""; display: block; width: 13rem; height: 14px; margin-top: 0.4rem;
+  --ob: radial-gradient(circle, var(--fx-brass) 0 1.4px, transparent 1.6px 3.2px, var(--fx-brass) 3.4px 5.4px, transparent 5.8px);
+  background: var(--ob) 50% 50% / 14px 14px no-repeat, var(--ob) calc(50% - 18px) 50% / 14px 14px no-repeat, var(--ob) calc(50% + 18px) 50% / 14px 14px no-repeat,
+    linear-gradient(var(--fx-brass), var(--fx-brass)) 0 50% / calc(50% - 30px) 1.5px no-repeat, linear-gradient(var(--fx-brass), var(--fx-brass)) 100% 50% / calc(50% - 30px) 1.5px no-repeat;
+}
+/* arched-top panels in a worn brass double frame, three obols set in the crown */
+:root[data-theme="entrati"] :is([data-slot="card"], .welcome, .panel) {
+  border: 2px solid var(--fx-brass); border-radius: 26px 26px 6px 6px;
+  outline: 1px solid color-mix(in srgb, var(--fx-brass) 55%, transparent); outline-offset: 3px;
+  background: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--fx-brass) 9%, var(--card)), var(--card) 60%);
+  box-shadow: 0 16px 30px -22px rgb(0 0 0 / 0.6);
+  animation: fx-e-in 0.6s cubic-bezier(.2,.8,.2,1) both;
+}
+:root[data-theme="entrati"] :is([data-slot="card"], .welcome, .panel)::before {
+  content: ""; position: absolute; top: -9px; left: 50%; width: 58px; height: 16px; transform: translateX(-50%); pointer-events: none; z-index: 1;
+  --ob: radial-gradient(circle, var(--fx-brass) 0 1.4px, var(--card) 1.6px 3.4px, var(--fx-brass) 3.6px 6px, transparent 6.4px);
+  background: var(--ob) 50% 50% / 16px 16px no-repeat, var(--ob) 0 50% / 16px 16px no-repeat, var(--ob) 100% 50% / 16px 16px no-repeat;
+}
+:root[data-theme="entrati"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 6px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--fx-brass) 55%, transparent) 20% 80%, transparent);
+}
+@keyframes fx-e-in { from { clip-path: inset(0 0 100% 0 round 26px 26px 6px 6px); opacity: .4; } to { clip-path: inset(0 0 -20px 0 round 26px 26px 6px 6px); opacity: 1; } }
+/* enamelled brass plates with engraved lettering; a little gear turns on hover */
+:root[data-theme="entrati"] :is(:is(button, a).bg-primary, .btn.primary) {
+  border: 1px solid color-mix(in srgb, var(--primary) 60%, #000); border-radius: 8px; font-weight: 600;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 6px -2px rgb(0 0 0 / 0.5);
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.25), 0 -1px 0 rgb(0 0 0 / 0.2);
+}
+:root[data-theme="entrati"] :is(:is(button, a).bg-primary, .btn.primary) svg { transition: transform .5s cubic-bezier(.3,1.6,.5,1); }
+:root[data-theme="entrati"] :is(:is(button, a).bg-primary, .btn.primary):hover svg { transform: rotate(30deg); }
+:root[data-theme="entrati"] [data-slot="button"][data-variant="outline"], :root[data-theme="entrati"] [data-slot="badge"][data-variant="outline"] { border-color: color-mix(in srgb, var(--fx-brass) 60%, transparent); }
+:root[data-theme="entrati"] [data-slot="progress-indicator"], :root[data-theme="entrati"] [data-slot="progress"] > div { background: linear-gradient(90deg, #6e1e2b, var(--fx-brass) 70%, #e07a3f); }
+:root[data-theme="entrati"] [data-slot="checkbox"] { border-radius: 50%; }
+:root[data-theme="entrati"] [data-slot="checkbox"][data-checked] { background: radial-gradient(circle, var(--fx-brass) 0 45%, color-mix(in srgb, var(--fx-brass) 70%, #000) 46%); border-color: color-mix(in srgb, var(--fx-brass) 60%, #000); color: #1c0f12; }
+:root[data-theme="entrati"] [data-slot="sidebar-inner"] { border-right: 2px solid var(--fx-brass); box-shadow: inset -4px 0 0 -2px color-mix(in srgb, var(--fx-brass) 40%, transparent); }
+:root[data-theme="entrati"] [aria-current="page"][data-sidebar="menu-button"] { background: color-mix(in srgb, var(--fx-brass) 16%, transparent); box-shadow: inset 3px 0 0 var(--fx-brass); }
+:root[data-theme="entrati"] [data-slot="sidebar-inset"] > header { border-bottom: 2px solid var(--fx-brass); box-shadow: 0 3px 0 -2px color-mix(in srgb, var(--fx-brass) 45%, transparent); }
+/* the scene: clockwork and an orrery turning slowly, amber light from the Necralisk windows */
+.tf-scene-entrati :is(.sc-e-gear, .sc-e-orrery) { position: absolute; fill: none; stroke: #c9a04a; stroke-opacity: .22; stroke-width: 2.5; }
+.tf-scene-entrati .sc-e-gear-a { width: 58vmin; height: 58vmin; left: -16vmin; bottom: -18vmin; animation: sc-spin 90s linear infinite; }
+.tf-scene-entrati .sc-e-gear-b { width: 30vmin; height: 30vmin; left: 30vmin; bottom: -9vmin; animation: sc-spin 46s linear infinite reverse; }
+.tf-scene-entrati .sc-e-orrery { width: 64vmin; height: 64vmin; right: -14vmin; top: -14vmin; stroke-width: 1.2; }
+.tf-scene-entrati .sc-e-orrery circle[r] { fill: none; }
+.tf-scene-entrati .sc-e-orbit circle { fill: #c9a04a; fill-opacity: .45; stroke: none; }
+.tf-scene-entrati .sc-e-orbit { transform-origin: 0 0; transform-box: view-box; }
+.tf-scene-entrati .sc-e-o1 { animation: sc-orbit 60s linear infinite; } .tf-scene-entrati .sc-e-o2 { animation: sc-orbit 38s linear infinite reverse; } .tf-scene-entrati .sc-e-o3 { animation: sc-orbit 24s linear infinite; }
+.tf-scene-entrati .sc-e-glow { position: absolute; inset: auto 0 -10% 0; height: 50%; background: radial-gradient(50% 70% at 70% 100%, rgb(224 122 63 / 0.16), transparent 70%); animation: sc-breathe 7s ease-in-out infinite alternate; }
+:root:not(.dark)[data-theme="entrati"] :is(.sc-e-gear, .sc-e-orrery) { stroke: #6e1e2b; stroke-opacity: .12; }
+:root:not(.dark)[data-theme="entrati"] .sc-e-orbit circle { fill: #6e1e2b; fill-opacity: .25; }
+
+/* ==========================================================================================================
+   LOTUS: serene guidance over the Void. Flowing hairlines, soft halos, petal ornaments, drifting light, breathing
+   rings, prismatic vapour. Dark is the Orbiter at night among the stars; light is an Orokin marble hall where the
+   stars are black on white, like the Void.
+   ========================================================================================================== */
+:root[data-theme="lotus"] {
+  --radius: 0.85rem;
+  --font-heading: "TF Platforms", "Cormorant Garamond", "Cinzel", Georgia, serif;
+  --fx-1: #0f7c74; --fx-gold: #8a6a1f; --fx-bg: #f7f5ee; --fx-tile: url(/themes/lotus-stars-ink.svg);
+  --background: #f7f5ee; --foreground: #0f2a33; --card: #fffdf7; --card-foreground: #0f2a33; --elevated: #fffefa;
+  --popover: #fffefa; --popover-foreground: #0f2a33; --secondary: #eeeadc; --secondary-foreground: #0f2a33;
+  --muted: #efebdf; --muted-foreground: #4b5d61; --accent: #dff1ee; --accent-foreground: #0f2a33;
+  --destructive: #a8243a; --success: #0f7c74; --warning: #8a5a12;
+  --border: #d9d0b8; --input: #cfc5aa; --ring: #0f7c74;
+  --sidebar: #f3f0e6; --sidebar-foreground: #0f2a33; --sidebar-accent: #e5efe9; --sidebar-accent-foreground: #0f2a33; --sidebar-border: #ddd4bd; --sidebar-ring: #0f7c74;
+  --shadow-elev: 0 1px 2px rgb(15 42 51 / 10%), 0 18px 40px rgb(15 42 51 / 12%);
+}
+:root.dark[data-theme="lotus"] {
+  --fx-1: #4fd1c5; --fx-gold: #d8b45a; --fx-bg: #060b14; --fx-tile: url(/themes/lotus-stars.svg);
+  --background: #060b14; --foreground: #eaf6f4; --card: #0c1822; --card-foreground: #eaf6f4; --elevated: #10202c;
+  --popover: #10202c; --popover-foreground: #eaf6f4; --secondary: #0f1e2a; --secondary-foreground: #eaf6f4;
+  --muted: #0e1c27; --muted-foreground: #9dbcbd; --accent: #0f2e33; --accent-foreground: #c6f3ee;
+  --destructive: #ff8fa3; --success: #4fd1c5; --warning: #d8b45a;
+  --border: #1b3540; --input: #23434f; --ring: #4fd1c5;
+  --sidebar: rgb(6 13 22 / 0.88); --sidebar-foreground: #eaf6f4; --sidebar-accent: #0f2a31; --sidebar-accent-foreground: #c6f3ee; --sidebar-border: #173039; --sidebar-ring: #4fd1c5;
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 50%), 0 18px 46px rgb(0 0 0 / 55%), 0 0 30px rgb(79 209 197 / 0.08);
+}
+:root[data-theme="lotus"][data-accent="faction"] { --primary: #0f7c74; --primary-foreground: #ffffff; --chart-1: #0f7c74; --sidebar-primary: #0f7c74; --sidebar-primary-foreground: #ffffff; }
+:root.dark[data-theme="lotus"][data-accent="faction"] { --primary: #4fd1c5; --primary-foreground: #04151a; --chart-1: #4fd1c5; --sidebar-primary: #4fd1c5; --sidebar-primary-foreground: #04151a; }
+:root[data-theme="lotus"] {
+  background-image: radial-gradient(1200px 700px at 50% -20%, color-mix(in srgb, var(--fx-1) 14%, transparent), transparent 70%), var(--fx-tile);
+  background-size: auto, 400px 400px;
+}
+:root[data-theme="lotus"] :is(h1, h2, h3, [data-slot="card-title"]) { font-weight: 600; letter-spacing: 0.01em; }
+:root[data-theme="lotus"] main h1 { font-size: 2.35rem; color: var(--foreground); }
+/* a long hairline with a ring and dot at its heart */
+:root[data-theme="lotus"] main h1::after {
+  content: ""; display: block; width: 14rem; height: 12px; margin-top: 0.35rem;
+  background: radial-gradient(circle, var(--fx-gold) 0 1.6px, transparent 2px 3.6px, var(--fx-gold) 4px 4.8px, transparent 5.2px) 0 50% / 12px 12px no-repeat,
+    linear-gradient(90deg, var(--fx-gold), color-mix(in srgb, var(--fx-1) 60%, transparent) 40%, transparent) 16px 50% / calc(100% - 16px) 1px no-repeat;
+}
+/* soft-edged panels in a hairline, with a breathing halo and a fan of petals in two corners */
+:root[data-theme="lotus"] :is([data-slot="card"], .welcome, .panel) {
+  border: 1px solid color-mix(in srgb, var(--fx-gold) 40%, var(--border)); border-radius: 16px;
+  background: radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--fx-1) 7%, var(--card)), var(--card) 55%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.03) inset, 0 0 26px -6px color-mix(in srgb, var(--fx-1) 22%, transparent), 0 20px 40px -30px rgb(0 0 0 / 0.5);
+  animation: fx-l-in 0.55s cubic-bezier(.2,.7,.2,1) both;
+}
+:root[data-theme="lotus"] { --fx-fan: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20transform%3D%22rotate%280%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%238a6a1f%22%20fill-opacity%3D%220.55%22/%3E%3Cpath%20transform%3D%22rotate%2830%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%238a6a1f%22%20fill-opacity%3D%220.4%22/%3E%3Cpath%20transform%3D%22rotate%2860%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%238a6a1f%22%20fill-opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%224%22%20cy%3D%2236%22%20r%3D%222.2%22%20fill%3D%22%238a6a1f%22/%3E%3C/svg%3E"); }
+:root.dark[data-theme="lotus"] { --fx-fan: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20transform%3D%22rotate%280%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%23d8b45a%22%20fill-opacity%3D%220.55%22/%3E%3Cpath%20transform%3D%22rotate%2830%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%23d8b45a%22%20fill-opacity%3D%220.4%22/%3E%3Cpath%20transform%3D%22rotate%2860%204%2036%29%22%20d%3D%22M4%2036C8%2026%208%2016%204%208C0%2016%200%2026%204%2036Z%22%20fill%3D%22%23d8b45a%22%20fill-opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%224%22%20cy%3D%2236%22%20r%3D%222.2%22%20fill%3D%22%23d8b45a%22/%3E%3C/svg%3E"); }
+:root[data-theme="lotus"] :is([data-slot="card"], .welcome, .panel)::before,
+:root[data-theme="lotus"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; bottom: 4px; width: 26px; height: 26px; pointer-events: none; z-index: 1; opacity: .8;
+  background: var(--fx-fan) 0 0 / 100% 100% no-repeat;
+}
+:root[data-theme="lotus"] :is([data-slot="card"], .welcome, .panel)::before { left: 4px; }
+:root[data-theme="lotus"] :is([data-slot="card"], .welcome, .panel)::after { right: 4px; transform: scaleX(-1); }
+@keyframes fx-l-in { from { opacity: 0; transform: translateY(8px); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+/* buttons bloom with a halo on hover */
+:root[data-theme="lotus"] :is(:is(button, a).bg-primary, .btn.primary) {
+  border-radius: 999px; letter-spacing: 0.08em; text-transform: uppercase; font-size: .82em; font-weight: 600;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--fx-gold) 45%, transparent), 0 0 18px -4px color-mix(in srgb, var(--fx-1) 70%, transparent);
+  transition: box-shadow .4s ease, transform .3s ease;
+}
+:root[data-theme="lotus"] :is(:is(button, a).bg-primary, .btn.primary):hover { box-shadow: 0 0 0 1px var(--fx-gold), 0 0 28px 2px color-mix(in srgb, var(--fx-1) 55%, transparent); transform: translateY(-1px); }
+:root[data-theme="lotus"] [data-slot="button"][data-variant="outline"] { border-radius: 999px; border-color: color-mix(in srgb, var(--fx-gold) 45%, var(--border)); }
+:root[data-theme="lotus"] [data-slot="badge"][data-variant="outline"] { border-color: color-mix(in srgb, var(--fx-gold) 45%, var(--border)); }
+:root[data-theme="lotus"] [data-slot="progress-indicator"], :root[data-theme="lotus"] [data-slot="progress"] > div { background: linear-gradient(90deg, var(--fx-1), #9b8cff 70%, var(--fx-gold)); box-shadow: 0 0 10px color-mix(in srgb, var(--fx-1) 50%, transparent); }
+:root[data-theme="lotus"] [data-slot="checkbox"] { border-radius: 50%; }
+:root[data-theme="lotus"] [data-slot="checkbox"][data-checked] { box-shadow: 0 0 10px color-mix(in srgb, var(--fx-1) 60%, transparent); }
+:root[data-theme="lotus"] [data-slot="sidebar-inner"] { border-right: 1px solid transparent; border-image: linear-gradient(180deg, transparent, var(--fx-gold) 30%, var(--fx-1) 70%, transparent) 1; }
+:root[data-theme="lotus"] [aria-current="page"][data-sidebar="menu-button"] { background: linear-gradient(90deg, color-mix(in srgb, var(--fx-1) 20%, transparent), transparent 85%); box-shadow: inset 2px 0 0 var(--fx-1); }
+:root[data-theme="lotus"] [data-slot="sidebar-inset"] > header { border-bottom: 1px solid transparent; border-image: linear-gradient(90deg, transparent, var(--fx-gold) 30%, var(--fx-1) 70%, transparent) 1; }
+/* the scene: prismatic vapour, rings breathing around a lotus, motes of light rising */
+.tf-scene-lotus .sc-l-vapor { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; filter: blur(60px); opacity: .5; }
+.tf-scene-lotus .sc-l-v1 { background: radial-gradient(circle, rgb(79 209 197 / 0.28), transparent 65%); left: -15vmax; top: 10vh; animation: sc-drift 26s ease-in-out infinite alternate; }
+.tf-scene-lotus .sc-l-v2 { background: radial-gradient(circle, rgb(155 140 255 / 0.22), transparent 65%); right: -20vmax; top: -15vmax; animation: sc-drift 32s ease-in-out infinite alternate-reverse; }
+.tf-scene-lotus .sc-l-v3 { background: radial-gradient(circle, rgb(216 180 90 / 0.16), transparent 65%); left: 30%; bottom: -30vmax; animation: sc-drift 38s ease-in-out infinite alternate; }
+.tf-scene-lotus .sc-l-rings { position: absolute; width: 80vmin; height: 80vmin; left: 50%; top: 8vh; margin-left: -40vmin; fill: none; stroke: #4fd1c5; stroke-opacity: .16; stroke-width: .8; animation: sc-breathe-ring 9s ease-in-out infinite alternate; }
+.tf-scene-lotus .sc-l-spin { transform-origin: 0 0; transform-box: view-box; animation: sc-orbit 80s linear infinite; }
+.tf-scene-lotus .sc-l-spin circle { fill: #d8b45a; fill-opacity: .6; stroke: none; }
+.tf-scene-lotus .sc-l-petal { fill: #4fd1c5; fill-opacity: .05; stroke: #d8b45a; stroke-opacity: .25; }
+.tf-scene-lotus .sc-l-mote { position: absolute; border-radius: 50%; background: #eafffb; box-shadow: 0 0 8px 2px rgb(79 209 197 / 0.6); opacity: .7; animation-name: sc-rise; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.tf-scene-lotus .sc-l-mote:nth-child(3n) { background: #fff3d1; box-shadow: 0 0 8px 2px rgb(216 180 90 / 0.6); }
+:root:not(.dark)[data-theme="lotus"] .sc-l-rings { stroke: #0f7c74; }
+:root:not(.dark)[data-theme="lotus"] .sc-l-mote { background: #0f7c74; box-shadow: none; opacity: .35; }
+:root:not(.dark)[data-theme="lotus"] .sc-l-vapor { opacity: .35; }
+
+/* ==========================================================================================================
+   INFESTED: living rot. Asymmetric flesh panels that breathe, cysts budding off the corners and pulsing out of
+   step, veins creeping across the screen with light flowing through them, spores in the air. Dark glows; light is
+   an anatomical plate where the glow becomes ink.
+   ========================================================================================================== */
+:root[data-theme="infested"] {
+  --radius: 1rem;
+  --font-heading: "TF Platforms", "Grenze Gotisch", "Cinzel", Georgia, serif;
+  --fx-1: #9c3150; --fx-glow: #3d6a08; --fx-vio: #5b3399; --fx-bg: #f3e6e1; --fx-tile: url(/themes/infested-veins-ink.svg);
+  --background: #f3e6e1; --foreground: #2b1620; --card: #fbf2ee; --card-foreground: #2b1620; --elevated: #fdf6f3;
+  --popover: #fdf6f3; --popover-foreground: #2b1620; --secondary: #eedcd5; --secondary-foreground: #2b1620;
+  --muted: #efdfd9; --muted-foreground: #64434f; --accent: #f3d8de; --accent-foreground: #2b1620;
+  --destructive: #a1172c; --success: #3d6a08; --warning: #8a4b06;
+  --border: #d8b4ba; --input: #cba3aa; --ring: #9c3150;
+  --sidebar: #f1e1db; --sidebar-foreground: #2b1620; --sidebar-accent: #ead0d3; --sidebar-accent-foreground: #2b1620; --sidebar-border: #d8b4ba; --sidebar-ring: #9c3150;
+  --shadow-elev: 0 1px 2px rgb(60 20 30 / 15%), 0 16px 36px rgb(60 20 30 / 18%);
+}
+:root.dark[data-theme="infested"] {
+  --fx-1: #e86a8a; --fx-glow: #b6f23a; --fx-vio: #7b4bc9; --fx-bg: #120a0e; --fx-tile: url(/themes/infested-veins.svg);
+  --background: #120a0e; --foreground: #ede3d6; --card: #1f1218; --card-foreground: #ede3d6; --elevated: #26151d;
+  --popover: #26151d; --popover-foreground: #ede3d6; --secondary: #24141b; --secondary-foreground: #ede3d6;
+  --muted: #22131a; --muted-foreground: #c3a9b2; --accent: #361824; --accent-foreground: #ffd2dd;
+  --destructive: #ff8fa0; --success: #b6f23a; --warning: #f59e2b;
+  --border: #4a2232; --input: #5a2a3d; --ring: #e86a8a;
+  --sidebar: #160b10; --sidebar-foreground: #ede3d6; --sidebar-accent: #2c1520; --sidebar-accent-foreground: #ffd2dd; --sidebar-border: #3c1c29; --sidebar-ring: #e86a8a;
+  --shadow-elev: 0 1px 2px rgb(0 0 0 / 50%), 0 18px 44px rgb(0 0 0 / 60%), 0 0 30px rgb(232 106 138 / 0.08);
+}
+:root[data-theme="infested"][data-accent="faction"] { --primary: #9c3150; --primary-foreground: #ffffff; --chart-1: #9c3150; --sidebar-primary: #9c3150; --sidebar-primary-foreground: #ffffff; }
+:root.dark[data-theme="infested"][data-accent="faction"] { --primary: #e86a8a; --primary-foreground: #1a0a10; --chart-1: #e86a8a; --sidebar-primary: #e86a8a; --sidebar-primary-foreground: #1a0a10; }
+:root[data-theme="infested"] {
+  background-image: radial-gradient(900px 600px at 0% 100%, color-mix(in srgb, var(--fx-vio) 18%, transparent), transparent 65%), radial-gradient(800px 500px at 100% 0%, color-mix(in srgb, var(--fx-1) 14%, transparent), transparent 60%), var(--fx-tile);
+  background-size: auto, auto, 360px 360px;
+}
+:root[data-theme="infested"] :is(h1, h2, h3, [data-slot="card-title"]) { font-weight: 700; letter-spacing: 0.01em; }
+:root[data-theme="infested"] main h1 { font-size: 2.4rem; color: var(--foreground); text-shadow: 0 0 18px color-mix(in srgb, var(--fx-1) 40%, transparent); }
+:root:not(.dark)[data-theme="infested"] main h1 { text-shadow: none; }
+/* a vein under the title, swelling at irregular points */
+:root[data-theme="infested"] main h1::after {
+  content: ""; display: block; width: 15rem; height: 10px; margin-top: 0.3rem;
+  background: radial-gradient(ellipse 5px 3.5px, var(--fx-1) 0 90%, transparent) 30px 50% / 10px 8px no-repeat, radial-gradient(ellipse 4px 3px, var(--fx-1) 0 90%, transparent) 118px 50% / 8px 7px no-repeat,
+    radial-gradient(circle, var(--fx-glow) 0 2px, transparent 2.6px) 170px 50% / 6px 6px no-repeat,
+    linear-gradient(90deg, var(--fx-1), color-mix(in srgb, var(--fx-1) 60%, transparent) 70%, transparent) 0 50% / 100% 2px no-repeat;
+}
+/* living panels: lopsided, membrane-skinned, a cyst cluster budding from one corner, breathing out of step */
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel) {
+  border: 1.5px solid color-mix(in srgb, var(--fx-1) 45%, var(--border)); border-radius: 22px 30px 18px 34px / 30px 18px 32px 20px;
+  background: radial-gradient(90% 60% at 100% 0%, color-mix(in srgb, var(--fx-1) 9%, var(--card)), var(--card) 60%), radial-gradient(70% 50% at 0% 100%, color-mix(in srgb, var(--fx-vio) 8%, var(--card)), transparent 70%);
+  box-shadow: inset 0 0 22px -6px color-mix(in srgb, var(--fx-1) 22%, transparent), 0 18px 40px -26px color-mix(in srgb, var(--fx-1) 50%, #000);
+  animation: fx-i-in 0.7s cubic-bezier(.3,1.4,.4,1) both;
+}
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel):nth-child(2n) { border-radius: 34px 20px 30px 18px / 20px 32px 18px 30px; }
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel):nth-child(3n) { border-radius: 18px 36px 24px 28px / 28px 22px 36px 18px; }
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel)::before {
+  content: ""; position: absolute; bottom: -7px; left: 18px; width: 46px; height: 24px; pointer-events: none; z-index: 1;
+  background:
+    radial-gradient(circle closest-side at 38% 35%, rgb(255 255 255 / 0.6) 0 18%, transparent 30%) 4px 2px / 18px 18px no-repeat,
+    radial-gradient(circle closest-side, var(--fx-glow) 0 30%, color-mix(in srgb, var(--fx-glow) 35%, var(--fx-1)) 65%, color-mix(in srgb, var(--fx-1) 75%, #000) 92%, transparent 100%) 4px 2px / 18px 18px no-repeat,
+    radial-gradient(circle closest-side, color-mix(in srgb, var(--fx-glow) 70%, #fff) 0 22%, var(--fx-1) 70%, color-mix(in srgb, var(--fx-1) 70%, #000) 92%, transparent 100%) 22px 9px / 12px 12px no-repeat,
+    radial-gradient(circle closest-side, #f59e2b 0 25%, color-mix(in srgb, var(--fx-1) 80%, #000) 85%, transparent 100%) 34px 4px / 9px 9px no-repeat;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--fx-glow) 50%, transparent));
+  animation: fx-i-pulse 3.4s ease-in-out infinite; transform-origin: 30% 60%;
+}
+:root:not(.dark)[data-theme="infested"] :is([data-slot="card"], .welcome, .panel)::before { filter: none; }
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel):nth-child(2n)::before { animation-duration: 4.1s; animation-delay: -1.3s; }
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel):nth-child(3n)::before { animation-duration: 2.9s; animation-delay: -2.2s; }
+:root[data-theme="infested"] :is([data-slot="card"], .welcome, .panel)::after {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 22px -2px color-mix(in srgb, var(--fx-1) 45%, transparent); opacity: 0; animation: fx-i-breathe 5s ease-in-out infinite;
+}
+:root:not(.dark)[data-theme="infested"] :is([data-slot="card"], .welcome, .panel)::after { display: none; }
+@keyframes fx-i-in { 0% { opacity: 0; transform: scale(.94, .9); } 60% { opacity: 1; transform: scale(1.012, 1.02); } 100% { transform: none; } }
+@keyframes fx-i-pulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.08); filter: brightness(1.3); } }
+@keyframes fx-i-breathe { 0%, 100% { opacity: 0; } 50% { opacity: .9; } }
+/* fleshy buttons: a heartbeat glow, and a squish when pressed */
+:root[data-theme="infested"] :is(:is(button, a).bg-primary, .btn.primary) {
+  border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px; font-weight: 700;
+  background-image: radial-gradient(120% 140% at 30% 20%, rgb(255 255 255 / 0.22), transparent 55%);
+  box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 0 14px -2px color-mix(in srgb, var(--primary) 60%, transparent);
+  animation: fx-i-beat 2.6s ease-in-out infinite; transition: transform .12s;
+}
+:root[data-theme="infested"] :is(:is(button, a).bg-primary, .btn.primary):active { transform: scale(.96, 1.02); }
+@keyframes fx-i-beat { 0%, 30%, 100% { box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 0 12px -3px color-mix(in srgb, var(--primary) 50%, transparent); } 10% { box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 0 22px 1px color-mix(in srgb, var(--primary) 80%, transparent); } 20% { box-shadow: inset 0 -3px 6px rgb(0 0 0 / 0.25), 0 0 16px -1px color-mix(in srgb, var(--primary) 65%, transparent); } }
+:root[data-theme="infested"] [data-slot="button"][data-variant="outline"] { border-radius: 12px 16px 10px 18px / 16px 10px 18px 12px; border-color: color-mix(in srgb, var(--fx-1) 50%, var(--border)); }
+:root[data-theme="infested"] [data-slot="badge"][data-variant="outline"] { border-radius: 10px 4px 10px 4px; border-color: color-mix(in srgb, #d9c7a8 60%, var(--border)); }
+:root[data-theme="infested"] [data-slot="progress-indicator"], :root[data-theme="infested"] [data-slot="progress"] > div { background: linear-gradient(90deg, var(--fx-vio), var(--fx-1) 55%, var(--fx-glow)); box-shadow: 0 0 10px color-mix(in srgb, var(--fx-1) 50%, transparent); }
+:root[data-theme="infested"] [data-slot="checkbox"] { border-radius: 45% 55% 50% 50%; }
+:root[data-theme="infested"] [data-slot="checkbox"][data-checked] { background: radial-gradient(circle at 40% 35%, var(--fx-glow), color-mix(in srgb, var(--fx-glow) 40%, var(--fx-1)) 70%); border-color: var(--fx-1); color: #1a0a10; }
+:root[data-theme="infested"] [data-slot="sidebar-inner"] { border-right: 2px solid transparent; border-image: linear-gradient(180deg, var(--fx-vio), var(--fx-1) 50%, transparent) 1; }
+:root[data-theme="infested"] [aria-current="page"][data-sidebar="menu-button"] { background: radial-gradient(120% 140% at 0% 50%, color-mix(in srgb, var(--fx-1) 26%, transparent), transparent 70%); box-shadow: inset 3px 0 0 var(--fx-1); }
+:root[data-theme="infested"] [data-slot="sidebar-inset"] > header { border-bottom: 1.5px solid transparent; border-image: linear-gradient(90deg, var(--fx-vio), var(--fx-1) 40%, transparent 90%) 1; }
+/* the scene: veins creep in from the edges and keep pulsing, cysts throb in the dark, spores drift */
+.tf-scene-infested .sc-i-veins { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tf-scene-infested .sc-i-vein { fill: none; stroke: #e86a8a; stroke-opacity: .32; stroke-linecap: round; animation: sc-i-grow 2.4s cubic-bezier(.3,.6,.3,1) forwards; }
+.tf-scene-infested .sc-i-flow { fill: none; stroke: #b6f23a; stroke-linecap: round; stroke-dasharray: 3 140; stroke-opacity: .8; filter: drop-shadow(0 0 3px #b6f23a); animation: sc-i-flow 5s linear infinite; }
+@keyframes sc-i-grow { to { stroke-dashoffset: 0; } }
+@keyframes sc-i-flow { from { stroke-dashoffset: 143; } to { stroke-dashoffset: 0; } }
+.tf-scene-infested .sc-i-cyst { position: absolute; border-radius: 50%; filter: blur(30px); }
+.tf-scene-infested .sc-i-c1 { width: 34vmin; height: 30vmin; left: -8vmin; bottom: -6vmin; background: radial-gradient(circle, rgb(182 242 58 / 0.32), rgb(232 106 138 / 0.18) 50%, transparent 70%); animation: sc-throb 3.6s ease-in-out infinite; }
+.tf-scene-infested .sc-i-c2 { width: 28vmin; height: 26vmin; right: -6vmin; top: 6vh; background: radial-gradient(circle, rgb(245 158 43 / 0.26), rgb(123 75 201 / 0.18) 55%, transparent 70%); animation: sc-throb 4.4s ease-in-out infinite -1.5s; }
+.tf-scene-infested .sc-i-c3 { width: 20vmin; height: 18vmin; right: 22vw; bottom: -6vmin; background: radial-gradient(circle, rgb(232 106 138 / 0.3), transparent 70%); animation: sc-throb 2.8s ease-in-out infinite -.7s; }
+.tf-scene-infested .sc-i-spore { position: absolute; border-radius: 50%; background: radial-gradient(circle, #e8ffb0, rgb(182 242 58 / 0.4) 60%, transparent 70%); opacity: .7; animation-name: sc-rise; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.tf-scene-infested .sc-i-spore:nth-child(4n) { background: radial-gradient(circle, #ffd0dc, rgb(232 106 138 / 0.4) 60%, transparent 70%); }
+:root:not(.dark)[data-theme="infested"] .sc-i-vein { stroke: #9c3150; stroke-opacity: .2; }
+:root:not(.dark)[data-theme="infested"] .sc-i-flow { stroke: #9c3150; filter: none; stroke-opacity: .35; }
+:root:not(.dark)[data-theme="infested"] .sc-i-cyst { opacity: .45; }
+:root:not(.dark)[data-theme="infested"] .sc-i-spore { opacity: .35; }
+
+/* ---------- palettes: any colour other than "Faction colours" re-tints each faction's frames, glows and trims ---------- */
+:root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]):not([data-accent="faction"]) { --fx-1: var(--primary); }
+:root[data-theme="corpus"]:not([data-accent="faction"]) { --fx-glow: var(--primary); }
+:root[data-theme="entrati"]:not([data-accent="faction"]) { --fx-brass: var(--primary); }
+:root[data-theme="grineer"]:not([data-accent="faction"]) { --fx-hz: var(--primary); }
+
+/* ---------- shared scene motion ---------- */
+@keyframes sc-spin { to { transform: rotate(360deg); } }
+@keyframes sc-orbit { to { transform: rotate(360deg); } }
+@keyframes sc-drift { from { transform: translate3d(-3%, 0, 0) scale(1); } to { transform: translate3d(3%, -4%, 0) scale(1.08); } }
+@keyframes sc-breathe { from { opacity: .6; } to { opacity: 1; } }
+@keyframes sc-breathe-ring { from { transform: scale(.96) rotate(0deg); opacity: .75; } to { transform: scale(1.04) rotate(8deg); opacity: 1; } }
+@keyframes sc-throb { 0%, 100% { transform: scale(1); opacity: .75; } 50% { transform: scale(1.12); opacity: 1; } }
+@keyframes sc-rise { 0% { transform: translate3d(0, 20vh, 0); opacity: 0; } 15% { opacity: .8; } 50% { transform: translate3d(var(--drift, 20px), -30vh, 0); } 85% { opacity: .7; } 100% { transform: translate3d(0, -80vh, 0); opacity: 0; } }
+
+/* everything holds still for people who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  .tf-scene *, :root:is([data-theme="grineer"],[data-theme="corpus"],[data-theme="entrati"],[data-theme="lotus"],[data-theme="infested"]) :is([data-slot="card"], .welcome, .panel, [data-slot="card"]::before, .panel::before, .welcome::before, [data-slot="card"]::after),
+  :root[data-theme="infested"] :is(:is(button, a).bg-primary, .btn.primary) { animation: none !important; }
+  .tf-scene-infested .sc-i-vein { stroke-dashoffset: 0 !important; }
+}
