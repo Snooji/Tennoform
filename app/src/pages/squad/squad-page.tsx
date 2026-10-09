@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { tf, useTFData, type SquadData } from "@/lib/tf"
 import { SignInCard } from "@/pages/home/side-cards"
 import { MyPicture, PersonAvatar } from "@/components/tf/person"
+import { FriendsList, MyShare } from "./friends-list"
 
 const initial = (n: string) => (n.trim()[0] || "T").toUpperCase()
 
@@ -19,7 +20,7 @@ function Head() {
     <header className="flex flex-col gap-1">
       <span className="text-xs text-muted-foreground">Squad</span>
       <h1 className="font-heading text-3xl font-semibold">Friends</h1>
-      <p className="max-w-2xl text-sm text-muted-foreground">Add friends with their friend code and start group chats. Tap a friend or group to open it in Chat, where you can also invite them to your tasks. You can add people by tapping their name in Chat or on a shared build too; they have to accept.</p>
+      <p className="max-w-2xl text-sm text-muted-foreground">Your friends, where each one is with their Mastery Rank, and how you can help them along. Add friends with their friend code, message them, and start group chats.</p>
     </header>
   )
 }
@@ -134,7 +135,7 @@ function ListItem({ active, title, sub, unread, badge, onClick, group, av }: {
 
 function People({ d }: { d: SquadData }) {
   return (
-    <nav aria-label="Chats" className="flex flex-col gap-3">
+    <nav aria-label="Group chats" className="flex flex-col gap-3">
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between px-1">
           <h2 className="text-xs font-medium text-muted-foreground">Groups</h2>
@@ -145,17 +146,6 @@ function People({ d }: { d: SquadData }) {
             {d.groups.map((g) => <ListItem key={g.id} group active={false} title={g.name} sub={`${g.members} members`} unread={g.unread} onClick={() => tf().chatGo("g:" + g.id)} />)}
           </ul>
         ) : <p className="px-1 text-sm text-muted-foreground">No groups yet.</p>}
-      </div>
-      <div className="flex flex-col gap-1">
-        <h2 className="px-1 text-xs font-medium text-muted-foreground">Friends</h2>
-        {d.friends.length ? (
-          <ul className="flex flex-col gap-0.5">
-            {d.friends.map((f) => (
-              <ListItem key={f.uid} active={false} av={f.av} title={f.name} badge={f.pending ? "Pending" : ""} sub={[f.mr, f.xp].filter(Boolean).join(" · ")} unread={f.unread}
-                onClick={() => tf().chatGo("f:" + f.uid)} />
-            ))}
-          </ul>
-        ) : <p className="px-1 text-sm text-muted-foreground">No friends yet. Share your code, or enter theirs above.</p>}
       </div>
     </nav>
   )
@@ -213,7 +203,9 @@ function Friends() {
       <CodeCards d={d} />
       <Requests d={d} />
       {d.newGroup ? <NewGroup d={d} /> : null}
+      <FriendsList />
       <Card className="px-3"><People d={d} /></Card>
+      <MyShare />
       {d.compare ? <Compare d={d} /> : null}
       {d.blocked.length ? (
         <Card size="sm" className="gap-2 px-4">
