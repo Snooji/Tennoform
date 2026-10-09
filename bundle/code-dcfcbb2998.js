@@ -47,16 +47,28 @@ $('#hamb')&&$('#hamb').addEventListener('click',()=>setMenu(!$('#drawer').classL
 $('#sheet')&&$('#sheet').addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
 
-/* ---------- theme: auto (follows the device), dark, light or Foundry (a light theme styled after the in-game Foundry) ---------- */
-/* dark is the default; "auto" follows the device. The .dark class drives every colour token. */
-function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return ['dark','light','auto','foundry'].includes(t)?t:'dark'}catch(e){return 'dark'}}
-function themeApply(t){const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));document.documentElement.classList.toggle('dark',dark);if(t==='foundry')document.documentElement.dataset.theme='foundry';else delete document.documentElement.dataset.theme;document.documentElement.style.colorScheme=dark?'dark':'light';
-  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#100f0d':t==='foundry'?'#b4bfcb':'#f5f5f3'}
-function themeSet(t){try{localStorage.setItem('tf-theme',JSON.stringify(t))}catch(x){}themeApply(t);if(typeof tfNotify==='function')tfNotify()}
+/* ---------- theme: a mode (auto follows the device, dark, light) and a style (Default, Foundry, Prime) ---------- */
+/* The .dark class drives every colour token; data-theme picks the style; data-accent (set by the React shell) picks the colour palette.
+   Every style has a light and a dark version, and every palette works in every style. */
+const THEME_STYLES=['default','foundry','prime'];
+function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return t==='foundry'?'light':['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
+function themeStyle(){try{const s=JSON.parse(localStorage.getItem('tf-style')||'null');if(THEME_STYLES.includes(s))return s;
+  /* before styles were separate, Foundry was a theme of its own (a light one) */
+  return JSON.parse(localStorage.getItem('tf-theme')||'""')==='foundry'?'foundry':'default'}catch(e){return 'default'}}
+const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3']};
+function themeApply(t,st){st=st||themeStyle();const r=document.documentElement;
+  const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));
+  r.classList.toggle('dark',dark);if(st==='default')delete r.dataset.theme;else r.dataset.theme=st;r.style.colorScheme=dark?'dark':'light';
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=THEME_BAR[st][dark?0:1]}
+function themeSave(){if(typeof tfNotify==='function')tfNotify()}
+function themeSet(t){try{localStorage.setItem('tf-theme',JSON.stringify(t));if(!localStorage.getItem('tf-style'))localStorage.setItem('tf-style',JSON.stringify(themeStyle()))}catch(x){}themeApply(t);themeSave()}
+function themeStyleSet(s){if(!THEME_STYLES.includes(s))return;try{localStorage.setItem('tf-style',JSON.stringify(s));localStorage.setItem('tf-theme',JSON.stringify(themeGet()))}catch(x){}themeApply(themeGet(),s);themeSave()}
 try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',()=>{if(themeGet()==='auto')themeApply('auto')})}catch(e){}
 themeApply(themeGet());
-function themeSw(){const t=themeGet();return `<span class="themesw" role="group" aria-label="Theme">${[['auto','Auto'],['dark','Dark'],['light','Light'],['foundry','Foundry']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>`}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set]');if(!b)return;themeSet(b.dataset.themeSet);rerender()});
+function themeSw(){const t=themeGet(),st=themeStyle();
+  return `<span class="themesw" role="group" aria-label="Mode">${[['auto','Auto'],['dark','Dark'],['light','Light']].map(([k,l])=>`<button type="button" class="btn sm${t===k?' on':''}" data-theme-set="${k}" aria-pressed="${t===k}">${l}</button>`).join('')}</span>
+  <span class="themesw" role="group" aria-label="Style">${[['default','Default'],['foundry','Foundry'],['prime','Prime']].map(([k,l])=>`<button type="button" class="btn sm${st===k?' on':''}" data-style-set="${k}" aria-pressed="${st===k}">${l}</button>`).join('')}</span>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-theme-set],[data-style-set]');if(!b)return;if(b.dataset.themeSet)themeSet(b.dataset.themeSet);else themeStyleSet(b.dataset.styleSet);rerender()});
 /* ---------- icons: one drawn set, 24px grid, 1.5px stroke, sized to the text ---------- */
 const IC={check:'M5 12.5l4.5 4.5L19 7.5',minus:'M6 12h12',close:'M6 6l12 12M18 6L6 18',star:'M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z',
   pin:'M9 3.5h6M10 3.5v6l-3.5 4h11L14 9.5v-6M12 13.5V21',more:'M5.5 12h.01M12 12h.01M18.5 12h.01',repeat:'M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3',
@@ -273,7 +285,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
     if(p.k==='p'){const full=p.full||(name+' '+p.n);
       let src='';if(p.rel)src=`${priceChip(full)}${sellChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
-      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
+      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub&&!/Blueprint$/.test(full)?' blueprint':''}`,src);
       if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">${ic('timer')}Start Foundry timer</button>`);
     }else if(p.k==='i'){
       h+=step('have|'+name+'|'+p.n+'|'+pi,`Have a spare ${L(p.n)}${p.q>1?' ×'+p.q:''} (used up by the recipe)`,
@@ -506,7 +518,7 @@ function newId(){return Date.now().toString(36)+Math.random().toString(36).slice
 function addTask(k,r,t,extra){P.tasks=P.tasks||[];if(k!=='note'&&P.tasks.some(x=>!x.d&&x.k===k&&x.r===r)){toast('Already in your tasks');return null}
   const task={id:newId(),t:t||((TK[k]?TK[k]+' ':'')+r),k,r,d:0,at:Date.now(),...(extra||{})};P.tasks.unshift(task);saveProfile();return task}
 function taskGo(x){if(x.k==='quest')return `href="#quests" data-q="${esc(x.r)}"`;if(x.k==='node')return `href="#missions" data-scp="${esc(x.r)}"`;if(x.k==='synd')return 'href="#synd"';
-  if(x.k==='fish'||x.k==='ore')return 'href="#world"';if(x.k==='lich')return `href="#" data-go="item|${esc(x.r)}"`;if(['res','item','relic','mod','arc','guide','way'].includes(x.k))return `href="#" data-go="${esc(x.k+'|'+x.r)}"`;return ''}
+  if(x.k==='fish'||x.k==='ore')return 'href="#world"';if(x.k==='animal')return `href="#" data-go="ow|${esc(x.r)}"`;if(x.k==='lich')return `href="#" data-go="item|${esc(x.r)}"`;if(['res','item','relic','mod','arc','guide','way'].includes(x.k))return `href="#" data-go="${esc(x.k+'|'+x.r)}"`;return ''}
 function taskRow(x,compact){const go=taskGo(x);
   return `<div class="trow${x.d?' done':''}"><input type="checkbox" class="ck sm" data-tdone="${esc(x.id)}" ${x.d?'checked':''} aria-label="Done"><div class="tmain">${go?`<a class="ln" ${go}>${esc(x.t)}</a>`:`<span>${esc(x.t)}</span>`}${taskMeta(x)}
    ${(x.with||[]).length?`<div class="small muted">with ${x.with.map(w=>esc(w.name)).join(', ')}</div>`:''}${x.from?`<div class="small muted">from ${esc(x.from.name)}</div>`:''}</div>
@@ -797,7 +809,7 @@ function feedStatus(){const age=d=>{const t=Date.parse(d);return isNaN(t)?null:(
   return `<span>${dot(gk)}Game data ${D.meta.wfcd?'v'+esc(D.meta.wfcd)+', ':''}${esc(D.meta.built)}${gk==='warn'?' (may be out of date)':''}</span><span>${dot(pk)}Prices ${esc(D.meta.prices)}${pk==='warn'?' (delayed)':''}</span><span>${dot(lk)}Live game feed ${lk==='ok'?'connected':lk==='bad'?'unavailable':HOSTED?'not loaded yet':'on tennoform.com only'}</span>`}
 function siteFoot(){return `<footer class="sitefoot"><div class="footcta" role="navigation" aria-label="Tennoform"><a class="btn sm primary" href="#donate">Support Tennoform</a><a class="btn sm" href="#feedback">Send feedback</a><a class="btn sm" href="#about" data-about="changes">What's new</a></div><div class="feeds">${feedStatus()}</div>
  <div><a class="ln" href="#about">About, data &amp; privacy</a> · <a class="ln" href="#feedback">Feedback</a> · <a class="ln" href="#donate">Support</a> · <a class="ln" href="#about" data-about="changes">What's new</a> · Made by <a class="ln" href="#about">Snooji</a></div>
- <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe and its content are trademarks of Digital Extremes Ltd.</div></footer>`}
+ <div class="muted">Tennoform is a free, community-made tool. It is not affiliated with, endorsed or sponsored by Digital Extremes. Warframe, its content and its item pictures are trademarks and property of Digital Extremes Ltd.</div></footer>`}
 function syncInfo(){const ls=P.lastSync;const pre=lsGet('tf-presync',null);
   return `<details class="panel cut syncinfo" ${P.at?'':'open'}><summary><h2>How syncing works</h2><span class="small muted">What's read, what isn't, and how to undo it</span></summary>
   <dl class="faq">
@@ -825,7 +837,7 @@ function about(){const sec=state.aboutSec;
    <li><b>With an account</b> your progress, tasks and settings are stored in Google Firebase so they follow you between devices. Only you can read them.</li>
    <li><b>Friends</b> can see your display name, friend code, MR, total Mastery XP and node counts. Messages are stored until you or the recipient deletes them.</li>
    <li><b>Feedback</b> is readable only by the developer.</li>
-   <li><b>No ads, no analytics, no tracking.</b> Your browser contacts Google Fonts, warframestat.us (live data, item images, profile sync) and Firebase (when signed in).</li>
+   <li><b>No ads, no analytics, no tracking.</b> Your browser contacts warframestat.us (live data and item pictures), Tennoform's profile relay (when you sync) and Firebase (when signed in).</li>
    <li>You can export your data any time (Profile → Backup &amp; export) and delete your account and everything stored with it (Profile → Account &amp; sync).</li></ul></section>
   <details class="obj grp" ${sec==='changes'?'open':''} id="changes"><summary><h3>What's new</h3></summary><div class="stack" style="padding:10px 14px;gap:8px">${CHANGES.map(([d,t])=>`<div class="small"><b class="mono">${esc(fdate(d))}</b> · ${esc(t)}</div>`).join('')}</div></details>
   <section class="panel cut stack"><h2>Contact</h2><span class="small">Bugs, ideas or wrong data: <a class="ln" href="#feedback">Feedback page</a>. Like the app? <a class="ln" href="#donate">Support Tennoform</a>.</span></section></div>`}
@@ -1240,11 +1252,12 @@ const GUIDES=D.guides||[];const GIDX=Object.fromEntries(GUIDES.map(g=>[g.id,g]))
 /* guides and farm "ways" come as their own files (bundle/guides-*.json, bundle/ways-*.json), fetched just after the page is up,
    or straight away when a page or search needs them; the search index is rebuilt when they arrive */
 const LAZY={guides:{done:GUIDES.length>0,busy:false,err:false,add:j=>{GUIDES.push(...j);Object.assign(GIDX,Object.fromEntries(j.map(g=>[g.id,g])))}}};
-function lazyLoad(k){const L=LAZY[k];const url=D.lazy&&D.lazy[k];if(!L||L.done||L.busy||!url)return;L.busy=true;L.err=false;
+function lazyLoad(k){const L=LAZY[k];const url=L&&L.url?L.url():D.lazy&&D.lazy[k];if(!L||L.done||L.busy||!url)return;L.busy=true;L.err=false;
   fetch(url).then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{L.add(j);L.done=true;CMDX=null;IDX=null})
     .catch(()=>{L.err=true}).finally(()=>{L.busy=false;if(typeof render==='function')try{render()}catch(e){}tfNotify()})}
 const lazyLoading=k=>!!(LAZY[k]&&!LAZY[k].done&&!LAZY[k].err);
-setTimeout(()=>Object.keys(LAZY).forEach(lazyLoad),1200);
+/* files marked demand load only when something asks for them (e.g. price history when a chart opens) */
+setTimeout(()=>Object.keys(LAZY).filter(k=>!LAZY[k].demand).forEach(lazyLoad),1200);
 const GKIND={quest:'Quests',system:'Unlocks',mode:'Missions'};
 const guideOfQuest=n=>GUIDES.find(g=>g.kind==='quest'&&g.n===n);
 function guideKey(n){if(I[n])return 'item|'+n;if(Q.some(q=>q.n===n))return 'quest|'+n;if(RES[n])return 'res|'+n;if(MODS[n])return 'mod|'+n;if(ARC[n])return 'arc|'+n;const g=GUIDES.find(x=>x.n===n);return g?'guide|'+g.id:''}
@@ -1819,7 +1832,7 @@ function mastery(){const tab=state.mTab;
   if(tab==='sframes')h+=`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>Easy Warframes</h3>${progHTML()}</summary>${M.frames.map(f=>mrow(f.id,f.src)).join('')}</details>
     <details class="obj grp" data-scope="input.ck.mk" open><summary><h3>Market companions</h3>${progHTML()}</summary>${M.companions.map(f=>mrow(f.id,'Market blueprint')).join('')}</details>`;
   if(tab==='craft'){const by={};M.craft.forEach(x=>(by[x.mr]=by[x.mr]||[]).push(x));
-    h+=`<div class="callout small">Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</div>`+
+    h+=`<div class="callout small tf-more">Weapons used to craft other weapons. Rank the ingredient for its XP first, then build a spare copy for the recipe.</div>`+
     Object.keys(by).sort((a,b)=>a-b).map(mr=>`<details class="obj grp" data-scope="input.ck.mk" open><summary><h3>MR ${mr}</h3>${progHTML()}</summary>${by[mr].map(x=>`<div style="padding:10px 14px 0;border-top:1px solid var(--line)"><div class="mono small">${esc(x.recipe)} · ${fmt(x.xp)} XP</div>${x.note?`<div class="small" style="color:var(--warn)">${esc(x.note)}</div>`:''}</div>${x.targets.map(t=>mrow(t.id,'')).join('')}`).join('')}</details>`).join('')}
   if(tab==='xp')h+=`<div class="panel stack cut"><h2>Where to level gear fast</h2>
     <p class="small muted" style="margin:0">Best spots first. A frame that clears whole rooms ranks a fresh weapon to 30 in a few waves; stack an Affinity Booster on days you level several items.</p></div>
@@ -2060,7 +2073,7 @@ window.TF={
     return {route:key,title:SUBL[key]||PL[key]||'Home',place:pl?{id:pl[0],label:pl[1]}:null,
       mr:m.mr,mrLabel:(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr),nextLabel:m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1),xp:t.total,next:m.next,pct:m.pct,toNext:Math.max(0,m.next-t.total),
       name:P.tname||(P.prof&&P.prof.name)||'',signedIn:on,canAcct:canAcct(),acctName:on?(acct.name||acct.email||''):'',acctEmail:on?(acct.email||''):'',
-      admin:!!FBK.admin,unread:SO.uid?(unread().n||0):0,theme:themeGet(),demo:!!DEMO,isNew:isNew(),qs:!!state.qs}},
+      admin:!!FBK.admin,unread:SO.uid?(unread().n||0):0,theme:themeGet(),style:themeStyle(),demo:!!DEMO,isNew:isNew(),qs:!!state.qs}},
   nav(){return PLACES.map(p=>({id:p[0],label:p[1],pages:p[3].filter(r=>!NAV_PAIRED.has(r)).map(r=>({route:r,label:SUBL[r]||PL[r]}))}))},
   menu(){return MENU.map(([r,l])=>({route:r,label:l}))},
   search(q){return cmdFind(q).map(e=>({name:e.n,group:e.g,act:e.act,sub:e.g==='Gear'?I[e.n].c:e.g==='Pages'?'Page':e.g.replace(/s$/,''),img:e.g==='Gear'&&I[e.n].img?'https://cdn.warframestat.us/img/'+encodeURIComponent(I[e.n].img):''}))},
@@ -2070,6 +2083,7 @@ window.TF={
   signOut:()=>{flushNow();if(FB)FB.auth.signOut();toast('Signed out. Your progress stays on this device too.')},
   account:()=>{state.tTab='account';saveUI();if(location.hash==='#tenno')render();else location.hash='tenno'},
   theme:t=>themeSet(t),
+  themeStyle:st=>themeStyleSet(st),
   logo:()=>LOGO_HTML(),
   share:()=>shareCard(),
   keys:()=>keysOpen(),
@@ -2689,17 +2703,22 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');i
   e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
 const _relicsRoute=routes.relics;
 routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
+/* live fissures by relic era (normal first, then Steel Path; Void Storms need a Railjack so they come last) */
+function fisByEra(){const out={},now=Date.now();const fs=(WS&&WS.fissures||[]).filter(f=>!f.expired&&new Date(f.expiry).getTime()>now).sort((a,b)=>(!!a.isStorm-!!b.isStorm)||(!!a.isHard-!!b.isHard));
+  for(const f of fs)if(!out[f.tier])out[f.tier]={mission:f.missionType,node:f.node,hard:!!f.isHard,storm:!!f.isStorm,left:left(new Date(f.expiry)-now),more:fs.filter(x=>x.tier===f.tier).length-1};
+  return out}
 /* relic planner: what a run is worth with your squad size and refinement, and the chance of what you need */
 function runEV(r,ref,n,valOf){const R=REL[r];const rows=R.rw.map(([nm,rar])=>({v:valOf(nm)||0,p:RCH[ref][rar]/100})).sort((a,b)=>a.v-b.v);let F=0,prev=0,ev=0;for(const x of rows){F+=x.p;const cur=Math.pow(Math.min(1,F),n);ev+=x.v*(cur-prev);prev=cur}return ev}
 function plannerData(){const ref=state.rpR||'r',n=+(state.rpN||4),own=state.rpO!==false&&state.rpO!=='0',ef=state.rpE||'all',so=state.rpS||'plat',q=(state.rpQ||'').toLowerCase().trim();
-  let list=Object.keys(REL).filter(r=>(!own||relCount(r)>0)&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v))&&(!q||r.toLowerCase().includes(q)||REL[r].rw.some(([x])=>x.toLowerCase().includes(q))));
+  const FIS=fisByEra();
+  let list=Object.keys(REL).filter(r=>(!own||relCount(r)>0)&&(ef==='all'||REL[r].era===ef||(ef==='open'&&!REL[r].v)||(ef==='fis'&&FIS[REL[r].era]))&&(!q||r.toLowerCase().includes(q)||REL[r].rw.some(([x])=>x.toLowerCase().includes(q))));
   const rows=list.map(r=>{const R=REL[r];const need=R.rw.filter(([x])=>!/Forma/.test(x)&&partNeeded(x)&&partGoal(x));
     const best=need.length?need.reduce((a,[x,rar])=>RCH[ref][rar]<RCH[ref][a[1]]?[x,rar]:a,need[0]):null;
     const needP=need.length?1-need.reduce((m,[,rar])=>m*Math.pow(1-RCH[ref][rar]/100,n),1):0;
     const rare=R.rw.find(x=>x[1]==='R');
     return {r,era:R.era,vaulted:!!R.v,count:relCount(r),plat:runEV(r,ref,n,pv),du:runEV(r,ref,n,partDu),
       rare:rare?{n:rare[0],go:linkKey(rare[0]),p:1-Math.pow(1-RCH[ref].R/100,n),plat:pv(rare[0])!=null?Math.round(pv(rare[0])):null}:null,
-      need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:''}});
+      need:need.map(([x,rar])=>({n:x,go:linkKey(x),p:1-Math.pow(1-RCH[ref][rar]/100,n)})),needP,hardest:best?best[0]:'',fis:FIS[R.era]||null}});
   rows.sort((a,b)=>so==='du'?b.du-a.du:so==='need'?(b.needP-a.needP)||b.plat-a.plat:so==='name'?a.r.localeCompare(b.r,undefined,{numeric:true}):b.plat-a.plat);rv('rpS',rows);
   return {ref,squad:String(n),own,era:ef,sort:so,q:state.rpQ||'',total:rows.length,owned:Object.keys(P.rel||{}).filter(r=>REL[r]&&relCount(r)>0).length,rows:rows.slice(0,150).map(x=>({...x,plat:Math.round(x.plat*10)/10,du:Math.round(x.du)}))}}
 Object.assign(window.TF,{planSet:o=>{const m={ref:'rpR',squad:'rpN',era:'rpE',sort:'rpS',q:'rpQ'};for(const k in o)if(m[k])state[m[k]]=o[k];if(o.own!=null)state.rpO=o.own;tfNotify()}});
@@ -2922,20 +2941,20 @@ function buildById(id){if(id.startsWith('mine:'))return (P.myb||[]).find(b=>'min
 function bParts(b){return [...(b.aura?[['aura',b.aura]]:[]),...(b.exilus?[['exilus',b.exilus]]:[]),...b.mods.filter(Boolean).map(m=>['mod',m]),...(b.arcanes||[]).filter(Boolean).map(a=>['arc',a])]}
 const bHave=b=>{const p=bParts(b);return {have:p.filter(([k,n])=>on((k==='arc'?'arc|':'mod|')+n)||(k==='arc'&&(+((P.arc||{})[n])||0)>0)).length,total:p.length}};
 function bCard(b){const it=I[b.item];const h=bHave(b);const mv=(P.bv||{})[b.doc]||0;
-  return {id:b.id,src:b.src,item:b.item,img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
+  return {id:b.id,src:b.src,item:b.item,fits:bFits(b),img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
     goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0}}
 function bDetail(b){const it=I[b.item];const c=it?it.c:'';const sl=BSLOTS(c);
   return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
     mods:[...(b.aura?[modSlot(sl.aura||'Aura',b.aura)]:[]),...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.filter(Boolean).map(m=>modSlot('Mod',m))],
     arcanes:(b.arcanes||[]).filter(Boolean).map(a=>modSlot('Arcane',a,true)),
-    itemOwned:it?ownedItem(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
+    itemOwned:it?famOwned(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
 function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
   if(s!=='meta')loadShared();
-  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
+  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
   L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
-  else if(so==='own')L.sort((a,b)=>(+ownedItem(b.item)-+ownedItem(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
+  else if(so==='own')L.sort((a,b)=>(+famOwned(b.item)-+famOwned(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
   rv('blO',L);
@@ -3093,7 +3112,7 @@ ${phone?`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone: u
     <div class="row"><button type="button" class="btn" id="idmarkcopy">Copy the bookmark</button></div></div></div>
 `:''}   <div class="sv"><span class="svn">${pcN}</span><div><b>On a computer: run one line in the console</b><div class="small muted">Copy the line, then on warframe.com press <span class="mono">F12</span> (Mac: <span class="mono">Cmd+Option+J</span>), open the <b>Console</b> tab, paste it and press Enter. You land back here with your ID ready to link.</div>
     <div class="row"><button type="button" class="btn primary" id="idcode">Copy the console line</button></div>
-    <div class="small muted">Using a web inspector instead (for example an iPhone inspector app)? Open its Resources or Application tab, find the cookie <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Not <span class="mono">_gsid</span>: that one is a Google Analytics ID.</div>
+    <div class="small muted">Or copy it from the cookies yourself: <b>iPhone</b> with a Safari web inspector extension (Resources tab), <b>Android</b> with the Mimir app by MST Sage (Applications tab), or a <b>computer</b> with F12 (Application tab). Open Cookies for warframe.com, find <b>user-info</b> and copy the 24 characters after <span class="mono">"user_id":"</span>. Only copy that: other warframe.com cookies can keep you logged in, so never share them. <a class="ln" href="#" data-go="guide|find-account-id">Steps for each device</a></div>
     <details class="small"><summary>See the line</summary><pre class="mono" style="white-space:pre-wrap;word-break:break-all;margin:6px 0 0">${esc(ID_CODE)}</pre></details>
     <div class="small muted">Chrome or Edge may say pasting is blocked: type <span class="mono">allow pasting</span>, press Enter, then paste again. The line only reads your account ID from warframe.com and changes nothing.</div>
     <div class="small muted">Prefer one click? Drag this button to your bookmarks bar, then click it while on warframe.com: <a class="btn sm" id="idmark" href="${esc(ID_MARK)}" draggable="true">Tennoform ID</a></div></div></div>
@@ -3882,6 +3901,287 @@ function returningData(){const from=lsGet('tf-ret-from','')||'';const updates=fr
   const known=!!P.at||quests.some(q=>q.done);const todo=quests.filter(q=>!q.done&&(known||!from||q.isNew));
   return {from,options:RET_FROM.map(([value,label])=>({value,label})),updates,quests:todo.slice(0,8),moreQuests:Math.max(0,todo.length-8),questsDone:quests.filter(q=>q.done).length,questsTotal:quests.length,synced:!!P.at,assumed:!known&&!!from}}
 Object.assign(window.TF,{returning:()=>returningData(),returningSet:v=>{lsSet('tf-ret-from',String(v||''));tfNotify()}});
+/* ---------- Baro wishlist, Circuit alerts and build dates ---------- */
+/* Baro: list what you want him to bring; when he's at a relay with any of it, an alert says so. His stock is only known
+   once he arrives (the live feed lists it then). Circuit: ring the bell on a Warframe or adapter; the alert fires in the
+   week the Circuit offers it, and the forecast shows how many weeks away it is. All saved in your profile. */
+const wishList=()=>Array.isArray(P.baroWish)?P.baroWish:[];
+const wishKey=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,'');
+const onWish=n=>wishList().some(w=>wishKey(w)===wishKey(n));
+function baroWishSet(n,v){n=String(n||'').trim().slice(0,60);if(!n)return;const rest=wishList().filter(w=>wishKey(w)!==wishKey(n));P.baroWish=v?[...rest,n]:rest;saveProfile();tfNotify()}
+/* names to suggest while typing: the things Baro sells (Primed mods, Prisma weapons and the like) plus any mod or item */
+function baroSuggest(q){q=wishKey(q);if(q.length<2)return [];const pool=[...Object.keys(MODS),...Object.keys(I).filter(n=>/\/VoidTrader\//.test(I[n].u)||/^(Prisma |Mara )/.test(n))];
+  const hit=pool.filter(n=>wishKey(n).includes(q)&&!onWish(n));hit.sort((a,b)=>(/^Primed |^Prisma /.test(b)-/^Primed |^Prisma /.test(a))||a.length-b.length);return hit.slice(0,8)}
+const ownedAny=n=>(I[n]&&ownedItem(n))||on('mod|'+n)||on('arc|'+n);
+{const _t=todayData;todayData=function(){const out=_t();const b=out.live&&out.live.baro;
+  if(b){b.inv=b.inv.map(x=>({...x,wish:onWish(x.item),own:ownedAny(x.item)}));b.wish=wishList().map(n=>({n,here:b.here&&b.inv.some(x=>wishKey(x.item)===wishKey(n))}))}
+  if(out.live)out.live.baroWish=wishList();return out}}
+
+const cirWatch=()=>Array.isArray(P.cirWatch)?P.cirWatch:[];
+function cirWatchSet(n,v){const rest=cirWatch().filter(x=>x!==n);P.cirWatch=v?[...rest,n]:rest;saveProfile();tfNotify()}
+{const _c=circuitData;circuitData=function(){const d=_c();const W=cirWatch();
+  d.weeks.forEach(w=>{w.frames.forEach(f=>f.watch=W.includes(f.n));w.adapters.forEach(a=>a.watch=W.includes(a.n))});
+  d.watching=W.map(n=>{const i=d.weeks.findIndex(w=>w.frames.some(f=>f.n===n)||w.adapters.some(a=>a.n===n));return {n,week:i,label:i<0?'not in the next 10 weeks':i===0?'this week':i===1?'next week':'in '+i+' weeks'}});
+  return d}}
+
+{const _a=alertsAll;alertsAll=function(){const out=_a();
+  const vt=WS&&WS.voidTrader,now=Date.now();
+  if(vt&&vt.inventory&&wishList().length&&new Date(vt.activation).getTime()<=now&&now<new Date(vt.expiry).getTime()){
+    const hits=vt.inventory.map(x=>x.item).filter(onWish);
+    if(hits.length)out.unshift({id:'baro-wish:'+vt.activation+':'+hits.map(wishKey).sort().join(','),kind:'baro',title:`Baro has ${hits.length===1?hits[0]:hits.length+' things'} from your wishlist`,
+      text:`At ${vt.location||'a relay'} for ${left(new Date(vt.expiry)-now)}.`,items:hits.slice(0,6),href:'today'})}
+  if(cirWatch().length){const w0=circuitData().weeks[0];const hits=[...w0.frames.filter(f=>f.watch).map(f=>f.n),...w0.adapters.filter(a=>a.watch).map(a=>a.n+' Incarnon Genesis')];
+    if(hits.length)out.push({id:'circuit:'+w0.start+':'+hits.join(','),kind:'circuit',title:`This week's Circuit has ${hits.length===1?hits[0]:hits.length+' things you want'}`,
+      text:`Until the Monday reset (${w0.endsIn}). Run the ${w0.adapters.some(a=>a.watch)?'Steel Path ':''}Circuit in Duviri to pick it.`,items:hits,href:'today'})}
+  return out}}
+
+/* builds: when each one was shared or last reviewed, and a note when it's old enough that patches may have changed it */
+const BUILDS_REVIEWED='2026-10-05';   /* the community picks were last checked against the game on this date */
+const STALE_DAYS=180;
+{const _b=bCard;bCard=function(b){const c=_b(b);const t=b.src==='player'?(b.at||0):Date.parse(BUILDS_REVIEWED);
+  c.dated=t?(b.src==='player'?'Shared ':'Reviewed ')+fdate(new Date(t).toISOString().slice(0,10)):'';c.stale=!!t&&Date.now()-t>STALE_DAYS*DAY;return c}}
+
+Object.assign(window.TF,{baroWish:(n,v)=>baroWishSet(n,v),baroSuggest:q=>baroSuggest(q),circuitWatch:(n,v)=>cirWatchSet(n,v)});
+/* ---------- warframe.market price history and price alerts ---------- */
+/* History: 90 days of daily average prices per item, saved by the daily price refresh from the statistics it already
+   downloads, and fetched only when a chart opens. Alerts: "tell me when X is below N platinum", checked against each
+   day's snapshot (the cheapest seller if there is one, else the 7-day average). Nothing extra is asked of warframe.market. */
+let PH=null;
+LAZY.pricehist={done:false,busy:false,err:false,demand:true,url:()=>D.hist,add:j=>{PH=j}};
+function priceHist(n){if(!D.hist)return {state:'none',points:[]};if(!PH){lazyLoad('pricehist');return {state:LAZY.pricehist.err?'error':'loading',points:[]}}
+  const h=PH[n];if(!h)return {state:'empty',points:[]};const d0=new Date(h[0]+'T00:00:00Z').getTime();
+  const points=h[1].map((p,i)=>({d:new Date(d0+i*DAY).toISOString().slice(0,10),p}));const vals=points.map(x=>x.p).filter(x=>x!=null);
+  return {state:'ok',points,min:Math.min(...vals),max:Math.max(...vals),first:vals[0],last:vals[vals.length-1]}}
+const palerts=()=>P.palerts&&typeof P.palerts==='object'?P.palerts:{};
+/* today's price for an alert: the cheapest seller in the snapshot, else the 7-day average */
+function nowPrice(n){const sl=(SEL[n]||[]).filter(s=>s[0]!=='__buy');if(sl.length)return {p:sl[0][1],how:'cheapest seller'};const a=(PR[n]||{}).a7;return a!=null?{p:Math.round(a),how:'7-day average'}:null}
+function priceAlertSet(n,below){const a={...palerts()};if(below==null||!(+below>0))delete a[n];else a[n]=Math.round(+below);P.palerts=a;saveProfile();tfNotify()}
+function priceAlertsData(){const a=palerts();return {date:D.meta.prices||'',list:Object.keys(a).sort().map(n=>{const c=nowPrice(n);return {n,below:a[n],now:c?c.p:null,how:c?c.how:'',hit:!!c&&c.p<=a[n],url:MS[n]?'https://warframe.market/items/'+MS[n]:''}})}}
+function priceSuggest(q){q=String(q||'').toLowerCase().trim();if(q.length<2)return [];const a=palerts();
+  return Object.keys(MS).filter(n=>n.toLowerCase().includes(q)&&!(n in a)).sort((x,y)=>(x.toLowerCase().startsWith(q)?0:1)-(y.toLowerCase().startsWith(q)?0:1)||x.length-y.length).slice(0,8)}
+{const _a=alertsAll;alertsAll=function(){const out=_a();const hits=priceAlertsData().list.filter(x=>x.hit);
+  if(hits.length)out.push({id:'price:'+(D.meta.prices||'')+':'+hits.map(x=>x.n).join(','),kind:'price',title:hits.length===1?`${hits[0].n} is ${hits[0].now}p`:`${hits.length} items hit your price alerts`,
+    text:hits.length===1?`At or below your ${hits[0].below}p alert (${hits[0].how}, warframe.market snapshot of ${D.meta.prices}).`:`At or below the prices you set (warframe.market snapshot of ${D.meta.prices}).`,
+    items:hits.slice(0,6).map(x=>`${x.n}: ${x.now}p (alert at ${x.below}p)`),href:'market'});
+  return out}}
+Object.assign(window.TF,{priceHist:n=>priceHist(n),priceAlerts:()=>priceAlertsData(),priceAlert:(n,below)=>priceAlertSet(n,below),priceSuggest:q=>priceSuggest(q)});
+/* ---------- chat and friend notifications ---------- */
+/* Built on what the site already listens to when you're signed in (your inbox and your group chats), plus a community room
+   while it's open. New direct messages, group messages, friend requests and new friends show a notification: a system one
+   when Tennoform is in the background (through a tiny service worker, which is what phones need), a toast while you're
+   looking at the site. Never for the conversation you're reading. Each kind can be switched off, any chat can be muted,
+   and "silent" shows them without a sound. Nothing here sends anything anywhere. */
+const NTF_DEF={on:false,sound:true,dm:true,group:true,friend:true,room:false,mute:{}};
+const ntfPrefs=()=>({...NTF_DEF,...(P.notif||{}),mute:{...((P.notif||{}).mute||{})}});
+function ntfSet(o){P.notif={...ntfPrefs(),...o};saveProfile();if(P.notif.on)ntfWorker();tfNotify()}
+const ntfPerm=()=>typeof Notification==='undefined'?'unsupported':Notification.permission;
+let NTF_SW=null;
+function ntfWorker(){if(NTF_SW||!('serviceWorker' in navigator))return NTF_SW;NTF_SW=navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(()=>navigator.serviceWorker.ready).catch(()=>null);return NTF_SW}
+async function ntfEnable(){if(typeof Notification==='undefined'){toast("This browser can't show notifications. On iPhone, add Tennoform to your Home Screen first.");return false}
+  const p=Notification.permission==='granted'?'granted':await Notification.requestPermission();
+  if(p!=='granted'){toast('Notifications are blocked for this site. Allow them in your browser settings to turn this on.');ntfSet({on:false});return false}
+  ntfSet({on:true});await ntfWorker();return true}
+/* the conversation on screen right now, if any: no notification for it */
+function ntfViewing(conv){if(document.visibilityState!=='visible')return false;const h=location.hash;
+  if(conv.startsWith('room:'))return h==='#chat';return h==='#friends'&&state.chat===conv.replace(/^dm:/,'')}
+async function ntfShow(title,body,conv,url){const pr=ntfPrefs();
+  if(document.visibilityState==='visible'&&document.hasFocus()){if(!ntfViewing(conv))toast(title+': '+body.slice(0,90));return}
+  if(ntfPerm()!=='granted')return;const opt={body:body.slice(0,180),tag:conv,renotify:true,silent:!pr.sound,icon:'/icon-192.png',badge:'/icon-192.png',data:{url}};
+  try{const reg=await ntfWorker();if(reg&&reg.showNotification){await reg.showNotification(title,opt);return}}catch(e){}
+  try{const n=new Notification(title,opt);n.onclick=()=>{window.focus();location.hash=url.replace(/^.*#/,'');n.close()}}catch(e){}}
+/* only things newer than when this page started listening, and each one once */
+const NTF_START=Date.now();const NTF_SEEN=new Set();
+function ntfScan(){const pr=ntfPrefs();if(!pr.on||typeof SO==='undefined'||!SO.uid)return;
+  const fresh=(id,at)=>at>NTF_START&&!NTF_SEEN.has(id)&&(NTF_SEEN.add(id),true);
+  for(const m of SO.inbox||[]){if(m.from===SO.uid||!fresh('i:'+m.id,m.at||0))continue;if(typeof blocked==='function'&&blocked(m.from))continue;const who=m.fromName||'A friend';
+    if(m.type==='friend'&&pr.friend)ntfShow('Friend request',`${who} wants to add you as a friend.`,'freq:'+m.from,'/#friends');
+    else if(m.type==='accept'&&pr.friend)ntfShow('New friend',`${who} accepted your friend request. You can message them now.`,'fnew:'+m.from,'/#friends');
+    else if((m.type==='msg'||m.type==='task')&&pr.dm&&!pr.mute['dm:'+m.from]&&!ntfViewing('dm:'+m.from))ntfShow(who,m.type==='task'?'Invited you to a task'+(m.task&&m.task.t?': '+m.task.t:''):(m.text||'Sent you a message'),'dm:'+m.from,'/#friends')}
+  for(const g of SO.groups||[])for(const m of (SO.gm&&SO.gm[g.id])||[]){if(m.from===SO.uid||!fresh('g:'+g.id+':'+m.id,m.at||0))continue;
+    if(m.type==='sys'||!pr.group||pr.mute['g:'+g.id]||ntfViewing('g:'+g.id))continue;
+    ntfShow(g.name||'Group chat',`${m.fromName||'Someone'}: ${m.text||'sent something'}`,'g:'+g.id,'/#friends')}
+  if(pr.room&&typeof CM!=='undefined'&&CM.sub&&!pr.mute['room:'+CM.sub])for(const m of CM.msgs||[]){if(m.uid===SO.uid||!fresh('r:'+m.id,m.at||0))continue;
+    if(!ntfViewing('room:'+CM.sub))ntfShow('Community chat',`${m.name||'Someone'}: ${m.text||'sent something'}`,'room:'+CM.sub,'/#chat')}}
+setInterval(ntfScan,2000);
+if(ntfPrefs().on&&ntfPerm()==='granted')ntfWorker();
+function ntfData(){const pr=ntfPrefs();const cur=state.chat?(state.chat.startsWith('g:')?state.chat:'dm:'+state.chat):'';
+  return {...pr,perm:ntfPerm(),worker:'serviceWorker' in navigator,ios:/iPhone|iPad/.test(navigator.userAgent)&&!(navigator.standalone||matchMedia('(display-mode: standalone)').matches),current:cur,currentMuted:!!(cur&&pr.mute[cur])}}
+Object.assign(window.TF,{notif:()=>ntfData(),notifSet:o=>ntfSet(o),notifEnable:()=>ntfEnable(),
+  notifMute:(conv,v)=>{const m={...ntfPrefs().mute};if(v)m[conv]=1;else delete m[conv];ntfSet({mute:m})},
+  notifTest:()=>{if(ntfPerm()!=='granted'){toast('Turn notifications on first.');return}const opt={body:'This is how chat notifications will look.',tag:'test',silent:!ntfPrefs().sound,icon:'/icon-192.png',data:{url:'/#friends'}};
+    ntfWorker()&&NTF_SW.then(r=>r?r.showNotification('Tennoform',opt):new Notification('Tennoform',opt)).catch(()=>{try{new Notification('Tennoform',opt)}catch(e){}})}});
+/* ---------- Conservation: every animal you can capture in the open worlds ----------
+   From the Warframe wiki (Conservation and each species page), checked October 2026. Standing numbers are for a
+   Perfect capture of the common / rare / very rare variant. Where the wiki gives no time of day, none is shown. */
+const CONSERVATION={
+  steps:[
+    'Buy the Tranq Rifle (500 standing) from The Business in Fortuna or Son in the Necralisk. Master Teasonai in Cetus does not sell it.',
+    'Buy an Echo-Lure for each animal from that world\'s vendor (Teasonai, The Business or Son). Lures are reusable.',
+    'Optional: a Pheromone (Oota, Synthesizer or Gland) makes rare variants far more likely: about 33% rare and 67% very rare instead of 29% and 14%.',
+    'Equip a lure or the rifle in Arsenal > Gear. Holding the rifle shows trail starts as diamonds on the map and minimap.',
+    'Interact with the tracks, follow the footprints to the calling point, then use the lure and keep the pitch inside the brackets by aiming up or down.',
+    'Hide downwind and out of sight, then tranq it. Darts are silent but slow, so lead moving targets.',
+    'Perfect capture: it never noticed you and no abilities were used (Ivara\'s Quiver, Navigator and Prowl, Baruuk\'s Lull and Equinox\'s Rest are allowed). Good: it saw or smelled you. Bad: it was hurt or it took too long.',
+    'Captures give standing (Plains and Vallis) and species tags. Trade tags with the vendor for Floofs, emblems and Beast Claw mods. Resource Boosters and the Retriever mods give more tags.'],
+  worlds:[
+  {world:'Plains of Eidolon',vendor:'Master Teasonai (Ostron), Cetus',species:[
+    {n:'Kuaka',variants:['Plains','Ashen','Ghost'],rare:['Ashen','Ghost'],where:'Open grassland. The rare variants live in the caves.',time:'Any time',lure:'Kuaka Echo-Lure, Neutral with the Ostron',reward:'400 / 600 / 1,200 standing and tags. A lure always calls three.',tip:'Tranq the one at the back first so the group doesn\'t see the others drop.'},
+    {n:'Condroc',variants:['Common','Rogue','Emperor'],rare:['Rogue','Emperor'],where:'Across the Plains. It flies in; roaming ones are often already on the ground.',time:'Rogue Condroc only spawns during the day',lure:'Condroc Echo-Lure, Offworlder with the Ostron',reward:'800 / 1,200 / 1,800 standing and tags',tip:'Wait until it lands at the calling point before you shoot.'},
+    {n:'Mergoo',variants:['Coastal','Woodland','Splendid'],rare:['Woodland','Splendid'],where:'Coasts, lakes and other large water.',time:'Any time',lure:'Mergoo Echo-Lure, Visitor with the Ostron',reward:'1,200 / 2,400 / 3,600 standing and tags, the best standing on the Plains',tip:'Search the lakeshores and shoot once it has landed.'},
+    {n:'Vasca Kavat',variants:['Ostia','Bau','Nephil'],rare:['Bau','Nephil'],where:'Across the Plains.',time:'Night only',lure:'Vasca Kavat Echo-Lure, Trusted with the Ostron',reward:'500 / 1,000 / 1,500 standing and tags',tip:'Sleep abilities last half as long on it, so use the rifle.'}]},
+  {world:'Orb Vallis',vendor:'The Business (Solaris United), Fortuna',species:[
+    {n:'Pobber',variants:['Sunny','Delicate','Subterranean'],rare:['Delicate','Subterranean'],where:'Fungal forests and mushroom groves. Subterranean only comes to a lure.',lure:'Pobber Echo-Lure, Neutral with Solaris United',reward:'400 / 600 / 800 standing and tags. A lure always calls three.',tip:'Head for the mushroom groves.'},
+    {n:'Virmink',variants:['White-Breasted','Dusky-Headed','Red-Crested'],rare:['Dusky-Headed','Red-Crested'],where:'Rocky ground.',lure:'Virmink Echo-Lure, Outworlder with Solaris United',reward:'600 / 800 / 1,000 standing and tags',tip:'Check rocky ground near Pobber groups.'},
+    {n:'Sawgaw',variants:['Flossy','Alpine Monitor','Frogmouthed'],rare:['Alpine Monitor','Frogmouthed'],where:'Cliffs and fungal groves. It perches on giant mushrooms.',lure:'Sawgaw Echo-Lure, Rapscallion with Solaris United',reward:'800 / 1,200 / 1,800 standing and tags',tip:'Look up at the mushroom caps.'},
+    {n:'Bolarola',variants:['Spotted','Black-Banded','Thorny'],rare:['Black-Banded','Thorny'],where:'Cratered and stormy areas.',lure:'Bolarola Echo-Lure, Doer with Solaris United',reward:'1,000 / 1,500 / 2,500 standing and tags',tip:'Its armour blocks darts. Shoot the belly when it leans back.'},
+    {n:'Horrasque',variants:['Dappled','Swimmer','Stormer'],rare:['Swimmer','Stormer'],where:'Burrows underground. Its trail is toxic scat.',lure:'Horrasque Echo-Lure, Cove with Solaris United',reward:'1,200 / 2,400 / 3,600 standing and tags. Takes two darts.',tip:'Wait until it has fully surfaced at the calling point.'},
+    {n:'Stover',variants:['Sentinel','Fuming Dax','Fire-Veined'],rare:['Fuming Dax','Fire-Veined'],where:'Caves.',lure:'Stover Echo-Lure, Cove with Solaris United',reward:'1,600 / 3,200 / 6,400 standing and tags. Takes two darts.',tip:'It attacks you. Clear the cave first and keep your distance.'},
+    {n:'Kubrodon',variants:['Brindle','Vallis','Incarnadine'],rare:['Vallis','Incarnadine'],where:'Across the Vallis. Incarnadine only comes to a lure.',lure:'Kubrodon Echo-Lure, Old Mate with Solaris United',reward:'2,000 / 4,000 / 8,000 standing and tags, the most of any animal. Takes two darts.',tip:'It has a strong sense of smell, so stay downwind.'}]},
+  {world:'Cambion Drift',vendor:'Son (Entrati), Necralisk',species:[
+    {n:'Cryptilex',variants:['Burrowing','Septic','Caustic'],rare:['Septic','Caustic'],where:'Caves, including the Catabolic Gutter.',time:'Any time',lure:'Cryptilex Echo-Lure, Neutral with the Entrati',reward:'Tags (Perfect 3, Good 2, Bad 1) to trade with Son',tip:'It is aggressive. Shoot before it reaches you.'},
+    {n:'Vulpaphyla',variants:['Sly','Crescent','Panzer'],rare:['Crescent','Panzer'],where:'The open Drift.',time:'Crescent during Vome, Panzer during Fass',lure:'Vulpaphyla Echo-Lure, Stranger with the Entrati',reward:'Tags. A Weakened one (hurt by Infested) can be revived at Son as a companion.',tip:'Panzer takes three darts. Let Infested hit it if you want a Weakened one.'},
+    {n:'Predasite',variants:['Vizier','Pharaoh','Medjay'],rare:['Pharaoh','Medjay'],where:'The open Drift.',time:'Pharaoh during Fass, Medjay during Vome',lure:'Predasite Echo-Lure, Stranger with the Entrati',reward:'Tags. A Weakened one can be revived at Son as a companion (needs a Mutagen and an Antigen).',tip:'Takes two darts, and abilities last a quarter as long on it.'},
+    {n:'Avichaea',variants:['Common','Sporule','Viscid'],rare:['Sporule','Viscid'],where:'Clings to walls.',time:'Sporule during Vome, Viscid during Fass',lure:'Avichaea Echo-Lure, Acquaintance with the Entrati',reward:'Tags',tip:'Look up at the walls.'},
+    {n:'Undazoa',variants:['Umber','Vaporous','Howler'],rare:['Vaporous','Howler'],where:'Along the exocrine rivers.',time:'Vaporous during Fass, Howler during Vome',lure:'Undazoa Echo-Lure, Associate with the Entrati',reward:'Tags. Takes two darts.',tip:'Follow the exocrine rivers.'},
+    {n:'Velocipod',variants:['Purple','Green','White'],rare:['Green','White'],where:'Purple: Undulatum and the base of the path from the Necralisk. Green: north of the area between Cerebrum Magna and the Infested Seraglio. White: swamps, the Catabolic Gutter ridges and the Infested Seraglio.',time:'White only during Vome',lure:'No lure. Find wild ones.',reward:'Tags. You can also ride one.',tip:'Look on high ground. It doesn\'t run away.'},
+    {n:'Nexifera',variants:['Amethyst','Viridian','Scarlet'],rare:['Viridian','Scarlet'],where:'Cave ceilings above a green puddle.',lure:'No lure. Find wild ones.',reward:'Tags',tip:'Step on the puddle, back away quickly, then tranq it as it drops.'}]},
+  {world:'Duviri',vendor:'No vendor. Each animal leads you to a chest.',species:[
+    {n:'Void-corrupted animals',variants:['Krubie','Kexat','Tamm'],rare:[],where:'A few fixed spots are active each run: the middle of Royalstead Pastures, west of the road from Primrose Village to Moirai Crossing, and a ravine west of Titan\'s Rest. Players see them most near Royalstead Pastures and the Chamber of Muses.',time:'Any spiral',lure:'No Tranq Rifle or lure. Koral tells you when one is close.',reward:'A chest with 3 Drifter Intrinsics, Duviri resources and a Decree',tip:'Sneak up and interact. If it spots you, destroy its three orbs, then finish the quick-time prompt and pet it.'}]}]};
+/* ---------- open worlds: one search across fishing, mining and conservation, also in the Farm finder ---------- */
+/* Every fish, ore, gem and animal gets a guide (where, when, what to bring, what it gives) under the key ow|<name>.
+   They show up in the Farm finder as the "Open worlds" type and in the search on the Open worlds page. */
+function owEntries(){const out=[];
+  for(const f of D.fish||[])out.push({n:f.n,kind:'Fish',reg:f.reg,r:f.r,f});
+  for(const rg in (D.mine&&D.mine.reg)||{}){const R=D.mine.reg[rg];for(const [n,r] of R.ore||[])out.push({n,kind:'Ore',reg:rg,r});for(const [n,r] of R.gem||[])out.push({n,kind:'Gem',reg:rg,r})}
+  for(const w of (typeof CONSERVATION!=='undefined'?CONSERVATION.worlds:[]))for(const a of w.species)out.push({n:a.n,kind:'Animal',reg:w.world,r:(a.rare||[]).length?'Has rare variants':'',a,w});
+  return out}
+let OWX=null;const owIndex=()=>OWX||(OWX=Object.fromEntries(owEntries().map(e=>[e.n,e])));
+const OW_DO={Fish:'Fishing',Ore:'Mining',Gem:'Mining',Animal:'Conservation'};
+{const _b=buildIdx;buildIdx=function(){_b();for(const e of Object.values(owIndex()))IDX.push([e.n,'ow',e.kind+' · '+e.reg,OW_DO[e.kind]])}}
+FFT.push(['ow','Open worlds']);
+const owKey=e=>e.kind==='Fish'?'fish|'+e.n:e.kind==='Animal'?'animal|'+e.n:'ore|'+e.n;
+function owGuide(e){const rows=[];const it=(k,v)=>v?rows.push(`<div><b>${k}:</b> ${esc(v)}</div>`):0;
+  if(e.kind==='Fish'){const f=e.f,R=(D.fishreg||{})[e.reg]||{};it('Where',`${e.reg}, ${f.bio||'any water'}`);it('When',f.time);it('Spear',f.sp||R.sp);it('Bait',f.bait||'None needed');
+    if(f.spots&&f.spots.length)it('Good spots',f.spots.join('; '));if(f.dr&&f.dr.length)rows.push(`<div><b>Gives:</b> ${f.dr.map(x=>RES[x]?L(x):esc(x)).join(', ')}</div>`);it('Sell or trade',R.v?R.v+'. '+(R.use||''):'')}
+  else if(e.kind==='Animal'){const a=e.a;it('Where',`${e.reg}: ${a.where}`);it('When',a.time);it('How to call it',a.lure);if(a.variants&&a.variants.length)it('Variants',a.variants.join(', ')+((a.rare||[]).length?` (rare: ${a.rare.join(', ')})`:''));
+    it('Perfect captures give',a.reward);it('Tip',a.tip);it('Vendor',e.w.vendor)}
+  else{const R=D.mine.reg[e.reg];it('Where',e.reg);it('Vein',e.kind==='Ore'?'Red veins (ores)':'Blue veins (gems)');if(R.spots&&R.spots.length)it('Best spots',R.spots.join('; '));
+    it('Cutter',e.r==='Rare'||e.r==='Special'?'Advanced cutter or Sunpoint Plasma Drill for the best odds':'Any cutter');it('Sell or trade',R.v)}
+  return rows.join('')}
+function owDetail(n){const e=owIndex()[n];if(!e)return '';const k=owKey(e);
+  return `<section class="obj" data-scope><div class="obj-h"><div class="title"><h3>${esc(n)}</h3><span class="chip">${esc(e.kind)} · ${esc(e.reg)}</span>${e.r?`<span class="chip ${/Rare|Legendary|Special/.test(e.r)?'gold':''}">${esc(e.r)}</span>`:''}<span style="margin-left:auto">${taskBtn(e.kind==='Fish'?'fish':e.kind==='Animal'?'animal':'ore',n,(e.kind==='Fish'?'Catch ':e.kind==='Animal'?'Capture ':'Mine ')+n)}</span></div></div>
+  <div style="padding:12px 14px" class="small stack">${owGuide(e)}<label class="row" style="gap:8px">${ck(k)} ${e.kind==='Fish'?'Caught':e.kind==='Animal'?'Captured':'Mined'}</label></div></section>`}
+{const _d=detail;detail=function(sel){return sel.startsWith('ow|')?owDetail(sel.slice(3)):_d(sel)}}
+/* the search on the Open worlds page */
+function owSearch(q){q=String(q||'').toLowerCase().trim();if(q.length<2)return [];const w=q.split(/\s+/);
+  return Object.values(owIndex()).filter(e=>{const hay=(e.n+' '+e.kind+' '+e.reg+' '+(e.f?e.f.bio+' '+e.f.time:'')+(e.a?' '+e.a.where+' '+(e.a.time||'')+' '+(e.a.variants||[]).join(' '):'')).toLowerCase();return w.every(x=>hay.includes(x))})
+    .sort((a,b)=>(b.n.toLowerCase().startsWith(q)-a.n.toLowerCase().startsWith(q))||a.n.localeCompare(b.n)).slice(0,30)
+    .map(e=>({n:e.n,kind:e.kind,reg:e.reg,r:e.r,done:on(owKey(e)),key:'ow|'+e.n,line:e.kind==='Fish'?[e.f.bio,e.f.time].filter(Boolean).join(' · '):e.kind==='Animal'?[e.a.time,e.a.where].filter(Boolean).join(' · ').slice(0,120):e.kind==='Ore'?'Red vein':'Blue vein'}))}
+/* conservation tab data */
+function conservationData(){const C=typeof CONSERVATION!=='undefined'?CONSERVATION:null;if(!C)return null;const rg=state.cvR&&C.worlds.some(w=>w.world===state.cvR)?state.cvR:C.worlds[0].world;
+  const w=C.worlds.find(x=>x.world===rg);return {steps:C.steps,regions:C.worlds.map(x=>x.world),region:rg,vendor:w.vendor,species:w.species.map(a=>({...a,key:'animal|'+a.n,done:on('animal|'+a.n),hasTask:(P.tasks||[]).some(x=>!x.d&&x.k==='animal'&&x.r===a.n)}))}}
+{const _w=worldData;worldData=function(){if(state.wTab==='cons')return {tab:'cons',region:'',regions:[],cons:conservationData()};return _w()}}
+Object.assign(window.TF,{worldSearch:q=>owSearch(q),conservation:()=>conservationData(),conservationSet:r=>{state.cvR=r;tfNotify()}});
+/* a link from another page into the Farm finder opens its guide straight away on a phone too */
+let FARM_JUMP=false;{const _g=go;go=function(t){const was=location.hash;_g(t);FARM_JUMP=was!=='#farm'&&location.hash==='#farm'}}
+addEventListener('hashchange',()=>{if(location.hash!=='#farm')FARM_JUMP=false});
+window.TF.farmJumped=()=>FARM_JUMP;
+/* ---------- floating chat window: chat stays live on every page while the pop-up window is open ---------- */
+/* The window itself (position, size, minimised, the reopen button) lives in the React shell; it tells us here when it opens and
+   closes so rooms stay subscribed, conversations get marked read, and notifications skip the chat you're looking at. */
+const CHATWIN={open:false};
+const chatLive=()=>location.hash==='#chat'||CHATWIN.open;
+{const _cp=chatPageData;chatPageData=function(){const d=_cp();if(CHATWIN.open&&location.hash!=='#chat'){const cur=d.cur;
+  if(ctConv(cur)){chatClose();state.chat=ctConvKey(cur)}else{state.chat=null;if(FB)chatOpen(cur)}}return d}}
+{const _sr=socialRender;socialRender=function(){if(CHATWIN.open&&location.hash!=='#chat')tfNotify();return _sr()}}
+/* leaving the Chat page keeps the room open while the window is up (the page's own listener closes it; reopen straight after) */
+window.addEventListener('hashchange',()=>{if(location.hash!=='#chat'&&CHATWIN.open)setTimeout(()=>tfNotify(),0)});
+{const _v=ntfViewing;ntfViewing=function(conv){if(_v(conv))return true;if(!CHATWIN.open||document.visibilityState!=='visible')return false;
+  const cur=CT.cur;if(conv.startsWith('room:'))return conv==='room:'+cur;if(conv.startsWith('dm:'))return cur==='f:'+conv.slice(3);return cur===conv}}
+Object.assign(window.TF,{chatWin:open=>{const was=CHATWIN.open;CHATWIN.open=!!open;
+  if(was&&!open&&location.hash!=='#chat'){chatClose();state.chat=null}tfNotify()}});
+/* ---------- how to level each kind of gear (not everything works on Hydron), and roles for every Warframe ---------- */
+/* From the Warframe wiki (Mastery Rank, Affinity, Archwing, Archgun Deployer, Necramech Summon, K-Drive, Amp, Kitgun, Zaw,
+   Companion, Plexus and the Kuva/Tenet/Coda pages), checked October 2026. */
+const HYDRON='Level it fast on Hydron (Sedna) or Elite Sanctuary Onslaught.';
+const LEVEL_HOW={
+  Archwing:{no:1,t:'Archwings can\'t be used on Hydron. Level it in Archwing missions (Salacia on Neptune is the classic spot), in Railjack missions like R-9 Cloud (Veil Proxima), or in the open worlds with the Archwing Launcher. It only gains XP while you fly it.'},
+  'Arch-Gun':{no:1,t:'Fastest in Archwing missions (Salacia, Neptune) or Railjack missions like R-9 Cloud. On foot it needs the Archgun Deployer (Profit-Taker heist) and a Gravimag installed; then you can call it down in normal missions like Hydron, but not in Sanctuary Onslaught or Duviri. While it\'s out, unequip your other weapons so it gets more of the XP.'},
+  'Arch-Melee':{no:1,t:'Only works in space: Archwing missions (Salacia, Neptune) or Railjack missions like R-9 Cloud. It can\'t be used on foot. Equip only the arch-melee so it gets more of the XP.'},
+  Necramech:{no:1,t:'Necramechs can\'t be used on Hydron. Summon it with the Necramech Summon gear (needs The War Within) in the open worlds, Isolation Vaults on Deimos, Conjunction Survival on Lua, or the ground parts of Railjack missions (Tactical Intrinsic 5). Squad mates within 250 m share XP in the open worlds. Max rank is 40, which takes 5 Forma.'},
+  'K-Drive':{no:1,t:'K-Drives can\'t be used on Hydron and kills give them nothing. They level only from tricks: ride in an open world (Orb Vallis and Cambion Drift races are best) and chain jumps, grabs and grinds. Blue crystals raise the trick multiplier.'},
+  Amp:{t:'Works on Hydron, but only kills you make yourself as your Operator or Drifter count fully (shared XP gives the Amp a little over a third). Eidolon hunts and the Zariman work too. Most Amps give Mastery only after you gild them at rank 30 and level them again; Sirocco comes already gilded.'},
+  Kitgun:{t:'Level it anywhere (Hydron, Sanctuary Onslaught). For Mastery, rank it to 30, gild it with Rude Zuud in Fortuna, then level it again. Each chamber counts once.'},
+  Zaw:{t:'Level it anywhere (Hydron, Sanctuary Onslaught). For Mastery, rank it to 30, gild it with Hok in Cetus, then level it again. Each strike counts once.'},
+};
+const LEVEL_NAME={
+  Plexus:{no:1,t:'The Plexus only levels in Railjack missions. Man a turret: turret kills give the Plexus all of the XP. Joining public Railjack squads as a gunner works fine.'},
+  Sirocco:{t:'Sirocco is the Drifter\'s Amp. It comes already gilded, so it gives Mastery as soon as you level it. Use it as your Operator or Drifter in any mission (Hydron works) and get the kills yourself.'},
+  Grimoire:{t:HYDRON+' It has unlimited ammo.'},
+};
+function levelTip(it){if(!it)return HYDRON;const n=it.n;
+  if(LEVEL_NAME[n])return LEVEL_NAME[n].t;
+  if(/^(Kuva|Tenet|Coda) /.test(n)||n==='Paracesis')return HYDRON+' Max rank is 40: each Forma raises it by 2, and every extra rank gives Mastery.';
+  if(it.c==='Companion'&&/(MOA|Hound|Predasite|Vulpaphyla)/.test(n))return 'Equip it and play anywhere (Hydron works); it gets XP from your kills. For Mastery, rank it to 30, gild it, then level it again.';
+  const L=LEVEL_HOW[it.c];return L?L.t:HYDRON}
+const notHydron=it=>!!(it&&((LEVEL_NAME[it.n]||{}).no||(LEVEL_HOW[it.c]||{}).no));
+
+/* Warframe roles. "Playstyle" is the label the wiki seeded from a list Digital Extremes supplied; the "good at" tags are the community's usual view. */
+const FRAME_ROLE={
+  Ash:[['Stealth','Damage'],[]],Atlas:[['Damage','Survival'],['Tank']],Banshee:[['Crowd Control'],['Buffer','Stealth']],Baruuk:[['Damage','Crowd Control'],['Tank']],
+  Caliban:[['Crowd Control'],[]],Chroma:[['Survival','Damage'],['Tank','Buffer']],Citrine:[['Support'],['Debuffer','Healer']],'Cyte-09':[['Damage','Stealth'],[]],
+  Dagath:[['Damage'],['Debuffer']],Dante:[['Damage','Support','Survival'],['Healer']],Ember:[['Damage'],['Nuker']],Equinox:[['Support'],['Nuker','Healer']],
+  Excalibur:[['Damage'],[]],'Excalibur Umbra':[['Damage'],[]],Follie:[['Crowd Control'],['Debuffer']],Frost:[['Crowd Control','Survival'],['Tank']],
+  Gara:[['Damage','Survival','Crowd Control'],['Tank']],Garuda:[['Damage'],[]],Gauss:[['Damage','Survival'],['Mobility']],Grendel:[['Survival'],['Tank']],
+  Gyre:[['Damage','Crowd Control'],['Nuker']],Harrow:[['Survival','Support'],['Buffer']],Hildryn:[['Damage','Survival'],['Tank','Nuker']],
+  Hydroid:[['Crowd Control'],['Resource farming']],Inaros:[['Survival','Crowd Control'],['Tank']],Ivara:[['Stealth'],['Resource farming']],
+  Jade:[['Support'],['Buffer','Healer']],Khora:[['Crowd Control','Damage'],['Resource farming']],Koumei:[['Damage','Crowd Control'],[]],
+  Kullervo:[['Damage'],['Mobility']],Lavos:[['Damage'],['Debuffer']],Limbo:[['Crowd Control'],[]],Loki:[['Stealth'],[]],Mag:[['Crowd Control'],['Debuffer']],
+  Mesa:[['Damage'],[]],Mirage:[['Damage'],[]],Narin:[['Damage','Crowd Control'],[]],Nekros:[['Crowd Control'],['Resource farming','Summoner']],
+  Nezha:[['Survival','Crowd Control'],['Tank','Mobility']],Nidus:[['Damage','Survival','Crowd Control'],['Tank']],Nokko:[['Damage','Crowd Control'],[]],
+  Nova:[['Damage','Crowd Control'],['Debuffer','Nuker']],Nyx:[['Crowd Control'],['Debuffer']],Oberon:[['Support'],['Healer']],
+  Octavia:[['Support','Damage','Crowd Control'],['Buffer','Stealth']],Oraxia:[['Damage','Stealth'],[]],Protea:[['Damage','Support'],[]],
+  Qorvex:[['Survival','Crowd Control'],['Tank']],Revenant:[['Damage','Survival'],['Tank']],Rhino:[['Survival','Crowd Control'],['Tank','Buffer']],
+  Saryn:[['Damage'],['Nuker','Debuffer']],Sevagoth:[['Damage','Survival'],['Summoner']],Styanax:[['Damage','Support'],['Nuker']],Temple:[['Damage','Support'],[]],
+  Titania:[['Damage','Crowd Control'],['Mobility']],Trinity:[['Survival','Support'],['Healer','Buffer']],Uriel:[['Damage'],['Summoner']],
+  Valkyr:[['Damage','Survival'],['Tank']],Vauban:[['Crowd Control'],[]],Volt:[['Damage'],['Buffer','Mobility']],Voruna:[['Damage','Stealth'],[]],
+  Wisp:[['Support'],['Buffer','Healer']],Wukong:[['Damage','Survival'],['Tank','Summoner']],Xaku:[['Damage'],['Debuffer']],
+  Yareli:[['Damage','Crowd Control'],['Mobility']],Zephyr:[['Damage','Crowd Control'],['Mobility']],
+  'Sirius & Orion':[['Damage','Support'],['Summoner']],'Orion & Sirius':[['Damage','Support'],['Summoner']]};
+const roleOf=n=>FRAME_ROLE[n]||FRAME_ROLE[baseOf(n)]||[[],[]];
+const ROLE_LIST=['Damage','Crowd Control','Support','Survival','Stealth','Tank','Healer','Buffer','Debuffer','Nuker','Summoner','Mobility','Resource farming'];
+const hasRole=(n,r)=>{const [a,b]=roleOf(n);return a.includes(r)||b.includes(r)};
+
+/* the Warframes page: roles under the name and a filter for each role */
+{const _fd=framesData;framesData=function(){const ff=state.frF||'all';let d;
+  if(ff.startsWith('role:')){const r=ff.slice(5);
+    const match=Object.values(I).filter(i=>i.c==='Warframe'&&i.n!=='Helminth'&&hasRole(i.n,r)).map(i=>i.n).sort();
+    if(match.length&&!match.includes(state.frame))state.frame=match.includes('Saryn Prime')?'Saryn Prime':match[0];
+    state.frF='all';try{d=_fd()}finally{state.frF=ff}
+    if(match.length)d.list=match;else d.filteredEmpty=true;d.filter=ff}
+  else d=_fd();
+  const [play,good]=roleOf(d.name);return {...d,playstyle:play,goodAt:good,roles:ROLE_LIST}}}
+/* every item's "Rank to 30" step says where it can actually be levelled */
+{const _t=itemTree;itemTree=function(name,opts){const h=_t(name,opts);const it=I[name];return it?h.replace(HYDRON,esc(levelTip(it))):h}}
+/* the Mastery page's XP tab: the gear Hydron can't level */
+{const _x=xpTabHTML;xpTabHTML=function(){const rows=[['Archwings','Archwing'],['Arch-guns','Arch-Gun'],['Arch-melee','Arch-Melee'],['Necramechs (Voidrig, Bonewidow)','Necramech'],['K-Drives','K-Drive'],['Amps','Amp'],['Kitguns','Kitgun'],['Zaws','Zaw']];
+  return _x()+`<div class="panel stack cut"><h2>Gear Hydron can't level (or needs extra steps)</h2><p class="small muted" style="margin:0">Most gear levels anywhere. These are the exceptions.</p>
+  <ul class="small stack" style="margin:0;padding-left:18px">${[...rows.map(([l,c])=>[l,LEVEL_HOW[c].t]),['Plexus (Railjack)',LEVEL_NAME.Plexus.t],['MOAs, Hounds, Predasites, Vulpaphylas','Level them anywhere, then gild and level again for Mastery.'],['Kuva, Tenet and Coda weapons, Paracesis','Max rank 40: each Forma raises it by 2, and every extra rank gives Mastery.'],['Exalted weapons and pet weapons','They rank up but give no Mastery.']].map(([a,b])=>`<li><b>${esc(a)}:</b> ${esc(b)}</li>`).join('')}</ul></div>`}}
+/* ---------- Simple / Detailed view: Simple hides the long explanations (see html[data-detail=simple] in the CSS) ---------- */
+const SIMPLE=()=>document.documentElement.dataset.detail==='simple';
+document.documentElement.dataset.detail=lsGet('tf-detail','detailed')==='simple'?'simple':'detailed';
+/* item steps and other embedded pages are cached; rebuild them when the view changes */
+window.TF.detailChanged=()=>{ISLV++;FFD.key='';FRT.key='';try{render()}catch(e){}tfNotify()};
+/* ---------- builds fit every version of an item: Saryn's build is Saryn Prime's (and Umbra's) too, Soma Prime's fits Soma ---------- */
+function famOf(n){const b=String(n).replace(/ (Prime|Umbra)$/,'');return [b,b+' Prime',b+' Umbra'].filter(x=>I[x])}
+const famOwned=n=>famOf(n).some(ownedItem);
+function bFits(b){return b.fits||(b.fits=famOf(b.item).filter(x=>x!==b.item))}
+{const _mb=metaBuilds;metaBuilds=function(){const r=_mb();for(const b of r)if(!b.fits)b.fits=famOf(b.item).filter(x=>x!==b.item);return r}}
+/* the weapon and companion build tabs list every version, each showing the family's builds */
+const FAMSRC=new Map();
+{const _bd=buildsData;buildsData=function(src,kind){let ex=FAMSRC.get(src);
+  if(!ex){ex={...src};for(const k in src)for(const v of famOf(k))if(!ex[v])ex[v]=src[k];FAMSRC.set(src,ex)}
+  return _bd(ex,kind)}}
 /* ---------- events ---------- */
 function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.querySelector('input.ck')===o)row.classList.toggle('done',o.checked)}
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
