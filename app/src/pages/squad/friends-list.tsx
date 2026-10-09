@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ArrowRightLeft, BookOpen, ChevronDown, Copy, Gem, Hammer, HandHelping, MessageSquare, MoreHorizontal, Search, Star, UserMinus, UserX } from "lucide-react"
+import { ArrowRightLeft, BookOpen, ChevronDown, Copy, Gem, Hammer, HandHelping, ListTodo, MessageSquare, MoreHorizontal, Search, Star, UserMinus, UserX } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -46,7 +46,6 @@ export function FriendsList() {
 }
 
 function Friend({ f, open }: { f: FriendCard; open: boolean }) {
-  const helpN = f.help.length
   return (
     <li className={cn("flex flex-col gap-3 px-4 py-3", open && "bg-muted/30")}>
       <div className="flex items-start gap-3">
@@ -68,6 +67,7 @@ function Friend({ f, open }: { f: FriendCard; open: boolean }) {
                 </span>
               ) : <span className="text-xs text-muted-foreground">Hasn't synced their rank yet.</span>}
               <span className="text-xs text-muted-foreground">{[f.active, f.maxed ? `${fmt(f.maxed)} mastered` : "", f.nodes ? `${fmt(f.nodes)} nodes` : ""].filter(Boolean).join(" · ")}</span>
+              <Summary f={f} />
             </>
           )}
         </div>
@@ -96,7 +96,7 @@ function Friend({ f, open }: { f: FriendCard; open: boolean }) {
         <button type="button" onClick={() => tf().friendsHubSet({ open: f.uid })} aria-expanded={open}
           className="group flex min-h-9 items-center gap-1.5 self-start rounded-md text-sm font-medium outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50 sm:ml-14">
           <HandHelping className="size-4 text-primary" aria-hidden />
-          {helpN ? `${helpN} way${helpN > 1 ? "s" : ""} you can help` : "What they're working on"}
+          {open ? "Hide details" : "See what they're doing and how to help"}
           <ChevronDown className={cn("size-4 text-muted-foreground transition-transform", open && "rotate-180")} aria-hidden />
         </button>
       ) : null}
@@ -105,9 +105,25 @@ function Friend({ f, open }: { f: FriendCard; open: boolean }) {
   )
 }
 
+/** One line on the row: what they're doing and how you can help, without opening anything. */
+function Summary({ f }: { f: FriendCard }) {
+  if (f.shared === "loading") return null
+  if (f.shared !== "ok") return <span className="text-xs text-muted-foreground italic">Hasn't shared what they're doing yet</span>
+  const bits = [
+    f.tasks.length ? `Doing: ${f.tasks.slice(0, 2).map((x) => x.t).join(", ")}${f.tasks.length > 2 ? ` +${f.tasks.length - 2}` : ""}` : "",
+    f.need.length ? `needs ${f.need.length} part${f.need.length > 1 ? "s" : ""}` : "",
+  ].filter(Boolean)
+  return (
+    <span className="text-sm">
+      {bits.length ? <span className="text-foreground">{bits.join(" · ")}</span> : <span className="text-muted-foreground">Nothing on their list right now</span>}
+      {f.help.length ? <span className="font-medium text-primary"> · {f.help.length} way{f.help.length > 1 ? "s" : ""} you can help</span> : null}
+    </span>
+  )
+}
+
 function HelpPanel({ f }: { f: FriendCard }) {
   if (f.shared === "loading") return <p className="text-sm text-muted-foreground sm:ml-14" role="status">Loading what they're working on…</p>
-  if (f.shared !== "ok") return <p className="text-sm text-muted-foreground sm:ml-14">{f.name} hasn't shared what they're working on yet. It shows up here once they open Tennoform with sharing on (it's on by default).</p>
+  if (f.shared !== "ok") return <p className="text-sm text-muted-foreground sm:ml-14">{f.name} hasn't shared what they're doing yet. Their tasks, the gear they're tracking and the parts they need show up here once they open Tennoform (signed in) with sharing on, which is the default.</p>
   return (
     <div className="flex flex-col gap-3 sm:ml-14">
       {f.note ? <blockquote className="border-l-2 border-primary/50 pl-3 text-sm italic">"{f.note}"</blockquote> : null}
@@ -124,6 +140,14 @@ function HelpPanel({ f }: { f: FriendCard }) {
           })}
         </ul>
       ) : <p className="text-sm text-muted-foreground">Nothing you own matches what they need right now. Their list is below if you want to farm with them.</p>}
+      {f.tasks.length ? (
+        <div className="flex flex-col gap-1">
+          <span className="text-xs text-muted-foreground">Doing now</span>
+          <ul className="flex flex-col gap-1 text-sm">
+            {f.tasks.map((x, i) => <li key={i} className="flex items-start gap-2"><ListTodo className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden />{x.go ? <GoLink k={x.go}>{x.t}</GoLink> : <span>{x.t}</span>}</li>)}
+          </ul>
+        </div>
+      ) : null}
       {f.lf.length ? (
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="text-xs text-muted-foreground">Looking for help with</span>
@@ -159,7 +183,7 @@ export function MyShare() {
         <span className="flex flex-col">
           <span className="font-medium">Share what I'm working on with my friends</span>
           <span className="text-xs text-muted-foreground">
-            {me.on ? `They see the ${me.goals} gear you're tracking, the ${me.need} parts you still need, and what you'd like help with, so they can see how to help. Only people on your friends list can see it.` : "Off. Friends only see your rank and stats."}
+            {me.on ? `They see your open tasks, the ${me.goals} gear you're tracking, the ${me.need} parts you still need, and what you'd like help with, so they can see how to help. Only people on your friends list can see it.` : "Off. Friends only see your rank and stats."}
           </span>
         </span>
       </label>

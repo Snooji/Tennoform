@@ -11,9 +11,13 @@ function shareOut(){const goals=(P.goals||[]).filter(n=>I[n]&&!on('m|'+n)&&!on('
   /* only parts that come from relics or drops: a Market blueprint is just bought, nobody needs help with it */
   for(const g of goals){const it=I[g];if(!on('bp|'+g)&&(it.bprel||it.bpd))need.push(g+' Blueprint');
     for(const p of it.parts){if(p.k!=='p'||p.n==='Blueprint'||!(p.rel||(p.dr&&p.dr.length)))continue;if(on('part|'+g+'|'+p.n)||on('built|'+g+'|'+p.n))continue;need.push(p.full||(g+' '+p.n))}}
-  return {at:Date.now(),goals,need:[...new Set(need)].slice(0,40),lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)).slice(0,12),note:String(P.lfNote||'').slice(0,120)}}
+  /* open to-do tasks as "kind|ref|title" so friends can open the same page */
+  const tasks=(P.tasks||[]).filter(x=>!x.d&&x.t).slice(0,20).map(x=>[x.k||'note',String(x.r||'').slice(0,80),String(x.t).slice(0,100)].join('|'));
+  return {at:Date.now(),goals,need:[...new Set(need)].slice(0,40),lf:(P.lf||[]).filter(t=>LF_TAGS.includes(t)).slice(0,12),note:String(P.lfNote||'').slice(0,120),tasks}}
 function publishShare(){if(!SO.uid||!FB)return Promise.resolve();const ref=FB.fs.collection('share').doc(SO.uid);
-  return (P.shareOff?ref.delete():ref.set(shareOut())).catch(()=>{})}
+  if(P.shareOff)return ref.delete().catch(()=>{});const d=shareOut();
+  /* until the updated rules (with tasks) are published, share everything else */
+  return ref.set(d).catch(()=>{const {tasks,...rest}=d;return ref.set(rest).catch(()=>{})})}
 {const _pp=publishPublic;publishPublic=function(){const r=_pp();publishShare();return r}}
 
 /* what my friends share with me */
@@ -32,7 +36,13 @@ function partIx(){if(PARTIX)return PARTIX;PARTIX={};
     for(const p of it.parts||[])if(p.k==='p'){const full=p.full||(it.n+' '+p.n);if(!PARTIX[full])PARTIX[full]={item:it.n,rel:p.rel||null,dr:p.dr||null}}}
   return PARTIX}
 const relName=r=>String(Array.isArray(r)?r[0]:r);
-function helpFor(sh,theirMr,myMr){const out=[];const ix=partIx();const need=(sh.need||[]).filter(x=>typeof x==='string');
+const TASK_GO={res:'res',item:'item',relic:'relic',mod:'mod',arc:'arc',part:'part',guide:'guide',way:'way',quest:'guide'};
+function shareTasks(sh){return (Array.isArray(sh.tasks)?sh.tasks:[]).filter(x=>typeof x==='string').map(x=>{const a=x.split('|');const k=a[0]||'note',r=a[1]||'',t=a.slice(2).join('|')||r;
+  return {k,r,t,go:TASK_GO[k]&&r?TASK_GO[k]+'|'+r:''}}).filter(x=>x.t)}
+function helpFor(sh,theirMr,myMr){const out=[];const ix=partIx();
+  for(const x of shareTasks(sh)){
+    if(x.k==='relic'&&REL[x.r]&&relCount(x.r)>0)out.push({k:'relic',t:`They're working on ${x.t}, and you have ${relCount(x.r)} ${x.r}. Run it together.`,go:'relic|'+x.r});
+    else if(x.k==='item'&&I[x.r]&&on('m|'+x.r))out.push({k:'build',t:`They're working on ${x.t}. You've mastered ${x.r}, so share your build or tips.`,go:'item|'+x.r})}const need=(sh.need||[]).filter(x=>typeof x==='string');
   for(const part of need){const p=ix[part]||{};const spare=+((P.dup||{})[part])||0;
     if(spare){out.push({k:'give',t:`You have ${spare} spare ${part}. Trade it to them.`,go:'part|'+part});continue}
     const mine=(p.rel||[]).map(relName).filter(r=>REL[r]&&relCount(r)>0);
@@ -43,7 +53,7 @@ function helpFor(sh,theirMr,myMr){const out=[];const ix=partIx();const need=(sh.
   const relN=Object.keys(P.rel||{}).filter(r=>relCount(r)>0).length;const spOn=ALLN.some(n=>on('sp|'+n.id));
   for(const t of lf){const why=t==='Relic runs'&&relN?`you have ${relN} kind${relN>1?'s':''} of relics`:t==='Steel Path'&&spOn?'you have Steel Path':t==='New player help'&&myMr>theirMr+4?`you're ${myMr-theirMr} ranks ahead`:'';
     if(why)out.push({k:'lf',t:`They want help with ${t}, and ${why}.`})}
-  return out.slice(0,12)}
+  const seen=new Set();return out.filter(h=>{const key=h.k==='build'?'build|'+h.go:h.t;if(seen.has(key))return false;seen.add(key);return true}).slice(0,12)}
 
 function agoText(at){if(!at)return '';const s=(Date.now()-at)/1000;if(s<120)return 'Active just now';if(s<3600)return `Active ${Math.round(s/60)} min ago`;
   if(s<86400)return `Active ${Math.round(s/3600)} h ago`;const d=Math.round(s/86400);return d<60?`Active ${d} day${d>1?'s':''} ago`:'Not active lately'}
@@ -59,7 +69,7 @@ function friendsHubData(){const sq=squadData();if(sq.status!=='ok')return {statu
       diff:mr!=null?mr-myMr:0,at:+p.at||0,active:agoText(+p.at||0),
       nodes:+p.nodes||0,sp:+p.sp||0,maxed:+p.maxed||0,
       shared:f.pending?'pending':sh.st||'loading',goals:(sh.goals||[]).filter(x=>typeof x==='string'),need:(sh.need||[]).filter(x=>typeof x==='string'),
-      lf:(sh.lf||[]).filter(t=>LF_TAGS.includes(t)),note:typeof sh.note==='string'?sh.note:'',help:mr!=null&&sh.st==='ok'?helpFor(sh,mr,myMr):[]}});
+      lf:(sh.lf||[]).filter(t=>LF_TAGS.includes(t)),note:typeof sh.note==='string'?sh.note:'',tasks:sh.st==='ok'?shareTasks(sh):[],help:mr!=null&&sh.st==='ok'?helpFor(sh,mr,myMr):[]}});
   if(q)list=list.filter(f=>f.name.toLowerCase().includes(q)||f.code.toLowerCase().includes(q));
   list.sort((a,b)=>(b.pinned-a.pinned)||(a.pending-b.pending)||(so==='mr'?((b.mr??-1)-(a.mr??-1)):so==='name'?a.name.localeCompare(b.name):(b.unread-a.unread)||(b.at-a.at))||a.name.localeCompare(b.name));
   const mine=shareOut();
