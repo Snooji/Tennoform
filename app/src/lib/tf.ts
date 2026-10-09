@@ -635,6 +635,7 @@ export type FriendCard = {
   mr: number | null; mrLabel: string; pct: number; toNext: number; nextLabel: string; diff: number; at: number; active: string
   nodes: number; sp: number; maxed: number
   shared: "ok" | "none" | "loading" | "pending"; goals: string[]; need: string[]; lf: string[]; note: string; help: FriendHelp[]
+  tasks: { k: string; r: string; t: string; go: string }[]
 }
 export type FriendsHubData = {
   status: string; q?: string; sort?: string; open?: string; myMr?: number; count?: number; friends?: FriendCard[]; lfTags?: string[]
