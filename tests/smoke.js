@@ -14,7 +14,7 @@ const BASE = process.env.SITE || 'http://localhost:8765/'
 const PAGES = ['home', 'ranks', 'mastery', 'goals', 'tasks', 'missions', 'quests', 'farm', 'resources', 'relics', 'world', 'market', 'arsenal', 'frames',
   'today', 'synd', 'achievements', 'tenno', 'friends', 'donate', 'feedback', 'about', 'guides', 'collection']
 const fails = []
-const where = (p) => { try { return new URL(p.url()).hash || '#home' } catch { return '?' } }
+const where = (p) => { try { const u = new URL(p.url()); return u.hash || u.pathname.replace(/^\/|\/$/g, '') || 'home' } catch { return '?' } }
 const fail = (m) => { fails.push(m); console.log('FAIL', m) }
 
 async function context(b, w, scheme) {
@@ -90,7 +90,7 @@ async function grey(b) {
         const s = await state()
         if ((s.ov && !s.content) || (s.lock === 'hidden' && !s.content) || s.pe === 'none') fail(`grey ${w} #${r} after "${label}": ${JSON.stringify(s)}`)
         if (s.content) { await p.keyboard.press('Escape'); await p.waitForTimeout(250) }
-        if (await p.evaluate((r) => location.hash.slice(1) !== r, r)) { await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(350) }
+        if (await p.evaluate((r) => location.pathname.replace(/^\/|\/$/g, '') !== r, r)) { await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(350) }
       }
     }
     if (errs.length) fail(`grey ${w} script errors: ${errs.slice(0, 3).join(' | ')}`)
@@ -132,6 +132,29 @@ async function simpleView(b) {
   }
 }
 
+/* every page has its own address: opening one directly, links between them, back and forward, and old #links */
+async function pageUrls(b) {
+  const ctx = await context(b, 1280, 'dark'), p = await ctx.newPage(), errs = []
+  p.on('pageerror', (e) => errs.push(e.message))
+  const path = () => p.evaluate(() => location.pathname + location.hash)
+  const h1 = () => p.evaluate(() => (document.querySelector('main h1') || {}).textContent || '')
+  await p.goto(BASE + 'world/'); await p.waitForTimeout(1200)
+  if (!/Open worlds/.test(await h1())) fail(`urls: /world/ opened "${await h1()}"`)
+  if (!/Open Worlds/.test(await p.title())) fail(`urls: /world/ title is "${await p.title()}"`)
+  await p.locator('[data-slot="sidebar"] a[href="/farm/"]').first().click(); await p.waitForTimeout(600)
+  if ((await path()) !== '/farm/') fail(`urls: sidebar link went to ${await path()}`)
+  await p.goBack(); await p.waitForTimeout(600)
+  if ((await path()) !== '/world/' || !/Open worlds/.test(await h1())) fail(`urls: back went to ${await path()} "${await h1()}"`)
+  await p.goForward(); await p.waitForTimeout(600)
+  if ((await path()) !== '/farm/') fail(`urls: forward went to ${await path()}`)
+  await p.goto(BASE + '#ranks'); await p.waitForTimeout(1200)
+  if ((await path()) !== '/ranks/') fail(`urls: old #ranks link ended on ${await path()}`)
+  await p.evaluate(() => (location.hash = 'today')); await p.waitForTimeout(600)
+  if ((await path()) !== '/today/') fail(`urls: setting the hash ended on ${await path()}`)
+  if (errs.length) fail(`urls script errors: ${errs.slice(0, 3).join(' | ')}`)
+  console.log('page addresses checked'); await ctx.close()
+}
+
 async function chatWindow(b) {
   for (const w of [1280, 390]) {
     const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
@@ -164,7 +187,7 @@ async function chatWindow(b) {
 ;(async () => {
     // full Chromium (what visitors run), not Playwright's stripped-down headless shell
   const b = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : { channel: 'chromium' })
-  await pages(b); await grey(b); await styles(b); await simpleView(b); await chatWindow(b)
+  await pages(b); await grey(b); await styles(b); await simpleView(b); await chatWindow(b); await pageUrls(b)
   await b.close()
   console.log(fails.length ? `\n${fails.length} problem(s) found` : '\nAll checks passed')
   process.exit(fails.length ? 1 : 0)

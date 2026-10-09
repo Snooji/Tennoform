@@ -77,7 +77,7 @@ function Row({ c }: { c: CheckRow }) {
               <p className="text-xs">
                 Unlocks after the quest{" "}
                 <a
-                  href="#quests"
+                  href="/quests/"
                   className="underline decoration-primary/60 underline-offset-4"
                   onClick={(e) => {
                     e.preventDefault()

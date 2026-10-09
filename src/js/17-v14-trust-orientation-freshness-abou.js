@@ -70,12 +70,12 @@ async function deleteAccount(){const u=FB&&FB.auth.currentUser;if(!u)return;cons
 
 /* ---- v14 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-onb],#wsretry,#undosync,#clearimp,#delacct,[data-about]');if(!t)return;
-  if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';location.hash='ranks'}else if(t.dataset.onb==='import'){state.tTab='account';location.hash='tenno'}else rerender();return}
-  if(t.dataset.about){state.aboutSec=t.dataset.about;if(location.hash==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
+  if(t.dataset.onb){P.onb=t.dataset.onb;saveProfile();if(t.dataset.onb==='manual'){state.rkCat='Warframe';GO('ranks')}else if(t.dataset.onb==='import'){state.tTab='account';GO('tenno')}else rerender();return}
+  if(t.dataset.about){state.aboutSec=t.dataset.about;if(HASH()==='#about'){rerender();$('#changes')&&$('#changes').scrollIntoView({block:'start'})}else setTimeout(()=>{const c=$('#changes');if(c){c.open=true;c.scrollIntoView({block:'start'})}},150);return}
   if(t.id==='wsretry'){WSat=0;WSerr=false;const p=loadWS();rerender();await p;rerender();return}
   if(t.id==='undosync'){const s=lsGet('tf-presync',null);if(!s)return;C=s.C||{};for(const k in P)delete P[k];Object.assign(P,s.P||{});lsSet('tenno-codex',C);try{localStorage.removeItem('tf-presync')}catch(err){}pushAll();updateMR();rerender();toast('Sync undone. Everything is back the way it was.');return}
   if(t.id==='clearimp'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again to clear';return}
     ['prof','nw','daily','lastSync','mc','at','auto'].forEach(k=>delete P[k]);if(P.syn)for(const k in P.syn)if(P.syn[k].sync)delete P.syn[k];saveProfile();updateMR();rerender();toast('Imported snapshot cleared');return}
   if(t.id==='delacct'){if(!t.dataset.armed){t.dataset.armed=1;t.textContent='Tap again: delete everything';t.classList.add('danger');return}t.disabled=true;await deleteAccount();return}});
-setInterval(()=>{if(location.hash==='#today'&&HOSTED&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){loadWS();rerender()}},5*60e3);
+setInterval(()=>{if(HASH()==='#today'&&HOSTED&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){loadWS();rerender()}},5*60e3);
 

@@ -9,5 +9,5 @@ function collectionData(){const f=state.colF||'owned',q=(state.colQ||'').toLower
   return {f,q:state.colQ||'',owned,mastered:mast,level,total,inv,cats:cats.filter(c=>c.items.length||!q)}}
 Object.assign(window.TF,{collection:()=>collectionData(),
   collectionSet:o=>{if(o.f!=null)state.colF=o.f;if(o.q!=null)state.colQ=o.q;saveUI();tfNotify()},
-  showInRanks:n=>{state.rkQ=n;state.rkF='all';saveUI();location.hash='ranks';tfNotify()}});
+  showInRanks:n=>{state.rkQ=n;state.rkF='all';saveUI();GO('ranks');tfNotify()}});
 routes.collection=function(){return ''};

@@ -30,7 +30,7 @@ Object.assign(window.TF,{
   setDup:(n,v)=>{P.dup=P.dup||{};const c=Math.max(0,+v||0);if(c)P.dup[n]=c;else delete P.dup[n];saveProfile();tfNotify()}
 });
 document.addEventListener('click',e=>{const t=e.target.closest('[data-rltab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')))return;
-  e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(location.hash!=='#relics')location.hash='relics';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.rlTab=t.dataset.rltab;saveUI();if(HASH()!=='#relics')GO('relics');else tfNotify()},true);
 const _relicsRoute=routes.relics;
 routes.relics=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('relics')?'':_relicsRoute()};
 /* live fissures by relic era (normal first, then Steel Path; Void Storms need a Railjack so they come last) */

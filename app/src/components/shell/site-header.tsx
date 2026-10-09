@@ -8,6 +8,7 @@ import {
   Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { tf, useTF } from "@/lib/tf"
+import { pagePath } from "@/lib/page-path"
 
 export function SiteHeader({ onSearch }: { onSearch: () => void }) {
   const s = useTF()
@@ -22,7 +23,7 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
           {showPlace && (
             <>
               <BreadcrumbItem className="hidden sm:inline-flex">
-                <BreadcrumbLink render={<a href={`#${tf().nav().find((p) => p.id === s.place!.id)?.pages[0].route ?? "home"}`} />}>
+                <BreadcrumbLink render={<a href={pagePath(tf().nav().find((p) => p.id === s.place!.id)?.pages[0].route ?? "home")} />}>
                   {s.place!.label}
                 </BreadcrumbLink>
               </BreadcrumbItem>

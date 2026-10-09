@@ -43,7 +43,7 @@ function applyReset(){const p=RESET_P;if(!p)return;const on1=new Set([...documen
 {const _ip=importProfile;importProfile=function(txt){if(RESET&&Date.now()-RESET_T<15*60e3){RESET=false;DRY=false;showReset(txt);return 'Choose what to keep, then tap Apply.'}return _ip.apply(this,arguments)}}
 function startReset(){RESET=true;RESET_T=Date.now();
   if(wfPlat().auto&&/^[0-9a-f]{24}$/i.test(P.wfid||'')){autoSync(false);return}
-  state.tTab='account';saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+  state.tTab='account';saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
   toast('Reset is ready: paste your profile data with the steps below, and you\'ll choose what to keep.');setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},80)}
 document.addEventListener('click',e=>{const t=e.target.closest('#rsreset,#rsok,#rsno,#rsbk,[data-rsall],[data-rsnone]');if(!t)return;
   if(t.id==='rsreset'){e.preventDefault();startReset();return}

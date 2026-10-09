@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { tf, useTFData, type AlertItem } from "@/lib/tf"
+import { pagePath } from "@/lib/page-path"
 
 const ICON = { baro: Store, resurgence: History, fissure: Hexagon, circuit: Swords, price: Tag }
 const KINDS = [["baro", "Baro Ki'Teer arriving or here"], ["resurgence", "Prime Resurgence for gear you need"], ["fissure", "Fissures for relics you own"]] as const
@@ -55,7 +56,7 @@ function Alert({ a }: { a: AlertItem }) {
     <li className="flex gap-3 py-3 first:pt-0 last:pb-0">
       <Icon aria-hidden className="mt-1 size-4 shrink-0 text-muted-foreground" />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <a href={`#${a.href}`} className="font-medium underline-offset-4 hover:underline">{a.title}</a>
+        <a href={pagePath(a.href)} className="font-medium underline-offset-4 hover:underline">{a.title}</a>
         <span className="text-sm text-muted-foreground">{a.text}</span>
         {a.items.length ? <ul className="flex flex-col gap-0.5 text-xs text-muted-foreground">{a.items.map((x) => <li key={x}>{x}</li>)}</ul> : null}
       </div>
