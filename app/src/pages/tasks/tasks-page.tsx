@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react"
 import { PairTabs } from "@/components/tf/pair-tabs"
-import { CalendarClock, MoreHorizontal, NotebookPen, Plus, Repeat, Trash2, UserPlus, Users } from "lucide-react"
+import { CalendarClock, MoreHorizontal, NotebookPen, Plus, Repeat, Trash2, UserPlus, Users, MapPin } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -83,6 +83,7 @@ function Row({ x, d }: { x: TaskRow; d: TasksData }) {
         ) : (
           <span className={cn("leading-snug", x.done && "text-muted-foreground line-through")}>{x.title}</span>
         )}
+        {x.how ? <span className={cn("flex gap-1.5 text-xs text-muted-foreground", x.done && "opacity-70")}><MapPin className="mt-px size-3.5 shrink-0 text-primary/70" aria-hidden />{x.how}</span> : null}
         {x.kind || x.rep || x.due || x.note || x.with.length || x.from ? (
           <span className="flex flex-wrap items-center gap-1">
             {x.kind ? <Badge variant="outline">{x.kind}</Badge> : null}
