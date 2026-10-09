@@ -31,6 +31,20 @@ service cloud.firestore {
         && shortStr(data().name, 40);
     }
 
+    // What you're working on (tracked gear, parts you still need, what you'd like help with), for your friends only.
+    // Readable by you and by people on your friends list; removing someone from your list takes their access away.
+    match /share/{uid} {
+      allow get: if signedIn() && (me() == uid || isFriendOf(uid, me()));
+      allow delete: if signedIn() && me() == uid;
+      allow create, update: if signedIn() && me() == uid
+        && data().keys().hasOnly(['at', 'goals', 'need', 'lf', 'note'])
+        && data().at is number
+        && data().goals is list && data().goals.size() <= 20
+        && data().need is list && data().need.size() <= 40
+        && data().lf is list && data().lf.size() <= 12
+        && shortStr(data().note, 120);
+    }
+
     // Public card friends see. Readable one at a time; only admins can list them (to count players).
     match /public/{uid} {
       allow get: if signedIn();
