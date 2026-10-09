@@ -65,7 +65,7 @@ export function Helper({ h }: { h: HelperData }) {
           {h.intr!.length ? (
             <Card className="gap-0 py-0">
               <h3 className="border-b px-4 py-3 font-heading text-base font-semibold">Intrinsics</h3>
-              <ul className="flex flex-col divide-y">{h.intr!.map((x) => <li key={x.n} className="flex items-center gap-3 px-4 py-3"><a href="#ranks" onClick={(e) => { e.preventDefault(); tf().act("button", { "data-rkcat": "Intrinsics" }) }} className="flex-1 font-medium underline decoration-primary/50 underline-offset-4">{x.n}</a><Badge variant="outline" className="border-primary/40 text-primary">+{fmt(x.left)} XP</Badge></li>)}</ul>
+              <ul className="flex flex-col divide-y">{h.intr!.map((x) => <li key={x.n} className="flex items-center gap-3 px-4 py-3"><a href="/ranks/" onClick={(e) => { e.preventDefault(); tf().act("button", { "data-rkcat": "Intrinsics" }) }} className="flex-1 font-medium underline decoration-primary/50 underline-offset-4">{x.n}</a><Badge variant="outline" className="border-primary/40 text-primary">+{fmt(x.left)} XP</Badge></li>)}</ul>
             </Card>
           ) : null}
         </>
@@ -73,7 +73,7 @@ export function Helper({ h }: { h: HelperData }) {
         <>
           <p className="text-sm text-muted-foreground">Prime gear you haven't mastered whose missing parts all drop from relics you own, with the chance you get every part before you run out. Refined relics count at their better odds.</p>
           {!h.relicCount ? (
-            <Card className="items-start gap-2 p-6 text-sm"><b className="font-heading text-base font-semibold">No relics entered yet</b><p className="text-muted-foreground">Add the relics in your inventory and this list fills in.</p><a href="#relics" onClick={(e) => { e.preventDefault(); tf().act("button", { "data-rltab": "add" }) }} className="font-medium underline decoration-primary/60 underline-offset-4">Add relics</a></Card>
+            <Card className="items-start gap-2 p-6 text-sm"><b className="font-heading text-base font-semibold">No relics entered yet</b><p className="text-muted-foreground">Add the relics in your inventory and this list fills in.</p><a href="/relics/" onClick={(e) => { e.preventDefault(); tf().act("button", { "data-rltab": "add" }) }} className="font-medium underline decoration-primary/60 underline-offset-4">Add relics</a></Card>
           ) : h.items.length ? (
             <Card className="gap-0 py-0">
               <ul className="flex flex-col divide-y">

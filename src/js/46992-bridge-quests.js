@@ -19,6 +19,6 @@ Object.assign(window.TF,{
 });
 /* quest links from anywhere open the React list at that quest */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-q]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('quests')))return;
-  e.preventDefault();e.stopPropagation();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.qFocus=t.dataset.q;if(HASH()!=='#quests')GO('quests');else tfNotify()},true);
 const _questsRoute=routes.quests;
 routes.quests=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('quests')?'':_questsRoute()};

@@ -20,5 +20,5 @@ document.addEventListener('click',e=>{const t=e.target.closest('#rkmore,#rkall,#
   if(t.id==='qsgo'){const mr=$('#qsmr').value.trim(),xp=$('#qsxp').value.trim();if(mr===''&&xp===''&&!document.querySelector('[data-qsitem]:checked')){toast('Enter your MR, or pick some starter gear');return}
     if(mr!==''){P.gmr=+mr;P.prof=P.prof||{};P.prof.mr=+mr}if(xp!=='')P.gxp=+xp;document.querySelectorAll('[data-qsitem]:checked').forEach(i=>setRank(i.dataset.qsitem,99));
     P.onb='quick';state.qs=false;saveProfile();updateMR();rerender();toast('Saved. Your dashboard now starts from your in-game rank.')}});
-setInterval(()=>{if(location.hash==='#today'&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){const y=scrollY;render();scrollTo(0,y)}},30000);
+setInterval(()=>{if(HASH()==='#today'&&!document.hidden&&!(document.activeElement&&document.activeElement.matches('input,select,textarea'))){const y=scrollY;render();scrollTo(0,y)}},30000);
 

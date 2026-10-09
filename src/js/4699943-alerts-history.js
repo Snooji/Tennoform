@@ -23,7 +23,7 @@ function alertsData(){const pr=alertPrefs();return {prefs:pr,live:!!WS,list:aler
 /* pop up new alerts while the site is open (no background service, nothing sent anywhere) */
 function alertsCheck(){const pr=alertPrefs();const seen=new Set(lsGet('tf-alert-seen',[])||[]);const fresh=alertsAll().filter(a=>!seen.has(a.id)&&!AL_HIDE.includes(a.id));
   if(!fresh.length)return;fresh.forEach(a=>seen.add(a.id));lsSet('tf-alert-seen',[...seen].slice(-100));
-  if(pr.notify&&typeof Notification!=='undefined'&&Notification.permission==='granted'&&document.hidden){fresh.forEach(a=>{try{const n=new Notification(a.title,{body:a.text,tag:a.id,icon:'icon-192.png'});n.onclick=()=>{window.focus();location.hash=a.href;n.close()}}catch(e){}})}
+  if(pr.notify&&typeof Notification!=='undefined'&&Notification.permission==='granted'&&document.hidden){fresh.forEach(a=>{try{const n=new Notification(a.title,{body:a.text,tag:a.id,icon:'/icon-192.png'});n.onclick=()=>{window.focus();GO(a.href);n.close()}}catch(e){}})}
   tfNotify()}
 setInterval(alertsCheck,60e3);setTimeout(alertsCheck,8e3);
 Object.assign(window.TF,{alerts:()=>alertsData(),

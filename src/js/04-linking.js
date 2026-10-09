@@ -5,8 +5,8 @@ function L(name,label){label=label??name;const n=String(name);
   else{const m=n.match(/^(.+?) (Neuroptics|Chassis|Systems|Blueprint|Harness|Wings)$/);if(m&&I[m[1]])t='item|'+m[1]}
   return t?`<a class="ln" href="#" data-go="${esc(t)}">${esc(label)}</a>`:esc(label)}
 function go(t){const i=t.indexOf('|');const ty=t.slice(0,i),n=t.slice(i+1);
-  if(ty==='res'){state.resSel=n;state.resQ='';if(location.hash!=='#resources')location.hash='resources';else{render();window.scrollTo(0,0)}return}
-  if(ty==='item'&&I[n]&&I[n].c==='Warframe'){state.frame=n;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}return}
-  if(ty==='node'){state.scP=n||null;state.planet=null;if(location.hash!=='#missions')location.hash='missions';else render();return}
-  state.farmSel=t;if(location.hash!=='#farm')location.hash='farm';else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
+  if(ty==='res'){state.resSel=n;state.resQ='';if(HASH()!=='#resources')GO('resources');else{render();window.scrollTo(0,0)}return}
+  if(ty==='item'&&I[n]&&I[n].c==='Warframe'){state.frame=n;state.build=0;saveUI();if(HASH()!=='#frames')GO('frames');else{render();window.scrollTo(0,0)}return}
+  if(ty==='node'){state.scP=n||null;state.planet=null;if(HASH()!=='#missions')GO('missions');else render();return}
+  state.farmSel=t;if(HASH()!=='#farm')GO('farm');else{render();setTimeout(()=>$('#fdet')?.scrollIntoView({block:'start',behavior:'smooth'}),30)}}
 

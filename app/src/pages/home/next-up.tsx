@@ -75,7 +75,7 @@ function NextRow({ x, n }: { x: HomeNext; n: number }) {
             {x.done ? (
               <p className="text-xs text-muted-foreground">
                 Tick the box when it's done. Mistake? Undo it from{" "}
-                <a href="#achievements" className="text-foreground underline decoration-primary/60 underline-offset-4">
+                <a href="/achievements/" className="text-foreground underline decoration-primary/60 underline-offset-4">
                   Achievements
                 </a>
                 .
@@ -109,8 +109,8 @@ export function NextUp({ d, stage }: { d: HomeData; stage?: string }) {
           </ol>
         ) : (
           <p className="text-sm text-muted-foreground">
-            You're all caught up. Pick something from <a className="underline decoration-primary/60 underline-offset-4" href="#goals">Goals</a> or
-            the <a className="underline decoration-primary/60 underline-offset-4" href="#mastery">rank-up plan</a>.
+            You're all caught up. Pick something from <a className="underline decoration-primary/60 underline-offset-4" href="/goals/">Goals</a> or
+            the <a className="underline decoration-primary/60 underline-offset-4" href="/mastery/">rank-up plan</a>.
           </p>
         )}
         {d.snoozed ? (
