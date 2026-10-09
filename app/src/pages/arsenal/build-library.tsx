@@ -52,7 +52,7 @@ function Row({ b }: { b: BuildCard }) {
         className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-3 text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
         <Thumb src={b.img} className="size-12 shrink-0 rounded-xl" />
         <span className="flex min-w-0 flex-1 flex-col gap-1">
-          <span className="text-xs text-muted-foreground">{b.item}</span>
+          <span className="text-xs text-muted-foreground">{b.item}{b.fits?.length ? ` · also ${b.fits.join(", ")}` : ""}</span>
           <b className="truncate font-heading text-base leading-tight font-semibold">{b.name}</b>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> {b.author || "Player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
@@ -77,6 +77,11 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
           <Thumb src={b.img} className="size-16 shrink-0 rounded-xl" />
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <a href="#" className="text-xs text-muted-foreground underline-offset-4 hover:underline" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "item|" + b.item }) }}>{b.item}</a>
+            {b.fits?.length ? (
+              <span className="text-xs text-muted-foreground">Also fits{" "}
+                {b.fits.map((f, i) => <span key={f}>{i ? ", " : ""}<a href="#" className="underline-offset-4 hover:underline" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "item|" + f }) }}>{f}</a></span>)}
+              </span>
+            ) : null}
             <h2 className="font-heading text-2xl leading-tight font-semibold">{b.name}</h2>
             <span className="flex flex-wrap items-center gap-2 text-sm">
               {b.src === "player" ? (b.authorUid
