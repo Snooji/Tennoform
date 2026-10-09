@@ -43,7 +43,7 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
           aria-keyshortcuts="Control+K"
         >
           <Search className="size-4" />
-          <span className="hidden md:inline">Search…</span>
+          <span className="hidden sm:inline">Search…</span>
           <Kbd className="ml-auto hidden md:inline-flex">{mac ? "⌘" : "Ctrl"} K</Kbd>
         </Button>
         {s.canAcct && !s.signedIn && (
