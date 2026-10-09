@@ -30,7 +30,7 @@ export function CollectionPage() {
         <h1 className="font-heading text-3xl font-semibold">My collection</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
           Everything you have, by category. Owned and mastered are separate: Warframe keeps mastery after you sell or release something.
-          Change either on <a href="#ranks" className="underline decoration-primary/50 underline-offset-4">Ranks</a>.
+          Change either on <a href="/ranks/" className="underline decoration-primary/50 underline-offset-4">Ranks</a>.
         </p>
       </header>
       <HistoryCard />
@@ -42,7 +42,7 @@ export function CollectionPage() {
           {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-1.5 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
         </div>
       </div>
-      <p role="status" className="text-xs text-muted-foreground">{fmt(shown)} {shown === 1 ? "item" : "items"} shown{d.inv ? <> · {fmt(d.inv)} resource types counted in <a href="#tenno" onClick={(e) => { e.preventDefault(); tf().tennoSet({ tab: "inventory" }); location.hash = "tenno" }} className="underline decoration-primary/50 underline-offset-4">Profile → Inventory</a></> : null}</p>
+      <p role="status" className="text-xs text-muted-foreground">{fmt(shown)} {shown === 1 ? "item" : "items"} shown{d.inv ? <> · {fmt(d.inv)} resource types counted in <a href="/tenno/" onClick={(e) => { e.preventDefault(); tf().tennoSet({ tab: "inventory" }); tf().go("tenno") }} className="underline decoration-primary/50 underline-offset-4">Profile → Inventory</a></> : null}</p>
       {d.cats.map((c) => (
         <Collapsible key={c.id} defaultOpen={c.items.length > 0 && c.items.length <= 40}>
           <Card className="gap-0 py-0">

@@ -34,6 +34,6 @@ function conservationData(){const C=typeof CONSERVATION!=='undefined'?CONSERVATI
 {const _w=worldData;worldData=function(){if(state.wTab==='cons')return {tab:'cons',region:'',regions:[],cons:conservationData()};return _w()}}
 Object.assign(window.TF,{worldSearch:q=>owSearch(q),conservation:()=>conservationData(),conservationSet:r=>{state.cvR=r;tfNotify()}});
 /* a link from another page into the Farm finder opens its guide straight away on a phone too */
-let FARM_JUMP=false;{const _g=go;go=function(t){const was=location.hash;_g(t);FARM_JUMP=was!=='#farm'&&location.hash==='#farm'}}
-addEventListener('hashchange',()=>{if(location.hash!=='#farm')FARM_JUMP=false});
+let FARM_JUMP=false;{const _g=go;go=function(t){const was=HASH();_g(t);FARM_JUMP=was!=='#farm'&&HASH()==='#farm'}}
+addEventListener('hashchange',()=>{if(HASH()!=='#farm')FARM_JUMP=false});
 window.TF.farmJumped=()=>FARM_JUMP;

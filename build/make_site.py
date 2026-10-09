@@ -67,6 +67,7 @@ def emit(kind, ext, text):
 def as_js(var, obj):
     # JSON.parse of a string literal is much faster for the browser to read than the same data as a JS object literal.
     return 'self.%s=JSON.parse(%s);\n' % (var, json.dumps(json.dumps(obj, separators=(',', ':'), ensure_ascii=False), ensure_ascii=False))
+PAGES = {k: v for k, v in json.load(open(os.path.join(H, 'pages.json'), encoding='utf-8')).items() if not k.startswith('_')}
 MARKET_KEYS = ('prices', 'sellers', 'sets', 'meta')  # these change every day; the rest only on game patches
 # Guides and farm "ways" aren't needed to draw the first page: they're their own files, fetched right after it's up.
 LAZY = ('guides', 'ways')
@@ -86,7 +87,8 @@ files = {
     'css': emit('legacy', 'css', '@layer legacy{\n' + part('css') + '\n}\n'),
     'game': emit('game', 'js', as_js('TF_GAME', game)),
     'market': emit('market', 'js', as_js('TF_MARKET', market)),
-    'code': emit('code', 'js', part('js')),
+    # each page's title rides in the code so in-app navigation shows the same title as the page's own address
+    'code': emit('code', 'js', 'self.TF_PAGES=%s;\n' % json.dumps({k: v[0] for k, v in PAGES.items()}, ensure_ascii=False) + part('js')),
 }
 # Keep this build's files and every file a recent version of the page used (see KEEP_DAYS above).
 keep = set(os.path.basename(u) for u in list(files.values()) + list(lazy.values()) + ([market['hist']] if market.get('hist') else []))
@@ -159,15 +161,44 @@ def shell_tags():
     order = '<style>@layer properties, theme, base, legacy, components, utilities;</style>'
     return order + css + '<script type="module" src="/assets/%s"></script>' % e['file']
 # Structured data so search engines know this is a free web app (shown as a rich result where Google supports it).
+SITE = 'https://tennoform.com'
 JSON_LD = '<script type="application/ld+json">' + json.dumps({
-    '@context': 'https://schema.org', '@type': 'WebApplication', 'name': 'Tennoform', 'url': 'https://tennoform.com/',
-    'description': 'Free Warframe companion: track mastery rank, find where to farm every item, follow quests and relics, plan builds and check market prices. Works on PC, console and mobile.', 'applicationCategory': 'GameApplication', 'operatingSystem': 'Any',
+    '@context': 'https://schema.org', '@type': 'WebApplication', 'name': 'Tennoform', 'url': SITE + '/',
+    'description': PAGES['home'][1], 'applicationCategory': 'GameApplication', 'operatingSystem': 'Any',
     'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'}}, separators=(',', ':')) + '</script>'
-page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
-        '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
-        '<meta http-equiv="Content-Security-Policy" content="' + csp + '">'
-        '<meta name="referrer" content="strict-origin-when-cross-origin">'
-        '<title>Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices</title><meta name="theme-color" content="#100f0d"><meta name="description" content="Free Warframe companion: track mastery rank, find where to farm every item, follow quests and relics, plan builds and check market prices. Works on PC, console and mobile."><link rel="canonical" href="https://tennoform.com/"><meta name="robots" content="index,follow"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform"><meta property="og:type" content="website"><meta property="og:site_name" content="Tennoform"><meta property="og:url" content="https://tennoform.com/"><meta property="og:title" content="Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices"><meta property="og:description" content="Free Warframe companion: track mastery rank, find where to farm every item, follow quests and relics, plan builds and check market prices. Works on PC, console and mobile."><meta property="og:image" content="https://tennoform.com/icon-512.png"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Tennoform: Warframe Mastery Tracker, Farming Guide and Market Prices"><meta name="twitter:description" content="Free Warframe companion: track mastery rank, find where to farm every item, follow quests and relics, plan builds and check market prices. Works on PC, console and mobile.">' + JSON_LD + ''
-        + shell_tags() + '</head><body>\n' + body + '\n</body></html>\n')
+esc = lambda t: t.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
+def page_for(route, status_ok=True):
+    title, desc, index = PAGES[route]
+    url = SITE + ('/' if route == 'home' else '/%s/' % route)
+    robots = 'index,follow' if index and status_ok else 'noindex,follow'
+    head = ('<title>%s</title><meta name="theme-color" content="#100f0d"><meta name="description" content="%s">' % (esc(title), esc(desc))
+            + ('<link rel="canonical" href="%s">' % url if status_ok else '') + '<meta name="robots" content="%s">' % robots
+            + '<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform">'
+            + '<meta property="og:type" content="website"><meta property="og:site_name" content="Tennoform"><meta property="og:url" content="%s"><meta property="og:title" content="%s"><meta property="og:description" content="%s"><meta property="og:image" content="%s/icon-512.png">' % (url, esc(title), esc(desc), SITE)
+            + '<meta name="twitter:card" content="summary"><meta name="twitter:title" content="%s"><meta name="twitter:description" content="%s">' % (esc(title), esc(desc))
+            + (JSON_LD if route == 'home' else ''))
+    # what a crawler without JavaScript sees: this page's name and what it is for
+    b = re.sub(r'<noscript>.*?</noscript>', '<noscript><h1>%s</h1><p>%s</p><p>Tennoform is a free Warframe companion. Turn on JavaScript to use it.</p></noscript>' % (esc(title), esc(desc)), body, count=1, flags=re.S)
+    return ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
+            '<meta http-equiv="Content-Security-Policy" content="' + csp + '">'
+            '<meta name="referrer" content="strict-origin-when-cross-origin">' + head
+            + shell_tags() + '</head><body>\n' + b + '\n</body></html>\n')
+page = page_for('home')
+# every page gets its own address: tennoform.com/farm/ is farm/index.html (GitHub Pages serves folders this way)
+ROOT = os.path.join(H, '..')
+for route in PAGES:
+    if route == 'home':
+        continue
+    os.makedirs(os.path.join(ROOT, route), exist_ok=True)
+    open(os.path.join(ROOT, route, 'index.html'), 'w').write(page_for(route))
+# unknown addresses: the app opens on the home page, and search engines are told not to list it
+open(os.path.join(ROOT, '404.html'), 'w').write(page_for('home', status_ok=False))
+with open(os.path.join(ROOT, 'sitemap.xml'), 'w') as f:
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+    for route, (_, _, index) in PAGES.items():
+        if index:
+            f.write('  <url><loc>%s</loc><changefreq>daily</changefreq></url>\n' % (SITE + ('/' if route == 'home' else '/%s/' % route)))
+    f.write('</urlset>\n')
 open(os.path.join(H, '..', 'index.html'), 'w').write(page)
 print('index.html', len(page) // 1024, 'KB;', ', '.join('%s %d KB' % (u.split('/')[-1], os.path.getsize(os.path.join(BUNDLE, u.split('/')[-1])) // 1024) for u in files.values()))

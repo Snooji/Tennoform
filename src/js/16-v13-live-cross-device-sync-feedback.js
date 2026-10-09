@@ -12,7 +12,7 @@ function liveSync(uid){const base=FB.fs.collection('users').doc(uid).collection(
 /* ---- feedback ---- */
 const FBK={list:null,admin:false,tried:false};
 async function loadFeedback(){if(!FB||!SO.uid||FBK.tried)return;FBK.tried=true;
-  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;FBK.err='';if(location.hash==='#feedback'||location.hash==='#admin')liveRender()}catch(e){FBK.admin=false;FBK.err=(e&&e.code)||'error';if(location.hash==='#admin')liveRender()}}
+  try{const s=await FB.fs.collection('feedback').orderBy('at','desc').limit(200).get();FBK.list=s.docs.map(d=>({id:d.id,...d.data()}));FBK.admin=true;FBK.err='';if(HASH()==='#feedback'||HASH()==='#admin')liveRender()}catch(e){FBK.admin=false;FBK.err=(e&&e.code)||'error';if(HASH()==='#admin')liveRender()}}
 function feedback(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const f=state.fbF||'open';
   let h=`<div class="stack"><div class="head"><div class="eyebrow">Feedback</div><h1>Feedback</h1><p class="lede">Found a bug, missing data or have an idea? Tennoform is built by one developer, and every message gets read.</p></div>`;
   if(!HOSTED)return h+`<div class="panel cut">Send feedback from <a class="ln" href="https://tennoform.com/#feedback" target="_blank" rel="noopener">tennoform.com</a>.</div></div>`;
@@ -35,7 +35,7 @@ async function sendFeedback(){const text=($('#fbtext')&&$('#fbtext').value||'').
   if(!SO.uid)return toast('Sign in to send feedback');d.uid=SO.uid;d.name=myName();
   try{await FB.fs.collection('feedback').add(d);$('#fbtext').value='';if($('#fbcontact'))$('#fbcontact').value='';toast('Thanks! Your feedback was sent.')}catch(e){toast('Couldn\'t send. Try again in a moment.')}}
 document.addEventListener('click',async e=>{const t=e.target.closest('#fbsend,[data-fbdone],[data-fbdel],#fbreload,a[href="#feedback"]');if(!t)return;
-  if(t.matches('a[href="#feedback"]')){state.fbFrom=(location.hash||'#home').slice(1);return}
+  if(t.matches('a[href="#feedback"]')){state.fbFrom=(HASH()||'#home').slice(1);return}
   if(t.id==='fbsend'){t.disabled=true;await sendFeedback();t.disabled=false;return}
   if(t.id==='fbreload'){FBK.tried=false;loadFeedback();return}
   if(t.dataset.fbdone){const x=FBK.list.find(y=>y.id===t.dataset.fbdone);if(!x)return;x.done=!x.done;FB.fs.collection('feedback').doc(x.id).update({done:x.done}).catch(()=>toast('Couldn\'t update'));liveRender();return}

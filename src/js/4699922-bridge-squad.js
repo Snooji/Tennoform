@@ -38,7 +38,7 @@ Object.assign(window.TF,{
   friendRemove:uid=>{FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).delete().catch(()=>{});state.chat=null;tfNotify();toast('Removed from your friends')},
   friendBlock:uid=>{P.block=P.block||[];if(!P.block.includes(uid))P.block.push(uid);saveProfile();FB.fs.collection('users').doc(SO.uid).collection('friends').doc(uid).delete().catch(()=>{});
     SO.inbox.filter(m=>m.from===uid&&m.type==='friend').forEach(m=>FB.fs.collection('inbox').doc(SO.uid).collection('msgs').doc(m.id).delete().catch(()=>{}));state.chat=null;tfNotify();toast("Blocked. They can't message you or send requests.")},
-  friendReport:uid=>{const f=SO.friends.find(x=>x.uid===uid)||{};state.fbPrefill=`Report: ${sqName(uid)} (friend code ${f.code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';location.hash='feedback'},
+  friendReport:uid=>{const f=SO.friends.find(x=>x.uid===uid)||{};state.fbPrefill=`Report: ${sqName(uid)} (friend code ${f.code||'?'}, id ${uid}).\nWhat happened: `;state.fbKind='other';state.fbFrom='friends';GO('feedback')},
   msgSend:async text=>{text=(text||'').trim();if(!text||!state.chat)return false;
     try{const g=sqGid();if(g)await gpost(g,{type:'msg',text});else await sendMsg(state.chat,{type:'msg',text});return true}catch(e){toast("Couldn't send. They may not have accepted yet.");return false}},
   inviteTask:async id=>{const x=(P.tasks||[]).find(y=>y.id===id);if(!x||!state.chat)return;const task={id:x.id,t:x.t,k:x.k,r:x.r};const g=sqGid();
@@ -52,5 +52,5 @@ Object.assign(window.TF,{
   groupLeave:()=>{const g=sqGid();if(g)gLeave(g)}
 });
 /* chats and requests arrive live; let React redraw even while someone is typing (it keeps its own input state) */
-const _socialRender=socialRender;socialRender=function(){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')&&location.hash==='#friends'){badge();tfNotify();return}_socialRender()};
+const _socialRender=socialRender;socialRender=function(){if(window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')&&HASH()==='#friends'){badge();tfNotify();return}_socialRender()};
 const _friendsRoute=routes.friends;routes.friends=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('friends')?'':_friendsRoute()};

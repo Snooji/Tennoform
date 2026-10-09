@@ -23,6 +23,6 @@ Object.assign(window.TF,{
 });
 /* planet links from anywhere */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-scp]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('missions'))||t.closest('.tf-island'))return;
-  e.preventDefault();e.stopPropagation();state.scP=t.dataset.scp||null;state.scQ='';saveUI();if(location.hash!=='#missions')location.hash='missions';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.scP=t.dataset.scp||null;state.scQ='';saveUI();if(HASH()!=='#missions')GO('missions');else tfNotify()},true);
 const _missionsRoute=routes.missions;
 routes.missions=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('missions')?'':_missionsRoute()};

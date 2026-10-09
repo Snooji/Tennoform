@@ -62,7 +62,7 @@ function BuildGoals({ list }: { list: BuildGoal[] }) {
           <div className="flex items-start gap-3">
             <Thumb src={g.img} className="size-12" />
             <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <a href="#" onClick={(e) => { e.preventDefault(); tf().buildLibSet({ sel: g.from }); tf().arsenalSet({ tab: "top" }); location.hash = "arsenal" }} className={cn("truncate font-heading text-base font-semibold", linkCls)}>{g.name}</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); tf().buildLibSet({ sel: g.from }); tf().arsenalSet({ tab: "top" }); tf().go("arsenal") }} className={cn("truncate font-heading text-base font-semibold", linkCls)}>{g.name}</a>
               <span className="text-xs text-muted-foreground tabular-nums">{g.have}/{g.total} mods and arcanes owned{g.missing.length ? ` · ${g.missing.length} to get` : " · complete"}</span>
             </div>
             <Button variant="ghost" size="icon-sm" onClick={() => tf().buildGoalRemove(g.id)} aria-label={`Remove the ${g.name} goal`}><X /></Button>
@@ -105,7 +105,7 @@ export function GoalsPage() {
           <Target aria-hidden className="size-6 text-primary" />
           <b className="font-heading text-base font-semibold">No goals yet</b>
           <p className="text-muted-foreground">Open any Warframe, weapon or Prime set and tap Track, or save a build from Builds as a goal.</p>
-          <a href="#frames" className={cn(buttonVariants(), "h-9")}>Browse Warframes</a>
+          <a href="/frames/" className={cn(buttonVariants(), "h-9")}>Browse Warframes</a>
         </Card>
       ) : (
         <>
@@ -189,7 +189,7 @@ export function GoalsPage() {
                       </div>
                     </div>
                   ))}
-                  <a href="#today" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 self-start")}>See open fissures</a>
+                  <a href="/today/" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "h-8 self-start")}>See open fissures</a>
                 </CardContent>
               </Card>
             ) : null}

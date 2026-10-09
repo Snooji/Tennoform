@@ -2,7 +2,7 @@
 /* data/stats.json is built from WFCD by build/make_stats.py and only loaded when an item page first opens. */
 const ST={data:null,busy:false,err:false};
 function loadStats(){if(ST.data||ST.busy||ST.err)return;ST.busy=true;
-  fetch('data/stats.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{ST.data=j}).catch(()=>{ST.err=true}).finally(()=>{ST.busy=false;
+  fetch('/data/stats.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(j=>{ST.data=j}).catch(()=>{ST.err=true}).finally(()=>{ST.busy=false;
     if(typeof FRT!=='undefined')FRT.key='';if(typeof render==='function')render();tfNotify()})}
 const DMG_L={impact:'Impact',puncture:'Puncture',slash:'Slash',heat:'Heat',cold:'Cold',electricity:'Electricity',toxin:'Toxin',blast:'Blast',radiation:'Radiation',gas:'Gas',magnetic:'Magnetic',viral:'Viral',corrosive:'Corrosive',void:'Void',tau:'Tau',true:'True'};
 const pct=v=>Math.round(v*1000)/10+'%';

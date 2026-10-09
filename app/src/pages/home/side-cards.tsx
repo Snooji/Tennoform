@@ -44,7 +44,7 @@ export function TodayCard({ d }: { d: HomeData }) {
           <h2 className="font-heading text-lg leading-tight font-semibold">Today</h2>
         </CardTitle>
         <CardAction>
-          <a href="#today" className={cardLink}>
+          <a href="/today/" className={cardLink}>
             All of today
           </a>
         </CardAction>
@@ -58,7 +58,7 @@ export function TodayCard({ d }: { d: HomeData }) {
           ))}
         </ul>
         <a
-          href="#achievements"
+          href="/achievements/"
           className="-mx-2 mt-1 flex items-center gap-3 rounded-md border-t px-2 py-2.5 transition-colors hover:bg-muted/60 focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
         >
           <Award aria-hidden className="size-4 text-muted-foreground" />
@@ -87,13 +87,13 @@ export function CollectionCard() {
           <h2 className="font-heading text-lg leading-tight font-semibold">My collection</h2>
         </CardTitle>
         <CardAction>
-          <a href="#collection" className={cardLink}>See all</a>
+          <a href="/collection/" className={cardLink}>See all</a>
         </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
           {[["owned", c.owned], ["mastered", c.mastered], ["to level", c.level]].map(([k, v]) => (
-            <a key={k as string} href="#collection" onClick={() => tf().collectionSet({ f: k === "owned" ? "owned" : k === "mastered" ? "mastered" : "level" })} className="rounded-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-primary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
+            <a key={k as string} href="/collection/" onClick={() => tf().collectionSet({ f: k === "owned" ? "owned" : k === "mastered" ? "mastered" : "level" })} className="rounded-sm text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground hover:decoration-primary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none">
               <b className="font-semibold text-foreground tabular-nums">{v as number}</b> {k as string}
             </a>
           ))}
@@ -120,7 +120,7 @@ export function GoalsCard({ d }: { d: HomeData }) {
           <h2 className="font-heading text-lg leading-tight font-semibold">Goals</h2>
         </CardTitle>
         <CardAction>
-          <a href="#goals" className={cardLink}>
+          <a href="/goals/" className={cardLink}>
             {d.goalCount > 4 ? `All ${d.goalCount}` : "Goals"}
           </a>
         </CardAction>
@@ -173,7 +173,7 @@ export function TasksCard({ d }: { d: HomeData }) {
           <h2 className="font-heading text-lg leading-tight font-semibold">My tasks</h2>
         </CardTitle>
         <CardAction>
-          <a href="#tasks" className={cardLink}>
+          <a href="/tasks/" className={cardLink}>
             {d.taskCount > 6 ? `All ${d.taskCount}` : "All tasks"}
           </a>
         </CardAction>
@@ -256,7 +256,7 @@ export function SignInCard() {
           {G_LOGO} Continue with Google
         </Button>
         <a
-          href="#tenno"
+          href="/tenno/"
           className={cn(buttonVariants({ variant: "ghost" }), "h-10 px-3")}
           onClick={(e) => {
             e.preventDefault()

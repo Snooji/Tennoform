@@ -36,7 +36,7 @@ ${phone?'':`   <div class="sv"><span class="svn">${phN}</span><div><b>On a phone
   </div>`}
 /* coming back from warframe.com with #wfid=<id>: ask before linking, so a shared link can't change your account by itself */
 function idFromHash(){const m=/^#wfid=([0-9a-f]{24})$/i.exec(location.hash);if(!m)return false;
-  state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'',location.pathname+location.search+'#tenno');
+  state.idPending=m[1].toLowerCase();state.tTab='account';history.replaceState(null,'','/tenno/'+location.search);
   if(typeof render==='function')render();tfNotify();setTimeout(()=>{const c=$('#idpend');if(c)c.scrollIntoView({block:'center'})},300);return true}
 window.addEventListener('hashchange',idFromHash);setTimeout(idFromHash,0);
 /* why a pasted text has no ID: the usual mix-ups are other long codes that aren't the Warframe account ID */
@@ -88,6 +88,6 @@ function platPickHTML(){const cur=wfPlat();
   ${cur.auto?'':`<div class="callout small" role="status">One-tap sync can only reach PC and cross-save accounts until a profile relay is set up. For ${esc(cur.label)}, use the two quick steps below: they open your profile on Warframe's ${esc(cur.label)} server.</div>`}</div>`}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
 /* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
-{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render();
+{const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
     toast(`${wfPlat().label} profiles sync with the two quick steps on this page.`);setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
   return _as2.apply(this,arguments)}}

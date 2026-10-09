@@ -17,6 +17,6 @@ Object.assign(window.TF,{
 });
 /* tab links from anywhere (e.g. "Full breakdown", "Foundry", "Sync your profile") */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-ttab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')))return;
-  e.preventDefault();e.stopPropagation();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.tTab=t.dataset.ttab;saveUI();if(HASH()!=='#tenno')GO('tenno');else tfNotify()},true);
 const _tennoRoute=routes.tenno;
 routes.tenno=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('tenno')?'':_tennoRoute()};

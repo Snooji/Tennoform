@@ -65,7 +65,7 @@ function processInbox(){const fs=FB.fs;
 function unread(){const lr=lsGet('tf-read',{});let n=0;const per={};for(const g of SO.groups){const c=(SO.gm[g.id]||[]).filter(m=>m.from!==SO.uid&&m.at>(lr['g:'+g.id]||0)).length;if(c){n+=c;per['g:'+g.id]=c}}for(const m of SO.inbox){if(m.type==='sent'||m.type==='accept')continue;if(m.type==='friend'){n++;continue}if(m.at>(lr[m.from]||0)){n++;per[m.from]=(per[m.from]||0)+1}}return {n,per}}
 function badge(){const u=SO.uid?unread().n:0;document.querySelectorAll('.nbadge').forEach(e=>e.remove());if(!u)return;
   document.querySelectorAll('a[href="#friends"],#hamb,#menu').forEach(a=>{const b=document.createElement('span');b.className='nbadge';b.textContent=u>9?'9+':u;a.appendChild(b)})}
-function socialRender(){badge();if(location.hash==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(location.hash==='#friends'){const box=$('#chatlog');if(box){const g=state.chat&&state.chat.startsWith('g:')?SO.groups.find(x=>'g:'+x.id===state.chat):null;box.innerHTML=g?groupLog(g):chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
+function socialRender(){badge();if(HASH()==='#friends'&&!(document.activeElement&&document.activeElement.matches('input,textarea'))){const y=scrollY;render();scrollTo(0,y)}else if(HASH()==='#friends'){const box=$('#chatlog');if(box){const g=state.chat&&state.chat.startsWith('g:')?SO.groups.find(x=>'g:'+x.id===state.chat):null;box.innerHTML=g?groupLog(g):chatLog(state.chat);box.scrollTop=box.scrollHeight}}}
 function chatLog(fid){const ms=SO.inbox.filter(m=>!blocked(m.from)&&(m.from===fid&&m.type!=='friend'&&m.type!=='accept')||(m.type==='sent'&&m.to===fid)).sort((a,b)=>a.at-b.at);
   return ms.map(m=>{const mine=m.type==='sent';const t=new Date(m.at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
     let body=esc(m.text||'');
@@ -139,7 +139,7 @@ function hubRight(){const now=Date.now();const fl=(P.foundry||[]).slice().sort((
 /* ---- v11 events ---- */
 document.addEventListener('click',async e=>{const t=e.target.closest('[data-addtask],#taddb,[data-tdel],[data-tshare],[data-tinvite],#tclear,#faddc,[data-facc],[data-fdec],[data-chat],#msgsend,[data-funf],[data-tjoin],[data-tdecline],[data-copy]');if(!t)return;
   if(t.dataset.addtask){e.preventDefault();const i=t.dataset.addtask.indexOf('|');const k=t.dataset.addtask.slice(0,i),r=t.dataset.addtask.slice(i+1);const lab=t.dataset.tlabel||'';
-    if((P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r)){location.hash='tasks';return}if(addTask(k,r,lab)){toast('Added to your tasks');t.classList.add('on');t.textContent='✓ In tasks'}return}
+    if((P.tasks||[]).some(x=>!x.d&&x.k===k&&x.r===r)){GO('tasks');return}if(addTask(k,r,lab)){toast('Added to your tasks');t.classList.add('on');t.textContent='✓ In tasks'}return}
   if(t.id==='taddb'){const el=$('#tnew');const v=(el&&el.value||'').trim();if(!v)return;addTask('note',v,v);rerender();return}
   if(t.dataset.tdel){P.tasks=(P.tasks||[]).filter(x=>x.id!==t.dataset.tdel);saveProfile();rerender();return}
   if(t.dataset.tshare){state.tShare=state.tShare===t.dataset.tshare?null:t.dataset.tshare;rerender();return}

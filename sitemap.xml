@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tennoform.com/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/mastery/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/ranks/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/collection/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/foundry/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/missions/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/quests/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/guides/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/farm/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/resources/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/relics/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/world/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/market/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/arsenal/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/frames/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/today/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/synd/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/achievements/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/donate/</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://tennoform.com/about/</loc><changefreq>daily</changefreq></url>
 </urlset>
