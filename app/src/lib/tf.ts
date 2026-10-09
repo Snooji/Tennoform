@@ -223,6 +223,10 @@ export type TFApi = {
   donReload(): void
   donCSV(): void
   squad(): SquadData
+  friendsHub(): FriendsHubData
+  friendsHubSet(o: { q?: string; sort?: string; open?: string }): void
+  friendPin(uid: string): void
+  shareSet(o: { on?: boolean; lf?: string; note?: string }): void
   squadSet(o: { chat?: string | null; newGroup?: boolean }): void
   friendAdd(code: string): void
   friendAccept(id: string): void
@@ -622,6 +626,17 @@ export type AdminData = {
 export type SquadMsg = {
   id: string; mine: boolean; time: string; who: string; text: string; task: string; ans: string
   kind: "text" | "invite" | "sentInvite" | "joined" | "declined" | "done" | "sys"
+}
+export type FriendHelp = { k: "give" | "relic" | "know" | "build" | "lf"; t: string; go?: string }
+export type FriendCard = {
+  uid: string; name: string; av: string; pending: boolean; pinned: boolean; unread: number; code: string
+  mr: number | null; mrLabel: string; pct: number; toNext: number; nextLabel: string; diff: number; at: number; active: string
+  nodes: number; sp: number; maxed: number
+  shared: "ok" | "none" | "loading" | "pending"; goals: string[]; need: string[]; lf: string[]; note: string; help: FriendHelp[]
+}
+export type FriendsHubData = {
+  status: string; q?: string; sort?: string; open?: string; myMr?: number; count?: number; friends?: FriendCard[]; lfTags?: string[]
+  me?: { on: boolean; lf: string[]; note: string; goals: number; need: number }
 }
 export type SquadData = {
   status: "ok" | "offline" | "loading" | "unavailable" | "signin"
