@@ -45,6 +45,7 @@ export type TFApi = {
   refresh(): void
   detailChanged?(): void
   home(): HomeData
+  badgeSet(v: string): void
   act(tag: string, attrs: Record<string, string>): void
   nuDone(i: number): void
   nuSnooze(i: number): void
@@ -272,6 +273,7 @@ export type HomeNext = {
 }
 export type HomeTile = { k: string; v: string; x: string; route: string; ttab?: string; done?: number; total?: number }
 export type HomeData = {
+  badge?: { cur: string; auto: string; options: { value: string; label: string }[] }
   name: string; mr: number; mrLabel: string; mrShort: string; inGame: string; maxed: number
   xp: number; next: number; toNext: number; nextLabel: string; pct: number; parts: { label: string; xp: number }[]
   action: "link" | "sync" | "plan"; since: string[]; foundryReady: number

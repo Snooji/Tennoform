@@ -1,8 +1,9 @@
 import { motion, useReducedMotion } from "motion/react"
-import { CircleCheck, RefreshCw, Route, Share2 } from "lucide-react"
+import { Check, ChevronDown, CircleCheck, RefreshCw, Route, Share2 } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { RollingNumber } from "@/components/ui/rolling-number"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type HomeData } from "@/lib/tf"
@@ -81,6 +82,39 @@ function SyncControl() {
   )
 }
 
+/** Your name; tap it to pick the platform badge shown after it (here only, so it never gets in the way elsewhere). */
+function NamePicker({ d, title }: { d: HomeData; title: string }) {
+  const b = d.badge
+  if (!d.name || !b) return <h1 className="truncate font-heading text-2xl leading-tight font-semibold md:text-3xl">{title}</h1>
+  const pick = (v: string) => tf().badgeSet(v)
+  const autoLabel = b.options.find((o) => o.value === b.auto)?.label
+  return (
+    <h1 className="min-w-0 font-heading text-2xl leading-tight font-semibold md:text-3xl">
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<button type="button" className="group inline-flex max-w-full items-center gap-1 rounded-md text-left outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50" aria-label={`${title}. Choose your platform badge`} title="Choose your platform badge" />}>
+          <span className="truncate">{title}</span>
+          <ChevronDown className="size-4 shrink-0 text-muted-foreground opacity-60 group-hover:opacity-100" aria-hidden />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-60 font-sans text-sm font-normal">
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="text-xs">Your platform badge</DropdownMenuLabel>
+            {b.options.map((o) => (
+              <DropdownMenuItem key={o.value} onClick={() => pick(o.value)}>
+                <Check className={b.cur === o.value ? "opacity-100" : "opacity-0"} /> {o.label}
+              </DropdownMenuItem>
+            ))}
+            <DropdownMenuItem onClick={() => pick("none")}><Check className={b.cur === "none" ? "opacity-100" : "opacity-0"} /> No badge</DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => pick("")}>
+            <Check className={!b.cur ? "opacity-100" : "opacity-0"} /> From my Warframe name{autoLabel ? ` (${autoLabel})` : ""}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </h1>
+  )
+}
+
 export function MasteryHero({ d }: { d: HomeData }) {
   const title = d.name || d.mrLabel
   const primary = (
@@ -94,7 +128,7 @@ export function MasteryHero({ d }: { d: HomeData }) {
         <MasteryRing pct={d.pct} label={d.mrShort} size={window.innerWidth < 500 ? 104 : 132} />
         <div className="flex min-w-0 flex-col gap-1">
           <SyncControl />
-          <h1 className="truncate font-heading text-2xl leading-tight font-semibold md:text-3xl">{title}</h1>
+          <NamePicker d={d} title={title} />
           <p className="tf-keep text-sm text-muted-foreground">
             {d.name ? d.mrLabel.replace("Mastery rank", "MR") + " · " : ""}
             {d.inGame ? `in game MR ${d.inGame} · ` : ""}
