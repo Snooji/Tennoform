@@ -15,13 +15,13 @@ async function ntfEnable(){if(typeof Notification==='undefined'){toast("This bro
   if(p!=='granted'){toast('Notifications are blocked for this site. Allow them in your browser settings to turn this on.');ntfSet({on:false});return false}
   ntfSet({on:true});await ntfWorker();return true}
 /* the conversation on screen right now, if any: no notification for it */
-function ntfViewing(conv){if(document.visibilityState!=='visible')return false;const h=location.hash;
+function ntfViewing(conv){if(document.visibilityState!=='visible')return false;const h=HASH();
   if(conv.startsWith('room:'))return h==='#chat';return h==='#friends'&&state.chat===conv.replace(/^dm:/,'')}
 async function ntfShow(title,body,conv,url){const pr=ntfPrefs();
   if(document.visibilityState==='visible'&&document.hasFocus()){if(!ntfViewing(conv))toast(title+': '+body.slice(0,90));return}
   if(ntfPerm()!=='granted')return;const opt={body:body.slice(0,180),tag:conv,renotify:true,silent:!pr.sound,icon:'/icon-192.png',badge:'/icon-192.png',data:{url}};
   try{const reg=await ntfWorker();if(reg&&reg.showNotification){await reg.showNotification(title,opt);return}}catch(e){}
-  try{const n=new Notification(title,opt);n.onclick=()=>{window.focus();location.hash=url.replace(/^.*#/,'');n.close()}}catch(e){}}
+  try{const n=new Notification(title,opt);n.onclick=()=>{window.focus();GO(url.replace(/^.*#/,''));n.close()}}catch(e){}}
 /* only things newer than when this page started listening, and each one once */
 const NTF_START=Date.now();const NTF_SEEN=new Set();
 function ntfScan(){const pr=ntfPrefs();if(!pr.on||typeof SO==='undefined'||!SO.uid)return;

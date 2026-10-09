@@ -111,7 +111,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-nudone],[d
   if(t.id==='hubhintx'){lsSet('tf-hubhint',1);rerender();return}
   if(t.dataset.livetask){const tx=t.dataset.livetask;if((P.tasks||[]).some(x=>!x.d&&x.t===tx)){toast('Already in your tasks');return}const ex=t.dataset.ltexp;addTask('note','',tx,ex?{due:ymd(ex)}:{});rerender();toast('Added to your tasks');return}
   if(t.dataset.fisrel){const era=t.dataset.fisrel;const n=Object.keys(P.rel||{}).some(r=>REL[r]&&REL[r].era===era&&relCount(r)>0);
-    if(n){state.rlTab='mine';state.rlE=era;saveUI();location.hash='#relics'}else{state.farmQ=era;state.ffT='relic';state.unvOnly=true;saveUI();location.hash='#farm'}return}
+    if(n){state.rlTab='mine';state.rlE=era;saveUI();GO('#relics')}else{state.farmQ=era;state.ffT='relic';state.unvOnly=true;saveUI();GO('#farm')}return}
   if(t.id==='rsclear'){state.resQ='';state.rsF='all';saveUI();rerender();return}
   if(t.id==='mkclear'){state.mkQ='';state.mkF='all';saveUI();rerender();return}
   if(t.id==='rlclear'){state.rlE='all';saveUI();rerender();return}

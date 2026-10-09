@@ -21,6 +21,6 @@ Object.assign(window.TF,{
 });
 /* picks from anywhere (search, links inside details) land in the React page instead of the old #fdet panel */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-pick]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')))return;
-  e.preventDefault();e.stopPropagation();state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.farmSel=t.dataset.pick;if(HASH()!=='#farm')GO('farm');else tfNotify()},true);
 const _farmRoute=routes.farm;
 routes.farm=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('farm')?'':_farmRoute()};

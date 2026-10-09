@@ -15,6 +15,7 @@ import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData, type
 import { firstSentence, useSimple } from "@/lib/detail"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Helper } from "./helper"
+import { pagePath } from "@/lib/page-path"
 
 const TABS = [
   { value: "path", label: "Path to max" }, { value: "helper", label: "Quick wins" }, { value: "ladder", label: "Rank ladder" }, { value: "sheet", label: "Starter weapons (MR 0–12)" },
@@ -128,7 +129,7 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
             {x.planets.map((p) => <li key={p.p}><Badge variant="outline" className="text-muted-foreground">{p.p}: {p.n} · {fmt(p.xp)} XP</Badge></li>)}
           </ul>
         ) : null}
-        {x.link ? <a href={`#${x.link}`} className={cn(linkCls, "self-start text-sm")}>{x.link === "missions" ? "Open the Star chart" : "Open Ranks"}</a> : null}
+        {x.link ? <a href={pagePath(x.link)} className={cn(linkCls, "self-start text-sm")}>{x.link === "missions" ? "Open the Star chart" : "Open Ranks"}</a> : null}
         {x.items.length ? (
           <Collapsible open={open} onOpenChange={setOpen}>
             <CollapsibleTrigger className="group inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-md text-sm font-medium outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50">
@@ -166,7 +167,7 @@ function Ladder({ d }: { d: MasteryData }) {
               <p className="text-sm">
                 Quests unlocked:{" "}
                 {r.quests.map((q, i) => (
-                  <span key={q}>{i ? ", " : ""}<a href="#quests" className={linkCls} onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#quests", "data-q": q }) }}>{q}</a></span>
+                  <span key={q}>{i ? ", " : ""}<a href="/quests/" className={linkCls} onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#quests", "data-q": q }) }}>{q}</a></span>
                 ))}
               </p>
             ) : null}
@@ -205,7 +206,7 @@ export function MasteryPage() {
           <h1 className="font-heading text-3xl font-semibold">MR plan</h1>
           <p className="text-sm text-muted-foreground">
             What to do next to reach your target rank, the full rank ladder, and the easiest gear to rank first. Enter what you've already ranked on the{" "}
-            <a href="#ranks" className={linkCls}>Ranks</a> page.
+            <a href="/ranks/" className={linkCls}>Ranks</a> page.
           </p>
         </div>
         <Card size="sm" className="flex-row items-center gap-4 px-4">
