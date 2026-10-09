@@ -28,7 +28,7 @@ function itemTree(name,opts){opts=opts||{};const it=I[name];if(!it)return `<div 
     if(p.k==='p'){const full=p.full||(name+' '+p.n);
       let src='';if(p.rel)src=`${priceChip(full)}${sellChip(full)}${p.du?` <span class="chip">${p.du} ducats</span>`:''}${sellerRow(full)}`+relicChips(p.rel);
       else if(p.dr&&p.dr.length)src=dropsList(p.dr,2);else src='Same source as the blueprint.';
-      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub?' blueprint':''}`,src);
+      h+=step('part|'+name+'|'+p.n,`Get ${esc(full)}${p.sub&&!/Blueprint$/.test(full)?' blueprint':''}`,src);
       if(p.sub)h+=step('built|'+name+'|'+p.n,`Craft ${esc(p.n)} · ${hrs(p.t)} · ${fmt(p.cr)} cr`,resRows(p.sub,'res|'+name+'|'+p.n)+`<button class="btn sm" style="margin-top:8px" data-fstart="${esc(name+' '+p.n)}">${ic('timer')}Start Foundry timer</button>`);
     }else if(p.k==='i'){
       h+=step('have|'+name+'|'+p.n+'|'+pi,`Have a spare ${L(p.n)}${p.q>1?' ×'+p.q:''} (used up by the recipe)`,

@@ -63,7 +63,7 @@ function GuideList({ list, loading }: { list: GuideCard[]; loading?: boolean }) 
                 </span>
                 <Status g={g} />
               </span>
-              {g.sum ? <span className="line-clamp-2 pl-7 text-sm text-muted-foreground">{g.sum}</span> : null}
+              {g.sum ? <span className="tf-more line-clamp-2 pl-7 text-sm text-muted-foreground">{g.sum}</span> : null}
             </button>
           </li>
         )
@@ -72,9 +72,9 @@ function GuideList({ list, loading }: { list: GuideCard[]; loading?: boolean }) 
   )
 }
 
-function Section({ icon: Icon, title, children }: { icon: typeof BookOpen; title: string; children: React.ReactNode }) {
+function Section({ icon: Icon, title, more, children }: { icon: typeof BookOpen; title: string; more?: boolean; children: React.ReactNode }) {
   return (
-    <Card className="gap-3 px-5">
+    <Card className={more ? "tf-more gap-3 px-5" : "gap-3 px-5"}>
       <h2 className="flex items-center gap-2 font-heading text-lg leading-tight font-semibold"><Icon className="size-4.5 text-primary" aria-hidden /> {title}</h2>
       {children}
     </Card>
@@ -92,7 +92,7 @@ function Detail({ g }: { g: GuideDetail }) {
       <header className="flex flex-col gap-2">
         <span className="flex items-center gap-2 text-xs text-muted-foreground"><K.icon className="size-3.5" aria-hidden /> {K.label} guide{g.time ? <><span aria-hidden>·</span><Clock className="size-3.5" aria-hidden /> {g.time}</> : null}</span>
         <h1 className="font-heading text-3xl font-semibold">{g.n}</h1>
-        {g.sum ? <p className="max-w-3xl text-sm text-muted-foreground">{g.sum}</p> : null}
+        {g.sum ? <p className="tf-keep max-w-3xl text-sm text-muted-foreground">{g.sum}</p> : null}
         <div className="flex flex-wrap gap-2 pt-1">
           <Button variant="outline" className="h-9" disabled={g.hasTask} onClick={() => tf().guideTask(g.id)}>{g.hasTask ? <Check /> : <Plus />} {g.hasTask ? "In tasks" : "Add to tasks"}</Button>
           {g.act ? <Button className="h-9" onClick={() => tf().act("a", { href: "#" + g.act!.route, ...(g.act!.tab ? { "data-ttab": g.act!.tab } : {}) })}>{g.act.label}</Button> : null}
@@ -125,7 +125,7 @@ function Detail({ g }: { g: GuideDetail }) {
 
           {g.stepList.length ? (
             <Section icon={BookOpen} title="Step by step">
-              <p className="-mt-1 text-xs text-muted-foreground">Tick each step as you go. {left ? `${left} left.` : "All done!"} Your progress is saved.</p>
+              <p className="tf-more -mt-1 text-xs text-muted-foreground">Tick each step as you go. {left ? `${left} left.` : "All done!"} Your progress is saved.</p>
               <ol className="flex flex-col">
                 {g.stepList.map((s, i) => (
                   <li key={i} className="flex gap-3 border-b py-3 last:border-0">
@@ -134,7 +134,7 @@ function Detail({ g }: { g: GuideDetail }) {
                       <span className={cn("text-sm", s.done && "text-muted-foreground line-through decoration-primary/60")}>
                         <b className="mr-1.5 font-heading font-semibold text-primary">{i + 1}.</b><Linkify text={s.t} />
                       </span>
-                      {s.tip ? <span className="rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs text-muted-foreground">Tip: {s.tip}</span> : null}
+                      {s.tip ? <span className="tf-more rounded-lg bg-muted/50 px-2.5 py-1.5 text-xs text-muted-foreground">Tip: {s.tip}</span> : null}
                     </div>
                   </li>
                 ))}

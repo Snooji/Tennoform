@@ -4,7 +4,8 @@
    1. pages: every page in dark and light, phone and desktop, loads without script errors and passes axe (WCAG 2.1 AA)
    2. grey screens: tapping every tab and switch on every page never leaves an empty overlay or a locked page
    3. styles: Foundry and Prime, light and dark, with a few colour palettes, pass axe
-   4. chat window: the pop-up chat opens from its button, moves, resizes, minimises, closes and passes axe */
+   4. simple view: every page in Simple view loads without script errors and passes axe
+   5. chat window: the pop-up chat opens from its button, moves, resizes, minimises, closes and passes axe */
 const { chromium } = require('playwright')
 const fs = require('fs')
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8')
@@ -100,6 +101,24 @@ async function styles(b) {
   }
 }
 
+async function simpleView(b) {
+  for (const w of [1280, 390]) {
+    const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
+    p.on('pageerror', (e) => errs.push(`${e.message} @ ${where(p)}`))
+    await open(p, { 'tf-detail': 'simple' })
+    if ((await p.evaluate(() => document.documentElement.dataset.detail)) !== 'simple') fail(`simple ${w}: Simple view didn't switch on`)
+    for (const r of PAGES) {
+      await p.evaluate((r) => (location.hash = r), r); await p.waitForTimeout(400)
+      const h1 = await p.evaluate(() => (document.querySelector('main h1') || {}).textContent || '')
+      if (/didn't load/i.test(h1)) fail(`simple ${w} #${r}: page didn't load`)
+      const v = await axe(p)
+      if (v.length) fail(`simple ${w} #${r} axe: ${v.join('; ')}`)
+    }
+    if (errs.length) fail(`simple ${w} script errors: ${errs.slice(0, 3).join(' | ')}`)
+    console.log('simple view', w, 'checked'); await ctx.close()
+  }
+}
+
 async function chatWindow(b) {
   for (const w of [1280, 390]) {
     const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
@@ -132,7 +151,7 @@ async function chatWindow(b) {
 ;(async () => {
     // full Chromium (what visitors run), not Playwright's stripped-down headless shell
   const b = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : { channel: 'chromium' })
-  await pages(b); await grey(b); await styles(b); await chatWindow(b)
+  await pages(b); await grey(b); await styles(b); await simpleView(b); await chatWindow(b)
   await b.close()
   console.log(fails.length ? `\n${fails.length} problem(s) found` : '\nAll checks passed')
   process.exit(fails.length ? 1 : 0)

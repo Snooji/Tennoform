@@ -95,7 +95,7 @@ export function MasteryHero({ d }: { d: HomeData }) {
         <div className="flex min-w-0 flex-col gap-1">
           <SyncControl />
           <h1 className="truncate font-heading text-2xl leading-tight font-semibold md:text-3xl">{title}</h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="tf-keep text-sm text-muted-foreground">
             {d.name ? d.mrLabel.replace("Mastery rank", "MR") + " · " : ""}
             {d.inGame ? `in game MR ${d.inGame} · ` : ""}
             {fmt(d.maxed)} items mastered

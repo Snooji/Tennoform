@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Bell, ChevronsUpDown, MessagesSquare, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
+import { Bell, ChevronsUpDown, List, MessagesSquare, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -18,6 +18,7 @@ import { TF_LINKS, openLink } from "./tennoform-links"
 import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
 import { setChatWin, useChatWin } from "@/lib/chat-win"
+import { setSimple, useSimple } from "@/lib/detail"
 
 export function Logo({ className }: { className?: string }) {
   return <span aria-hidden className={className} dangerouslySetInnerHTML={{ __html: tf().logo() }} />
@@ -141,6 +142,7 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
   const [look, setLook] = useState(false)
   const [ntf, setNtf] = useState(false)
   const cw = useChatWin()
+  const simple = useSimple()
   return (
     <SidebarMenu>
       <AppearanceDialog open={look} onOpenChange={setLook} />
@@ -200,6 +202,9 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => setSimple(!simple)} title="Simple hides the long explanations and keeps steps short. Detailed shows everything.">
+              <List /> {simple ? "Switch to detailed view" : "Switch to simple view"}
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => { setOpen(false); setNtf(true) }}>
               <Bell /> Notifications
             </DropdownMenuItem>

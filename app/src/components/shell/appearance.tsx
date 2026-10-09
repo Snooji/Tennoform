@@ -1,9 +1,10 @@
-import { Check, Monitor, Moon, Sun } from "lucide-react"
+import { AlignJustify, Check, List, Monitor, Moon, Sun } from "lucide-react"
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ACCENTS, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { cn } from "@/lib/utils"
 import { tf, useTF, type TFState } from "@/lib/tf"
+import { setSimple, useSimple } from "@/lib/detail"
 
 const MODES: { value: TFState["theme"]; label: string; icon: typeof Sun }[] = [
   { value: "light", label: "Light", icon: Sun },
@@ -58,12 +59,13 @@ const chip = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
 export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
   const s = useTF()
   const accent = useAccentChoice()
+  const simple = useSimple()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Appearance</DialogTitle>
-          <DialogDescription>Pick a mode, a style and a colour. Every style has a light and a dark version, and every colour works with every style.</DialogDescription>
+          <DialogDescription>Pick a mode, how much detail to show, a style and a colour. Every style has a light and a dark version, and every colour works with every style.</DialogDescription>
         </DialogHeader>
 
         <section className="flex flex-col gap-2" aria-labelledby="ap-mode">
@@ -75,6 +77,22 @@ export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpen
                 <button key={m.value} type="button" role="radio" aria-checked={on} onClick={() => tf().theme(m.value)}
                   className={cn(chip, "flex min-h-11 flex-col items-center justify-center gap-1 rounded-lg border px-2 py-2 text-sm", on ? "border-primary bg-primary/10 font-medium" : "hover:bg-muted")}>
                   <m.icon aria-hidden className="size-4" /> {m.label}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-2" aria-labelledby="ap-detail">
+          <h3 id="ap-detail" className="text-sm font-medium">Detail</h3>
+          <div role="radiogroup" aria-labelledby="ap-detail" className="grid grid-cols-2 gap-2">
+            {([[false, "Detailed", "Every step, source and tip", AlignJustify], [true, "Simple", "Just the key steps", List]] as const).map(([v, label, hint, Icon]) => {
+              const on = simple === v
+              return (
+                <button key={label} type="button" role="radio" aria-checked={on} onClick={() => setSimple(v)}
+                  className={cn(chip, "flex min-h-11 flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left text-sm", on ? "border-primary bg-primary/10" : "hover:bg-muted")}>
+                  <span className={cn("flex items-center gap-1.5", on && "font-medium")}><Icon aria-hidden className="size-4" /> {label}</span>
+                  <span className="text-xs text-muted-foreground">{hint}</span>
                 </button>
               )
             })}

@@ -51,7 +51,7 @@ function Fishing({ d }: { d: WorldData }) {
         <CardContent className="flex flex-col gap-1.5 text-sm">
           <p><b className="font-medium">Spears:</b> {d.info!.spears}</p>
           <p><b className="font-medium">Vendor:</b> {d.info!.vendor}. {d.info!.use}</p>
-          {d.info!.tips.length ? <ul className="mt-1 flex list-disc flex-col gap-1 pl-5 text-muted-foreground marker:text-primary/60">{d.info!.tips.map((t) => <li key={t}>{t}</li>)}</ul> : null}
+          {d.info!.tips.length ? <ul className="tf-more mt-1 flex list-disc flex-col gap-1 pl-5 text-muted-foreground marker:text-primary/60">{d.info!.tips.map((t) => <li key={t}>{t}</li>)}</ul> : null}
         </CardContent>
       </Card>
       <div className="flex flex-wrap gap-2">
@@ -138,7 +138,7 @@ function Mining({ d }: { d: WorldData }) {
           ))}
         </ul>
       </Card>
-      <Card size="sm" className="px-4"><ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-muted-foreground marker:text-primary/60">{d.tips!.map((t) => <li key={t}>{t}</li>)}</ul></Card>
+      <Card size="sm" className="tf-more px-4"><ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-muted-foreground marker:text-primary/60">{d.tips!.map((t) => <li key={t}>{t}</li>)}</ul></Card>
     </>
   )
 }
