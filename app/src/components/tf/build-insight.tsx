@@ -36,7 +36,7 @@ export function BuildInsight({ id, role, notes, item, mods, arcanes }: { id: str
               {d.elements.map((e, i) => <span key={e.t}>{i ? ", " : ""}<b className="font-medium">{e.t}</b>{e.from ? ` (${e.from.join(" + ")})` : ""} {Math.round(e.v)}</span>)}
             </p>
           ) : null}
-          <p className="text-xs text-muted-foreground">
+          <p className="tf-more text-xs text-muted-foreground">
             {d.kind === "weapon"
               ? `Unmodded ${item} → this build, with every mod at max rank. Leaves out conditional bonuses, Arcanes, Rivens, faction mods and enemy armor, so real damage in a fight is usually higher.`
               : d.kind === "frame"

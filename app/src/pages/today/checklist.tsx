@@ -46,7 +46,7 @@ function Row({ c }: { c: CheckRow }) {
               ) : null}
               {c.pinned ? <Pin aria-label="Pinned" className="size-3.5 fill-primary text-primary" /> : null}
             </span>
-            <span className="text-sm text-muted-foreground">{c.desc}</span>
+            <span className="tf-more text-sm text-muted-foreground">{c.desc}</span>
           </span>
           <ChevronDown aria-hidden className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform group-data-[panel-open]:rotate-180" />
         </CollapsibleTrigger>

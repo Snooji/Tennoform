@@ -495,3 +495,20 @@ body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
 @media (prefers-reduced-motion: reduce) {
   :root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel), :root[data-theme="prime"] [data-slot="progress-indicator"], :root[data-theme="prime"] [data-slot="progress"] > div { animation: none; }
 }
+
+/* ---------- Simple view: the same items and locations, without the long explanations, tips, sellers and side notes ---------- */
+html[data-detail="simple"] {
+  /* page intros under the title, and anything marked as extra detail */
+  & main header h1 ~ p:not(.tf-keep),
+  & .tf-more,
+  /* the older embedded pages */
+  & .lede,
+  & .hubhelp,
+  & .hubhint,
+  /* item steps: who's selling and timer buttons inside steps (every item, relic and location stays) */
+  & section.obj .seller,
+  & section.obj li.step [data-sell],
+  & section.obj li.step .src > .btn.sm {
+    display: none !important;
+  }
+}

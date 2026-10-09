@@ -12,6 +12,7 @@ import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
 import { StatList } from "@/components/tf/stat-list"
 import { fmt, tf, useTF, useTFData, type GearRow as Gear, type MasteryData, type RouteStep } from "@/lib/tf"
+import { firstSentence, useSimple } from "@/lib/detail"
 import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Helper } from "./helper"
 
@@ -66,7 +67,7 @@ function Path({ d }: { d: MasteryData }) {
               That's more XP than everything below can give right now. The rest comes from gear that unlocks at a higher rank, modular companions and new releases.
             </p>
           ) : null}
-          <p className="text-xs text-muted-foreground">Every source of mastery counts: gear, star chart and Steel Path nodes, Junctions, Railjack and Drifter intrinsics, and modular companions. The steps below go quickest first and stop where you reach {d.targetLabel}.</p>
+          <p className="tf-more text-xs text-muted-foreground">Every source of mastery counts: gear, star chart and Steel Path nodes, Junctions, Railjack and Drifter intrinsics, and modular companions. The steps below go quickest first and stop where you reach {d.targetLabel}.</p>
         </CardContent>
       </Card>
       <Route d={d} />
@@ -104,6 +105,7 @@ function Route({ d }: { d: MasteryData }) {
 }
 
 function Step({ x, n }: { x: RouteStep; n: number }) {
+  const simple = useSimple()
   const [open, setOpen] = useState(x.kind === "gear" && n <= 2 && !x.beyond)
   return (
     <li className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-2 py-4">
@@ -119,7 +121,7 @@ function Step({ x, n }: { x: RouteStep; n: number }) {
           </div>
           {x.reach ? <Badge variant="outline" className="border-primary/50 text-foreground"><Check className="text-primary" /> Reaches your target</Badge> : null}
         </div>
-        <p className="text-sm text-muted-foreground">{x.how}</p>
+        <p className="text-sm text-muted-foreground">{simple ? firstSentence(x.how) : x.how}</p>
         {x.pick ? <p className="text-sm font-medium">Ranking {x.pick === x.count ? "all of these" : `about ${x.pick} of these`} gets you to your target. The biggest XP is listed first.</p> : null}
         {x.planets?.length ? (
           <ul className="flex flex-wrap gap-1.5" aria-label="Where the most node XP is left">
