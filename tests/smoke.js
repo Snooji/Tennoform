@@ -12,7 +12,7 @@ const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8')
 const WSD = require('./world-state.js')
 const BASE = process.env.SITE || 'http://localhost:8765/'
 const PAGES = ['home', 'ranks', 'mastery', 'goals', 'tasks', 'missions', 'quests', 'farm', 'resources', 'relics', 'world', 'market', 'arsenal', 'frames',
-  'today', 'synd', 'achievements', 'tenno', 'friends', 'donate', 'feedback', 'about', 'guides', 'collection']
+  'today', 'synd', 'achievements', 'tenno', 'foundry', 'friends', 'donate', 'feedback', 'about', 'guides', 'collection']
 const fails = []
 const where = (p) => { try { return new URL(p.url()).hash || '#home' } catch { return '?' } }
 const fail = (m) => { fails.push(m); console.log('FAIL', m) }

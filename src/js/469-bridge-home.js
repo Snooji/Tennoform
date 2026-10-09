@@ -21,7 +21,7 @@ function homeData(){const t=totalXP(),m=mrInfo(t.total);const g=P.prof&&P.prof.m
   if(WS&&WS.sortie&&WS.sortie.variants)today.push({k:'Sortie',v:WS.sortie.boss||'Today',x:leftOf(WS.sortie.expiry),route:'today'});
   if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)today.push({k:'Fissures you need',v:String(n),x:Object.keys(need).slice(0,3).join(', '),route:'today'})}
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)today.push({k:'Steel Path reward',v:WS.steelPath.currentReward.name,x:WS.steelPath.currentReward.cost+' essence',route:'today'});
-  if(fl.length)today.push({k:'Foundry',v:`${ready}/${fl.length} ready`,x:ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000),route:'tenno',ttab:'foundry'});
+  if(fl.length)today.push({k:'Foundry',v:`${ready}/${fl.length} ready`,x:ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000),route:'foundry',fdtimers:1});
   today.push({k:'Weekly reset',v:left(lastWeekly()+7*DAY-now),x:`${wd.filter(ckDone).length}/${wd.length} weekly done`,route:'today'});
   const lg=logList().filter(e=>e.t>=lastDaily()&&e.k!=='sync');
   /* goals and tasks */

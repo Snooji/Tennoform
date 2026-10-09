@@ -19,6 +19,7 @@ function Tile({ t }: { t: HomeTile }) {
     <a
       href={href}
       onClick={(e) => {
+        if (t.fdtimers) tf().foundrySet({ tab: "timers" })
         if (!t.ttab) return
         e.preventDefault()
         tf().act("a", { href, "data-ttab": t.ttab })
