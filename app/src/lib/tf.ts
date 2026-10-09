@@ -182,6 +182,7 @@ export type TFApi = {
   framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
   world(): WorldData
   worldSet(o: { tab?: string; region?: string; rarity?: string; time?: string }): void
+  wsRefresh(): void
   worldSearch(q: string): WorldHit[]
   conservationSet(region: string): void
   market(): MarketData
@@ -474,8 +475,10 @@ export type Linked = { n: string; go: string }
 export type WorldHit = { n: string; kind: "Fish" | "Ore" | "Gem" | "Animal"; reg: string; r: string; done: boolean; key: string; line: string }
 export type Animal = { n: string; variants: string[]; rare: string[]; where: string; time?: string; lure: string; reward: string; tip: string; key: string; done: boolean; hasTask: boolean }
 export type ConservationData = { steps: string[]; regions: string[]; region: string; vendor: string; species: Animal[] }
+export type WorldCycle = { region: string; hub: string; now: string; next: string; expiry: string }
 export type WorldData = {
   tab: "fish" | "mine" | "cons"; region: string; regions: string[]; cons?: ConservationData | null
+  cycles?: { state: "ok" | "loading" | "error"; list: WorldCycle[] }
   rarity?: string; time?: string; times?: string[]; cycle?: string; caught?: number; total?: number
   info?: { spears: string; vendor: string; use: string; tips: string[] }
   fish?: { n: string; key: string; done: boolean; rarity: string; bio: string; time: string; spear: string; bait: string; spots: string[]; gives: Linked[]; hasTask: boolean }[]

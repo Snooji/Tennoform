@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronRight, Clock, Fish, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
+import { Check, ChevronRight, Fish, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { GoLink } from "@/components/tf/go-link"
+import { WorldCycles } from "./world-cycles"
 import { cn } from "@/lib/utils"
 import { tf, useTFData, type ConservationData, type WorldData } from "@/lib/tf"
 
@@ -45,7 +46,6 @@ function Fishing({ d }: { d: WorldData }) {
         <CardHeader>
           <CardTitle className="flex flex-wrap items-center gap-2">
             <h2 className="font-heading text-lg leading-tight font-semibold">{d.region}</h2>
-            {d.cycle ? <Badge variant="outline" className="text-muted-foreground"><Clock /> Now: {d.cycle}</Badge> : null}
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-1.5 text-sm">
@@ -238,6 +238,7 @@ export function WorldPage() {
           { value: "cons", label: <span className="flex items-center gap-1.5"><PawPrint className="size-4" aria-hidden /> Conservation</span> },
         ]}
       />
+      <WorldCycles d={d} region={d.tab === "cons" ? d.cons?.region || "" : d.region} />
       {d.tab === "cons" ? (d.cons ? <Conservation c={d.cons} /> : null) : d.tab === "mine" ? <Mining d={d} /> : <Fishing d={d} />}
     </div>
   )
