@@ -64,10 +64,10 @@ Object.assign(window.TF,{
     if(i>=0){const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()});return}
     const g={id:'bg'+Date.now().toString(36),from:id,item:b.item,name:b.item+': '+b.name,aura:b.aura||'',exilus:b.exilus||'',mods:[...b.mods],arcanes:[...(b.arcanes||[])],at:Date.now()};P.bg.push(g);
     const addItem=I[b.item]&&!ownedItem(b.item)&&!(P.goals||[]).includes(b.item);if(addItem){P.goals=P.goals||[];P.goals.push(b.item)}
-    saveProfile();tfNotify();toastAction('Saved as a goal'+(addItem?' (and '+b.item+' added to Goals)':'')+'. Goals shows the mods you still need.','Open Goals',()=>{location.hash='goals'})},
+    saveProfile();tfNotify();toastAction('Saved as a goal'+(addItem?' (and '+b.item+' added to Goals)':'')+'. Goals shows the mods you still need.','Open Goals',()=>{GO('goals')})},
   buildGoalRemove:id=>{const i=(P.bg||[]).findIndex(g=>g.id===id);if(i<0)return;const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()})},
   buildCopy:id=>{const b=buildById(id);if(!b)return;const c=cleanB(b);state.mbEdit={...c,name:(b.src==='player'&&b.author?b.author+"'s ":'')+c.name,mods:[...c.mods,...Array(Math.max(0,8-c.mods.length)).fill('')]};state.aTab='mine';state.blSel=null;saveUI();
-    if(location.hash!=='#arsenal')location.hash='arsenal';tfNotify();window.scrollTo(0,0)},
+    if(HASH()!=='#arsenal')GO('arsenal');tfNotify();window.scrollTo(0,0)},
   buildVote:async(id,v)=>{const b=buildById(id);if(!b||b.src!=='player')return;if(!SO.uid){toast('Sign in to vote');return}P.bv=P.bv||{};const cur=P.bv[b.doc]||0;const nv=cur===v?0:v;
     try{const r=await voteTx(b.doc,nv);Object.assign(b,{up:r.up,down:r.down,score:r.score});if(nv)P.bv[b.doc]=nv;else delete P.bv[b.doc];saveProfile();tfNotify()}catch(e){toast("Couldn't save your vote. Try again.")}},
   myBuilds:()=>myBuildsData(),

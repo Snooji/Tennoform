@@ -268,7 +268,7 @@ export function Fissures({ L }: { L: TodayLive }) {
               ))}
             </>
           ) : (
-            <>Track a Prime item under <a href="#goals" className="underline decoration-primary/60 underline-offset-4">Goals</a> to highlight the fissures you need.</>
+            <>Track a Prime item under <a href="/goals/" className="underline decoration-primary/60 underline-offset-4">Goals</a> to highlight the fissures you need.</>
           )}
         </p>
       </div>

@@ -1,7 +1,7 @@
 /* ---------- bridge: what the React shell reads and calls. Logic stays here; the shell only renders it. ---------- */
 function tfNotify(){try{window.dispatchEvent(new CustomEvent('tf:update'))}catch(e){}}
 window.TF={
-  state(){const t=totalXP(),m=mrInfo(t.total);const r=(location.hash||'#home').slice(1);const key=routes[r]?r:'home';const pl=placeOf(key);const on=signedIn();
+  state(){const t=totalXP(),m=mrInfo(t.total);const r=(HASH()||'#home').slice(1);const key=routes[r]?r:'home';const pl=placeOf(key);const on=signedIn();
     return {route:key,title:SUBL[key]||PL[key]||'Home',place:pl?{id:pl[0],label:pl[1]}:null,
       mr:m.mr,mrLabel:(m.mr>30?'Legendary ':'MR ')+mrLabel(m.mr),nextLabel:m.mr>=30?'Legendary '+(m.mr-29):'MR '+(m.mr+1),xp:t.total,next:m.next,pct:m.pct,toNext:Math.max(0,m.next-t.total),
       name:P.tname||(P.prof&&P.prof.name)||'',signedIn:on,canAcct:canAcct(),acctName:on?(acct.name||acct.email||''):'',acctEmail:on?(acct.email||''):'',
@@ -10,10 +10,10 @@ window.TF={
   menu(){return MENU.map(([r,l])=>({route:r,label:l}))},
   search(q){return cmdFind(q).map(e=>({name:e.n,group:e.g,act:e.act,sub:e.s?e.s:e.g==='Gear'?I[e.n].c:e.g==='Pages'?'Page':e.g.replace(/s$/,''),img:e.g==='Gear'&&I[e.n].img?'https://cdn.warframestat.us/img/'+encodeURIComponent(I[e.n].img):''}))},
   open:act=>cmdGo({act}),
-  go:route=>{if(location.hash==='#'+route)render();else location.hash=route},
+  go:route=>{if(HASH()==='#'+route)render();else GO(route)},
   google:()=>{if(!FB){toast('Sign-in is still loading. Try again in a moment.');return}signGoogle()},
   signOut:()=>{flushNow();if(FB)FB.auth.signOut();toast('Signed out. Your progress stays on this device too.')},
-  account:()=>{state.tTab='account';saveUI();if(location.hash==='#tenno')render();else location.hash='tenno'},
+  account:()=>{state.tTab='account';saveUI();if(HASH()==='#tenno')render();else GO('tenno')},
   theme:t=>themeSet(t),
   themeStyle:st=>themeStyleSet(st),
   logo:()=>LOGO_HTML(),

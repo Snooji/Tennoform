@@ -3,11 +3,11 @@ function syncRow(o){const row=o.closest('.step,.mod,.mitem,.qrow');if(row&&row.q
 async function copy(text,msg){try{await navigator.clipboard.writeText(text);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?msg:'Copy blocked here. The whisper is: '+text)}}
 document.addEventListener('change',e=>{const t=e.target;
   if(t.matches('input.ck[data-k]')){const k=t.dataset.k;setK(k,t.checked);document.querySelectorAll(`input.ck[data-k="${CSS.escape(k)}"]`).forEach(o=>{o.checked=t.checked;syncRow(o)});refresh();
-    if(k.startsWith('q|')&&location.hash==='#quests'){const y=window.scrollY;render();window.scrollTo(0,y)}}
+    if(k.startsWith('q|')&&HASH()==='#quests'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='fsel'){state.frame=t.value;state.build=0;saveUI();render()}
   if(t.id==='msort'){state.mkSort=t.value;render()}
   if(t.id==='tgt'){state.target=+t.value;render()}
-  if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(location.hash==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
+  if(t.id==='intr'||t.id==='adj'){P[t.id]=+t.value||0;saveProfile();updateMR();if(HASH()==='#tenno'){const y=window.scrollY;render();window.scrollTo(0,y)}}
   if(t.id==='wfid'){const id=findId(t.value);if(id)setWfid(id);else if(t.value.trim())toast(typeof idMiss==='function'?idMiss(t.value):'No 24-character account ID found in that text.')}
   if(t.id==='eelog'&&t.files&&t.files[0]){readLog(t.files[0])}
   if(t.dataset.othin){P.oth=P.oth||{};P.oth[t.dataset.othin]=Math.max(0,+t.value||0);saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
@@ -31,7 +31,7 @@ document.addEventListener('click',async e=>{
   if(!t)return;
   if(t.id==='menu'){setMenu(!$('#drawer').classList.contains('open'));return}
   if(t.id==='unlink'){P.wfid='';lsSet('tenno-acct','');saveProfile();render();return}
-  if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(location.hash!=='#missions')location.hash='missions';else{render();scrollTo(0,0)}return}
+  if(t.dataset.scp!==undefined){e.preventDefault();state.scP=t.dataset.scp||null;state.scQ='';if(HASH()!=='#missions')GO('missions');else{render();scrollTo(0,0)}return}
   if(t.dataset.ipip){const [key,n,v]=t.dataset.ipip.split('|');setIntr(key+'|'+n,+v);const y=scrollY;render();scrollTo(0,y);return}
   if(t.dataset.oth){P.oth=P.oth||{};const k=t.dataset.oth;P.oth[k]=Math.max(0,(+P.oth[k]||0)+(+t.dataset.d));saveProfile();updateMR();const y=scrollY;render();scrollTo(0,y);return}
   if(t.id==='exhtml'){const nm=(P.tname||(P.prof&&P.prof.name)||'tenno').replace(/\W+/g,'-');saveFile('tennoform-report-'+nm+'.html',reportHTML(),'text/html');return}
@@ -46,21 +46,21 @@ document.addEventListener('click',async e=>{
   if(t.id==='lgout'){flushNow();FB&&FB.auth.signOut();toast('Signed out. Progress stays in this browser too.');return}
   if(t.dataset.rk){const row=t.closest('.rk');const n=row.dataset.n;const r=rankOf(n);setRank(n,t.dataset.rk==='max'?99:r+(+t.dataset.rk));row.outerHTML=rkRow(I[n]);return}
   if(t.dataset.intr){const [key,n]=t.dataset.intr.split('|');const v=+((P[key]||{})[n]||0);setIntr(t.dataset.intr,t.dataset.d==='max'?10:v+(+t.dataset.d));const y=window.scrollY;render();window.scrollTo(0,y);return}
-  if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(location.hash!=='#ranks')location.hash='ranks';else render();return}
+  if(t.dataset.rkcat){e.preventDefault();state.rkCat=t.dataset.rkcat;state.rkQ='';saveUI();if(HASH()!=='#ranks')GO('ranks');else render();return}
   if(t.id==='rkmaxall'){if(!t.dataset.armed){const k=(state._rkList||[]).filter(n=>!on('m|'+n)).length;t.dataset.armed=1;t.textContent=`Mark ${k} item${k===1?'':'s'} mastered? Tap again`;t.classList.add('primary');setTimeout(()=>{if(t.isConnected){delete t.dataset.armed;t.classList.remove('primary');t.textContent='Max all in this list…'}},5000);return}
     logBulk('Maxed '+(state._rkList||[]).filter(n=>!on('m|'+n)).length+' items on Ranks',()=>(state._rkList||[]).forEach(n=>{if(!on('m|'+n))setRank(n,99)}));render();toast('Marked '+(state._rkList||[]).length+' items mastered');return}
   if(t.id==='boreset'){P.bo={};saveProfile();render();toast('Using your Ranks page numbers again');return}
   if(t.dataset.qupto){const q=Q.find(x=>x.n===t.dataset.qupto);const idx=Q.indexOf(q);const arc=/^Arc/.test(q.g);logBulk('Quests up to '+q.n,()=>Q.forEach((o,i)=>{if(i<=idx&&(arc?/^Arc/.test(o.g):o.g===q.g))setK('q|'+o.n,1)}));const y=window.scrollY;render();window.scrollTo(0,y);toast('Marked quests up to '+q.n+' complete');return}
   if(t.dataset.go){e.preventDefault();go(t.dataset.go)}
-  else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else render()}
-  else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(location.hash!=='#tenno')location.hash='tenno';else render()}
+  else if(t.dataset.mtab){e.preventDefault();state.mTab=t.dataset.mtab;saveUI();if(HASH()!=='#mastery')GO('mastery');else render()}
+  else if(t.dataset.ttab){e.preventDefault();state.tTab=t.dataset.ttab;saveUI();if(HASH()!=='#tenno')GO('tenno');else render()}
   else if(t.dataset.mk){state.mkTab=t.dataset.mk;saveUI();render()}
   else if(t.dataset.build){state.build=+t.dataset.build;render()}
-  else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(location.hash!=='#frames')location.hash='frames';else{render();window.scrollTo(0,0)}}
-  else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(location.hash!=='#farm')location.hash='farm';else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
+  else if(t.dataset.frame){e.preventDefault();state.frame=t.dataset.frame;state.build=0;saveUI();if(HASH()!=='#frames')GO('frames');else{render();window.scrollTo(0,0)}}
+  else if(t.dataset.pick){state.farmSel=t.dataset.pick;if(HASH()!=='#farm')GO('farm');else{$('#fdet').innerHTML=detail(state.farmSel);document.querySelectorAll('#fres .hit').forEach(h=>h.classList.toggle('sel',h.dataset.pick===state.farmSel));refresh();$('#fdet').scrollIntoView({block:'start',behavior:'smooth'})}}
   else if(t.dataset.cat){state.allCat=t.dataset.cat;state.allQ='';saveUI();render()}
   else if(t.dataset.planet){const md=t.dataset.mode;logBulk('All of '+t.dataset.planet+(md==='sp'?' (Steel Path)':''),()=>ALLN.filter(n=>n.p===t.dataset.planet&&!isJ(n)).forEach(n=>setK(md+'|'+n.id,1)));state.scP=t.dataset.planet;const y=scrollY;render();scrollTo(0,y);toast('Marked '+t.dataset.planet+(md==='sp'?' Steel Path':'')+' complete')}
-  else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(location.hash!=='#quests')location.hash='quests';else focusQuest()}
+  else if(t.dataset.q){e.preventDefault();state.qFocus=t.dataset.q;if(HASH()!=='#quests')GO('quests');else focusQuest()}
   else if(t.dataset.wh){copy(t.dataset.wh,'Whisper copied. Paste it into in-game chat.')}
   else if(t.dataset.fstart){const n=t.dataset.fstart;const d=foundryFind(n)||43200;P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d});saveProfile();toast(n+' started · ready in '+hrs(d))}
   else if(t.id==='faddb'){const n=$('#fadd').value.trim();if(!n)return;const d=foundryFind(n);P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d||43200});saveProfile();render();toast(d?n+' added':'Added with a 12 h default timer')}
@@ -95,7 +95,7 @@ function bindPage(r){
   if(r==='resources'&&state.resSel&&window.innerWidth<900&&!state.resQ)setTimeout(()=>$('#rdet')?.scrollIntoView({block:'start'}),30)}
 liveResurgence();
 function bootSync(){if(HOSTED&&P.wfid&&(!P.auto||Date.now()-new Date(P.auto)>6*3600e3))autoSync(true)}
-setInterval(()=>{if(location.hash==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
+setInterval(()=>{if(HASH()==='#tenno'&&state.tTab==='foundry'&&!(document.activeElement&&document.activeElement.matches('input,textarea')))render()},60000);
 render();fbInit();
 document.addEventListener('dragover',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d){e.preventDefault();d.classList.add('over')}});
 document.addEventListener('dragleave',e=>{const d=e.target.closest&&e.target.closest('#drop');if(d)d.classList.remove('over')});

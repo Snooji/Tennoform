@@ -7,6 +7,7 @@ import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
 import { cn } from "@/lib/utils"
 import { AlertsCard } from "@/components/tf/alerts-card"
 import { Search } from "lucide-react"
+import { pagePath } from "@/lib/page-path"
 
 /** Home dashboard: rank progress first, then what to do next, then today, goals and tasks. */
 export function HomePage() {
@@ -33,7 +34,7 @@ export function HomePage() {
           ))}
           {d.foundryReady ? (
             <a
-              href="#tenno"
+              href="/tenno/"
               onClick={(e) => {
                 e.preventDefault()
                 tf().act("a", { href: "#tenno", "data-ttab": "foundry" })
@@ -64,7 +65,7 @@ export function HomePage() {
           </p>
           <div className="flex flex-wrap gap-2">
             {TF_LINKS.map((l) => (
-              <a key={l.label} href={`#${l.route}`} onClick={(e) => openLink(l, e)} className={cn(buttonVariants({ variant: l.accent ? "default" : "outline" }), "h-9 px-3")}>
+              <a key={l.label} href={pagePath(l.route)} onClick={(e) => openLink(l, e)} className={cn(buttonVariants({ variant: l.accent ? "default" : "outline" }), "h-9 px-3")}>
                 <l.icon /> {l.label}
               </a>
             ))}

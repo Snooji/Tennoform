@@ -115,7 +115,7 @@ function Detail({ g }: { g: GuideDetail }) {
                 {u.quests.map((q) => (
                   <li key={q.n} className="flex flex-wrap items-center gap-2">
                     {q.done ? <Check className="size-4 text-emerald-700 dark:text-emerald-400" aria-label="Done" /> : <Lock className="size-4 text-amber-700 dark:text-amber-400" aria-label="Not done" />}
-                    Finish {q.guide ? <a href="#guides" className={linkCls} onClick={(e) => { e.preventDefault(); tf().guidesSet({ sel: q.guide }) }}>{q.n}</a> : <b className="font-medium">{q.n}</b>}
+                    Finish {q.guide ? <a href="/guides/" className={linkCls} onClick={(e) => { e.preventDefault(); tf().guidesSet({ sel: q.guide }) }}>{q.n}</a> : <b className="font-medium">{q.n}</b>}
                   </li>
                 ))}
                 {u.other.map((o) => <li key={o} className="flex gap-2"><span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-primary/60" />{o}</li>)}

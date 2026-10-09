@@ -27,7 +27,7 @@ Object.assign(window.TF,{
 });
 /* tab links from elsewhere */
 document.addEventListener('click',e=>{const t=e.target.closest('[data-mtab]');if(!t||!(window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')))return;
-  e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(location.hash!=='#mastery')location.hash='mastery';else tfNotify()},true);
+  e.preventDefault();e.stopPropagation();state.mTab=t.dataset.mtab;saveUI();if(HASH()!=='#mastery')GO('mastery');else tfNotify()},true);
 const _masteryRoute=routes.mastery;
 routes.mastery=function(){return window.TF_UI&&TF_UI.owns&&TF_UI.owns('mastery')?'':_masteryRoute()};
 /* mastery helper: easy wins, items you can finish from relics you own, and the cheapest items to buy with platinum */

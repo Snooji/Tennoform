@@ -68,7 +68,7 @@ export function AboutPage() {
       <PageHead eyebrow="About" title="About Tennoform" lede={d.pitch} />
       <p className="max-w-[68ch] text-sm">
         Tennoform is made and maintained by <b>Snooji</b>, a Warframe player, on their own time. Ideas and bug reports go straight to them through{" "}
-        <a href="#feedback" className={linkCls}>Feedback</a>, and every change is listed under What's new below.
+        <a href="/feedback/" className={linkCls}>Feedback</a>, and every change is listed under What's new below.
       </p>
       <p className="rounded-xl border border-amber-500/40 bg-amber-500/5 px-4 py-3 text-sm">
         <b>Unofficial community tool.</b> Tennoform is made by one independent developer. It is not affiliated with, endorsed or sponsored by Digital Extremes,
@@ -125,7 +125,7 @@ export function AboutPage() {
         </ul>
         <p className="text-xs text-muted-foreground">
           New game content is checked daily against the WFCD data set and goes live automatically. Recommendations such as farms and builds are community guidance, not guarantees.
-          If something looks wrong, <a href="#feedback" className={linkCls}>send feedback</a>.
+          If something looks wrong, <a href="/feedback/" className={linkCls}>send feedback</a>.
         </p>
       </Section>
 
@@ -158,7 +158,7 @@ export function AboutPage() {
 
       <Section title="Contact">
         <p className="text-sm">
-          Bugs, ideas or wrong data: <a href="#feedback" className={linkCls}>Feedback page</a>. Like the app? <a href="#donate" className={linkCls}>Support Tennoform</a>.
+          Bugs, ideas or wrong data: <a href="/feedback/" className={linkCls}>Feedback page</a>. Like the app? <a href="/donate/" className={linkCls}>Support Tennoform</a>.
         </p>
       </Section>
     </div>

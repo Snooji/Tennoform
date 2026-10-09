@@ -19,6 +19,7 @@ import { fmt, tf, useTF, type TFState } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
 import { setChatWin, useChatWin } from "@/lib/chat-win"
 import { setSimple, useSimple } from "@/lib/detail"
+import { pagePath } from "@/lib/page-path"
 
 export function Logo({ className }: { className?: string }) {
   return <span aria-hidden className={className} dangerouslySetInnerHTML={{ __html: tf().logo() }} />
@@ -51,7 +52,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" tooltip="Tennoform" render={<a href="#home" onClick={close} />}>
+            <SidebarMenuButton size="lg" tooltip="Tennoform" render={<a href="/" onClick={close} />}>
               <Logo className="grid size-8 shrink-0 place-items-center [&_svg]:size-8" />
               <span className="font-heading text-lg font-semibold tracking-wide">
                 Tenno<span className="text-primary">form</span>
@@ -73,7 +74,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
                     <SidebarMenuButton
                       isActive={active}
                       tooltip={p.label}
-                      render={<a href={`#${p.route}`} aria-current={active ? "page" : undefined} onClick={close} />}
+                      render={<a href={pagePath(p.route)} aria-current={active ? "page" : undefined} onClick={close} />}
                     >
                       <Icon />
                       <span>{p.label}</span>
@@ -95,7 +96,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
                   <SidebarMenuButton
                     isActive={active}
                     tooltip={l.label}
-                    render={<a href={`#${l.route}`} aria-current={active ? "page" : undefined} onClick={(e) => { openLink(l, e); close() }} />}
+                    render={<a href={pagePath(l.route)} aria-current={active ? "page" : undefined} onClick={(e) => { openLink(l, e); close() }} />}
                   >
                     <l.icon className={l.accent ? "text-primary" : undefined} />
                     <span>{l.label}</span>
@@ -118,7 +119,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
 function MasteryMeter({ s }: { s: TFState }) {
   return (
     <a
-      href="#mastery"
+      href="/mastery/"
       className="block rounded-md px-2 py-2 hover:bg-sidebar-accent group-data-[collapsible=icon]:hidden"
       aria-label={`${s.mrLabel}, ${fmt(s.toNext)} XP to ${s.nextLabel}`}
     >
