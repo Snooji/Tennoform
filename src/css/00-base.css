@@ -9,8 +9,8 @@
   --ok:var(--success); --warn:var(--warning); --bad:var(--destructive);
   --good-soft:color-mix(in srgb,var(--primary) 12%,transparent); --warn-soft:color-mix(in srgb,var(--warning) 12%,transparent); --bad-soft:color-mix(in srgb,var(--destructive) 12%,transparent);
   --c-common:#C99A6A; --c-unc:#AEB6BC; --c-rare:#D9B24C;
-  --f-display:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
-  --f-body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:"TF Platforms","Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"TF Platforms","Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"Source Sans 3",system-ui,sans-serif;
   --f-code:ui-monospace,Menlo,Consolas,monospace;
   --cut:0px; --navh:62px; --r:var(--radius); --r-sm:calc(var(--radius) * .7);

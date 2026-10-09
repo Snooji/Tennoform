@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
-    --font-sans: "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-heading: "TF Platforms", "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+    --font-sans: "TF Platforms", "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
     --color-success: var(--success);
     --color-warning: var(--warning);
     --color-elevated: var(--elevated);
@@ -319,12 +319,14 @@ body:has([data-slot="dialog-content"]) [data-tf-tabs] { display: none; }
    Panels are framed in polished metal: a gradient border that catches a slow sweep of light, with Orokin corner trims.
    Headings are engraved capitals (Cinzel) in metal. Dark is black lacquer; light is ivory marble with the same metal.
    --m1..--m5 are the metal's gradient stops (shadow, body, highlight, body, shadow); each palette sets its own metal. */
+/* Warframe ends cross-play names with a private-use character (U+E000 + platform); this font draws it as a small platform badge (built by build/make_platform_font.py) */
+@font-face{font-family:"TF Platforms";font-display:block;src:url(/fonts/tf-platforms.woff2) format("woff2");unicode-range:U+E000-E005}
 @font-face{font-family:"Cinzel";font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cinzel-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:"Cinzel";font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cinzel-latin-700-normal.woff2) format("woff2")}
 @property --pr-sheen { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
 :root[data-theme="prime"] {
   --radius: 0.35rem;
-  --font-heading: "Cinzel", "Barlow Semi Condensed", Georgia, serif;
+  --font-heading: "TF Platforms", "Cinzel", "Barlow Semi Condensed", Georgia, serif;
   /* gold, the Prime default */
   --m1: #5e3f0c; --m2: #b98a2a; --m3: #fbeeb0; --m4: #d6a83f; --m5: #6d4a12;
   --m-ink: #6b4b10;     /* the metal as text on the light (ivory) style */
