@@ -187,6 +187,7 @@ export type TFApi = {
   foundryUntrack(n: string): void
   foundryTimer(n: string): void
   worldSet(o: { tab?: string; region?: string; rarity?: string; time?: string }): void
+  wsRefresh(): void
   worldSearch(q: string): WorldHit[]
   conservationSet(region: string): void
   market(): MarketData
@@ -488,8 +489,10 @@ export type FoundryData = {
   detail: { n: string; kind: string; gear: boolean; img: string; qty: number; makes: number; credits: number; time: number; parts: FoundryPart[]; raw: FoundryRow[]; tracked: boolean; bp: string } | null
   tracked: { n: string; qty: number; kind: string; gear: boolean }[]; timers: number; ready: number; html: string
 }
+export type WorldCycle = { region: string; hub: string; now: string; next: string; expiry: string }
 export type WorldData = {
   tab: "fish" | "mine" | "cons"; region: string; regions: string[]; cons?: ConservationData | null
+  cycles?: { state: "ok" | "loading" | "error"; list: WorldCycle[] }
   rarity?: string; time?: string; times?: string[]; cycle?: string; caught?: number; total?: number
   info?: { spears: string; vendor: string; use: string; tips: string[] }
   fish?: { n: string; key: string; done: boolean; rarity: string; bio: string; time: string; spear: string; bait: string; spots: string[]; gives: Linked[]; hasTask: boolean }[]
