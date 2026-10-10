@@ -34,10 +34,10 @@ export function HomePage() {
           ))}
           {d.foundryReady ? (
             <a
-              href="/tenno/"
+              href="/foundry/"
               onClick={(e) => {
                 e.preventDefault()
-                tf().act("a", { href: "#tenno", "data-ttab": "foundry" })
+                tf().foundrySet({ tab: "timers" }); tf().go("foundry")
               }}
               className="font-medium underline decoration-primary/60 underline-offset-4"
             >

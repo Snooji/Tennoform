@@ -43,6 +43,7 @@ jobs:
           python3 -I build/make_stats.py "$J"
           python3 -I build/make_modinfo.py "$J"
           python3 -I build/make_umap.py "$J"
+          python3 -I build/make_crafts.py "$J"
           python3 build/make_site.py
       - name: Safety checks
         if: steps.ver.outputs.cur != steps.ver.outputs.new

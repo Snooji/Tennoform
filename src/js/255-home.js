@@ -22,7 +22,7 @@ function seenNow(){const t=totalXP();return {t:Date.now(),xp:t.total,mr:mrInfo(t
 function sinceLast(){const cur=seenNow();if(!SEEN){const prev=lsGet('tf-seen',null);SEEN=prev&&cur.t-prev.t>30*60e3?prev:(prev||cur);if(!prev||cur.t-prev.t>30*60e3)lsSet('tf-seen',cur)}
   const now=Date.now();const ready=(P.foundry||[]).filter(f=>now>=f.t0+f.dur*1000).length;const bits=[];
   if(SEEN!==cur&&SEEN.t<cur.t){if(cur.mr>SEEN.mr)bits.push(`MR ${SEEN.mr} → ${cur.mr}`);if(cur.maxed>SEEN.maxed)bits.push(`+${cur.maxed-SEEN.maxed} mastered`);if(cur.xp>SEEN.xp)bits.push(`+${fmt(cur.xp-SEEN.xp)} XP`);if(cur.q>SEEN.q)bits.push(`+${cur.q-SEEN.q} quest${cur.q-SEEN.q>1?'s':''}`)}
-  if(ready)bits.push(`<a class="ln" href="#tenno" data-ttab="foundry">${ready} ready in the Foundry</a>`);
+  if(ready)bits.push(`<a class="ln" href="#foundry" data-fdtimers>${ready} ready in the Foundry</a>`);
   return bits.length?`<p class="since small"><span class="muted">Since last time:</span> ${bits.join(' · ')}</p>`:''}
 
 /* today strip: what is on before the next reset */
@@ -33,7 +33,7 @@ function todayStrip(){const now=Date.now();if(HOSTED&&!WS&&!WSerr)loadWS();const
   if(WS&&WS.sortie&&WS.sortie.variants)tiles.push(`<a class="ts" href="#today"><span class="k">Sortie</span><b>${esc(WS.sortie.boss||'Today')}</b><span class="x">${leftOf(WS.sortie.expiry)}</span></a>`);
   if(WS&&WS.fissures){const need=neededEras();const n=WS.fissures.filter(x=>!x.expired&&new Date(x.expiry)>now&&need[x.tier]).length;if(Object.keys(need).length)tiles.push(`<a class="ts" href="#today"><span class="k">Fissures you need</span><b>${n}</b><span class="x">${Object.keys(need).slice(0,3).join(', ')}</span></a>`)}
   if(WS&&WS.steelPath&&WS.steelPath.currentReward)tiles.push(`<a class="ts" href="#today"><span class="k">Steel Path reward</span><b>${esc(WS.steelPath.currentReward.name)}</b><span class="x">${WS.steelPath.currentReward.cost} essence</span></a>`);
-  if(fl.length)tiles.push(`<a class="ts" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><b>${ready}/${fl.length} ready</b><span class="x">${ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000)}</span></a>`);
+  if(fl.length)tiles.push(`<a class="ts" href="#foundry" data-fdtimers><span class="k">Foundry</span><b>${ready}/${fl.length} ready</b><span class="x">${ready?'Claim in game':'Next in '+hrs((Math.min(...fl.map(f=>f.t0+f.dur*1000))-now)/1000)}</span></a>`);
   tiles.push(`<a class="ts" href="#today"><span class="k">Weekly reset</span><b>${left(lastWeekly()+7*DAY-now)}</b><span class="x">Monday 00:00 UTC</span></a>`);
   return `<section aria-labelledby="ts-h"><div class="hsec"><h2 id="ts-h">Today</h2><a class="ln small" href="#today">All of today</a></div><div class="tstrip">${tiles.join('')}</div></section>`}
 

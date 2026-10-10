@@ -44,6 +44,7 @@ const TodayPage = page(() => import("@/pages/today/today-page"), (m) => m.TodayP
 const AchievementsPage = page(() => import("@/pages/achievements/achievements-page"), (m) => m.AchievementsPage)
 const TasksPage = page(() => import("@/pages/tasks/tasks-page"), (m) => m.TasksPage)
 const GoalsPage = page(() => import("@/pages/goals/goals-page"), (m) => m.GoalsPage)
+const FoundryPage = page(() => import("@/pages/foundry/foundry-page"), (m) => m.FoundryPage)
 const QuestsPage = page(() => import("@/pages/quests/quests-page"), (m) => m.QuestsPage)
 const MasteryPage = page(() => import("@/pages/mastery/mastery-page"), (m) => m.MasteryPage)
 const MissionsPage = page(() => import("@/pages/missions/missions-page"), (m) => m.MissionsPage)
@@ -78,6 +79,7 @@ const PAGES: Record<string, React.ComponentType> = {
   achievements: AchievementsPage,
   tasks: TasksPage,
   goals: GoalsPage,
+  foundry: FoundryPage,
   quests: QuestsPage,
   mastery: MasteryPage,
   missions: MissionsPage,

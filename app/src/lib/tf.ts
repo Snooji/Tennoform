@@ -181,6 +181,11 @@ export type TFApi = {
   frames(): FramesData
   framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
   world(): WorldData
+  foundry(): FoundryData
+  foundrySet(o: { tab?: string; q?: string; kind?: string; sel?: string | null; qty?: number }): void
+  foundryTrack(n: string, qty: number): void
+  foundryUntrack(n: string): void
+  foundryTimer(n: string): void
   worldSet(o: { tab?: string; region?: string; rarity?: string; time?: string }): void
   wsRefresh(): void
   worldSearch(q: string): WorldHit[]
@@ -272,7 +277,7 @@ export type HomeNext = {
   i: number; id: string; title: string; why: string; steps: string[]; done: boolean; doneLabel: string; img: string
   open: TFAction | null; task: { has: boolean; key: string; label: string } | null
 }
-export type HomeTile = { k: string; v: string; x: string; route: string; ttab?: string; done?: number; total?: number }
+export type HomeTile = { k: string; v: string; x: string; route: string; ttab?: string; fdtimers?: number; done?: number; total?: number }
 export type HomeData = {
   badge?: { cur: string; auto: string; options: { value: string; label: string }[] }
   name: string; mr: number; mrLabel: string; mrShort: string; inGame: string; maxed: number
@@ -391,6 +396,7 @@ export type GoalsData = {
   goals: { name: string; img: string; done: number; total: number; xp: number; built: boolean; vault: { kind: "now" | "vaulted" | "farmable"; text: string } | null }[]
   shop: { n: string; need: number; have: number | null; left: number; where: string; task: { has: boolean; key: string; label: string } }[]
   relics: { era: string; relics: string[] }[]
+  crafts?: { n: string; qty: number; kind: string }[]
 }
 export type QuestRow = {
   guide: string
@@ -475,6 +481,14 @@ export type Linked = { n: string; go: string }
 export type WorldHit = { n: string; kind: "Fish" | "Ore" | "Gem" | "Animal"; reg: string; r: string; done: boolean; key: string; line: string }
 export type Animal = { n: string; variants: string[]; rare: string[]; where: string; time?: string; lure: string; reward: string; tip: string; key: string; done: boolean; hasTask: boolean }
 export type ConservationData = { steps: string[]; regions: string[]; region: string; vendor: string; species: Animal[] }
+export type FoundryRow = { n: string; need: number; have: number | null; left: number; where: string; go: string }
+export type FoundryPart = FoundryRow | { n: string; q: number; sub: FoundryRow[]; cr?: number; t?: number }
+export type FoundryData = {
+  tab: "planner" | "timers"; q: string; kind: string; kinds: string[]; total: number
+  results: { n: string; kind: string; img: string }[]; sel: string
+  detail: { n: string; kind: string; gear: boolean; img: string; qty: number; makes: number; credits: number; time: number; parts: FoundryPart[]; raw: FoundryRow[]; tracked: boolean; bp: string } | null
+  tracked: { n: string; qty: number; kind: string; gear: boolean }[]; timers: number; ready: number; html: string
+}
 export type WorldCycle = { region: string; hub: string; now: string; next: string; expiry: string }
 export type WorldData = {
   tab: "fish" | "mine" | "cons"; region: string; regions: string[]; cons?: ConservationData | null

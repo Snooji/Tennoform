@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { PairTabs } from "@/components/tf/pair-tabs"
-import { Check, Hexagon, Plus, ShoppingBasket, Target, X } from "lucide-react"
+import { Check, Hexagon, Plus, ShoppingBasket, Target, X, Hammer } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -87,7 +87,20 @@ export function GoalsPage() {
       </header>
       <PairTabs pair="goals" current="goals" />
       <BuildGoals list={d.bgoals} />
-      {!d.goals.length && d.bgoals.length ? null : !d.goals.length ? (
+      {d.crafts?.length ? (
+        <Card size="sm" className="gap-2 px-4">
+          <span className="flex items-center gap-2 font-heading text-base font-semibold"><Hammer className="size-4 text-primary" aria-hidden /> From the Foundry planner</span>
+          <ul className="flex flex-wrap gap-2">
+            {d.crafts.map((c) => (
+              <li key={c.n} className="flex items-center gap-1 rounded-full border px-3 py-1 text-sm">
+                <a href="#foundry" onClick={() => tf().foundrySet({ tab: "planner", sel: c.n })} className={linkCls}>{c.qty > 1 ? `${c.qty} × ` : ""}{c.n}</a>
+                <button type="button" className="ml-1 text-muted-foreground hover:text-foreground" onClick={() => tf().foundryUntrack(c.n)} aria-label={`Stop tracking ${c.n}`}><X className="size-3.5" /></button>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      ) : null}
+      {!d.goals.length && !d.crafts?.length && d.bgoals.length ? null : !d.goals.length && !d.crafts?.length ? (
         <Card className="items-start gap-3 p-6 text-sm">
           <Target aria-hidden className="size-6 text-primary" />
           <b className="font-heading text-base font-semibold">No goals yet</b>

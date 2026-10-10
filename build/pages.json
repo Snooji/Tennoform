@@ -5,6 +5,7 @@
  "ranks": ["Warframe Mastery Rank Tests and Requirements · Tennoform", "Every Warframe mastery rank: XP needed, what each rank test asks and how to pass it, and what each rank unlocks.", true],
  "collection": ["Warframe Mastery Checklist: Every Item to Level · Tennoform", "Tick off every Warframe, weapon, companion and vehicle you have mastered, and see what is left and where to get it.", true],
  "goals": ["Goals and To-dos · Tennoform", "Your Warframe goals and the parts and resources still needed for each.", false],
+ "foundry": ["Warframe Foundry Planner: Every Blueprint and What It Needs · Tennoform", "Every Warframe blueprint and its ingredients: Forma, Catalysts, Specters, keys, gear and parts. Enter what you have, track what you want to build and see what to farm and where.", true],
  "tasks": ["To-do list · Tennoform", "Your Warframe to-do list.", false],
  "missions": ["Warframe Star Chart: Junctions, Nodes and Steel Path · Tennoform", "Every Warframe planet, node and junction with what each one asks, what it drops and how to unlock the next.", true],
  "quests": ["Warframe Quest Order and Walkthroughs · Tennoform", "Every Warframe quest in order, what each one unlocks and how to start it.", true],

@@ -12,6 +12,9 @@ gp = os.path.join(H, 'guides.json')
 D['guides'] = json.load(open(gp)) if os.path.exists(gp) else []
 fp = os.path.join(H, 'farms.json')
 D['ways'] = json.load(open(fp)) if os.path.exists(fp) else []
+# Foundry recipes for everything craftable that isn't masterable gear (build/make_crafts.py)
+cp = os.path.join(H, 'crafts.json')
+D['crafts'] = json.load(open(cp)) if os.path.exists(cp) else {}
 D['prices'] = mk['prices']
 D['sellers'] = mk['sellers']
 D['sets'] = {k: v for k, v in mk['prices'].items() if k.endswith(' Set')}

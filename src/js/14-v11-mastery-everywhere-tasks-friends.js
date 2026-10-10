@@ -131,7 +131,7 @@ function hubRight(){const now=Date.now();const fl=(P.foundry||[]).slice().sort((
   return `<div class="stack hr">${taskPanel()}
    <div class="tiles t2">
     <a class="tile cut" href="#today"><span class="k">Today</span><span class="v num">${ddone}<small>/${dd.length}</small></span><span class="tbar"><i style="width:${dd.length?ddone/dd.length*100:0}%"></i></span><span class="x">Reset in ${left(lastDaily()+DAY-now)}</span></a>
-    <a class="tile cut" href="#tenno" data-ttab="foundry"><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?(ready?'Ready to claim':'Next in '+hrs((fl[0].t0+fl[0].dur*1000-now)/1000)):'Nothing building'}</span></a>
+    <a class="tile cut" href="#foundry" data-fdtimers><span class="k">Foundry</span><span class="v num">${ready}<small>/${fl.length}</small></span><span class="tbar"><i style="width:${fl.length?ready/fl.length*100:0}%"></i></span><span class="x">${fl.length?(ready?'Ready to claim':'Next in '+hrs((fl[0].t0+fl[0].dur*1000-now)/1000)):'Nothing building'}</span></a>
     <a class="tile cut" href="#goals"><span class="k">Goals</span><span class="v num">${(P.goals||[]).length}</span><span class="x">Tracked items</span></a>
     <a class="tile cut" href="#friends"><span class="k">Friends</span><span class="v num">${SO.uid?SO.friends.filter(f=>!f.pending).length:'—'}</span><span class="x">${u&&u.n?u.n+' new':SO.uid?'Message & invite':HOSTED?'Sign in to add':'On tennoform.com'}</span></a>
    </div></div>`}
