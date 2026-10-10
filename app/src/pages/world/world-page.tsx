@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Check, ChevronRight, Fish, MapPin, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
+import { Check, ChevronRight, Fish, MapPin, Wrench, PawPrint, Pickaxe, Plus, Search } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -224,6 +224,37 @@ function Conservation({ c }: { c: ConservationData }) {
   )
 }
 
+const TOOL_WORD = { fish: "fish", mine: "mine", cons: "capture animals" } as const
+
+/** What to buy, from whom and for how much before you can fish, mine or capture animals in this world. */
+function Tools({ d }: { d: WorldData }) {
+  const t = d.tools
+  const rg = d.tab === "cons" ? d.cons?.region : d.region
+  if (!t || (!t.list.length && !t.first)) return null
+  return (
+    <Card size="sm" className="py-0">
+      <details className="group px-4 py-3" open>
+        <summary className="flex cursor-pointer list-none items-center gap-2 font-heading text-base font-semibold [&::-webkit-details-marker]:hidden">
+          <ChevronRight className="size-4 text-muted-foreground transition-transform group-open:rotate-90" aria-hidden />
+          <Wrench className="size-4 text-primary/80" aria-hidden /> Tools you need to {TOOL_WORD[d.tab]}{rg ? ` in ${rg}` : ""}
+        </summary>
+        {t.first ? <p className="mt-2 text-sm text-muted-foreground">{t.first}</p> : null}
+        {t.list.length ? (
+          <ul className="mt-2 flex flex-col divide-y rounded-md border">
+            {t.list.map((x) => (
+              <li key={x.n} className="flex flex-col gap-0.5 px-3 py-2 text-sm">
+                <span className="flex flex-wrap items-baseline gap-x-2"><b className="font-medium">{x.n}</b>{x.cost ? <span className="text-xs text-primary">{x.cost}</span> : null}</span>
+                {x.from ? <span className="text-xs text-muted-foreground">From {x.from}</span> : null}
+                {x.note ? <span className="text-xs text-muted-foreground">{x.note}</span> : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </details>
+    </Card>
+  )
+}
+
 export function WorldPage() {
   const d = useTFData(() => tf().world())
   return (
@@ -244,6 +275,7 @@ export function WorldPage() {
         ]}
       />
       <WorldCycles d={d} region={d.tab === "cons" ? d.cons?.region || "" : d.region} />
+      <Tools d={d} />
       {d.tab === "cons" ? (d.cons ? <Conservation c={d.cons} /> : null) : d.tab === "mine" ? <Mining d={d} /> : <Fishing d={d} />}
     </div>
   )
