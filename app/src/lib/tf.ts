@@ -382,7 +382,7 @@ export type AchData = {
   note: string; empty: boolean
 }
 export type TaskRow = {
-  id: string; title: string; kind: string; done: boolean; due: string; over: boolean; rep: string; note: string
+  id: string; title: string; kind: string; done: boolean; due: string; over: boolean; rep: string; note: string; how?: string
   with: string[]; from: string; open: TFAction | null
 }
 export type TasksData = {
