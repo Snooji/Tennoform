@@ -26,9 +26,9 @@ export function CommandMenu({ open, setOpen }: { open: boolean; setOpen: (o: boo
   }
   const pages = tf().nav().flatMap((p) => p.pages)
   return (
-    <CommandDialog open={open} onOpenChange={setOpen} title="Search Tennoform" description="Find guides, gear, relics, mods, quests, planets and pages">
+    <CommandDialog open={open} onOpenChange={setOpen} title="Search Tennoform" description="Find gear, resources, relics, mods, nodes, hidden places, open-world fish and animals, quests, guides and pages">
       <Command shouldFilter={false} loop>
-        <CommandInput value={q} onValueChange={setQ} placeholder="Search guides, gear, relics, mods, quests…" />
+        <CommandInput value={q} onValueChange={setQ} placeholder="Search gear, resources, nodes, places, guides…" />
         <CommandList className="max-h-[min(60vh,480px)]">
           {q.trim() ? (
             <>
