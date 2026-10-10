@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { ChevronUp, EyeOff, GripHorizontal, Maximize2, MessagesSquare, Minus, MoveDiagonal2, X } from "lucide-react"
 
+import { NotificationsButton } from "./inbox"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { tf, useTF } from "@/lib/tf"
@@ -180,6 +181,7 @@ export function ChatFloat() {
         <b className="min-w-0 flex-1 truncate font-heading text-sm font-semibold">Chat</b>
         {c.min && s.unread ? <span className="grid h-5 min-w-5 place-items-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground" aria-label={`${s.unread} unread`}>{s.unread > 9 ? "9+" : s.unread}</span> : null}
         <span data-nodrag className="flex items-center">
+          <NotificationsButton compact />
           <Button variant="ghost" size="icon-sm" className="size-8" onClick={() => tf().go("chat")} aria-label="Open the full Chat page" title="Full page"><Maximize2 /></Button>
           <Button variant="ghost" size="icon-sm" className="size-8" onClick={() => setChatWin({ min: !c.min })} aria-label={c.min ? "Restore chat window" : "Minimise chat window"} aria-expanded={!c.min} title={c.min ? "Restore" : "Minimise"}>
             {c.min ? <ChevronUp /> : <Minus />}

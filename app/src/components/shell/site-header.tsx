@@ -2,6 +2,7 @@ import { LogIn, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
+import { NotificationsButton } from "./inbox"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import {
@@ -47,6 +48,7 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
           <span className="hidden sm:inline">Search…</span>
           <Kbd className="ml-auto hidden md:inline-flex">{mac ? "⌘" : "Ctrl"} K</Kbd>
         </Button>
+        <NotificationsButton />
         {s.canAcct && !s.signedIn && (
           <Button className="h-9" onClick={() => tf().google()}>
             <LogIn className="size-4" />
