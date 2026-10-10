@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
 import { cn } from "@/lib/utils"
 import { AlertsCard } from "@/components/tf/alerts-card"
+import { Search } from "lucide-react"
 import { pagePath } from "@/lib/page-path"
 
 /** Home dashboard: rank progress first, then what to do next, then today, goals and tasks. */
@@ -13,6 +14,15 @@ export function HomePage() {
   const d = useTFData(() => tf().home())
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
+      <button
+        type="button"
+        onClick={() => window.TF_UI?.openSearch?.()}
+        className="flex h-11 w-full items-center gap-2.5 rounded-lg border bg-card px-3.5 text-left text-sm text-muted-foreground shadow-xs transition-colors hover:border-primary/50 hover:text-foreground"
+        aria-label="Search everything"
+      >
+        <Search className="size-4 shrink-0" aria-hidden />
+        <span className="truncate">Search everything: gear, resources, nodes, hidden places, fish, guides…</span>
+      </button>
       <MasteryHero d={d} />
       {d.since.length || d.foundryReady ? (
         <p className="-mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 px-1 text-sm">
