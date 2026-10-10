@@ -133,7 +133,7 @@ export function FarmPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Farm finder</h1>
-        <p className="max-w-2xl text-sm text-muted-foreground">Search any item, part, mod, relic, arcane or resource to see where it drops. Or pick a type to browse everything.</p>
+        <p className="max-w-2xl text-sm text-muted-foreground">Search any item, part, mod, relic, arcane, resource, node or hidden place to see where it drops or how to unlock it. Or pick a type to browse everything.</p>
       </header>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <div className="flex min-w-0 flex-col gap-3">

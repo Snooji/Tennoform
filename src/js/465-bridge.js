@@ -8,7 +8,7 @@ window.TF={
       admin:!!FBK.admin,unread:SO.uid?(unread().n||0):0,theme:themeGet(),style:themeStyle(),demo:!!DEMO,isNew:isNew(),qs:!!state.qs}},
   nav(){return PLACES.map(p=>({id:p[0],label:p[1],pages:p[3].filter(r=>!NAV_PAIRED.has(r)).map(r=>({route:r,label:SUBL[r]||PL[r]}))}))},
   menu(){return MENU.map(([r,l])=>({route:r,label:l}))},
-  search(q){return cmdFind(q).map(e=>({name:e.n,group:e.g,act:e.act,sub:e.g==='Gear'?I[e.n].c:e.g==='Pages'?'Page':e.g.replace(/s$/,''),img:e.g==='Gear'&&I[e.n].img?'https://cdn.warframestat.us/img/'+encodeURIComponent(I[e.n].img):''}))},
+  search(q){return cmdFind(q).map(e=>({name:e.n,group:e.g,act:e.act,sub:e.s?e.s:e.g==='Gear'?I[e.n].c:e.g==='Pages'?'Page':e.g.replace(/s$/,''),img:e.g==='Gear'&&I[e.n].img?'https://cdn.warframestat.us/img/'+encodeURIComponent(I[e.n].img):''}))},
   open:act=>cmdGo({act}),
   go:route=>{if(HASH()==='#'+route)render();else GO(route)},
   google:()=>{if(!FB){toast('Sign-in is still loading. Try again in a moment.');return}signGoogle()},
