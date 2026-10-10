@@ -181,6 +181,8 @@ export type TFApi = {
   frames(): FramesData
   framesSet(o: { f?: string; frame?: string; build?: string; budget?: boolean }): void
   world(): WorldData
+  notifications(): TFNotification[]
+  notifAct(act: string, arg: string): void
   foundry(): FoundryData
   foundrySet(o: { tab?: string; q?: string; kind?: string; sel?: string | null; qty?: number }): void
   foundryTrack(n: string, qty: number): void
@@ -488,6 +490,10 @@ export type FoundryData = {
   results: { n: string; kind: string; img: string }[]; sel: string
   detail: { n: string; kind: string; gear: boolean; img: string; qty: number; makes: number; credits: number; time: number; parts: FoundryPart[]; raw: FoundryRow[]; tracked: boolean; bp: string } | null
   tracked: { n: string; qty: number; kind: string; gear: boolean }[]; timers: number; ready: number; html: string
+}
+export type TFNotification = {
+  id: string; kind: "friend" | "dm" | "invite" | "group" | "other"; n: number; title: string; text: string; at: number
+  actions: { label: string; act: string; arg: string; primary?: boolean }[]
 }
 export type WorldCycle = { region: string; hub: string; now: string; next: string; expiry: string }
 export type WorldData = {
