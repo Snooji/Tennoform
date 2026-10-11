@@ -1,10 +1,12 @@
-import { AlignJustify, Check, List, Monitor, Moon, Sun } from "lucide-react"
+import { useState } from "react"
+import { AlignJustify, Check, List, Monitor, Moon, Pause, Sparkles, Sun } from "lucide-react"
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { ACCENTS, isFaction, setAccent, useAccentChoice, type AccentChoice } from "@/lib/accent"
 import { cn } from "@/lib/utils"
 import { tf, useTF, type TFState } from "@/lib/tf"
 import { setSimple, useSimple } from "@/lib/detail"
+import { calmGet, calmSet } from "@/lib/fx"
 
 const MODES: { value: TFState["theme"]; label: string; icon: typeof Sun }[] = [
   { value: "light", label: "Light", icon: Sun },
@@ -12,9 +14,9 @@ const MODES: { value: TFState["theme"]; label: string; icon: typeof Sun }[] = [
   { value: "auto", label: "Match device", icon: Monitor },
 ]
 const STYLES: { value: TFState["style"]; label: string; hint: string }[] = [
-  { value: "default", label: "Default", hint: "Calm and plain" },
-  { value: "foundry", label: "Foundry", hint: "Blueprint panels, like the in-game Foundry" },
-  { value: "prime", label: "Prime", hint: "Orokin lacquer with polished metal trim" },
+  { value: "default", label: "Default", hint: "Orbiter console: star chart, orbits, radar sweep" },
+  { value: "foundry", label: "Foundry", hint: "Living blueprint: fabrication laser, drafting schematics" },
+  { value: "prime", label: "Prime", hint: "Orokin cathedral: god rays, turning halo, gilded frames" },
   { value: "grineer", label: "Grineer", hint: "Riveted hull plate, hazard stripes, embers" },
   { value: "corpus", label: "Corpus", hint: "Frosted glass, hex grid, data pulses" },
   { value: "entrati", label: "Entrati", hint: "Arched brass, obol coins, turning clockwork" },
@@ -47,15 +49,17 @@ function StylePreview({ style }: { style: TFState["style"] }) {
   if (style === "foundry")
     return (
       <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden p-2" style={{ background: "linear-gradient(rgb(255 255 255/.2) 1px,transparent 1px) 0 0/10px 10px, linear-gradient(90deg,rgb(255 255 255/.2) 1px,transparent 1px) 0 0/10px 10px, #b4bfcb" }}>
-        <span className="h-9 flex-1 border border-white bg-[#f4f6f8]" style={{ boxShadow: "0 4px 0 -2px #fff" }} />
-        <span className="h-4 w-8 border border-[#12171c] bg-white" />
+        <span className="absolute inset-x-0 top-5 h-px bg-white shadow-[0_0_6px_2px_rgb(255_255_255/.6)]" />
+        <span className="relative h-9 flex-1 border border-white bg-[#f4f6f8]" style={{ boxShadow: "0 4px 0 -2px #fff" }} />
+        <span className="relative h-4 w-8 border border-[#12171c] bg-white" />
       </span>
     )
   if (style === "prime")
     return (
       <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden p-2" style={{ background: "repeating-linear-gradient(60deg,rgb(214 168 63/.12) 0 1px,transparent 1px 14px), repeating-linear-gradient(-60deg,rgb(214 168 63/.12) 0 1px,transparent 1px 14px), #08070a" }}>
-        <span className="h-9 flex-1 rounded-sm border border-transparent" style={{ background: `linear-gradient(#110f0c,#110f0c) padding-box, ${metal(SWATCH.gold)} border-box` }} />
-        <span className="h-4 w-8 rounded-sm" style={{ background: metal(SWATCH.gold) }} />
+        <span className="absolute -top-10 left-1/2 size-24 -translate-x-1/2 rounded-full border border-[#d6a83f]/40" style={{ boxShadow: "0 0 24px rgb(214 168 63/.25)" }} />
+        <span className="relative h-9 flex-1 rounded-sm border border-transparent" style={{ background: `linear-gradient(#110f0c,#110f0c) padding-box, ${metal(SWATCH.gold)} border-box` }} />
+        <span className="relative h-4 w-8 rounded-sm" style={{ background: metal(SWATCH.gold) }} />
       </span>
     )
   const fx = FACTION[style]
@@ -69,9 +73,11 @@ function StylePreview({ style }: { style: TFState["style"] }) {
       </span>
     )
   return (
-    <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden bg-[#100f0d] p-2">
-      <span className="h-9 flex-1 rounded-md border border-[#2a2824] bg-[#181714]" />
-      <span className="h-4 w-8 rounded-md bg-[#d2ae63]" />
+    <span aria-hidden className="relative flex h-16 w-full items-end gap-1.5 overflow-hidden p-2" style={{ background: "radial-gradient(1px 1px at 12px 10px,#ece8df 99%,transparent) 0 0/34px 26px, radial-gradient(1px 1px at 26px 20px,#d2ae63 99%,transparent) 0 0/34px 26px, #100f0d" }}>
+      <span className="absolute -top-8 -right-6 size-20 rounded-full border border-dashed border-[#d2ae63]/50" />
+      <span className="absolute -top-3 -right-1 size-10 rounded-full border border-[#d2ae63]/40" />
+      <span className="relative h-9 flex-1 rounded-md border border-[#2a2824] bg-[#181714]" style={{ boxShadow: "0 0 0 1px rgb(210 174 99/.25)" }} />
+      <span className="relative h-4 w-8 rounded-md bg-[#d2ae63]" />
     </span>
   )
 }
@@ -83,12 +89,13 @@ export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpen
   const s = useTF()
   const accent = useAccentChoice()
   const simple = useSimple()
+  const [calm, setCalm] = useState(calmGet)
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Appearance</DialogTitle>
-          <DialogDescription>Pick a mode, how much detail to show, a style and a colour. Every style has a light and a dark version, and every colour works with every style.</DialogDescription>
+          <DialogDescription>Pick a mode, how much detail to show, a style, how much it moves and a colour. Every style has a light and a dark version, and every colour works with every style.</DialogDescription>
         </DialogHeader>
 
         <section className="flex flex-col gap-2" aria-labelledby="ap-mode">
@@ -135,6 +142,22 @@ export function AppearanceDialog({ open, onOpenChange }: { open: boolean; onOpen
                     <span className="flex items-center gap-1.5 text-sm font-medium">{st.label}{on ? <Check aria-hidden className="size-4 text-primary" /> : null}</span>
                     <span className="text-xs text-muted-foreground">{st.hint}</span>
                   </span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-2" aria-labelledby="ap-motion">
+          <h3 id="ap-motion" className="text-sm font-medium">Motion</h3>
+          <div role="radiogroup" aria-labelledby="ap-motion" className="grid grid-cols-2 gap-2">
+            {([[false, "Living", "Moving backdrop, panels that light up", Sparkles], [true, "Calm", "No moving backdrop or effects", Pause]] as const).map(([v, label, hint, Icon]) => {
+              const on = calm === v
+              return (
+                <button key={label} type="button" role="radio" aria-checked={on} onClick={() => { calmSet(v); setCalm(v) }}
+                  className={cn(chip, "flex min-h-11 flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left text-sm", on ? "border-primary bg-primary/10" : "hover:bg-muted")}>
+                  <span className={cn("flex items-center gap-1.5", on && "font-medium")}><Icon aria-hidden className="size-4" /> {label}</span>
+                  <span className="text-xs text-muted-foreground">{hint}</span>
                 </button>
               )
             })}

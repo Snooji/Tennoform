@@ -3,8 +3,13 @@ import { createRoot } from "react-dom/client"
 
 import "./index.css"
 import "./factions.css"
+import "./originals.css"
 import App from "./App"
 import { reloadForUpdate } from "@/lib/update-reload"
+import { calmApply, installFx } from "@/lib/fx"
+
+calmApply()
+installFx()
 
 /* a stylesheet or shared file from an older build is gone: same fix as a page, reload once into the new version */
 window.addEventListener("vite:preloadError", (e) => {
