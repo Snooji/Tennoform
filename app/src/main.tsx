@@ -7,6 +7,7 @@ import "./originals.css"
 import App from "./App"
 import { reloadForUpdate } from "@/lib/update-reload"
 import { calmApply, installFx } from "@/lib/fx"
+import { invLinkInit } from "@/lib/inv-link"
 
 calmApply()
 installFx()
@@ -21,6 +22,7 @@ function mount() {
   const el = document.getElementById("tf-root")
   if (!el || !window.TF) return void setTimeout(mount, 30)
   document.documentElement.classList.add("tf-shell")
+  invLinkInit()
   createRoot(el).render(
     <StrictMode>
       <App />
