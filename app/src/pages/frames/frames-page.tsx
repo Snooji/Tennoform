@@ -10,6 +10,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
 import { ModCard, ModList } from "@/components/tf/mod-card"
 import { BuildInsight } from "@/components/tf/build-insight"
+import { MoreBuilds } from "@/components/tf/more-builds"
 import { Thumb } from "@/components/tf/thumb"
 import { tf, useTFData } from "@/lib/tf"
 
@@ -84,6 +85,7 @@ export function FramesPage() {
                 {b.arcanes.map((m, i) => <ModCard key={m.key + "a" + i} m={m} />)}
               </ModList>
               <BuildInsight id={`m:${d.name}:${d.bi}`} notes={b.notes} item={d.name} mods={b.mods} arcanes={b.arcanes} />
+              <MoreBuilds item={d.name} />
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><Check className="size-3.5" aria-hidden /> Tick what you own. Forma each slot to match its mod's polarity.</p>
             </CardContent>
           </Card>

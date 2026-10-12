@@ -35,6 +35,21 @@ const PRIVACY: [typeof Cloud, string, string][] = [
   [Trash2, "Your data, your call", "Export it any time (Profile → Backup & export), or delete your account and everything stored with it (Profile → Account & sync)."],
 ]
 
+/** Other open data and tools the Warframe community uses. Linked for credit and for players who want more; Tennoform doesn't depend on them. */
+const OTHERS: [string, string, string][] = [
+  ["Official drop tables", "https://www.warframe.com/droptables", "Digital Extremes' own list of every drop chance (PC). The source behind all drop data."],
+  ["WFCD warframe-drop-data", "https://github.com/WFCD/warframe-drop-data", "The official drop tables as open JSON (MIT licence), at drops.warframestat.us."],
+  ["WFCD on GitHub", "https://github.com/WFCD", "The Warframe Community Developers: open item data, world-state API, parsers and bots that most Warframe tools build on."],
+  ["Warframe Public Export Plus", "https://github.com/calamity-inc/warframe-public-export-plus", "A cleaned-up, expanded copy of the game's public data export (MIT licence)."],
+  ["browse.wf", "https://browse.wf", "Open-source browser for game data, world state and profiles."],
+  ["WFinfo", "https://github.com/WFCD/WFinfo", "Open-source PC app that reads the relic reward screen and shows each part's platinum value."],
+  ["FrameHub", "https://github.com/Paroxity/FrameHub", "Open-source Mastery Rank tracker."],
+  ["AlecaFrame", "https://alecaframe.com", "Closed-source desktop companion (Overwolf) with inventory, relic and trading tools."],
+  ["Overframe", "https://overframe.gg", "Large community build database and build planner."],
+  ["warframe.market", "https://warframe.market", "Player-to-player price listings, also Tennoform's price source."],
+  ["Official Warframe Companion app", "https://www.warframe.com", "Digital Extremes' own app for Foundry, inventory and chat on your phone."],
+]
+
 const FAIRPLAY: [typeof Cloud, string, string][] = [
   [ShieldCheck, "Never touches the game", "Tennoform is a website. It doesn't install anything, read or change game files or memory, sit between the game and its servers, automate play, or add macros, overlays or mods. Warframe's End User License Agreement forbids those, and Tennoform does none of them."],
   [KeyRound, "Never asks for your Warframe password", "Your account ID is read from warframe.com in your own browser. The console line and bookmark only read the ID warframe.com already stores for you; they send nothing to Warframe."],
@@ -43,9 +58,9 @@ const FAIRPLAY: [typeof Cloud, string, string][] = [
   [Handshake, "Trades happen in the game", "Market prices come from warframe.market. Tennoform never signs in there or posts for you, and it doesn't sell platinum or items."],
 ]
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, id, children }: { title: string; id?: string; children: React.ReactNode }) {
   return (
-    <Card className="gap-3 px-5">
+    <Card id={id} className="scroll-mt-20 gap-3 px-5">
       <h2 className="font-heading text-xl leading-tight font-semibold">{title}</h2>
       {children}
     </Card>
@@ -56,12 +71,25 @@ export function AboutPage() {
   const d = useTFData(() => tf().about())
   const [open, setOpen] = useState(d.sec === "changes")
   useEffect(() => { if (d.sec === "changes") setOpen(true) }, [d.sec])
-  const sources: [string, React.ReactNode][] = [
-    ["Items, mastery, relics, mods, arcanes", <><Ext href="https://github.com/WFCD/warframe-items">WFCD warframe-items</Ext>{d.wfcd ? ` v${d.wfcd}` : ""}</>],
-    ["Drop locations, quests, junctions, syndicates, fishing and mining", <Ext href="https://wiki.warframe.com">Warframe Wiki</Ext>],
-    ["Live cycles, fissures, Baro, Sortie, Prime Resurgence", <><Ext href="https://docs.warframestat.us">warframestat.us</Ext> (checked when you open Today)</>],
-    ["Prices and cheapest sellers", <><Ext href="https://warframe.market">warframe.market</Ext> (refreshed daily)</>],
-    ["Your profile sync", "Warframe's public profile for your account ID, read-only"],
+  const sources: [string, React.ReactNode, string][] = [
+    ["Items, parts, Mastery, relics and their rewards, mods, arcanes, Foundry recipes, item stats, mod effects",
+      <><Ext href="https://github.com/WFCD/warframe-items">WFCD warframe-items</Ext>{d.wfcd ? ` v${d.wfcd}` : ""}, the open data set built from the game's public export and Digital Extremes' official drop tables</>,
+      "Checked every day; new content goes live automatically"],
+    ["Drop chances and mission rewards", <><Ext href="https://www.warframe.com/droptables">Digital Extremes' official drop tables</Ext>, through WFCD</>, "With each game data update"],
+    ["Guides, quests, junctions, syndicates, resource sources, open-world locations, fishing and mining",
+      <><Ext href="https://wiki.warframe.com">Warframe Wiki</Ext>, rewritten in Tennoform's own words; each guide links its wiki page</>, "Reviewed by hand"],
+    ["Live cycles, fissures, Baro Ki'Teer, Sortie, Archon Hunt, Nightwave, Prime Resurgence, invasions",
+      <><Ext href="https://docs.warframestat.us">warframestat.us</Ext> (WFCD's open world-state API), read by your browser</>, "Live, when you open Today"],
+    ["Item pictures", <><Ext href="https://github.com/WFCD/warframe-items">WFCD</Ext> image CDN (cdn.warframestat.us)</>, "With each game data update"],
+    ["Prices, trade volume and cheapest sellers", <><Ext href="https://warframe.market">warframe.market</Ext> public API</>, "Refreshed daily"],
+    ["Your ranks, star chart, syndicates and quests", "Warframe's public profile for your account ID, read-only, through Tennoform's relay", "When you sync"],
+    ["Your owned gear, mods, relics, resources and Foundry (optional, PC)",
+      <><Ext href="https://wfhelper.com">WFHelper</Ext>'s inventory.json, read on your own device; nothing is uploaded</>, "When you import, or by itself once linked"],
+    ["Tennoform picks (builds)",
+      "Written by Tennoform from widely used community setups, then checked by a script so every mod exists and no two mods clash. Each build says what it's for and what to upgrade later. They're guidance, not the only way to play. Every build also links searches for more builds on Overframe, YouTube and Reddit.",
+      `Last reviewed ${d.buildsReviewed || "recently"}`],
+    ["Player builds", "Shared by players on Tennoform and ranked by their votes", "Live"],
+    ["Farm routes, Steel Path advice, recommendations", "Tennoform's own guidance, based on the data above and community knowledge", "Reviewed by hand"],
   ]
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
@@ -108,12 +136,12 @@ export function AboutPage() {
         </Collapsible>
       </Card>
 
-      <Section title="Where the data comes from">
+      <Section title="Where the data comes from" id="sources">
         <dl className="flex flex-col divide-y text-sm">
-          {sources.map(([k, v]) => (
+          {sources.map(([k, v, when]) => (
             <div key={k} className="flex flex-col gap-0.5 py-2.5 first:pt-0 sm:flex-row sm:gap-6">
-              <dt className="text-muted-foreground sm:w-1/2 sm:shrink-0">{k}</dt>
-              <dd>{v}</dd>
+              <dt className="text-muted-foreground sm:w-2/5 sm:shrink-0">{k}</dt>
+              <dd className="flex flex-col gap-0.5"><span>{v}</span><span className="text-xs text-muted-foreground">{when}</span></dd>
             </div>
           ))}
         </dl>
@@ -123,6 +151,15 @@ export function AboutPage() {
             return <li key={f.t} className="flex items-center gap-2"><Icon aria-hidden className={cn("size-4 shrink-0", cls)} />{f.t}</li>
           })}
         </ul>
+        <div className="flex flex-col gap-2 border-t pt-3">
+          <h3 className="text-sm font-medium">Other open sources and tools players use</h3>
+          <p className="text-xs text-muted-foreground">Credited and linked for anyone who wants more. Third-party tools that read your game account aren't approved by Digital Extremes, so use them at your own risk, and never give any site or tool your Warframe password.</p>
+          <ul className="grid gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
+            {OTHERS.map(([n, href, t]) => (
+              <li key={n} className="flex flex-col"><Ext href={href}>{n}</Ext><span className="text-xs text-muted-foreground">{t}</span></li>
+            ))}
+          </ul>
+        </div>
         <p className="text-xs text-muted-foreground">
           New game content is checked daily against the WFCD data set and goes live automatically. Recommendations such as farms and builds are community guidance, not guarantees.
           If something looks wrong, <a href="/feedback/" className={linkCls}>send feedback</a>.

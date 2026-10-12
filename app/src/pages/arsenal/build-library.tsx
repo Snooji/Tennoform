@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ModCard, ModList } from "@/components/tf/mod-card"
 import { BuildInsight } from "@/components/tf/build-insight"
+import { MoreBuilds } from "@/components/tf/more-builds"
 import { Thumb } from "@/components/tf/thumb"
 import { PersonMenu } from "@/components/tf/person"
 import { cn } from "@/lib/utils"
@@ -15,7 +16,7 @@ import { tf, useTFData, type BuildCard, type BuildDetail } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
 
 const KINDS = [{ value: "all", label: "Everything" }, { value: "Warframe", label: "Warframes" }, { value: "Weapon", label: "Weapons" }, { value: "Companion", label: "Companions" }]
-const SRCS = [{ value: "all", label: "Community + players" }, { value: "meta", label: "Community picks" }, { value: "players", label: "Player builds" }]
+const SRCS = [{ value: "all", label: "Tennoform + players" }, { value: "meta", label: "Tennoform picks" }, { value: "players", label: "Player builds" }]
 const GOALS = [
   { value: "all", label: "Any build", hint: "" },
   { value: "sp", label: "Steel Path", hint: "Built to handle level 100+ enemies" },
@@ -66,7 +67,7 @@ function Row({ b }: { b: BuildCard }) {
           <span className="text-xs text-muted-foreground">{b.item}{b.fits?.length ? ` · also ${b.fits.join(", ")}` : ""}</span>
           <b className="truncate font-heading text-base leading-tight font-semibold">{b.name}</b>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> {b.author || "Player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
+            {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> {b.author || "Player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Tennoform pick</Badge>}
             <Tags tags={b.tags} />
             {b.role ? <span className="truncate text-xs text-muted-foreground">{b.role}</span> : null}
             {b.dated ? <span className={cn("text-xs", b.stale ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{b.dated}{b.stale ? " · may be out of date" : ""}</span> : null}
@@ -98,7 +99,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
             <span className="flex flex-wrap items-center gap-2 text-sm">
               {b.src === "player" ? (b.authorUid
                 ? <PersonMenu uid={b.authorUid} name={b.author || "Player"} className="rounded-4xl" label={`Shared by ${b.author || "a player"}: add friend or block`}><Badge variant="outline" className="text-muted-foreground hover:bg-muted"><Users /> Shared by {b.author || "a player"}</Badge></PersonMenu>
-                : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
+                : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Tennoform pick</Badge>}
               <Tags tags={b.tags} />
               {b.helminth ? <span>Helminth: <b className="font-medium">{b.helminth}</b></span> : null}
             </span>
@@ -120,6 +121,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
         </div>
         <Progress have={b.have} total={b.total} />
         {!b.itemOwned ? <p className="text-sm text-muted-foreground">You don't have {b.item} yet. {b.itemGoal ? "It's in your Goals." : "Saving this build as a goal adds it to your Goals too."}</p> : null}
+        <MoreBuilds item={b.item} />
       </Card>
       <Card className="gap-4 px-5">
         <BuildInsight id={b.id} role={b.role} notes={b.notes} item={b.item} mods={b.mods} arcanes={b.arcanes} />
@@ -148,7 +150,7 @@ export function BuildLibrary() {
   return (
     <div className="flex flex-col gap-3">
       <p className="text-sm text-muted-foreground">
-        Community picks plus builds shared by players. Open one to see every mod and where it drops, save it as a goal, or copy it to tweak. {d.signedIn ? "Vote on player builds to push the best ones up." : "Sign in to vote and share your own."}
+        Tennoform's picks (based on widely used community setups) plus builds shared by players. Open one to see every mod and where it drops, save it as a goal, or copy it to tweak. {d.signedIn ? "Vote on player builds to push the best ones up." : "Sign in to vote and share your own."}
       </p>
       <div className="relative">
         <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />

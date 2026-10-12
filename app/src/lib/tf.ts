@@ -637,7 +637,7 @@ export type SupportData = { ign: string; paypal: string; whisper: string }
 export type FeedbackData = { hosted: boolean; ready: boolean; signed: boolean; kind: string; from: string; prefill: string; admin: boolean
   mine: { id: string; kind: string; text: string; at: string; status: string; label: string }[]; mineLoading: boolean }
 export type AboutData = {
-  pitch: string; site: string; wfcd: string; built: string; prices: string; sec: string
+  pitch: string; site: string; wfcd: string; buildsReviewed: string; built: string; prices: string; sec: string
   changes: { d: string; t: string }[]
   feeds: { k: "ok" | "warn" | "bad" | "off"; t: string }[]
 }
