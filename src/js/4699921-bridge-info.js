@@ -3,7 +3,7 @@ function supportData(){const ign=DONATE.ign;return {ign,paypal:DONATE.paypal,whi
 function feedbackData(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const from=state.fbFrom&&state.fbFrom!=='feedback'?state.fbFrom:'';
   return {hosted:HOSTED,ready:!!FB,signed:!!SO.uid,kind:state.fbKind||'bug',from:from?(PL[from]||from):'',prefill:state.fbPrefill||'',admin:!!FBK.admin}}
 function aboutData(){
-  return {pitch:PITCH,site:D.meta.site||D.meta.built,wfcd:D.meta.wfcd||'',built:D.meta.built,prices:D.meta.prices,sec:state.aboutSec||'',
+  return {pitch:PITCH,site:D.meta.site||D.meta.built,wfcd:D.meta.wfcd||'',buildsReviewed:new Date(BUILDS_REVIEWED+'T12:00:00Z').toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'}),built:D.meta.built,prices:D.meta.prices,sec:state.aboutSec||'',
     changes:CHANGES.map(([d,t])=>({d:fdate(d),t})),
     feeds:feedsData().map(f=>({k:f.k,t:f.name+': '+f.t}))}}
 function adminData(){const base={state:'',email:(typeof acct!=='undefined'&&acct&&(acct.email||acct.name))||'',uid:SO.uid||'',err:''};

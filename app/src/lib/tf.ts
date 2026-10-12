@@ -637,7 +637,7 @@ export type SupportData = { ign: string; paypal: string; whisper: string }
 export type FeedbackData = { hosted: boolean; ready: boolean; signed: boolean; kind: string; from: string; prefill: string; admin: boolean
   mine: { id: string; kind: string; text: string; at: string; status: string; label: string }[]; mineLoading: boolean }
 export type AboutData = {
-  pitch: string; site: string; wfcd: string; built: string; prices: string; sec: string
+  pitch: string; site: string; wfcd: string; buildsReviewed: string; built: string; prices: string; sec: string
   changes: { d: string; t: string }[]
   feeds: { k: "ok" | "warn" | "bad" | "off"; t: string }[]
 }
@@ -700,12 +700,13 @@ export type GuidesData = {
 }
 
 export type BuildCard = {
-  id: string; src: "meta" | "player" | "mine"; item: string; fits?: string[]; img: string; kind: string; cat: string; name: string; role: string
+  id: string; src: "meta" | "player" | "mine" | "wiki"; item: string; fits?: string[]; img: string; kind: string; cat: string; name: string; role: string
   author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number; dated?: string; stale?: boolean
   tags: ("sp" | "budget" | "starter")[]
 }
 export type BuildDetail = BuildCard & {
-  notes: string; helminth: string; mine: boolean; doc: string; mods: ModSlot[]; arcanes: ModSlot[]
+  notes: string; helminth: string; link: string; mine: boolean; doc: string
+  wiki: { url: string; created: string; updated: string; exact: boolean; gone: string[]; forma: string } | null; mods: ModSlot[]; arcanes: ModSlot[]
   itemOwned: boolean; itemGoal: boolean; canVote: boolean; authorUid: string
 }
 export type BuildLibData = {
@@ -713,7 +714,7 @@ export type BuildLibData = {
   shared: { loading: boolean; err: string; count: number; online: boolean }; signedIn: boolean; sel: BuildDetail | null
 }
 export type BuildDraft = {
-  id?: string; item: string; name: string; role: string; aura: string; exilus: string; mods: string[]; arcanes: string[]; helminth: string; notes: string
+  id?: string; item: string; name: string; role: string; aura: string; exilus: string; mods: string[]; arcanes: string[]; helminth: string; notes: string; link?: string
 }
 export type MyBuildsData = {
   list: (BuildCard & { pub: string; updated: number })[]

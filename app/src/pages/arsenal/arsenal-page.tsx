@@ -253,7 +253,7 @@ export function ArsenalPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Builds</h1>
-        <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, and every arcane and mod with what it does.</p>
+        <p className="max-w-2xl text-sm text-muted-foreground">Tennoform picks and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, and every arcane and mod with what it does.</p>
       </header>
       <div className="scroll-fade -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
         <Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />

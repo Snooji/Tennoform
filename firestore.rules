@@ -151,12 +151,14 @@ service cloud.firestore {
           && (l.size() < 9 || shortStr(l[8], m)) && (l.size() < 10 || shortStr(l[9], m));
       }
       function okBuild() {
-        return data().keys().hasOnly(['uid', 'author', 'item', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'at', 'up', 'down', 'score'])
+        return data().keys().hasOnly(['uid', 'author', 'item', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'link', 'at', 'up', 'down', 'score'])
           && data().keys().hasAll(['uid', 'item', 'name', 'mods', 'at', 'up', 'down', 'score'])
           && shortStr(data().item, 60) && data().item.size() > 0 && shortStr(data().name, 60)
           && shortStr(data().get('author', ''), 40) && shortStr(data().get('role', ''), 60)
           && shortStr(data().get('aura', ''), 60) && shortStr(data().get('exilus', ''), 60)
           && shortStr(data().get('helminth', ''), 60) && shortStr(data().get('notes', ''), 600)
+          // the author's own build on Overframe, if they link one: only overframe.gg build pages
+          && (data().get('link', '') == '' || (shortStr(data().link, 200) && data().link.matches('https://(www[.])?overframe[.]gg/build/[0-9]+(/[A-Za-z0-9_%.-]+)*/?')))
           && strList(data().mods, 10, 60) && strList(data().get('arcanes', []), 2, 60)
           && data().at is number && data().up is int && data().down is int && data().score is int;
       }
@@ -176,7 +178,7 @@ service cloud.firestore {
         && data().up == 0 && data().down == 0 && data().score == 0;
       // the author edits the build itself, never the counts
       allow update: if signedIn() && okBuild() && resource.data.uid == me()
-        && data().diff(resource.data).affectedKeys().hasOnly(['author', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'item']);
+        && data().diff(resource.data).affectedKeys().hasOnly(['author', 'name', 'role', 'aura', 'exilus', 'mods', 'arcanes', 'helminth', 'notes', 'link', 'item']);
       // anyone signed in votes: only the counts change, and they match the vote they're writing
       allow update: if signedIn()
         && data().diff(resource.data).affectedKeys().hasOnly(['up', 'down', 'score'])
