@@ -1,10 +1,45 @@
-import { useRef, useState } from "react"
-import { BookOpen, CircleCheck, FileUp, LoaderCircle, TriangleAlert, Undo2 } from "lucide-react"
+import { useRef, useState, useSyncExternalStore } from "react"
+import { BookOpen, CircleCheck, FileUp, Link2, Link2Off, LoaderCircle, RefreshCw, TriangleAlert, Undo2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { tf, useTFData } from "@/lib/tf"
+import { invLink, invLinkState, invLinkSubscribe, invUnlink, invUpdateNow } from "@/lib/inv-link"
+
+const ago = (t: number) => { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? "just now" : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} h ago` : `${Math.round(m / 1440)} d ago` }
+
+/** Link inventory.json once and Tennoform re-reads it whenever you come back (Chrome and Edge on a computer). */
+function AutoUpdate({ onResult }: { onResult: (r: { ok: boolean; msg: string } | null | undefined) => void }) {
+  const l = useSyncExternalStore(invLinkSubscribe, invLinkState)
+  if (!l.supported) return <p className="text-xs text-muted-foreground">Tip: in Chrome or Edge on a computer you can link inventory.json once, and Tennoform keeps your inventory updated by itself.</p>
+  const busy = l.state === "busy"
+  return (
+    <div className="flex flex-col gap-2 rounded-xl border bg-muted/30 px-4 py-3">
+      <span className="flex items-center gap-2 text-sm font-medium"><RefreshCw className="size-4 text-primary" aria-hidden /> Keep it updated automatically</span>
+      {!l.linked ? (
+        <>
+          <p className="text-sm text-muted-foreground">Link WFHelper's inventory.json once. While WFHelper runs it keeps that file current, and Tennoform reads it again every time you open or come back to this site, so you never have to upload it by hand. When your browser asks, choose <b className="font-medium text-foreground">Allow on every visit</b>.</p>
+          <Button className="h-10 self-start px-4" disabled={busy} onClick={async () => onResult(await invLink())}><Link2 /> Link inventory.json</Button>
+        </>
+      ) : (
+        <>
+          <p className="text-sm text-muted-foreground">
+            Linked to <b className="font-medium text-foreground">{l.name}</b>.{" "}
+            {l.state === "needs-permission" ? "Your browser wants permission again before Tennoform can read it. Tap Update now and choose Allow on every visit."
+              : l.state === "missing" ? "The file has moved or was deleted. Link it again."
+              : <>Updates by itself whenever you come back to Tennoform{l.fileAt ? <>; WFHelper last saved it {ago(l.fileAt)}</> : null}.</>}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {l.state === "missing" ? <Button className="h-9" onClick={async () => onResult(await invLink())}><Link2 /> Link again</Button>
+              : <Button variant={l.state === "needs-permission" ? "default" : "outline"} className="h-9" disabled={busy} onClick={async () => onResult(await invUpdateNow())}>{busy ? <LoaderCircle className="animate-spin" /> : <RefreshCw />} Update now</Button>}
+            <Button variant="ghost" className="h-9" onClick={() => { invUnlink(); onResult(null) }}><Link2Off /> Unlink</Button>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
 
 /** Upload an inventory.json: everything the public profile can't see (owned gear, parts, mods, arcanes, relics, resources, Foundry). */
 export function InventoryImport() {
@@ -40,6 +75,7 @@ export function InventoryImport() {
           <span className="rounded bg-muted px-1 py-0.5 font-mono text-xs break-all text-foreground">%appdata%\WFHelper\api-helper\inventory.json</span> here.
         </p>
       </div>
+      <AutoUpdate onResult={(r) => setRes(r ?? null)} />
       <div
         onDragOver={(e) => { e.preventDefault(); setDrag(true) }}
         onDragLeave={() => setDrag(false)}
@@ -47,7 +83,7 @@ export function InventoryImport() {
         className={cn("flex flex-col items-center gap-2 rounded-xl border-2 border-dashed px-4 py-6 text-center transition-colors", drag ? "border-primary bg-primary/10" : "border-border")}
       >
         {busy ? <LoaderCircle className="size-6 animate-spin text-primary" aria-hidden /> : <FileUp className="size-6 text-primary" aria-hidden />}
-        <span className="text-sm">{busy ? "Reading your inventory…" : "Drop inventory.json here, or"}</span>
+        <span className="text-sm">{busy ? "Reading your inventory…" : "Or upload it once: drop inventory.json here, or"}</span>
         <input ref={input} type="file" accept=".json,application/json" className="sr-only" id="inv-file" aria-label="Inventory file (inventory.json)" tabIndex={-1} onChange={(e) => read(e.target.files?.[0])} />
         <Button className="h-10 px-5" disabled={busy} onClick={() => input.current?.click()}>Choose file</Button>
       </div>
