@@ -15,6 +15,7 @@ export type TFState = {
   name: string
   signedIn: boolean
   canAcct: boolean
+  canBack?: boolean
   acctName: string
   acctEmail: string
   admin: boolean
@@ -34,6 +35,9 @@ export type TFApi = {
   search(q: string): TFHit[]
   open(act: string): void
   go(route: string): void
+  details(): DetailsData
+  openDetails(key: string): void
+  back(): void
   google(): void
   signOut(): void
   account(): void
@@ -726,4 +730,9 @@ export type WayDetail = {
   n: string; cat: string; sum: string; w: string; tips: string[]; hasTask: boolean
   ways: { t: string; how: string; why: string; req: string; tags: string[]; node: string; planet: string }[]
   plat?: { date: string; groups: { t: string; per: string; items: { n: string; kind: string; how: string; chance: number; price: number; sold: number; per: number; img: string; key: string }[] }[] } | null
+}
+
+export type DetailsData = {
+  key: string; kind: string; kindLabel?: string; name: string; found: boolean; img?: string; cat?: string; html?: string; wiki?: string
+  used?: string[]; builds?: number; way?: WayDetail | null
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Check, Coins, Crosshair, Gem, Hexagon, Search, X, type LucideIcon } from "lucide-react"
+import { Check, Coins, Crosshair, Gem, Hexagon, Maximize2, Search, X, type LucideIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -104,6 +104,15 @@ function QuickPicks({ sel, compact }: { sel: string; compact: boolean }) {
         </ul>
       )}
     </nav>
+  )
+}
+
+/** Opens the full page for what's selected: everything about it, with its own address. */
+function MoreDetails({ k, onGo }: { k: string; onGo?: () => void }) {
+  return (
+    <Button variant="outline" className="h-9 self-start" onClick={() => { onGo?.(); tf().openDetails(k) }}>
+      <Maximize2 /> More details
+    </Button>
   )
 }
 
@@ -229,7 +238,10 @@ export function FarmPage() {
         </div>
         {narrow ? null : (
           <div className="min-w-0">
-            <div className="lg:sticky lg:top-16">{d.way ? <WayView w={d.way} /> : d.sel && d.detail ? <Island html={d.detail} /> : <EmptyDetail />}</div>
+            <div className="flex flex-col gap-2 lg:sticky lg:top-16">
+              {d.sel && (d.way || d.detail) ? <MoreDetails k={d.sel} /> : null}
+              {d.way ? <WayView w={d.way} /> : d.sel && d.detail ? <Island html={d.detail} /> : <EmptyDetail />}
+            </div>
           </div>
         )}
       </div>
@@ -240,7 +252,10 @@ export function FarmPage() {
               <SheetTitle className="pr-8 font-heading text-lg">{d.selName}</SheetTitle>
               <SheetDescription className="sr-only">Where to farm {d.selName}</SheetDescription>
             </SheetHeader>
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">{d.way ? <WayView w={d.way} inSheet /> : d.detail ? <Island html={d.detail} /> : null}</div>
+            <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3">
+              {d.sel ? <MoreDetails k={d.sel} onGo={() => setSheet(false)} /> : null}
+              {d.way ? <WayView w={d.way} inSheet /> : d.detail ? <Island html={d.detail} /> : null}
+            </div>
           </SheetContent>
         </Sheet>
       ) : null}

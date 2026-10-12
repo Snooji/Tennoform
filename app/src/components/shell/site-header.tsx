@@ -1,4 +1,4 @@
-import { LogIn, Search } from "lucide-react"
+import { ArrowLeft, LogIn, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
@@ -19,6 +19,11 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
     <header className="sticky top-0 z-20 flex h-[calc(3.5rem+env(safe-area-inset-top))] shrink-0 items-center pt-[env(safe-area-inset-top)] gap-2 border-b bg-background px-3 md:px-4">
       <SidebarTrigger className="-ml-1 size-9" aria-label="Show or hide navigation" />
       <Separator orientation="vertical" className="mx-1 h-5" />
+      {s.canBack ? (
+        <Button variant="ghost" size="sm" className="-ml-1 h-9 shrink-0 px-2" onClick={() => tf().back()} aria-label="Go back to the last page" title="Back">
+          <ArrowLeft /><span className="max-sm:sr-only">Back</span>
+        </Button>
+      ) : null}
       <Breadcrumb className="min-w-0">
         <BreadcrumbList className="flex-nowrap">
           {showPlace && (
