@@ -53,6 +53,7 @@ function Mods() {
             <li key={x.n} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3">
               <span className="flex min-w-0 flex-1 basis-48 flex-col gap-1">
                 <GoLink k={(x.kind === "Mod" ? "mod|" : "arc|") + x.n} className="font-medium">{x.n}</GoLink>
+                {x.fx ? <span className="text-sm">{x.fx}</span> : null}
                 <span className="text-xs text-muted-foreground">{[x.type, x.rar, x.v7 ? `${fmt(x.v7)} sold a week` : ""].filter(Boolean).join(" · ")}</span>
               </span>
               <span className="flex flex-wrap items-center justify-end gap-2">

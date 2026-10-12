@@ -15,7 +15,7 @@ import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { GoLink } from "@/components/tf/go-link"
 import { Island } from "@/components/tf/island"
-import { ModCard, ModList } from "@/components/tf/mod-card"
+import { ModCard, ModDialog, ModList } from "@/components/tf/mod-card"
 import { BuildInsight } from "@/components/tf/build-insight"
 import { NumField } from "@/components/tf/num-field"
 import { Thumb } from "@/components/tf/thumb"
@@ -26,7 +26,7 @@ import { SortDir } from "@/components/tf/sort-dir"
 const TABS = [
   { value: "top", label: "Top builds" }, { value: "mine", label: "My builds" },
   { value: "builds", label: "Weapons" }, { value: "comp", label: "Companions" }, { value: "lich", label: "Lich weapons" },
-  { value: "arc", label: "Arcanes" }, { value: "mods", label: "Key mods" },
+  { value: "arc", label: "Arcanes" }, { value: "mods", label: "Mods" },
 ]
 type Opt = { value: string; label: string }
 function Pick({ items, value, onChange, label, prefix, className }: { items: Opt[]; value?: string; onChange: (v: string) => void; label: string; prefix?: string; className?: string }) {
@@ -164,7 +164,7 @@ function Arcanes({ d }: { d: ArsenalData }) {
       <div className="flex flex-wrap gap-2">
         <div className="relative min-w-44 flex-1">
           <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find an arcane" aria-label="Find an arcane" className="h-10 pr-9 pl-9" />
+          <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find an arcane by name or effect" aria-label="Find an arcane by name or effect" className="h-10 pr-9 pl-9" />
           {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-1.5 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
         </div>
         <Pick items={opts("All types", d.types!)} value={d.type} onChange={(v) => tf().arsenalSet({ art: v })} label="Arcane type" />
@@ -187,6 +187,7 @@ function Arcanes({ d }: { d: ArsenalData }) {
               <span className="text-xs text-muted-foreground">{a.copies >= a.need ? "maxed" : `${a.need - a.copies} more to rank ${a.maxRank}`}</span>
             </div>
             <Progress value={Math.min(100, (100 * a.copies) / a.need)} className="h-1" aria-label={`${a.copies} of ${a.need} copies`} />
+            {a.fx.length ? <ul className="flex flex-col gap-0.5 text-sm">{a.fx.map((l, i) => <li key={i}>{l}</li>)}</ul> : null}
             <p className="text-xs text-muted-foreground">{a.type}{a.uses.length ? ` · used in ${a.uses.slice(0, 4).join(", ")}${a.uses.length > 4 ? " +" + (a.uses.length - 4) : ""}` : ""}</p>
             {a.drops ? <p className="text-xs">{a.drops}</p> : null}
           </Card>
@@ -197,32 +198,51 @@ function Arcanes({ d }: { d: ArsenalData }) {
   )
 }
 
-function KeyMods({ d }: { d: ArsenalData }) {
+/** Every mod in the game and what it does: search by name or effect, filter by type and what you own; tap one for drops and prices. */
+function AllMods({ d }: { d: ArsenalData }) {
+  const [q, setQ] = useState(d.q || "")
+  const [open, setOpen] = useState("")
+  useEffect(() => {
+    const t = window.setTimeout(() => q !== d.q && tf().arsenalSet({ kmq: q }), 160)
+    return () => window.clearTimeout(t)
+  }, [q, d.q])
   return (
     <>
-      <p className="text-sm text-muted-foreground">Every mod used by the builds in this app, most-used first. Tick the ones you own; the same ticks show on every build.</p>
-      <div className="flex flex-wrap items-center gap-2">
+      <p className="text-sm text-muted-foreground">Every mod and what it does at max rank. Search by name or by what it does, like "status chance", "Heat" or "energy". Tick the ones you own; the same ticks show on every build.</p>
+      <div className="flex flex-wrap gap-2">
+        <div className="relative min-w-52 flex-1">
+          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a mod by name or effect" aria-label="Find a mod by name or effect" className="h-10 pr-9 pl-9" />
+          {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-1.5 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
+        </div>
         <Pick items={opts("All mod types", d.types!)} value={d.type} onChange={(v) => tf().arsenalSet({ kmt: v })} label="Mod type" />
-        <Pick items={[{ value: "all", label: "All" }, { value: "miss", label: "Missing" }, { value: "have", label: "Owned" }, { value: "trade", label: "Tradeable" }]} value={d.status} onChange={(v) => tf().arsenalSet({ kms: v })} label="Status" />
-        <Badge variant="outline" className="border-primary/40 text-primary tabular-nums">{d.have}/{d.total} owned</Badge>
+        <Pick items={[{ value: "all", label: "All" }, { value: "used", label: "Used in builds" }, { value: "miss", label: "Missing" }, { value: "have", label: "Owned" }, { value: "trade", label: "Tradeable" }, { value: "aug", label: "Augments" }]} value={d.status} onChange={(v) => tf().arsenalSet({ kms: v })} label="Show" />
+        <Pick items={[{ value: "use", label: "Most used" }, { value: "name", label: "Name" }, { value: "price", label: "Price" }]} value={d.sort} onChange={(v) => tf().arsenalSet({ kmo: v })} label="Sort" prefix="Sort:" />
+        <SortDir k="kmO" className="size-9" />
       </div>
+      <p className="text-xs text-muted-foreground" role="status">{fmt(d.found ?? 0)} mods{d.found !== d.total ? ` of ${fmt(d.total ?? 0)}` : ""} · {fmt(d.have ?? 0)} owned{d.loading ? " · loading what each one does…" : ""}</p>
       <Card className="gap-0 py-0">
         <ul className="flex flex-col divide-y">
           {d.mods!.map((m) => (
-            <li key={m.n} className={cn("flex gap-3 px-4 py-2.5", m.done && "bg-muted/30")}>
+            <li key={m.n} className={cn("flex gap-3 px-4 py-3", m.done && "bg-muted/30")}>
               <Checkbox className="mt-0.5 size-5 rounded-md" checked={m.done} onCheckedChange={(v) => tf().nodeTick(m.key, !!v)} aria-label={(m.done ? "Don't have: " : "Have: ") + m.n} />
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="flex flex-wrap items-center gap-x-2">
-                  <GoLink k={m.go} className={cn("font-medium", m.done && "text-muted-foreground line-through")}>{m.n}</GoLink>
-                  {m.price ? <span className="text-xs text-primary">{m.price}</span> : null}
-                  <span className="text-xs text-muted-foreground">{m.type} · in {m.uses} build{m.uses > 1 ? "s" : ""}</span>
+              <button type="button" onClick={() => setOpen(m.n)} className="group flex min-w-0 flex-1 flex-col gap-1 rounded-md text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50" aria-label={`${m.n}: what it does, how to get it and prices`}>
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <b className={cn("font-medium group-hover:underline group-hover:underline-offset-4", m.done && "text-muted-foreground line-through decoration-primary/70")}>{m.n}</b>
+                  <span className="text-xs text-muted-foreground">{m.type}{m.aug ? " · Augment" : ""}{m.pol ? ` · ${m.pol}` : ""}{m.drain != null ? ` · ${m.drain < 0 ? "+" + Math.abs(m.drain) : m.drain} capacity` : ""}</span>
+                  {m.price ? <span className="text-xs text-primary tabular-nums">{m.price}</span> : null}
+                  {m.uses ? <Badge variant="outline" className="h-5 text-[11px]">in {m.uses} build{m.uses > 1 ? "s" : ""}</Badge> : null}
                 </span>
-                <span className="text-xs text-muted-foreground">{m.src}</span>
-              </span>
+                {m.fx.length ? <span className="flex flex-col text-sm">{m.fx.map((l, i) => <span key={i}>{l}</span>)}</span> : d.loading ? <span className="h-4 w-40 animate-pulse rounded bg-muted" aria-hidden /> : null}
+                <span className="text-xs text-muted-foreground">{m.fits && m.fits !== m.type ? `Fits ${m.fits}` : ""}{m.fits && m.fits !== m.type && m.src ? " · " : ""}{m.src}</span>
+              </button>
             </li>
           ))}
         </ul>
       </Card>
+      {!d.mods!.length ? <p className="text-sm text-muted-foreground">Nothing matches.</p> : null}
+      {d.more ? <Button variant="outline" className="h-10 self-center" onClick={() => tf().arsenalSet({ kmMore: true })}>Show more ({fmt(d.more)} left)</Button> : null}
+      {open ? <ModDialog name={open} onClose={() => setOpen("")} /> : null}
     </>
   )
 }
@@ -233,12 +253,12 @@ export function ArsenalPage() {
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-5 md:px-6 md:py-6">
       <header className="flex flex-col gap-1">
         <h1 className="font-heading text-3xl font-semibold">Builds</h1>
-        <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, arcanes and key mods.</p>
+        <p className="max-w-2xl text-sm text-muted-foreground">Top community and player builds for every Warframe, weapon and companion, your own builds, your Kuva, Tenet and Coda weapons, and every arcane and mod with what it does.</p>
       </header>
       <div className="scroll-fade -mx-4 overflow-x-auto px-4 md:mx-0 md:px-0">
         <Segmented className="min-w-max" value={d.tab} onValueChange={(v) => tf().arsenalSet({ tab: v })} items={TABS} />
       </div>
-      {d.tab === "top" ? <BuildLibrary /> : d.tab === "mine" ? <MyBuilds /> : d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <KeyMods d={d} />}
+      {d.tab === "top" ? <BuildLibrary /> : d.tab === "mine" ? <MyBuilds /> : d.tab === "builds" ? <Builds d={d} kind="w" /> : d.tab === "comp" ? <Builds d={d} kind="c" /> : d.tab === "lich" ? <Lich d={d} /> : d.tab === "arc" ? <Arcanes d={d} /> : <AllMods d={d} />}
     </div>
   )
 }
