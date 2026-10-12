@@ -6,8 +6,13 @@ const BARCTY={Warframe:['Warframe Arcane'],Primary:['Primary Arcane','Bow Arcane
 const BSLOTS=c=>({aura:c==='Warframe'?'Aura':['Melee','Zaw'].includes(c)?'Stance':'',exilus:['Companion','Sentinel'].includes(c)?'':'Exilus',arcanes:c==='Warframe'?2:BARCTY[c]?1:0,helminth:c==='Warframe'});
 const SB={list:null,loading:false,err:'',at:0};
 let METAB=null;
+/* what a build is for: Steel Path (endgame mods: Galvanized, Umbral, Archon, endgame arcanes), cheap first Steel Path, or starter */
+const SP_ARC=new Set(['Molt Augmented','Arcane Energize','Primary Merciless','Secondary Merciless','Primary Deadhead','Secondary Deadhead','Primary Dexterity','Secondary Dexterity','Melee Influence','Melee Crescendo','Melee Duplicate','Melee Animosity']);
+function bTags(b){if(Array.isArray(b.tags)&&b.tags.length)return b.tags.filter(t=>['sp','budget','starter'].includes(t));const t=[];const txt=((b.name||'')+' '+(b.role||'')).toLowerCase();
+  if(/steel path|\bsp\b/.test(txt)||[b.aura,b.exilus,...(b.mods||[])].some(m=>/^(Galvanized|Umbral|Archon) /.test(m||''))||(b.arcanes||[]).some(a=>SP_ARC.has(a)))t.push('sp');
+  if(/starter|early game|beginner/.test(txt))t.push('starter');return t}
 function metaBuilds(){if(METAB)return METAB;const out=[];
-  for(const src of [D.builds,D.wbuilds,D.cbuilds])for(const item in src||{})(src[item]||[]).forEach((b,i)=>out.push({id:'m:'+item+':'+i,src:'meta',item,name:b.name||'Build',role:b.role||'',aura:b.aura||'',exilus:b.exilus||'',mods:b.mods||[],arcanes:b.arcanes||[],helminth:b.helminth||'',notes:b.notes||''}));
+  for(const src of [D.builds,D.wbuilds,D.cbuilds])for(const item in src||{})(src[item]||[]).forEach((b,i)=>out.push({id:'m:'+item+':'+i,src:'meta',item,name:b.name||'Build',role:b.role||'',aura:b.aura||'',exilus:b.exilus||'',mods:b.mods||[],arcanes:b.arcanes||[],helminth:b.helminth||'',notes:b.notes||'',tags:b.tags||[]}));
   return METAB=out}
 function loadShared(force){if(!FB||SB.loading||(SB.list&&!force&&Date.now()-SB.at<120000))return;SB.loading=true;SB.err='';tfNotify();
   FB.fs.collection('builds').orderBy('score','desc').limit(300).get().then(s=>{SB.list=s.docs.map(d=>({id:'p:'+d.id,doc:d.id,src:'player',...d.data()}));SB.at=Date.now()})
@@ -18,16 +23,16 @@ function bParts(b){return [...(b.aura?[['aura',b.aura]]:[]),...(b.exilus?[['exil
 const bHave=b=>{const p=bParts(b);return {have:p.filter(([k,n])=>on((k==='arc'?'arc|':'mod|')+n)||(k==='arc'&&(+((P.arc||{})[n])||0)>0)).length,total:p.length}};
 function bCard(b){const it=I[b.item];const h=bHave(b);const mv=(P.bv||{})[b.doc]||0;
   return {id:b.id,src:b.src,item:b.item,fits:bFits(b),img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
-    goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0}}
+    goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0,tags:bTags(b)}}
 function bDetail(b){const it=I[b.item];const c=it?it.c:'';const sl=BSLOTS(c);
   return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
     mods:[...(b.aura?[modSlot(sl.aura||'Aura',b.aura)]:[]),...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.filter(Boolean).map(m=>modSlot('Mod',m))],
     arcanes:(b.arcanes||[]).filter(Boolean).map(a=>modSlot('Arcane',a,true)),
     itemOwned:it?famOwned(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
-function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
+function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),g=state.blG||'all',k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
   if(s!=='meta')loadShared();
   let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
-  L=L.map(bCard).filter(c=>k==='all'||c.kind===k);
+  L=L.map(bCard).filter(c=>(k==='all'||c.kind===k)&&(g==='all'||c.tags.includes(g)));
   if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
   else if(so==='own')L.sort((a,b)=>(+famOwned(b.item)-+famOwned(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
@@ -35,7 +40,7 @@ function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),k=state.blK
   else L.sort((a,b)=>a.item.localeCompare(b.item)||a.name.localeCompare(b.name));
   rv('blO',L);
   const sel=state.blSel?buildById(state.blSel):null;
-  return {q:state.blQ||'',kind:k,src:s,sort:so,total:L.length,list:L.slice(0,state.blN||60),more:L.length>(state.blN||60),
+  return {q:state.blQ||'',goal:g,kind:k,src:s,sort:so,total:L.length,list:L.slice(0,state.blN||60),more:L.length>(state.blN||60),
     shared:{loading:SB.loading,err:SB.err,count:(SB.list||[]).length,online:!!FB&&HOSTED},signedIn:!!SO.uid,sel:sel?bDetail(sel):null}}
 /* build goals: a snapshot of a build you're working towards; Goals lists the parts you're missing and where they drop */
 function bGoalsData(){return (P.bg||[]).map(g=>{const h=bHave(g);const parts=bParts(g).map(([k,n])=>modSlot(k==='arc'?'Arcane':k==='aura'?'Aura':k==='exilus'?'Exilus':'Mod',n,k==='arc'));
@@ -58,7 +63,7 @@ function voteTx(doc,v){const ref=FB.fs.collection('builds').doc(doc),vref=ref.co
     const up=(b.up||0)+(v===1)-(old===1),down=(b.down||0)+(v===-1)-(old===-1);if(v)tx.set(vref,{v});else tx.delete(vref);tx.update(ref,{up,down,score:up-down});return {...b,up,down,score:up-down}})}
 Object.assign(window.TF,{
   buildLib:()=>buildLibData(),
-  buildLibSet:o=>{const m={q:'blQ',kind:'blK',src:'blS',sort:'blO'};for(const k in m)if(o[k]!=null){state[m[k]]=o[k];state.blN=60}if('sel' in o){state.blSel=o.sel;window.scrollTo(0,0)}if(o.more)state.blN=(state.blN||60)+60;tfNotify()},
+  buildLibSet:o=>{const m={q:'blQ',goal:'blG',kind:'blK',src:'blS',sort:'blO'};for(const k in m)if(o[k]!=null){state[m[k]]=o[k];state.blN=60}if('sel' in o){state.blSel=o.sel;window.scrollTo(0,0)}if(o.more)state.blN=(state.blN||60)+60;tfNotify()},
   buildLibReload:()=>loadShared(true),
   buildGoal:id=>{const b=buildById(id);if(!b)return;P.bg=P.bg||[];const i=P.bg.findIndex(g=>g.from===id);
     if(i>=0){const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()});return}

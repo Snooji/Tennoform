@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ArrowLeft, Check, Copy, Flag, RefreshCw, Search, Target, ThumbsDown, ThumbsUp, Trash2, Users, X } from "lucide-react"
+import { ArrowLeft, Check, Copy, Flag, RefreshCw, Search, Shield, Target, ThumbsDown, ThumbsUp, Trash2, Users, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -16,6 +16,17 @@ import { SortDir } from "@/components/tf/sort-dir"
 
 const KINDS = [{ value: "all", label: "Everything" }, { value: "Warframe", label: "Warframes" }, { value: "Weapon", label: "Weapons" }, { value: "Companion", label: "Companions" }]
 const SRCS = [{ value: "all", label: "Community + players" }, { value: "meta", label: "Community picks" }, { value: "players", label: "Player builds" }]
+const GOALS = [
+  { value: "all", label: "Any build", hint: "" },
+  { value: "sp", label: "Steel Path", hint: "Built to handle level 100+ enemies" },
+  { value: "budget", label: "First Steel Path", hint: "Steel Path builds from mods you can get early" },
+  { value: "starter", label: "Starter", hint: "Simple builds for new players" },
+] as const
+const TAG_L: Record<string, string> = { sp: "Steel Path", budget: "Cheap mods", starter: "Starter" }
+/** What a build is for, as small badges: Steel Path, cheap mods, starter. */
+function Tags({ tags }: { tags: BuildCard["tags"] }) {
+  return <>{tags.map((t) => <Badge key={t} variant="outline" className={cn(t === "sp" ? "border-sky-600/40 text-sky-800 dark:text-sky-300" : t === "budget" ? "border-emerald-600/40 text-emerald-800 dark:text-emerald-300" : "text-muted-foreground")}>{TAG_L[t]}</Badge>)}</>
+}
 const SORTS = [{ value: "top", label: "Top voted" }, { value: "new", label: "Newest" }, { value: "own", label: "Items I own" }, { value: "ready", label: "Mods I own" }, { value: "name", label: "Name" }]
 
 export function Votes({ b, size = "sm" }: { b: BuildCard; size?: "sm" | "lg" }) {
@@ -56,6 +67,7 @@ function Row({ b }: { b: BuildCard }) {
           <b className="truncate font-heading text-base leading-tight font-semibold">{b.name}</b>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
             {b.src === "player" ? <Badge variant="outline" className="text-muted-foreground"><Users /> {b.author || "Player"}</Badge> : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
+            <Tags tags={b.tags} />
             {b.role ? <span className="truncate text-xs text-muted-foreground">{b.role}</span> : null}
             {b.dated ? <span className={cn("text-xs", b.stale ? "text-amber-800 dark:text-amber-300" : "text-muted-foreground")}>{b.dated}{b.stale ? " · may be out of date" : ""}</span> : null}
             {b.goal ? <Badge variant="outline" className="border-primary/40 text-primary"><Target /> Goal</Badge> : null}
@@ -87,6 +99,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
               {b.src === "player" ? (b.authorUid
                 ? <PersonMenu uid={b.authorUid} name={b.author || "Player"} className="rounded-4xl" label={`Shared by ${b.author || "a player"}: add friend or block`}><Badge variant="outline" className="text-muted-foreground hover:bg-muted"><Users /> Shared by {b.author || "a player"}</Badge></PersonMenu>
                 : <Badge variant="outline" className="text-muted-foreground"><Users /> Shared by {b.author || "a player"}</Badge>) : <Badge variant="outline" className="border-primary/40 text-primary">Community pick</Badge>}
+              <Tags tags={b.tags} />
               {b.helminth ? <span>Helminth: <b className="font-medium">{b.helminth}</b></span> : null}
             </span>
             {b.dated ? (
@@ -142,6 +155,24 @@ export function BuildLibrary() {
         <Input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a Warframe, weapon, build or player" aria-label="Search builds" className="h-11 rounded-full pr-10 pl-9" />
         {q ? <Button variant="ghost" size="icon-sm" className="absolute top-1/2 right-2 -translate-y-1/2" onClick={() => setQ("")} aria-label="Clear search"><X /></Button> : null}
       </div>
+      <div role="radiogroup" aria-label="What the build is for" className="flex flex-wrap gap-2">
+        {GOALS.map((g) => (
+          <Button key={g.value} type="button" role="radio" aria-checked={d.goal === g.value} variant={d.goal === g.value ? "default" : "outline"} className="h-9 rounded-full"
+            title={g.hint || undefined} onClick={() => tf().buildLibSet({ goal: g.value })}>{d.goal === g.value && g.value !== "all" ? <Check /> : null}{g.label}</Button>
+        ))}
+      </div>
+      {d.goal === "sp" || d.goal === "budget" ? (
+        <Card size="sm" className="gap-1.5 px-4">
+          <b className="flex items-center gap-2 text-sm font-medium"><Shield className="size-4 text-primary" aria-hidden /> New to the Steel Path?</b>
+          <p className="text-sm text-muted-foreground">
+            {d.goal === "budget" ? "These builds use mods you can farm or buy cheaply, and each one says what to upgrade later. " : "Steel Path builds lean on Galvanized mods, armor strip and survival mods. Pick First Steel Path to see cheaper versions. "}
+            Start with one tanky Warframe and one weapon built for Viral damage.
+          </p>
+          <a href="#" className="self-start text-sm font-medium underline decoration-primary/50 underline-offset-4 hover:decoration-primary" onClick={(e) => { e.preventDefault(); tf().act("a", { href: "#", "data-go": "guide|steel-path-loadout" }) }}>
+            Read: Getting ready for the Steel Path
+          </a>
+        </Card>
+      ) : null}
       <div className="flex flex-wrap gap-2">
         {[["kind", KINDS, d.kind, "Show"], ["src", SRCS, d.src, "Source"], ["sort", SORTS, d.sort, "Sort"]].map(([k, items, v, label]) => (
           <Select key={k as string} items={items as typeof KINDS} value={v as string} onValueChange={(x) => tf().buildLibSet({ [k as string]: String(x) })}>
