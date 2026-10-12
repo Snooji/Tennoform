@@ -6,14 +6,19 @@ function loadModInfo(){if(MDI.data||MDI.busy||MDI.err)return;MDI.busy=true;
 /* one line saying what a mod does at max rank, for lists */
 function modFx(n){if(!MDI.data){loadModInfo();return ''}const x=MDI.data[n];if(!x||!x.fx.length)return '';
   return x.fx.map(l=>l.replace(/\n/g,' ')).join(' · ').slice(0,140)}
+/* what a mod or arcane does, for the older HTML cards (Farm finder, Frames): one line each */
+function modFxHTML(n){if(!MDI.data){loadModInfo();return ''}const x=MDI.data[n];if(!x||!x.fx.length)return '';
+  return `<div class="fx">${x.fx.map(l=>`<div>${esc(l.replace(/\n/g,' '))}</div>`).join('')}</div>`}
 {const _ms=modSlot;modSlot=function(slot,m,arc){const r=_ms(slot,m,arc);return {...r,pol:POL_L[r.pol]||r.pol,fx:modFx(m)}}}
 
+/* the game data marks every Warframe mod and aura as an augment; a real augment fits one named Warframe or item */
+const isAug=md=>!!(md&&md.aug&&md.for&&!/^(warframe|aura)$/i.test(md.for));
 const RAR_L={C:'Common',U:'Uncommon',R:'Rare',L:'Legendary',P:'Peculiar'};
 const POL_L={madurai:'Madurai',vazarin:'Vazarin',naramon:'Naramon',zenurik:'Zenurik',unairu:'Unairu',penjaga:'Penjaga',umbra:'Umbra',aura:'Aura',universal:'Any'};
 function modInfo(n){const arc=!!ARC[n]&&!MODS[n];const md=(arc?ARC[n]:MODS[n]);if(!md)return null;if(!MDI.data)loadModInfo();const x=(MDI.data||{})[n]||{};
   const p=PR[n]||{};const sl=(SEL[n]||[]).filter(s=>s[0]!=='__buy');const key=(arc?'arc|':'mod|')+n;
   return {n,arc,key,owned:on(key),loading:!MDI.data&&!MDI.err,type:md.ty||'',fits:x.fits||md.for||'',rarity:RAR_L[md.r]||'',polarity:arc?'':(POL_L[md.pol]||md.pol||''),
-    rank:x.rk??(arc?md.mx:null),drain:x.dr??null,fx:x.fx||[],fx0:x.fx0||[],augment:!!md.aug,
+    rank:x.rk??(arc?md.mx:null),drain:x.dr??null,fx:x.fx||[],fx0:x.fx0||[],augment:isAug(md),
     drops:(md.dr||[]).slice(0,8).map(d=>({where:d[0],chance:d[1]})),moreDrops:Math.max(0,(md.dr||[]).length-8),src:md.src||'',
     tradable:!!MS[n],wfm:MS[n]?'https://warframe.market/items/'+MS[n]:'',a7:p.a7??null,a30:p.a30??null,v7:p.v7??null,date:D.meta.prices||'',
     sellers:sl.slice(0,3).map(s=>({name:s[0],price:s[1],qty:s[2],rank:s[5]??null,status:s[4]==='ingame'?'In game':s[4]==='online'?'Online':'',whisper:whisper(n,s)}))}}

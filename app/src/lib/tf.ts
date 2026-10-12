@@ -204,7 +204,7 @@ export type TFApi = {
   setDup(n: string, v: string): void
   planSet(o: { ref?: string; squad?: string; era?: string; sort?: string; q?: string; own?: boolean }): void
   arsenal(): ArsenalData
-  arsenalSet(o: Partial<Record<"tab" | "cat" | "own" | "lf" | "ls" | "arq" | "art" | "ars" | "aro" | "kmt" | "kms" | "sel" | "bi", string>>): void
+  arsenalSet(o: Partial<Record<"tab" | "cat" | "own" | "lf" | "ls" | "arq" | "art" | "ars" | "aro" | "kmt" | "kms" | "kmq" | "kmo" | "sel" | "bi", string>> & { kmMore?: boolean }): void
   arcAdj(n: string, d: number): void
   arcSet(n: string, v: string): void
   lichSet(n: string, o: { e?: string; b?: string }): void
@@ -508,7 +508,7 @@ export type WorldData = {
   cutters?: { n: string; key: string; done: boolean; where: string; desc: string }[]; tips?: string[]
 }
 export type VaultCard = { n: string; c: string; img: string; text: string; watched?: boolean }
-export type MarketModRow = { n: string; kind: "Mod" | "Arcane"; type: string; rar: string; a7: number | null; v7: number; seller: { name: string; price: number; rank: number | null; wh: string } | null; url: string }
+export type MarketModRow = { n: string; kind: "Mod" | "Arcane"; type: string; rar: string; fx: string; a7: number | null; v7: number; seller: { name: string; price: number; rank: number | null; wh: string } | null; url: string }
 export type MarketMods = { q: string; kind: string; sort: string; total: number; count: number; more: number; rows: MarketModRow[] }
 export type MarketData = {
   tab: "sets" | "vault" | "mods" | "alerts"; snapshot: string
@@ -544,8 +544,9 @@ export type ArsenalData = {
   factions?: { f: string; have: number; total: number }[]; how?: { f: string; who: string; how: string; vanq: string; alt: string }[]; elements?: string[]
   list?: { n: string; f: string; c: string; go: string; own: boolean; key: string; rank: number; left: number; xp: number; price: string; el: string; bonus: number }[]
   q?: string; type?: string; sort?: string; types?: string[]; count?: number; owned?: number; maxed?: number
-  arcs?: { n: string; go: string; copies: number; need: number; maxRank: number; rank: number; price: string; type: string; uses: string[]; drops: string }[]
-  mods?: { n: string; go: string; key: string; done: boolean; price: string; type: string; uses: number; src: string }[]
+  arcs?: { n: string; go: string; copies: number; need: number; maxRank: number; rank: number; price: string; type: string; uses: string[]; drops: string; fx: string[] }[]
+  mods?: { n: string; go: string; key: string; done: boolean; price: string; type: string; uses: number; src: string; fx: string[]; fits: string; rank: number | null; drain: number | null; pol: string; aug: boolean }[]
+  found?: number; more?: number; loading?: boolean
 }
 export type TennoData = {
   tab: string; tabs: { value: string; label: string }[]; name: string; synced: string; inGame: string; mrLabel: string; pct: number; showSign: boolean; html: string

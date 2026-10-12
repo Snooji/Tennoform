@@ -3,7 +3,7 @@
 let ISLV=0;
 document.addEventListener('click',e=>{if(e.target.closest('.tf-island')&&e.target.closest('button,a'))ISLV++},true);
 const FFD={key:'',html:''};
-function farmDetail(){const sel=state.farmSel||'';if(!sel)return '';const k=sel+'|'+ISLV;if(FFD.key!==k){FFD.key=k;FFD.html=detail(sel)}return FFD.html}
+function farmDetail(){const sel=state.farmSel||'';if(!sel)return '';const k=sel+'|'+ISLV+'|'+(MDI.data?1:0);if(FFD.key!==k){FFD.key=k;FFD.html=detail(sel)}return FFD.html}
 function farmData(){const ft=state.ffT||'all';const cats=ffCats(ft);const cat=cats.some(c=>c[0]===state.ffC)?state.ffC:'';const q=state.farmQ||'';
   const total=search('',ft,cat).length;const r=unvFilter(search(q,ft,cat));const lim=state.ffLim||60;
   const items=r.slice(0,lim).map(([n,t,l])=>{const it=t==='item'?MIX[n]:null;const left=it?mxp(it)-itemXP(n):0;return {n,t,label:l,key:t+'|'+n,xp:it?mxp(it):0,left,img:t==='item'||t==='part'?IMG(t==='part'?((partOwner(n)||{}).n||''):n):''}});
