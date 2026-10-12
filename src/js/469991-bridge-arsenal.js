@@ -19,21 +19,29 @@ function arsenalData(){const tab=state.aTab||'top';const out={tab};
       factions:['Kuva','Tenet','Coda'].map(f=>{const a=D.lich.filter(w=>w.f===f);return {f,have:a.filter(w=>own(w.n)).length,total:a.length}}),
       how:Object.entries(D.lichsrc).map(([f,s])=>({f,who:s.who,how:s.how,vanq:s.vanq,alt:s.alt})),elements:ELEM.slice(1),
       list:list.map(w=>{const v=L2[w.n]||{};const it=MIX[w.n];return {n:w.n,f:w.f,c:w.c,go:linkKey(w.n),own:own(w.n),key:'lich|'+w.n,rank:rankOf(w.n)&&!on('m|'+w.n)?rankOf(w.n):0,left:it?mxp(it)-itemXP(w.n):0,xp:it?mxp(it):0,price:strip(priceChip(w.n)),el:v.e||'',bonus:+v.b||0}})})}
-  else if(tab==='arc'){const q=(state.arQ||'').toLowerCase().trim(),tf=state.arT||'all',sf=state.arS||'all',so=state.arO||'use';const A=P.arc||{};const U2=arcUses();
+  else if(tab==='arc'){if(!MDI.data)loadModInfo();const q=(state.arQ||'').toLowerCase().trim(),AFX=n=>(((MDI.data||{})[n]||{}).fx||[]).join(' ').toLowerCase(),tf=state.arT||'all',sf=state.arS||'all',so=state.arO||'use';const A=P.arc||{};const U2=arcUses();
     const types=[...new Set(Object.values(ARC).map(a=>a.ty).filter(Boolean))].sort();
-    let list=Object.values(ARC).filter(a=>(!q||a.n.toLowerCase().includes(q))&&(tf==='all'||a.ty===tf)).filter(a=>{const c=+A[a.n]||0,mx=arcCopies(a.mx||5);return sf==='all'||(sf==='used'&&U2[a.n])||(sf==='own'&&c>0)||(sf==='max'&&c>=mx)||(sf==='part'&&c>0&&c<mx)||(sf==='none'&&!c)});
+    let list=Object.values(ARC).filter(a=>(!q||a.n.toLowerCase().includes(q)||AFX(a.n).includes(q))&&(tf==='all'||a.ty===tf)).filter(a=>{const c=+A[a.n]||0,mx=arcCopies(a.mx||5);return sf==='all'||(sf==='used'&&U2[a.n])||(sf==='own'&&c>0)||(sf==='max'&&c>=mx)||(sf==='part'&&c>0&&c<mx)||(sf==='none'&&!c)});
     list.sort((a,b)=>so==='name'?a.n.localeCompare(b.n):so==='price'?((pv(b.n)??-1)-(pv(a.n)??-1)):so==='need'?((arcCopies(b.mx||5)-(+A[b.n]||0))-(arcCopies(a.mx||5)-(+A[a.n]||0))):(((U2[b.n]?U2[b.n].size:0)-(U2[a.n]?U2[a.n].size:0))||a.n.localeCompare(b.n)));rv('arO',list);
     Object.assign(out,{q:state.arQ||'',type:tf,status:sf,sort:so,types,count:Object.keys(ARC).length,owned:Object.values(ARC).filter(a=>(+A[a.n]||0)>0).length,maxed:Object.values(ARC).filter(a=>(+A[a.n]||0)>=arcCopies(a.mx||5)).length,
-      arcs:list.slice(0,200).map(a=>{const c=+A[a.n]||0,mx=a.mx||5,need=arcCopies(mx);const u=U2[a.n];return {n:a.n,go:linkKey(a.n),copies:c,need,maxRank:mx,rank:arcRank(c),price:strip(priceChip(a.n)),type:a.ty||'',uses:u?[...u]:[],drops:a.dr&&a.dr.length?strip(dropsList(a.dr,2)):''}})})}
-  else{const sf=state.kmS||'all',tf=state.kmT||'all';const all=keyMods();const types=[...new Set(all.map(x=>x.md.ty).filter(Boolean))].sort();
-    const list=all.filter(x=>(tf==='all'||x.md.ty===tf)&&(sf==='all'||(sf==='miss'&&!on('mod|'+x.n))||(sf==='have'&&on('mod|'+x.n))||(sf==='trade'&&x.md.tr)));
-    Object.assign(out,{type:tf,status:sf,types,have:all.filter(x=>on('mod|'+x.n)).length,total:all.length,
-      mods:list.map(x=>({n:x.n,go:linkKey(x.n),key:'mod|'+x.n,done:on('mod|'+x.n),price:strip(priceChip(x.n)),type:x.md.ty||'',uses:x.s.size,src:x.md.src?x.md.src:x.md.dr&&x.md.dr.length?strip(dropsList(x.md.dr,2)):'Trade on warframe.market'}))})}
+      arcs:list.slice(0,200).map(a=>{const c=+A[a.n]||0,mx=a.mx||5,need=arcCopies(mx);const u=U2[a.n];return {n:a.n,go:linkKey(a.n),copies:c,need,maxRank:mx,rank:arcRank(c),price:strip(priceChip(a.n)),type:a.ty||'',uses:u?[...u]:[],fx:(((MDI.data||{})[a.n]||{}).fx||[]).map(l=>l.replace(/\n/g,' ')),drops:a.dr&&a.dr.length?strip(dropsList(a.dr,2)):''}})})}
+  else{/* every mod, with what it does: search by name or by effect ("status chance", "Heat"), filter by type and what you own */
+    if(!MDI.data)loadModInfo();const q=(state.kmQ||'').toLowerCase().trim(),sf=state.kmS||'all',tf=state.kmT||'all',so=state.kmO||'use';
+    const used={};keyMods().forEach(x=>used[x.n]=x.s);const fxOf=n=>((MDI.data||{})[n]||{}).fx||[];
+    const all=Object.values(MODS).filter(m=>m.ty&&m.ty!=='Focus Way'&&!/Riven Mod$/.test(m.ty));
+    const types=[...new Set(all.map(m=>m.ty))].sort();
+    let list=all.filter(m=>(tf==='all'||m.ty===tf)&&(sf==='all'||(sf==='miss'&&!on('mod|'+m.n))||(sf==='have'&&on('mod|'+m.n))||(sf==='used'&&used[m.n])||(sf==='trade'&&m.tr)||(sf==='aug'&&isAug(m)))
+      &&(!q||m.n.toLowerCase().includes(q)||(m.for||'').toLowerCase().includes(q)||fxOf(m.n).some(l=>l.toLowerCase().includes(q))));
+    list.sort((a,b)=>so==='name'?a.n.localeCompare(b.n):so==='price'?((pv(b.n)??-1)-(pv(a.n)??-1)):(((used[b.n]?used[b.n].size:0)-(used[a.n]?used[a.n].size:0))||a.n.localeCompare(b.n)));rv('kmO',list);
+    const n=Math.max(60,+state.kmN||60);const x=MDI.data||{};
+    Object.assign(out,{q:state.kmQ||'',type:tf,status:sf,sort:so,types,have:all.filter(m=>on('mod|'+m.n)).length,total:all.length,found:list.length,more:Math.max(0,list.length-n),loading:!MDI.data&&!MDI.err,
+      mods:list.slice(0,n).map(m=>{const i=x[m.n]||{};return {n:m.n,go:linkKey(m.n),key:'mod|'+m.n,done:on('mod|'+m.n),price:strip(priceChip(m.n)),type:m.ty||'',uses:used[m.n]?used[m.n].size:0,
+        src:m.src?m.src:m.dr&&m.dr.length?strip(dropsList(m.dr,2)):m.tr?'Trade on warframe.market':'',fx:(i.fx||[]).map(l=>l.replace(/\n/g,' ')),fits:i.fits||m.for||'',rank:i.rk??null,drain:i.dr??null,pol:POL_L[m.pol]||m.pol||'',aug:isAug(m)}})})}
   return out}
 Object.assign(window.TF,{
   arsenal:()=>arsenalData(),
-  arsenalSet:o=>{const m={tab:'aTab',cat:'wbC',own:'wbO',lf:'lF',ls:'lS',arq:'arQ',art:'arT',ars:'arS',aro:'arO',kmt:'kmT',kms:'kmS'};for(const k in o)if(m[k])state[m[k]]=o[k];
-    if(o.sel!=null){state[(state.aTab||'builds')==='comp'?'cbSel':'wbSel']=o.sel;state.wbI=0}if(o.bi!=null)state.wbI=+o.bi;saveUI();tfNotify()},
+  arsenalSet:o=>{const m={tab:'aTab',cat:'wbC',own:'wbO',lf:'lF',ls:'lS',arq:'arQ',art:'arT',ars:'arS',aro:'arO',kmt:'kmT',kms:'kmS',kmq:'kmQ',kmo:'kmO'};for(const k in o)if(m[k])state[m[k]]=o[k];
+    if(o.sel!=null){state[(state.aTab||'builds')==='comp'?'cbSel':'wbSel']=o.sel;state.wbI=0}if(o.bi!=null)state.wbI=+o.bi;if(o.kmq!=null||o.kmt||o.kms)state.kmN=60;if(o.kmMore)state.kmN=(Math.max(60,+state.kmN||60))+120;saveUI();tfNotify()},
   arcAdj:(n,d)=>{P.arc=P.arc||{};P.arc[n]=Math.max(0,(+P.arc[n]||0)+d);if(!P.arc[n])delete P.arc[n];saveProfile();tfNotify()},
   arcSet:(n,v)=>{P.arc=P.arc||{};const c=Math.max(0,+v||0);if(c)P.arc[n]=c;else delete P.arc[n];saveProfile();tfNotify()},
   lichSet:(n,o)=>{P.lich=P.lich||{};const v=P.lich[n]=P.lich[n]||{};if(o.e!=null)v.e=o.e;if(o.b!=null)v.b=Math.max(0,Math.min(60,+o.b||0));saveProfile();tfNotify()}

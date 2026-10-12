@@ -18,7 +18,7 @@ function frames(){const ff=state.frF||'all';const fr=Object.values(I).filter(i=>
   return h+'</div></div>'}
 function modCard(slot,m){const md=MODS[m]||{};const k='mod|'+m;
   const src=md.src?esc(md.src):(md.dr&&md.dr.length?dropsList(md.dr,2):'Trade on warframe.market');
-  return `<div class="mod${on(k)?' done':''}">${ck(k)}<div><div class="slot">${slot}${md.pol?` · <span class="pol">${esc(md.pol)}</span>`:''}</div><div class="nm"><span class="lbl">${esc(m)}</span> ${priceChip(m)}</div><div class="src">${src}</div>${sellerRow(m)}</div></div>`}
+  return `<div class="mod${on(k)?' done':''}">${ck(k)}<div><div class="slot">${slot}${md.pol?` · <span class="pol">${esc(md.pol)}</span>`:''}</div><div class="nm"><span class="lbl">${esc(m)}</span> ${priceChip(m)}</div>${modFxHTML(m)}<div class="src">${src}</div>${sellerRow(m)}</div></div>`}
 function arcCard(a){const ad=ARC[a]||{};const k='arc|'+a;
-  return `<div class="mod${on(k)?' done':''}">${ck(k)}<div><div class="slot">Arcane</div><div class="nm"><span class="lbl">${esc(a)}</span> ${priceChip(a)}</div><div class="src">${ad.dr&&ad.dr.length?dropsList(ad.dr,2):'Trade on warframe.market'}</div>${sellerRow(a)}</div></div>`}
+  return `<div class="mod${on(k)?' done':''}">${ck(k)}<div><div class="slot">Arcane</div><div class="nm"><span class="lbl">${esc(a)}</span> ${priceChip(a)}</div>${modFxHTML(a)}<div class="src">${ad.dr&&ad.dr.length?dropsList(ad.dr,2):'Trade on warframe.market'}</div>${sellerRow(a)}</div></div>`}
 
