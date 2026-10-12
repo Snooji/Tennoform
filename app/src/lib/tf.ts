@@ -259,7 +259,7 @@ export type TFApi = {
   buildLib(): BuildLibData
   modInfo(n: string): ModInfo | null
   buildInsight(id: string, ov?: { mods: string[]; arcanes: string[] }): BuildInsight | null
-  buildLibSet(o: { q?: string; kind?: string; src?: string; sort?: string; sel?: string | null; more?: boolean }): void
+  buildLibSet(o: { q?: string; goal?: string; kind?: string; src?: string; sort?: string; sel?: string | null; more?: boolean }): void
   buildLibReload(): void
   buildGoal(id: string): void
   buildGoalRemove(id: string): void
@@ -702,13 +702,14 @@ export type GuidesData = {
 export type BuildCard = {
   id: string; src: "meta" | "player" | "mine"; item: string; fits?: string[]; img: string; kind: string; cat: string; name: string; role: string
   author: string; score: number; up: number; down: number; myVote: number; have: number; total: number; goal: boolean; at: number; dated?: string; stale?: boolean
+  tags: ("sp" | "budget" | "starter")[]
 }
 export type BuildDetail = BuildCard & {
   notes: string; helminth: string; mine: boolean; doc: string; mods: ModSlot[]; arcanes: ModSlot[]
   itemOwned: boolean; itemGoal: boolean; canVote: boolean; authorUid: string
 }
 export type BuildLibData = {
-  q: string; kind: string; src: string; sort: string; total: number; more: boolean; list: BuildCard[]
+  q: string; goal: string; kind: string; src: string; sort: string; total: number; more: boolean; list: BuildCard[]
   shared: { loading: boolean; err: string; count: number; online: boolean }; signedIn: boolean; sel: BuildDetail | null
 }
 export type BuildDraft = {
