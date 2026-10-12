@@ -65,6 +65,10 @@ function Editor({ e, items }: { e: NonNullable<MyBuildsData["edit"]>; items: str
         </>
       ) : <p className="text-sm text-muted-foreground">Pick what you're building first; the mod slots then show only mods that fit it.</p>}
       <label className={field}>Notes for players who copy it<Textarea value={d.notes} onChange={(x) => set("notes", x.target.value)} maxLength={600} rows={3} placeholder="How to play it, what to swap on a budget, Forma tips" className="text-sm font-normal text-foreground" /></label>
+      <label className={field}>Your build on Overframe (optional)
+        <Input type="url" value={d.link || ""} onChange={(x) => set("link", x.target.value)} maxLength={200} placeholder="https://overframe.gg/build/…" className="h-10 text-sm font-normal text-foreground" aria-invalid={!(!d.link || /^https:\/\/(www\.)?overframe\.gg\/build\/[0-9]+(\/[A-Za-z0-9_%.-]+)*\/?$/.test(d.link.trim())) || undefined} />
+        <span className="text-xs font-normal text-muted-foreground">{!d.link || /^https:\/\/(www\.)?overframe\.gg\/build\/[0-9]+(\/[A-Za-z0-9_%.-]+)*\/?$/.test(d.link.trim()) ? "If you posted this build on Overframe too, paste its link and players can open it there. Only link your own builds." : "That isn't an Overframe build link. It should start with https://overframe.gg/build/"}</span>
+      </label>
       <div className="flex flex-wrap gap-2">
         <Button className="h-10 px-5" onClick={() => tf().myBuildSave(d)}>Save build</Button>
         <Button variant="outline" className="h-10" onClick={() => tf().myBuildEdit(null)}><Undo2 /> Cancel</Button>

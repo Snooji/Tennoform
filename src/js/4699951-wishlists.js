@@ -35,7 +35,10 @@ function cirWatchSet(n,v){const rest=cirWatch().filter(x=>x!==n);P.cirWatch=v?[.
 /* builds: when each one was shared or last reviewed, and a note when it's old enough that patches may have changed it */
 const BUILDS_REVIEWED='2026-10-05';   /* the community picks were last checked against the game on this date */
 const STALE_DAYS=180;
-{const _b=bCard;bCard=function(b){const c=_b(b);const t=b.src==='player'?(b.at||0):Date.parse(BUILDS_REVIEWED);
+{const _b=bCard;bCard=function(b){const c=_b(b);
+  if(b.src==='wiki'){const mo=d=>d?new Date(d+'T12:00:00Z').toLocaleDateString([],{month:'short',year:'numeric'}):'';const t=Date.parse(b.updated||b.created||'')||0;
+    c.dated='Made '+mo(b.created)+(b.updated&&b.updated.slice(0,7)!==(b.created||'').slice(0,7)?' · updated '+mo(b.updated):'');c.stale=!!t&&Date.now()-t>STALE_DAYS*DAY;return c}
+  const t=b.src==='player'?(b.at||0):Date.parse(BUILDS_REVIEWED);
   c.dated=t?(b.src==='player'?'Shared ':'Reviewed ')+fdate(new Date(t).toISOString().slice(0,10)):'';c.stale=!!t&&Date.now()-t>STALE_DAYS*DAY;return c}}
 
 Object.assign(window.TF,{baroWish:(n,v)=>baroWishSet(n,v),baroSuggest:q=>baroSuggest(q),circuitWatch:(n,v)=>cirWatchSet(n,v)});

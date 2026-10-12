@@ -13,6 +13,9 @@ D['guides'] = json.load(open(gp)) if os.path.exists(gp) else []
 fp = os.path.join(H, 'farms.json')
 D['ways'] = json.load(open(fp)) if os.path.exists(fp) else []
 # Foundry recipes for everything craftable that isn't masterable gear (build/make_crafts.py)
+# Warframe Wiki user builds, credited to their authors (build/make_wikibuilds.py)
+wp = os.path.join(H, 'wikibuilds.json')
+D['wikib'] = json.load(open(wp)) if os.path.exists(wp) else []
 cp = os.path.join(H, 'crafts.json')
 D['crafts'] = json.load(open(cp)) if os.path.exists(cp) else {}
 D['prices'] = mk['prices']

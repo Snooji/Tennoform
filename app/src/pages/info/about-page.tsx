@@ -89,6 +89,9 @@ export function AboutPage() {
       "Written by Tennoform from widely used community setups, then checked by a script so every mod exists and no two mods clash. Each build says what it's for and what to upgrade later. They're guidance, not the only way to play. Every build also links searches for more builds on Overframe, YouTube and Reddit.",
       `Last reviewed ${d.buildsReviewed || "recently"}`],
     ["Player builds", "Shared by players on Tennoform and ranked by their votes", "Live"],
+    ["Warframe Wiki builds",
+      <>Player-written builds from the <Ext href="https://wiki.warframe.com/w/Category:User_Builds">Warframe Wiki's User Builds</Ext>, each credited to its author with the date it was made and last updated, a link to the original page, and the wiki's licence (<Ext href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</Ext>). Many are years old, and each one says so.</>,
+      "Imported Oct 2026"],
     ["Farm routes, Steel Path advice, recommendations", "Tennoform's own guidance, based on the data above and community knowledge", "Reviewed by hand"],
   ]
   return (

@@ -13,6 +13,9 @@ function bTags(b){if(Array.isArray(b.tags)&&b.tags.length)return b.tags.filter(t
   if(/starter|early game|beginner/.test(txt))t.push('starter');return t}
 function metaBuilds(){if(METAB)return METAB;const out=[];
   for(const src of [D.builds,D.wbuilds,D.cbuilds])for(const item in src||{})(src[item]||[]).forEach((b,i)=>out.push({id:'m:'+item+':'+i,src:'meta',item,name:b.name||'Build',role:b.role||'',aura:b.aura||'',exilus:b.exilus||'',mods:b.mods||[],arcanes:b.arcanes||[],helminth:b.helminth||'',notes:b.notes||'',tags:b.tags||[]}));
+  /* Warframe Wiki user builds: credited to their authors, with when they were made and last edited (CC BY-NC-SA 3.0) */
+  (D.wikib||[]).forEach((b,i)=>out.push({id:'w:'+i,src:'wiki',item:b.item,name:b.name||'Build',role:'',aura:b.aura||'',exilus:'',mods:b.mods||[],arcanes:b.arcanes||[],helminth:'',notes:b.notes||'',
+    author:b.author||'',url:b.url||'',created:b.created||'',updated:b.updated||'',exact:!!b.exact,gone:b.gone||[],forma:b.forma||'',at:Date.parse(b.updated||b.created||'')||0}));
   return METAB=out}
 function loadShared(force){if(!FB||SB.loading||(SB.list&&!force&&Date.now()-SB.at<120000))return;SB.loading=true;SB.err='';tfNotify();
   FB.fs.collection('builds').orderBy('score','desc').limit(300).get().then(s=>{SB.list=s.docs.map(d=>({id:'p:'+d.id,doc:d.id,src:'player',...d.data()}));SB.at=Date.now()})
@@ -25,15 +28,15 @@ function bCard(b){const it=I[b.item];const h=bHave(b);const mv=(P.bv||{})[b.doc]
   return {id:b.id,src:b.src,item:b.item,fits:bFits(b),img:IMG(b.item),kind:it?BKIND(it.c):'Other',cat:it?it.c:'',name:b.name,role:b.role||'',author:b.author||'',score:b.score||0,up:b.up||0,down:b.down||0,myVote:mv,have:h.have,total:h.total,
     goal:(P.bg||[]).some(g=>g.from===b.id),at:b.at||0,tags:bTags(b)}}
 function bDetail(b){const it=I[b.item];const c=it?it.c:'';const sl=BSLOTS(c);
-  return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
+  return {...bCard(b),notes:b.notes||'',helminth:b.helminth||'',wiki:b.src==='wiki'?{url:b.url,created:b.created,updated:b.updated,exact:b.exact,gone:b.gone,forma:b.forma}:null,link:b.src==='player'||b.src==='mine'?ofLink(b.link):'',mine:b.src==='player'&&b.uid===SO.uid,doc:b.doc||'',
     mods:[...(b.aura?[modSlot(sl.aura||'Aura',b.aura)]:[]),...(b.exilus?[modSlot('Exilus',b.exilus)]:[]),...b.mods.filter(Boolean).map(m=>modSlot('Mod',m))],
     arcanes:(b.arcanes||[]).filter(Boolean).map(a=>modSlot('Arcane',a,true)),
     itemOwned:it?famOwned(b.item):true,itemGoal:(P.goals||[]).includes(b.item),canVote:b.src==='player'&&!!SO.uid}}
 function buildLibData(){const q=(state.blQ||'').toLowerCase().trim(),g=state.blG||'all',k=state.blK||'all',s=state.blS||'all',so=state.blO||'top';
   if(s!=='meta')loadShared();
-  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
+  let L=allBuilds().filter(b=>(s==='all'||(s==='meta'&&b.src==='meta')||(s==='players'&&b.src==='player')||(s==='wiki'&&b.src==='wiki'))&&(!q||(b.item+' '+bFits(b).join(' ')+' '+b.name+' '+(b.role||'')+' '+(b.author||'')).toLowerCase().includes(q)));
   L=L.map(bCard).filter(c=>(k==='all'||c.kind===k)&&(g==='all'||c.tags.includes(g)));
-  if(so==='top')L.sort((a,b)=>(b.src==='player')-(a.src==='player')||b.score-a.score||a.item.localeCompare(b.item));
+  const SRCR={player:0,meta:1,wiki:2};if(so==='top')L.sort((a,b)=>(SRCR[a.src]??1)-(SRCR[b.src]??1)||b.score-a.score||a.item.localeCompare(b.item));
   else if(so==='new')L.sort((a,b)=>b.at-a.at||a.item.localeCompare(b.item));
   else if(so==='own')L.sort((a,b)=>(+famOwned(b.item)-+famOwned(a.item))||(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
   else if(so==='ready')L.sort((a,b)=>(b.have/(b.total||1))-(a.have/(a.total||1))||a.item.localeCompare(b.item));
@@ -54,9 +57,12 @@ let BITEMS=null;
 const buildItems=()=>BITEMS||(BITEMS=Object.keys(I).filter(n=>BKIND(I[n].c)!=='Other'||BMODTY[I[n].c]).sort());
 function myBuildsData(){const ed=state.mbEdit;return {list:(P.myb||[]).map(b=>({...bCard({...b,id:'mine:'+b.id,src:'mine'}),pub:b.pub||'',updated:b.at||0})).reverse(),
   items:buildItems(),edit:ed?{...ed,cat:I[ed.item]?I[ed.item].c:'',opts:I[ed.item]?buildOptions(I[ed.item].c):null}:null,signedIn:!!SO.uid,online:!!FB&&HOSTED}}
+/* a player's own build on Overframe: only overframe.gg build pages are accepted */
+const OF_RE=/^https:\/\/(www\.)?overframe\.gg\/build\/[0-9]+(\/[A-Za-z0-9_%.-]+)*\/?$/;
+const ofLink=v=>{const u=String(v||'').trim().slice(0,200);return OF_RE.test(u)?u:''};
 const cleanB=d=>{const s=(v,n)=>String(v||'').trim().slice(0,n);const c=I[d.item]?I[d.item].c:'';const sl=BSLOTS(c);
   return {item:s(d.item,60),name:s(d.name,60)||'My build',role:s(d.role,60),aura:sl.aura?s(d.aura,60):'',exilus:sl.exilus?s(d.exilus,60):'',mods:(d.mods||[]).map(m=>s(m,60)).filter(Boolean).slice(0,10),
-    arcanes:(d.arcanes||[]).map(m=>s(m,60)).filter(Boolean).slice(0,sl.arcanes),helminth:sl.helminth?s(d.helminth,60):'',notes:s(d.notes,600)}};
+    arcanes:(d.arcanes||[]).map(m=>s(m,60)).filter(Boolean).slice(0,sl.arcanes),helminth:sl.helminth?s(d.helminth,60):'',notes:s(d.notes,600),...(ofLink(d.link)?{link:ofLink(d.link)}:{})}};
 const pubDoc=b=>({...cleanB(b),uid:SO.uid,author:myName(),at:Date.now()});
 function voteTx(doc,v){const ref=FB.fs.collection('builds').doc(doc),vref=ref.collection('votes').doc(SO.uid);
   return FB.fs.runTransaction(async tx=>{const s=await tx.get(ref),vs=await tx.get(vref);if(!s.exists)throw new Error('gone');const b=s.data(),old=vs.exists?vs.data().v:0;if(old===v)return b;
@@ -71,15 +77,15 @@ Object.assign(window.TF,{
     const addItem=I[b.item]&&!ownedItem(b.item)&&!(P.goals||[]).includes(b.item);if(addItem){P.goals=P.goals||[];P.goals.push(b.item)}
     saveProfile();tfNotify();toastAction('Saved as a goal'+(addItem?' (and '+b.item+' added to Goals)':'')+'. Goals shows the mods you still need.','Open Goals',()=>{GO('goals')})},
   buildGoalRemove:id=>{const i=(P.bg||[]).findIndex(g=>g.id===id);if(i<0)return;const g=P.bg.splice(i,1)[0];saveProfile();tfNotify();toastAction('Removed the '+g.name+' goal','Undo',()=>{P.bg.splice(i,0,g);saveProfile();tfNotify()})},
-  buildCopy:id=>{const b=buildById(id);if(!b)return;const c=cleanB(b);state.mbEdit={...c,name:(b.src==='player'&&b.author?b.author+"'s ":'')+c.name,mods:[...c.mods,...Array(Math.max(0,8-c.mods.length)).fill('')]};state.aTab='mine';state.blSel=null;saveUI();
+  buildCopy:id=>{const b=buildById(id);if(!b)return;const c=cleanB(b);delete c.link;if(b.src==='wiki')c.notes=(`Based on ${b.author}'s build on the Warframe Wiki (CC BY-NC-SA 3.0): ${b.url}. `+c.notes).slice(0,600);state.mbEdit={...c,name:(b.src==='player'&&b.author?b.author+"'s ":'')+c.name,mods:[...c.mods,...Array(Math.max(0,8-c.mods.length)).fill('')]};state.aTab='mine';state.blSel=null;saveUI();
     if(HASH()!=='#arsenal')GO('arsenal');tfNotify();window.scrollTo(0,0)},
   buildVote:async(id,v)=>{const b=buildById(id);if(!b||b.src!=='player')return;if(!SO.uid){toast('Sign in to vote');return}P.bv=P.bv||{};const cur=P.bv[b.doc]||0;const nv=cur===v?0:v;
     try{const r=await voteTx(b.doc,nv);Object.assign(b,{up:r.up,down:r.down,score:r.score});if(nv)P.bv[b.doc]=nv;else delete P.bv[b.doc];saveProfile();tfNotify()}catch(e){toast("Couldn't save your vote. Try again.")}},
   myBuilds:()=>myBuildsData(),
   myBuildEdit:o=>{if(o===null)state.mbEdit=null;else if(o&&o.id&&!o.mods){const b=(P.myb||[]).find(x=>x.id===o.id);if(b)state.mbEdit={...b,mods:[...b.mods,...Array(Math.max(0,8-b.mods.length)).fill('')]}}else state.mbEdit={item:'',name:'',role:'',aura:'',exilus:'',mods:Array(8).fill(''),arcanes:['',''],helminth:'',notes:'',...(o||{})};tfNotify()},
-  myBuildSave:d=>{if(!I[d.item]){toast('Pick a Warframe, weapon or companion first');return false}P.myb=P.myb||[];const c=cleanB(d);let b=d.id&&P.myb.find(x=>x.id===d.id);
-    if(b)Object.assign(b,c,{at:Date.now()});else{b={id:'b'+Date.now().toString(36),...c,at:Date.now()};P.myb.push(b)}state.mbEdit=null;saveProfile();tfNotify();
-    if(b.pub&&SO.uid)FB.fs.collection('builds').doc(b.pub).update({...cleanB(b),author:myName()}).then(()=>{SB.at=0}).catch(()=>toast("Saved here, but couldn't update the shared copy."));toast('Build saved');return true},
+  myBuildSave:d=>{if(!I[d.item]){toast('Pick a Warframe, weapon or companion first');return false}P.myb=P.myb||[];const c=cleanB(d);let b=d.id&&P.myb.find(x=>x.id===d.id);const hadLink=!!(b&&b.link);
+    if(b){delete b.link;Object.assign(b,c,{at:Date.now()})}else{b={id:'b'+Date.now().toString(36),...c,at:Date.now()};P.myb.push(b)}state.mbEdit=null;saveProfile();tfNotify();
+    if(b.pub&&SO.uid)FB.fs.collection('builds').doc(b.pub).update({...cleanB(b),...(hadLink&&!c.link?{link:''}:{}),author:myName()}).then(()=>{SB.at=0}).catch(()=>toast("Saved here, but couldn't update the shared copy."));toast('Build saved');return true},
   myBuildDel:id=>{const i=(P.myb||[]).findIndex(x=>x.id===id);if(i<0)return;const b=P.myb.splice(i,1)[0];saveProfile();tfNotify();
     toastAction('Deleted '+b.name+(b.pub?'. The shared copy stays until you unshare it.':''),'Undo',()=>{P.myb.splice(i,0,b);saveProfile();tfNotify()})},
   myBuildPublish:async id=>{const b=(P.myb||[]).find(x=>x.id===id);if(!b)return;if(!SO.uid){toast('Sign in to share builds');return}if(!b.mods.length){toast('Add some mods before sharing');return}
