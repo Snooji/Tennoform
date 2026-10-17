@@ -38,6 +38,7 @@ export type TFApi = {
   details(): DetailsData
   openDetails(key: string): void
   back(): void
+  howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null
   google(): void
   signOut(): void
   account(): void

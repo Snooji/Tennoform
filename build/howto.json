@@ -1,0 +1,841 @@
+{
+ "Ash": {
+  "keep": [
+   "Smoke Screen"
+  ],
+  "loop": [
+   "Cast Smoke Screen to turn invisible before you engage a group.",
+   "Throw Shuriken at tough targets to soften them and strip their armor (with Seeking Shuriken).",
+   "Use Teleport to jump onto an enemy and finish it, which refunds some energy.",
+   "Cast Blade Storm on a crowd to mark them, then let your clones (or you) clear the marks.",
+   "Keep your melee weapon well modded: Blade Storm damage comes from it."
+  ],
+  "watch": "Blade Storm uses your melee weapon's damage, so a weak melee build makes the whole frame feel weak."
+ },
+ "Atlas": {
+  "keep": [
+   "Rumblers"
+  ],
+  "loop": [
+   "Cast Rumblers to get two stone brawlers and petrify enemies close to you.",
+   "Petrify a group to make them take more damage and drop healing rubble when killed.",
+   "Punch with Landslide: chain up to three hits for a bigger, cheaper combo.",
+   "Walk over rubble to stack armor and stay tanky.",
+   "Recast Rumblers when they crumble, then keep punching."
+  ],
+  "watch": "Rubble armor fades over time, so keep killing petrified enemies or your armor slowly drops away."
+ },
+ "Banshee": {
+  "keep": [
+   "Sonar"
+  ],
+  "loop": [
+   "Cast Sonar to reveal weak spots on nearby enemies.",
+   "Shoot the red weak spots: everyone in your squad gets the damage bonus.",
+   "Use Sonic Boom to push enemies away and lower their armor when they get close.",
+   "Cast Silence when you need enemies stunned and unable to use abilities.",
+   "Stay at range; Banshee is fragile."
+  ],
+  "watch": "Banshee has low health and armor, so do not stand in the open trading shots with heavy units."
+ },
+ "Baruuk": {
+  "keep": [
+   "Elude",
+   "Serene Storm"
+  ],
+  "loop": [
+   "Use Elude, Lull and Desolate Hands to erode Restraint (the bar on screen); lower Restraint also gives him damage reduction.",
+   "Use Elude to dodge bullets while you move into position.",
+   "Cast Lull to put a room to sleep if you need breathing room.",
+   "Once Restraint is low, activate Serene Storm and fight with Desert Wind fists.",
+   "Stay in Serene Storm while fighting; when it ends, erode Restraint again with your other abilities."
+  ],
+  "watch": "Elude stops protecting you while you attack, so do not rely on it during Serene Storm."
+ },
+ "Caliban": {
+  "keep": [
+   "Lethal Progeny"
+  ],
+  "loop": [
+   "Cast Lethal Progeny to summon Sentients that fight beside you.",
+   "Use Razor Gyre to dash through enemies; each hit gives back energy.",
+   "Fire Fusion Strike at groups to strip armor and shields.",
+   "Smash with Sentient Wrath to lift survivors so they take extra damage.",
+   "Finish lifted enemies with your weapons, then repeat."
+  ],
+  "watch": "Sentient Wrath leaves survivors floating only briefly, so follow up quickly or the damage bonus is wasted."
+ },
+ "Chroma": {
+  "keep": [
+   "Vex Armor",
+   "Elemental Ward"
+  ],
+  "loop": [
+   "Pick an element with Spectral Scream (tap to cycle); it changes what Elemental Ward does.",
+   "Cast Elemental Ward for its defensive buff (Cold adds armor, Electric adds shields).",
+   "Cast Vex Armor, then take some damage and get kills to build up its armor and damage buffs.",
+   "Fight with weapons while the buffs are high; recast Vex Armor before it runs out.",
+   "Drop Effigy in a spot you are defending if you need extra damage there."
+  ],
+  "watch": "Vex Armor only grows when you take damage or get kills, so casting it and hiding behind cover gives you a weak buff."
+ },
+ "Citrine": {
+  "keep": [
+   "Preserving Shell",
+   "Prismatic Gem"
+  ],
+  "loop": [
+   "Cast Preserving Shell to protect yourself and nearby allies.",
+   "Deploy Prismatic Gem; it shoots enemies your team is damaging and applies elemental status.",
+   "Hit groups with Fractured Blast for Slash status and more health and energy orb drops.",
+   "Use Crystallize to paralyze enemies, then shoot the crystals for critical damage.",
+   "Keep killing: kills and assists strengthen your shell."
+  ],
+  "watch": "Preserving Shell decays over time, so recast it before a big fight instead of after it breaks."
+ },
+ "Cyte-09": {
+  "keep": [
+   "Seek"
+  ],
+  "loop": [
+   "Plant Seek facing the enemies to reveal them through walls and boost weak point damage.",
+   "Throw Resupply ammo packs and pick the element your weapon needs.",
+   "Aim for heads and other weak points; weak point kills raise your crit chance.",
+   "Summon the Neutralizer sniper for tough targets; hits on weak points ricochet to other weak points.",
+   "If you get swarmed, use Evade to jump back and turn invisible."
+  ],
+  "watch": "His bonuses are built around weak points, so body shots throw away most of his damage."
+ },
+ "Dagath": {
+  "keep": [
+   "Grave Spirit"
+  ],
+  "loop": [
+   "Cast Doom on a group of enemies so part of your damage is dealt to them again.",
+   "Cast Grave Spirit to give your weapons extra critical damage (doubled on Doomed enemies).",
+   "Use Wyrd Scythes to slow enemies and spread Doom to more targets.",
+   "Send Rakhali's Cavalry through Doomed enemies to strip their defenses.",
+   "Kill Doomed targets with your weapons, recasting Doom as new waves arrive."
+  ],
+  "watch": "Grave Spirit's damage bonus is much bigger on Doomed enemies, so do not forget to cast Doom first."
+ },
+ "Dante": {
+  "keep": [],
+  "loop": [
+   "Cast Light Verse to give your team Overguard and heal them.",
+   "Cast Dark Verse to bleed nearby enemies with Slash damage.",
+   "After two Verses, cast Final Verse: two Light Verses give Triumph, a big health and Overguard buff.",
+   "Open Noctua to shoot the exalted tome when you want direct damage.",
+   "Repeat the Verse pattern you need: more Light for safety, more Dark for damage."
+  ],
+  "watch": "Final Verse depends on which two Verses you cast before it, so casting them in the wrong order gives the wrong effect."
+ },
+ "Ember": {
+  "keep": [
+   "Immolation"
+  ],
+  "loop": [
+   "Cast Immolation; its heat meter climbs over time and gives more damage reduction as it rises.",
+   "Slam Fire Blast near groups to knock them back and strip their armor.",
+   "Cast Inferno on stripped enemies to burn and spread fire through the crowd.",
+   "Toss Fireball at single targets or to set enemies alight from range.",
+   "Watch your energy: at full heat Immolation starts draining it, so pick up orbs or turn it off."
+  ],
+  "watch": "Immolation drains energy once its meter is full; running dry leaves you without damage reduction."
+ },
+ "Equinox": {
+  "keep": [],
+  "loop": [
+   "Pick a form with Metamorphosis: Night-Form for safety, Day-Form for damage.",
+   "In Night-Form, cast Rest & Rage to put enemies to sleep.",
+   "In Day-Form, cast Mend & Maim and let it store damage from everything you kill or hit.",
+   "Turn Maim off near a group to release the stored damage in one big blast.",
+   "Switch forms whenever you need the other set of effects."
+  ],
+  "watch": "Each ability does something different in each form, so check which form you are in before casting."
+ },
+ "Excalibur": {
+  "keep": [
+   "Exalted Blade"
+  ],
+  "loop": [
+   "Cast Radial Blind to blind everything near you; blinded enemies are open to finishers.",
+   "Use Radial Javelin to hit a whole group with Slash status.",
+   "Turn on Exalted Blade and swing; it fires energy waves that hit enemies at range.",
+   "Use Slash Dash to move between groups and keep your melee combo going.",
+   "Recast Radial Blind whenever the blind wears off."
+  ],
+  "watch": "Exalted Blade drains energy while active, so keep an eye on your energy and pick up orbs."
+ },
+ "Follie": {
+  "keep": [],
+  "loop": [
+   "Open with Plein Air to tie nearby enemies to balloons; they float and lose armor and shields.",
+   "Pop the balloons (or let them drop) so enemies crash down for fall damage.",
+   "Cast Self Portrait to draw an effigy that absorbs damage for you and your allies.",
+   "Use Forced Perspective to reposition safely; you are invulnerable while you travel and it clears status.",
+   "Use Shadowgraph for the tool or item the situation calls for."
+  ],
+  "watch": "Self Portrait only grows when enemies die in its ink pool, so fight near it instead of running far away."
+ },
+ "Frost": {
+  "keep": [],
+  "loop": [
+   "On defense, cast Snow Globe over the objective; enemies inside are slowed and bullets are blocked.",
+   "Cast Avalanche when enemies bunch up to freeze them and strip armor.",
+   "Use Freeze to stop single dangerous targets.",
+   "Use Ice Wave to hit a line of enemies.",
+   "Recast Snow Globe before it breaks; up to several globes can be up at once."
+  ],
+  "watch": "Snow Globe's health is set when you cast it, so put it up before enemies arrive rather than mid-fight."
+ },
+ "Gara": {
+  "keep": [
+   "Splinter Storm"
+  ],
+  "loop": [
+   "Cast Splinter Storm to wrap yourself in glass: it cuts damage you take and hurts enemies near you.",
+   "Cast Mass Vitrify to crystallize enemies in a ring and block incoming fire.",
+   "Use Spectrorage to trap enemies attacking their own reflections.",
+   "Use Shattered Lash to break the Vitrify ring or hit enemies at range.",
+   "Recast Splinter Storm before it runs out."
+  ],
+  "watch": "Splinter Storm is your main defense, so letting it drop in a hard mission is the fastest way to die."
+ },
+ "Garuda": {
+  "keep": [],
+  "loop": [
+   "Use Bloodletting to turn some of your health into energy and clear status effects.",
+   "Hold Dread Mirror on an enemy to rip its life force into a shield, then release to fire it.",
+   "Place Blood Altar on an enemy to heal yourself and allies nearby.",
+   "Charge Seeking Talons and release to hit everything in the targeting area.",
+   "Fight with your weapons while the shield is up; repeat Bloodletting when energy is low."
+  ],
+  "watch": "Bloodletting costs health, so do not use it at low health without a heal (Blood Altar) ready."
+ },
+ "Gauss": {
+  "keep": [
+   "Kinetic Plating",
+   "Redline"
+  ],
+  "loop": [
+   "Keep Kinetic Plating up for damage resistance and to stop knockdowns.",
+   "Use Mach Rush to sprint around and charge your battery.",
+   "Cast Redline to supercharge your fire rate, reload and abilities while the battery is high.",
+   "Tap Thermal Sunder for a Cold blast or hold it for a Heat blast around you.",
+   "Keep moving with Mach Rush to keep the battery high."
+  ],
+  "watch": "Kinetic Plating's damage resistance depends on battery level, so standing still with an empty battery leaves you fragile."
+ },
+ "Grendel": {
+  "keep": [
+   "Nourish"
+  ],
+  "loop": [
+   "Cast Feast to swallow nearby enemies; they stay in your stomach.",
+   "Cast Nourish to heal, buff energy pickups and add Viral damage for the squad.",
+   "Roll with Pulverize to move, heal and knock enemies over.",
+   "Use Regurgitate to spit a swallowed enemy at a group.",
+   "Swallow new enemies to keep Nourish fueled."
+  ],
+  "watch": "Feast drains energy for each enemy in your stomach, so do not hold too many when energy is low."
+ },
+ "Gyre": {
+  "keep": [
+   "Rotorswell"
+  ],
+  "loop": [
+   "Cast Rotorswell to shock nearby enemies; critical hits from you trigger chain lightning.",
+   "Cast Cathode Grace for a burst of critical chance and energy regeneration.",
+   "Throw Arcsphere into groups so it shocks them over time.",
+   "Throw Coil Horizon into crowds to pull enemies in and blast them.",
+   "Keep killing to extend Cathode Grace."
+  ],
+  "watch": "Gyre has very little armor, so stay mobile and do not stand in front of heavy units."
+ },
+ "Harrow": {
+  "keep": [],
+  "loop": [
+   "Cast Condemn to chain enemies in place and refill your shields.",
+   "Cast Penance (spends shields) for faster reload and fire rate and lifesteal for your team.",
+   "Channel Thurible, then kill enemies (headshots count more) to give energy to allies.",
+   "Cast Covenant to make the squad briefly invulnerable; absorbed damage becomes crit chance.",
+   "Aim for heads during Covenant for the biggest bonus."
+  ],
+  "watch": "Thurible's energy bonus only pays out on kills after you stop channeling, so channel briefly and then go shoot."
+ },
+ "Hildryn": {
+  "keep": [
+   "Haven"
+  ],
+  "loop": [
+   "Hildryn uses shields instead of energy to cast, so keep your shields healthy.",
+   "Cast Haven to give allies shields and damage enemies near you.",
+   "Use Pillage to drain shields and armor from enemies and refill your own.",
+   "Fire Balefire for strong charged shots without using ammo.",
+   "Cast Aegis Storm to fly up and rain Balefire on enemies below."
+  ],
+  "watch": "Pillage is your main refill; if you stop using it in fights, your shields and casting run out together."
+ },
+ "Hydroid": {
+  "keep": [
+   "Plunder",
+   "Tentacle Swarm"
+  ],
+  "loop": [
+   "Cast Plunder in a crowd to strip their Armor and charge up your Corrosive bonus.",
+   "Drop Tentacle Swarm on the biggest group to hold them in place.",
+   "Throw Tempest Barrage onto the held enemies for extra damage.",
+   "Use Tidal Surge to cross the map or escape when surrounded.",
+   "Recast Plunder whenever the buff runs out."
+  ],
+  "watch": "Hydroid has little natural toughness, so don't stand in the open waiting for tentacles to do the work."
+ },
+ "Inaros": {
+  "keep": [
+   "Scarab Shell",
+   "Scarab Swarm"
+  ],
+  "loop": [
+   "Activate Scarab Shell to turn some Health into Armor; tap again to stop early.",
+   "Cast Scarab Swarm on groups for guaranteed Corrosive and to spawn Swarm Kavats.",
+   "Use Desiccation to blind nearby enemies and steal back Health.",
+   "Open Sandstorm when surrounded to grab enemies and heal yourself.",
+   "Fight in melee range; your huge Health pool is your shield."
+  ],
+  "watch": "Inaros has no shields, so Toxin and heavy Slash damage go straight to Health; keep Scarab Shell up and heal often."
+ },
+ "Ivara": {
+  "keep": [
+   "Prowl"
+  ],
+  "loop": [
+   "Pick Cloak or Sleep in Quiver to set up safe zones or knock out groups.",
+   "Turn on Prowl to go invisible and walk up to enemies to steal their loot.",
+   "Shoot from Prowl for big weak-point damage while staying hidden.",
+   "Use Navigator to steer an arrow through a line of enemies.",
+   "Pull out Artemis Bow when you need to delete a room."
+  ],
+  "watch": "Prowl drains energy and slows you; move too fast or run dry and you're exposed with very low Health."
+ },
+ "Jade": {
+  "keep": [
+   "Symphony Of Mercy",
+   "Ophanim Eyes"
+  ],
+  "loop": [
+   "Pick a song in Symphony of Mercy (Strength, Weapon Damage or Shields) and keep it running by killing.",
+   "Cast Ophanim Eyes to slow enemies and melt their Shields and Armor.",
+   "Drop Light's Judgment on a group to mark them with Judgments and heal allies inside.",
+   "Use Glory on High and alt-fire to detonate the Judgments for a big explosion."
+  ],
+  "watch": "Jade's damage depends on stripped Armor; skipping Ophanim Eyes on Steel Path makes everything slow to kill."
+ },
+ "Khora": {
+  "keep": [
+   "Venari",
+   "Strangledome"
+  ],
+  "loop": [
+   "Set Venari's posture (Attack, Protect or Heal) for the mission.",
+   "Cast Strangledome on a group to trap and choke them.",
+   "Use Whipclaw on the dome to damage everyone inside at once.",
+   "Ensnare a single enemy to tie up anyone who wanders near them."
+  ],
+  "watch": "Whipclaw uses your melee mods, so an unmodded or weak melee weapon leaves Khora with poor damage."
+ },
+ "Koumei": {
+  "keep": [
+   "Omamori",
+   "Kumihimo"
+  ],
+  "loop": [
+   "Cast Omamori to surround yourself with charms that can turn hits into healing.",
+   "Lay Kumihimo threads where enemies walk so they pick up random elemental statuses.",
+   "Cast Omikuji and complete its challenge to earn a Decree; hold to reject a bad roll.",
+   "Use Bunraku on enemies in front of you to stack many statuses before shooting them.",
+   "Kill with the weapon your passive picked to get bonus statuses."
+  ],
+  "watch": "Your dice add randomness; don't rely on Omamori alone in Steel Path when it rolls few charms."
+ },
+ "Kullervo": {
+  "keep": [
+   "Recompense",
+   "Collective Curse"
+  ],
+  "loop": [
+   "Cast Collective Curse on a group so damage to one hits them all.",
+   "Keep Recompense up: daggers that hit heal you, and at full Health you get Overguard.",
+   "Tap Wrathful Advance to teleport to an enemy with a heavy attack.",
+   "Drop Storm of Ukko on big groups and fight inside it."
+  ],
+  "watch": "Recompense daggers that miss hit you, so casting it with no enemies nearby chips your Health."
+ },
+ "Lavos": {
+  "keep": [
+   "Catalyze"
+  ],
+  "loop": [
+   "Hold an ability to imbue the next cast with its element (Toxin, Cold or Heat).",
+   "Cast Catalyze on groups after stacking elements for double damage per element.",
+   "Throw Transmutation Probe to shock enemies, cut cooldowns and turn pickups into Universal Orbs.",
+   "Use Vial Rush to move and freeze, and Ophidian Bite to heal."
+  ],
+  "watch": "Lavos uses cooldowns, not energy, so Efficiency mods do nothing for him; don't waste slots on them."
+ },
+ "Limbo": {
+  "keep": [
+   "Cataclysm",
+   "Stasis"
+  ],
+  "loop": [
+   "Cast Cataclysm to open a bubble of the Rift around a group.",
+   "Cast Stasis to freeze every enemy inside the Rift.",
+   "Use Rift Surge on rift-bound enemies so killing them spreads the effect.",
+   "Shoot while in the Rift; you only hit Rift enemies and they can't hurt you.",
+   "Use Banish to pull single targets in or out of the Rift."
+  ],
+  "watch": "Limbo in the wrong plane frustrates teammates and stops objectives; avoid trapping allies who need to hit enemies outside the Rift."
+ },
+ "Loki": {
+  "keep": [
+   "Invisibility"
+  ],
+  "loop": [
+   "Turn on Invisibility before moving into enemy view.",
+   "Cast Radial Disarm to take guns away from everyone nearby.",
+   "Drop a Decoy to pull enemy fire away from you or your team.",
+   "Use Switch Teleport to swap places with an enemy, ally or Decoy to escape."
+  ],
+  "watch": "Loki has very low Health and Shields; if Invisibility drops in a crowd you can die in a second."
+ },
+ "Mag": {
+  "keep": [
+   "Magnetize",
+   "Polarize"
+  ],
+  "loop": [
+   "Cast Polarize to strip enemy Shields and Armor and refill your shields.",
+   "Tap Magnetize on one enemy to trap the group around it.",
+   "Shoot into the Magnetize bubble to multiply the damage.",
+   "Use Crush to finish off weakened groups, or Pull to bring enemies to you."
+  ],
+  "watch": "Mag's survival is her shields; if you stop casting Polarize she becomes very fragile."
+ },
+ "Mesa": {
+  "keep": [
+   "Shatter Shield"
+  ],
+  "loop": [
+   "Keep Shatter Shield on to reflect bullets back at enemies.",
+   "Cast Shooting Gallery for bonus damage and to jam nearby enemy guns.",
+   "Use Ballistic Battery to store gun damage for a big shot.",
+   "Turn on Peacemaker and aim at groups; it auto-targets inside your aim cone."
+  ],
+  "watch": "Shatter Shield only stops bullets; melee and explosions still hurt, so don't stand still in Peacemaker."
+ },
+ "Mirage": {
+  "keep": [
+   "Hall Of Mirrors",
+   "Eclipse"
+  ],
+  "loop": [
+   "Cast Hall of Mirrors so your clones copy your shots.",
+   "Hold Eclipse for weapon damage, or tap it for damage reduction.",
+   "Throw Prism into groups to blind and laser them.",
+   "Use Sleight of Hand to trap nearby objects when enemies cluster."
+  ],
+  "watch": "Eclipse's mode depends on tap or hold; using the damage mode when you need defense gets you killed."
+ },
+ "Narin": {
+  "keep": [
+   "Naraemagi"
+  ],
+  "loop": [
+   "Use Neote to lunge through enemies, stacking Cold and Puncture and gaining Ice.",
+   "Cast Naraemagi near cold-affected enemies to refill Shields and gain Overguard.",
+   "Use Hakchum to leap and land on a group for Cold vulnerability.",
+   "When Ice is full, cast Nurinarim and attack to shatter Armor and Shields."
+  ],
+  "watch": "Nurinarim needs full Ice; don't waste your other abilities away from enemies or you can't build it."
+ },
+ "Nekros": {
+  "keep": [
+   "Shadows Of The Dead",
+   "Desecrate"
+  ],
+  "loop": [
+   "Soul Punch enemies to mark them for harvest.",
+   "Kill marked enemies so they join your Shadows of the Dead.",
+   "Keep Desecrate running over corpses for extra loot.",
+   "Use Terrify to make nearby enemies flee when you're overwhelmed."
+  ],
+  "watch": "Desecrate burns energy fast; without an energy plan you run dry mid-farm."
+ },
+ "Nezha": {
+  "keep": [
+   "Warding Halo"
+  ],
+  "loop": [
+   "Keep Warding Halo up to absorb damage and stun enemies that get close.",
+   "Throw Blazing Chakram so enemies take more damage and drop orbs.",
+   "Cast Divine Spears to lift a group, then recast to slam them.",
+   "Use Fire Walker to leave a burning trail as you move."
+  ],
+  "watch": "When Warding Halo breaks you're fragile; recast before it runs out instead of after."
+ },
+ "Nidus": {
+  "keep": [
+   "Parasitic Link"
+  ],
+  "loop": [
+   "Cast Virulence into groups to build Mutation stacks and steal Energy.",
+   "Use Larva to pull enemies into a tight bunch.",
+   "Hit the Larva group with Virulence for more stacks.",
+   "Keep Parasitic Link on a strong ally or on yourself for strength.",
+   "Use Ravenous for steady stack gain in long missions."
+  ],
+  "watch": "Mutation stacks prevent your death but are spent when you'd die; letting them run low on Steel Path is fatal."
+ },
+ "Nokko": {
+  "keep": [
+   "Brightbonnet",
+   "Stinkbrain"
+  ],
+  "loop": [
+   "Plant Stinkbrain near enemies to put them to sleep and apply Viral.",
+   "Plant Brightbonnet near your team for Energy and an Ability Strength buff.",
+   "Fire Sporespring through groups; bouncing off your mushrooms makes them pulse faster.",
+   "Use Reroot to become untargetable and heal when in danger."
+  ],
+  "watch": "Nokko is very fragile; let your mushrooms work from a distance instead of running into the crowd."
+ },
+ "Nova": {
+  "keep": [
+   "Molecular Prime"
+  ],
+  "loop": [
+   "Tap Molecular Prime to slow enemies and make them take double damage.",
+   "Hold Molecular Prime instead in exterminate runs to speed enemies toward you.",
+   "Keep Null Star particles up to reduce damage you take.",
+   "Throw Antimatter Drop at big targets; shoot it to charge it.",
+   "Place a Wormhole to cross gaps quickly."
+  ],
+  "watch": "Nova is fragile; Null Star running out of particles in a crowd is when most deaths happen."
+ },
+ "Nyx": {
+  "keep": [
+   "Chaos",
+   "Absorb"
+  ],
+  "loop": [
+   "Cast Chaos so enemies in range fight each other.",
+   "Use Psychic Bolts to weaken enemies' defenses.",
+   "Mind Control a strong enemy to fight for you.",
+   "Use Absorb when overwhelmed, then release it for a big blast and invulnerability."
+  ],
+  "watch": "Chaos makes enemies fight each other but they can still shoot you; don't treat it as invulnerability."
+ },
+ "Oberon": {
+  "keep": [
+   "Renewal",
+   "Hallowed Ground"
+  ],
+  "loop": [
+   "Cast Renewal to give allies Armor and heal them over time.",
+   "Lay Hallowed Ground under the team for status immunity and doubled healing.",
+   "Use Reckoning on groups to strip Armor and spawn Health orbs.",
+   "Smite tough single targets to remove their defenses."
+  ],
+  "watch": "Renewal drains energy while healing; leaving it on with nobody hurt wastes energy you'll need later."
+ },
+ "Octavia": {
+  "keep": [
+   "Mallet",
+   "Metronome"
+  ],
+  "loop": [
+   "Drop Mallet where enemies will shoot at it; damage it takes makes it stronger.",
+   "Cast Resonator to lure enemies; it merges with the Mallet to roam.",
+   "Keep Metronome up and crouch on the beat for invisibility (Nocturne).",
+   "Cast Amp near Mallets for a damage buff for the team."
+  ],
+  "watch": "Mallet needs enemies shooting it to deal damage; against melee-heavy factions it does much less."
+ },
+ "Oraxia": {
+  "keep": [
+   "Silken Stride"
+  ],
+  "loop": [
+   "Cast Silken Stride to gain status immunity, extra health and Toxin damage on your guns.",
+   "Throw Webbed Embrace onto a group to cocoon them and make them take more damage.",
+   "Fire Widow's Brood at the group; poisoned enemies hatch Scuttlers that fight for you when they die.",
+   "Use Mercy's Kiss on tough or wounded enemies to finish them and pick up the health and energy orbs.",
+   "Tap dodge in Silken Stride to leap to walls and keep moving between fights."
+  ],
+  "watch": "Silken Stride drains energy every second, so keep Mercy's Kiss kills coming for energy orbs or you drop out of your tanky form."
+ },
+ "Orion & Sirius": {
+  "keep": [
+   "Astral Shell"
+  ],
+  "loop": [
+   "Cast Astral Shell: the first hit you take is negated and leaves a decoy that pulls enemy fire.",
+   "Cast Event Horizon toward a group; the black hole drags enemies in and explodes when it ends.",
+   "Hit the black hole with Gravitic Slash to push it forward and add time to it.",
+   "Every ability you cast adds Constellation Stars; once you have a few, cast Celestial Clash.",
+   "In Celestial Clash, attack with the twin whose colour matches the next star for bonus critical chance."
+  ],
+  "watch": "Celestial Clash cannot be cast without Constellation Stars, so cast your other abilities first instead of opening with it."
+ },
+ "Protea": {
+  "keep": [
+   "Grenade Fan"
+  ],
+  "loop": [
+   "Hold Grenade Fan to make Shield Satellites that protect you and your team.",
+   "Place Dispensary near where you fight for health, energy and ammo pickups.",
+   "Deploy Blaze Artillery facing the enemies so it keeps firing at them.",
+   "Before a big fight, drop Temporal Anchor; when it rewinds it heals what you lost and explodes.",
+   "Refresh satellites and Dispensary whenever they run out."
+  ],
+  "watch": "Blaze Artillery only shoots where it faces, so aim it at the enemies when you place it, not at a wall."
+ },
+ "Qorvex": {
+  "keep": [
+   "Disometric Guard"
+  ],
+  "loop": [
+   "Cast Disometric Guard to protect you and nearby allies from status effects.",
+   "Place a Chyrinka Pillar where enemies are coming; it slows them and pulses Radiation.",
+   "Cast Containment Wall to crush enemies between walls and irradiate them.",
+   "Fire Crucible Blast into irradiated groups so they explode in a chain reaction.",
+   "Fight near your pillars and replace them when they expire."
+  ],
+  "watch": "Pillars and walls stay where you cast them, so drag the fight to them instead of running away from your setup."
+ },
+ "Revenant": {
+  "keep": [
+   "Mesmer Skin"
+  ],
+  "loop": [
+   "Cast Mesmer Skin before engaging; each charge blocks a hit and stuns the attacker.",
+   "Reave through groups to refill your health and shields.",
+   "Enthrall a tough enemy so it fights for you and spreads Enthrall to others.",
+   "When a room fills up, activate Danse Macabre and sweep the beams; hold fire for more damage.",
+   "Recast Mesmer Skin when the charge counter gets low."
+  ],
+  "watch": "Watch the Mesmer Skin charge counter: once it hits zero you take full damage, so recast before it runs out."
+ },
+ "Rhino": {
+  "keep": [
+   "Iron Skin"
+  ],
+  "loop": [
+   "Cast Iron Skin first; it soaks damage until it breaks.",
+   "Cast Roar before you start shooting to boost your squad's damage.",
+   "Use Rhino Stomp when surrounded to freeze enemies in place.",
+   "Recast Iron Skin as soon as it breaks, and Roar again when its timer ends."
+  ],
+  "watch": "Iron Skin does not come back on its own; recast it the moment it breaks or you are just a normal frame."
+ },
+ "Saryn": {
+  "keep": [
+   "Toxic Lash"
+  ],
+  "loop": [
+   "Cast Spores on an enemy in a group.",
+   "Cast Molt to leave a decoy that draws fire.",
+   "Turn on Toxic Lash and attack spored enemies to burst and spread the spores.",
+   "Keep spreading spores so their damage keeps growing.",
+   "Cast Miasma in the middle of spored enemies to finish them."
+  ],
+  "watch": "Spores only grow while they keep spreading, so keep hitting spored enemies instead of letting the infection die out."
+ },
+ "Sevagoth": {
+  "keep": [
+   "Gloom"
+  ],
+  "loop": [
+   "Turn on Gloom to slow nearby enemies and make your attacks steal health.",
+   "Cast Sow on groups to plant death seeds.",
+   "Cast Reap to detonate sown enemies; kills fill the Death Well.",
+   "When the Death Well is full, cast Exalted Shadow and fight with the Shadow's melee abilities.",
+   "Turn Gloom off when you no longer need it to save energy."
+  ],
+  "watch": "Gloom drains energy the whole time it is on, so don't leave it running while you are just moving between fights."
+ },
+ "Styanax": {
+  "keep": [
+   "Rally Point"
+  ],
+  "loop": [
+   "Cast Rally Point to regenerate energy for the squad and pull enemy attention to you.",
+   "Swing Tharros Strike into groups to strip shields and armor and heal yourself.",
+   "Throw Axios Javelin to pin an enemy to a wall and pull nearby enemies in.",
+   "Cast Final Stand on big groups to rain javelins on them."
+  ],
+  "watch": "Rally Point makes enemies target you, so keep your defences up before casting it in tough missions."
+ },
+ "Temple": {
+  "keep": [
+   "Ripper's Wail"
+  ],
+  "loop": [
+   "Watch the Backbeat metronome and cast abilities on the beat for bonuses and cheaper casts.",
+   "Cast Ripper's Wail for brief invulnerability, healing and a Heat damage buff for the squad.",
+   "Use Overdrive on groups in front of you to make them easier to crit.",
+   "Use Pyrotechnics on the beat to add more Heat damage to Ripper's Wail and extend it.",
+   "When the Backbeat charge is ready, cast Exalted Solo and burn enemies with Lizzie."
+  ],
+  "watch": "Casting off the Backbeat costs more energy and loses the bonus, so time your casts to the beat."
+ },
+ "Titania": {
+  "keep": [
+   "Razorwing"
+  ],
+  "loop": [
+   "Cast Tribute on enemies to collect buffs such as Thorns (less damage taken) and Dust (enemies miss).",
+   "Use Spellbind to lift enemies and give allies status immunity.",
+   "Cast Lantern on an enemy to turn it into a lure that pulls others in.",
+   "Activate Razorwing to fly and shoot with Dex Pixia and Diwata.",
+   "Land and refresh Tribute buffs when they run out."
+  ],
+  "watch": "Razorwing drains energy while you fly, so watch your energy and land before it hits zero."
+ },
+ "Trinity": {
+  "keep": [
+   "Link"
+  ],
+  "loop": [
+   "Cast Energy Vampire on a tough enemy to feed energy to your squad.",
+   "Cast Link to send damage you take to nearby enemies.",
+   "Cast Blessing when allies are hurt to heal them and reduce their damage taken.",
+   "Put Well Of Life on an enemy so allies heal by attacking it."
+  ],
+  "watch": "Link needs enemies nearby to pass damage to, so stay in range of them instead of hiding far back."
+ },
+ "Uriel": {
+  "keep": [
+   "Infernalis"
+  ],
+  "loop": [
+   "Cast Infernalis to burn nearby enemies; roll while airborne to fly as a meteor.",
+   "Cast Remedium to heal yourself and your demons, or bring dead demons back.",
+   "Cast Demonium to send demon souls that make enemies take more damage.",
+   "Your demons fill the Brimstone gauge; when it is full, cast Brimstone in a crowd."
+  ],
+  "watch": "Demonium needs at least one living demon, so cast Remedium first if your demons are dead."
+ },
+ "Valkyr": {
+  "keep": [
+   "Warcry"
+  ],
+  "loop": [
+   "Cast Warcry to boost armor and attack speed for you and nearby allies.",
+   "Turn on Hysteria and attack with the claws; hits heal you.",
+   "Use Paralysis to stun groups and make them take more melee damage.",
+   "Use Rip Line (or the claws' leap) to close distance quickly.",
+   "Recast Warcry when it ends."
+  ],
+  "watch": "Hysteria is not invincible; it keeps you alive by healing on hits, so keep attacking instead of standing still in it."
+ },
+ "Vauban": {
+  "keep": [
+   "Bastille"
+  ],
+  "loop": [
+   "Place Bastille where enemies come; it holds them and strips their armor.",
+   "Throw Tesla Nervos to latch onto enemies and shock groups.",
+   "Use Minelayer: the Tether-Flechette orb gathers enemies, and the held pad speeds allies up.",
+   "Call Photon Strike on held groups or Overguard enemies.",
+   "Hold Bastille to merge all Bastilles into one damaging vortex when needed."
+  ],
+  "watch": "Bastille only holds a limited number of enemies, so place several or extra enemies will walk right past."
+ },
+ "Volt": {
+  "keep": [
+   "Electric Shield"
+  ],
+  "loop": [
+   "Place Electric Shield in front of you and shoot through it for bonus damage.",
+   "Cast Speed to make you and your allies move and reload faster.",
+   "Throw Shock at groups to stun and chain damage between enemies.",
+   "Use Discharge when surrounded to paralyze everything around you."
+  ],
+  "watch": "Electric Shield only boosts shots fired through it, so stay behind it instead of walking away from it."
+ },
+ "Voruna": {
+  "keep": [
+   "Lycath's Hunt"
+  ],
+  "loop": [
+   "Cast Lycath's Hunt so melee kills drop health orbs and headshots drop energy.",
+   "Cast Fangs Of Raksh on an enemy to stack many statuses that spread when it dies.",
+   "Use Shroud Of Dynar to turn invisible; your first melee hits after it ends gain crit and status.",
+   "Use Ulfrun's Descent to dash between status-afflicted enemies for big damage."
+  ],
+  "watch": "Shroud Of Dynar's invisibility ends when you attack, so line up the target before you swing."
+ },
+ "Wisp": {
+  "keep": [
+   "Reservoirs"
+  ],
+  "loop": [
+   "Drop Haste and Vitality Reservoirs where you will fight; standing near them gives you motes.",
+   "Cast Breach Surge to make enemies release sparks when damaged.",
+   "Use Wil-O-Wisp to distract enemies or teleport to the image.",
+   "Open Sol Gate on big groups and hold fire for double damage."
+  ],
+  "watch": "Motes come from Reservoirs, so fight near them and place new ones when you move to a new area."
+ },
+ "Wukong": {
+  "keep": [
+   "Celestial Twin"
+  ],
+  "loop": [
+   "Summon your Celestial Twin; it melees when you shoot and shoots when you melee.",
+   "Cast Defy when taking heavy fire to become invulnerable and gain armor afterward.",
+   "Use Cloud Walker to move through danger and heal.",
+   "Cast Primal Fury to fight with the iron staff when a big fight starts."
+  ],
+  "watch": "Primal Fury drains energy while active, so turn it off between fights."
+ },
+ "Xaku": {
+  "keep": [
+   "Xata's Whisper",
+   "Grasp Of Lohk"
+  ],
+  "loop": [
+   "Cast Xata's Whisper to add Void damage to your weapons.",
+   "Cast Grasp Of Lohk to steal enemy weapons that fire for you.",
+   "Cycle The Lost: Accuse turns enemies into allies, Gaze holds them, Deny blasts with a beam.",
+   "Cast The Vast Untime to blast enemies, weaken them to Void and switch to a faster form."
+  ],
+  "watch": "Xaku is fragile without its passive evasion, so keep Grasp Of Lohk and The Vast Untime up instead of standing in the open."
+ },
+ "Yareli": {
+  "keep": [
+   "Merulina"
+  ],
+  "loop": [
+   "Summon Merulina and ride it; it absorbs much of the damage you take.",
+   "Throw Sea Snares to hold enemies and make them take more damage.",
+   "Cast Aquablades to cut enemies around you as you move.",
+   "Use Riptide to pull a group together and blow them apart."
+  ],
+  "watch": "Merulina's protection only works while you are riding it, so recast it if it disappears."
+ },
+ "Zephyr": {
+  "keep": [
+   "Turbulence"
+  ],
+  "loop": [
+   "Cast Turbulence to deflect incoming bullets and projectiles.",
+   "Throw Tornado to catch enemies; shoot the enemies inside for extra damage.",
+   "Use Airburst to pull or blast groups.",
+   "Use Tail Wind to dash through the air or dive bomb enemies below."
+  ],
+  "watch": "Turbulence stops projectiles but not melee or area attacks, so don't stand inside enemy melee range."
+ }
+}

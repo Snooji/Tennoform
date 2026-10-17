@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from "@/components/ui/combobox"
-import { Segmented } from "@/components/ui/segmented"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
 import { ModCard, ModList } from "@/components/tf/mod-card"
 import { BuildInsight } from "@/components/tf/build-insight"
+import { HowToPlay } from "@/components/tf/how-to-play"
 import { MoreBuilds } from "@/components/tf/more-builds"
 import { Thumb } from "@/components/tf/thumb"
 import { tf, useTFData } from "@/lib/tf"
@@ -61,15 +61,20 @@ export function FramesPage() {
       </div>
       {d.filteredEmpty ? <p className="text-sm text-muted-foreground">No Warframes match that filter, so all of them are listed.</p> : null}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        <div className="min-w-0"><Island html={d.tree} /></div>
+        <div className="flex min-w-0 flex-col gap-4"><HowToPlay frame={d.name} /><Island html={d.tree} /></div>
         {b ? (
           <Card className="self-start">
             <CardHeader>
-              <CardTitle><h2 className="font-heading text-lg leading-tight font-semibold">Meta build</h2></CardTitle>
+              <CardTitle><h2 className="font-heading text-lg leading-tight font-semibold">{d.builds.length > 1 ? `Builds (${d.builds.length})` : "Build"}</h2></CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
               <div className="flex flex-wrap items-center gap-2">
-                {d.builds.length > 1 ? <Segmented items={d.builds} value={d.bi} onValueChange={(v) => tf().framesSet({ build: v })} /> : null}
+                {d.builds.length > 1 ? (
+                  <Select items={d.builds} value={d.bi} onValueChange={(v) => tf().framesSet({ build: String(v) })}>
+                    <SelectTrigger className="h-9 min-w-56 max-w-full" aria-label={`Build (${d.builds.length} for ${d.name})`}><SelectValue /></SelectTrigger>
+                    <SelectContent>{d.builds.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
+                  </Select>
+                ) : null}
                 <Toggle variant="outline" pressed={d.budget} onPressedChange={(v) => tf().framesSet({ budget: v })} className="h-9 px-3 data-[pressed]:border-primary/60 data-[pressed]:bg-primary/15">Budget mods</Toggle>
               </div>
               <div className="flex flex-wrap items-center gap-2 text-sm">

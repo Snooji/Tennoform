@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ModCard, ModList } from "@/components/tf/mod-card"
 import { BuildInsight } from "@/components/tf/build-insight"
+import { HowToPlay } from "@/components/tf/how-to-play"
 import { MoreBuilds } from "@/components/tf/more-builds"
 import { Thumb } from "@/components/tf/thumb"
 import { PersonMenu } from "@/components/tf/person"
@@ -144,6 +145,7 @@ export function BuildView({ b, back }: { b: BuildDetail; back?: () => void }) {
         <MoreBuilds item={b.item} />
       </Card>
       <Card className="gap-4 px-5">
+        {b.kind === "Warframe" ? <HowToPlay frame={b.item} plain /> : null}
         <BuildInsight id={b.id} role={b.role} notes={b.notes} item={b.item} mods={b.mods} arcanes={b.arcanes} />
       </Card>
       <Card className="gap-3 px-5">

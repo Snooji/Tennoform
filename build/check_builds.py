@@ -5,12 +5,16 @@
 """
 import json, os, re, sys
 D = json.load(open(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), 'base.json')))
+mp = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'morebuilds.json')
+if os.path.exists(mp):  # the extra builds are checked the same way
+    for k, v in json.load(open(mp)).items():
+        for item, bs in v.items(): D[k][item] = D[k].get(item, []) + bs
 M=D['mods']
 GALV={'Galvanized Chamber':'Split Chamber','Galvanized Diffusion':'Barrel Diffusion','Galvanized Hell':"Hell's Chamber",'Galvanized Aptitude':'Rifle Aptitude','Galvanized Savvy':'Shotgun Savvy','Galvanized Crosshairs':'Hydraulic Crosshairs','Galvanized Scope':'Argon Scope','Galvanized Steel':'True Steel','Galvanized Shot':'Sure Shot'}
 def fam(n):
     if n in GALV: return GALV[n]
     if n=='Transient Fortitude': return n
-    return re.sub(r'^(Primed|Umbral|Archon|Amalgam|Precision) ','',n).replace('Steel Fiber','Fiber').replace('Umbral Fiber','Fiber')
+    return re.sub(r'^(Primed|Umbral|Archon|Amalgam) ','',n).replace('Steel Fiber','Fiber').replace('Umbral Fiber','Fiber')
 def famfix(n):
     f=fam(n); return 'Fiber' if f in('Fiber','Steel Fiber') else f
 bad=0

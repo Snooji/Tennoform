@@ -1,0 +1,5388 @@
+{
+ "builds": {
+  "Ash": [
+   {
+    "name": "Smoke Shadow Stealth Crit",
+    "role": "Stealth / team crit",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Smoke Shadow",
+     "Teleport Rush",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Crepuscular",
+     "Arcane Energize"
+    ],
+    "helminth": "Xata's Whisper → Shuriken",
+    "notes": "Smoke Shadow hides nearby allies and gives a big crit chance bonus while invisible; Crepuscular adds strength and crit damage while you are unseen. Play as a stealth melee killer: stay in smoke, Teleport between targets to extend it, and save Blade Storm for big packs.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Blade Storm Starter",
+    "role": "Starter melee nuke",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Seeking Shuriken",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Guardian"
+    ],
+    "helminth": "",
+    "notes": "Only common mods: Vitality and Steel Fiber keep you alive, Flow and Streamline let you cast Blade Storm often. Shuriken strips armor first, then Blade Storm the group. A good first Ash before you own Primed or Umbral mods.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Atlas": [
+   {
+    "name": "Landslide Brawler",
+    "role": "Melee-style ability DPS",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Rubble Heap",
+     "Path Of Statues",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Blind Rage",
+     "Primed Continuity",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Tectonics",
+    "notes": "Rubble Heap makes Landslide free and twice as strong once you hold over 1400 rubble, so keep kills flowing to stay above it. Path Of Statues leaves a petrifying trail behind each punch, setting up the next combo.",
+    "tags": []
+   },
+   {
+    "name": "Budget Rock Starter",
+    "role": "Starter tank",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Atlas is very forgiving: common mods and his rubble armor make him a tough first frame. Spam Landslide, cast Rumblers when surrounded, and pick up rubble to stay healthy.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Banshee": [
+   {
+    "name": "Resonance Sonar Sniper",
+    "role": "Weak point support",
+    "aura": "Worthy Comradery",
+    "exilus": "Power Drift",
+    "mods": [
+     "Resonance",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Gloom → Sonic Boom",
+    "notes": "Strength raises the Sonar weak spot multiplier for the whole squad, and Resonance re-casts Sonar when you kill through a weak spot. Pair with a high-damage precise weapon and keep chaining weak spot kills; Gloom slows enemies and heals you.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Savage Silence Finisher",
+    "role": "Melee finisher / CC",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Savage Silence",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Ultimatum",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Sonic Boom",
+    "notes": "Savage Silence staggers enemies and boosts finisher damage, so cast Silence and walk through the room finishing staggered enemies with melee. Arcane Ultimatum turns finisher kills into a large armor buff.",
+    "tags": []
+   }
+  ],
+  "Baruuk": [
+   {
+    "name": "Reactive Storm Steel Path",
+    "role": "Status melee DPS",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Reactive Storm",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Blind Rage",
+     "Stretch",
+     "Adaptation",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Lull",
+    "notes": "Reactive Storm gives Desert Wind a big status chance boost and switches its damage to what the enemy is weak to, so it works against every faction. Blind Rage pushes strength since Desert Wind does not use energy; Rolling Guard clears status when you dodge.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Endless Lullaby Sleeper",
+    "role": "Crowd control",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Endless Lullaby",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Ultimatum",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Range and duration make Lull cover the whole room; Endless Lullaby recasts it whenever you finish or kill a sleeping enemy. Great for defense and survival: keep the room asleep and pick off sleepers with finishers for Ultimatum armor.",
+    "tags": []
+   }
+  ],
+  "Caliban": [
+   {
+    "name": "Sentient Wrath Nuke",
+    "role": "AoE nuke",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Blind Rage",
+     "Transient Fortitude",
+     "Stretch",
+     "Augur Reach",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Lethal Progeny",
+    "notes": "Heavy strength and range turn Sentient Wrath and Fusion Strike into a room-clearing combo: Fusion Strike strips armor, Sentient Wrath lifts and damages, Roar multiplies it. Gives up summons for raw damage.",
+    "tags": []
+   },
+   {
+    "name": "Budget Razor Gyre Squad",
+    "role": "Starter summoner",
+    "aura": "Summoner's Wrath",
+    "exilus": "Power Drift",
+    "mods": [
+     "Razor Mortar",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Keep Ortholysts out with Lethal Progeny and use Razor Gyre with Razor Mortar to pull enemies together while your summons focus fire on them. Razor Gyre refunds energy per hit, so dash often.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Chroma": [
+   {
+    "name": "Guardian Armor Team Tank",
+    "role": "Squad damage reduction",
+    "aura": "Stand United",
+    "exilus": "Power Drift",
+    "mods": [
+     "Guardian Armor",
+     "Everlasting Ward",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Augur Reach",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Arcane Aegis",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Effigy",
+    "notes": "Guardian Armor makes Vex Armor cut damage taken by squadmates near you, and Everlasting Ward lets allies keep Elemental Ward after leaving its radius. Stay near the team instead of running ahead; Roar stacks with Vex Armor's damage buff.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Vex Armor",
+    "role": "Starter weapon buffer",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber",
+     "Redirection"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Shields and health give Vex Armor more to work with; cast it, let shields and health take a few hits, then shoot. A strong pick before you have Umbral mods.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Citrine": [
+   {
+    "name": "Recrystalize Crit Spreader",
+    "role": "Crowd control / crit",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Recrystalize",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Transient Fortitude",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Recrystalize makes enemies killed by crystals spread new crystals nearby, so one Crystallize can chain through a packed room. Shoot the crystal growths for guaranteed crit damage. Umbral mods keep you tanky while you sit in the crowd.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Prismatic Companion Status",
+    "role": "Mobile status support",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Prismatic Companion",
+     "Archon Continuity",
+     "Umbral Intensify",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Prismatic Companion attaches the gem to your companion so it follows you. The gem applies Toxin, and Archon Continuity adds Corrosive with each Toxin proc, shredding armor. Best for moving missions where a static gem would be left behind.",
+    "tags": []
+   }
+  ],
+  "Cyte-09": [
+   {
+    "name": "Neutralizer Sniper",
+    "role": "Exalted sniper DPS",
+    "aura": "Worthy Comradery",
+    "exilus": "Power Drift",
+    "mods": [
+     "Precision Intensify",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Resupply",
+    "notes": "Built for the Neutralizer: Precision Intensify and strength boost the exalted sniper, Worthy Comradery adds weak point crit chance and Seek raises weak point damage. Stay at range, keep Seek pointed at the fight and chain weak point ricochets.",
+    "tags": []
+   },
+   {
+    "name": "Evade Stealth Survivor",
+    "role": "Steel Path stealth",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Archon Vitality",
+     "Umbral Fiber",
+     "Adaptation",
+     "Rolling Guard",
+     "Primed Flow",
+     "Stretch"
+    ],
+    "arcanes": [
+     "Arcane Crepuscular",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Duration lengthens Evade invisibility and each weak point kill extends it and heals you. Crepuscular adds strength and crit damage while invisible, so stay hidden and shoot heads with your normal guns. Tankier mods cover the moments you are seen.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Dagath": [
+   {
+    "name": "Spectral Spirit Doom Spreader",
+    "role": "Weapon crit buffer",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Spectral Spirit",
+     "Umbral Intensify",
+     "Blind Rage",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Gloom → Wyrd Scythes",
+    "notes": "Spectral Spirit puts you straight into spectral form and gives your weapons and abilities a chance to apply Doom, so you Doom enemies just by shooting. Strength raises Grave Spirit's crit damage; Gloom slows and heals in place of the scythes.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Doom Room Control",
+    "role": "Crowd control",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Archon Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Range and duration let Doom and Wyrd Scythes cover a whole room and keep enemies slowed for long stretches. Plays slower than the crit build: Doom the room, let scythes spread it, and use Rakhali's Cavalry to break armor on the pack.",
+    "tags": []
+   }
+  ],
+  "Dante": [
+   {
+    "name": "Triumph Overguard Support",
+    "role": "Team Overguard / support",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Noctua Swarm",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Truculence",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Cast Light Verse twice and then Final Verse for Triumph to keep the squad topped with Overguard. Arcane Truculence triggers a large Viral blast when you gain lots of Overguard, which Dante does easily. Noctua Swarm silences enemies and steals their energy for allies.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Verse Starter",
+    "role": "Starter support",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Redirection"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Guardian"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Enough strength, range and efficiency to keep Light Verse Overguard on the team and use Dark Verse for damage. Learn the Verse combos here before investing in Umbral mods.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Ember": [
+   {
+    "name": "Healing Flame Tank",
+    "role": "Steel Path survival",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Healing Flame",
+     "Archon Vitality",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Archon Stretch",
+     "Primed Flow",
+     "Rolling Guard",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Fireball",
+    "notes": "Healing Flame heals you per enemy hit by Fire Blast and turns overhealing into Overguard, so Fire Blast is your heal and armor strip in one. Archon Vitality doubles Heat status from your abilities. Stay in the middle of packs and Fire Blast often.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Fireball Frenzy",
+    "role": "Starter team heat buffer",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Fireball Frenzy",
+     "Exothermic",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Hold Fireball to give allies extra Heat damage for 40 seconds, and Exothermic makes Inferno kills drop energy orbs to keep you casting. A friendly early build for star chart missions.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Equinox": [
+   {
+    "name": "Night-Form Sleeper",
+    "role": "Crowd control",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Calm & Frenzy",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Nourish → Pacify & Provoke",
+    "notes": "Range and duration let Rest put large groups to sleep, and Calm & Frenzy spreads the sleep to nearby enemies when you kill a sleeper. Stay in Night-Form, sleep the room, and pick off sleepers safely. Nourish adds energy gain and Viral damage.",
+    "tags": []
+   },
+   {
+    "name": "Peaceful Provocation Tank",
+    "role": "Damage reduction / strength",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Peaceful Provocation",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Rest & Rage",
+    "notes": "Pacify lowers enemy damage around you, and Peaceful Provocation turns the damage it blocks into a slowing aura (or, in Day-Form, Provoke gains extra strength). Strength raises Pacify's reduction. Keep it running and fight with weapons.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Excalibur": [
+   {
+    "name": "Chromatic Blade Status",
+    "role": "Melee status DPS",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Chromatic Blade",
+     "Furious Javelin",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Fury",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Slash Dash",
+    "notes": "Chromatic Blade gives Exalted Blade a huge status chance bonus and an element based on your energy color, so pick a color for the element you want. Cast Radial Javelin on groups first: each hit raises melee damage via Furious Javelin.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Radiant Finisher",
+    "role": "Starter melee",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Radiant Finish",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Radial Blind blinds a room and Radiant Finish makes blinded enemies take far more finisher damage, so blind, then walk up and finish. Safe and simple for new players before Exalted Blade is modded.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Follie": [
+   {
+    "name": "Plein Air Room Control",
+    "role": "Crowd control",
+    "aura": "Energy Siphon",
+    "exilus": "Cunning Drift",
+    "mods": [
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Adaptation",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Range and duration let Plein Air lift whole groups and keep them floating, stripped of armor and shields, while your team shoots them. Cast it, let the squad kill the floating enemies, recast as new ones arrive.",
+    "tags": []
+   },
+   {
+    "name": "Self Portrait Tank",
+    "role": "Steel Path survival",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Archon Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Rolling Guard",
+     "Health Conversion"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Blessing"
+    ],
+    "helminth": "",
+    "notes": "Inkblot kills drop health orbs, which feed Health Conversion armor and Arcane Blessing max health. Strength helps Self Portrait absorb more damage. Hold ground in the ink pool and dodge to clear status with Rolling Guard.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Frost": [
+   {
+    "name": "Chilling Globe Anchor",
+    "role": "Defense objective guard",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Chilling Globe",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Freeze",
+    "notes": "Strength makes Snow Globe much tougher, and Chilling Globe gives enemies that walk in a chance to freeze solid for 10 seconds. Built for Defense, Mobile Defense and Survival points: set globes on the objective and fight from inside them.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Freeze Force",
+    "role": "Starter team cold buffer",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Freeze Force",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Hold Freeze to give allies bonus Cold damage for 40 seconds; Snow Globe and Avalanche still cover defense and armor strip. A solid early Frost for star chart defense missions.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Gara": [
+   {
+    "name": "Shattered Storm Steel Path",
+    "role": "Tank / AoE damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Mending Splinters",
+     "Shattered Storm",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Primed Flow",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Nourish → Spectrorage",
+    "notes": "Mending Splinters heals you for each enemy hit by Splinter Storm, and Shattered Storm spreads Splinter Storm onto enemies when you break your Vitrify ring with Shattered Lash. Vitrify a group, shatter it, and stand in the glass.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Spectrosiphon Energy CC",
+    "role": "Crowd control / team energy",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Spectrosiphon",
+     "Archon Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Shattered Lash",
+    "notes": "Spectrorage traps enemies, and Spectrosiphon gives each one that dies inside a chance to drop an energy orb for the team. Range and duration make the carousel cover a room. Drop it where enemies come from and let the squad farm it.",
+    "tags": []
+   }
+  ],
+  "Garuda": [
+   {
+    "name": "Dread Mirror Nuke",
+    "role": "Burst damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Dread Ward",
+     "Umbral Intensify",
+     "Blind Rage",
+     "Umbral Vitality",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Secrets",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Blood Altar",
+    "notes": "Dread Mirror stores the damage it blocks and fires it back as an explosive projectile; strength boosts the hit. Dread Ward makes you unkillable for 8 seconds when Dread Mirror rips a target. Bloodletting covers Blind Rage's energy cost.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Blending Talons",
+    "role": "Starter self-sufficient",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Blending Talons",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Blending Talons lets you tap Seeking Talons for a quick area attack around you and raises combo gain from her Talons on Slash-affected enemies. Bloodletting keeps energy up without energy mods.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Gauss": [
+   {
+    "name": "Thermal Sunder Nuke",
+    "role": "AoE nuke / team buff",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Thermal Transfer",
+     "Umbral Intensify",
+     "Blind Rage",
+     "Stretch",
+     "Augur Reach",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Aegis"
+    ],
+    "helminth": "Roar → Mach Rush",
+    "notes": "Charge the battery, then use Thermal Sunder: tap for Cold, hold for Heat, and both together blast enemies hard. Thermal Transfer gives allies in range bonus elemental damage. Strength and range make it a room-wide nuke.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Mach Crash Runner",
+    "role": "Starter speed",
+    "aura": "Sprint Boost",
+    "exilus": "Speed Drift",
+    "mods": [
+     "Mach Crash",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Redirection"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Mach Rush moves you very fast and Mach Crash sucks nearby enemies into the shockwave when you crash into a wall. Great for exterminate and capture missions where speed matters.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Grendel": [
+   {
+    "name": "Pulverize Roller",
+    "role": "Tank / mobility",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Catapult",
+     "Hearty Nourishment",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Streamline"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Regurgitate",
+    "notes": "Roll with Pulverize to heal and knock enemies over; Catapult launches you where you aim for fast travel. Hearty Nourishment clears status and gives status immunity based on enemies in your stomach. Great tanky solo frame for Steel Path.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Gastro Gas Bomber",
+    "role": "AoE gas damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Gastro",
+     "Gastroparesis",
+     "Umbral Intensify",
+     "Blind Rage",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Pulverize",
+    "notes": "Gastro makes regurgitated enemies bounce and leave gas clouds, and Gastroparesis adds Gas damage to your guns for each enemy you swallowed. Swallow a full stomach, spit them at groups and shoot through the gas.",
+    "tags": []
+   }
+  ],
+  "Gyre": [
+   {
+    "name": "Rotorswell Chain Crit",
+    "role": "Self-sustaining AoE",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Cathode Current",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Primed Continuity",
+     "Archon Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Arcsphere",
+    "notes": "Keep Rotorswell and Cathode Grace up and kill with a crit weapon: Rotorswell chains lightning from your crits, and Cathode Current adds extra discharges on kills. Archon Stretch gives energy back when Electric abilities hit.",
+    "tags": []
+   },
+   {
+    "name": "Budget Coil Recharge",
+    "role": "Starter electric nuke",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Coil Recharge",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Redirection"
+    ],
+    "arcanes": [
+     "Arcane Guardian",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Coil Recharge lets you recall the sphere to shock enemies again and chain to others, so one Coil Horizon hits twice. Throw, recall, repeat in packed rooms.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Harrow": [
+   {
+    "name": "Thurible Energy Battery",
+    "role": "Team energy support",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Warding Thurible",
+     "Tribunal",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Strength raises how much energy each kill gives the squad through Thurible, and Warding Thurible cuts damage for allies while you channel. Tribunal lets allies trigger Penance and Thurible by hitting Condemned enemies. Play as the team's energy source.",
+    "tags": []
+   },
+   {
+    "name": "Lasting Covenant Headshotter",
+    "role": "Steel Path crit DPS",
+    "aura": "Worthy Comradery",
+    "exilus": "Power Drift",
+    "mods": [
+     "Lasting Covenant",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Adaptation",
+     "Rolling Guard",
+     "Augur Accord"
+    ],
+    "arcanes": [
+     "Arcane Aegis",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Penance",
+    "notes": "Cast Covenant in a firefight, then kill with headshots: Lasting Covenant extends the crit bonus with each weak point kill, and Worthy Comradery adds weak point crit chance. Extra shields feed Penance and Condemn. Use a precise, high-crit weapon.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Hildryn": [
+   {
+    "name": "Aegis Gale Bomber",
+    "role": "Aerial AoE damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Aegis Gale",
+     "Umbral Intensify",
+     "Primed Redirection",
+     "Augur Accord",
+     "Primed Continuity",
+     "Stretch",
+     "Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Arcane Expertise",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Aegis Gale gives Balefire an alternate fire during Aegis Storm that adds damage based on your max shield, so stack shield capacity. Arcane Expertise applies strength to max shields too. Fly up with Aegis Storm and bomb crowds while Pillage refills shields.",
+    "tags": []
+   },
+   {
+    "name": "Budget Shield Starter",
+    "role": "Starter shield tank",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Balefire Surge",
+     "Blazing Pillage",
+     "Intensify",
+     "Redirection",
+     "Vigor",
+     "Continuity",
+     "Stretch",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Barrier",
+     "Arcane Guardian"
+    ],
+    "helminth": "",
+    "notes": "Common mods only. Balefire Surge restores shields on charged direct hits and Blazing Pillage adds heat damage and extra shield gain to Pillage on enemies in Haven. Cast Haven, Pillage often, and refill shields with Balefire.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Hydroid": [
+   {
+    "name": "Pilfering Loot Farm",
+    "role": "Loot farming",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Pilfering Swarm",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Streamline",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Efficiency"
+    ],
+    "helminth": "Nourish → Tidal Surge",
+    "notes": "Pilfering Swarm gives every enemy held by the tentacles a 100% chance at extra drops. Range and duration keep big swarms up; strength barely matters. Let teammates do the killing while enemies are grabbed, then recast Tentacle Swarm on the next group.",
+    "tags": []
+   },
+   {
+    "name": "Viral Tempest Plunderer",
+    "role": "Steel Path damage / armor",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Viral Tempest",
+     "Rousing Plunder",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Grace"
+    ],
+    "helminth": "Roar → Tidal Surge",
+    "notes": "Rousing Plunder raises Plunder's Corrosive and Armor cap and heals allies, while Viral Tempest makes every Tempest Barrage drop apply Viral. Strip armor with Plunder, then Tempest Barrage into Tentacle Swarm and shoot the primed groups.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Inaros": [
+   {
+    "name": "Bellicose Brawler",
+    "role": "Tank / ability strength from Health",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Negation Armor",
+     "Umbral Vitality",
+     "Primed Vigor",
+     "Carnis Carapace",
+     "Archon Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Arcane Bellicose",
+     "Arcane Grace"
+    ],
+    "helminth": "Roar → Sandstorm",
+    "notes": "Stacks raw Health instead of Armor: Arcane Bellicose turns it into Ability Strength, and Archon Intensify adds more each time Desiccation heals you. Negation Armor saves you from one fatal hit every 30s. Brawl in melee and heal with Desiccation.",
+    "tags": []
+   },
+   {
+    "name": "Kavat Pack Finisher",
+    "role": "Summons / melee finishers",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Desiccation's Curse",
+     "Umbral Vitality",
+     "Primed Vigor",
+     "Umbral Intensify",
+     "Stretch",
+     "Primed Continuity",
+     "Augur Reach",
+     "Equilibrium"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Grace"
+    ],
+    "helminth": "Roar → Sandstorm",
+    "notes": "Desiccation blinds a crowd; finishing blinded enemies with melee summons Swarm Kavats (+2 max) that spread Scarab Swarm. Range widens the blind. Play up close: blind, finisher, repeat. Equilibrium turns Health orbs into Energy.",
+    "tags": []
+   }
+  ],
+  "Ivara": [
+   {
+    "name": "Concentrated Artemis",
+    "role": "Artemis Bow damage",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Concentrated Arrow",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Adaptation",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Avenger"
+    ],
+    "helminth": "Roar → Navigator",
+    "notes": "Concentrated Arrow turns Artemis Bow into one high-crit arrow that explodes on weak points. Strength drives the damage, efficiency keeps the bow running. Aim for heads, fire fully charged shots and keep Prowl for repositioning.",
+    "tags": []
+   },
+   {
+    "name": "Spy Infiltrator",
+    "role": "Spy / stealth support",
+    "aura": "Enemy Radar",
+    "exilus": "Stealth Drift",
+    "mods": [
+     "Infiltrate",
+     "Empowered Quiver",
+     "Primed Streamline",
+     "Primed Flow",
+     "Stretch",
+     "Primed Continuity",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "Nourish → Artemis Bow",
+    "notes": "Infiltrate lets Ivara walk through laser barriers in Prowl and moves her faster, making spy vaults trivial. Empowered Quiver's Dashwire gives allies +100% Critical Damage and Cloak arrows block status. Efficiency keeps Prowl running long.",
+    "tags": []
+   }
+  ],
+  "Jade": [
+   {
+    "name": "Judgment Detonator",
+    "role": "Damage / healing",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Jade's Judgment",
+     "Archon Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Light's Judgment heals allies, so Archon Intensify gives +30% strength on top; Jade's Judgment adds Jade Lights on enemies in the well. Big range catches more Judgments for Glory on High. Stack the well, then detonate.",
+    "tags": []
+   },
+   {
+    "name": "Budget Choir",
+    "role": "Budget team support",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Steel Fiber",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods needed: Intensify and Augur Secrets keep songs and Ophanim Eyes strong, Continuity keeps them up longer. Play as the team's buffer: run Deathbringer for weapon damage and keep Ophanim Eyes on.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Khora": [
+   {
+    "name": "Accumulating Whip",
+    "role": "Whipclaw damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Accumulating Whipclaw",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Grace"
+    ],
+    "helminth": "Roar → Ensnare",
+    "notes": "Accumulating Whipclaw stacks 35% damage each time you hit 3+ enemies, so chain Whipclaws into Strangledome groups. Equip a strong Viral/Slash melee build since Whipclaw copies those mods. Efficiency lets you spam it.",
+    "tags": []
+   },
+   {
+    "name": "Pilfering Dome Farm",
+    "role": "Loot farming",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Pilfering Strangledome",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Streamline",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Venari Bodyguard"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Efficiency"
+    ],
+    "helminth": "Nourish → Ensnare",
+    "notes": "Enemies held in Strangledome get a 65% chance for extra loot. Range and duration hold more enemies longer; Venari Bodyguard makes Venari take a fatal hit for you. Place domes where enemies spawn and let them die inside.",
+    "tags": []
+   }
+  ],
+  "Koumei": [
+   {
+    "name": "Loaded Dice Status",
+    "role": "Status spreading / CC",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Kumihimo Loading",
+     "Umbral Intensify",
+     "Stretch",
+     "Augur Reach",
+     "Primed Continuity",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Impetus"
+    ],
+    "helminth": "Roar → Omikuji",
+    "notes": "Kumihimo Loading gives a loaded die (always 6) every 6 kills with your passive weapon; hold Kumihimo to spend them on an empowered cast. Range spreads threads wide, and Arcane Impetus rewards the many unique statuses you apply.",
+    "tags": []
+   },
+   {
+    "name": "Budget Fortune",
+    "role": "Budget starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Omikuji's Fortune",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Omikuji's Fortune cuts Omikuji's cooldown by 4s per kill with your passive weapon, so you earn Decrees much more often. Keep shooting with the imbued weapon and re-roll Omikuji as soon as it's ready.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Kullervo": [
+   {
+    "name": "Ukko Stormchaser",
+    "role": "AoE damage",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Wrath Of Ukko",
+     "Volatile Recompense",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Umbral Vitality",
+     "Primed Vigor",
+     "Augur Reach"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Bellicose"
+    ],
+    "helminth": "",
+    "notes": "Wrath of Ukko moves Storm of Ukko to wherever Wrathful Advance teleports you, so the storm follows you room to room. Volatile Recompense makes the daggers circle and slash nearby foes with Blast. Bellicose turns your big Health into strength.",
+    "tags": []
+   },
+   {
+    "name": "Budget Curse Bruiser",
+    "role": "Budget melee tank",
+    "aura": "Steel Charge",
+    "exilus": "Power Drift",
+    "mods": [
+     "Vitality",
+     "Steel Fiber",
+     "Adaptation",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Grace",
+     "Arcane Fury"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Vitality and Steel Fiber stack on Kullervo's high base Health and Armor. Curse a group, then heavy-attack one target with Wrathful Advance so the hit spreads to all cursed enemies.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Lavos": [
+   {
+    "name": "Valence Weapon Alchemist",
+    "role": "Weapon buffer",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Valence Formation",
+     "Swift Bite",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Vigor"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Rise"
+    ],
+    "helminth": "",
+    "notes": "Valence Formation gives your weapons a +200% bonus of each element you imbue, with guaranteed status, for 20s. Swift Bite cuts all cooldowns by 4s when Ophidian Bite hits 4 enemies. Imbue, cast, then shoot.",
+    "tags": []
+   },
+   {
+    "name": "Archon Alchemist",
+    "role": "Status / ability damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Lingering Transmutation",
+     "Archon Vitality",
+     "Archon Continuity",
+     "Umbral Intensify",
+     "Stretch",
+     "Augur Reach",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Impetus"
+    ],
+    "helminth": "",
+    "notes": "Archon Continuity makes Toxin abilities also apply Corrosive, and Archon Vitality doubles Heat statuses from abilities. Lingering Transmutation keeps the probe nearby for cooldown cuts. Imbue Toxin and Heat into Catalyze for big armor strip and damage.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Limbo": [
+   {
+    "name": "Rift Torrent Gunner",
+    "role": "Weapon damage in the Rift",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Rift Torrent",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Primed Streamline",
+     "Primed Vigor",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Avenger"
+    ],
+    "helminth": "Roar → Banish",
+    "notes": "Rift Torrent gives you +30% damage for every surged enemy while you're in the Rift. Surge a large Cataclysm, stay inside and shoot: more surged enemies mean bigger damage.",
+    "tags": []
+   },
+   {
+    "name": "Budget Stasis Defense",
+    "role": "Budget defense lockdown",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Cataclysmic Continuum",
+     "Continuity",
+     "Augur Message",
+     "Stretch",
+     "Augur Reach",
+     "Streamline",
+     "Flow",
+     "Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Cataclysmic Continuum adds 1s to Cataclysm for every kill, so a busy defense point stays covered. Place Cataclysm on the objective, freeze it with Stasis and let the team clean up.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Loki": [
+   {
+    "name": "Crepuscular Ghost",
+    "role": "Stealth damage / spy",
+    "aura": "Growing Power",
+    "exilus": "Stealth Drift",
+    "mods": [
+     "Hushed Invisibility",
+     "Primed Continuity",
+     "Narrow Minded",
+     "Constitution",
+     "Augur Message",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Crepuscular"
+    ],
+    "helminth": "",
+    "notes": "Stacks Duration for very long Invisibility; Hushed Invisibility silences your weapons so shooting doesn't alert enemies. Arcane Crepuscular adds strength and 3x crit damage while invisible. Stay cloaked and kill with weapons.",
+    "tags": []
+   },
+   {
+    "name": "Budget Guardian Swap",
+    "role": "Budget team support",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Safeguard Switch",
+     "Savior Decoy",
+     "Continuity",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Redirection",
+     "Stretch"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Safeguard Switch swaps with an ally to make them invulnerable for 6s and cleanse statuses; Savior Decoy saves you from a fatal hit. Keep a Decoy near you and swap to downed or swarmed teammates.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Mag": [
+   {
+    "name": "Fracturing Crush Strip",
+    "role": "Armor strip / nuke",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Fracturing Crush",
+     "Magnetized Discharge",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Primed Flow",
+     "Primed Redirection",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Expertise"
+    ],
+    "helminth": "Nourish → Pull",
+    "notes": "Fracturing Crush casts faster and strips 75% Armor from survivors while rooting them. Magnetized Discharge lets you detonate Magnetize. Polarize, Crush, then pop Magnetize. Arcane Expertise turns your strength into extra shields.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Greedy Vacuum",
+    "role": "Budget loot pickup",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Greedy Pull",
+     "Stretch",
+     "Augur Reach",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Redirection",
+     "Intensify"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Greedy Pull drags every pickup to you, so with range stacked one cast vacuums a whole room's loot and orbs. Great for resource farming with friends who kill fast.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Mesa": [
+   {
+    "name": "Waltzing Gunslinger",
+    "role": "Mobile Peacemaker",
+    "aura": "Pistol Amp",
+    "exilus": "Mesa's Waltz",
+    "mods": [
+     "Staggering Shield",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Avenger"
+    ],
+    "helminth": "Roar → Ballistic Battery",
+    "notes": "Mesa's Waltz lets you move at half speed in Peacemaker, so you can chase enemies instead of standing still. Staggering Shield adds stagger to reflected bullets, and Rolling Guard clears status. Walk forward while firing.",
+    "tags": []
+   },
+   {
+    "name": "Gallery Support",
+    "role": "Team support / blind",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Muzzle Flash",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Ballistic Battery",
+    "notes": "Shooting Gallery boosts one ally's damage and jams nearby guns; range widens the jam. Muzzle Flash makes your shot blind enemies after 6 kill assists. Rotate Gallery to teammates and keep Shatter Shield up.",
+    "tags": []
+   }
+  ],
+  "Mirage": [
+   {
+    "name": "Total Eclipse Squad Buffer",
+    "role": "Team damage buff",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Total Eclipse",
+     "Hall Of Malevolence",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Rise"
+    ],
+    "helminth": "Roar → Sleight Of Hand",
+    "notes": "Total Eclipse shares your Eclipse with allies within 15m, buffing the whole squad. Hall of Malevolence makes your clones stronger with every kill. Hold Eclipse for damage, keep Hall up and stay near teammates.",
+    "tags": []
+   },
+   {
+    "name": "Budget Mirror Gunner",
+    "role": "Budget starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Redirection",
+     "Adaptation",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Strength and duration keep Eclipse and Hall of Mirrors strong, which is all Mirage needs to multiply a good weapon. Just recast both and shoot.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Narin": [
+   {
+    "name": "Frostbloom Nuke",
+    "role": "Ability damage / range",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Primed Streamline",
+     "Primed Redirection",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Ice Storm"
+    ],
+    "helminth": "",
+    "notes": "Range and strength make Hakchum's cold vulnerability and Nurinarim's dance hit more enemies harder. Primed Redirection builds on Narin's big shields for Naraemagi. Arcane Ice Storm stacks strength and duration as you freeze enemies.",
+    "tags": []
+   },
+   {
+    "name": "Budget Shield Dancer",
+    "role": "Budget starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Redirection",
+     "Vigor",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Barrier"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Redirection and Vigor lean into Narin's high shields so Naraemagi refills more and tips into Overguard. Arcane Barrier can instantly restore shields.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Nekros": [
+   {
+    "name": "Shadow Legion",
+    "role": "Steel Path summoner tank",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Shield Of Shadows",
+     "Creeping Terrify",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Primed Flow",
+     "Primed Vigor",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Camisado"
+    ],
+    "helminth": "Roar → Desecrate",
+    "notes": "Shield of Shadows makes each nearby Shadow take 6% of your damage, so a full army makes you tanky. Strength buffs the Shadows; Creeping Terrify slows fleeing foes. Arcane Camisado turns your Shadows' attacks into strength.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Despoil Farmer",
+    "role": "Budget loot farming",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Despoil",
+     "Stretch",
+     "Augur Reach",
+     "Vitality",
+     "Steel Fiber",
+     "Equilibrium",
+     "Continuity",
+     "Intensify"
+    ],
+    "arcanes": [
+     "Arcane Grace",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Despoil makes Desecrate cost Health per corpse instead of Energy, and Equilibrium turns energy pickups into healing. Stack range, follow the killers and leave Desecrate on.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Nezha": [
+   {
+    "name": "Divine Retribution",
+    "role": "Status nuke",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Divine Retribution",
+     "Umbral Intensify",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Primed Streamline",
+     "Adaptation",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Hot Shot"
+    ],
+    "helminth": "Nourish → Fire Walker",
+    "notes": "Divine Retribution spreads statuses across all speared enemies, and spear explosions scale with remaining Slash, Toxin and Heat. Chakram and Spears, apply status with a weapon, then slam. Hot Shot turns ability Heat into weapon crit.",
+    "tags": []
+   },
+   {
+    "name": "Budget Safeguard Halo",
+    "role": "Budget team protection",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Safeguard",
+     "Ward Recovery",
+     "Intensify",
+     "Vitality",
+     "Steel Fiber",
+     "Continuity",
+     "Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Safeguard lets you cast Warding Halo on allies at 50% strength, and Ward Recovery refunds energy for unused protection. Keep halos on yourself and the weakest teammate.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Nidus": [
+   {
+    "name": "Parasite Host",
+    "role": "Team buffer / tank",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Parasitic Vitality",
+     "Abundant Mutation",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Umbral Vitality",
+     "Carnis Carapace",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Bellicose"
+    ],
+    "helminth": "Roar → Ravenous",
+    "notes": "Abundant Mutation raises your stack cap by 300, and Parasitic Vitality gives you and a linked ally +4% Health per stack. Link to the team's best damage dealer, farm stacks with Virulence, and Bellicose turns all that Health into strength.",
+    "tags": []
+   },
+   {
+    "name": "Larva Burst Gunner",
+    "role": "Weapon crit / toxin burst",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Teeming Virulence",
+     "Larva Burst",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Augur Reach",
+     "Umbral Vitality",
+     "Archon Continuity"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Rise"
+    ],
+    "helminth": "Roar → Ravenous",
+    "notes": "Larva Burst detonates Larva for stacking Toxin, and Archon Continuity makes that Toxin also apply Corrosive. Hitting 4 enemies with Virulence gives +200% primary crit chance via Teeming Virulence. Larva, burst, Virulence, then shoot.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Nokko": [
+   {
+    "name": "Rampaging Sprodlings",
+    "role": "Toxin damage",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Reroot Rampage",
+     "Umbral Intensify",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "Reroot Rampage summons extra Sprodlings that deal Toxin with rising crit when you collect Reroot orbs, so Reroot becomes an attack as well as an escape. Strength and range boost Sporespring and Stinkbrain. Reroot near groups.",
+    "tags": []
+   },
+   {
+    "name": "Budget Spore Support",
+    "role": "Budget starter / energy support",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Redirection",
+     "Augur Message"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Duration keeps Brightbonnet and Stinkbrain alive longer so the team gets steady Energy and sleep CC. Plant them at the objective and bounce Sporespring off them.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Nova": [
+   {
+    "name": "Slow Prime Fission",
+    "role": "Slow CC / damage",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Molecular Fission",
+     "Umbral Intensify",
+     "Transient Fortitude",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Wormhole",
+    "notes": "High strength slows enemies harder with tapped Molecular Prime. Molecular Fission primes enemies hit by Null Star and refunds particles on kills, so your defense refills itself. Prime, shoot primed enemies, recast Null Star when low.",
+    "tags": []
+   },
+   {
+    "name": "Budget Wormhole Starter",
+    "role": "Budget starter / speed",
+    "aura": "Energy Siphon",
+    "exilus": "Escape Velocity",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Redirection"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Escape Velocity gives allies +50% speed for 7s after using your Wormhole. Range spreads Molecular Prime across the map; tap to slow for safety, hold to speed up enemies when racing.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Nyx": [
+   {
+    "name": "Assimilate Fortress",
+    "role": "Survival / gunplay",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Assimilate",
+     "Umbral Intensify",
+     "Stretch",
+     "Primed Streamline",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Adaptation",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Avenger"
+    ],
+    "helminth": "Roar → Mind Control",
+    "notes": "Assimilate lets you shoot while Absorb is active and keeps it up indefinitely for an energy drain, with half the range. Efficiency keeps the drain low; Stretch offsets the range loss. Sit in Absorb and fire from safety.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Pacifier",
+    "role": "Budget wide CC",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Pacifying Bolts",
+     "Chaos Sphere",
+     "Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Streamline",
+     "Flow",
+     "Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Pacifying Bolts confuses everything it hits for 10s with Radiation, and Chaos Sphere confuses enemies that walk into the zone. Range and duration keep the map fighting itself.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Oberon": [
+   {
+    "name": "Hallowed Reckoner",
+    "role": "Armor strip / Steel Path",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Hallowed Reckoning",
+     "Phoenix Renewal",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Umbral Fiber",
+     "Primed Streamline",
+     "Augur Reach"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Universal Fallout"
+    ],
+    "helminth": "Nourish → Smite",
+    "notes": "Hallowed Reckoning adds 40% range and leaves damaging, armor-giving zones under every enemy hit. Phoenix Renewal saves allies from a fatal hit once per minute. Reckoning strips Armor, then shoot; Fallout drops Universal Orbs from Radiation.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Radiant Support",
+    "role": "Budget team support",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Smite Infusion",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Hold Smite to give every ally within 15m +100% Radiation damage for 40s, then keep Renewal and Hallowed Ground on the team.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Octavia": [
+   {
+    "name": "Partitioned Conductor",
+    "role": "AoE damage",
+    "aura": "Growing Power",
+    "exilus": "Conductor",
+    "mods": [
+     "Partitioned Mallet",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Primed Streamline",
+     "Primed Vigor",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Partitioned Mallet adds a second Mallet, and Conductor lets you send Resonator to your aim point at 150% speed. Place Mallets on both lanes and steer the Resonator ball through groups.",
+    "tags": []
+   },
+   {
+    "name": "Budget Rhythm Starter",
+    "role": "Budget starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Redirection",
+     "Augur Message"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Grace"
+    ],
+    "helminth": "",
+    "notes": "No Umbral or Primed mods. Duration keeps Mallet, Metronome and Amp up for long stretches. Drop a Mallet on the objective, crouch on the beat for invisibility and let it work.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Oraxia": [
+   {
+    "name": "Silken Stride Toxic Bruiser",
+    "role": "Steel Path tank / toxin DPS",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Archon Continuity",
+     "Brood's Oversurge",
+     "Primed Flow",
+     "Augur Secrets",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Blessing",
+     "Molt Augmented"
+    ],
+    "helminth": "Nourish → Mercy's Kiss",
+    "notes": "Silken Stride multiplies your max health by Ability Strength, so stack health and strength. All her abilities deal Toxin, and Archon Continuity turns those procs into Corrosive armor strip. Brood's Oversurge lets you hold Widow's Brood to throw your Scuttlers at a target.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Web Lockdown Budget",
+    "role": "Crowd control / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Steel Fiber",
+     "Quick Thinking"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Range and duration make Webbed Embrace webs bigger and longer so you can keep up to three cocoon zones. Play from the webs: shoot cocooned enemies and spend energy on Widow's Brood.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Orion & Sirius": [
+   {
+    "name": "Celestial Clash Nuke",
+    "role": "Damage / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Precision Intensify",
+     "Augur Secrets",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Power Ramp",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Celestial Clash damage scales with Ability Strength, and Precision Intensify boosts only the 4th ability. Arcane Power Ramp rewards cycling different abilities, which is how you build stars anyway. Build stars with Astral Shell and Event Horizon, then spend them in one Clash.",
+    "tags": []
+   },
+   {
+    "name": "Event Horizon Control",
+    "role": "Crowd control / survival",
+    "aura": "Brief Respite",
+    "exilus": "Power Drift",
+    "mods": [
+     "Primed Continuity",
+     "Augur Reach",
+     "Stretch",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Flow",
+     "Quick Thinking"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Efficiency"
+    ],
+    "helminth": "",
+    "notes": "Duration keeps Astral Shell and Event Horizon up longer and range grows the black hole and its explosion. Play it as a controller: keep a black hole pulling enemies in, push it with Gravitic Slash, and let the Astral Shell decoy soak fire.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Protea": [
+   {
+    "name": "Temporal Erosion Strip",
+    "role": "Armor strip / damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Temporal Erosion",
+     "Temporal Artillery",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Nourish → Grenade Fan",
+    "notes": "While Temporal Anchor is up, Temporal Erosion makes every Blaze Artillery hit strip armor, and Temporal Artillery attaches a turret to you so it follows you around. Cast the anchor, fight next to your turrets, and let the rewind explode.",
+    "tags": []
+   },
+   {
+    "name": "Shield Satellite Support",
+    "role": "Team support / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Repair Dispensary",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Augur Accord"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Aegis"
+    ],
+    "helminth": "",
+    "notes": "Budget support build: hold Grenade Fan for Shield Satellites on the whole squad and keep Dispensaries down for everyone's energy and ammo. Repair Dispensary also heals companions.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Qorvex": [
+   {
+    "name": "Fused Crucible Beam",
+    "role": "Damage / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Fused Crucible",
+     "Umbral Intensify",
+     "Primed Streamline",
+     "Primed Flow",
+     "Stretch",
+     "Umbral Vitality",
+     "Augur Secrets",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Universal Fallout"
+    ],
+    "helminth": "Nourish → Containment Wall",
+    "notes": "Fused Crucible turns Crucible Blast into a ramping channel at 20 energy/s and freezes your pillars' duration, so efficiency and max energy matter most. Plant pillars, then stand and beam. Arcane Universal Fallout turns ability Radiation procs into orb drops.",
+    "tags": []
+   },
+   {
+    "name": "Wrecking Wall Strip",
+    "role": "Armor strip / tank",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Wrecking Wall",
+     "Archon Intensify",
+     "Augur Reach",
+     "Stretch",
+     "Primed Continuity",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Universal Fallout"
+    ],
+    "helminth": "",
+    "notes": "Wrecking Wall makes Containment Wall strip armor and shields, and hitting 5+ enemies restarts and empowers your pillars. Range lets the walls catch more. Play by slamming walls on every group so your team's weapons do the work.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Revenant": [
+   {
+    "name": "Danse Macabre Laser",
+    "role": "Damage / channel",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Primed Streamline",
+     "Primed Flow",
+     "Augur Secrets",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Transient Fortitude",
+     "Stretch"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Intention"
+    ],
+    "helminth": "Nourish → Enthrall",
+    "notes": "Strength and efficiency for Danse Macabre: the beams pick damage types to suit enemy defences and soak damage you would take. Arcane Intention adds health while you channel. Keep Mesmer Skin up and sweep rooms instead of using Reave as your main tool.",
+    "tags": []
+   },
+   {
+    "name": "Mesmer Shield Team Guard",
+    "role": "Team support / tank",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Mesmer Shield",
+     "Blinding Reave",
+     "Primed Continuity",
+     "Stretch",
+     "Streamline",
+     "Primed Flow",
+     "Archon Vitality",
+     "Umbral Intensify"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Pillage → Enthrall",
+    "notes": "Mesmer Shield gives nearby allies up to 5 Mesmer charges too, and Blinding Reave adds range and blinds what you dash through. Stay near your squad and recast Mesmer Skin on cooldown.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Rhino": [
+   {
+    "name": "Piercing Roar Buffer",
+    "role": "Team buffer / damage",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Blind Rage",
+     "Primed Continuity",
+     "Piercing Roar",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Nourish → Rhino Charge",
+    "notes": "Everything goes into Ability Strength to make Roar's damage buff as large as possible for the whole squad. Piercing Roar adds range and knocks down nearby enemies with Puncture procs. Blind Rage hurts efficiency, so Primed Flow and Energize keep you casting.",
+    "tags": []
+   },
+   {
+    "name": "Reinforcing Stomp Control",
+    "role": "Crowd control / tank",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Reinforcing Stomp",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Health Conversion",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Pillage → Rhino Charge",
+    "notes": "Range and duration make Rhino Stomp freeze bigger groups for longer, and Reinforcing Stomp refills Iron Skin by 4% per enemy hit, so you rarely need to recast Iron Skin. Stomp often and shoot the frozen enemies.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Saryn": [
+   {
+    "name": "Toxic Lash Melee Brawler",
+    "role": "Melee / sustain",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Contagion Cloud",
+     "Regenerative Molt",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Flow",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Reaper",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Toxic Lash doubles its Toxin bonus on melee and Contagion Cloud leaves toxic clouds on every kill, twice as strong for melee kills. Regenerative Molt heals you after each Molt, and Arcane Reaper gives armor and healing on melee kills. Play up close with a fast melee weapon.",
+    "tags": []
+   },
+   {
+    "name": "Venom Dose Squad Support",
+    "role": "Team support / damage",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Venom Dose",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Primed Continuity",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Stretch"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Molt",
+    "notes": "Hold Spores to give everyone within 15m extra Corrosive damage for 40s, then play a normal spore game. Roar replaces Molt for even more squad damage. Recast the hold version whenever the buff runs low.",
+    "tags": []
+   }
+  ],
+  "Sevagoth": [
+   {
+    "name": "Sow Detonator Nuke",
+    "role": "Damage / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Dark Propagation",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Stretch",
+     "Primed Continuity",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Gloom",
+    "notes": "Dark Propagation spreads Sow to nearby enemies when a sown enemy dies, so one Sow plus Reap chains through rooms. Strength makes the detonations hit harder. Roar takes Gloom's slot for extra damage, so stay mobile instead of relying on lifesteal.",
+    "tags": []
+   },
+   {
+    "name": "Shadow Haze Exalted",
+    "role": "Exalted melee / crit",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Shadow Haze",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation",
+     "Equilibrium"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Nourish → Sow",
+    "notes": "Shadow Haze gives +50% critical chance on enemies hit by Reap's Death Harvest and spawns extra Shadows from them when they die. Reap often to fill the Death Well, then play most of the mission in Exalted Shadow.",
+    "tags": []
+   }
+  ],
+  "Styanax": [
+   {
+    "name": "Intrepid Stand Overguard",
+    "role": "Steel Path tank / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intrepid Stand",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Streamline",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Truculence"
+    ],
+    "helminth": "Roar → Axios Javelin",
+    "notes": "Intrepid Stand gives 60 Overguard to you and 30 to allies for every javelin that hits during Final Stand, so big groups mean huge Overguard. Arcane Truculence releases a Viral blast when you gain lots of Overguard. Cast Final Stand often, not just to finish fights.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Tharros Lethality Budget",
+    "role": "Crit support / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Tharros Lethality",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Axios Javelin",
+    "notes": "No Umbral, Primed or Archon mods. Tharros Lethality gives +100% critical damage on enemies you hit with Tharros Strike, which also strips their armor and heals you. Swing the shield into each group, then shoot with a crit weapon.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Temple": [
+   {
+    "name": "Exalted Solo Lizzie",
+    "role": "Exalted weapon DPS",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Rhythm Guard",
+     "Umbral Intensify",
+     "Archon Vitality",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Adaptation",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Lizzie's damage multiplier scales a little with strength, and Archon Vitality applies the Heat procs from your abilities twice. Rhythm Guard gives growing Overguard as long as you keep hitting the Backbeat. Mod Lizzie like a primary and stay in Exalted Solo.",
+    "tags": []
+   },
+   {
+    "name": "Ripper's Wail Heat Buffer",
+    "role": "Team buffer / sustain",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Archon Intensify",
+     "Primed Continuity",
+     "Augur Secrets",
+     "Stretch",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Rolling Guard"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Ripper's Wail heals Temple, which triggers Archon Intensify's +30% strength. Strength and duration raise and stretch the squad's Heat weapon buff. Cast Overdrive and Pyrotechnics on the beat mainly to grow the buff, and let teammates do the shooting.",
+    "tags": []
+   }
+  ],
+  "Titania": [
+   {
+    "name": "Lantern Crowd Control",
+    "role": "Crowd control / support",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Beguiling Lantern",
+     "Spellbound Harvest",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Primed Flow",
+     "Umbral Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "A ground build: Beguiling Lantern makes attracted enemies take 100% more weapon damage, so plant a Lantern and let the squad shoot the cluster. Spellbound Harvest refunds energy and adds range to the next Spellbind. Range and duration make both bigger.",
+    "tags": []
+   },
+   {
+    "name": "Ironclad Razorwing",
+    "role": "Steel Path exalted DPS",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Ironclad Flight",
+     "Razorwing Blitz",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Quick Thinking",
+     "Adaptation",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Spellbind",
+    "notes": "Ironclad Flight gives 40% damage reduction while airborne but turns off Razorwing's loot vacuum. Razorwing Blitz stacks fire rate and flight speed each time you cast. Stay in the air and recast Tribute or Lantern to keep Blitz stacked.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Trinity": [
+   {
+    "name": "Abating Link Survivor",
+    "role": "Steel Path tank / armor strip",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Abating Link",
+     "Primed Continuity",
+     "Umbral Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation",
+     "Transient Fortitude",
+     "Quick Thinking"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Well of Life",
+    "notes": "Abating Link cuts armor by 60% on the enemies you are linked to while it redirects your damage to them. Duration keeps Link and Blessing up longer. Play aggressively next to enemies and recast Link the moment it ends.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Energy Vampire Budget",
+    "role": "Energy support / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Vampire Leech",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Aegis"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Energy Vampire on a durable enemy keeps your whole squad's energy topped up, and Vampire Leech turns extra energy into shields. Mark a new enemy as soon as the last one dies.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Uriel": [
+   {
+    "name": "Brimstone Heat Nuke",
+    "role": "Damage / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Archon Vitality",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Stretch",
+     "Primed Continuity",
+     "Primed Flow",
+     "Infernum",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Uriel's abilities deal Heat, and Archon Vitality applies their Heat procs twice. Strength and range make Brimstone bigger and harder-hitting. Infernum adds fireballs when you grab runes in flight that also charge Brimstone. Mark with Demonium, then Brimstone.",
+    "tags": []
+   },
+   {
+    "name": "Remedium Sustain Tank",
+    "role": "Steel Path tank",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Archon Intensify",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity",
+     "Streamline",
+     "Primed Flow",
+     "Rolling Guard",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Blessing"
+    ],
+    "helminth": "",
+    "notes": "Remedium heals a percent of max health, so big health makes it heal more, and healing with it triggers Archon Intensify's +30% strength. Keep Infernalis up, cast Remedium when hurt or when demons die, and pick up the health orbs.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Valkyr": [
+   {
+    "name": "Eternal War Armor Tank",
+    "role": "Steel Path tank / buffer",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Eternal War",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Augur Secrets",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Health Conversion",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Arcane Reaper",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Rip Line",
+    "notes": "Strength raises Warcry's armor and attack speed buff and Eternal War extends it on each melee kill. Hysteria multiplies that armor. Arcane Reaper adds armor and healing on melee kills. Play with your normal melee weapon and keep Warcry running.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Enraged Hysteria",
+    "role": "Exalted melee DPS",
+    "aura": "Growing Power",
+    "exilus": "Hysterical Assault",
+    "mods": [
+     "Enraged",
+     "Hysterical Fixation",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Fury",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Rip Line",
+    "notes": "Enraged gives Hysteria large damage and crit bonuses but limits it to 15s with a matching cooldown. Hysterical Fixation restores shields on kills and Hysterical Assault lets the claws leap to targets. Open Hysteria on big groups, then fight normally during the cooldown.",
+    "tags": []
+   }
+  ],
+  "Vauban": [
+   {
+    "name": "Photon Strike Nuke",
+    "role": "Damage / nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Photon Repeater",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Tesla Nervos",
+    "notes": "Photon Repeater makes the next Photon Strike free and adds two strikes when you hit 5+ enemies. Strength boosts every strike. Gather enemies with Bastille or Minelayer first, then chain free Photon Strikes on the pile.",
+    "tags": []
+   },
+   {
+    "name": "Enduring Bastille Budget",
+    "role": "Crowd control / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Enduring Bastille",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Augur Reach",
+     "Flow",
+     "Streamline",
+     "Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Guardian"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Enduring Bastille extends Bastille for every kill inside it, so lockdowns last on their own. Great for Defense and Survival: place Bastilles on enemy routes and shoot what they hold.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Volt": [
+   {
+    "name": "Shock Trooper Squad Buffer",
+    "role": "Team buffer",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Shock Trooper",
+     "Archon Stretch",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Hold Shock to give allies within 15m extra Electricity damage for 40s. All of Volt's abilities deal Electricity, so Archon Stretch gives energy regen every time they hit. Recast the hold Shock on cooldown and still use Electric Shield.",
+    "tags": []
+   },
+   {
+    "name": "Speed Runner Budget",
+    "role": "Speed / mobility",
+    "aura": "Sprint Boost",
+    "exilus": "Rush",
+    "mods": [
+     "Kinetic Collision",
+     "Shocking Speed",
+     "Intensify",
+     "Continuity",
+     "Streamline",
+     "Flow",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Agility"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Speed makes you fast, Kinetic Collision extends it when you run into enemies and Shocking Speed shocks enemies you pass. Great for capture, exterminate and getting around fast.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Voruna": [
+   {
+    "name": "Ulfrun's Descent Slash",
+    "role": "Damage / mobile nuke",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Ulfrun's Endurance",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Primed Flow",
+     "Streamline",
+     "Stretch",
+     "Umbral Vitality",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Nourish → Shroud of Dynar",
+    "notes": "Ulfrun's Endurance refunds Ulfrun's charges when enemies die from Slash status, so you can keep dashing. Strength raises the dash damage. Fang enemies first so they have statuses, then dash through the group.",
+    "tags": []
+   },
+   {
+    "name": "Prey Of Dynar Stealth",
+    "role": "Stealth melee crit",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Prey Of Dynar",
+     "Primed Continuity",
+     "Umbral Intensify",
+     "Primed Flow",
+     "Rolling Guard",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Streamline"
+    ],
+    "arcanes": [
+     "Arcane Crepuscular",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "Shroud Of Dynar plus Prey Of Dynar adds 50% damage vulnerability to your target, and Arcane Crepuscular gives strength and crit damage while invisible. Duration keeps the shroud up. Pick a target, open with melee, and recast Shroud between kills.",
+    "tags": []
+   }
+  ],
+  "Wisp": [
+   {
+    "name": "Sol Gate Beam",
+    "role": "Damage / channel",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Precision Intensify",
+     "Primed Flow",
+     "Primed Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Primed Continuity"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Arcane Intention"
+    ],
+    "helminth": "Roar → Breach Surge",
+    "notes": "Precision Intensify adds strength only to Sol Gate, and efficiency keeps the beam running. Enemies hit by Sol Gate become more vulnerable to it the longer you hold it on them. Drop Reservoirs first, then stand and beam large groups.",
+    "tags": []
+   },
+   {
+    "name": "Fused Reservoir Support",
+    "role": "Team buffer / speed",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Fused Reservoir",
+     "Critical Surge",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Streamline",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Augur Secrets"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Wil-O-Wisp",
+    "notes": "Fused Reservoir adds a fourth reservoir with all three motes at a higher energy cost, so efficiency matters. Critical Surge lets you teleport to a Reservoir with Breach Surge for a big primary critical chance bonus. Hop between reservoirs and shoot.",
+    "tags": []
+   }
+  ],
+  "Wukong": [
+   {
+    "name": "Primal Rage Staff",
+    "role": "Exalted melee DPS",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Primal Rage",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Cloud Walker",
+    "notes": "Primal Rage adds 15% critical chance per kill in Primal Fury. Strength raises the staff's damage and efficiency eases the drain. Mod the iron staff like a melee weapon and stay in Primal Fury through each fight while your twin helps.",
+    "tags": []
+   },
+   {
+    "name": "Celestial Stomp Budget",
+    "role": "Crowd control / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Power Drift",
+    "mods": [
+     "Celestial Stomp",
+     "Enveloping Cloud",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Hold Celestial Twin to have it slam and suspend enemies within 20m. Enveloping Cloud makes allies near your Cloud Walker invisible, which helps revives and escapes.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Xaku": [
+   {
+    "name": "Relentless Lost Rotation",
+    "role": "Damage / crowd control",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "The Relentless Lost",
+     "Umbral Intensify",
+     "Augur Secrets",
+     "Primed Continuity",
+     "Stretch",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Arcane Power Ramp",
+     "Molt Augmented"
+    ],
+    "helminth": "Roar → Xata's Whisper",
+    "notes": "The Relentless Lost gives +35% strength and +15% efficiency per cast, up to 3x, as long as you do not repeat the same Lost ability twice in a row. Arcane Power Ramp rewards the same habit. Cycle Accuse, Gaze and Deny on every group.",
+    "tags": []
+   },
+   {
+    "name": "Vampiric Grasp Survival",
+    "role": "Steel Path survival",
+    "aura": "Corrosive Projection",
+    "exilus": "Power Drift",
+    "mods": [
+     "Vampiric Grasp",
+     "Untime Rift",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Umbral Vitality",
+     "Adaptation",
+     "Rolling Guard",
+     "Primed Flow"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Vampiric Grasp heals you each time stolen weapons hit enemies under Gaze or The Vast Untime, and Untime Rift doubles The Vast Untime's debuffs on Void-afflicted enemies. Keep Grasp and Untime up together for steady healing.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Yareli": [
+   {
+    "name": "Loyal Merulina Snares",
+    "role": "Crowd control / on foot",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Loyal Merulina",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Stretch",
+     "Augur Secrets",
+     "Primed Flow",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Aquablades",
+    "notes": "Loyal Merulina stops you riding it; instead it follows you and casts Sea Snares on nearby enemies every few seconds. You fight on foot with normal parkour, so health and shields matter more. Snares and Riptide make enemies easy targets.",
+    "tags": []
+   },
+   {
+    "name": "Merulina Guardian Gunner",
+    "role": "Secondary weapon DPS",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Merulina Guardian",
+     "Surging Blades",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Streamline",
+     "Primed Flow",
+     "Augur Accord",
+     "Adaptation"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "",
+    "notes": "Kills during Sea Snares heal Merulina and give +200% reload speed and fire rate to your secondary for 20s. Surging Blades lets you throw Aquablades for free while riding. Ride, snare, and shoot with a strong secondary.",
+    "tags": []
+   }
+  ],
+  "Zephyr": [
+   {
+    "name": "Jet Stream Squad Speed",
+    "role": "Team buffer / mobility",
+    "aura": "Growing Power",
+    "exilus": "Power Drift",
+    "mods": [
+     "Jet Stream",
+     "Airburst Rounds",
+     "Umbral Intensify",
+     "Primed Continuity",
+     "Primed Flow",
+     "Streamline",
+     "Umbral Vitality",
+     "Umbral Fiber"
+    ],
+    "arcanes": [
+     "Molt Augmented",
+     "Arcane Energize"
+    ],
+    "helminth": "Roar → Tornado",
+    "notes": "Jet Stream makes Turbulence give you and your allies extra movement and projectile speed. Airburst Rounds adds secondary damage for each enemy Airburst hits, so open fights with Airburst then switch to your secondary. Roar replaces Tornado for squad damage.",
+    "tags": []
+   },
+   {
+    "name": "Tail Wind Dive Bomber",
+    "role": "Mobility / starter",
+    "aura": "Energy Siphon",
+    "exilus": "Aviator",
+    "mods": [
+     "Target Fixation",
+     "Intensify",
+     "Continuity",
+     "Stretch",
+     "Flow",
+     "Streamline",
+     "Vitality",
+     "Steel Fiber"
+    ],
+    "arcanes": [
+     "Arcane Energize",
+     "Molt Augmented"
+    ],
+    "helminth": "",
+    "notes": "No Umbral, Primed or Archon mods. Target Fixation resets your bullet jump on each Tail Wind and adds damage for every enemy hit until you land. Stay in the air: dash, dive bomb, bullet jump, repeat. Aviator cuts damage while airborne.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ]
+ },
+ "wbuilds": {
+  "Acceltra Prime": [
+   {
+    "name": "Corrosive + Heat armor melt",
+    "role": "Steel Path armor strip",
+    "exilus": "Vigilante Armaments",
+    "mods": [
+     "Serration",
+     "Primed Shred",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "High Voltage",
+     "Hellfire"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Toxin + Electricity make Corrosive, which strips armor from heavy Grineer; Heat adds burning damage over time. Use this against armored Steel Path enemies instead of the Viral setup.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget rocket",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "Cryo Rounds",
+     "Speed Trigger",
+     "Firestorm"
+    ],
+    "arcanes": [],
+    "notes": "Uses only common drop mods. Firestorm widens the rocket blasts so you can clear groups while you farm the better mods. Viral from Toxin + Cold.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Boltor": [
+   {
+    "name": "Incarnon crit Viral",
+    "role": "Steel Path crit",
+    "exilus": "Vigilante Armaments",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Primed Shred",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "Cryo Rounds",
+     "Hellfire"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Needs the Boltor Incarnon Genesis from The Circuit. The evolution perks make it a crit weapon; Viral (Toxin + Cold) plus Heat works on every faction. Primary Merciless stacks damage as you keep killing.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Status Viral",
+    "role": "Status / slash procs",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Galvanized Aptitude",
+     "Rifle Elementalist",
+     "Malignant Force",
+     "Rime Rounds",
+     "Hellfire",
+     "Primed Shred"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Stacks Status Chance and Status Damage instead of crit. Viral + Heat on every bolt melts health; good if you have not finished the Incarnon crit perks yet.",
+    "tags": []
+   }
+  ],
+  "Braton": [
+   {
+    "name": "Incarnon full crit",
+    "role": "Steel Path crit",
+    "exilus": "Vigilante Armaments",
+    "mods": [
+     "Amalgam Serration",
+     "Galvanized Chamber",
+     "Primed Shred",
+     "Point Strike",
+     "Vital Sense",
+     "Primed Cryo Rounds",
+     "Infected Clip",
+     "Galvanized Scope"
+    ],
+    "arcanes": [
+     "Primary Deadhead"
+    ],
+    "notes": "Leans fully into crit with the Incarnon form. Galvanized Scope boosts crit chance after headshot kills, and Primary Deadhead rewards aiming for heads. Viral from Toxin + Cold.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Corrosive armor stripper",
+    "role": "Anti-Grineer",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Galvanized Aptitude",
+     "Point Strike",
+     "Vital Sense",
+     "High Voltage",
+     "Infected Clip",
+     "Primed Bane Of Grineer"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Toxin + Electricity make Corrosive, which removes armor from Grineer, and Bane of Grineer multiplies damage against them. Use for Kuva Lich and Grineer-heavy missions.",
+    "tags": []
+   }
+  ],
+  "Ignis Wraith": [
+   {
+    "name": "Crit flamer",
+    "role": "Crit + Heat",
+    "exilus": "Vigilante Armaments",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Primed Shred",
+     "Infected Clip",
+     "Hellfire",
+     "Primed Cryo Rounds"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Swaps the pure status setup for crit mods while still applying lots of status. Viral (Toxin + Cold) plus Heat; good damage against single tough targets.",
+    "tags": []
+   },
+   {
+    "name": "Budget status flamer",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Rifle Aptitude",
+     "Malignant Force",
+     "Rime Rounds",
+     "Thermite Rounds",
+     "Rifle Elementalist",
+     "Fast Hands"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only. High status from Rifle Aptitude and the 60/60 elemental mods spreads Viral and Heat over every enemy in the flame. Great for Star Chart clearing.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Kuva Bramma": [
+   {
+    "name": "Crit cluster nuke",
+    "role": "AoE crit",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Primed Shred",
+     "Primed Firestorm",
+     "Hellfire",
+     "Infected Clip"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Crit-focused version: Point Strike and Vital Sense make the cluster bomblets crit. Primed Firestorm keeps the blasts wide. Mind the self-stagger at close range.",
+    "tags": []
+   },
+   {
+    "name": "Viral status bomber",
+    "role": "Status AoE",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Galvanized Aptitude",
+     "Rifle Elementalist",
+     "Malignant Force",
+     "Rime Rounds",
+     "Firestorm",
+     "Vital Sense"
+    ],
+    "arcanes": [
+     "Primary Blight"
+    ],
+    "notes": "Status Chance spreads Viral (Toxin + Cold) across every enemy in the blast; Primary Blight stacks crit damage and multishot from Toxin procs. Pick a Heat or Toxin progenitor.",
+    "tags": []
+   }
+  ],
+  "Kuva Zarr": [
+   {
+    "name": "Crit bombard",
+    "role": "AoE crit",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Primed Shred",
+     "Primed Firestorm",
+     "Infected Clip",
+     "Cryo Rounds"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Adds crit mods so the cannonball and cluster bombs crit hard. Viral (Toxin + Cold) works on every faction. Keep distance: the explosions stagger you.",
+    "tags": []
+   },
+   {
+    "name": "Corrosive status",
+    "role": "Anti-armor status",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Galvanized Aptitude",
+     "Rifle Elementalist",
+     "Malignant Force",
+     "High Voltage",
+     "Firestorm",
+     "Hellfire"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) plus Heat strips armor from Grineer crowds; the wide blasts spread status across the whole group.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Bubonico": [
+   {
+    "name": "Crit Corrosive",
+    "role": "Crit shotgun",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Primed Ravage",
+     "Critical Deceleration",
+     "Primed Blunderbuss",
+     "Toxic Barrage",
+     "Primed Charged Shell",
+     "Seeking Fury"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Swaps the status focus for crit: Critical Deceleration and Primed Blunderbuss push crit chance high, Primed Ravage raises crit damage. Toxin + Electricity make Corrosive to strip armor; Seeking Fury adds punch through.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget Viral",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Point Blank",
+     "Hell's Chamber",
+     "Shotgun Savvy",
+     "Ravage",
+     "Blunderbuss",
+     "Contagious Spread",
+     "Frigid Blast",
+     "Shotgun Elementalist"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only. Toxin + Cold for Viral with good status from Shotgun Savvy and Frigid Blast. Upgrade to the Primed/Galvanized versions later.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Felarx": [
+   {
+    "name": "Status Viral + Heat",
+    "role": "Status shotgun",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Galvanized Savvy",
+     "Shotgun Elementalist",
+     "Toxic Barrage",
+     "Frigid Blast",
+     "Scattering Inferno",
+     "Primed Ravage"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Stacks status instead of crit so every pellet spreads Viral and Heat. Galvanized Savvy grows status damage per kill. Good against crowds.",
+    "tags": []
+   },
+   {
+    "name": "Corrosive anti-armor",
+    "role": "Steel Path Grineer",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Primed Ravage",
+     "Critical Deceleration",
+     "Toxic Barrage",
+     "Primed Charged Shell",
+     "Primed Cleanse Grineer",
+     "Galvanized Savvy"
+    ],
+    "arcanes": [
+     "Shotgun Vendetta"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) and Cleanse Grineer for armored Grineer. Shotgun Vendetta gives big multishot after close kills, so fight up close.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Kuva Hek": [
+   {
+    "name": "Status Viral",
+    "role": "Status shotgun",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Galvanized Savvy",
+     "Shotgun Elementalist",
+     "Toxic Barrage",
+     "Frigid Blast",
+     "Scattering Inferno",
+     "Primed Ravage"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "High status build: Viral + Heat on every burst. Use the alt-fire full-auto burst to proc status quickly on a group.",
+    "tags": []
+   },
+   {
+    "name": "Close-range Vendetta",
+    "role": "Crit Corrosive",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Primed Ravage",
+     "Blunderbuss",
+     "Critical Deceleration",
+     "Toxic Barrage",
+     "Primed Charged Shell",
+     "Primed Tactical Pump"
+    ],
+    "arcanes": [
+     "Shotgun Vendetta"
+    ],
+    "notes": "Shotgun Vendetta adds multishot and reload after kills within 5m; Primed Tactical Pump keeps reloads short. Corrosive strips armor.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Akarius Prime": [
+   {
+    "name": "Viral status rocket",
+    "role": "Status AoE",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Primed Heated Charge",
+     "Pistol Elementalist",
+     "Primed Fulmination"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Swaps crit mods for status: Viral (Toxin + Cold) plus Heat on every rocket. Primed Fulmination makes the blast wider so status spreads to groups.",
+    "tags": []
+   },
+   {
+    "name": "Budget rocket",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Barrel Diffusion",
+     "Lethal Torrent",
+     "Pistol Gambit",
+     "Target Cracker",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Fulmination"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only, crit with Viral. Fulmination increases the rocket radius for crowd clearing.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Athodai": [
+   {
+    "name": "Pain Points weak-spot",
+    "role": "Augment headshot",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Galvanized Crosshairs",
+     "Pain Points",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Deadhead"
+    ],
+    "notes": "Pain Points stacks Weak Point Damage on each weak-spot hit. Aim for heads constantly; Heat adds armor-shredding burns.",
+    "tags": []
+   },
+   {
+    "name": "Viral status",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Pistol Elementalist",
+     "Primed Target Cracker"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Uses status instead of headshots: Viral (Toxin + Cold) primes enemies for the rest of your loadout. Easier to use while moving.",
+    "tags": []
+   }
+  ],
+  "Dual Toxocyst": [
+   {
+    "name": "Viral status",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Frostbite",
+     "Primed Heated Charge",
+     "Pistol Elementalist",
+     "Primed Target Cracker"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "The innate Toxin plus Cold make Viral, and Heat adds damage over time. Status helps when you cannot land headshots for Frenzy.",
+    "tags": []
+   },
+   {
+    "name": "Budget headshot",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Barrel Diffusion",
+     "Lethal Torrent",
+     "Target Cracker",
+     "Pistol Gambit",
+     "Hydraulic Crosshairs",
+     "Heated Charge",
+     "Convulsion"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods. Land headshots to trigger Frenzy (faster fire), then keep aiming at heads. Heat + Electricity make Radiation.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Epitaph": [
+   {
+    "name": "Uncharged status",
+    "role": "Status spam",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Primed Heated Charge",
+     "Pistol Elementalist"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Fire uncharged shots quickly to spread Viral + Heat status. Use the charged shot only for tight groups.",
+    "tags": []
+   },
+   {
+    "name": "Corrosive charged",
+    "role": "Anti-armor AoE",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Galvanized Crosshairs",
+     "Pistol Pestilence",
+     "Convulsion",
+     "Primed Fulmination"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) strips armor; Primed Fulmination widens the charged-shot explosion.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Kompressa Prime": [
+   {
+    "name": "Viral status bounce",
+    "role": "Status AoE",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Pistol Elementalist",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Status setup: bouncing grenades spread Viral + Heat over groups. Good for priming enemies for melee.",
+    "tags": []
+   },
+   {
+    "name": "Corrosive wide blast",
+    "role": "Anti-armor",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Pistol Pestilence",
+     "Convulsion",
+     "Primed Fulmination"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) for armored Grineer; Primed Fulmination makes each blast bigger.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Kuva Nukor": [
+   {
+    "name": "Crit Radiation",
+    "role": "Crit beam",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Galvanized Crosshairs",
+     "Primed Heated Charge",
+     "Convulsion",
+     "Lethal Torrent"
+    ],
+    "arcanes": [
+     "Secondary Irradiate"
+    ],
+    "notes": "Heat + Electricity make Radiation. Nukor procs it fast; Secondary Irradiate then splashes damage around Radiation-stacked enemies. High crit damage multiplier helps.",
+    "tags": []
+   },
+   {
+    "name": "Viral status chain",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Pistol Elementalist",
+     "Augur Pact",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Encumber"
+    ],
+    "notes": "Viral + Heat status on every chained target; Secondary Encumber adds extra random status. Strong as a status primer for your other weapons.",
+    "tags": []
+   }
+  ],
+  "Laetum": [
+   {
+    "name": "Viral status",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Pistol Elementalist",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Status setup: Viral (Toxin + Cold) plus Heat. Works in both normal and Incarnon form.",
+    "tags": []
+   },
+   {
+    "name": "Corrosive anti-armor",
+    "role": "Steel Path",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Pistol Pestilence",
+     "Convulsion",
+     "Primed Expel Grineer"
+    ],
+    "arcanes": [
+     "Secondary Deadhead"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) strips armor and Expel Grineer multiplies damage against Grineer, for Kuva Lich and armored Steel Path missions. Secondary Deadhead rewards headshot kills.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Lato": [
+   {
+    "name": "Incarnon full crit",
+    "role": "Steel Path crit",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Galvanized Crosshairs",
+     "Pistol Pestilence",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Deadhead"
+    ],
+    "notes": "Full Primed/Galvanized crit setup for the Incarnon Lato. Aim for heads to stack Galvanized Crosshairs and Deadhead.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Corrosive status",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Convulsion",
+     "Pistol Elementalist",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Corrosive (Toxin + Electricity) strips armor and Heat burns. Uses status mods instead of crit.",
+    "tags": []
+   }
+  ],
+  "Lex Prime": [
+   {
+    "name": "Viral status",
+    "role": "Status",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Galvanized Shot",
+     "Pistol Pestilence",
+     "Frostbite",
+     "Pistol Elementalist",
+     "Primed Heated Charge"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Status version for the Incarnon form: Viral + Heat on ricocheting shots spreads to groups.",
+    "tags": []
+   },
+   {
+    "name": "Budget crit",
+    "role": "No Primed/Galvanized",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Barrel Diffusion",
+     "Lethal Torrent",
+     "Target Cracker",
+     "Pistol Gambit",
+     "Hydraulic Crosshairs",
+     "Pistol Pestilence",
+     "Frostbite"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only. Viral from Toxin + Cold. Get the Lex Incarnon Genesis for the big upgrade.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Dorrclave": [
+   {
+    "name": "Viral status",
+    "role": "Status combo",
+    "aura": "Tainted Hydra",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "North Wind",
+     "Primed Pressure Point",
+     "Galvanized Elementalist"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Rising Vendetta (after 10 kills) gives +100% Status Chance; Viral (Toxin + Cold) plus its natural Slash make Condition Overload huge. Melee Influence spreads elements.",
+    "tags": []
+   },
+   {
+    "name": "Budget",
+    "role": "No Primed/Galvanized",
+    "aura": "Tainted Hydra",
+    "exilus": "",
+    "mods": [
+     "Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Pressure Point",
+     "Organ Shatter",
+     "Fever Strike",
+     "North Wind",
+     "Berserker Fury"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only. Viral from Toxin + Cold, Blood Rush scales crit with combo.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Dual Ichor": [
+   {
+    "name": "Crit combo",
+    "role": "Crit",
+    "aura": "Swirling Tiger",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Gladiator Might",
+     "Berserker Fury",
+     "North Wind"
+    ],
+    "arcanes": [
+     "Melee Duplicate"
+    ],
+    "notes": "Crit-focused version. Innate Toxin + North Wind Cold make Viral. Melee Duplicate gives crits a second hit.",
+    "tags": []
+   },
+   {
+    "name": "Heavy attack",
+    "role": "Heavy",
+    "aura": "Swirling Tiger",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Corrupt Charge",
+     "Killing Blow",
+     "Melee Elementalist",
+     "Molten Impact"
+    ],
+    "arcanes": [
+     "Melee Animosity"
+    ],
+    "notes": "Build combo with light attacks, then spend it on heavy attacks. Corrupt Charge and Killing Blow boost heavies, Melee Elementalist speeds wind-up and Melee Animosity adds crit chance to the next heavy.",
+    "tags": []
+   }
+  ],
+  "Glaive Prime": [
+   {
+    "name": "Hand combo",
+    "role": "Melee combo",
+    "aura": "Gleaming Talon",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Weeping Wounds",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Berserker Fury",
+     "Primed Fever Strike"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Fights in hand instead of heavy throws. Blood Rush and Weeping Wounds scale with combo, Primed Fever Strike adds Toxin. Use light attacks to keep combo up.",
+    "tags": []
+   },
+   {
+    "name": "Budget throw",
+    "role": "No Primed",
+    "aura": "Gleaming Talon",
+    "exilus": "",
+    "mods": [
+     "Reach",
+     "Condition Overload",
+     "Pressure Point",
+     "Organ Shatter",
+     "Power Throw",
+     "Fever Strike",
+     "Quick Return",
+     "Blood Rush"
+    ],
+    "arcanes": [],
+    "notes": "Cheap mods only. Heavy-throw the glaive and detonate it on groups; Power Throw boosts the explosion and Quick Return brings it back faster.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Gram Prime": [
+   {
+    "name": "Combo crit",
+    "role": "Combo",
+    "aura": "Tempo Royale",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Weeping Wounds",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Gladiator Might",
+     "Berserker Fury"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Light-attack combo build instead of heavy slams. Blood Rush and Weeping Wounds scale crit and status with combo, Berserker Fury speeds up swings. Keep attacking to hold the combo.",
+    "tags": []
+   },
+   {
+    "name": "Status",
+    "role": "Status",
+    "aura": "Tempo Royale",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Primed Pressure Point",
+     "Virulent Scourge",
+     "North Wind",
+     "Galvanized Elementalist",
+     "Weeping Wounds",
+     "Berserker Fury"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Status build: Virulent Scourge and North Wind make Viral, Galvanized Elementalist stacks status chance on kills, and Condition Overload grows with each status on the target. Good on crowds with the wide heavy-blade swings.",
+    "tags": []
+   }
+  ],
+  "Hate": [
+   {
+    "name": "Burning Hate heat",
+    "role": "Augment status",
+    "aura": "Reaping Spiral",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Burning Hate",
+     "Molten Impact",
+     "Weeping Wounds",
+     "Blood Rush",
+     "Primed Pressure Point",
+     "Berserker Fury"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Hate's augment Burning Hate makes enemies with Heat status take more Status Damage. Molten Impact adds Heat and status chance, so combo attacks keep Heat on targets while Weeping Wounds and Condition Overload scale up.",
+    "tags": []
+   },
+   {
+    "name": "Heavy",
+    "role": "Heavy",
+    "aura": "Reaping Spiral",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Corrupt Charge",
+     "Killing Blow",
+     "Melee Elementalist",
+     "Virulent Scourge"
+    ],
+    "arcanes": [
+     "Melee Animosity"
+    ],
+    "notes": "Build combo with light attacks, then heavy attack for big single hits. Melee Elementalist speeds up the wind-up and Melee Animosity adds crit chance to the next heavy. Good against single tanky enemies.",
+    "tags": []
+   }
+  ],
+  "Kronen Prime": [
+   {
+    "name": "Viral status",
+    "role": "Status combo",
+    "aura": "Gemini Cross",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Blood Rush",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "North Wind",
+     "Primed Pressure Point",
+     "Galvanized Elementalist"
+    ],
+    "arcanes": [
+     "Melee Influence"
+    ],
+    "notes": "Status combo build: Virulent Scourge and North Wind make Viral, and Galvanized Elementalist stacks status chance on kills, so Condition Overload grows with every status on the target. Fast tonfa hits spread status quickly.",
+    "tags": []
+   },
+   {
+    "name": "Heavy",
+    "role": "Heavy",
+    "aura": "Gemini Cross",
+    "exilus": "",
+    "mods": [
+     "Primed Reach",
+     "Condition Overload",
+     "Organ Shatter",
+     "Primed Pressure Point",
+     "Corrupt Charge",
+     "Killing Blow",
+     "Melee Elementalist",
+     "Primed Fever Strike"
+    ],
+    "arcanes": [
+     "Melee Animosity"
+    ],
+    "notes": "Build combo with quick light attacks, then spend it on heavy attacks. Corrupt Charge and Killing Blow boost heavy damage, Melee Elementalist speeds up the wind-up, and Melee Animosity adds crit chance to each heavy.",
+    "tags": []
+   }
+  ],
+  "Nataruk": [
+   {
+    "name": "Viral slash bow",
+    "role": "Steel Path all-rounder",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Hunter Munitions",
+     "Malignant Force",
+     "Primed Cryo Rounds",
+     "Galvanized Aptitude"
+    ],
+    "arcanes": [
+     "Primary Merciless"
+    ],
+    "notes": "Toxin + Cold make Viral, and Hunter Munitions turns crits into Slash bleeds, so it works on any faction without a Bane mod. Release just before full charge for the Perfect Shot; charged shots pierce every body in a line.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget viral bow",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Rifle Aptitude",
+     "Hammer Shot",
+     "Infected Clip",
+     "Cryo Rounds"
+    ],
+    "arcanes": [],
+    "notes": "All common mods, no Galvanized or Primed. Nataruk never needs ammo, so you can fire all mission; line up enemies so the charged arrow pierces them.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Phenmor": [
+   {
+    "name": "Viral crit",
+    "role": "Steel Path any faction",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Primed Cryo Rounds",
+     "Malignant Force",
+     "Galvanized Aptitude",
+     "Hunter Munitions"
+    ],
+    "arcanes": [
+     "Primary Blight"
+    ],
+    "notes": "Swaps the Bane mod for Viral + Slash, so it works on every faction without changing mods. Malignant Force's Toxin procs feed Primary Blight. Get into Incarnon form fast and stay in it.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget corrosive",
+    "role": "Armor strip, cheap",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "Stormbringer",
+     "Rifle Aptitude",
+     "Hammer Shot"
+    ],
+    "arcanes": [],
+    "notes": "Toxin + Electricity make Corrosive, which strips Grineer armor. Only common mods; fine until you can afford the Galvanized versions.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Rubico Prime": [
+   {
+    "name": "Weak-point one-shot",
+    "role": "Headshot sniper",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Primary Acuity",
+     "Galvanized Scope",
+     "Vital Sense",
+     "Primed Chamber",
+     "Heavy Caliber",
+     "Hellfire",
+     "Primed Cryo Rounds"
+    ],
+    "arcanes": [
+     "Primary Deadhead"
+    ],
+    "notes": "Primary Acuity adds huge weak-point damage and crit chance but blocks multishot, so no Split Chamber here. Aim for heads: Galvanized Scope and Deadhead stack on weak-point hits, and Primed Chamber boosts the first shot of each magazine.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget viral sniper",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Charged Chamber",
+     "Heavy Caliber",
+     "Cryo Rounds",
+     "Infected Clip"
+    ],
+    "arcanes": [],
+    "notes": "Common mods only. Viral (Cold + Toxin) makes every faction take more damage; Charged Chamber makes the first shot of each magazine hit harder, so open on the biggest target.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Soma Prime": [
+   {
+    "name": "Hata-Satya viral",
+    "role": "Sustained fire",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Hata-Satya",
+     "Malignant Force",
+     "Primed Cryo Rounds",
+     "Hunter Munitions"
+    ],
+    "arcanes": [
+     "Primary Blight"
+    ],
+    "notes": "Hata-Satya (Soma Prime's augment) adds crit chance with every hit until you reload or holster, so hold the trigger and keep firing. Viral and Slash procs replace the Bane mod for any-faction use.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget viral",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "Cryo Rounds",
+     "Speed Trigger",
+     "Heavy Caliber"
+    ],
+    "arcanes": [],
+    "notes": "Common mods only. Soma's crit chance does the heavy lifting; Cryo + Infected Clip make Viral for every faction.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Torid": [
+   {
+    "name": "Corrosive status",
+    "role": "Armor strip AoE",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Galvanized Aptitude",
+     "Malignant Force",
+     "High Voltage",
+     "Stormbringer",
+     "Rifle Elementalist",
+     "Primed Shred"
+    ],
+    "arcanes": [
+     "Primary Blight"
+    ],
+    "notes": "Adds Electricity to Torid's Toxin for Corrosive, which strips Grineer armor on Steel Path. Rifle Elementalist boosts status damage; Toxin procs feed Primary Blight.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget gas grenades",
+    "role": "Crowd clear, cheap",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Rifle Aptitude",
+     "Thermite Rounds",
+     "Infected Clip",
+     "Heavy Caliber",
+     "Firestorm",
+     "Hammer Shot"
+    ],
+    "arcanes": [],
+    "notes": "Heat + Toxin make Gas, an area cloud that suits Torid's grenades; Firestorm widens the blast. Fire into groups and let the clouds tick.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Trumna": [
+   {
+    "name": "Viral status explosions",
+    "role": "Crowd clear",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Galvanized Chamber",
+     "Galvanized Aptitude",
+     "Malignant Force",
+     "Primed Cryo Rounds",
+     "Primed Firestorm",
+     "Rifle Elementalist",
+     "Primed Shred"
+    ],
+    "arcanes": [
+     "Primary Blight"
+    ],
+    "notes": "Every bullet explodes, so status lands on whole groups. Viral sits next to Trumna's own Heat; Primed Firestorm widens each blast. Explosions stagger you too, so don't fire at your feet. Kills charge the alt-fire grenade.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget crit",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Rifle Aptitude",
+     "Infected Clip",
+     "Speed Trigger",
+     "Hellfire"
+    ],
+    "arcanes": [],
+    "notes": "The standard crit build without Galvanized mods. Heat + Toxin give Gas for crowds; Speed Trigger raises fire rate so the grenade charges faster.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Tenet Arca Plasmor": [
+   {
+    "name": "Crit viral",
+    "role": "Steel Path corridor clear",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Primed Point Blank",
+     "Galvanized Hell",
+     "Primed Ravage",
+     "Critical Deceleration",
+     "Primed Blunderbuss",
+     "Contagious Spread",
+     "Frigid Blast",
+     "Shotgun Elementalist"
+    ],
+    "arcanes": [
+     "Shotgun Vendetta"
+    ],
+    "notes": "Leans on crits instead of pure status: Critical Deceleration and Primed Blunderbuss push crit chance, Viral boosts damage on every faction. Close-range kills trigger Shotgun Vendetta for extra multishot, so push into hallways.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget viral + heat",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Point Blank",
+     "Hell's Chamber",
+     "Shotgun Savvy",
+     "Blunderbuss",
+     "Ravage",
+     "Toxic Barrage",
+     "Frigid Blast",
+     "Blaze"
+    ],
+    "arcanes": [],
+    "notes": "Unprimed, non-Galvanized versions of the core mods. Toxic Barrage and Frigid Blast make Viral; Blaze adds Heat and raw damage. Keep Toxic before Frigid so they combine.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Pyrana Prime": [
+   {
+    "name": "Viral crit",
+    "role": "Steel Path any faction",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Lethal Torrent",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Pathogen Rounds",
+     "Frostbite",
+     "Galvanized Shot"
+    ],
+    "arcanes": [
+     "Secondary Encumber"
+    ],
+    "notes": "Viral (Toxin + Cold) plus crit; Galvanized Shot adds damage per status type on the target. Chain kills to summon the second Pyrana and dual-wield for a few seconds.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget gas",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Barrel Diffusion",
+     "Lethal Torrent",
+     "Target Cracker",
+     "Pistol Gambit",
+     "Pathogen Rounds",
+     "Heated Charge",
+     "Augur Pact"
+    ],
+    "arcanes": [],
+    "notes": "Common mods only. Heat + Toxin make Gas clouds that hit groups, which suits a pellet sidearm used up close.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Tenet Cycron": [
+   {
+    "name": "Corrosive beam",
+    "role": "Armor strip",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Galvanized Diffusion",
+     "Galvanized Shot",
+     "Pathogen Rounds",
+     "Primed Convulsion",
+     "Primed Target Cracker",
+     "Primed Pistol Gambit",
+     "Lethal Torrent"
+    ],
+    "arcanes": [
+     "Secondary Merciless"
+    ],
+    "notes": "Toxin + Electricity make Corrosive, with the beam's own Heat kept separate. The beam chains to 2 nearby enemies and refills itself, so keep it on targets: damage ramps up after a short time firing.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget status beam",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Hornet Strike",
+     "Barrel Diffusion",
+     "Sure Shot",
+     "Pistol Pestilence",
+     "Heated Charge",
+     "Lethal Torrent",
+     "Target Cracker",
+     "Pistol Gambit"
+    ],
+    "arcanes": [],
+    "notes": "Common mods only. Lots of status from a beam that chains between enemies and never needs ammo pickups.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Nikana Prime": [
+   {
+    "name": "Heavy attack crit",
+    "role": "Heavy attack",
+    "aura": "Blind Justice",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Amalgam Organ Shatter",
+     "Sacrificial Steel",
+     "Killing Blow",
+     "Corrupt Charge",
+     "Galvanized Reflex",
+     "Primed Reach",
+     "Gladiator Might"
+    ],
+    "arcanes": [
+     "Melee Animosity"
+    ],
+    "notes": "Built around heavy attacks instead of combo slashing. Corrupt Charge starts you with combo, Sacrificial Steel doubles crit on heavies, and Melee Animosity stacks crit from normal hits onto your next heavy. Hit a few times, then heavy.",
+    "tags": []
+   },
+   {
+    "name": "Viral status",
+    "role": "Steel Path combo",
+    "aura": "Blind Justice",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Condition Overload",
+     "Primed Reach",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "Vicious Frost",
+     "Volcanic Edge",
+     "Galvanized Elementalist"
+    ],
+    "arcanes": [
+     "Melee Exposure"
+    ],
+    "notes": "Stacks Viral, Heat and Slash so Condition Overload has many status types to count. Melee Exposure adds Corrosive whenever you cast an ability. Stay in combo and keep swinging.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Praedos": [
+   {
+    "name": "Heavy attack crit",
+    "role": "Heavy attack",
+    "aura": "Gemini Cross",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Organ Shatter",
+     "Sacrificial Steel",
+     "Killing Blow",
+     "Corrupt Charge",
+     "Primed Reach",
+     "Gladiator Might",
+     "Galvanized Reflex"
+    ],
+    "arcanes": [
+     "Melee Animosity"
+    ],
+    "notes": "A heavy attack at 5x combo unlocks Incarnon form, and this build makes heavies the main attack. Corrupt Charge gives starting combo, Galvanized Reflex keeps some combo after each heavy.",
+    "tags": []
+   },
+   {
+    "name": "Viral status",
+    "role": "Steel Path combo",
+    "aura": "Gemini Cross",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Condition Overload",
+     "Primed Reach",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "Vicious Frost",
+     "Galvanized Elementalist",
+     "Blood Rush"
+    ],
+    "arcanes": [
+     "Melee Exposure"
+    ],
+    "notes": "Viral boosts damage on every faction; Condition Overload grows with each status on the target. Open Incarnon form with one heavy, then keep normal-attacking for combo.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Reaper Prime": [
+   {
+    "name": "Viral + heat status",
+    "role": "Steel Path combo",
+    "aura": "Reaping Spiral",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Condition Overload",
+     "Primed Reach",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "Vicious Frost",
+     "Volcanic Edge",
+     "Blood Rush"
+    ],
+    "arcanes": [
+     "Melee Exposure"
+    ],
+    "notes": "Reaper Prime's Slash-heavy hits pair well with Viral and Heat: more status types for Condition Overload to count. Melee Exposure adds Corrosive after every ability cast.",
+    "tags": [
+     "sp"
+    ]
+   },
+   {
+    "name": "Budget slash",
+    "role": "Early game",
+    "aura": "Reaping Spiral",
+    "exilus": "",
+    "mods": [
+     "Pressure Point",
+     "Condition Overload",
+     "Blood Rush",
+     "Weeping Wounds",
+     "Reach",
+     "Organ Shatter",
+     "Fury",
+     "Fever Strike"
+    ],
+    "arcanes": [],
+    "notes": "No Primed mods. The same Condition Overload combo recipe as the main build, with standard versions of each mod.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ],
+  "Skana": [
+   {
+    "name": "Cheap viral status",
+    "role": "Early game",
+    "aura": "Crimson Dervish",
+    "exilus": "",
+    "mods": [
+     "Pressure Point",
+     "Condition Overload",
+     "Fever Strike",
+     "North Wind",
+     "Reach",
+     "Fury",
+     "Weeping Wounds",
+     "Melee Prowess"
+    ],
+    "arcanes": [],
+    "notes": "Fever Strike + North Wind make Viral, and Melee Prowess adds status chance so procs land often. Every mod is easy to get early.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   },
+   {
+    "name": "Starter heavy attack",
+    "role": "Heavy attack",
+    "aura": "Crimson Dervish",
+    "exilus": "",
+    "mods": [
+     "Pressure Point",
+     "True Steel",
+     "Organ Shatter",
+     "Killing Blow",
+     "Corrupt Charge",
+     "Spoiled Strike",
+     "Reach",
+     "Molten Impact"
+    ],
+    "arcanes": [],
+    "notes": "A simple heavy-attack build: Corrupt Charge gives starting combo and Killing Blow speeds up the wind-up. Use heavy attacks to one-shot tough targets.",
+    "tags": [
+     "budget",
+     "starter"
+    ]
+   }
+  ],
+  "Venka Prime": [
+   {
+    "name": "Gladiator crit",
+    "role": "Fast crit combo",
+    "aura": "Four Riders",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Blood Rush",
+     "Organ Shatter",
+     "Gladiator Might",
+     "Gladiator Rush",
+     "Gladiator Vice",
+     "Sacrificial Steel",
+     "Primed Reach"
+    ],
+    "arcanes": [
+     "Melee Duplicate"
+    ],
+    "notes": "Fast claws that crit often: the three Gladiator mods add speed and combo time, and Melee Duplicate makes base crits strike twice. Keep attacking to hold combo high.",
+    "tags": []
+   },
+   {
+    "name": "Viral status",
+    "role": "Steel Path combo",
+    "aura": "Four Riders",
+    "exilus": "",
+    "mods": [
+     "Primed Pressure Point",
+     "Condition Overload",
+     "Primed Reach",
+     "Weeping Wounds",
+     "Virulent Scourge",
+     "Vicious Frost",
+     "Galvanized Elementalist",
+     "Blood Rush"
+    ],
+    "arcanes": [
+     "Melee Exposure"
+    ],
+    "notes": "Fast hits spread Viral and Slash quickly, feeding Condition Overload. Cast an ability now and then to keep Melee Exposure's Corrosive stacks up.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Sporothrix": [
+   {
+    "name": "Budget crit sniper",
+    "role": "Early game",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Serration",
+     "Split Chamber",
+     "Point Strike",
+     "Vital Sense",
+     "Infected Clip",
+     "Cryo Rounds",
+     "Rifle Aptitude",
+     "Heavy Caliber"
+    ],
+    "arcanes": [],
+    "notes": "Common rifle mods only. Aim for heads; Viral from Infected Clip + Cryo Rounds helps on every faction.",
+    "tags": [
+     "budget"
+    ]
+   }
+  ]
+ },
+ "cbuilds": {
+  "Carrier Prime": [
+   {
+    "name": "Crate breaker",
+    "role": "Loot farming",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Looter",
+     "Ammo Case",
+     "Vacuum",
+     "Primed Animal Instinct",
+     "Spare Parts",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Guardian"
+    ],
+    "arcanes": [],
+    "notes": "Looter breaks every loot crate nearby, Spare Parts marks enemies to drop more items, and Animal Instinct shows loot on the minimap. For relaxed resource runs.",
+    "tags": []
+   },
+   {
+    "name": "Tanky gunner",
+    "role": "Combat",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Assault Mode",
+     "Ammo Case",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Metal Fiber",
+     "Calculated Redirection",
+     "Accelerated Deflection",
+     "Sacrifice"
+    ],
+    "arcanes": [],
+    "notes": "Health, armor and shield mods keep Carrier alive in harder missions while Assault Mode lets it shoot. Ammo Case still covers ammo, and Sacrifice can revive you.",
+    "tags": []
+   }
+  ],
+  "Diriga": [
+   {
+    "name": "Electric crowd control",
+    "role": "Stun",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Arc Coil",
+     "Electro Pulse",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Metal Fiber",
+     "Guardian",
+     "Sacrifice",
+     "Primed Animal Instinct"
+    ],
+    "arcanes": [],
+    "notes": "Diriga's own precepts: Electro Pulse holds one enemy stunned and Arc Coil zaps groups nearby. The health and armor mods keep it up long enough to matter.",
+    "tags": []
+   },
+   {
+    "name": "Calculated sniper",
+    "role": "Damage",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Calculated Shot",
+     "Assault Mode",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Calculated Redirection",
+     "Accelerated Deflection",
+     "Medi-Ray",
+     "Sacrifice"
+    ],
+    "arcanes": [],
+    "notes": "Calculated Shot fires a charged shot at the first enemy in 70m, with Assault Mode for normal fire. Medi-Ray adds a little healing for you.",
+    "tags": []
+   }
+  ],
+  "Djinn": [
+   {
+    "name": "Reawaken immortal",
+    "role": "Survival",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Reawaken",
+     "Thumper",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Calculated Redirection",
+     "Metal Fiber",
+     "Accelerated Deflection",
+     "Sacrifice"
+    ],
+    "arcanes": [],
+    "notes": "Reawaken cuts Djinn's recovery time with every Energy Orb and brings it back with Overshields, so it rarely stays down. Thumper makes it attack the first enemy it sees.",
+    "tags": []
+   },
+   {
+    "name": "Lure support",
+    "role": "Defense / support",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Fatal Attraction",
+     "Reawaken",
+     "Medi-Ray",
+     "Guardian",
+     "Shield Charger",
+     "Sanctuary",
+     "Primed Regen",
+     "Primed Animal Instinct"
+    ],
+    "arcanes": [],
+    "notes": "Fatal Attraction pulls enemies to you to explode; Shield Charger, Medi-Ray and Sanctuary (a shield while you revive allies) keep you and the team up. Good for defense objectives.",
+    "tags": []
+   }
+  ],
+  "Helminth Charger": [
+   {
+    "name": "Slash hunter",
+    "role": "Damage + healing",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Link Vitality",
+     "Link Fiber",
+     "Maul",
+     "Bite",
+     "Hunter Command",
+     "Hunter Recovery",
+     "Strain Eruption",
+     "Trample"
+    ],
+    "arcanes": [],
+    "notes": "Hunter Command sends the Charger after anything you hit with Slash, and Hunter Recovery heals you from its damage. Strain Eruption makes its maggots explode for Corrosive.",
+    "tags": []
+   },
+   {
+    "name": "Proboscis tank",
+    "role": "Survival / grab",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Proboscis",
+     "Primed Pack Leader",
+     "Link Vitality",
+     "Link Fiber",
+     "Link Redirection",
+     "Hastened Deflection",
+     "Restorative Bond",
+     "Maul"
+    ],
+    "arcanes": [],
+    "notes": "Proboscis pulls enemies in, and the Link mods copy your Warframe's health, armor and shields. Primed Pack Leader heals the Charger when you melee, so it survives Steel Path.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Oxylus": [
+   {
+    "name": "Mining and plants",
+    "role": "Open-world gathering",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Scan Matter",
+     "Botanist",
+     "Vacuum",
+     "Primed Animal Instinct",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Metal Fiber",
+     "Guardian"
+    ],
+    "arcanes": [],
+    "notes": "Scan Matter shows mineral deposits and breaks resource containers; Botanist picks plants for you. Bring it for mining and gathering in open worlds.",
+    "tags": []
+   },
+   {
+    "name": "Container farmer",
+    "role": "Star Chart loot",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Scan Matter",
+     "Spare Parts",
+     "Vacuum",
+     "Primed Animal Instinct",
+     "Primed Regen",
+     "Enhanced Vitality",
+     "Calculated Redirection",
+     "Sacrifice"
+    ],
+    "arcanes": [],
+    "notes": "Scan Matter auto-breaks resource containers every few seconds and Spare Parts marks enemies to drop more items. Good for resource runs on normal missions.",
+    "tags": []
+   }
+  ],
+  "Panzer Vulpaphyla": [
+   {
+    "name": "Viral quills",
+    "role": "Damage support",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Viral Quills",
+     "Panzer Devolution",
+     "Link Vitality",
+     "Link Fiber",
+     "Hastened Deflection",
+     "Primed Animal Instinct",
+     "Maul",
+     "Bite"
+    ],
+    "arcanes": [],
+    "notes": "Viral Quills spreads Viral to groups, so your own weapons hit harder too. Panzer Devolution keeps it fighting as a larva while downed.",
+    "tags": []
+   },
+   {
+    "name": "Martyr healer",
+    "role": "Survival for you",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Martyr Symbiosis",
+     "Panzer Devolution",
+     "Link Vitality",
+     "Link Fiber",
+     "Link Redirection",
+     "Restorative Bond",
+     "Loyal Companion",
+     "Primed Pack Leader"
+    ],
+    "arcanes": [],
+    "notes": "Martyr Symbiosis stores health from corpses and heals you when you drop very low; Loyal Companion gives damage reduction at low health. Panzer Devolution means going down costs it little.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ],
+  "Smeeta Kavat": [
+   {
+    "name": "Charm survivor",
+    "role": "Loot / resources",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Charm",
+     "Mischief",
+     "Tek Assault",
+     "Link Vitality",
+     "Link Fiber",
+     "Primed Animal Instinct",
+     "Loyal Retriever",
+     "Hastened Deflection"
+    ],
+    "arcanes": [],
+    "notes": "Keeps Charm's loot buffs going by keeping Smeeta alive: Mischief makes it invisible while a decoy draws fire, and Tek Assault can ignore lethal hits. Loyal Retriever adds a chance to double pickups.",
+    "tags": []
+   },
+   {
+    "name": "Crit claws",
+    "role": "Combat",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Charm",
+     "Sharpened Claws",
+     "Fear Sense",
+     "Maul",
+     "Bite",
+     "Link Vitality",
+     "Link Fiber",
+     "Tenacious Bond"
+    ],
+    "arcanes": [],
+    "notes": "Bite pushes Smeeta's crit chance over 50%, which turns on Tenacious Bond's bonus to your own crit damage. Sharpened Claws strips armor. Charm still procs.",
+    "tags": []
+   }
+  ],
+  "Vasca Kavat": [
+   {
+    "name": "Bleeding claws",
+    "role": "Damage",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Draining Bite",
+     "Sharpened Claws",
+     "Maul",
+     "Bite",
+     "Hunter Command",
+     "Link Vitality",
+     "Link Fiber",
+     "Hunter Recovery"
+    ],
+    "arcanes": [],
+    "notes": "Draining Bite applies Slash stacks and heals Vasca; Hunter Command sends it after enemies you hit with Slash, and Hunter Recovery heals you from its damage.",
+    "tags": []
+   },
+   {
+    "name": "Revive buddy",
+    "role": "Survival",
+    "aura": "",
+    "exilus": "",
+    "mods": [
+     "Transfusion",
+     "Tek Assault",
+     "Link Vitality",
+     "Link Fiber",
+     "Link Redirection",
+     "Loyal Companion",
+     "Restorative Bond",
+     "Hastened Deflection"
+    ],
+    "arcanes": [],
+    "notes": "Transfusion raises you when you're bleeding out, and the Link mods plus Tek Assault keep Vasca alive to do it. Loyal Companion gives damage reduction at low health.",
+    "tags": [
+     "sp"
+    ]
+   }
+  ]
+ }
+}
