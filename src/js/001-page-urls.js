@@ -3,16 +3,18 @@
    a path here, before any other hashchange listener runs, and HASH() gives back the old '#route' form for code that reads it.
    Old #links, bookmarks and shared links keep working. build/make_site.py writes a page for each route below. */
 const PAGE_ROUTES=['home','today','ranks','synd','goals','tenno','missions','resources','mastery','frames','farm','quests','market','arsenal','relics',
-  'world','tasks','foundry','friends','donate','feedback','about','admin','achievements','guides','collection','chat'];
+  'world','tasks','foundry','friends','donate','feedback','about','admin','achievements','guides','collection','chat','details'];
 const PAGE_SET=new Set(PAGE_ROUTES);
 const pathRoute=()=>{const p=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();return PAGE_SET.has(p)?p:''};
 const hashRoute=()=>{const h=location.hash.slice(1);return PAGE_SET.has(h)?h:''};
 const routePath=r=>!r||r==='home'?'/':'/'+r+'/';
 /** The current page as '#route' ('' on the home page), the way location.hash used to read. */
 function HASH(){const r=hashRoute()||pathRoute();return r&&r!=='home'?'#'+r:r==='home'?'#home':''}
+/* the details page carries what it shows in ?k=...; other pages keep any other query (such as ?id=) as before */
+const keepSearch=r=>{const q=new URLSearchParams(location.search);if(r!=='details')q.delete('k');const s=q.toString();return s?'?'+s:''};
 /** Go to a page without reloading. */
 function GO(r){r=String(r||'').replace(/^[#/]+|\/+$/g,'')||'home';if(r===(HASH().slice(1)||'home'))return;
-  history.pushState(null,'',routePath(r)+location.search);
+  history.pushState(null,'',routePath(r)+keepSearch(r));
   // like a hash change, the page renders on the next task, so code after GO() still runs first
   setTimeout(()=>dispatchEvent(new HashChangeEvent('hashchange')),0)}
 /* a route hash (a #link, a bookmark, or code setting location.hash) becomes the page's path */

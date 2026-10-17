@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChevronDown, Gem, Search, X } from "lucide-react"
+import { ChevronDown, Gem, Maximize2, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -107,7 +107,7 @@ export function ResourcesPage() {
             )}
           </Card>
         </div>
-        {narrow ? null : <div className="min-w-0"><div className="lg:sticky lg:top-16">{d.detail ? <Island html={d.detail} /> : empty}</div></div>}
+        {narrow ? null : <div className="min-w-0"><div className="flex flex-col gap-2 lg:sticky lg:top-16">{d.detail ? <><Button variant="outline" className="h-9 self-start" onClick={() => tf().openDetails("res|" + d.sel)}><Maximize2 /> More details</Button><Island html={d.detail} /></> : empty}</div></div>}
       </div>
       {narrow ? (
         <Sheet open={sheet && !!d.detail} onOpenChange={setSheet}>
@@ -116,7 +116,7 @@ export function ResourcesPage() {
               <SheetTitle className="pr-8 font-heading text-lg">{d.sel}</SheetTitle>
               <SheetDescription className="sr-only">Where to farm {d.sel}</SheetDescription>
             </SheetHeader>
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">{d.detail ? <Island html={d.detail} /> : null}</div>
+            <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3">{d.detail ? <><Button variant="outline" className="h-9 self-start" onClick={() => { setSheet(false); tf().openDetails("res|" + d.sel) }}><Maximize2 /> More details</Button><Island html={d.detail} /></> : null}</div>
           </SheetContent>
         </Sheet>
       ) : null}
