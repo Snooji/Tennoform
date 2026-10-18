@@ -19,10 +19,23 @@ jobs:
         run: |
           # a line starting with 7+ '<' or '>' is what git leaves behind in a conflicted file; the browser can't run it
           if git grep -nIE '^(<{7}|>{7})' -- . ':(exclude)*.md'; then
-            echo "::error::Merge conflict markers found in the files above. Rebuild them (cd app && npm run build; python3 build/make_site.py) and commit again."
+            echo "::error::Merge conflict markers found in the files above. Fix them and commit again."
             exit 1
           fi
           echo "No conflict markers."
+  built:
+    name: No built files in the pull request
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # the merge GitHub tests and the main it merges into
+      - name: Only source changes
+        run: |
+          # built files are made after the merge (Build site workflow); a PR that changes them clashes with every update
+          git diff --name-only HEAD^1 HEAD > "$RUNNER_TEMP/changed.txt"
+          python3 build/built_files.py --check "$RUNNER_TEMP/changed.txt"
   build:
     name: Site builds and works in a browser
     runs-on: ubuntu-latest
