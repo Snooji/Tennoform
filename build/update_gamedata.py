@@ -216,8 +216,9 @@ d['meta']['wfcd'] = VERSION
 if changed:
     from datetime import date
     d['meta']['built'] = date.today().strftime('%b %-d, %Y')
-with open(BASE, 'w') as fh:
-    json.dump(d, fh, separators=(',', ':'))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # run with -I, which leaves this folder off the path
+import jsonlines
+jsonlines.dump(d, BASE)
 print('WFCD', VERSION)
 for k in ('items', 'relics', 'mods', 'arcanes', 'vault'):
     print(f'{k}: {len(log[k])}' + (': ' + ', '.join(log[k][:40]) + (' …' if len(log[k]) > 40 else '') if log[k] else ''))

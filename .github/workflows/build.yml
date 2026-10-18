@@ -1,0 +1,31 @@
+name: Build site
+# After every merge to main: build the pages, assets/ and bundle/ from the merged source and publish them.
+# Pull requests don't include built files (see build/built_files.py), so they never clash with each other or with the
+# daily data updates. Pushes made by this workflow don't start it again (GitHub doesn't run workflows for them).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: build-site   # a merge that lands while this runs waits, then builds everything merged so far
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 100   # make_site.py keeps the files of recent versions, so it needs their history
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build and publish
+        run: build/publish.sh "Build site"
