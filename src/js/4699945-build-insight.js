@@ -19,7 +19,7 @@ function modInfo(n){const arc=!!ARC[n]&&!MODS[n];const md=(arc?ARC[n]:MODS[n]);i
   const p=PR[n]||{};const sl=(SEL[n]||[]).filter(s=>s[0]!=='__buy');const key=(arc?'arc|':'mod|')+n;
   return {n,arc,key,owned:on(key),loading:!MDI.data&&!MDI.err,type:md.ty||'',fits:x.fits||md.for||'',rarity:RAR_L[md.r]||'',polarity:arc?'':(POL_L[md.pol]||md.pol||''),
     rank:x.rk??(arc?md.mx:null),drain:x.dr??null,fx:x.fx||[],fx0:x.fx0||[],augment:isAug(md),
-    drops:(md.dr||[]).slice(0,8).map(d=>({where:d[0],chance:d[1]})),moreDrops:Math.max(0,(md.dr||[]).length-8),src:md.src||'',
+    drops:(md.dr||[]).slice(0,8).map(d=>({where:d[0],chance:d[1],enemy:typeof ENM!=='undefined'&&ENM[d[0]]?'enemy|'+d[0]:''})),moreDrops:Math.max(0,(md.dr||[]).length-8),src:md.src||'',
     tradable:!!MS[n],wfm:MS[n]?'https://warframe.market/items/'+MS[n]:'',a7:p.a7??null,a30:p.a30??null,v7:p.v7??null,date:D.meta.prices||'',
     sellers:sl.slice(0,3).map(s=>({name:s[0],price:s[1],qty:s[2],rank:s[5]??null,status:s[4]==='ingame'?'In game':s[4]==='online'?'Online':'',whisper:whisper(n,s)}))}}
 

@@ -468,7 +468,7 @@ export type ModSlot = { slot: string; m: string; key: string; pol: string; done:
 export type ModInfo = {
   n: string; arc: boolean; key: string; owned: boolean; loading: boolean; type: string; fits: string; rarity: string; polarity: string
   rank: number | null; drain: number | null; fx: string[]; fx0: string[]; augment: boolean
-  drops: { where: string; chance: number }[]; moreDrops: number; src: string
+  drops: { where: string; chance: number; enemy?: string }[]; moreDrops: number; src: string
   tradable: boolean; wfm: string; a7: number | null; a30: number | null; v7: number | null; date: string
   sellers: { name: string; price: number; qty: number; rank: number | null; status: string; whisper: string }[]
 }

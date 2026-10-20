@@ -72,7 +72,9 @@ export function ModInfoBody({ d, onLeave }: { d: ModInfoData; onLeave?: () => vo
         <ul className="flex flex-col divide-y border-y text-sm">
           {d.drops.map((x) => (
             <li key={x.where} className="flex items-baseline justify-between gap-3 py-1.5">
-              <span className="min-w-0">{x.where}</span>
+              {x.enemy ? (
+                <button type="button" className="min-w-0 text-left underline-offset-2 hover:underline" onClick={() => { onLeave?.(); tf().openDetails(x.enemy!) }}>{x.where}</button>
+              ) : <span className="min-w-0">{x.where}</span>}
               <span className="shrink-0 text-muted-foreground tabular-nums">{x.chance}%</span>
             </li>
           ))}

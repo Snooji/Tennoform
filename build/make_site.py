@@ -25,6 +25,9 @@ D['howto'] = json.load(open(hp)) if os.path.exists(hp) else {}
 # Warframe Wiki user builds, credited to their authors (build/make_wikibuilds.py)
 wp = os.path.join(H, 'wikibuilds.json')
 D['wikib'] = json.load(open(wp)) if os.path.exists(wp) else []
+# every enemy: stats, weaknesses, where it spawns and what it drops (build/make_enemies.py)
+ep = os.path.join(H, 'enemies.json')
+D['enemies'] = json.load(open(ep)) if os.path.exists(ep) else []
 cp = os.path.join(H, 'crafts.json')
 D['crafts'] = json.load(open(cp)) if os.path.exists(cp) else {}
 D['prices'] = mk['prices']
@@ -81,8 +84,8 @@ def as_js(var, obj):
     return 'self.%s=JSON.parse(%s);\n' % (var, json.dumps(json.dumps(obj, separators=(',', ':'), ensure_ascii=False), ensure_ascii=False))
 PAGES = {k: v for k, v in json.load(open(os.path.join(H, 'pages.json'), encoding='utf-8')).items() if not k.startswith('_')}
 MARKET_KEYS = ('prices', 'sellers', 'sets', 'meta')  # these change every day; the rest only on game patches
-# Guides and farm "ways" aren't needed to draw the first page: they're their own files, fetched right after it's up.
-LAZY = ('guides', 'ways')
+# Guides, farm "ways" and enemies aren't needed to draw the first page: they're their own files, fetched right after it's up.
+LAZY = ('guides', 'ways', 'enemies')
 game = {k: v for k, v in D.items() if k not in MARKET_KEYS and k not in LAZY}
 market = {k: D[k] for k in MARKET_KEYS}
 def part(d):
