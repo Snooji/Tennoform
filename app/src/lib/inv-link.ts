@@ -93,7 +93,8 @@ export async function invLink() {
   const pick = picker()
   if (!pick) return null
   let h: Handle
-  try { [h] = await pick({ id: "tf-inventory", types: [{ description: "Inventory file", accept: { "application/json": [".json"] } }] }) } catch { return null }
+  // open in Documents: Chrome and Edge refuse to link files inside %AppData% (where WFHelper saves it) as "system files"
+  try { [h] = await pick({ id: "tf-inventory", startIn: "documents", types: [{ description: "Inventory file", accept: { "application/json": [".json"] } }] }) } catch { return null }
   handle = h
   try { await idb("readwrite", (s) => s.put(h, KEY)) } catch { /* still works for this visit */ }
   const first = !S.linked
