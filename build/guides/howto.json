@@ -50,7 +50,8 @@
     "t": "Check the summary. If something looks wrong, tap Undo last import to put everything back."
    },
    {
-    "t": "Repeat after a play session whenever you want fresh numbers. WFHelper keeps inventory.json up to date while it runs, and each import replaces your relic, resource and Foundry counts."
+    "t": "Want it to update by itself? Under Keep it updated automatically, open Set up the copy (once, Windows) and follow its three steps. It keeps a copy of inventory.json in Documents\\Tennoform, and once you link that copy Tennoform reads it again every time you come back.",
+    "tip": "Chrome and Edge won't link a file inside %appdata% (\"contains system files\"), which is why the copy lives in Documents. Without the setup, just choose the file again after a play session: each import replaces your relic, resource and Foundry counts."
    }
   ],
   "fast": [
