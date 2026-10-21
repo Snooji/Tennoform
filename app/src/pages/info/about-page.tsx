@@ -72,7 +72,7 @@ export function AboutPage() {
   const [open, setOpen] = useState(d.sec === "changes")
   useEffect(() => { if (d.sec === "changes") setOpen(true) }, [d.sec])
   const sources: [string, React.ReactNode, string][] = [
-    ["Items, parts, Mastery, relics and their rewards, mods, arcanes, Foundry recipes, item stats, mod effects",
+    ["Items, parts, Mastery, relics and their rewards, mods, arcanes, Foundry recipes, item stats, mod effects, enemies (stats, weaknesses, the planets they spawn on, what they drop)",
       <><Ext href="https://github.com/WFCD/warframe-items">WFCD warframe-items</Ext>{d.wfcd ? ` v${d.wfcd}` : ""}, the open data set built from the game's public export and Digital Extremes' official drop tables</>,
       "Checked every day; new content goes live automatically"],
     ["Drop chances and mission rewards", <><Ext href="https://www.warframe.com/droptables">Digital Extremes' official drop tables</Ext>, through WFCD</>, "With each game data update"],

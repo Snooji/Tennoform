@@ -49,6 +49,7 @@ jobs:
           python3 -I build/make_modinfo.py "$J"
           python3 -I build/make_umap.py "$J"
           python3 -I build/make_crafts.py "$J"
+          python3 -I build/make_enemies.py "$J"
       - name: Publish
         if: steps.ver.outputs.cur != steps.ver.outputs.new
         env:
