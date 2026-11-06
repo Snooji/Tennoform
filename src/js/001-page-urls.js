@@ -5,7 +5,11 @@
 const PAGE_ROUTES=['home','today','ranks','synd','goals','tenno','missions','resources','mastery','frames','farm','quests','market','arsenal','relics',
   'world','tasks','foundry','friends','donate','feedback','about','admin','achievements','guides','collection','chat','details'];
 const PAGE_SET=new Set(PAGE_ROUTES);
-const pathRoute=()=>{const p=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();return PAGE_SET.has(p)?p:''};
+/* every item, mod, arcane, relic, resource and enemy also has its own page (tennoform.com/mod/serration/): the details page
+   for that thing. build/seo_pages.py writes them; 4699972-details.js turns the address into what to show. */
+const SEO_SEG={item:'item',mod:'mod',arcane:'arc',relic:'relic',resource:'res',enemy:'enemy'};
+const seoPath=p=>{const m=/^([a-z]+)\/([a-z0-9-]+)$/.exec(p);return m&&SEO_SEG[m[1]]?m:null};
+const pathRoute=()=>{const p=location.pathname.replace(/^\/+|\/+$/g,'').toLowerCase();return PAGE_SET.has(p)?p:seoPath(p)?'details':''};
 const hashRoute=()=>{const h=location.hash.slice(1);return PAGE_SET.has(h)?h:''};
 const routePath=r=>!r||r==='home'?'/':'/'+r+'/';
 /** The current page as '#route' ('' on the home page), the way location.hash used to read. */
@@ -31,4 +35,6 @@ addEventListener('popstate',()=>{if(hashRoute())return;const r=HASH().slice(1)||
 document.addEventListener('click',e=>{if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
   const a=e.target.closest&&e.target.closest('a[href]');if(!a||a.target&&a.target!=='_self'||a.hasAttribute('download'))return;
   let u;try{u=new URL(a.href)}catch(x){return}if(u.origin!==location.origin||u.hash)return;
-  const p=u.pathname.replace(/^\/+|\/+$/g,'');if(p&&!PAGE_SET.has(p))return;e.preventDefault();GO(p||'home')});
+  const p=u.pathname.replace(/^\/+|\/+$/g,'');
+  if(seoPath(p)&&typeof openPath==='function'){e.preventDefault();openPath(u.pathname);return}
+  if(p&&!PAGE_SET.has(p))return;e.preventDefault();GO(p||'home')});
