@@ -67,6 +67,13 @@ jobs:
           if missing:
               print('::error::index.html points at files that are not there:', missing); sys.exit(1)
           print('All', len(re.findall(r'(?:src|href)="/(?:assets|bundle)/', html)), 'files present.')
+          # the item, mod, relic... pages load the build through boot.js
+          boot = open('boot.js').read()
+          gone = [u for u in re.findall(r'(?:src|href)=\\"/((?:assets|bundle)/[^"\\]+)', boot) if not os.path.exists(u)]
+          pages = sum(len(os.listdir(d)) for d in ('item', 'mod', 'arcane', 'relic', 'resource', 'enemy'))
+          if gone or pages < 3000:
+              print('::error::boot.js points at missing files', gone, 'or too few item/mod/relic pages:', pages); sys.exit(1)
+          print(pages, 'item/mod/relic/resource/enemy pages; boot.js files present.')
           PY
       - name: Install the browser checks
         run: cd tests && npm ci && npx playwright install --with-deps chromium

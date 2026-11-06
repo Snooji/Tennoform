@@ -47,3 +47,20 @@ Safari blocks the cross-site cookies Google sign-in normally relies on. The site
 2. **Authorized JavaScript origins:** add `https://tennoform.com`.
 3. **Authorized redirect URIs:** add `https://tennoform.com/__/auth/handler`. **Save**.
 4. In `firebase-config.js`, set `window.TENNO_SELF_AUTH = true;` and commit.
+
+# Getting listed on Google and Bing
+
+The site already gives search engines what they need: a page with its own title and description for every section, and for every item, mod, arcane, relic, resource and enemy (`tennoform.com/mod/serration/`, written by `build/seo_pages.py`), all listed in `sitemap.xml`. These steps tell Google and Bing the site exists and is yours.
+
+**Google (Search Console)**
+1. Go to https://search.google.com/search-console and choose **Add property → Domain**, then enter `tennoform.com`.
+2. Google shows a TXT record. Because the domain is on Cloudflare, use the **Verify with Cloudflare** button if Google offers it; otherwise, in Cloudflare open **DNS → Records → Add record**, choose type **TXT**, name `@`, paste the value, and save. Back in Search Console, press **Verify** (it can take a few minutes).
+3. **Sitemaps** (left menu): enter `sitemap.xml` and press **Submit**.
+4. **URL inspection** (top bar): paste `https://tennoform.com/` and press **Request indexing**. Do the same for a few key pages, such as `/farm/`, `/relics/` and `/mastery/`.
+5. Check **Pages** after a few days to see what's indexed and why anything isn't.
+
+Prefer a meta tag to DNS? Choose **URL prefix** instead of Domain, pick **HTML tag**, and put the `content` value in `build/verify.json` as `{"google": "…"}`. Every page then carries it after the next build.
+
+**Bing (also used by DuckDuckGo, Yahoo and ChatGPT search)**
+1. Go to https://www.bing.com/webmasters, sign in, and choose **Import from Google Search Console**. It copies the verified site and its sitemap.
+2. (Or add the site by hand and put Bing's `msvalidate.01` value in `build/verify.json` as `"bing": "…"`.)

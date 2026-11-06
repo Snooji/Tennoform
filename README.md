@@ -44,6 +44,8 @@ Commit only the source (`src/`, `app/`, `build/`, data files). The built files (
 
 `index.html` is a 3 KB shell; the old page styles, the old page code, the game data and the daily prices are separate files in `bundle/` whose names change when their contents do, so returning visitors only download what changed (usually just the prices). Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
 
+Search engines: every section has its own page (`build/pages.json`: title, description, listed or not), and every item, mod, arcane, relic, resource and enemy has one too (`tennoform.com/mod/serration/`, written by `build/seo_pages.py` with the facts in plain HTML, links between related pages and breadcrumb data). Those pages load the current build through `boot.js`, so they only change when their own content does. Everything indexable is in `sitemap.xml`; `og.png` is the link-preview image. Getting listed on Google and Bing is in `SETUP.md`.
+
 The Backend page (admins only) shows players online, daily and total users, feedback, donations, the chat review queue, bans, and who leads each clan and alliance chat.
 
 Not affiliated with Digital Extremes. Warframe is a trademark of Digital Extremes Ltd.

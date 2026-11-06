@@ -182,23 +182,65 @@ JSON_LD = '<script type="application/ld+json">' + json.dumps({
     'description': PAGES['home'][1], 'applicationCategory': 'GameApplication', 'operatingSystem': 'Any',
     'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'}}, separators=(',', ':')) + '</script>'
 esc = lambda t: t.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
-def page_for(route, status_ok=True):
-    title, desc, index = PAGES[route]
-    url = SITE + ('/' if route == 'home' else '/%s/' % route)
-    robots = 'index,follow' if index and status_ok else 'noindex,follow'
+# Search Console / Bing ownership tags, if the owner verifies with a meta tag rather than DNS (build/verify.json)
+VP = os.path.join(H, 'verify.json')
+VERIFY = json.load(open(VP)) if os.path.exists(VP) else {}
+VERIFY_TAGS = ''.join('<meta name="%s" content="%s">' % (n, esc(VERIFY[k])) for k, n in (('google', 'google-site-verification'), ('bing', 'msvalidate.01')) if VERIFY.get(k))
+# The item, mod, relic... pages load the current build through /boot.js instead of naming its files, so they stay the same
+# from one daily price update to the next (thousands of pages would otherwise change every day).
+body_loader = (template.replace('<style>@layer legacy{\n/*CSS*/\n}</style>', '', 1)
+               .replace('<script id="data" type="application/json">/*DATA*/</script>\n<script>/*JS*/</script>', '<script src="/boot.js"></script>', 1))
+def boot_js():
+    mf = os.path.join(H, '..', 'assets', '.vite', 'manifest.json')
+    e = json.load(open(mf))['src/main.tsx'] if os.path.exists(mf) else {}
+    head = ['<link rel="stylesheet" href="/assets/%s">' % c for c in e.get('css', [])] + (['<script type="module" src="/assets/%s"></script>' % e['file']] if e.get('file') else [])
+    body = ['<link rel="stylesheet" href="%s">' % files['css']] + ['<script src="%s"></script>' % files[k] for k in ('game', 'market', 'code')]
+    return ('/* written by build/make_site.py: this build\'s files, for the item/mod/relic/resource/enemy pages. Run once in <head>\n'
+            '   (the app\'s styles and script) and once at the end of <body> (the page styles and the game, price and app code). */\n'
+            '(function(){var h=%s,b=%s;(document.body?b:h).forEach(function(t){document.write(t)})})();\n'
+            % (json.dumps(head).replace('</', '<\\/'), json.dumps(body).replace('</', '<\\/')))
+def render_page(title, desc, url, index=True, seo='', extra_head='', loader=False, key=''):
+    robots = 'index,follow' if index else 'noindex,follow'
     head = ('<title>%s</title><meta name="theme-color" content="#100f0d"><meta name="description" content="%s">' % (esc(title), esc(desc))
-            + ('<link rel="canonical" href="%s">' % url if status_ok else '') + '<meta name="robots" content="%s">' % robots
+            + ('<link rel="canonical" href="%s">' % url if url else '') + '<meta name="robots" content="%s">' % robots + VERIFY_TAGS
+            + ('<meta name="tf-key" content="%s">' % esc(key) if key else '')
             + '<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Tennoform">'
-            + '<meta property="og:type" content="website"><meta property="og:site_name" content="Tennoform"><meta property="og:url" content="%s"><meta property="og:title" content="%s"><meta property="og:description" content="%s"><meta property="og:image" content="%s/icon-512.png">' % (url, esc(title), esc(desc), SITE)
-            + '<meta name="twitter:card" content="summary"><meta name="twitter:title" content="%s"><meta name="twitter:description" content="%s">' % (esc(title), esc(desc))
-            + (JSON_LD if route == 'home' else ''))
-    # what a crawler without JavaScript sees: this page's name and what it is for
-    b = re.sub(r'<noscript>.*?</noscript>', '<noscript><h1>%s</h1><p>%s</p><p>Tennoform is a free Warframe companion. Turn on JavaScript to use it.</p></noscript>' % (esc(title), esc(desc)), body, count=1, flags=re.S)
+            + '<meta property="og:type" content="website"><meta property="og:site_name" content="Tennoform"><meta property="og:url" content="%s"><meta property="og:title" content="%s"><meta property="og:description" content="%s"><meta property="og:image" content="%s/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Tennoform, the free Warframe companion">' % (url or SITE + '/', esc(title), esc(desc), SITE)
+            + '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="%s"><meta name="twitter:description" content="%s"><meta name="twitter:image" content="%s/og.png">' % (esc(title), esc(desc), SITE)
+            + extra_head)
+    b = body_loader if loader else body
+    # what a crawler without JavaScript sees: this page's name and what it is for, and on the bigger pages its own content
+    b = re.sub(r'<noscript>.*?</noscript>', '<noscript><p>Tennoform is a free Warframe companion. Turn on JavaScript to use it.</p></noscript>' if seo else
+               '<noscript><h1>%s</h1><p>%s</p><p>Tennoform is a free Warframe companion. Turn on JavaScript to use it.</p></noscript>' % (esc(title), esc(desc)), b, count=1, flags=re.S)
+    if seo:
+        # inside #app, so the app's first render replaces it with the real page
+        b = b.replace('<div id="app" tabindex="-1"></div>', '<div id="app" tabindex="-1">%s</div>' % seo, 1)
+    tags = ('<style>@layer properties, theme, base, legacy, components, utilities;</style><script src="/boot.js"></script>' if loader else shell_tags())
     return ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
             '<meta http-equiv="Content-Security-Policy" content="' + csp + '">'
             '<meta name="referrer" content="strict-origin-when-cross-origin">' + head
-            + shell_tags() + '</head><body>\n' + b + '\n</body></html>\n')
+            + tags + '</head><body>\n' + b + '\n</body></html>\n')
+def ld(obj):
+    return '<script type="application/ld+json">' + json.dumps(obj, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/') + '</script>'
+def crumbs_ld(crumbs, name, url):
+    items = [{'@type': 'ListItem', 'position': i + 1, 'name': t, 'item': SITE + u} for i, (t, u) in enumerate(crumbs)]
+    items.append({'@type': 'ListItem', 'position': len(items) + 1, 'name': name, 'item': url})
+    return ld({'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': items})
+import seo_pages
+SEO = seo_pages.load(D)
+def hub_html(route):
+    links = SEO.hub(route)
+    if not links:
+        return ''
+    title, desc, _ = PAGES[route]
+    return ('<article class="seo-page" style="max-width:860px;margin:0 auto;padding:24px 16px;line-height:1.55"><h1>%s</h1><p>%s</p>%s</article>'
+            % (esc(title.split(' · ')[0]), esc(desc), links))
+def page_for(route, status_ok=True):
+    title, desc, index = PAGES[route]
+    url = SITE + ('/' if route == 'home' else '/%s/' % route)
+    extra = (JSON_LD + ld({'@context': 'https://schema.org', '@type': 'WebSite', 'name': 'Tennoform', 'url': SITE + '/'}) if route == 'home' else '')
+    return render_page(title, desc, url if status_ok else '', index and status_ok, seo=hub_html(route) if status_ok else '', extra_head=extra)
 page = page_for('home')
 # every page gets its own address: tennoform.com/farm/ is farm/index.html (GitHub Pages serves folders this way)
 ROOT = os.path.join(H, '..')
@@ -209,11 +251,36 @@ for route in PAGES:
     open(os.path.join(ROOT, route, 'index.html'), 'w').write(page_for(route))
 # unknown addresses: the app opens on the home page, and search engines are told not to list it
 open(os.path.join(ROOT, '404.html'), 'w').write(page_for('home', status_ok=False))
+# a page for every item, mod, arcane, relic, resource and enemy (tennoform.com/mod/serration/); old ones are removed
+open(os.path.join(ROOT, 'boot.js'), 'w').write(boot_js())
+written = set()
+for key, path in SEO.path.items():
+    title, desc, html_, crumbs = SEO.page(key)
+    url = SITE + path
+    name = key.split('|', 1)[1]
+    d = os.path.join(ROOT, path.strip('/'))
+    os.makedirs(d, exist_ok=True)
+    out = render_page(title, desc[:300], url, True, seo=html_, extra_head=crumbs_ld(crumbs, name, url), loader=True, key=key)
+    fp = os.path.join(d, 'index.html')
+    if not os.path.exists(fp) or open(fp, encoding='utf-8').read() != out:
+        open(fp, 'w', encoding='utf-8').write(out)
+    written.add(path.strip('/'))
+for seg in set(seo_pages.SEG.values()):
+    top = os.path.join(ROOT, seg)
+    for sub in (os.listdir(top) if os.path.isdir(top) else []):
+        if seg + '/' + sub not in written:
+            import shutil
+            shutil.rmtree(os.path.join(top, sub), ignore_errors=True)
+if SEO.dupes:
+    print('no page (same address as another):', ', '.join(SEO.dupes[:20]))
 with open(os.path.join(ROOT, 'sitemap.xml'), 'w') as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
     for route, (_, _, index) in PAGES.items():
         if index:
             f.write('  <url><loc>%s</loc><changefreq>daily</changefreq></url>\n' % (SITE + ('/' if route == 'home' else '/%s/' % route)))
+    for path in sorted(written):
+        f.write('  <url><loc>%s/%s/</loc><changefreq>weekly</changefreq></url>\n' % (SITE, path))
     f.write('</urlset>\n')
 open(os.path.join(H, '..', 'index.html'), 'w').write(page)
+print(len(written), 'item/mod/relic/resource/enemy pages;', end=' ')
 print('index.html', len(page) // 1024, 'KB;', ', '.join('%s %d KB' % (u.split('/')[-1], os.path.getsize(os.path.join(BUNDLE, u.split('/')[-1])) // 1024) for u in files.values()))
