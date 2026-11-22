@@ -7,7 +7,7 @@
 const NTF_DEF={on:false,sound:true,dm:true,group:true,friend:true,room:false,foundry:true,daily:false,weekly:false,mute:{}};
 const ntfPrefs=()=>({...NTF_DEF,...(P.notif||{}),mute:{...((P.notif||{}).mute||{})}});
 function ntfSet(o){P.notif={...ntfPrefs(),...o};saveProfile();if(P.notif.on)ntfWorker();tfNotify()}
-const ntfPerm=()=>typeof Notification==='undefined'?'unsupported':Notification.permission;
+const ntfPerm=()=>window.TF_NATIVE_PERM||(typeof Notification==='undefined'?'unsupported':Notification.permission);
 let NTF_SW=null;
 function ntfWorker(){if(NTF_SW||!('serviceWorker' in navigator))return NTF_SW;NTF_SW=navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(()=>navigator.serviceWorker.ready).catch(()=>null);return NTF_SW}
 async function ntfEnable(){if(typeof Notification==='undefined'){toast("This browser can't show notifications. On iPhone, add Tennoform to your Home Screen first.");return false}

@@ -1,0 +1,14 @@
+{
+  "appId": "com.tennoform.app",
+  "appName": "Tennoform",
+  "webDir": "www",
+  "backgroundColor": "#100f0d",
+  "ios": { "contentInset": "never", "scheme": "Tennoform" },
+  "android": { "allowMixedContent": false },
+  "plugins": {
+    "SplashScreen": { "launchAutoHide": false, "backgroundColor": "#100f0d", "showSpinner": false },
+    "StatusBar": { "overlaysWebView": true, "style": "DARK", "backgroundColor": "#00000000" },
+    "LocalNotifications": { "iconColor": "#D9B45E" },
+    "FirebaseAuthentication": { "skipNativeAuth": true, "providers": ["google.com", "apple.com"] }
+  }
+}

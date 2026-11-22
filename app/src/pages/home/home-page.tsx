@@ -3,7 +3,7 @@ import { MasteryHero } from "./mastery-hero"
 import { NextUp } from "./next-up"
 import { GoalsCard, SignInCard, TasksCard, TodayCard, CollectionCard } from "./side-cards"
 import { buttonVariants } from "@/components/ui/button"
-import { TF_LINKS, openLink } from "@/components/shell/tennoform-links"
+import { TF_LINKS_SHOWN, openLink } from "@/components/shell/tennoform-links"
 import { cn } from "@/lib/utils"
 import { AlertsCard } from "@/components/tf/alerts-card"
 import { Search } from "lucide-react"
@@ -64,7 +64,7 @@ export function HomePage() {
             <b className="font-medium text-foreground">Tennoform is free and made by one player.</b> Support helps keep it running, and feedback decides what gets built next.
           </p>
           <div className="flex flex-wrap gap-2">
-            {TF_LINKS.map((l) => (
+            {TF_LINKS_SHOWN.map((l) => (
               <a key={l.label} href={pagePath(l.route)} onClick={(e) => openLink(l, e)} className={cn(buttonVariants({ variant: l.accent ? "default" : "outline" }), "h-9 px-3")}>
                 <l.icon /> {l.label}
               </a>

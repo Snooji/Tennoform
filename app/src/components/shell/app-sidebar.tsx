@@ -14,8 +14,8 @@ import { ProgressBar } from "@/components/ui/progress-bar"
 import { PAGE_ICON } from "./nav-icons"
 import { AppearanceDialog } from "./appearance"
 import { NotificationsDialog } from "./notifications"
-import { TF_LINKS, openLink } from "./tennoform-links"
-import { fmt, tf, useTF, type TFState } from "@/lib/tf"
+import { TF_LINKS_SHOWN, openLink } from "./tennoform-links"
+import { fmt, isIOSApp, isNativeApp, tf, useTF, type TFState } from "@/lib/tf"
 import { useNavReset } from "@/lib/nav-reset"
 import { setChatWin, useChatWin } from "@/lib/chat-win"
 import { setSimple, useSimple } from "@/lib/detail"
@@ -89,7 +89,7 @@ export function AppSidebar({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMe
         <SidebarGroup>
           <SidebarGroupLabel>Tennoform</SidebarGroupLabel>
           <SidebarMenu>
-            {TF_LINKS.map((l) => {
+            {TF_LINKS_SHOWN.map((l) => {
               const active = s.route === l.route && !("whatsNew" in l)
               return (
                 <SidebarMenuItem key={l.label}>
@@ -173,6 +173,11 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
               <>
                 <DropdownMenuGroup>
                   <DropdownMenuLabel className="text-xs">Save Tennoform progress to an account</DropdownMenuLabel>
+                  {isIOSApp() && (
+                    <DropdownMenuItem onClick={() => tf().apple?.()}>
+                      <LogIn /> Continue with Apple
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem onClick={() => tf().google()}>
                     <LogIn /> Continue with Google
                   </DropdownMenuItem>
@@ -192,9 +197,11 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
               <DropdownMenuItem onClick={() => go("tenno")}>
                 <UserRound /> Profile &amp; account
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => go("donate")}>
-                <Coffee /> Support Tennoform
-              </DropdownMenuItem>
+              {!isNativeApp() && (
+                <DropdownMenuItem onClick={() => go("donate")}>
+                  <Coffee /> Support Tennoform
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={() => go("feedback")}>
                 <MessageSquare /> Feedback
               </DropdownMenuItem>

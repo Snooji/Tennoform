@@ -40,6 +40,7 @@ export type TFApi = {
   back(): void
   howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null
   google(): void
+  apple?(): void
   signOut(): void
   account(): void
   theme(t: TFState["theme"]): void
@@ -738,3 +739,8 @@ export type DetailsData = {
   key: string; kind: string; kindLabel?: string; name: string; found: boolean; img?: string; cat?: string; html?: string; wiki?: string
   used?: string[]; builds?: number; way?: WayDetail | null
 }
+
+/** True inside the Tennoform app (Capacitor), false on the website. */
+export const isNativeApp = (): boolean => !!(window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()
+/** True inside the iPhone/iPad app, where Sign in with Apple is offered next to Google. */
+export const isIOSApp = (): boolean => isNativeApp() && (window as unknown as { Capacitor?: { getPlatform?: () => string } }).Capacitor?.getPlatform?.() === "ios"

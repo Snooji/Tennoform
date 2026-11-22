@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { Thumb } from "@/components/tf/thumb"
-import { fmt, hrefOf, runAct, tf, type HomeData, type HomeTile } from "@/lib/tf"
+import { fmt, hrefOf, isIOSApp, runAct, tf, type HomeData, type HomeTile } from "@/lib/tf"
 
 const cardLink = "text-xs font-medium text-muted-foreground underline decoration-primary/50 underline-offset-4 hover:text-foreground relative after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
 
@@ -252,6 +252,12 @@ export function SignInCard() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
+        {isIOSApp() ? (
+          <Button className="h-10 gap-2 bg-foreground px-4 text-background hover:bg-foreground/90" onClick={() => tf().apple?.()}>
+            <svg viewBox="0 0 17 20" aria-hidden className="size-4 fill-current"><path d="M14.2 10.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM11.7 3c.7-.9 1.2-2 1-3.1-1 0-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.9-1.4z"/></svg>
+            Continue with Apple
+          </Button>
+        ) : null}
         <Button variant="outline" className="h-10 gap-2 bg-background px-4" onClick={() => tf().google()}>
           {G_LOGO} Continue with Google
         </Button>

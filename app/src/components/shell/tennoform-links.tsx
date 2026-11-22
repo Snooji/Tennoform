@@ -1,6 +1,6 @@
 import { Heart, MessageSquare, ScrollText } from "lucide-react"
 
-import { tf } from "@/lib/tf"
+import { isNativeApp, tf } from "@/lib/tf"
 
 /** Support, feedback and what's new: one list used by the sidebar and the Home card. */
 export const TF_LINKS = [
@@ -8,6 +8,8 @@ export const TF_LINKS = [
   { route: "feedback", label: "Send feedback", icon: MessageSquare, accent: false },
   { route: "about", label: "What's new", icon: ScrollText, accent: false, whatsNew: true },
 ] as const
+/** The app stores don't allow outside payment links, so the app leaves out "Support Tennoform". */
+export const TF_LINKS_SHOWN = TF_LINKS.filter((l) => !(l.route === "donate" && isNativeApp()))
 
 /** Opens a link from TF_LINKS; "What's new" opens the About page at the changelog. */
 export function openLink(l: (typeof TF_LINKS)[number], e?: React.MouseEvent) {
