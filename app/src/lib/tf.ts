@@ -130,6 +130,7 @@ export type TFApi = {
   clearRank(n: string): void
   howToGet(n: string): { text: string; craft: boolean; wiki: string }
   maxAll(): number
+  maxMany(names: string[]): number
   farm(): FarmData
   farmSet(o: { q?: string; ty?: string; cat?: string; unv?: boolean }): void
   farmClear(): void

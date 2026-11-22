@@ -23,6 +23,8 @@ Object.assign(window.TF,{
   ranksMore:all=>{state.rkLim=all?1e5:(state.rkLim||60)+60;tfNotify()},
   ranksRefresh:()=>{RKC.key='';tfNotify()},
   setRank:(n,r)=>{setRank(n,r);tfNotify()},
+  maxMany:names=>{const L=(names||[]).filter(n=>I[n]&&!on('m|'+n));if(!L.length)return 0;logBulk('Mastered '+L.length+' picked item'+(L.length===1?'':'s'),()=>L.forEach(n=>setRank(n,99)));updateMR();clearTimeout(RKT);
+    toastAction(`Marked ${L.length} item${L.length===1?'':'s'} mastered`,'Undo',()=>{const e=logList()[0];if(e&&e.k==='bulk')logUndo(e.id)});tfNotify();return L.length},
   maxAll:()=>{const L=(state._rkList||[]).filter(n=>!on('m|'+n));if(!L.length)return 0;logBulk('Maxed '+L.length+' items on Ranks',()=>L.forEach(n=>setRank(n,99)));updateMR();clearTimeout(RKT);
     toastAction(`Marked ${L.length} item${L.length===1?'':'s'} mastered`,'Undo',()=>{const e=logList()[0];if(e&&e.k==='bulk')logUndo(e.id)});return L.length}
 });

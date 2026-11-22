@@ -178,6 +178,66 @@ const RankRow = memo(function RankRow({ it }: { it: RankItem }) {
   )
 })
 
+/** Pick several items, then mark them all mastered in one go (one undo for the lot). */
+function PickGrid({ items }: { items: RankItem[] }) {
+  const [sel, setSel] = useState<Set<string>>(() => new Set())
+  const open = items.filter((it) => it.r < it.mx)
+  const toggle = (n: string) => setSel((s) => { const x = new Set(s); if (x.has(n)) x.delete(n); else x.add(n); return x })
+  const picked = open.filter((it) => sel.has(it.n)).length
+  return (
+    <>
+      <p className="flex flex-wrap items-center gap-2 border-b px-4 py-2.5 text-sm text-muted-foreground">
+        <span className="mr-auto">Tap everything you've already mastered, then save once. Mastered items aren't shown.</span>
+        {open.length ? (
+          <Button variant="ghost" size="sm" className="h-8" onClick={() => setSel(picked === open.length ? new Set() : new Set(open.map((it) => it.n)))}>
+            {picked === open.length ? "Clear" : "Pick all shown"}
+          </Button>
+        ) : null}
+      </p>
+      {open.length ? (
+        <ul className="grid grid-cols-2 gap-2 p-3 pb-24 sm:grid-cols-3 lg:grid-cols-4" aria-label="Pick what you've mastered">
+          {open.map((it) => {
+            const on = sel.has(it.n)
+            return (
+              <li key={it.n}>
+                <button
+                  type="button"
+                  aria-pressed={on}
+                  onClick={() => { toggle(it.n); try { navigator.vibrate?.(8) } catch { /* not supported */ } }}
+                  className={cn(
+                    "flex h-full min-h-14 w-full items-center gap-2.5 rounded-xl border p-2 text-left transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                    on ? "border-primary/60 bg-primary/10" : "border-border hover:bg-muted/50",
+                  )}
+                >
+                  <Thumb src={it.img} className="size-10 shrink-0" />
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="text-sm leading-tight font-medium break-words">{it.n}</span>
+                    <span className="text-xs text-muted-foreground">{it.r ? `Rank ${it.r} of ${it.mx}` : "Not started"}</span>
+                  </span>
+                  <span aria-hidden className={cn("grid size-5 shrink-0 place-items-center rounded-full border", on ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/40")}>
+                    {on ? <Check className="size-3.5" /> : null}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      ) : (
+        <p className="px-4 py-8 text-sm text-muted-foreground">Everything shown here is mastered.</p>
+      )}
+      {picked ? (
+        <div className="fixed inset-x-3 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-[75] mx-auto flex max-w-md items-center gap-2 rounded-2xl border bg-card/95 p-2 pl-4 shadow-lg backdrop-blur md:bottom-6" role="region" aria-label="Picked items">
+          <span className="mr-auto text-sm font-medium tabular-nums">{picked} picked</span>
+          <Button variant="ghost" className="h-10" onClick={() => setSel(new Set())}>Clear</Button>
+          <Button className="h-10" onClick={() => { tf().maxMany(open.filter((it) => sel.has(it.n)).map((it) => it.n)); setSel(new Set()) }}>
+            <Check /> Mark mastered
+          </Button>
+        </div>
+      ) : null}
+    </>
+  )
+}
+
 /** Quick check: a grid of names to tap, like the in-game inventory. Tapping only changes ownership, never mastery. */
 function OwnGrid({ items, owned, total, signedIn }: { items: RankItem[]; owned: number; total: number; signedIn: boolean }) {
   const [last, setLast] = useState("")
@@ -227,8 +287,8 @@ export function RanksPage() {
   })
   const [q, setQ] = useState(d.q)
   const [confirm, setConfirm] = useState(false)
-  const [view, setViewS] = useState<"list" | "own">(() => { try { return localStorage.getItem("tf-rkview") === "own" ? "own" : "list" } catch { return "list" } })
-  const setView = (v: "list" | "own") => { setViewS(v); try { localStorage.setItem("tf-rkview", v) } catch { /* private mode */ } }
+  const [view, setViewS] = useState<"list" | "own" | "pick">(() => { try { const v = localStorage.getItem("tf-rkview"); return v === "own" || v === "pick" ? v : "list" } catch { return "list" } })
+  const setView = (v: "list" | "own" | "pick") => { setViewS(v); try { localStorage.setItem("tf-rkview", v) } catch { /* private mode */ } }
   useNavReset(() => setConfirm(false))
   useEffect(() => {
     const t = window.setTimeout(() => {
@@ -355,6 +415,7 @@ export function RanksPage() {
             <div className="flex rounded-full border p-0.5" role="group" aria-label="View">
               <Button variant="ghost" size="sm" aria-pressed={view === "list"} className={cn("h-8 rounded-full px-3", view === "list" && "bg-primary/15 text-foreground")} onClick={() => setView("list")}>Ranks</Button>
               <Button variant="ghost" size="sm" aria-pressed={view === "own"} className={cn("h-8 rounded-full px-3", view === "own" && "bg-primary/15 text-foreground")} onClick={() => setView("own")}>Tap what you own</Button>
+              <Button variant="ghost" size="sm" aria-pressed={view === "pick"} className={cn("h-8 rounded-full px-3", view === "pick" && "bg-primary/15 text-foreground")} onClick={() => setView("pick")}>Pick mastered</Button>
             </div>
           ) : null}
           {!d.island && left && view === "list" ? (
@@ -370,6 +431,8 @@ export function RanksPage() {
             <p className="border-b px-4 py-2.5 text-sm text-muted-foreground">Tap everything you have in your inventory right now. It doesn't change mastery; use the Owned and Not owned filters afterwards.</p>
             <OwnGrid items={d.items} owned={(d as typeof d & RanksExtra).owned ?? 0} total={d.total} signedIn={!!(d as typeof d & RanksExtra).signedIn} />
           </>
+        ) : d.items.length && view === "pick" ? (
+          <PickGrid key={d.cat + "|" + d.q + "|" + d.f} items={d.items} />
         ) : d.items.length ? (
           <ul className="flex flex-col divide-y">
             {d.items.map((it) => (
