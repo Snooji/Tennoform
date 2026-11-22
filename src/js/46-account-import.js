@@ -51,16 +51,10 @@ function fromParsed(o){if(o&&o.Results)return o;const p=o.profile||o;const st=o.
     ChallengeProgress:(p.challengeProgress||[]).map(c=>({Name:c.name,Progress:c.progress})),...dailyFrom(p)}],
     Stats:{GuildName:st.guildName,TimePlayedSec:st.timePlayedSec,MissionsCompleted:st.missionsCompleted,MissionsFailed:st.missionsFailed,MeleeKills:st.meleeKills,Deaths:st.deaths,ReviveCount:st.reviveCount,Income:st.income,PickupCount:st.pickupCount,
       Enemies:(st.enemies||[]).map(e=>({kills:e.kills})),Weapons:(st.weapons||[]).map(w=>({type:w.uniqueName,kills:w.kills})),Abilities:(st.abilities||[]).map(a=>({type:a.uniqueName,used:a.used}))}}}
-async function autoSync(quiet){const id=(P.wfid||'').trim();if(!/^[0-9a-f]{24}$/i.test(id)){if(!quiet)toast('Enter your 24-character account ID first');return false}
-  try{let j=null;if(window.TENNO_PROXY){const relay=async plat=>{try{return await netJSON('relay',window.TENNO_PROXY+'?playerId='+id+(plat&&plat!=='pc'?'&platform='+plat:''))}catch(e){if(e.kind==='stopped'||e.kind==='budget'||e.kind==='backoff')throw e;return null}};
-      const plat=typeof wfPlat==='function'?wfPlat().id:'pc';j=await relay(plat);
-      /* cross-save accounts keep their profile on the PC server, so a console or phone server with no profile falls back to it */
-      if(plat!=='pc'&&!(j&&(j.Results||j.profile))){const pc=await relay('pc');if(pc&&(pc.Results||pc.profile))j=pc}}
-    if((!j||!(j.Results||j.profile))&&typeof wfPlat==='function'&&wfPlat().id!=='pc'){const er=new Error('relay');er.msg=j&&typeof j.error==='string'?j.error.slice(0,160):'';throw er}if(!j||!(j.Results||j.profile)){j=await netJSON('relay','https://api.warframestat.us/profile/'+id+'/?language=en');if(j.error)throw new Error(j.error)}
-    const msg=importProfile(JSON.stringify(fromParsed(j)));P.auto=new Date().toISOString();saveProfile();if(!quiet||HASH()==='#home'||HASH()==='')render();if(!quiet)toast(msg);return true}
-  catch(e){if(e instanceof NetErr&&e.kind!=='network'&&e.kind!=='http'){if(!quiet)toast(e.message);return false}
-    if(!quiet){state.syncFail=true;state.tTab='account';saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
-      toast(e&&e.msg?e.msg+' Or use the two quick steps on this page.':"Warframe's profile service didn't answer. Use the two quick steps on this page.");setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}}
+/* Tennoform doesn't fetch anything from Digital Extremes. Syncing means the player uploads or pastes their own profile file;
+   importProfile() saves it to this device and, when signed in, to their account. */
+async function autoSync(quiet){if(quiet)return false;state.tTab='account';state.syncFail=false;saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
+  setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60);return false}
 async function liveResurgence(){try{const v=await netJSON('vault','https://api.warframestat.us/pc/vaultTrader/?language=en');if(!v.inventory||!v.expiry)return;
   const until=v.expiry.slice(0,10);if(until===D.vtnow.until)return;const frames=v.inventory.map(x=>x.item).filter(n=>I[n]&&I[n].c==='Warframe');if(!frames.length)return;
   const pairs=new Set(frames.map(f=>(VAULT[f]||{}).pair).filter(Boolean));for(const n in VAULT)delete VAULT[n].now;

@@ -1,7 +1,7 @@
 /* ---------- first visit: sync first, quick start, or look around a sample account ---------- */
 function welcome(){return `<section class="welcome"><div class="wl">${LOGO_HTML()}<div><h1>Know what to rank next</h1><p class="lede" style="margin:4px 0 0;display:block">Tennoform reads your Warframe profile and tells you what to master, farm and do before reset.</p></div></div>
  <div class="wchoices">
-  <button type="button" class="wchoice" data-onb="import"><b>Sync my profile <span class="chip good">Recommended</span></b><span class="small muted">Paste your account ID. Read-only: no password, nothing changes in game.</span><span class="wgo">Sync →</span></button>
+  <button type="button" class="wchoice" data-onb="import"><b>Sync my profile <span class="chip good">Recommended</span></b><span class="small muted">Upload your saved profile file. Read-only: no password, nothing changes in game.</span><span class="wgo">Sync →</span></button>
   <button type="button" class="wchoice" data-qsopen><b>Quick start</b><span class="small muted">Enter your Mastery Rank and tick the gear you've maxed. About a minute.</span><span class="wgo">Start →</span></button>
   <button type="button" class="wchoice" data-demo><b>Look around first</b><span class="small muted">Open a sample MR 11 account. Nothing is saved.</span><span class="wgo">Open sample →</span></button>
  </div>

@@ -66,7 +66,7 @@ document.addEventListener('click',async e=>{
   else if(t.id==='faddb'){const n=$('#fadd').value.trim();if(!n)return;const d=foundryFind(n);P.foundry=P.foundry||[];P.foundry.push({id:Date.now().toString(36),n,t0:Date.now(),dur:d||43200});saveProfile();render();toast(d?n+' added':'Added with a 12 h default timer')}
   else if(t.dataset.fclaim){const f=(P.foundry||[]).find(x=>x.id===t.dataset.fclaim);if(f){P.foundry=P.foundry.filter(x=>x!==f);if(I[f.n])setK('build|'+f.n,1);else{const m=Object.values(I).find(it=>it.parts.some(p=>p.sub&&it.n+' '+p.n===f.n));if(m)setK('built|'+m.n+'|'+f.n.slice(m.n.length+1),1)}saveProfile();render();toast(f.n+' claimed')}}
   else if(t.dataset.fdel){P.foundry=(P.foundry||[]).filter(x=>x.id!==t.dataset.fdel);saveProfile();render()}
-  else if(t.id==='autosync'){t.disabled=true;t.textContent='Syncing…';await autoSync(false);if(t.isConnected){t.disabled=false;t.textContent='Sync automatically'}}
+  else if(t.id==='autosync'){t.disabled=true;await autoSync(false);if(t.isConnected)t.disabled=false}
   else if(t.id==='openprof'){if(!/^[0-9a-f]{24}$/i.test(P.wfid||'')){e.preventDefault();toast('Enter your 24-character account ID first');$('#wfid')?.focus()}}
   else if(t.id==='budget'){state.budget=!state.budget;saveUI();render()}
   else if(t.id==='unv'){state.unvOnly=!state.unvOnly;t.classList.toggle('on');$('#fres').innerHTML=resultsHTML()}

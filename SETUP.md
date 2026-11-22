@@ -12,23 +12,11 @@ Accounts use Firebase's free Spark plan. No credit card needed.
 
 Free limits: about 50,000 reads and 20,000 saves per day. The site batches saves, so that covers roughly a thousand active players a day. If a limit is hit, saving pauses until the next day; nothing is ever charged on the Spark plan.
 
-# One-tap profile sync
+# Profile sync (upload only)
 
-PC (and cross-save) accounts work out of the box: the site syncs through warframestat.us's public profile service when someone taps **Sync**. That service only reads Warframe's PC server.
+Tennoform doesn't fetch anything from Digital Extremes. Players sync by saving their own public profile page (it opens in their browser from the **Account & sync** tab) and then pasting it or uploading the saved `.json`/`.txt`. WFHelper files and Tennoform backups upload through the same button. The file is read on the device; the result is saved locally and, when signed in, to the player's Firestore documents, so it follows them to every device.
 
-PlayStation, Xbox, Switch, iPhone and Android profiles live on their own servers, which don't let a website read them directly. `google-apps-script-relay.gs` is a small free relay on your Google account that asks the right server. To switch it on:
-
-1. Go to https://script.google.com and click **New project**.
-2. Delete what's there, paste the whole of `google-apps-script-relay.gs`, and name the project "Tennoform relay".
-3. Click **Deploy → New deployment**, pick **Web app**, set **Execute as: Me** and **Who has access: Anyone**, then **Deploy**. Allow access when Google asks.
-4. Copy the **Web app URL** (it ends in `/exec`).
-5. In `firebase-config.js`, set `window.TENNO_PROXY = "<that URL>";` and commit.
-
-Once it's set, one-tap sync works on every platform; PC players also go through the relay first, with warframestat.us as the fallback. The relay only accepts a 24-character account ID and only reads the public profile. If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
-
-**Request limits (built in).** Warframe publishes no API or rate limits for this endpoint, so the relay is conservative: each profile is reused for 10 minutes, at most 10 requests a minute and 120 an hour go to Warframe across all players, errors are remembered for 5–10 minutes, and if Warframe ever answers 403 or 429 the relay stops asking anyone for 6 hours. It identifies itself as Google Apps Script (no browser disguise). The site adds its own limits on top: at most 4 sync requests per 15 minutes per browser, exponential backoff on errors, and a full stop with a message on 403/429.
-
-The old Cloudflare Worker relay has been deleted (both the Worker and its files here), and the site's security policy no longer allows connections to it.
+The Google Apps Script relay and the Cloudflare Worker relay are both retired: their files are deleted, `window.TENNO_PROXY` is empty and the site's security policy no longer allows connections to them. If you still have the Apps Script deployed, archive it in script.google.com (Deploy → Manage deployments → Archive).
 
 # Reading feedback (owner only)
 

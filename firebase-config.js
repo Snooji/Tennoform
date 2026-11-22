@@ -11,9 +11,9 @@ window.TENNO_FIREBASE = {
   appId: "1:877080991164:web:6bfae6a07af747755a87b9"
 };
 
-// 2) One-tap profile sync on every platform: the Google Apps Script relay
-//    (google-apps-script-relay.gs, deploy steps in SETUP.md). Leave empty to sync PC accounts only.
-window.TENNO_PROXY = "https://script.google.com/macros/s/AKfycbyLDkG0FRDXvErEfJx0NC1IaHj_I_wI4SROjQVgMUhoIXbyDZkBiIIY-i19KXMqKKeJug/exec";
+// 2) Profile sync is upload-only: players save their own profile page and upload or paste it.
+//    Tennoform never contacts Digital Extremes, so there is no relay to set.
+window.TENNO_PROXY = ""; /* retired: Tennoform no longer fetches profiles; players upload their own file */
 
 // 3) iPhone home-screen sign-in: set to true after adding https://tennoform.com/__/auth/handler
 //    to the Google OAuth client's "Authorized redirect URIs" (see SETUP.md).

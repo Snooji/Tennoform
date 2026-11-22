@@ -131,7 +131,7 @@ scripts = re.findall(r'<script>(.*?)</script>', body, re.S)
 hashes = ' '.join("'sha256-%s'" % base64.b64encode(hashlib.sha256(x.encode()).digest()).decode() for x in scripts)
 # Content Security Policy: only this site's own scripts (its files, plus any inline script pinned by hash) and Google sign-in may run.
 csp = ("default-src 'self'; script-src 'self' %s https://apis.google.com; "
-       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us https://script.google.com https://script.googleusercontent.com; "
+       "connect-src 'self' https://*.googleapis.com https://apis.google.com https://api.warframestat.us; "
        "frame-src 'self' https://tennoform.firebaseapp.com https://accounts.google.com https://apis.google.com; "
        "img-src 'self' data: blob: https://cdn.warframestat.us https://raw.githubusercontent.com https://*.googleusercontent.com; "
        "style-src 'self' 'unsafe-inline'; font-src 'self'; "

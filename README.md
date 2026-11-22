@@ -17,7 +17,7 @@ A free Warframe companion for keeping track of where you are and what to do next
 - Chat: one window with a tab for General, Trading, LFG, your clan, your alliance and each friend or group conversation. Profile pictures, clan and alliance backgrounds set by leaders, and a filter that holds illegal or extremely explicit messages for review
 - Friends: add by friend code or by tapping someone in Chat or on a shared build (they accept first), group chats, shared tasks, blocking
 
-Progress saves in your browser. Sign in to keep it on every device. Link your Warframe account ID to fill in ranks, star chart and quests from your public profile; pick where you play (PC, PlayStation, Xbox, Switch, iPhone or Android) so sync reads the right profile. **Reset sync** shows what a fresh sync would add or remove and lets you choose item by item. Tennoform never asks for your Warframe password.
+Progress saves in your browser. Sign in to keep it on every device. Upload or paste your saved public profile page (.json or .txt) to fill in ranks, star chart and quests; Tennoform never contacts Digital Extremes for you. What you upload is saved to your account when you're signed in. **Reset sync** shows what a fresh sync would add or remove and lets you choose item by item. Tennoform never asks for your Warframe password.
 
 ## Data
 
@@ -42,7 +42,7 @@ python build/make_site.py                # src/ + data -> index.html + bundle/ (
 
 Commit only the source (`src/`, `app/`, `build/`, data files). The built files (`index.html`, `404.html`, `sitemap.xml`, each page's `<page>/index.html`, `assets/` and `bundle/`; listed by `build/built_files.py`) are made after a merge by the **Build site** workflow (`build/publish.sh`), which also builds them for the daily game-data and price updates. Pull requests that change them fail the checks, because they would clash with every update. Build locally to test, then undo it with `python3 build/built_files.py --reset` before committing. `build/base.json` is written one entry per line (`build/jsonlines.py`) so changes to different entries merge cleanly.
 
-`index.html` is a 3 KB shell; the old page styles, the old page code, the game data and the daily prices are separate files in `bundle/` whose names change when their contents do, so returning visitors only download what changed (usually just the prices). Firebase setup, the console and mobile sync relay, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
+`index.html` is a 3 KB shell; the old page styles, the old page code, the game data and the daily prices are separate files in `bundle/` whose names change when their contents do, so returning visitors only download what changed (usually just the prices). Firebase setup, and Firestore rules (`firestore.rules`, publish them in the Firebase console after each change) are in `SETUP.md`.
 
 Search engines: every section has its own page (`build/pages.json`: title, description, listed or not), and every item, mod, arcane, relic, resource and enemy has one too (`tennoform.com/mod/serration/`, written by `build/seo_pages.py` with the facts in plain HTML, links between related pages and breadcrumb data). Those pages load the current build through `boot.js`, so they only change when their own content does. Everything indexable is in `sitemap.xml`; `og.png` is the link-preview image. Getting listed on Google and Bing is in `SETUP.md`.
 

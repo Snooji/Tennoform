@@ -81,7 +81,7 @@ document.addEventListener('change',e=>{const t=e.target;if(t&&t.id==='wfhfile'&&
 /* Each platform keeps its own profile unless cross-save is on. warframestat (one-tap sync) only reads the PC server,
    so other platforms use the copy-and-paste steps, pointed at that platform's own Warframe server. */
 const WF_PLATS=[['pc','PC or cross-save','api',true],['ps','PlayStation','api-ps4',false],['xb','Xbox','api-xb1',false],['sw','Switch','api-swi',false],['ios','iPhone / iPad','api-mob',false],['and','Android','api-and',false]];
-function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:p[3]||!!window.TENNO_PROXY}}
+function wfPlat(){const p=WF_PLATS.find(x=>x[0]===P.wfPlat)||WF_PLATS[0];return {id:p[0],label:p[1],host:p[2],auto:false}}
 function platPickHTML(){const cur=wfPlat();
   return `<div class="stack" style="gap:6px"><span class="small"><b>Where do you play?</b> <span class="muted">With cross-save on, pick PC: your progress lives there. Synced progress looks wrong or like an old account? That's usually the PC profile being read for a console or mobile account: pick your platform, then use Reset sync to clear what came in.</span></span>
   <div class="row" role="radiogroup" aria-label="Where you play" style="gap:6px">${WF_PLATS.map(([id,l])=>`<button type="button" class="btn sm${cur.id===id?' primary':''}" role="radio" aria-checked="${cur.id===id}" data-wfplat="${id}">${esc(l)}</button>`).join('')}</div>
@@ -89,5 +89,5 @@ function platPickHTML(){const cur=wfPlat();
 document.addEventListener('click',e=>{const t=e.target.closest('[data-wfplat]');if(!t)return;e.preventDefault();P.wfPlat=t.dataset.wfplat==='pc'?'':t.dataset.wfplat;saveProfile();render();tfNotify()});
 /* one-tap sync on a non-PC platform would read the wrong profile: send people to the steps instead */
 {const _as2=autoSync;autoSync=async function(quiet){if(!wfPlat().auto){if(!quiet){state.tTab='account';state.syncFail=false;saveUI();if(HASH()!=='#tenno')GO('tenno');else render();
-    toast(`${wfPlat().label} profiles sync with the two quick steps on this page.`);setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
+    toast('Upload or paste your profile file on this page to sync.');setTimeout(()=>{const b=$('#syncsteps');if(b)b.scrollIntoView({block:'center'})},60)}return false}
   return _as2.apply(this,arguments)}}
