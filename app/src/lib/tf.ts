@@ -305,7 +305,7 @@ export type ReturningData = {
   quests: { n: string; why: string; done: boolean; isNew: boolean }[]; moreQuests: number; questsDone: number; questsTotal: number; synced: boolean; assumed: boolean
 }
 export type NotifData = {
-  on: boolean; sound: boolean; dm: boolean; group: boolean; friend: boolean; room: boolean; mute: Record<string, number>
+  on: boolean; sound: boolean; dm: boolean; group: boolean; friend: boolean; room: boolean; foundry: boolean; daily: boolean; weekly: boolean; native?: boolean; mute: Record<string, number>
   perm: "granted" | "denied" | "default" | "unsupported"; worker: boolean; ios: boolean; current: string; currentMuted: boolean
 }
 export type PriceHist = { state: "none" | "loading" | "error" | "empty" | "ok"; points: { d: string; p: number | null }[]; min?: number; max?: number; first?: number; last?: number }

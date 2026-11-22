@@ -4,7 +4,7 @@
    when Tennoform is in the background (through a tiny service worker, which is what phones need), a toast while you're
    looking at the site. Never for the conversation you're reading. Each kind can be switched off, any chat can be muted,
    and "silent" shows them without a sound. Nothing here sends anything anywhere. */
-const NTF_DEF={on:false,sound:true,dm:true,group:true,friend:true,room:false,mute:{}};
+const NTF_DEF={on:false,sound:true,dm:true,group:true,friend:true,room:false,foundry:true,daily:false,weekly:false,mute:{}};
 const ntfPrefs=()=>({...NTF_DEF,...(P.notif||{}),mute:{...((P.notif||{}).mute||{})}});
 function ntfSet(o){P.notif={...ntfPrefs(),...o};saveProfile();if(P.notif.on)ntfWorker();tfNotify()}
 const ntfPerm=()=>typeof Notification==='undefined'?'unsupported':Notification.permission;
@@ -38,7 +38,7 @@ function ntfScan(){const pr=ntfPrefs();if(!pr.on||typeof SO==='undefined'||!SO.u
 setInterval(ntfScan,2000);
 if(ntfPrefs().on&&ntfPerm()==='granted')ntfWorker();
 function ntfData(){const pr=ntfPrefs();const cur=state.chat?(state.chat.startsWith('g:')?state.chat:'dm:'+state.chat):'';
-  return {...pr,perm:ntfPerm(),worker:'serviceWorker' in navigator,ios:/iPhone|iPad/.test(navigator.userAgent)&&!(navigator.standalone||matchMedia('(display-mode: standalone)').matches),current:cur,currentMuted:!!(cur&&pr.mute[cur])}}
+  return {...pr,perm:ntfPerm(),worker:'serviceWorker' in navigator,ios:/iPhone|iPad/.test(navigator.userAgent)&&!(navigator.standalone||matchMedia('(display-mode: standalone)').matches),current:cur,currentMuted:!!(cur&&pr.mute[cur]),native:!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform())}}
 Object.assign(window.TF,{notif:()=>ntfData(),notifSet:o=>ntfSet(o),notifEnable:()=>ntfEnable(),
   notifMute:(conv,v)=>{const m={...ntfPrefs().mute};if(v)m[conv]=1;else delete m[conv];ntfSet({mute:m})},
   notifTest:()=>{if(ntfPerm()!=='granted'){toast('Turn notifications on first.');return}const opt={body:'This is how chat notifications will look.',tag:'test',silent:!ntfPrefs().sound,icon:'/icon-192.png',data:{url:'/#friends'}};

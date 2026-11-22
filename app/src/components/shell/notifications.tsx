@@ -10,6 +10,9 @@ const KINDS = [
   { k: "group", label: "Group chats", hint: "New messages in your groups" },
   { k: "friend", label: "Friend requests and new friends", hint: "When someone asks to add you, or accepts your request" },
   { k: "room", label: "Community chat", hint: "New messages in the room you have open" },
+  { k: "foundry", label: "Foundry builds", hint: "When something you're building is ready to claim" },
+  { k: "daily", label: "Daily reset reminder", hint: "An hour before the daily reset (00:00 UTC)" },
+  { k: "weekly", label: "Weekly reset reminder", hint: "An hour before the weekly reset (Monday 00:00 UTC)" },
 ] as const
 
 /** Notifications for chat and friends: on or off, silent or with sound, and which kinds. Mute single chats from the chat itself. */
@@ -22,12 +25,12 @@ export function NotificationsDialog({ open, onOpenChange }: { open: boolean; onO
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Notifications</DialogTitle>
-          <DialogDescription>Get a notification for new messages and friend requests, on your computer or phone.</DialogDescription>
+          <DialogDescription>Messages, friend requests, Foundry builds and reset reminders, on your computer or phone.</DialogDescription>
         </DialogHeader>
         {!s.signedIn ? <p className="rounded-md border px-3 py-2 text-sm">Sign in to chat with friends. Notifications cover your messages once you're signed in.</p> : null}
         <div className="flex items-center justify-between gap-3">
           <span className="flex flex-col">
-            <span className="text-sm font-medium">Chat and friend notifications</span>
+            <span className="text-sm font-medium">Notifications</span>
             <span className="text-xs text-muted-foreground">{blocked ? "Blocked in your browser settings" : d.on ? "On" : "Off"}</span>
           </span>
           {d.on ? (
@@ -58,7 +61,9 @@ export function NotificationsDialog({ open, onOpenChange }: { open: boolean; onO
           <span className="text-xs text-muted-foreground">Mute a single chat with the bell in that chat.</span>
         </div>
         <p className="text-xs text-muted-foreground">
-          Notifications arrive while Tennoform is open, including in a background tab or a minimized window. You won't be notified about the chat you're reading.
+          {d.native
+            ? "Foundry and reset alerts arrive even when the app is closed. Chat notifications arrive while it's open. You won't be notified about the chat you're reading."
+            : "Notifications arrive while Tennoform is open, including in a background tab or a minimized window. In the Tennoform app, Foundry and reset alerts also arrive when it's closed. You won't be notified about the chat you're reading."}
         </p>
       </DialogContent>
     </Dialog>
