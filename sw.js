@@ -1,7 +1,36 @@
-/* Tennoform's service worker. It only shows notifications and opens the site when you tap one.
-   It doesn't cache pages or files, so the site always loads fresh. */
-self.addEventListener('install', () => self.skipWaiting())
-self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()))
+/* Tennoform's service worker: works offline and shows notifications.
+   - Built files in /bundle/ and /assets/ are named by their contents, so they are cached for good (cache first).
+   - Pages and the game data files are fetched fresh when online and served from the cache when offline (network first).
+   - Nothing from other sites (sign-in, chat, prices) is cached here. */
+const CACHE = 'tf-v1'
+const SHELL = ['/', '/manifest.webmanifest', '/favicon.svg', '/icon-192.png', '/firebase-config.js']
+self.addEventListener('install', (e) => {
+  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting()))
+})
+self.addEventListener('activate', (e) => e.waitUntil((async () => {
+  for (const k of await caches.keys()) if (k !== CACHE) await caches.delete(k)
+  await self.clients.claim()
+})()))
+const immutable = (p) => p.startsWith('/bundle/') || p.startsWith('/assets/') || p.startsWith('/fonts/')
+self.addEventListener('fetch', (e) => {
+  const r = e.request
+  if (r.method !== 'GET') return
+  const u = new URL(r.url)
+  if (u.origin !== self.location.origin) return
+  if (immutable(u.pathname)) {
+    e.respondWith(caches.match(r).then((hit) => hit || fetch(r).then((res) => {
+      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(r, copy)) }
+      return res
+    })))
+    return
+  }
+  e.respondWith(fetch(r).then((res) => {
+    if (res.ok && (r.mode === 'navigate' || /\.(json|js|css|png|svg|webmanifest)$/.test(u.pathname))) {
+      const copy = res.clone(); caches.open(CACHE).then((c) => c.put(r, copy))
+    }
+    return res
+  }).catch(async () => (await caches.match(r)) || (r.mode === 'navigate' ? caches.match('/') : Response.error())))
+})
 self.addEventListener('notificationclick', (e) => {
   e.notification.close()
   const url = new URL((e.notification.data && e.notification.data.url) || '/', self.location.origin).href
