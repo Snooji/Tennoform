@@ -9,3 +9,5 @@ Object.assign(window.TF,{settings:()=>({
   signedIn:signedIn(),email:(acct&&acct.kind==='fb'&&acct.email)||'',canAcct:canAcct(),
   profileFile:P.auto?fdate(P.auto):'',native:!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()),
   appVersion:window.TF_APPVER||'',notes:Object.keys(P.notes||{}).length,pins:(P.pins||[]).length})});
+/* once, for players moved to the new default look */
+if(window.TF_NEWLOOK)window.addEventListener('load',()=>setTimeout(()=>toastAction('Tennoform has a new look. You can switch back in Settings, Appearance.','Settings',()=>GO('settings')),2500));

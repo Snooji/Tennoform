@@ -17,9 +17,17 @@ export function MasteryRing({ pct, label, size = 132 }: { pct: number; label: st
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg viewBox="0 0 100 100" className="size-full -rotate-90" aria-hidden>
+        <defs>
+          {/* used by the Prime style: gold running into the logo's energy cyan */}
+          <linearGradient id="tf-ring-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="var(--m3, #fbebb5)" />
+            <stop offset=".55" stopColor="var(--m4, #d9b45e)" />
+            <stop offset="1" stopColor="var(--pr-energy, #6fd6e8)" />
+          </linearGradient>
+        </defs>
         <circle cx="50" cy="50" r={r} fill="none" strokeWidth="6" className="stroke-muted" />
         <motion.circle
-          cx="50" cy="50" r={r} fill="none" strokeWidth="6" strokeLinecap="butt" className="stroke-primary"
+          cx="50" cy="50" r={r} fill="none" strokeWidth="6" strokeLinecap="butt" className="tf-ring-fill stroke-primary"
           strokeDasharray={c}
           initial={{ strokeDashoffset: reduce ? c * (1 - p) : c }}
           animate={{ strokeDashoffset: c * (1 - p) }}

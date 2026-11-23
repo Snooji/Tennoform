@@ -5,7 +5,9 @@ const THEME_STYLES=['default','foundry','prime','grineer','corpus','entrati','lo
 function themeGet(){try{const t=JSON.parse(localStorage.getItem('tf-theme')||'"dark"');return t==='foundry'?'light':['dark','light','auto'].includes(t)?t:'dark'}catch(e){return 'dark'}}
 function themeStyle(){try{const s=JSON.parse(localStorage.getItem('tf-style')||'null');if(THEME_STYLES.includes(s))return s;
   /* before styles were separate, Foundry was a theme of its own (a light one) */
-  return JSON.parse(localStorage.getItem('tf-theme')||'""')==='foundry'?'foundry':'default'}catch(e){return 'default'}}
+  return JSON.parse(localStorage.getItem('tf-theme')||'""')==='foundry'?'foundry':'prime'}catch(e){return 'prime'}}
+/* the new default look (Prime, matched to the logo): players still on the old default move over once */
+try{if(!localStorage.getItem('tf-look-2026')){localStorage.setItem('tf-look-2026','1');if(JSON.parse(localStorage.getItem('tf-style')||'null')==='default'){localStorage.setItem('tf-style',JSON.stringify('prime'));window.TF_NEWLOOK=1}}}catch(e){}
 const THEME_BAR={default:['#100f0d','#f5f5f3'],foundry:['#0f1a24','#b4bfcb'],prime:['#07060a','#f4efe3'],grineer:['#15130e','#d9d2bf'],corpus:['#06111c','#eef3f7'],entrati:['#1a0d10','#efe3d0'],lotus:['#071417','#eef6f4'],infested:['#0d0a0c','#ece4dc']};
 function themeApply(t,st){st=st||themeStyle();const r=document.documentElement;
   const dark=t==='dark'||(t==='auto'&&!(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches));

@@ -139,7 +139,7 @@ export function ChatFloat() {
           aria-label={`Open chat${s.unread ? `, ${s.unread} unread` : ""}`}
           aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight"
           title="Open chat. Drag to move it; drop it on Hide to remove it."
-          className="fixed z-40 grid size-14 touch-none place-items-center rounded-full bg-primary text-primary-foreground shadow-lg ring-1 ring-black/10 outline-none select-none focus-visible:ring-4 focus-visible:ring-ring/60 active:scale-95"
+          className="fixed z-40 hidden size-14 md:grid touch-none place-items-center rounded-full bg-primary text-primary-foreground shadow-lg ring-1 ring-black/10 outline-none select-none focus-visible:ring-4 focus-visible:ring-ring/60 active:scale-95"
           style={{ left: bx, top: by }}
         >
           <MessagesSquare className="size-6" aria-hidden />

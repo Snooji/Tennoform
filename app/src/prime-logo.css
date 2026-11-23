@@ -1,0 +1,54 @@
+/* ==========================================================================================================
+   Prime, matched to the Tennoform logo (the default look). Layered on top of the Prime style in index.css and
+   originals.css: the logo's chamfered plate edges, its cyan energy cores next to the gold, and a cast-metal tab bar.
+   Everything here is scoped to [data-theme="prime"], so the other styles are untouched.
+   ========================================================================================================== */
+:root[data-theme="prime"] { --pr-energy: #0f7f8f; --pr-cut: 12px; }
+:root.dark[data-theme="prime"] { --pr-energy: #6fd6e8; --ring: #6fd6e8; --sidebar-ring: #6fd6e8; }
+
+/* plates with cut corners, like the ends of the logo's arms: top-left and bottom-right are chamfered,
+   and a gilded line runs along each cut so the frame stays closed */
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel) {
+  clip-path: polygon(var(--pr-cut) 0, 100% 0, 100% calc(100% - var(--pr-cut)), calc(100% - var(--pr-cut)) 100%, 0 100%, 0 var(--pr-cut));
+  border-radius: 4px;
+}
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::before,
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::after {
+  width: var(--pr-cut); height: var(--pr-cut);
+  background: linear-gradient(-45deg, transparent calc(50% - 1px), var(--m3) calc(50% - 1px), var(--m4) calc(50% + 1px), transparent calc(50% + 1px));
+}
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::before { top: 0; left: 0; }
+:root[data-theme="prime"] :is([data-slot="card"], .welcome, .panel)::after { bottom: 0; right: 0; transform: rotate(180deg); }
+/* the chamfer on main buttons too, smaller */
+:root[data-theme="prime"] :is(:is(button, a).bg-primary, .btn.primary) {
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); border-radius: 3px;
+}
+
+/* energy: the mastery ring and progress bars run from gold into the logo's cyan, with a soft glow at the head */
+:root[data-theme="prime"] .tf-ring-fill { stroke: url(#tf-ring-grad); filter: drop-shadow(0 0 3px color-mix(in srgb, var(--pr-energy) 55%, transparent)); }
+:root[data-theme="prime"] [data-slot="progress-indicator"] {
+  background: linear-gradient(90deg, var(--m4), var(--m3) 60%, var(--pr-energy));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--pr-energy) 45%, transparent);
+}
+:root[data-theme="prime"] :focus-visible { outline-color: var(--pr-energy); }
+/* live things (the green "connected" dots, the Live feed) glow cyan like the logo's cores */
+:root.dark[data-theme="prime"] .text-emerald-600, :root.dark[data-theme="prime"] .dark\:text-emerald-400 { color: var(--pr-energy); }
+
+/* the phone tab bar: dark cast metal with a gilded top edge; the active tab gets a lit gold bar and a cyan core */
+:root[data-theme="prime"] [data-tf-tabs] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--m5) 22%, var(--pr-panel)), var(--pr-panel));
+  border-top: 1px solid transparent; border-image: linear-gradient(90deg, transparent, var(--m2) 15%, var(--m3) 50%, var(--m2) 85%, transparent) 1;
+}
+:root[data-theme="prime"] [data-tf-tabs] [aria-current="page"] { color: var(--m3); }
+:root[data-theme="prime"] [data-tf-tabs] [aria-current="page"]::after {
+  background: linear-gradient(90deg, var(--m4), var(--m3), var(--m4)); height: 2px; border-radius: 0;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--m3) 70%, transparent);
+}
+:root[data-theme="prime"] [data-tf-tabs] [aria-current="page"] svg { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--pr-energy) 70%, transparent)); }
+:root:not(.dark)[data-theme="prime"] [data-tf-tabs] [aria-current="page"] { color: var(--m-ink); }
+
+/* engraved headings wrap on a phone instead of being cut off ("MASTERY R…") */
+:root[data-theme="prime"] main h1 .truncate, :root[data-theme="prime"] main h1.truncate { white-space: normal; overflow: visible; text-overflow: clip; }
+@media (max-width: 480px) { :root[data-theme="prime"] main h1 { letter-spacing: .03em; } }
+
+@media (prefers-reduced-motion: reduce) { :root[data-theme="prime"] .tf-ring-fill { filter: none; } }

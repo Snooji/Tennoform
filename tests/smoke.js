@@ -156,7 +156,16 @@ async function pageUrls(b) {
 }
 
 async function chatWindow(b) {
-  for (const w of [1280, 390]) {
+  /* phones: no floating button over the page; the Squad tab in the bottom bar opens chat */
+  {
+    const ctx = await context(b, 390, 'dark'), p = await ctx.newPage()
+    await open(p, {})
+    if (await p.locator('button[aria-label^="Open chat"]').isVisible().catch(() => false)) fail('chat 390: the floating chat button should be hidden on phones')
+    await p.locator('[data-tf-tabs] button, [data-tf-tabs] a').filter({ hasText: 'Squad' }).first().click(); await p.waitForTimeout(900)
+    if (!/^\/(chat|friends)\//.test(new URL(p.url()).pathname)) fail('chat 390: the Squad tab should open chat, got ' + p.url())
+    console.log('chat on phones (Squad tab) checked'); await ctx.close()
+  }
+  for (const w of [1280, 820]) {
     const ctx = await context(b, w, 'dark'), p = await ctx.newPage(), errs = []
     p.on('pageerror', (e) => errs.push(e.message))
     await open(p, {})

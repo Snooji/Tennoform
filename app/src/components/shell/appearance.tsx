@@ -14,9 +14,9 @@ const MODES: { value: TFState["theme"]; label: string; icon: typeof Sun }[] = [
   { value: "auto", label: "Match device", icon: Monitor },
 ]
 const STYLES: { value: TFState["style"]; label: string; hint: string }[] = [
-  { value: "default", label: "Default", hint: "Orbiter console: star chart, orbits, radar sweep" },
+  { value: "prime", label: "Prime", hint: "The Tennoform look: gilded plate, cut corners, energy glow" },
+  { value: "default", label: "Orbiter", hint: "Orbiter console: star chart, orbits, radar sweep" },
   { value: "foundry", label: "Foundry", hint: "Living blueprint: fabrication laser, drafting schematics" },
-  { value: "prime", label: "Prime", hint: "Orokin cathedral: god rays, turning halo, gilded frames" },
   { value: "grineer", label: "Grineer", hint: "Riveted hull plate, hazard stripes, embers" },
   { value: "corpus", label: "Corpus", hint: "Frosted glass, hex grid, data pulses" },
   { value: "entrati", label: "Entrati", hint: "Arched brass, obol coins, turning clockwork" },

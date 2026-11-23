@@ -55,7 +55,7 @@ export function SiteHeader({ onSearch }: { onSearch: () => void }) {
         </Button>
         <NotificationsButton />
         {s.canAcct && !s.signedIn && (
-          <Button className="h-9" onClick={() => tf().google()}>
+          <Button variant="outline" className="h-9 border-primary/50 text-primary hover:bg-primary/10" onClick={() => tf().google()}>
             <LogIn className="size-4" />
             <span>Sign in</span>
           </Button>
