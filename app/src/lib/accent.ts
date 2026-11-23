@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 
-/** Colour choices. "rank" follows your Mastery rank; the rest stay fixed. */
+/** Colour choices. Gold (the logo's) is the default; "rank" follows your Mastery rank; the rest stay fixed. */
 export type AccentChoice = "rank" | "faction" | "bronze" | "silver" | "gold" | "radiant" | "jade" | "teal" | "crimson" | "void"
 export const ACCENTS: { value: AccentChoice; label: string; hint: string }[] = [
-  { value: "rank", label: "Follow my rank", hint: "Bronze, then silver at MR 10, gold at MR 20, gold and jade at Legendary" },
+  { value: "rank", label: "Follow my rank", hint: "Changes as you rank up: bronze, silver at MR 10, gold at MR 20, Legendary at 30" },
   { value: "faction", label: "Faction colours", hint: "The faction's own colours (faction styles only)" },
   { value: "bronze", label: "Bronze", hint: "" },
   { value: "silver", label: "Silver", hint: "" },
@@ -18,10 +18,10 @@ export const ACCENTS: { value: AccentChoice; label: string; hint: string }[] = [
 const KEY = "tf-accent"
 const read = (): AccentChoice => {
   try {
-    const v = JSON.parse(localStorage.getItem(KEY) || '"rank"')
-    return ACCENTS.some((a) => a.value === v) ? v : "rank"
+    const v = JSON.parse(localStorage.getItem(KEY) || '"gold"')
+    return ACCENTS.some((a) => a.value === v) ? v : "gold"
   } catch {
-    return "rank"
+    return "gold"
   }
 }
 
