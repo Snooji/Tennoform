@@ -31,6 +31,18 @@ Run `npm run sync` again after every site build. `www/` and the copies inside `a
 3. **Android signing**: create an upload key (Android Studio → Build → Generate Signed Bundle) and keep it somewhere safe; Play App Signing holds the release key.
 4. **Store accounts**: Apple Developer Program (yearly fee) and a Google Play Console account (one-off fee).
 
+## Links that open the app (after the first store release)
+
+`mobile/well-known/` has the two files that let tennoform.com links open the app. Fill in:
+- `assetlinks.json`: the SHA-256 fingerprint from Play Console → Setup → App signing.
+- `apple-app-site-association`: your Apple Team ID.
+
+Then copy both to `/.well-known/` at the root of the site and commit (no `.json` on the Apple one). In Xcode add the **Associated Domains** capability with `applinks:tennoform.com`. Android is already set up in `AndroidManifest.xml`.
+
+## Rating prompt
+
+Inside the app only: after a rank-up, once someone has used the app on 3 different days, at most every 120 days. Apple and Google decide whether the prompt actually shows.
+
 ## Before submitting
 
 - App icons and splash screens: generate from the new logo (`npx @capacitor/assets generate` with `assets/icon.png` 1024×1024 and `assets/splash.png` 2732×2732).
