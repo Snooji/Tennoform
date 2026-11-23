@@ -82,6 +82,28 @@ const CHECKS = {
     else { await show.click(); await p.waitForTimeout(700); if (await p.getByPlaceholder(/Search gear/).inputValue()) fail('emptyStates: "Show everything" did not clear the search') }
     await ctx.close(); console.log('emptyStates checked')
   },
+  async goalGradient(b) {
+    const ctx = await context(b, 390)
+    const p = await fresh(ctx, { 'tenno-profile': { onb: 1 }, 'tenno-codex': { 'm|Ash': 1 } })
+    const t = await p.locator('main').innerText()
+    if (!/\d+% of the way to MR \d+/.test(t)) fail('goalGradient: Home does not say how far you are to the next rank ("NN% of the way to MR N")')
+    await ctx.close(); console.log('goalGradient checked')
+  },
+  async rankUp(b) {
+    const ctx = await context(b, 390)
+    let p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'ranks/')
+    if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUp: celebrated on first load')
+    await p.getByRole('button', { name: 'Set Ash to max rank' }).click(); await p.waitForTimeout(1500)
+    const dlg = p.getByRole('dialog', { name: /Mastery Rank 1/ })
+    if (!(await dlg.count())) fail('rankUp: reaching MR 1 showed no "Mastery Rank 1" moment')
+    else await dlg.getByRole('button', { name: 'Continue' }).click()
+    await p.reload(); await p.waitForTimeout(1800)
+    if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUp: celebrated again after a reload')
+    p = await fresh(ctx, {}, '')
+    await p.click('[data-demo]'); await p.waitForTimeout(1800)
+    if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUp: celebrated when opening the sample account')
+    await ctx.close(); console.log('rankUp checked')
+  },
 }
 
 ;(async () => {

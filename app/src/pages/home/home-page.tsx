@@ -47,7 +47,8 @@ export function HomePage() {
           ) : null}
         </p>
       ) : null}
-      {d.showSign ? <SignInCard /> : null}
+      {/* on a phone the next step comes first and the sign-in card after it; on a computer it stays up top */}
+      {d.showSign ? <div className="hidden md:block"><SignInCard /></div> : null}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
         <div className="min-w-0">
           <NextUp d={d} stage={d.stage} />
@@ -61,6 +62,7 @@ export function HomePage() {
           <TasksCard d={d} />
         </div>
       </div>
+      {d.showSign ? <div className="md:hidden"><SignInCard /></div> : null}
       <section id="tf-home-links" aria-label="Support Tennoform" className="flex flex-wrap items-center gap-3 border-t pt-4">
           <p className="min-w-0 flex-1 basis-56 text-sm text-muted-foreground">
             <b className="font-medium text-foreground">Tennoform is free and made by one player.</b> Support helps keep it running, and feedback decides what gets built next.

@@ -150,6 +150,12 @@ export function MasteryHero({ d }: { d: HomeData }) {
               / {fmt(d.next)} XP · {fmt(d.toNext)} to {d.nextLabel}
             </span>
           </p>
+          {d.toNext > 0 ? (
+            <p className="mt-1 text-sm">
+              <b className="font-heading font-semibold text-primary tabular-nums">{Math.min(99, Math.floor(d.pct))}%</b> of the way to {d.nextLabel}
+              {d.pct >= 80 ? <span className="ml-1.5 text-muted-foreground">· Almost there</span> : null}
+            </p>
+          ) : null}
         </div>
       </div>
       <Breakdown parts={d.parts} />

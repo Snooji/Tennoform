@@ -13,6 +13,7 @@ import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { ChatFloat } from "@/components/shell/chat-float"
 import { FarmSessionBar } from "@/components/tf/farm-session"
 import { FirstRun } from "@/components/shell/first-run"
+import { RankUp } from "@/components/shell/rank-up"
 import { ThemeScene } from "@/components/shell/theme-scene"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
@@ -184,6 +185,7 @@ export default function App() {
         <ChatFloat />
         <FarmSessionBar />
         <FirstRun />
+        <RankUp />
         <ThemeScene />
         <CommandMenu open={searchOpen} setOpen={setSearchOpen} />
         <SellDialog />
