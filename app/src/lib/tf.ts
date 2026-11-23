@@ -41,6 +41,13 @@ export type TFApi = {
   pinToggle(key: string): void
   shortcuts(): Shortcuts
   recentClear(): void
+  sess(): SessionData
+  sessStart(key: string, name?: string): void
+  sessRun(d?: number): void
+  sessDrop(d?: number): void
+  sessEnd(quiet?: boolean): void
+  relicLog(relic: string): RelicLog | null
+  relicOpen(relic: string, got: string): void
   back(): void
   howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null
   google(): void
@@ -750,3 +757,9 @@ export type Shortcuts = { pins: ShortcutItem[]; recent: ShortcutItem[]; notes: n
 export const isNativeApp = (): boolean => !!(window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()
 /** True inside the iPhone/iPad app, where Sign in with Apple is offered next to Google. */
 export const isIOSApp = (): boolean => isNativeApp() && (window as unknown as { Capacitor?: { getPlatform?: () => string } }).Capacitor?.getPlatform?.() === "ios"
+export type FarmSession = { key: string; name: string; runs: number; drops: number; t0: number; t1?: number; mins?: number }
+export type SessionData = { active: FarmSession | null; history: FarmSession[] }
+export type RelicLog = {
+  relic: string; opens: number; ducats: number; rare: number; intact: number; counts: Record<string, number>
+  rewards: { n: string; rar: "C" | "U" | "R"; du: number; chance: number }[]; recent: { got: string; at: number }[]
+}

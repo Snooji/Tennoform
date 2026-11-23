@@ -7,6 +7,8 @@ import { Island } from "@/components/tf/island"
 import { ModInfoBody } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
 import { Textarea } from "@/components/ui/textarea"
+import { FarmStartButton } from "@/components/tf/farm-session"
+import { RelicLogCard } from "@/components/tf/relic-log"
 import { WayView } from "@/pages/farm/way-detail"
 import { cn } from "@/lib/utils"
 import { tf, useTFData } from "@/lib/tf"
@@ -54,6 +56,7 @@ export function DetailsPage() {
           <div className="mt-1 flex flex-wrap gap-2">
             <Button variant={d.pinned ? "secondary" : "outline"} className="h-9" aria-pressed={!!d.pinned} onClick={() => tf().pinToggle(d.key)}>{d.pinned ? <><PinOff /> Unpin</> : <><Pin /> Pin to Home</>}</Button>
             <Button variant="outline" className="h-9" onClick={() => { tf().act("a", { href: "#", "data-go": d.key }) }}><Crosshair /> Open in Farm finder</Button>
+            {d.kind !== "way" && d.kind !== "place" ? <FarmStartButton k={d.key} name={d.name} /> : null}
             {d.builds ? <Button variant="outline" className="h-9" onClick={() => { tf().buildLibSet({ q: d.name, goal: "all", kind: "all", src: "all" }); tf().arsenalSet({ tab: "top" }); tf().go("arsenal") }}><Swords /> {d.builds} build{d.builds > 1 ? "s" : ""}</Button> : null}
             {d.wiki ? (
               <a href={d.wiki} target="_blank" rel="noopener" className={cn(buttonVariants({ variant: "ghost" }), "h-9")}>
@@ -64,6 +67,7 @@ export function DetailsPage() {
         </div>
       </header>
       {mod ? <ModPage name={d.name} /> : d.way ? <WayView w={d.way} /> : d.html ? <Island html={d.html} /> : null}
+      {d.kind === "relic" ? <RelicLogCard relic={d.name} /> : null}
       <NoteCard k={d.key} note={d.note || ""} />
       {d.used?.length ? (
         <Card className="gap-2 px-5">
