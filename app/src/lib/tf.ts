@@ -49,6 +49,7 @@ export type TFApi = {
   relicLog(relic: string): RelicLog | null
   compareList(name: string): string[]
   compare(a: string, b: string): CompareData
+  amp(name: string): AmpData | null
   settings(): SettingsData
   intro(): { show: boolean; plats: { id: string; label: string }[]; plat: string }
   introPlat(id: string): void
@@ -771,3 +772,5 @@ export type RelicLog = {
 }
 export type CompareData = { loading: boolean; a: string; b: string; imgA?: string; imgB?: string; mrA?: number; mrB?: number; rows: { label: string; a: string; b: string; better: "a" | "b" | null }[] }
 export type SettingsData = { gameData: string; prices: string; signedIn: boolean; email: string; canAcct: boolean; profileFile: string; native: boolean; appVersion: string; notes: number; pins: number }
+export type AmpPart = { n: string; img: string; cr: number; t: number; res: [string, number][] }
+export type AmpData = { prism: AmpPart; seller: string; mote: boolean; scaffolds: AmpPart[]; braces: AmpPart[]; prisms: number }

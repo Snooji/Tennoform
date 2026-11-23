@@ -113,6 +113,18 @@ const CHECKS = {
     if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUpOnlyFromPlayer: celebrated a rank that arrived without any tap (cloud sync)')
     await ctx.close(); console.log('rankUpOnlyFromPlayer checked')
   },
+  async ampItems(b) {
+    /* every amp prism is its own mastery item, like Zaw strikes; its page shows where to buy it and the parts to finish the amp */
+    const ctx = await context(b, 390)
+    let p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'ranks/')
+    await p.getByRole('button', { name: /^Amps/ }).first().click(); await p.waitForTimeout(800)
+    const names = await p.locator('main ul li').allInnerTexts()
+    for (const n of ['Sirocco', 'Mote Prism', 'Raplak Prism', 'Klamora Prism', 'Rahn Prism']) if (!names.some((t) => t.includes(n))) fail(`ampItems: Ranks → Amps is missing ${n}`)
+    p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'item/raplak-prism/')
+    const t = await p.locator('main').innerText()
+    for (const w of ['The Quills', 'Build an amp', 'Pencha Scaffold', 'Clapkra Brace', 'Iradite']) if (!t.toLowerCase().includes(w.toLowerCase())) fail(`ampItems: the Raplak Prism page doesn't mention ${w}`)
+    await ctx.close(); console.log('ampItems checked')
+  },
 }
 
 ;(async () => {

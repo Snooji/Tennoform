@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { FarmStartButton } from "@/components/tf/farm-session"
 import { RelicLogCard } from "@/components/tf/relic-log"
 import { CompareButton } from "@/components/tf/compare-dialog"
+import { AmpBuilder } from "@/components/tf/amp-builder"
 import { WayView } from "@/pages/farm/way-detail"
 import { cn } from "@/lib/utils"
 import { tf, useTFData } from "@/lib/tf"
@@ -70,6 +71,7 @@ export function DetailsPage() {
       </header>
       {mod ? <ModPage name={d.name} /> : d.way ? <WayView w={d.way} /> : d.html ? <Island html={d.html} /> : null}
       {d.kind === "relic" ? <RelicLogCard relic={d.name} /> : null}
+      {d.kind === "item" && d.cat === "Amp" && / Prism$/.test(d.name) ? <AmpBuilder name={d.name} /> : null}
       <NoteCard k={d.key} note={d.note || ""} />
       {d.used?.length ? (
         <Card className="gap-2 px-5">

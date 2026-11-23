@@ -192,6 +192,47 @@ for f, cat in CATS.items():
         if it['p'] and (n + ' Set') not in MS:
             MS[n + ' Set'] = slug(n + ' set'); log['slugs'] += 1
 
+# 2b. Amps. WFCD files amp parts under Misc.json (type "Amp") and marks them not masterable, but in the game each Prism
+# you rank up is its own mastery item (3,000 XP), the way Zaw strikes are; profiles record the XP on the prism.
+# Prisms become items in the "Amp" category; every part (prism, scaffold, brace) goes in d['amps'] for the amp builder.
+# Who sells a set follows from the game's own path: Sentient sets from the Quills, Corpus sets from Vox Solaris.
+AMP_SELLER = {'Sentients': 'The Quills (Onkko, Cetus)', 'Corpus': 'Vox Solaris (Little Duck, Fortuna)'}
+AMP_KIND = {'Prism': 'prism', 'Scaffold': 'scaffold', 'Brace': 'brace'}
+def amp_cost(a):
+    out = []
+    for c in a.get('components') or []:
+        cu = U.get(c.get('uniqueName', ''))
+        if cu and '/Recipes/' not in c['uniqueName'] and not c['uniqueName'].endswith('Blueprint'):
+            out.append([cu['name'], c.get('itemCount', 1)])
+    return out
+amps = []
+for a in L('Misc.json'):
+    if a.get('type') != 'Amp' or not a.get('name'):
+        continue
+    n, uq = a['name'], a.get('uniqueName', '')
+    kind = AMP_KIND.get(n.split(' ')[-1])
+    if not kind:
+        continue
+    fam = 'Sentients' if '/Sentients/' in uq else 'Corpus' if '/Corpus/' in uq else ''
+    mote = 'Training' in uq
+    seller = AMP_SELLER.get(fam, '')
+    p = {'n': n, 'k': kind, 'set': 'mote' if mote else fam.lower(), 'seller': seller, 'img': a.get('imageName', ''),
+         'cr': a.get('buildPrice'), 't': a.get('buildTime'), 'res': amp_cost(a)}
+    amps.append(p)
+    if kind != 'prism' or n in I or uq in by_u:
+        continue
+    it = {'n': n, 'c': 'Amp', 'mr': a.get('masteryReq', 0), 'p': 0, 'u': uq,
+          'w': 'https://wiki.warframe.com/w/' + n.replace(' ', '_'), 'img': a.get('imageName', ''),
+          't': a.get('buildTime'), 'cr': a.get('buildPrice'), 'rush': a.get('skipBuildTimePrice')}
+    if seller:
+        it['bpd'] = [[('Mote Amp: free from ' if mote else 'Sold by ') + seller, 100]]
+    it['parts'] = [{'n': 'Blueprint', 'q': 1, 'k': 'p', **({'dr': it['bpd']} if seller else {})}] + [{'n': r, 'q': q, 'k': 'r'} for r, q in p['res']]
+    I[n] = it; by_u[uq] = n
+    log['items'].append(n + ' (Amp)')
+amps.sort(key=lambda x: ({'prism': 0, 'scaffold': 1, 'brace': 2}[x['k']], x['set'], x['n']))
+if amps and d.get('amps') != amps:
+    d['amps'] = amps; log['items'].append('amp parts: %d' % len(amps))
+
 # 3. mods and arcanes (new ones only)
 for a in L('Mods.json'):
     n = a.get('name')
