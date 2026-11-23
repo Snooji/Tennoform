@@ -37,6 +37,10 @@ export type TFApi = {
   go(route: string): void
   details(): DetailsData
   openDetails(key: string): void
+  noteSet(key: string, text: string): void
+  pinToggle(key: string): void
+  shortcuts(): Shortcuts
+  recentClear(): void
   back(): void
   howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null
   google(): void
@@ -737,8 +741,10 @@ export type WayDetail = {
 
 export type DetailsData = {
   key: string; kind: string; kindLabel?: string; name: string; found: boolean; img?: string; cat?: string; html?: string; wiki?: string
-  used?: string[]; builds?: number; way?: WayDetail | null
+  used?: string[]; builds?: number; way?: WayDetail | null; note?: string; pinned?: boolean
 }
+export type ShortcutItem = { key: string; name: string; kind: string; img: string }
+export type Shortcuts = { pins: ShortcutItem[]; recent: ShortcutItem[]; notes: number }
 
 /** True inside the Tennoform app (Capacitor), false on the website. */
 export const isNativeApp = (): boolean => !!(window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.()

@@ -1,10 +1,12 @@
-import { BookOpen, Crosshair, ExternalLink, Hammer, SearchX, Swords } from "lucide-react"
+import { useEffect, useState } from "react"
+import { BookOpen, Crosshair, ExternalLink, Hammer, NotebookPen, Pin, PinOff, SearchX, Swords } from "lucide-react"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Island } from "@/components/tf/island"
 import { ModInfoBody } from "@/components/tf/mod-card"
 import { Thumb } from "@/components/tf/thumb"
+import { Textarea } from "@/components/ui/textarea"
 import { WayView } from "@/pages/farm/way-detail"
 import { cn } from "@/lib/utils"
 import { tf, useTFData } from "@/lib/tf"
@@ -14,6 +16,19 @@ function ModPage({ name }: { name: string }) {
   const d = useTFData(() => tf().modInfo(name))
   if (!d) return null
   return <Card className="gap-4 px-5"><ModInfoBody d={d} /></Card>
+}
+
+/** Your own note on this thing. Saves when you leave the box (and on the account when signed in). */
+function NoteCard({ k, note }: { k: string; note: string }) {
+  const [v, setV] = useState(note)
+  useEffect(() => setV(note), [k, note])
+  return (
+    <Card className="gap-2 px-5">
+      <label htmlFor="tf-note" className="flex items-center gap-2 font-heading text-lg font-semibold"><NotebookPen className="size-4 text-primary" aria-hidden /> My note</label>
+      <Textarea id="tf-note" value={v} maxLength={2000} placeholder="Anything to remember: which part you still need, who's giving you the Neuroptics, the build you want…" onChange={(e) => setV(e.target.value)} onBlur={() => { if (v !== note) tf().noteSet(k, v) }} className="min-h-20" />
+      <span className="text-xs text-muted-foreground">Only you can see this. Saves when you tap outside the box.</span>
+    </Card>
+  )
 }
 
 /** One thing on its own page: what it is, where to get it, prices, stats, what uses it, and where to read more. */
@@ -37,6 +52,7 @@ export function DetailsPage() {
           <span className="text-xs text-muted-foreground">{[d.kindLabel, d.cat && d.cat !== d.kindLabel ? d.cat : ""].filter(Boolean).join(" · ")}</span>
           <h1 className="font-heading text-3xl leading-tight font-semibold">{d.name}</h1>
           <div className="mt-1 flex flex-wrap gap-2">
+            <Button variant={d.pinned ? "secondary" : "outline"} className="h-9" aria-pressed={!!d.pinned} onClick={() => tf().pinToggle(d.key)}>{d.pinned ? <><PinOff /> Unpin</> : <><Pin /> Pin to Home</>}</Button>
             <Button variant="outline" className="h-9" onClick={() => { tf().act("a", { href: "#", "data-go": d.key }) }}><Crosshair /> Open in Farm finder</Button>
             {d.builds ? <Button variant="outline" className="h-9" onClick={() => { tf().buildLibSet({ q: d.name, goal: "all", kind: "all", src: "all" }); tf().arsenalSet({ tab: "top" }); tf().go("arsenal") }}><Swords /> {d.builds} build{d.builds > 1 ? "s" : ""}</Button> : null}
             {d.wiki ? (
@@ -48,6 +64,7 @@ export function DetailsPage() {
         </div>
       </header>
       {mod ? <ModPage name={d.name} /> : d.way ? <WayView w={d.way} /> : d.html ? <Island html={d.html} /> : null}
+      <NoteCard k={d.key} note={d.note || ""} />
       {d.used?.length ? (
         <Card className="gap-2 px-5">
           <h2 className="flex items-center gap-2 font-heading text-lg font-semibold"><Hammer className="size-4 text-primary" aria-hidden /> Used in builds for</h2>

@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { TF_LINKS_SHOWN, openLink } from "@/components/shell/tennoform-links"
 import { cn } from "@/lib/utils"
 import { AlertsCard } from "@/components/tf/alerts-card"
+import { ShortcutsCard } from "@/components/tf/shortcuts-card"
 import { Search } from "lucide-react"
 import { pagePath } from "@/lib/page-path"
 
@@ -53,6 +54,7 @@ export function HomePage() {
         </div>
         <div className="flex min-w-0 flex-col gap-4">
           <AlertsCard hideEmpty />
+          <ShortcutsCard />
           <TodayCard d={d} />
           <CollectionCard />
           <GoalsCard d={d} />
