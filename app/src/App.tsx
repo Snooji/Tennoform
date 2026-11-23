@@ -59,6 +59,7 @@ const ArsenalPage = page(() => import("@/pages/arsenal/arsenal-page"), (m) => m.
 const TennoPage = page(() => import("@/pages/tenno/tenno-page"), (m) => m.TennoPage)
 const SupportPage = page(() => import("@/pages/info/support-page"), (m) => m.SupportPage)
 const FeedbackPage = page(() => import("@/pages/info/feedback-page"), (m) => m.FeedbackPage)
+const SettingsPage = page(() => import("@/pages/info/settings-page"), (m) => m.SettingsPage)
 const AboutPage = page(() => import("@/pages/info/about-page"), (m) => m.AboutPage)
 const AdminPage = page(() => import("@/pages/info/admin-page"), (m) => m.AdminPage)
 const GuidesPage = page(() => import("@/pages/guides/guides-page"), (m) => m.GuidesPage)
@@ -95,6 +96,7 @@ const PAGES: Record<string, React.ComponentType> = {
   tenno: TennoPage,
   donate: SupportPage,
   feedback: FeedbackPage,
+  settings: SettingsPage,
   about: AboutPage,
   admin: AdminPage,
   friends: SquadPage,

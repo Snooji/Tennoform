@@ -125,6 +125,11 @@
   "Send feedback about Tennoform.",
   false
  ],
+ "settings": [
+  "Settings · Tennoform",
+  "Appearance, notifications, account, backup and data settings.",
+  false
+ ],
  "about": [
   "About and Privacy · Tennoform",
   "What Tennoform is, where its data comes from and how your information is kept private.",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Bell, ChevronsUpDown, List, MessagesSquare, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, ShieldCheck, UserRound } from "lucide-react"
+import { Bell, ChevronsUpDown, List, MessagesSquare, Palette, Coffee, Info, LogIn, LogOut, MessageSquare, Settings, ShieldCheck, UserRound } from "lucide-react"
 
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarHeader,
@@ -194,6 +194,9 @@ function AccountMenu({ s, open, setOpen, onNavigate }: { s: TFState; open: boole
                   <ShieldCheck /> Backend
                 </DropdownMenuItem>
               )}
+              <DropdownMenuItem onClick={() => go("settings")}>
+                <Settings /> Settings
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => go("tenno")}>
                 <UserRound /> Profile &amp; account
               </DropdownMenuItem>

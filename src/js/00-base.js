@@ -25,7 +25,7 @@ const ICON={squad:'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm9 0a3 3 0 1 1 0-6 3 3 0 0 
 const PLACES=[['home','Home','home',['home']],['plan','Plan','mastery',['mastery','ranks','collection','goals','foundry','tasks','missions','quests','guides']],['farm','Farm','farm',['farm','resources','relics','world','market','arsenal','frames']],['today','Today','today',['today','synd','achievements']],['squad','Squad','chat',['chat','friends']]];
 const PICON={home:'home',plan:'ranks',farm:'resources',today:'today',squad:'squad'};
 const SUBL={ranks:'Ranks',mastery:'MR plan',collection:'My collection',goals:'Goals & to-dos',foundry:'Foundry',tasks:'To-do list',missions:'Star chart & quests',quests:'Quests',guides:'Guides',farm:'Farm finder',resources:'Resources',relics:'Relics',world:'Open worlds',market:'Market',arsenal:'Builds',frames:'Warframes',today:'Today',synd:'Syndicates',achievements:'Achievements',chat:'Chat',friends:'Friends'};
-const MENU=[['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about','About & privacy']];
+const MENU=[['settings','Settings'],['tenno','Profile & account'],['donate','Support Tennoform'],['feedback','Feedback'],['about','About & privacy']];
 const BAR=PLACES.flatMap(p=>p[3]);
 /* paired pages share one menu entry (Gear goals + To-do list, Star chart + Quests); a switch on the page moves between them */
 const NAV_PAIRED=new Set(['tasks','quests']);

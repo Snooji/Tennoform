@@ -3,7 +3,7 @@
    a path here, before any other hashchange listener runs, and HASH() gives back the old '#route' form for code that reads it.
    Old #links, bookmarks and shared links keep working. build/make_site.py writes a page for each route below. */
 const PAGE_ROUTES=['home','today','ranks','synd','goals','tenno','missions','resources','mastery','frames','farm','quests','market','arsenal','relics',
-  'world','tasks','foundry','friends','donate','feedback','about','admin','achievements','guides','collection','chat','details'];
+  'world','tasks','foundry','friends','donate','feedback','about','admin','achievements','guides','collection','chat','details','settings'];
 const PAGE_SET=new Set(PAGE_ROUTES);
 /* every item, mod, arcane, relic, resource and enemy also has its own page (tennoform.com/mod/serration/): the details page
    for that thing. build/seo_pages.py writes them; 4699972-details.js turns the address into what to show. */
