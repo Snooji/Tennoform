@@ -13,14 +13,18 @@ import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type MarketData, type VaultCard } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { PhoneMarketRow } from "./market-sheet"
 import { PriceChart } from "@/components/tf/price-chart"
 import { PriceAlertField } from "@/components/tf/price-alert"
+import { EmptyState } from "@/components/tf/empty-state"
 
 const MOD_SORTS = [{ value: "v7", label: "Most traded" }, { value: "a7", label: "7-day price" }, { value: "low", label: "Cheapest seller" }, { value: "n", label: "Name" }]
 const MOD_KINDS = [{ value: "all", label: "Mods and arcanes" }, { value: "Mod", label: "Mods" }, { value: "Arcane", label: "Arcanes" }]
 const rankTxt = (r: number | null) => (r == null ? "" : r === 0 ? "Unranked" : `Rank ${r}`)
 
 function Mods() {
+  const phone = useIsMobile()
   const d = useTFData(() => tf().marketMods())
   const [q, setQ] = useState(d.q)
   useEffect(() => {
@@ -49,7 +53,14 @@ function Mods() {
       <p role="status" className="text-xs text-muted-foreground">{d.count === d.total ? `${fmt(d.total)} mods and arcanes` : `Showing ${fmt(d.count)} of ${fmt(d.total)}`}</p>
       <Card className="gap-0 py-0">
         <ul className="flex flex-col divide-y">
-          {d.rows.map((x) => (
+          {phone ? d.rows.map((x) => (
+            <PhoneMarketRow key={x.n} row={{
+              title: x.n, price: x.a7, detailsKey: (x.kind === "Mod" ? "mod|" : "arc|") + x.n, sellName: x.n, url: x.url,
+              chip: <span className="text-xs text-muted-foreground">{[x.type, x.rar].filter(Boolean).join(" · ")}</span>,
+              meta: [x.fx, x.v7 ? `${fmt(x.v7)} sold a week` : ""].filter(Boolean).join(" · "),
+              seller: x.seller ? { label: <>{x.seller.price}p{x.seller.rank != null ? ` · ${rankTxt(x.seller.rank)}` : ""}</>, aria: `Copy a whisper to ${x.seller.name}, selling ${rankTxt(x.seller.rank).toLowerCase()} at ${x.seller.price} platinum`, wh: x.seller.wh } : null,
+            }} />
+          )) : d.rows.map((x) => (
             <li key={x.n} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3">
               <span className="flex min-w-0 flex-1 basis-48 flex-col gap-1">
                 <GoLink k={(x.kind === "Mod" ? "mod|" : "arc|") + x.n} className="font-medium">{x.n}</GoLink>
@@ -72,7 +83,7 @@ function Mods() {
           ))}
         </ul>
         {d.more ? <div className="border-t px-4 py-3"><Button variant="outline" className="h-9 w-full" onClick={() => tf().marketModsSet({ more: true })}>Show {fmt(Math.min(60, d.more))} more</Button></div> : null}
-        {!d.rows.length ? <p className="px-4 py-6 text-sm text-muted-foreground">No mod or arcane by that name has market prices yet.</p> : null}
+        {!d.rows.length ? <EmptyState icon={Search} title="No prices for that" body="No mod or arcane by that name has market prices yet. Try part of the name." action={{ label: "Clear search", onClick: () => setQ("") }} /> : null}
       </Card>
       <Card size="sm" className="gap-1.5 px-4">
         <b className="font-heading text-base font-semibold">Rivens, Kuva Liches, Sisters and Tenet weapons</b>
@@ -92,6 +103,7 @@ const FILTERS = [{ value: "all", label: "All sets" }, { value: "farm", label: "F
 const VAULT_CLS = { vaulted: "border-red-500/40 text-red-700 dark:text-red-300", now: "border-emerald-500/40 text-emerald-700 dark:text-emerald-400", farmable: "text-muted-foreground" }
 
 function Sets({ d }: { d: MarketData }) {
+  const phone = useIsMobile()
   const [q, setQ] = useState(d.q || "")
   useEffect(() => {
     const t = window.setTimeout(() => q !== d.q && tf().marketSet({ q }), 160)
@@ -122,7 +134,17 @@ function Sets({ d }: { d: MarketData }) {
       </p>
       <Card className="gap-0 py-0">
         <ul className="flex flex-col divide-y">
-          {d.sets!.map((x) => (
+          {phone ? d.sets!.map((x) => {
+            const vault = x.vault ? <Badge variant="outline" className={VAULT_CLS[x.vault.kind]}>{x.vault.text}</Badge> : null
+            const xp = x.xp ? (x.left > 0 ? <Badge variant="outline" className="border-primary/40 text-primary">+{fmt(x.left)} MR XP</Badge> : <Badge variant="outline" className="text-muted-foreground"><Check /> Mastered</Badge>) : null
+            return (
+              <PhoneMarketRow key={x.n} row={{
+                title: x.base, img: x.img, price: x.price, detailsKey: "item|" + x.base, sellName: x.n, url: x.url, meta: x.meta,
+                chip: vault || xp, chips: <>{vault}{xp}</>,
+                seller: x.seller ? { label: <>{x.seller.price}p</>, aria: `Copy a whisper to ${x.seller.name}, selling at ${x.seller.price} platinum`, wh: x.seller.wh } : null,
+              }} />
+            )
+          }) : d.sets!.map((x) => (
             <li key={x.n} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3">
               <Thumb src={x.img} className="size-10" />
               <span className="flex min-w-0 flex-1 basis-48 flex-col gap-1">

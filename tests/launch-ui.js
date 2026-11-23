@@ -68,6 +68,20 @@ const CHECKS = {
     if (!(await pop.getByRole('link', { name: /warframe\.market/ }).count())) fail('marketRow: the sheet has no warframe.market link')
     await ctx.close(); console.log('marketRow checked')
   },
+  async emptyStates(b) {
+    const ctx = await context(b, 390)
+    let p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'collection/')
+    const es = p.locator('[data-slot="empty-state"]')
+    const up = es.getByRole('button', { name: 'Upload profile file' })
+    if (!(await up.count())) fail('emptyStates: an empty collection has no "Upload profile file" action')
+    else { await up.first().click(); await p.waitForTimeout(1200); if (!/\/tenno\//.test(p.url()) || !(await p.locator('#proffile').count())) fail('emptyStates: "Upload profile file" did not open the upload step') }
+    p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'ranks/')
+    await p.getByPlaceholder(/Search gear/).fill('zzzzqq'); await p.waitForTimeout(900)
+    const show = p.locator('[data-slot="empty-state"]').getByRole('button', { name: 'Show everything' })
+    if (!(await show.count())) fail('emptyStates: a search with no results has no "Show everything" empty state')
+    else { await show.click(); await p.waitForTimeout(700); if (await p.getByPlaceholder(/Search gear/).inputValue()) fail('emptyStates: "Show everything" did not clear the search') }
+    await ctx.close(); console.log('emptyStates checked')
+  },
 }
 
 ;(async () => {
