@@ -32,4 +32,16 @@ only, never Digital Extremes' logos or UI, and distinct from other companion app
 - **Explain empty states** with the one action that fills them.
 - **Phones first.** 40px touch targets, long tab rows scroll sideways, details open in a bottom sheet. Nothing floats over content
   on a phone: chat lives in the Squad tab; temporary bars (farming counter, picked items) sit just above the tab bar.
+- **Sheets drag to close.** Phone details open in the bottom sheet (`components/tf/phone-sheet.tsx`, the 21st.dev Drawer):
+  grab bar on top, the main action at the bottom within thumb reach, Back closes it.
 - **Accessible.** WCAG AA contrast in both modes, every style and every accent (run axe on every page), visible focus, labels on every input.
+
+## Motivation
+
+- **Show the distance, not just the total.** Progress reads as how close you are to the next rank ("86% of the way to MR 2"),
+  and "Almost there" past 80%: effort grows as a goal gets close.
+- **One moment per rank.** Ranking up gets one celebration (the logo, the new rank, Continue). Never on load, in the sample
+  account or after signing in to an account that was already higher. Nothing else interrupts.
+- **The next step comes first.** On a phone, Next up sits right under the rank; asking to sign in comes after.
+- **One action per empty state.** An empty list says what goes there and gives the one button that fills it.
+- **Gold is the default colour** (the logo's). Rank colours are a choice in Appearance, not the first impression.
