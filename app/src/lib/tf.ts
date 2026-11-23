@@ -47,6 +47,8 @@ export type TFApi = {
   sessDrop(d?: number): void
   sessEnd(quiet?: boolean): void
   relicLog(relic: string): RelicLog | null
+  compareList(name: string): string[]
+  compare(a: string, b: string): CompareData
   relicOpen(relic: string, got: string): void
   back(): void
   howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null
@@ -763,3 +765,4 @@ export type RelicLog = {
   relic: string; opens: number; ducats: number; rare: number; intact: number; counts: Record<string, number>
   rewards: { n: string; rar: "C" | "U" | "R"; du: number; chance: number }[]; recent: { got: string; at: number }[]
 }
+export type CompareData = { loading: boolean; a: string; b: string; imgA?: string; imgB?: string; mrA?: number; mrB?: number; rows: { label: string; a: string; b: string; better: "a" | "b" | null }[] }
