@@ -1,2 +1,7 @@
 /* Inside the Tennoform app: no outside payment links (store rules) */
 .tf-native a[href="#donate"],.tf-native a[href="/donate/"],.tf-native [data-go="donate"]{display:none!important}
+/* chat rules dialog */
+.tf-rules{margin:auto;position:fixed;inset:0;height:fit-content;max-width:min(28rem,calc(100vw - 2rem));border:1px solid var(--border);border-radius:1rem;background:var(--card);color:var(--foreground);padding:1.25rem}
+.tf-rules::backdrop{background:rgb(0 0 0/.55)}
+.tf-rules h2{margin:0;font-size:1.25rem}
+.tf-rules ul{list-style:disc}

@@ -36,5 +36,5 @@ Run `npm run sync` again after every site build. `www/` and the copies inside `a
 - App icons and splash screens: generate from the new logo (`npx @capacitor/assets generate` with `assets/icon.png` 1024×1024 and `assets/splash.png` 2732×2732).
 - Store listing: say it's a fan-made companion, "not affiliated with Digital Extremes", in the description; don't use Warframe in the app name.
 - Privacy: App Store privacy labels and the Play Data safety form. What's collected: email (sign-in), chat messages, the progress players save. Link the About & privacy page as the privacy policy.
-- Chat (user-generated content): report, block, the message filter and account deletion (Profile → Account → Delete account) are in place. **Still to add:** players agree to the chat rules before their first message (App Store rule 1.2).
+- Chat (user-generated content): report, block, the message filter, a one-time agreement to the chat rules before the first message, and account deletion (Profile → Account → Delete account) are in place.
 - Test on a real phone: sign in with Google and Apple, upload a profile file, go offline, get a Foundry notification with the app closed.
