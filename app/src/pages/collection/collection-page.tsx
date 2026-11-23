@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Thumb } from "@/components/tf/thumb"
 import { HistoryCard } from "@/components/tf/history-chart"
 import { fmt, tf, useTFData } from "@/lib/tf"
+import { EmptyState } from "@/components/tf/empty-state"
+import { Library } from "lucide-react"
 
 const VIEWS = [{ value: "owned", label: "Owned" }, { value: "mastered", label: "Mastered" }, { value: "level", label: "Owned, not mastered" }, { value: "all", label: "Everything" }]
 
@@ -33,7 +35,13 @@ export function CollectionPage() {
           Change either on <a href="/ranks/" className="underline decoration-primary/50 underline-offset-4">Ranks</a>.
         </p>
       </header>
-      <HistoryCard />
+      {!d.owned && !d.mastered ? (
+        <Card className="py-0">
+          <EmptyState icon={Library} title="Nothing tracked yet" body="Upload your saved profile file to fill in everything you've mastered in one go, or tick gear yourself on Ranks."
+            action={{ label: "Upload profile file", onClick: () => { tf().tennoSet({ tab: "account" }); tf().go("tenno") } }}
+            secondary={{ label: "Tick gear on Ranks", onClick: () => tf().go("ranks") }} />
+        </Card>
+      ) : <HistoryCard />}
       <div className="flex flex-wrap items-center gap-2">
         <div className="scroll-fade -mx-4 max-w-[calc(100%+2rem)] overflow-x-auto px-4 sm:mx-0 sm:max-w-full sm:px-0"><Segmented className="min-w-max" value={d.f} onValueChange={(v) => tf().collectionSet({ f: v })} items={views} /></div>
         <div className="relative min-w-48 flex-1">

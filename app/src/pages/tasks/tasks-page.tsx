@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { hrefOf, runAct, tf, useTFData, type TaskRow, type TasksData } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
+import { EmptyState } from "@/components/tf/empty-state"
+import { ListTodo } from "lucide-react"
 
 const FILTERS = [
   { value: "open", label: "To do" }, { value: "done", label: "Done" }, { value: "shared", label: "Shared with friends" }, { value: "all", label: "All" },
@@ -171,8 +173,11 @@ export function TasksPage() {
             {d.list.map((x) => <Row key={x.id} x={x} d={d} />)}
           </ul>
         ) : (
-          <div className="flex flex-col items-start gap-2 p-6 text-sm">
-            <b className="font-heading text-base font-semibold">{d.filter === "open" ? "No tasks yet." : "Nothing matches this filter."}</b>
+          d.filter === "open" ? (
+            <EmptyState icon={ListTodo} title="No tasks yet" body="Type one in the box above and press Enter, or tap + Task on any material, item or relic."
+              action={{ label: "Find something to farm", onClick: () => tf().go("farm") }} />
+          ) : <div className="flex flex-col items-start gap-2 p-6 text-sm">
+            <b className="font-heading text-base font-semibold">Nothing matches this filter.</b>
             <p className="text-muted-foreground">
               Type above and press Enter, or add tasks from anywhere in Tennoform. For example, open{" "}
               <a href="/goals/" className="text-foreground underline decoration-primary/60 underline-offset-4">Goals</a>, find a material you're short on and tap{" "}

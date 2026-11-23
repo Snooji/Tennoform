@@ -15,6 +15,7 @@ import { MasteryRing } from "@/pages/home/mastery-hero"
 import { Thumb } from "@/components/tf/thumb"
 import { Island } from "@/components/tf/island"
 import { SortDir } from "@/components/tf/sort-dir"
+import { EmptyState } from "@/components/tf/empty-state"
 
 const FILTERS = [
   { value: "all", label: "All" },
@@ -440,12 +441,8 @@ export function RanksPage() {
             ))}
           </ul>
         ) : (
-          <div className="flex flex-col items-start gap-2 px-4 py-8 text-sm text-muted-foreground">
-            Nothing matches this filter.
-            <Button variant="outline" size="sm" onClick={() => { setQ(""); tf().ranksSet({ q: "", f: "all" }) }}>
-              Show everything
-            </Button>
-          </div>
+          <EmptyState icon={Search} title="Nothing matches" body={searching ? `No gear called "${d.q}" in this list. Check the spelling, or show everything.` : "Nothing in this list fits the filter you picked."}
+            action={{ label: "Show everything", onClick: () => { setQ(""); tf().ranksSet({ q: "", f: "all" }) } }} />
         )}
         {d.total > d.shown ? (
           <div role="status" className="flex flex-wrap items-center gap-2 border-t px-4 py-3">

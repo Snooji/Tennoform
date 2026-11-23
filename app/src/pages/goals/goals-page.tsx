@@ -14,6 +14,7 @@ import { Thumb } from "@/components/tf/thumb"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useTFData, type BuildGoal, type GoalsData } from "@/lib/tf"
 import { SortDir } from "@/components/tf/sort-dir"
+import { EmptyState } from "@/components/tf/empty-state"
 
 const SORTS = [{ value: "added", label: "Order added" }, { value: "progress", label: "Most complete" }, { value: "name", label: "Name" }]
 const go = (key: string) => (e: React.MouseEvent) => {
@@ -101,11 +102,9 @@ export function GoalsPage() {
         </Card>
       ) : null}
       {!d.goals.length && !d.crafts?.length && d.bgoals.length ? null : !d.goals.length && !d.crafts?.length ? (
-        <Card className="items-start gap-3 p-6 text-sm">
-          <Target aria-hidden className="size-6 text-primary" />
-          <b className="font-heading text-base font-semibold">No goals yet</b>
-          <p className="text-muted-foreground">Open any Warframe, weapon or Prime set and tap Track, or save a build from Builds as a goal.</p>
-          <a href="/frames/" className={cn(buttonVariants(), "h-9")}>Browse Warframes</a>
+        <Card className="py-0">
+          <EmptyState icon={Target} title="No goals yet" body="Pick something you want to build. Tennoform adds up every part and resource and shows where to farm each one."
+            action={{ label: "Browse Warframes", onClick: () => tf().go("frames") }} secondary={{ label: "Browse builds", onClick: () => tf().go("arsenal") }} />
         </Card>
       ) : (
         <>
