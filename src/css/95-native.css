@@ -5,3 +5,5 @@
 .tf-rules::backdrop{background:rgb(0 0 0/.55)}
 .tf-rules h2{margin:0;font-size:1.25rem}
 .tf-rules ul{list-style:disc}
+/* the logo is a picture now: keep its shape inside the square slots the old SVG used */
+img.logo{object-fit:contain}

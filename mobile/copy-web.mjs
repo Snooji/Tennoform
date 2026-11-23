@@ -11,7 +11,7 @@ if (!existsSync(join(root, "index.html")) || !existsSync(join(root, "bundle"))) 
 }
 rmSync(out, { recursive: true, force: true })
 mkdirSync(out)
-const files = ["index.html", "boot.js", "firebase-config.js", "manifest.webmanifest", "favicon.svg", "favicon-32.png", "apple-touch-icon.png", "icon-192.png", "icon-512.png"]
+const files = ["index.html", "boot.js", "firebase-config.js", "manifest.webmanifest", "favicon.svg", "favicon-32.png", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "logo-128.png", "logo-256.png"]
 const dirs = ["assets", "bundle", "data", "fonts", "vendor"]
 for (const f of files) if (existsSync(join(root, f))) cpSync(join(root, f), join(out, f))
 for (const d of dirs) cpSync(join(root, d), join(out, d), { recursive: true })
