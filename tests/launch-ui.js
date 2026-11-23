@@ -104,6 +104,15 @@ const CHECKS = {
     if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUp: celebrated when opening the sample account')
     await ctx.close(); console.log('rankUp checked')
   },
+  async rankUpOnlyFromPlayer(b) {
+    /* progress that arrives without the player doing anything (an account syncing in from the cloud) is not celebrated */
+    const ctx = await context(b, 390)
+    const p = await fresh(ctx, { 'tenno-profile': { onb: 1 } }, 'ranks/')
+    await p.waitForTimeout(4500)
+    await p.evaluate(() => window.TF.setRank('Ash', 99)); await p.waitForTimeout(1500)
+    if (await p.getByRole('dialog', { name: /Mastery Rank/ }).count()) fail('rankUpOnlyFromPlayer: celebrated a rank that arrived without any tap (cloud sync)')
+    await ctx.close(); console.log('rankUpOnlyFromPlayer checked')
+  },
 }
 
 ;(async () => {

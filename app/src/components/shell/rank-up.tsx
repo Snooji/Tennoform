@@ -8,9 +8,13 @@ import { useTF } from "@/lib/tf"
 const KEY = "tf-rank-seen"
 const readSeen = () => { try { const v = Number(localStorage.getItem(KEY)); return Number.isFinite(v) && localStorage.getItem(KEY) != null ? v : null } catch { return null } }
 const saveSeen = (n: number) => { try { localStorage.setItem(KEY, String(n)) } catch { /* private mode */ } }
+/* when the player last tapped, typed or picked a file: a rank-up only counts as theirs if it follows one of these */
+let lastAct = 0
+for (const ev of ["pointerdown", "keydown", "change"]) window.addEventListener(ev, () => { lastAct = Date.now() }, { capture: true, passive: true })
 
 /** The rank-up moment: one celebration when your Mastery Rank goes up while you use the app (the highest new rank,
-    once). Never on first load, never in the sample account, never from signing in to an account that was already higher. */
+    once). Only for a rise that follows something the player just did here (a tap, a key, a file); never on first load,
+    in the sample account, from signing in, or from progress syncing in from another device. */
 export function RankUp() {
   const s = useTF()
   const reduce = useReducedMotion()
@@ -23,7 +27,7 @@ export function RankUp() {
     if (s.demo) return
     if (base.current == null) { base.current = Math.max(readSeen() ?? s.mr, s.mr); saveSeen(base.current); return }
     if (s.mr <= base.current) return
-    const quiet = Date.now() < quietUntil.current
+    const quiet = Date.now() < quietUntil.current || Date.now() - lastAct > 8000
     base.current = s.mr; saveSeen(s.mr)
     if (quiet) return
     setShow(s.mr)
