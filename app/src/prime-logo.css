@@ -52,3 +52,11 @@
 @media (max-width: 480px) { :root[data-theme="prime"] main h1 { letter-spacing: .03em; } }
 
 @media (prefers-reduced-motion: reduce) { :root[data-theme="prime"] .tf-ring-fill { filter: none; } }
+
+/* bottom sheets: lacquer with a gilded top edge and the logo's cut at both top corners; the grab bar is gold */
+:root[data-theme="prime"] [data-slot="drawer-popup"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--m5) 18%, var(--pr-panel)), var(--pr-panel) 120px);
+  border-top: 1px solid transparent; border-image: linear-gradient(90deg, transparent, var(--m2) 12%, var(--m3) 50%, var(--m2) 88%, transparent) 1;
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%, 0 16px); border-radius: 0;
+}
+:root[data-theme="prime"] [data-slot="drawer-bar"]::before { background: linear-gradient(90deg, var(--m4), var(--m3), var(--m4)); }

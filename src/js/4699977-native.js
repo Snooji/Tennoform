@@ -27,7 +27,7 @@ if(NATIVE){const CP=Capacitor.Plugins||{};const plat=Capacitor.getPlatform();
       if(window.TF_NATIVE_PERM!=='granted')return;try{await LN.schedule({notifications:[{id:Math.floor(Math.random()*9e4)+1000,title,body:body.slice(0,180),extra:{url}}]})}catch(e){}}}
   if(CP.Haptics){navigator.vibrate=()=>{try{CP.Haptics.impact({style:'LIGHT'})}catch(e){}return true}}
   if(CP.Share){navigator.share=d=>CP.Share.share({title:d&&d.title,text:d&&d.text,url:d&&d.url,dialogTitle:'Share'});navigator.canShare=()=>true}
-  if(CP.App&&plat==='android')CP.App.addListener('backButton',({canGoBack})=>{const h=HASH();if(h&&h!=='#home'&&canGoBack)history.back();else CP.App.exitApp()});
+  if(CP.App&&plat==='android')CP.App.addListener('backButton',({canGoBack})=>{if((window.TF_SHEET_OPEN||0)>0){dispatchEvent(new Event('tf:sheet-close'));return}const h=HASH();if(h&&h!=='#home'&&canGoBack)history.back();else CP.App.exitApp()});
   /* tennoform.com links opened from outside land on the right page (universal links / app links) */
   if(CP.App)CP.App.addListener('appUrlOpen',e=>{try{const u=new URL(e.url);if(!/(^|\.)tennoform\.com$/.test(u.hostname))return;const k=keyFromPath(u.pathname);
     if(k){openDetails(k);return}const r=u.pathname.replace(/^\/+|\/+$/g,'');GO(PAGE_SET.has(r)?r:'home')}catch(x){}});

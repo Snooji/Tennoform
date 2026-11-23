@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { PhoneSheet } from "@/components/tf/phone-sheet"
 import { Toggle } from "@/components/ui/toggle"
 import { Island } from "@/components/tf/island"
 import { WayView } from "./way-detail"
@@ -246,18 +246,10 @@ export function FarmPage() {
         )}
       </div>
       {narrow ? (
-        <Sheet open={sheet && !!d.detail} onOpenChange={setSheet}>
-          <SheetContent side="bottom" className="max-h-[calc(88dvh-4rem)] gap-0 rounded-t-2xl p-0">
-            <SheetHeader className="shrink-0 border-b px-4 py-3">
-              <SheetTitle className="pr-8 font-heading text-lg">{d.selName}</SheetTitle>
-              <SheetDescription className="sr-only">Where to farm {d.selName}</SheetDescription>
-            </SheetHeader>
-            <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3">
-              {d.sel ? <MoreDetails k={d.sel} onGo={() => setSheet(false)} /> : null}
+        <PhoneSheet open={sheet && !!d.detail} onOpenChange={setSheet} title={d.selName || ""} description={`Where to farm ${d.selName}`}>
+          {d.sel ? <MoreDetails k={d.sel} onGo={() => setSheet(false)} /> : null}
               {d.way ? <WayView w={d.way} inSheet /> : d.detail ? <Island html={d.detail} /> : null}
-            </div>
-          </SheetContent>
-        </Sheet>
+        </PhoneSheet>
       ) : null}
     </div>
   )

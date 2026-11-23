@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { PhoneSheet } from "@/components/tf/phone-sheet"
 import { Island } from "@/components/tf/island"
 import { cn } from "@/lib/utils"
 import { fmt, tf, useNarrow, useTFData, type ResRow } from "@/lib/tf"
@@ -110,15 +110,9 @@ export function ResourcesPage() {
         {narrow ? null : <div className="min-w-0"><div className="flex flex-col gap-2 lg:sticky lg:top-16">{d.detail ? <><Button variant="outline" className="h-9 self-start" onClick={() => tf().openDetails("res|" + d.sel)}><Maximize2 /> More details</Button><Island html={d.detail} /></> : empty}</div></div>}
       </div>
       {narrow ? (
-        <Sheet open={sheet && !!d.detail} onOpenChange={setSheet}>
-          <SheetContent side="bottom" className="max-h-[calc(88dvh-4rem)] gap-0 rounded-t-2xl p-0">
-            <SheetHeader className="shrink-0 border-b px-4 py-3">
-              <SheetTitle className="pr-8 font-heading text-lg">{d.sel}</SheetTitle>
-              <SheetDescription className="sr-only">Where to farm {d.sel}</SheetDescription>
-            </SheetHeader>
-            <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3">{d.detail ? <><Button variant="outline" className="h-9 self-start" onClick={() => { setSheet(false); tf().openDetails("res|" + d.sel) }}><Maximize2 /> More details</Button><Island html={d.detail} /></> : null}</div>
-          </SheetContent>
-        </Sheet>
+        <PhoneSheet open={sheet && !!d.detail} onOpenChange={setSheet} title={d.sel || ""} description={`Where to farm ${d.sel}`}>
+          {d.detail ? <><Button variant="outline" className="h-9 self-start" onClick={() => { setSheet(false); tf().openDetails("res|" + d.sel) }}><Maximize2 /> More details</Button><Island html={d.detail} /></> : null}
+        </PhoneSheet>
       ) : null}
     </div>
   )
