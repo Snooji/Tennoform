@@ -50,6 +50,9 @@ export type TFApi = {
   compareList(name: string): string[]
   compare(a: string, b: string): CompareData
   settings(): SettingsData
+  intro(): { show: boolean; plats: { id: string; label: string }[]; plat: string }
+  introPlat(id: string): void
+  introDone(): void
   relicOpen(relic: string, got: string): void
   back(): void
   howto(frame: string): { frame: string; keep: { n: string; d: string }[]; loop: string[]; watch: string } | null

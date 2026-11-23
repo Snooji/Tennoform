@@ -12,6 +12,7 @@ import { LegacyOutlet } from "@/components/shell/legacy-outlet"
 import { MobileTabs } from "@/components/shell/mobile-tabs"
 import { ChatFloat } from "@/components/shell/chat-float"
 import { FarmSessionBar } from "@/components/tf/farm-session"
+import { FirstRun } from "@/components/shell/first-run"
 import { ThemeScene } from "@/components/shell/theme-scene"
 import { SiteHeader } from "@/components/shell/site-header"
 import { DemoBanner } from "@/components/shell/demo-banner"
@@ -182,6 +183,7 @@ export default function App() {
         <MobileTabs />
         <ChatFloat />
         <FarmSessionBar />
+        <FirstRun />
         <ThemeScene />
         <CommandMenu open={searchOpen} setOpen={setSearchOpen} />
         <SellDialog />
