@@ -40,19 +40,13 @@ async function gJoin(gid,mid){const m=(SO.gm[gid]||[]).find(x=>x.id===mid);if(!m
   try{await gpost(gid,{type:'taskok',task:{id:m.task.id,t:m.task.t}});toast('Added to your tasks')}catch(e){}rerender()}
 
 /* ---- support page ---- */
-function donate(){const ign=DONATE.ign,pp=DONATE.paypal;const wh=ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:'';
-  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Free, no ads. Made by Snooji. If it saved you time, plat or PayPal both help.</p></div>
-  <div class="split two dongrid">
-   <section class="panel cut stack dcard"><div class="dic">${PLAT_SVG}</div><h2>Donate platinum</h2>
-    ${ign?`<p class="small" style="margin:0">Send any amount of platinum in game to <b class="mono" style="color:var(--gold)">${esc(ign)}</b>.</p>
-    <ol class="small" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px"><li>Copy the whisper below and paste it into in-game chat.</li><li>Meet in Maroo's Bazaar (Mars) or a Clan Dojo Trading Post.</li><li>Open a trade and add the platinum. Trading needs MR 2 and two-factor sign-in, and costs a small credit tax.</li></ol>
-    <div class="row"><button class="btn primary" data-copy="${esc(wh)}">Copy whisper</button><button class="btn" data-copy="${esc(ign)}">Copy name</button></div>`:'<p class="small muted" style="margin:0">Platinum donations open soon.</p>'}
-   </section>
+function donate(){const pp=DONATE.paypal;
+  return `<div class="stack"><div class="head"><div class="eyebrow">Support</div><h1>Support Tennoform</h1><p class="lede">Free, no ads. Made by Snooji. If it saved you time, a PayPal donation helps keep it running.</p></div>
+  <div class="dongrid">
    <section class="panel cut stack dcard"><div class="dic">${PP_SVG}</div><h2>Donate with PayPal</h2>
     ${pp?`<p class="small" style="margin:0">One-off donation in any amount through PayPal. You don't need a PayPal account to pay by card.</p><a class="btn primary" href="${esc(pp)}" target="_blank" rel="noopener" style="align-self:flex-start">Donate on PayPal ${ic('ext')}</a>`:'<p class="small muted" style="margin:0">PayPal donations open soon.</p>'}
    </section></div>
   <div class="callout small">Donations don't unlock anything. Every feature stays free for everyone.</div></div>`}
-const PLAT_SVG='<svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><path d="M24 3 42 14v20L24 45 6 34V14z" fill="#0d1a22" stroke="#6FD6E8" stroke-width="2"/><path d="M24 11 35 17.5v13L24 37 13 30.5v-13z" fill="#6FD6E8" opacity=".25" stroke="#BDF2FA" stroke-width="1.5"/><path d="M24 11v26M13 17.5l22 13M35 17.5l-22 13" stroke="#BDF2FA" stroke-width="1" opacity=".6"/></svg>';
 const PP_SVG='<svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="#0d1a22" stroke="#D9B45E" stroke-width="2"/><path d="M24 34s-9-5.6-9-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.4-9 12-9 12z" fill="#D9B45E"/></svg>';
 
 /* ---- v12 events ---- */

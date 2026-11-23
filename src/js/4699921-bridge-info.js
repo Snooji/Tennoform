@@ -1,5 +1,5 @@
 /* ---------- bridge: Support, Feedback, About and Backend for the React pages ---------- */
-function supportData(){const ign=DONATE.ign;return {ign,paypal:DONATE.paypal,whisper:ign?`/w ${ign} Hi! I'd like to donate platinum to Tennoform.`:''}}
+function supportData(){return {ign:'',paypal:DONATE.paypal,whisper:''}}
 function feedbackData(){if(HOSTED&&FB&&SO.uid&&!FBK.tried)loadFeedback();const from=state.fbFrom&&state.fbFrom!=='feedback'?state.fbFrom:'';
   return {hosted:HOSTED,ready:!!FB,signed:!!SO.uid,kind:state.fbKind||'bug',from:from?(PL[from]||from):'',prefill:state.fbPrefill||'',admin:!!FBK.admin}}
 function aboutData(){
